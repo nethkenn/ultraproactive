@@ -1,0 +1,14 @@
+.env
+/vendor/*
+/node_modules/*
+/storage/framework/views/*
+/storage/framework/sessions/*
+/storage/framework/cache/*
+/public/images/*
+composer.phar
+composer.lock
+.env.*.php
+.env.php
+.DS_Store
+workspace.xml
+Thumbs.db

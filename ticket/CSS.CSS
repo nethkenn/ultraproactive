@@ -1,0 +1,40 @@
+body
+{
+	width: 1056px;
+	margin: auto;
+	font-size: 0;
+}
+.ticket-holder
+{
+	background-color: gray;
+}
+.ticket
+{
+	display: inline-block;
+	width: 50%;
+	position: relative;
+}
+.ticket img
+{
+	width: 100%;
+}
+
+.id
+{
+ 	position: absolute;
+ 	font-family: "Kozuka Gothic Pr6N";
+ 	font-size: 16.67px;
+ 	top: 0;
+  	right: 10px;
+}
+
+.side-id
+{
+	font-size: 14.67px;
+	font-family: "Myriad Pro";
+	color: #c4c4c4;
+	position: absolute;
+	top: 143px;
+    left: 10px;
+	transform: rotate(90deg);
+}
