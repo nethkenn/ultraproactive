@@ -7,7 +7,7 @@
                 <select class="slot_owner_change" name="account_id">
                     <option value="0">NEW ACCOUNT</option>
                     @foreach($_account as $account)
-                    <option value="{{ $account->account_id }}">{{ $account->account_name }}</option>
+                    <option value="{{ $account->account_id }}">{{ $account->account_name }} ({{ $account->account_username }})</option>
                     @endforeach
                 </select>
             </div>
@@ -22,14 +22,6 @@
                 <div class="field"><input name="name" type="text" value=""></div>
             </div>
             <div class="fieldset">
-                <div class="label">EMAIL</div>
-                <div class="field"><input autocomplete="off" name="em" type="text" value=" "></div>
-            </div>
-            <div class="fieldset">
-                <div class="label">PASSWORD</div>
-                <div class="field"><input name="pw" type="password" value=""></div>
-            </div>
-            <div class="fieldset">
                 <div class="label">COUNTRY</div>
                 <div class="field">
                     <select name="country">
@@ -38,6 +30,14 @@
                         @endforeach
                     </select>
                 </div>
+            </div>
+            <div class="fieldset">
+                <div class="label">USERNAME</div>
+                <div class="field"><input autocomplete="off" name="un" type="text" value=" "></div>
+            </div>
+            <div class="fieldset">
+                <div class="label">PASSWORD</div>
+                <div class="field"><input name="pw" type="password" value=""></div>
             </div>
         </div>
         <div class="fieldset">

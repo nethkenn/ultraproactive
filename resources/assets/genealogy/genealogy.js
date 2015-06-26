@@ -43,18 +43,21 @@ function genealogy_loader()
     }
     function load_downline($slot_id)
     {
+        downline_loading($slot_id);
+        adjust_tree();
         $(".parent[slot_id=" + $slot_id + "]").siblings(".child-container").load('admin/maintenance/slots/downline?id=' + $slot_id, function()
         {
             child_load_event();
             registration_form_event();
-            adjust_tree();
         });
     }
     function registration_form_event_bind()
     {
         $(".submit-add-save").unbind("submit");
-        $(".submit-add-save").bind("submit", function()
+        $(".submit-add-save").bind("submit", function(e)
         {
+            $(e.currentTarget).find("button").attr("disabled", "disabled");
+
             $.ajax(
             {
                 url:"admin/maintenance/slots/add_form_submit",
@@ -63,10 +66,18 @@ function genealogy_loader()
                 type:"post",
                 success: function(data)
                 {
-                    load_downline(data)
-                    var x = $(this).attr("href");      
-                    var url = window.location.href.split('#')[0];
-                    window.location.href = url+"#";
+                    $(e.currentTarget).find("button").removeAttr("disabled");
+                    if(data.message == "")
+                    {
+                        load_downline(data.placement)
+                        var x = $(this).attr("href");      
+                        var url = window.location.href.split('#')[0];
+                        window.location.href = url+"#";
+                    }
+                    else
+                    {
+                        alert(data.message);
+                    }
                 }
             });
             
@@ -74,8 +85,10 @@ function genealogy_loader()
         });
 
         $(".submit-update-slot").unbind("submit");
-        $(".submit-update-slot").bind("submit", function()
+        $(".submit-update-slot").bind("submit", function(e)
         {
+            $(e.currentTarget).find("button").attr("disabled", "disabled");
+            
             $.ajax(
             {
                 url:"admin/maintenance/slots/edit_form_submit",
@@ -84,20 +97,44 @@ function genealogy_loader()
                 type:"post",
                 success: function(data)
                 {
-                    load_downline(data)
-                    var x = $(this).attr("href");      
-                    var url = window.location.href.split('#')[0];
-                    window.location.href = url+"#";
+                    $(e.currentTarget).find("button").removeAttr("disabled");
+                    if(data.message == "")
+                    {
+                        load_downline(data.placement)
+                        var x = $(this).attr("href");      
+                        var url = window.location.href.split('#')[0];
+                        window.location.href = url+"#";
+                    }
+                    else
+                    {
+                        alert(data.message);
+                    }
                 }
             });
             
             return false;
         });
     }
+    function show_loading()
+    {
+        var x = $(this).attr("href");      
+        var url = window.location.href.split('#')[0];
+        window.location.href = url+"#loading";
+    }
+    function downline_loading($slot_id)
+    {
+        $loading = '<ul>' +
+                        '<li class="width-reference"><span class="parent parent-reference load"></span></li>' +
+                        '<li class="width-reference"><span class="parent parent-reference load"></span></li>' +
+                    '</ul>';
+        $(".parent[slot_id=" + $slot_id + "]").siblings(".child-container").html($loading);
+    }
     function registration_form_event()
     {
-        $(".add-new-slot").click(function(e)
+        $(".add-new-slot").unbind("click");
+        $(".add-new-slot").bind("click", function(e)
         {
+            show_loading();
             placement = $(e.currentTarget).attr("placement");
             position = $(e.currentTarget).attr("position");
             $(".new-slot-form").load('admin/maintenance/slots/add_form?placement=' + placement + '&position=' + position, function()
@@ -113,6 +150,7 @@ function genealogy_loader()
         $(".parent .name").unbind("click")
         $(".parent .name").bind("click", function(e)
         {
+            show_loading();
             placement = $(e.currentTarget).closest(".parent").attr("placement");
             position = $(e.currentTarget).closest(".parent").attr("position");
             slot_id = $(e.currentTarget).closest(".parent").attr("slot_id");

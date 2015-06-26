@@ -10,6 +10,7 @@ use App\Tbl_membership;
 use App\Tbl_country;
 use App\Tbl_rank;
 use Crypt;
+use Validator;
 
 
 class AdminSlotController extends AdminController
@@ -57,45 +58,94 @@ class AdminSlotController extends AdminController
 	}
 	public function add_form_submit()
 	{
+		$return["message"] = "";
+		$data["message"] = "";
+		
 		if(Request::input("account_id") == 0)
 		{
-			$account_id = $this->add_form_submit_new_account();
+			$data = $this->add_form_submit_new_account($data);
+			$account_id = $data["account_id"];
 		}
 		else
 		{
 			$account_id = Request::input("account_id");
 		}
 
-		$insert["slot_id"] =  Request::input("slot_number");
-		$insert["slot_membership"] =  Request::input("slot_membership");
-		$insert["slot_type"] =  Request::input("slot_type");
-		$insert["slot_rank"] =  Request::input("rank");
-		$insert["slot_wallet"] =  Request::input("wallet");
-		$insert["slot_sponsor"] =  Request::input("sponsor");
-		$insert["slot_placement"] =  Request::input("placement");
-		$insert["slot_position"] =  strtolower(Request::input("slot_position"));
-		$insert["slot_binary_left"] =  Request::input("binary_left");
-		$insert["slot_binary_right"] =  Request::input("binary_right");
-		$insert["slot_personal_points"] =  Request::input("personal_pv");
-		$insert["slot_group_points"] =  Request::input("group_pv");
-		$insert["slot_upgrade_points"] =  Request::input("upgrade_points");
-		$insert["slot_owner"] =  $account_id;
-		Tbl_slot::insert($insert);
-		echo json_encode(Request::input("placement"));
+		$check_placement = Tbl_slot::checkposition(Request::input("placement"), strtolower(Request::input("slot_position")))->first();
+		$check_id = Tbl_slot::id(Request::input("slot_number"))->first();
+
+		if($check_placement)
+		{
+			$return["message"] = "The slot number you're trying to use was already used.";
+		}
+		elseif($check_id)
+		{
+			$return["message"] = "The position you're trying to use is already occupied";
+		}
+		elseif($data["message"] != "")
+		{
+			$return["message"] = $data["message"];
+		}
+		else
+		{
+			$insert["slot_id"] =  Request::input("slot_number");
+			$insert["slot_membership"] =  Request::input("slot_membership");
+			$insert["slot_type"] =  Request::input("slot_type");
+			$insert["slot_rank"] =  Request::input("rank");
+			$insert["slot_wallet"] =  Request::input("wallet");
+			$insert["slot_sponsor"] =  Request::input("sponsor");
+			$insert["slot_placement"] =  Request::input("placement");
+			$insert["slot_position"] =  strtolower(Request::input("slot_position"));
+			$insert["slot_binary_left"] =  Request::input("binary_left");
+			$insert["slot_binary_right"] =  Request::input("binary_right");
+			$insert["slot_personal_points"] =  Request::input("personal_pv");
+			$insert["slot_group_points"] =  Request::input("group_pv");
+			$insert["slot_upgrade_points"] =  Request::input("upgrade_points");
+			$insert["slot_owner"] =  $account_id;
+			Tbl_slot::insert($insert);
+
+			$return["placement"] = Request::input("placement");
+		}
+		
+		echo json_encode($return);
 	}
-	public function add_form_submit_new_account()
+	public function add_form_submit_new_account($data)
 	{
 		$insert["account_name"] = Request::input("name");
-		$insert["account_email"] = trim(Request::input("em"));
-		$insert["account_contact_number"] = " ";
+		$validation["account_name"] = "required|min:5|unique:tbl_account,account_name|alpha_num";
+		$insert["account_username"] = trim(Request::input("un"));
+		$validation["account_username"] = "required|unique:tbl_account,account_username";
+		$insert["account_contact_number"] = "000";
+		$validation["account_contact_number"] = "required";
 		$insert["account_country_id"] = Request::input("country");
+		$validation["account_country_id"] = "required|exists:tbl_country,country_id";
 		$insert["account_date_created"] = Carbon\Carbon::now();
-		$insert["account_password"] = Crypt::encrypt("pw");
+		$validation["account_date_created"] = "required";
+		$insert["account_password"] = Crypt::encrypt(Request::input("pw"));
+		$validation["account_password"] = "required";
 		$insert["account_created_from"] = "Quick Slot";
-		return Tbl_account::insertGetId($insert);
+		$validation["account_created_from"] = "required";
+
+		$validator = Validator::make($insert, $validation);
+
+		if($validator->fails())
+		{
+			$messages = $validator->messages();
+			$data["message"] = $messages->all()[0];
+			$data["account_id"] = 0;
+		}
+		else
+		{
+			$data["message"] = "";
+			$data["account_id"] = Tbl_account::insertGetId($insert);
+		}
+
+		return $data;
 	}
 	public function edit_form_submit()
 	{
+		$return["message"] = "";
+
 		$data["slot"] = Tbl_slot::id(Request::input("slot_id"))->first();
 		
 		$update["slot_owner"] = Request::input("account_id");
@@ -108,7 +158,10 @@ class AdminSlotController extends AdminController
 		$update["slot_upgrade_points"] = Request::input("upgrade_points");
 		$update["slot_wallet"] = Request::input("wallet");
 		Tbl_slot::where('slot_id', Request::input("slot_id"))->update($update);
-		echo json_encode($data["slot"]->slot_placement);
+
+		$return["placement"] = $data["slot"]->slot_placement;
+
+		echo json_encode($return);
 	}
 	public function downline()
 	{

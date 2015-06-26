@@ -16,10 +16,18 @@ class AdminAccountController extends AdminController
 	
     public function data()
     {
-        $account = Tbl_account::select('*')->leftJoin("tbl_country","tbl_account.account_country_id", "=", "tbl_country.country_id");
+
+
+        $account = Tbl_account::select('*')->where('tbl_account.archived', Request::input('archived'))->leftJoin("tbl_country","tbl_account.account_country_id", "=", "tbl_country.country_id");
+
+        $text = Request::input('archived') ? 'RESTORE' : 'ARCHIVE';
+		$class = Request::input('archived') ? 'restore-account' : 'archive-account';
+
         return Datatables::of($account)	->addColumn('edit','<a href="admin/maintenance/accounts/edit?id={{$account_id}}">EDIT</a>')
-        								->addColumn('archive','<a href="admin/maintenance/accounts/archive?id={{$account_id}}">ARCHIVE</a>')
+        								->addColumn('archive','<a class="'.$class.'" href="#" account-id="{{$account_id}}">'.$text.'</a>')
         								->make(true);
+
+
     }
 	public function add()
 	{
@@ -93,5 +101,24 @@ class AdminAccountController extends AdminController
 	{
 		DB::table("tbl_account_field")->where("account_field_id", Request::input("id"))->delete();
 		return Redirect::back();
+	}
+
+
+	public function archive_account()
+	{	
+
+		$id = Request::input('id');
+		$data['query'] = Tbl_account::where('account_id',$id)->update(['archived'=>'1']);
+
+		return json_encode($data);
+	}
+
+	public function restore_account()
+	{	
+
+		$id = Request::input('id');
+		$data['query'] = Tbl_account::where('account_id',$id)->update(['archived'=>'0']);
+
+		return json_encode($data);
 	}
 }

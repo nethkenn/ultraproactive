@@ -1,36 +1,36 @@
 
-var productJs = new productJs();
+var accountJs = new accountJs();
 
 
-function productJs()
+function accountJs()
 {
 	$(document).ready(function()
 	{
 		
 		
-	    $productTable.on( 'draw.dt', function () {
-			init_archive_product();
-			init_restore_product();
+	    $accountTable.on( 'draw.dt', function () {
+			init_archive_account();
+			init_restore_account();
 		})
 
 
 	});
 
-	function init_archive_product()
+	function init_archive_account()
 	{
-		$('.archive-product').on('click', function(e)
+		$('.archive-account').on('click', function(e)
 		{
 			e.preventDefault();
 			var token = $('input[name="_token"]').val();
-			var id = $(this).attr('product-id');
+			var id = $(this).attr('account-id');
 
 			// console.log(token + ' =  '+ id );
-			var selected_product = $(this);
+			var selected_account = $(this);
 
 			// console.log(token, id);
 			$.ajax(
 			{
-			    url: "admin/maintenance/product/archive",
+			    url: "admin/maintenance/accounts/archive",
 			 
 			    data: {
 			        id: id,
@@ -44,7 +44,7 @@ function productJs()
 			    success: function( data ) {
 			    	if( data['query']==1 )
 			    	{
-			    		$productTable.draw();
+			    		$accountTable.draw();
 			    	}
 			    	// console.log(data['query']);
 			    },
@@ -64,19 +64,19 @@ function productJs()
 	}
 
 
-	function init_restore_product()
+	function init_restore_account()
 	{
-		$('.restore-product').on('click', function(e)
+		$('.restore-account').on('click', function(e)
 		{
 			e.preventDefault();
 			var token = $('input[name="_token"]').val();
-			var id = $(this).attr('product-id');
-			var selected_product = $(this);
+			var id = $(this).attr('account-id');
+			var selected_account = $(this);
 
 			// console.log(token, id);
 			$.ajax(
 			{
-			    url: "admin/maintenance/product/restore",
+			    url: "admin/maintenance/accounts/restore",
 			 
 			    data: {
 			        id: id,
@@ -90,7 +90,7 @@ function productJs()
 			    success: function( data ) {
 			    	if( data['query']==1 )
 			    	{
-			    		$productTable.draw();
+			    		$accountTable.draw();
 			    	}
 			    	// console.log(data['query']);
 			    },

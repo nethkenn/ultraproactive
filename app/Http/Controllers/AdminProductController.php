@@ -13,15 +13,11 @@ use Datatables;
 use App\Tbl_product_category;
 use App\Tbl_product;
 use App\Classes\Image;
+use Crypt;
 class AdminProductController extends AdminController
 {
 	public function index()
 	{
-		
-
-
-
-		
 
 		$data["page"] = "Product Maintenance";
 		
@@ -130,7 +126,7 @@ class AdminProductController extends AdminController
 		// dd($product);
         return Datatables::of($product)	
         								->addColumn('edit','<a href="admin/maintenance/product/edit?id={{$product_id}}">EDIT</a>')
-        								->editColumn('image_file','<a href="'.Image::get_path().'{{$image_file}}/{{$image_file}}">{{$image_file}}</a>')
+        								->editColumn('image_file','@if($image_file != "default.jpg")<a href="'.Image::get_path().'{{$image_file}}/{{$image_file}}" target="_blank">{{$image_file}}</a>@else{{$image_file}}@endif')
 								        ->addColumn('archive','<a class="'.$class.'" href="#" product-id="{{$product_id}}">'.$text.'</a>')
 								        ->make(true);
         

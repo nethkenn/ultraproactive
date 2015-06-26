@@ -17,6 +17,7 @@ class CreateTblAccount extends Migration {
 			$table->increments('account_id');
 			$table->string('account_name');
 			$table->string('account_email');
+			$table->string('account_username');
 			$table->string('account_contact_number');
 			$table->integer('account_country_id');
 			$table->dateTime('account_date_created');
@@ -24,7 +25,6 @@ class CreateTblAccount extends Migration {
 			$table->text('custom_field_value');
 			$table->string('account_created_from', 40)->default('Back Office');
 			$table->tinyInteger('archived')->default(0);
-			
 		});
 	}
 

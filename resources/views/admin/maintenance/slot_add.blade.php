@@ -34,6 +34,8 @@
         <div class="remodal slot-form new-slot-form" data-remodal-id="newslot"></div>
         <!-- REMODAL UPDATE SLOT SLOT -->
         <div class="remodal slot-form update-slot-form" data-remodal-id="update-slot"></div>
+        <!-- LOADING -->
+        <div class="remodal slot-form pop-loading" data-remodal-id="loading"></div>
     </body>
 </html>
 

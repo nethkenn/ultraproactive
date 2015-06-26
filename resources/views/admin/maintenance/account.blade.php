@@ -2,6 +2,7 @@
 @section('content')
 	<div class="row">
 		<div class="header">
+			<input type="hidden" name="_token" value="{{ csrf_token() }}">
 			<div class="title col-md-8">
 				<h2><i class="fa fa-users"></i> ACCOUNT</h2>
 			</div>
@@ -13,6 +14,12 @@
 		<div class="filters ">
 		</div>
 	</div>
+		<div class="filters ">
+			<div class="col-md-8">
+				<a class="{{$active = Request::input('archived') ? '' : 'active' }}" href="admin/maintenance/accounts/">ACTIVE</a>
+				<a class="{{$active = Request::input('archived') ? 'active' : '' }}" href="admin/maintenance/accounts/?archived=1">ARCHIVED</a>
+			</div>
+		</div>
 	<div class="col-md-12">
 			<table id="table" class="table table-bordered">
 				<thead>
@@ -32,10 +39,15 @@
 @section('script')
 <script type="text/javascript">
 $(function() {
-    $('#table').DataTable({
+   $accountTable = $('#table').DataTable({
         processing: true,
         serverSide: true,
-        ajax: '{{ url("admin/maintenance/accounts/data") }}',
+         ajax:{
+	        	url:'admin/maintenance/accounts/data',
+	        	data:{
+	        	   	archived : "{{$archived = Request::input('archived') ? 1 : 0 }}"
+	        	   }
+	    	},
         columns: [
             {data: 'account_name', name: 'account_name'},
             {data: 'account_email', name: 'account_email'},
@@ -54,4 +66,6 @@ $(function() {
     });
 });
 </script>
+
+<script type="text/javascript" src="resources/assets/admin/account.js"></script>
 @endsection

@@ -17,6 +17,7 @@ class CreateTblMembership extends Migration
             $table->increments('membership_id');
             $table->string('membership_name');
             $table->double('membership_price');
+            $table->tinyInteger('archived')->default(0);
         });
     }
 

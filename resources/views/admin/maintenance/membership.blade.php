@@ -2,6 +2,7 @@
 @section('content')
 	<div class="row">
 		<div class="header">
+			<input type="hidden" name="_token" value="{{ csrf_token() }}">
 			<div class="title col-md-8">
 				<h2><i class="fa fa-star"></i> MEMBERSHIP</h2>
 			</div>
@@ -10,6 +11,12 @@
 			</div>
 		</div>
 		<div class="filters ">
+		</div>
+	</div>
+	<div class="filters ">
+		<div class="col-md-8">
+			<a class="{{$active = Request::input('archived') ? '' : 'active' }}" href="admin/maintenance/membership/">ACTIVE</a>
+			<a class="{{$active = Request::input('archived') ? 'active' : '' }}" href="admin/maintenance/membership/?archived=1">ARCHIVED</a>
 		</div>
 	</div>
 	<div class="col-md-12">
@@ -30,10 +37,15 @@
 @section('script')
 <script type="text/javascript">
 $(function() {
-    $('#table').DataTable({
+    $membershipTable = $('#table').DataTable({
         processing: true,
         serverSide: true,
-        ajax: '{{ url("admin/maintenance/membership/data") }}',
+       	ajax:{
+	        	url:'{{url("admin/maintenance/membership/data")}}',
+	        	data:{
+	        	   	archived : "{{$archived = Request::input('archived') ? 1 : 0 }}"
+	        	   }
+	    	},
         columns: [
             {data: 'membership_id', name: 'membership_id'},
             {data: 'membership_name', name: 'membership_name'},
@@ -51,4 +63,5 @@ $(function() {
     });
 });
 </script>
+<script type="text/javascript" src="resources/assets/admin/membership.js"></script>
 @endsection

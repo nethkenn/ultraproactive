@@ -14,11 +14,14 @@ Route::get('admin/maintenance/accounts', 'AdminAccountController@index');
 Route::get('admin/maintenance/accounts/data', 'AdminAccountController@data');
 Route::any('admin/maintenance/accounts/add', 'AdminAccountController@add');
 Route::any('admin/maintenance/accounts/edit', 'AdminAccountController@edit');
-Route::get('admin/maintenance/accounts/archive', 'AdminAccountController@archive');
+
+Route::post('admin/maintenance/accounts/archive', 'AdminAccountController@archive_account');
+Route::post('admin/maintenance/accounts/restore', 'AdminAccountController@restore_account');
+
 Route::any('admin/maintenance/accounts/field', 'AdminAccountController@field');
 Route::get('admin/maintenance/accounts/field/delete', 'AdminAccountController@field_delete');
 Route::get('admin/maintenance/codes', 'AdminCodeController@index');
-Route::get('admin/maintenance/package', 'AdminPackageController@index');
+
 
 Route::get('admin/maintenance/product', 'AdminProductController@index');
 Route::any('admin/maintenance/product/add', 'AdminProductController@add_product');
@@ -26,6 +29,17 @@ Route::any('admin/maintenance/product/edit', 'AdminProductController@edit_produc
 Route::get('admin/maintenance/product/get_product', 'AdminProductController@ajax_get_product');
 Route::post('admin/maintenance/product/archive', 'AdminProductController@archive_product');
 Route::post('admin/maintenance/product/restore', 'AdminProductController@restore_product');
+
+/**
+ * PRODUCT PACKAGE CONTROLLER
+ */
+Route::get('admin/maintenance/product_package', 'AdminProductPackageController@index');
+Route::get('admin/maintenance/product_package/get', 'AdminProductPackageController@ajax_get_product_package');
+Route::any('admin/maintenance/product_package/add', 'AdminProductPackageController@add_product_package');
+Route::any('admin/maintenance/product_package/get_product', 'AdminProductPackageController@ajax_get_product');
+
+
+
 
 Route::get('admin/maintenance/slots', 'AdminSlotController@index');
 Route::get('admin/maintenance/slots/data', 'AdminSlotController@data');
@@ -48,8 +62,10 @@ Route::get('admin/maintenance/deduction', 'AdminDeductionController@index');
 Route::get('admin/maintenance/membership', 'AdminMembershipController@index');
 Route::any('admin/maintenance/membership/data', 'AdminMembershipController@data');
 Route::any('admin/maintenance/membership/edit', 'AdminMembershipController@edit');
-Route::any('admin/maintenance/membership/archive', 'AdminMembershipController@archive');
+Route::any('admin/maintenance/membership/archive', 'AdminMembershipController@archive_membership');
+Route::any('admin/maintenance/membership/restore', 'AdminMembershipController@restore_membership');
 Route::any('admin/maintenance/membership/add', 'AdminMembershipController@add');
+Route::any('admin/maintenance/membership/edit', 'AdminMembershipController@edit');
 
 Route::get('admin/maintenance/ranking', 'AdminRankingController@index');
 Route::any('admin/maintenance/ranking/data', 'AdminRankingController@data');

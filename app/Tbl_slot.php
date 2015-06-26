@@ -25,4 +25,8 @@ class Tbl_slot extends Model
     {
         return $query->where("slot_id", $slot_id);
     }
+    public function scopeCheckposition($query, $placement, $position)
+    {
+        return $query->where("slot_position", $position)->where("slot_placement", $placement);
+    }
 }

@@ -1,36 +1,36 @@
 
-var productJs = new productJs();
+var membershipJs = new membershipJs();
 
 
-function productJs()
+function membershipJs()
 {
 	$(document).ready(function()
 	{
 		
 		
-	    $productTable.on( 'draw.dt', function () {
-			init_archive_product();
-			init_restore_product();
+	    $membershipTable.on( 'draw.dt', function () {
+			init_archive_membership();
+			init_restore_membership();
 		})
 
 
 	});
 
-	function init_archive_product()
+	function init_archive_membership()
 	{
-		$('.archive-product').on('click', function(e)
+		$('.archive-membership').on('click', function(e)
 		{
 			e.preventDefault();
 			var token = $('input[name="_token"]').val();
-			var id = $(this).attr('product-id');
+			var id = $(this).attr('membership-id');
 
 			// console.log(token + ' =  '+ id );
-			var selected_product = $(this);
+			var selected_membership = $(this);
 
 			// console.log(token, id);
 			$.ajax(
 			{
-			    url: "admin/maintenance/product/archive",
+			    url: "admin/maintenance/membership/archive",
 			 
 			    data: {
 			        id: id,
@@ -44,7 +44,7 @@ function productJs()
 			    success: function( data ) {
 			    	if( data['query']==1 )
 			    	{
-			    		$productTable.draw();
+			    		$membershipTable.draw();
 			    	}
 			    	// console.log(data['query']);
 			    },
@@ -64,19 +64,19 @@ function productJs()
 	}
 
 
-	function init_restore_product()
+	function init_restore_membership()
 	{
-		$('.restore-product').on('click', function(e)
+		$('.restore-membership').on('click', function(e)
 		{
 			e.preventDefault();
 			var token = $('input[name="_token"]').val();
-			var id = $(this).attr('product-id');
-			var selected_product = $(this);
+			var id = $(this).attr('membership-id');
+			var selected_membership = $(this);
 
 			// console.log(token, id);
 			$.ajax(
 			{
-			    url: "admin/maintenance/product/restore",
+			    url: "admin/maintenance/membership/restore",
 			 
 			    data: {
 			        id: id,
@@ -90,7 +90,7 @@ function productJs()
 			    success: function( data ) {
 			    	if( data['query']==1 )
 			    	{
-			    		$productTable.draw();
+			    		$membershipTable.draw();
 			    	}
 			    	// console.log(data['query']);
 			    },

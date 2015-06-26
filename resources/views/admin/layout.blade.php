@@ -65,7 +65,7 @@
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="admin/maintenance/accounts">Accounts</a></li>
 									<li><a href="admin/maintenance/codes">Codes</a></li>
-									<li><a href="admin/maintenance/package">Package</a></li>
+									<li><a href="admin/maintenance/product_package">Package</a></li>
 									<li><a href="admin/maintenance/product">Product</a></li>
 									<li><a href="admin/maintenance/slots">Slots</a></li>
 									<li><a href="admin/maintenance/country">Country</a></li>
