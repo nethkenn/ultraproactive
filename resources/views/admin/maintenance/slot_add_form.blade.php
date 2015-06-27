@@ -88,7 +88,7 @@
             </div>
         </div>
         <div class="fieldset">
-            <div class="label">WALLET</div>
+            <div class="label">AVAILABLE BALANCE</div>
             <div class="field"><input name="wallet" type="text" value="0"></div>
         </div>
         <div class="fieldset">
@@ -110,6 +110,14 @@
         <div class="fieldset">
             <div class="label">GROUP PV</div>
             <div class="field"><input name="group_pv" type="text" value="0"></div>
+        </div>
+        <div class="fieldset">
+            <div class="label">TOTAL EARNINGS</div>
+            <div class="field"><input name="total_earning" type="text" value="0"></div>
+        </div>
+        <div class="fieldset">
+            <div class="label">TOTAL WITHRAWAL</div>
+            <div class="field"><input name="total_withrawal" type="text" value="0"></div>
         </div>
         <button>CREATE SLOT</button>
     </form>

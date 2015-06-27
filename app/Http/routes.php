@@ -1,6 +1,8 @@
 <?php
+Route::any('/member', 'MemberController@index');
+
 /* ADMIN */
-Route::any('/', 'AdminController@index');
+Route::any('/', 'FrontController@index');
 Route::any('/admin', 'AdminController@index');
 
 /* ADMIN / TRANSACTION */
