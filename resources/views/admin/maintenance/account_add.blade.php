@@ -32,7 +32,14 @@
                     @endforeach
                 </select>
             </div>
-
+            <div class="form-group col-md-6">
+                <label for="account_username">Username</label>
+                <input name="account_username" value="" required="required" class="form-control" id="" placeholder="" type="text">
+            </div>  
+            <div class="form-group col-md-6">
+                <label for="account_password">Password</label>
+                <input name="account_password" value="" required="required" class="form-control" id="" placeholder="" type="text">
+            </div>  
             @foreach($_account_field as $field)
             <div class="form-group col-md-6">
                 <label for="custom_field">{{ $field->account_field_label }}</label>

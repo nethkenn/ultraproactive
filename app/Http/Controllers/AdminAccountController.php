@@ -37,6 +37,8 @@ class AdminAccountController extends AdminController
 			$insert["account_email"] = Request::input('account_meail');
 			$insert["account_contact_number"] = Request::input('account_contact');
 			$insert["account_country_id"] = Request::input('country');
+			$insert["account_username"] = Request::input('account_username');
+			$insert["account_password"] = Crypt::encrypt(Request::input('account_password'));
 			$insert["account_date_created"] = Carbon\Carbon::now();
 			$insert["custom_field_value"] = serialize(Request::input('custom_field'));
 			DB::table("tbl_account")->insert($insert);
@@ -55,6 +57,8 @@ class AdminAccountController extends AdminController
 		{
 			$update["account_name"] = Request::input('account_name');
 			$update["account_email"] = Request::input('account_meail');
+			$update["account_username"] = Request::input('account_username');
+			$update["account_password"] = Crypt::encrypt(Request::input('account_password'));
 			$update["account_contact_number"] = Request::input('account_contact');
 			$update["account_country_id"] = Request::input('country');
 			$update["account_date_created"] = Carbon\Carbon::now();
