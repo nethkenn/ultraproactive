@@ -44,28 +44,36 @@
             </div>
         </div>
         <div class="fieldset">
-            <div class="label">WALLET</div>
-            <div class="field"><input name="wallet" type="text" value="0"></div>
+            <div class="label">AVAILABLE BALANCE</div>
+            <div class="field"><input name="wallet" type="text" value="{{ $slot->slot_wallet }}"></div>
         </div>
         <div class="fieldset">
             <div class="label">UPGRADE POINTS</div>
-            <div class="field"><input name="upgrade_points" type="text" value="0"></div>
+            <div class="field"><input name="upgrade_points" type="text" value="{{ $slot->slot_upgrade_points }}"></div>
         </div>
         <div class="fieldset">
             <div class="label">BINARY POINTS LEFT</div>
-            <div class="field"><input name="binary_left" type="text" value="0"></div>
+            <div class="field"><input name="binary_left" type="text" value="{{ $slot->slot_binary_left }}"></div>
         </div>
         <div class="fieldset">
             <div class="label">BINARY POINTS RIGHT</div>
-            <div class="field"><input name="binary_right" type="text" value="0"></div>
+            <div class="field"><input name="binary_right" type="text" value="{{ $slot->slot_binary_right }}"></div>
         </div>
         <div class="fieldset">
             <div class="label">PERSONAL PV</div>
-            <div class="field"><input name="personal_pv" type="text" value="0"></div>
+            <div class="field"><input name="personal_pv" type="text" value="{{ $slot->slot_personal_points }}"></div>
         </div>
         <div class="fieldset">
             <div class="label">GROUP PV</div>
-            <div class="field"><input name="group_pv" type="text" value="0"></div>
+            <div class="field"><input name="group_pv" type="text" value="{{ $slot->slot_group_points }}"></div>
+        </div>
+        <div class="fieldset">
+            <div class="label">TOTAL EARNINGS</div>
+            <div class="field"><input name="total_earning" type="text" value="{{ $slot->slot_total_earning }}"></div>
+        </div>
+        <div class="fieldset">
+            <div class="label">TOTAL WITHRAWAL</div>
+            <div class="field"><input name="total_withrawal" type="text" value="{{ $slot->slot_total_withrawal }}"></div>
         </div>
         <button>UPDATE SLOT</button>
     </form>

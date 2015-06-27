@@ -4,6 +4,7 @@ use Request;
 use Redirect;
 use Carbon;
 use Datatables;
+use Crypt;
 use App\Tbl_account;
 
 class AdminAccountController extends AdminController

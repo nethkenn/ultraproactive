@@ -101,6 +101,8 @@ class AdminSlotController extends AdminController
 			$insert["slot_personal_points"] =  Request::input("personal_pv");
 			$insert["slot_group_points"] =  Request::input("group_pv");
 			$insert["slot_upgrade_points"] =  Request::input("upgrade_points");
+			$insert["slot_total_withrawal"] =  Request::input("total_withrawal");
+			$insert["slot_total_earning"] =  Request::input("total_earning");
 			$insert["slot_owner"] =  $account_id;
 			Tbl_slot::insert($insert);
 
@@ -112,9 +114,9 @@ class AdminSlotController extends AdminController
 	public function add_form_submit_new_account($data)
 	{
 		$insert["account_name"] = Request::input("name");
-		$validation["account_name"] = "required|min:5|unique:tbl_account,account_name|alpha_num";
+		$validation["account_name"] = "required|min:5|unique:tbl_account,account_name";
 		$insert["account_username"] = trim(Request::input("un"));
-		$validation["account_username"] = "required|unique:tbl_account,account_username";
+		$validation["account_username"] = "required|unique:tbl_account,account_username|alpha_num";
 		$insert["account_contact_number"] = "000";
 		$validation["account_contact_number"] = "required";
 		$insert["account_country_id"] = Request::input("country");
@@ -157,6 +159,8 @@ class AdminSlotController extends AdminController
 		$update["slot_type"] = Request::input("slot_type");
 		$update["slot_upgrade_points"] = Request::input("upgrade_points");
 		$update["slot_wallet"] = Request::input("wallet");
+		$update["slot_total_withrawal"] =  Request::input("total_withrawal");
+		$update["slot_total_earning"] =  Request::input("total_earning");
 		Tbl_slot::where('slot_id', Request::input("slot_id"))->update($update);
 
 		$return["placement"] = $data["slot"]->slot_placement;
