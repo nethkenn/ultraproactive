@@ -28,7 +28,7 @@
             <div class="field">
                 <select name="rank">
                     @foreach($_rank as $rank)
-                    <option {{ $rank->rank_id == $slot->slot_rank ? 'selected="selected"' : '' }} value="{{ $memberhsip->rank_id }}">{{ $rank->rank_name }}</option>
+                    <option {{ $rank->rank_id == $slot->slot_rank ? 'selected="selected"' : '' }} value="{{ $rank->rank_id }}">{{ $rank->rank_name }}</option>
                     @endforeach
                 </select>
             </div>
