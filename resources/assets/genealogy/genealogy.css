@@ -74,7 +74,6 @@ body
     -moz-transition: background-color ease-out 0.5s;
     -o-transition: background-color ease-out 0.5s;
     transition: background-color ease-out 0.5s;  
-    border-radius: 100%;
 }
 .tree li span:hover
 {
