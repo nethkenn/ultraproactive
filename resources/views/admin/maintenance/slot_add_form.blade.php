@@ -72,7 +72,7 @@
             <div class="field">
                 <select name="rank">
                     @foreach($_rank as $rank)
-                    <option value="{{ $memberhsip->membership_id }}">{{ $rank->rank_name }}</option>
+                    <option value="{{ $memberhsip->rank_id }}">{{ $rank->rank_name }}</option>
                     @endforeach
                 </select>
             </div>
