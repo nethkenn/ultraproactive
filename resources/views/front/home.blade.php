@@ -42,7 +42,7 @@
 <div class="col-lg-12">
 <div class="mainheadlinewrapper">
 <div class="mainheadline">
-<h2> Mobile App</h2>
+<h2> Ways to Earn</h2>
 </div>
 </div>
 </div><!--/col-lg-12 end-->
@@ -55,21 +55,6 @@ Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum cla
 </div><!--/col-lg-12 end-->
 </div><!--/row end-->
 <div class="row approwwrapper">
-<div class="col-lg-4 apptextleft">
-<div class="apptextleftinner">
-<h4>Take a look at our</h4>
-<h3>Duality App</h3>
-</div><!--/apptextleftinner end-->
-</div><!--/col-lg-4 end-->
-<div class="col-lg-4">
-<div class="appwrapper1">
-<div class="appwrapper">
-<div class="appinner">
-<img src="/resources/assets/slider_style/images/app.jpg" id="app" alt=""/>
-</div>
-</div>
-</div>
-</div><!--/col-lg-4 end-->
 <div class="col-lg-4 apptextright">
 <div class="apptextrightone">
 <h3>Headline One</h3>
@@ -104,9 +89,9 @@ Mirum est notare quam littera gothica
 </div><!--/container end-->
 </section><!--/one section end-->
 <section class="blackpart1">
-<h3>This is <span>call to action</span> box</h3>
+<h3>We are <span>looking</span> for you</h3>
 <div class="calltoactionwrapper">
-<a href="#" id="calltoaction">Buy now!</a>
+<a href="#" id="calltoaction">Join now!</a>
 </div>
 </section><!--/blackpart1 end-->
 <section class="wrapper100percent section1">
@@ -173,7 +158,7 @@ Anteposuerit litte quam nunc putamus parum claram, anteposuerit litterarum forma
 <div class="col-lg-12">
 <div class="mainheadlinewrapperblack">
 <div class="mainheadlineblack">
-<h2>Portfolio</h2>
+<h2>Gallery</h2>
 </div>
 </div>
 </div><!--/col-lg-12 end-->
@@ -282,7 +267,7 @@ Anteposuerit litte quam nunc putamus parum claram, anteposuerit litterarum forma
 <div class="col-lg-12">
 <div class="mainheadlinewrapper">
 <div class="mainheadline">
-<h2>Team</h2>
+<h2>About Us</h2>
 </div>
 </div>
 </div><!--/col-lg-12 end-->
@@ -352,8 +337,8 @@ Web Designer
 <div class="wrap">
 <div class="col-lg-3">
 <p>HTML3</p>
-<div class="progress-radial progress-90">
-<div class="overlay"><p><span>90%</span></p>
+<div class="progress-radial progress-100">
+<div class="overlay"><p><span>100%</span></p>
 </div>
 </div>
 </div>
@@ -361,24 +346,24 @@ Web Designer
 <div class="wrap">
 <div class="col-lg-3">
 <p>CSS3</p>
-<div class="progress-radial progress-80">
-<div class="overlay"><p><span>80%</span></p></div>
+<div class="progress-radial progress-100">
+<div class="overlay"><p><span>100%</span></p></div>
 </div>
 </div>
 </div>
 <div class="wrap">
 <div class="col-lg-3">
 <p>jQuery</p>
-<div class="progress-radial progress-50">
-<div class="overlay"><p><span>50%</span></p></div>
+<div class="progress-radial progress-100">
+<div class="overlay"><p><span>100%</span></p></div>
 </div>
 </div>
 </div>
 <div class="wrap">
 <div class="col-lg-3">
 <p>SEO</p>
-<div class="progress-radial progress-40">
-<div class="overlay"><p><span>40%</span></p></div>
+<div class="progress-radial progress-100">
+<div class="overlay"><p><span>100%</span></p></div>
 </div>
 </div>
 </div>
@@ -482,17 +467,19 @@ Anteposuerit litte quam nunc putamus parum claram, litterarum formas humanitatis
 <section class="blackpart4">
 <div class="container">
 <div class="row">
-<div class="col-lg-12">
+{{-- <div class="col-lg-12">
 <img src="/resources/assets/slider_style/images/hireusleftimg_yellow.png" class="hireusleftimg" alt=""/>
 <img src="/resources/assets/slider_style/images/hireus.png" class="hireusimg" alt=""/>
 <div class="hireuswraper">
 <a href="/resources/assets/slider_style/#" id="hireus">Hire us!</a>
 </div>
-</div></div></div>
+</div> --}}
+</div>
+</div>
 </section><!--/blackpart4 end-->
-<section class="blackpart4inner">
+{{-- <section class="blackpart4inner">
 <img src="/resources/assets/slider_style/images/contactarrow.png" class="contactarrow" alt=""/>
-</section><!--/blackpart4inner end-->
+</section><!--/blackpart4inner end--> --}}
 <section class="wrapper100percent section1">
 <div id="6" class="sectionwrapper">
 </div>

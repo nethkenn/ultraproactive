@@ -39,11 +39,11 @@
 				<nav class="cl-effect-12">
 					<ul class="nav navbar-nav pull-right">
 						<li><a href="#0">Home</a></li>
-						<li><a href="#1">App</a></li>
+						<li><a href="#1">Earn</a></li>
 						<li><a href="#2">Services</a></li>
-						<li><a href="#">2nd level</a><ul><li><a href="#3">Portfolio</a></li><li><a href="/resources/assets/slider_style/additionalpage1.html">Page1</a></li></ul></li>
-						<li><a href="#4">Team</a></li>
-						<li><a href="#5">Blog</a></li>
+						<li><a href="#3">Gallery</a></li>
+						<li><a href="#4">About Us</a></li>
+						<li><a href="#5">News</a></li>
 						<li><a href="#6">Contact</a></li>
 					</ul>
 				</nav>
