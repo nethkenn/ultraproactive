@@ -38,10 +38,10 @@ Route::post('admin/maintenance/product/restore', 'AdminProductController@restore
 Route::get('admin/maintenance/product_package', 'AdminProductPackageController@index');
 Route::get('admin/maintenance/product_package/get', 'AdminProductPackageController@ajax_get_product_package');
 Route::any('admin/maintenance/product_package/add', 'AdminProductPackageController@add_product_package');
+Route::any('admin/maintenance/product_package/edit', 'AdminProductPackageController@edit_product_package');
 Route::any('admin/maintenance/product_package/get_product', 'AdminProductPackageController@ajax_get_product');
-
-
-
+Route::post('admin/maintenance/product_package/archive', 'AdminProductPackageController@archive_product_package');
+Route::post('admin/maintenance/product_package/restore', 'AdminProductPackageController@restore_product_package');
 
 Route::get('admin/maintenance/slots', 'AdminSlotController@index');
 Route::get('admin/maintenance/slots/data', 'AdminSlotController@data');

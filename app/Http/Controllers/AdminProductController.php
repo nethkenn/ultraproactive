@@ -28,11 +28,15 @@ class AdminProductController extends AdminController
 	{
 		$data["page"] = "Add Product Maintenance";
 		$data['_error'] = null;
-		$data['_prod_cat'] = Tbl_product_category::where('archived',0)->get();
+		$data['_prod_cat'] = Tbl_product_category::where('archived',0)->count() > 0 ? Tbl_product_category::where('archived',0)->get() : null;
+
+		// dd(Tbl_product_category::where('archived',0)->count());
+		// $data['_prod_cat'] = null;
 		if(isset($_POST['product_name']))
 		{
 
 			$rules['product_name'] = 'required|unique:tbl_product,product_name|regex:/^[A-Za-z0-9\s-_]+$/';
+			$rules['sku'] = 'unique:tbl_product,sku|regex:/^[A-Za-z0-9\s-_]+$/';
 			$rules['product_category'] = 'required|regex:/^[A-Za-z0-9\s-_]+$/';
 			$rules['unilevel_pts'] = 'numeric|min:0';
 			$rules['binary_pts'] = 'numeric|min:0';
@@ -41,7 +45,8 @@ class AdminProductController extends AdminController
 
 			$message = [
 				'product_name.regex' => 'The :attribute must only have letters , numbers, spaces, hypens ( - ) and underscores ( _ )',
-				'product_category.regex' => 'The :attribute must only have letters , numbers, spaces, hypens ( - ) and underscores ( _ )'
+				'product_category.regex' => 'The :attribute must only have letters , numbers, spaces, hypens ( - ) and underscores ( _ )',
+				'sku.regex' => 'The :attribute must only have letters , numbers, spaces, hypens ( - ) and underscores ( _ )'
 			];
 
 
@@ -51,6 +56,7 @@ class AdminProductController extends AdminController
 			{
 				$product = new Tbl_product(Request::input());
 				$product->product_category_id = $this->get_prod_cat(Request::input('product_category'));
+				$product->sku = Request::input('sku');
 				$product->save();
 				return redirect('admin/maintenance/product');
 			}
@@ -151,6 +157,7 @@ class AdminProductController extends AdminController
 		{
 
 			$rules['product_name'] = 'required|unique:tbl_product,product_name,'.$data['product']->product_id.',product_id|regex:/^[A-Za-z0-9\s-_]+$/';
+			$rules['sku'] = 'unique:tbl_product,sku,'.$data['product']->product_id.',product_id|regex:/^[A-Za-z0-9\s-_]+$/';
 			$rules['product_category'] = 'required|regex:/^[A-Za-z0-9\s-_]+$/';
 			$rules['unilevel_pts'] = 'numeric|min:0';
 			$rules['binary_pts'] = 'numeric|min:0';
@@ -168,9 +175,11 @@ class AdminProductController extends AdminController
 			if (!$validator->fails())
 			{
 
-				
+				// dd(Request::input());
+				var_dump(Request::input());
 				$product = Tbl_product::findOrFail(Request::input('product_id'));
 				$product->product_category_id = $this->get_prod_cat(Request::input('product_category'));
+				$product->sku = Request::input('sku');
 				$product->update(Request::input());
 
 				return redirect('admin/maintenance/product');

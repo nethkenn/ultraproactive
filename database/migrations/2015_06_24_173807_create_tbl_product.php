@@ -14,6 +14,8 @@ class CreateTblProduct extends Migration
     {
         Schema::create('tbl_product', function (Blueprint $table) {
             $table->increments('product_id');
+            $table->string('sku');
+            // $table->string('barcode');
             $table->string('product_name');
             $table->string('slug');
             $table->integer('product_category_id')->unsigned();

@@ -74,4 +74,5 @@
 
 
 	</script>
+	<script type="text/javascript" src="resources/assets/admin/product_package.js"></script>
 @endsection

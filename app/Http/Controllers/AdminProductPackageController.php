@@ -37,86 +37,67 @@ class AdminProductPackageController extends AdminController
 	{
 		Tbl_product_package_has::where('product_package_id',$id)->delete();
 		$ctr=0;
+
 		foreach($product as $key => $value)
 		{
+
 			$insert[$ctr]['product_id'] = $key;
-			$insert[$ctr]['quantity'] = $value['quantity'];
+			$insert[$ctr]['quantity'] = intval($value['quantity']) <= 0 ? 1 : intval($value['quantity']);
 			$insert[$ctr]['product_package_id'] = $id;
 
 			$ctr++;
 		}
 
 		Tbl_product_package_has::insert($insert);
-		// dd($insert);
 	}
 
 	public function add_product_package()
 	{
 
-		if(isset($_POST['product_package_name']))
-		{
-			
-			$product_package =  new Tbl_product_package;
-			$product_package->product_package_name = Request::input('product_package_name');
-			$product_package->save();
-			$id = $product_package->product_package_id;
-			
-			$this->save_product_package($id, Request::input('product'));
 
-
-
-
-		}
 
 		$data["page"] = "Add Package Maintenance";
 		$data['_error'] = null;
 
 
-		$_product = Tbl_product::where('tbl_product.archived',0)->leftJoin('tbl_product_category', 'tbl_product_category.product_category_id','=','tbl_product.product_category_id')->get();
-
-		foreach ($_product as $key => $value)
+		if(isset($_POST['product_package_name']))
 		{
-			$product[$key] = $value;	# code...
+			
+
+
+
+			$rules['product_package_name'] = 'required|unique:tbl_product_package,product_package_name|regex:/^[A-Za-z0-9\s-_]+$/';
+			// $rules['product'] = 'numeric|min:1'; 
+			
+
+						$message = [
+				'product_package_name.regex' => 'The :attribute must only have letters , numbers, spaces, hypens ( - ) and underscores ( _ )',
+				
+			];
+
+			$validator = Validator::make(Request::input(),$rules,$message);
+			
+			if (!$validator->fails())
+			{
+
+
+				$product_package =  new Tbl_product_package;
+				$product_package->product_package_name = Request::input('product_package_name');
+				$product_package->save();
+				$id = $product_package->product_package_id;
+				$this->save_product_package($id, Request::input('product'));
+				return Redirect('admin/maintenance/product_package');
+
+			}
+			else
+			{
+				$errors =  $validator->errors();
+				$data['_error']['product_package_name'] = $errors->get('product_package_name');
+				// $data['_error']['product'] = $errors->get('product');
+			}
+
 		}
 
-		$data['product'] = $product;
-		// dd($product);
-		// $data['_prod_cat'] = Tbl_product_category::where('archived',0)->get();
-		// if(isset($_POST['product_name']))
-		// {
-
-
-
-			// $rules['product_name'] = 'required|unique:tbl_product,product_name|regex:/^[A-Za-z0-9\s-_]+$/';
-			// $rules['product_category'] = 'required|regex:/^[A-Za-z0-9\s-_]+$/';
-			// $rules['unilevel_pts'] = 'numeric|min:0';
-			// $rules['binary_pts'] = 'numeric|min:0';
-			// $rules['price'] = 'numeric|min:0';
-			
-
-			// $message = [
-			// 	'product_name.regex' => 'The :attribute must only have letters , numbers, spaces, hypens ( - ) and underscores ( _ )',
-			// 	'product_category.regex' => 'The :attribute must only have letters , numbers, spaces, hypens ( - ) and underscores ( _ )'
-			// ];
-
-
-			// $validator = Validator::make(Request::input(),$rules,$message);
-			
-			// if (!$validator->fails())
-			// {
-			// 	$product = new Tbl_product(Request::input());
-			// 	$product->product_category_id = $this->get_prod_cat(Request::input('product_category'));
-			// 	$product->save();
-			// 	return redirect('admin/maintenance/product');
-			// }
-			// else
-			// {
-			// 	$data['_error'] = $validator->errors()->all();
-			// }
-
-			
-
-		// }
 		
 
 
@@ -129,32 +110,65 @@ class AdminProductPackageController extends AdminController
 	}
 
 
-
-	public function get_prod_cat($input)
+	public function edit_product_package()
 	{
 
-		$prod_cat = Tbl_product_category::where('product_category_name',$input)->first();
-		if($prod_cat)
-		{
-			/**
-			 * IF CATEGORY EXIST RETURN THE ID.
-			 */
-			 $prod_cat_id = $prod_cat->product_category_id;
-		}
-		else
-		{
 
-			/**
-			 * IF CATEGORY DO NOT EXIST CREATRE NEW CATEGORY AND RETURN THE INSERT ID.
-			 */
-			$prod_cat = new Tbl_product_category;
-			$prod_cat->product_category_name = $input;
-			$prod_cat->save();
-			$prod_cat_id = $prod_cat->product_category_id;
+		$prod_package = Tbl_product_package::findOrFail(Request::input('id'));
+		$data['prod_package'] = $prod_package;
+		$prod_package_id = $prod_package->product_package_id;
+		$data["page"] = "Edit Package Maintenance";
+		$data['_error'] = null;
+		$data['_product'] = Tbl_product_package_has::Product()->where('product_package_id',4)->get();
+
+		if(isset($_POST['product_package_name']))
+		{
+			
+
+
+
+			$rules['product_package_name'] = 'required|unique:tbl_product_package,product_package_name,'.$prod_package_id.',product_package_id|regex:/^[A-Za-z0-9\s-_]+$/';
+			// $rules['product'] = 'numeric|min:1'; 
+
+						$message = [
+				'product_package_name.regex' => 'The :attribute must only have letters , numbers, spaces, hypens ( - ) and underscores ( _ )',
+				
+			];
+
+			$validator = Validator::make(Request::input(),$rules,$message);
+			
+			if (!$validator->fails())
+			{
+
+				$product_package = Tbl_product_package::find($prod_package_id);
+				$product_package->product_package_name = Request::input('product_package_name');
+				$product_package->save();
+				$this->save_product_package($prod_package_id, Request::input('product'));
+				return Redirect('admin/maintenance/product_package');
+
+
+			}
+			else
+			{
+				$errors =  $validator->errors();
+				$data['_error']['product_package_name'] = $errors->get('product_package_name');
+				// $data['_error']['product'] = $errors->get('product');
+			}
+
 		}
 
-		return $prod_cat_id;
+		
+
+
+		
+		
+
+
+		
+        return view('admin.maintenance.product_package_edit',$data);
 	}
+
+
 
 	public function ajax_get_product_package()
 	{
@@ -172,78 +186,24 @@ class AdminProductPackageController extends AdminController
         
 	}
 
-
-	public function edit_product()
-	{
-		$id = Request::input('id');
-		
-		
-		$data['product'] = Tbl_product::where('product_id',$id)->first();
-		$data['product']->img_src = $data['product']->image_file == 'default.jpg' ? 'resources/assets/img/1428733091.jpg' : Image::view($data['product']->image_file, $size="250x250");
-		// dd($data['product']);
-		$data["page"] = "Add Product Maintenance";
-		$data['_error'] = null;
-		$data['_prod_cat'] = Tbl_product_category::where('archived',0)->get();
-
-
-
-		if(isset($_POST['product_name']))
-		{
-
-			$rules['product_name'] = 'required|unique:tbl_product,product_name,'.$data['product']->product_id.',product_id|regex:/^[A-Za-z0-9\s-_]+$/';
-			$rules['product_category'] = 'required|regex:/^[A-Za-z0-9\s-_]+$/';
-			$rules['unilevel_pts'] = 'numeric|min:0';
-			$rules['binary_pts'] = 'numeric|min:0';
-			$rules['price'] = 'numeric|min:0';
-			
-
-			$message = [
-				'product_name.regex' => 'The :attribute must only have letters , numbers, spaces, hypens ( - ) and underscores ( _ )',
-				'product_category.regex' => 'The :attribute must only have letters , numbers, spaces, hypens ( - ) and underscores ( _ )'
-			];
-
-
-			$validator = Validator::make(Request::input(),$rules,$message);
-			
-			if (!$validator->fails())
-			{
-
-				
-				$product = Tbl_product::findOrFail(Request::input('product_id'));
-				$product->product_category_id = $this->get_prod_cat(Request::input('product_category'));
-				$product->update(Request::input());
-
-				return redirect('admin/maintenance/product');
-			}
-			else
-			{
-				$data['_error'] = $validator->errors()->all();
-			}
-
-			
-
-		}
-
-
-		return view('admin.maintenance.product_edit',$data);
-	}
-
-
-
-	public function archive_product()
+	public function archive_product_package()
 	{	
 
+		// dd('lol');
+
 		$id = Request::input('id');
-		$data['query'] = Tbl_product::where('product_id',$id)->update(['archived'=>'1']);
+		// dd($id);
+		$data['query'] = Tbl_product_package::where('product_package_id',$id)->update(['archived'=>'1']);
 
 		return json_encode($data);
 	}
 
-	public function restore_product()
+	public function restore_product_package()
 	{	
 
 		$id = Request::input('id');
-		$data['query'] = Tbl_product::where('product_id',$id)->update(['archived'=>'0']);
+
+		$data['query'] = Tbl_product_package::where('product_package_id',$id)->update(['archived'=>'0']);
 
 		return json_encode($data);
 	}
