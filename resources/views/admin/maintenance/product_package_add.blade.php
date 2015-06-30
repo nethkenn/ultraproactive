@@ -5,7 +5,7 @@
 	        <h2><i class="fa fa-tag"></i> Add New Product Package</h2>
 	    </div>
 	    <div class="buttons col-md-4 text-right">
-	        <button onclick="location.href='admin/maintenance/Product Package'" type="button" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back</button>
+	        <button onclick="location.href='admin/maintenance/product_package'" type="button" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back</button>
 	        <button onclick="$('#product-package-add-form').submit();" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
 	    </div>
     </div>
@@ -14,16 +14,16 @@
                 <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
                 <div class="form-group col-md-12">
                     <label for="product-package_name">Product Package Name</label>
-{{--                     @if($_error['Product Package_name'])
+                    @if($_error['product_package_name'])
                         <div class="col-md-12 alert alert-danger form-errors">
                             <ul>
-                                @foreach($_error['Product Package_name'] as $error)
+                                @foreach($_error['product_package_name'] as $error)
                                     <li>{{$error}}</li>
                                 @endforeach
                             </ul>
                         </div>
-                    @endif --}}
-            		<input name="product_package_name" value="" required="required" class="form-control" id="" placeholder="" type="text">
+                    @endif
+            		<input name="product_package_name" value="{{Request::input('product_package_name')}}" required="required" class="form-control" id="" placeholder="" type="text">
             	</div>
 
             	<div class="form-group col-md-12">
@@ -31,6 +31,7 @@
 						<thead>
 							<tr>
 								<th>ID</th>
+								<th>SKU</th>
 								<th>Name</th>
 								<th>Category</th>
 								<th>Unilevel Points</th>
@@ -44,10 +45,20 @@
 				</div>
 
             	<div class="form-group col-md-12">
+{{--             		@if($_error['product'])
+                        <div class="col-md-12 alert alert-danger form-errors">
+                            <ul>
+                                @foreach($_error['product'] as $error)
+                                    <li>{{$error}}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif --}}
             		<table id="added-product-table" class="table table-bordered table-hover">
 						<thead>
 							<tr>
 								<th>ID</th>
+								<th>SKU</th>
 								<th>Name</th>
 								<th>Category</th>
 								<th>Unilevel Points</th>
@@ -97,6 +108,7 @@
 
 	        columns: [
 	            {data: 'product_id', name: 'product_id'},
+	            {data: 'sku', name: 'sku'},
 	            {data: 'product_name', name: 'product_name'},
 	            {data: 'product_category_name', name: 'product_category_name'},
 	            {data: 'unilevel_pts', name: 'unilevel_pts'},
@@ -136,15 +148,12 @@
 				var $new_td = [];
 				$td = $selected_product.closest('tr').find('td');
 				$($td).each (function(index,element) {
+
 					$new_td[index] = $(element).html();
-					// console.log(index+ ' = '+ $(element).html());
-				  // do your cool stuff
+
 				});
 
-				// console.log($new_td);
-
-
-				$append = '<tr>'+
+				var $append = '<tr>'+
 					'<td>'+$new_td[0]+'</td>'+
 					'<td>'+$new_td[1]+'</td>'+
 					'<td>'+$new_td[2]+'</td>'+
@@ -152,24 +161,46 @@
 					'<td>'+$new_td[4]+'</td>'+
 					'<td>'+$new_td[5]+'</td>'+
 					'<td>'+$new_td[6]+'</td>'+
-					'<td>'+'<input style="width:100%;" type="number" name="'+$('#pop-up-input').attr('name')+'" value="'+$('#pop-up-input').val()+'"></td>'+
-					'<td><a style="cursor: pointer;" class="remvoe-added-prod">REMOVE</a></td>'+
+					'<td>'+$new_td[7]+'</td>'+
+
+					'<td>'+'<input product-id = "'+$new_td[0]+'" style="width:100%;" type="number" name="'+$('#pop-up-input').attr('name')+'" value="'+$('#pop-up-input').val()+'"></td>'+
+					'<td><a style="cursor: pointer;" class="remove-added-prod" product-id = "'+$new_td[0]+'">REMOVE</a></td>'+
 				'</tr>';
 
 				// console.log($append);
-				$('#added-product-table tbody').append($append);
+				var $checktd = $('#added-product-table tbody td a[product-id='+$new_td[0]+']').length;
+				console.log($checktd);
+				if($checktd > 0)
+				{
+					var $input =  $('input[product-id='+$new_td[0]+']').val();
+
+					$final_input = parseInt($input) + parseInt($('#pop-up-input').val());
+
+
+					
+					$('input[product-id='+$new_td[0]+']').val($final_input);
+
+				}
+				else
+				{
+					$('#added-product-table tbody').append($append);
+				}
 								
 			});
 
 
-			$( "#added-product-table" ).delegate( ".remvoe-added-prod", "click", function()
+			$( "#added-product-table" ).delegate( ".remove-added-prod", "click", function()
 			{
+
+				var $prod_id = $(this).attr('product-id');
+
+
 				$(this).closest('tr').remove();
 			});
 
 
 
-
+			
 
 
 
