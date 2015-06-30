@@ -31,6 +31,7 @@
 						<thead>
 							<tr>
 								<th>ID</th>
+								<th>SKU</th>
 								<th>Name</th>
 								<th>Category</th>
 								<th>Unilevel Points</th>
@@ -57,6 +58,7 @@
 						<thead>
 							<tr>
 								<th>ID</th>
+								<th>SKU</th>
 								<th>Name</th>
 								<th>Category</th>
 								<th>Unilevel Points</th>
@@ -106,6 +108,7 @@
 
 	        columns: [
 	            {data: 'product_id', name: 'product_id'},
+	            {data: 'sku', name: 'sku'},
 	            {data: 'product_name', name: 'product_name'},
 	            {data: 'product_category_name', name: 'product_category_name'},
 	            {data: 'unilevel_pts', name: 'unilevel_pts'},
@@ -158,6 +161,8 @@
 					'<td>'+$new_td[4]+'</td>'+
 					'<td>'+$new_td[5]+'</td>'+
 					'<td>'+$new_td[6]+'</td>'+
+					'<td>'+$new_td[7]+'</td>'+
+
 					'<td>'+'<input product-id = "'+$new_td[0]+'" style="width:100%;" type="number" name="'+$('#pop-up-input').attr('name')+'" value="'+$('#pop-up-input').val()+'"></td>'+
 					'<td><a style="cursor: pointer;" class="remove-added-prod" product-id = "'+$new_td[0]+'">REMOVE</a></td>'+
 				'</tr>';
