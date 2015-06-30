@@ -17,6 +17,7 @@ class CreateTblRank extends Migration
             $table->increments('rank_id');
             $table->string('rank_name');
             $table->integer('rank_level');
+            $table->string('slug');
         });
     }
 
