@@ -16,6 +16,7 @@ class CreateTblProductPackage extends Migration
             $table->increments('product_package_id');
             $table->string('product_package_name');
             $table->tinyInteger('archived');
+            $table->string('slug');
         });
     }
 

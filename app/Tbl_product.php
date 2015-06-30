@@ -9,7 +9,7 @@ class Tbl_product extends Model implements SluggableInterface
 {
 	protected $table = 'tbl_product';
 	protected $primaryKey = 'product_id';
-	protected $fillable = ['product_name', 'slug','product_category_id', 'unilevel_pts', 'binary_pts', 'price','image_file'];
+	protected $fillable = ['product_name', 'slug','product_category_id', 'unilevel_pts', 'binary_pts', 'price','image_file','barcode'];
 	
 
     // protected $attributes = array(
@@ -17,7 +17,7 @@ class Tbl_product extends Model implements SluggableInterface
     // );
 
 
-
+    use SluggableTrait;
     protected $sluggable = array(
 	    'build_from'      => 'product_name',
 	    'save_to'         => 'slug',
@@ -41,7 +41,7 @@ class Tbl_product extends Model implements SluggableInterface
     //     return $img_file;
     // }
 
-	use SluggableTrait;
+	
 
 
 

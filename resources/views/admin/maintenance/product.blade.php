@@ -22,6 +22,7 @@
 			<thead>
 				<tr>
 					<th>ID</th>
+					<th>SKU</th>
 					<th>Name</th>
 					<th>Category</th>
 					<th>Unilevel Points</th>
@@ -58,6 +59,7 @@
 
 	        columns: [
 	            {data: 'product_id', name: 'product_id'},
+	            {data: 'sku', name: 'sku'},
 	            {data: 'product_name', name: 'product_name'},
 	            {data: 'product_category_name', name: 'product_category_name'},
 	            {data: 'unilevel_pts', name: 'unilevel_pts'},
