@@ -78,9 +78,10 @@ Route::any('admin/maintenance/membership/edit', 'AdminMembershipController@edit'
 
 Route::get('admin/maintenance/ranking', 'AdminRankingController@index');
 Route::any('admin/maintenance/ranking/data', 'AdminRankingController@data');
-Route::any('admin/maintenance/ranking/edit', 'AdminRankingController@edit');
-Route::any('admin/maintenance/ranking/archive', 'AdminRankingController@archive');
-Route::any('admin/maintenance/ranking/add', 'AdminRankingController@add');
+Route::any('admin/maintenance/ranking/edit', 'AdminRankingController@edit_ranking');
+Route::any('admin/maintenance/ranking/delete', 'AdminRankingController@delete_ranking');
+Route::any('admin/maintenance/ranking/add', 'AdminRankingController@add_ranking');
+
 
 /* ADMIN / UTILITIES */
 Route::get('admin/utilities/admin', 'AdminAdminController@index');
