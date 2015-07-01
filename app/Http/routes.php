@@ -1,8 +1,15 @@
 <?php
 Route::any('/member', 'MemberController@index');
 
+
 /* ADMIN */
 Route::any('/', 'FrontController@index');
+Route::any('/about', 'FrontController@about');
+Route::any('/earn', 'FrontController@earn');
+Route::any('/service', 'FrontController@service');
+Route::any('/product', 'FrontController@product');
+Route::any('/news', 'FrontController@news');
+Route::any('/contact', 'FrontController@contact');
 Route::any('/admin', 'AdminController@index');
 
 /* ADMIN / TRANSACTION */
@@ -78,6 +85,10 @@ Route::any('admin/maintenance/ranking/add', 'AdminRankingController@add');
 /* ADMIN / UTILITIES */
 Route::get('admin/utilities/admin', 'AdminAdminController@index');
 Route::get('admin/utilities/position', 'AdminPositionController@index');
+Route::get('admin/utilities/position/add', 'AdminPositionController@add');
+Route::any('admin/utilities/position/add_submit', 'AdminPositionController@add_submit');
+Route::get('admin/utilities/position/edit', 'AdminPositionController@edit');
+Route::get('admin/utilities/position/edit_submit', 'AdminPositionController@edit_submit');
 Route::get('admin/utilities/setting', 'AdminSettingsController@index');
 Route::get('admin/utilities/complan', 'AdminComplanController@index');
 
