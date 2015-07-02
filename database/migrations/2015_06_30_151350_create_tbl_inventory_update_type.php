@@ -14,7 +14,7 @@ class CreateTblInventoryUpdateType extends Migration
     {
         Schema::create('tbl_inventory_update_type', function (Blueprint $table) {
             $table->increments('inventory_update_type_id');
-            $table->increments('inventory_update_type_name');
+            $table->string('inventory_update_type_name');
         });
     }
 
