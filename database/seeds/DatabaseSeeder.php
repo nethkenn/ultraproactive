@@ -89,7 +89,6 @@ class tbl_product_category extends Seeder
     } 
 }
 
-<<<<<<< HEAD
 
 class tbl_inventory_update_type extends Seeder
 {
@@ -116,7 +115,8 @@ class tbl_code_type extends Seeder
                         (4, 'Comission Deductable');
                     ");
     }
-=======
+}
+
 class tbl_module extends Seeder
 {
     public function run()
@@ -140,7 +140,6 @@ class tbl_module extends Seeder
         (15,    'Reports / Membership Sales Report',    0);"
         );
     } 
->>>>>>> 6ba7c38b78f54a247afd48edad77433f3f43b924
 }
 
 
