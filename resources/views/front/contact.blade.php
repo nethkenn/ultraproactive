@@ -51,18 +51,12 @@
                                     <div class="row-fluid">
                                         <div class="row-fluid">
                                             <div class="span12">
-                                                <form name="contactForm" class="standard-form row-fluid" action="http://newthemes.themeple.co/ausart_html/contact.php" method="post">
-                                                    <input class="span6" name="themeple_name" placeholder="Name" type="text" id="themeple_name" value="" />
-                                                    <input class="span6" name="themeple_email" placeholder="E-Mail" type="text" id="themeple_email" value="" />
-                                                    <input class="span6" name="themeple_subject" placeholder="Subject" type="text" id="themeple_subject" value="" />
-                                                    <select class="span12" placeholder="Priority" name="themeple_priority" id="themeple_priority">
-                                                        <option value='Low'>Low</option>
-                                                        <option value='Medium'>Medium</option>
-                                                        <option value='High'>High</option>
-                                                        <option value='Urgent as Hell'>Urgent as Hell</option>
-                                                        <option value='ASAP DUDE!!!'>ASAP DUDE!!!</option>
-                                                    </select>
-                                                    <textarea class="span12" placeholder="Message" name="themeple_message" cols="40" rows="7" id="themeple_message"></textarea>
+                                                <form name="contactForm" class="standard-form row-fluid" action="/contact/submit" method="post">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                    <input class="span6" name="name" placeholder="Name" type="text" id="themeple_name" value="" />
+                                                    <input class="span6" name="email" placeholder="E-Mail" type="text" id="themeple_email" value="" />
+                                                    <input class="span6" name="subject" placeholder="Subject" type="text" id="themeple_subject" value="" />
+                                                    <textarea class="span12" placeholder="Message" name="message" cols="40" rows="7" id="themeple_message"></textarea>
                                                     <p class="perspective">
                                                         <input type="submit" value="Submit Form" class="btn-system normal default" />
                                                     </p>

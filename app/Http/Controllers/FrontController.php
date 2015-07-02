@@ -2,7 +2,8 @@
 use DB;
 use App\Classes\Image;
 use Request;
-use multiexplode;
+use Input;
+use Mail;
 use App\Classes\Globals;
 
 class FrontController extends Controller
@@ -65,6 +66,27 @@ class FrontController extends Controller
 	public function contact()
 	{
         return view('front.contact');
+	}
+	public function contact_submit()
+	{
+		$fromEmail = Input::get('email');
+	    $fromName = Input::get('name');
+	    $subject = Input::get('subject');
+	    $data["data"] = Input::get('message');
+
+	    $toEmail = 'admin@prolife.global';
+	    $toName = 'Customer';
+
+	    Mail::send('emails.contact', $data, function($message) use ($toEmail, $toName, $fromEmail, $fromName, $subject)
+	    {
+	        $message->to($toEmail, $toName);
+
+	        $message->from($fromEmail, $fromName);
+
+	        $message->subject($subject);
+	    });
+
+	    return Redirect::to("/contact");
 	}
 	public function register()
 	{
