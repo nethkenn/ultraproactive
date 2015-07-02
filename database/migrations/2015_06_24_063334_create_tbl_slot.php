@@ -30,7 +30,6 @@ class CreateTblSlot extends Migration
             $table->double('slot_upgrade_points')->default(0);
             $table->double('slot_total_earning')->default(0);
             $table->double('slot_total_withrawal')->default(0);
-            $table->double('slot_upgrade_points')->default(0);
             $table->timestamps();
         });
     }

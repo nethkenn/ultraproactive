@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblHasProductPackage extends Migration
+class CreateTblProductPackageHas extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,8 @@ class CreateTblHasProductPackage extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_product_package_has', function (Blueprint $table) {
+        Schema::create('tbl_product_package_has', function (Blueprint $table)
+        {
             $table->integer('product_id')->unsigned();
             $table->integer('product_package_id')->unsigned();
             $table->integer('quantity');

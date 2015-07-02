@@ -1,4 +1,6 @@
 <?php
+Route::any('/neil', 'NeilController@index');
+
 Route::any('/member', 'MemberController@index');
 
 /* ADMIN */
@@ -77,7 +79,11 @@ Route::any('admin/maintenance/ranking/add', 'AdminRankingController@add');
 
 /* ADMIN / UTILITIES */
 Route::get('admin/utilities/admin', 'AdminAdminController@index');
+
 Route::get('admin/utilities/position', 'AdminPositionController@index');
+Route::any('admin/utilities/position/data', 'AdminPositionController@data');
+
+
 Route::get('admin/utilities/setting', 'AdminSettingsController@index');
 Route::get('admin/utilities/complan', 'AdminComplanController@index');
 
