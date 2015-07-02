@@ -16,7 +16,7 @@
                     font-size: 50px
                 }
                 </style>
-                <h1 class="title">Contact Page 3</h1>
+                <h1 class="title">Contact Us</h1>
                 <div class="breadcrumbss">
       
                 </div>

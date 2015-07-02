@@ -31,3 +31,4 @@ class TblNews extends Migration
     {
         Schema::drop('tbl_news');
     }
+}
