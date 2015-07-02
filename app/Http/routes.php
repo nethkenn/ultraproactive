@@ -108,17 +108,13 @@ Route::any('admin/maintenance/ranking/add', 'AdminRankingController@add_ranking'
 Route::get('admin/utilities/admin', 'AdminAdminController@index');
 
 Route::get('admin/utilities/position', 'AdminPositionController@index');
-<<<<<<< HEAD
 Route::any('admin/utilities/position/data', 'AdminPositionController@data');
-
-
-=======
 Route::get('admin/utilities/position/add', 'AdminPositionController@add');
 Route::any('admin/utilities/position/add_submit', 'AdminPositionController@add_submit');
 Route::get('admin/utilities/position/edit', 'AdminPositionController@edit');
 Route::any('admin/utilities/position/edit_submit', 'AdminPositionController@edit_submit');
 Route::any('admin/utilities/position/delete', 'AdminPositionController@delete');
->>>>>>> eebf8cd45767dc8fac24238bf31c0e4f77169f71
+
 Route::get('admin/utilities/setting', 'AdminSettingsController@index');
 Route::get('admin/utilities/complan', 'AdminComplanController@index');
 
