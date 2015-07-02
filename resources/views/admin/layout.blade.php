@@ -8,6 +8,7 @@
 		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 		<meta name="description" content="">
 		<meta name="author" content="">
+		<meta name="_token" content="{{ csrf_token() }}">
 		<title>Admin Panel - Intogadgets</title>
 		<!-- GOOGLE FONT -->
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
