@@ -11,6 +11,7 @@ Route::any('/product', 'FrontController@product');
 Route::any('/news', 'FrontController@news');
 Route::any('/news_content', 'FrontController@news_content');
 Route::any('/contact', 'FrontController@contact');
+Route::any('/register', 'FrontController@register');
 Route::any('/admin', 'AdminController@index');
 
 /* ADMIN / TRANSACTION */

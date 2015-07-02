@@ -66,4 +66,8 @@ class FrontController extends Controller
 	{
         return view('front.contact');
 	}
+	public function register()
+	{
+        return view('front.register');
+	}
 }

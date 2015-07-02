@@ -86,7 +86,7 @@
                                             <input type="text" name="log" id="log" value="" size="20" placeholder="Username" />
                                             <input type="password" name="pwd" id="pwd" size="20" placeholder="Password" />
                                             <input type="submit" name="submit" value="Login" class="button" />
-                                            <input type="submit" name="submit" value="Register" class="button" />
+                                            <a href="/register" name="submit" class="button">Register</a>
                                             <div class="check-login">
                                                 <label for="rememberme">
                                                     <input name="rememberme" id="rememberme" type="checkbox" checked="checked" value="forever" /> Remember me</label>
@@ -203,14 +203,13 @@
                                 <div class="triangle"></div>
                                 <ul class='tweet_list' id='tweet_footer'>
                                     <li class="tweet">
-                                        <h5>THEMEPLE @ New wordpress business theme its now online. Take a look:
-<a href="http://t.co/502gW1SS6P" class="twitter-link">http://t.co/502gW1SS6P</a> <a href="http://t.co/wjUP9mGHGy" class="twitter-link">http://t.co/wjUP9mGHGy</a></h5></li>
+                                        <h5>
+<a href="http://t.co/502gW1SS6P" class="twitter-link"></a> <a href="http://t.co/wjUP9mGHGy" class="twitter-link"></a></h5></li>
                                     <li class="tweet">
-                                        <h5>THEMEPLE @ Adaptive Backgrounds - a jQuery plugin to extract dominant colors from &lt;img&gt; tags and apply them to their parent <a href="http://t.co/as9cYK9s52" class="twitter-link">http://t.co/as9cYK9s52</a></h5></li>
+                                        <h5><a href="http://t.co/as9cYK9s52" class="twitter-link"></a></h5></li>
                                     <li class="tweet">
-                                        <h5>THEMEPLE @ <a href="http://t.co/iNKRzkrcRq" class="twitter-link">http://t.co/iNKRzkrcRq</a>
-
-Check new business html5 template <a href="http://t.co/AoGpjeWaZw" class="twitter-link">http://t.co/AoGpjeWaZw</a></h5></li>
+                                        <h5><a href="http://t.co/iNKRzkrcRq" class="twitter-link"></a>
+<a href="http://t.co/AoGpjeWaZw" class="twitter-link"></a></h5></li>
                                 </ul>
                                 <div class="pagination pull-right"><a href="#" class="back"><i class="moon-arrow-left"></i></a><a href="#" class="next"><i class="moon-arrow-right-2"></i></a></div><span class="shadow_top_footer"></span></div>
                         </div>
@@ -277,7 +276,7 @@ Check new business html5 template <a href="http://t.co/AoGpjeWaZw" class="twitte
                                     <a href='#' class='tag-link-31' title='1 topic' style='font-size: 8pt;'>premium</a>
                                     <a href='#' class='tag-link-32' title='1 topic' style='font-size: 8pt;'>theme</a>
                                     <a href='#' class='tag-link-28' title='1 topic' style='font-size: 8pt;'>visual</a>
-                                    <a href='#' class='tag-link-4' title='1 topic' style='font-size: 8pt;'>wordpress</a>
+                                    <a href='#' class='tag-link-4' title='1 topic' style='font-size: 8pt;'></a>
                                     <a href='#' class='tag-link-33' title='1 topic' style='font-size: 8pt;'>wp theme</a></div>
                             </div>
                         </div>
