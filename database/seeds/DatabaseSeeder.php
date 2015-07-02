@@ -19,14 +19,9 @@ class DatabaseSeeder extends Seeder
         $this->call('tbl_slot');
         $this->call('tbl_country');
         $this->call('tbl_product_category');
-<<<<<<< HEAD
         $this->call('tbl_inventory_update_type');
         $this->call('tbl_code_type');
-
-
-=======
         $this->call('tbl_module');
->>>>>>> 6ba7c38b78f54a247afd48edad77433f3f43b924
     }
 }
 class tbl_account extends Seeder
