@@ -1004,7 +1004,7 @@
                             <div class="wpb_wrapper">
                                 <div class="dark_clients clients_el ">
                                     <div class="header">
-                                        <h2>Our Clients</h2></div>
+                                        <h2>Our Partners</h2></div>
                                     <section class="row clients clients_caro">
                                         <div class="item">
                                             <a href="#" title="">

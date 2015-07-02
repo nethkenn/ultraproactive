@@ -9,6 +9,7 @@ Route::any('/earn', 'FrontController@earn');
 Route::any('/service', 'FrontController@service');
 Route::any('/product', 'FrontController@product');
 Route::any('/news', 'FrontController@news');
+Route::any('/news_content', 'FrontController@news_content');
 Route::any('/contact', 'FrontController@contact');
 Route::any('/admin', 'AdminController@index');
 
@@ -38,6 +39,13 @@ Route::any('admin/maintenance/product/edit', 'AdminProductController@edit_produc
 Route::get('admin/maintenance/product/get_product', 'AdminProductController@ajax_get_product');
 Route::post('admin/maintenance/product/archive', 'AdminProductController@archive_product');
 Route::post('admin/maintenance/product/restore', 'AdminProductController@restore_product');
+
+Route::get('admin/maintenance/news', 'AdminNewsController@index');
+Route::get('admin/maintenance/news/add', 'AdminNewsController@add');
+Route::any('admin/maintenance/news/add_submit', 'AdminNewsController@add_submit');
+Route::get('admin/maintenance/news/edit', 'AdminNewsController@edit');
+Route::any('admin/maintenance/news/edit_submit', 'AdminNewsController@edit_submit');
+Route::any('admin/maintenance/news/delete', 'AdminNewsController@delete');
 
 /**
  * PRODUCT PACKAGE CONTROLLER

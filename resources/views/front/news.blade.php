@@ -25,166 +25,27 @@
                 <div class="row">
                     
                     <div class="span9">
+                        @foreach($_news as $news)
                         <article id="post-3049" class="post-3049 post type-post status-publish format-standard has-post-thumbnail hentry category-new row-fluid blog-article v2 normal">
                             <div class="span12">
                                 <div class="span6">
                                     <div class="media">
-                                        <img src="/resources/assets/ausart/assets/uploads/2015/01/shutterstock_138847463w-700x301.jpg" alt="">
+                                        <img src="{{ $news->image }}" alt="">
                                     </div>
                                 </div>
                                 <div class="span6">
                                     <div class="content post_format_standart">
-                                        <h1><a href="post.html">First Post with Featured Image</a></h1>
+                                        <h1><a href="/news_content?id={{ $news->news_id }}">{{ $news->news_title }}</a></h1>
                                         <ul class="info">
-                                            <li><i class="linecon-icon-user"></i>Posted by admin</li>
-                                            <li><i class="linecon-icon-bubble"></i>1 Comments</li>
+                                            <li><i class="linecon-icon-user"></i>Posted by Prolife</li>
+                                            {{-- <li><i class="linecon-icon-bubble"></i>1 Comments</li> --}}
                                         </ul>
-                                        <div class="blog-content">
-                                            There are many variations of passages of Lorem Ipsum available, but the majority have suffered nel alteration in some form, by injected humour, or randomised words which don&#8217;t look even slightly statict believable. Injected humour, or randomised words which don&#8217;t look even slightly believable. </div>
+                                        <div class="blog-content">{!! substr($news->news_description, 0, 290) !!}</div>
                                     </div>
                                 </div>
                             </div>
                         </article>
-                        <article id="post-3046" class="post-3046 post type-post status-publish format-standard has-post-thumbnail hentry category-new tag-premium tag-theme tag-wp-theme row-fluid blog-article v2 normal">
-                            <div class="span12">
-                                <div class="span6">
-                                    <div class="media">
-                                        <img src="/resources/assets/ausart/assets/uploads/2015/01/shutterstock_195025238-700x301.jpg" alt="">
-                                    </div>
-                                </div>
-                                <div class="span6">
-                                    <div class="content post_format_standart">
-                                        <h1><a href="post.html">Second Post with Featured Image</a></h1>
-                                        <ul class="info">
-                                            <li><i class="linecon-icon-user"></i>Posted by admin</li>
-                                            <li><i class="linecon-icon-bubble"></i>0 Comments</li>
-                                        </ul>
-                                        <div class="blog-content">
-                                            There are many variations of passages of Lorem Ipsum available, but the majority have suffered nel alteration in some form, by injected humour, or randomised words which don&#8217;t look even slightly statict believable. Injected humour, or randomised words which don&#8217;t look even slightly believable. </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                        <article id="post-3041" class="post-3041 post type-post status-publish format-standard has-post-thumbnail hentry category-new tag-css3 tag-html5 tag-wordpress row-fluid blog-article v2 normal">
-                            <div class="span12">
-                                <div class="span6">
-                                    <div class="media">
-                                        <img src="/resources/assets/ausart/assets/uploads/2015/01/shutterstock_137898407-700x301.jpg" alt="">
-                                    </div>
-                                </div>
-                                <div class="span6">
-                                    <div class="content post_format_standart">
-                                        <h1><a href="post.html">New Post with Featured Image</a></h1>
-                                        <ul class="info">
-                                            <li><i class="linecon-icon-user"></i>Posted by admin</li>
-                                            <li><i class="linecon-icon-bubble"></i>0 Comments</li>
-                                        </ul>
-                                        <div class="blog-content">
-                                            There are many variations of passages of Lorem Ipsum available, but the majority have suffered nel alteration in some form, by injected humour, or randomised words which don&#8217;t look even slightly statict believable. Injected humour, or randomised words which don&#8217;t look even slightly believable. </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                        <article id="post-3038" class="post-3038 post type-post status-publish format-standard has-post-thumbnail hentry category-new tag-composer tag-drag-and-drop tag-visual row-fluid blog-article v2 normal">
-                            <div class="span12">
-                                <div class="span6">
-                                    <div class="media">
-                                        <img src="/resources/assets/ausart/assets/uploads/2015/01/shutterstock_144275518-700x301.jpg" alt="">
-                                    </div>
-                                </div>
-                                <div class="span6">
-                                    <div class="content post_format_standart">
-                                        <h1><a href="post.html">Quis lectus elemvolu euismod atras</a></h1>
-                                        <ul class="info">
-                                            <li><i class="linecon-icon-user"></i>Posted by admin</li>
-                                            <li><i class="linecon-icon-bubble"></i>4 Comments</li>
-                                        </ul>
-                                        <div class="blog-content">
-                                            There are many variations of passages of Lorem Ipsum available, but the majority have suffered nel alteration in some form, by injected humour, or randomised words which don&#8217;t look even slightly statict believable. Injected humour, or randomised words which don&#8217;t look even slightly believable. </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                        <article id="post-3037" class="post-3037 post type-post status-publish format-standard has-post-thumbnail hentry category-new tag-javascript tag-picture tag-post row-fluid blog-article v2 normal">
-                            <div class="span12">
-                                <div class="span6">
-                                    <div class="media">
-                                        <img src="/resources/assets/ausart/assets/uploads/2015/01/shutterstock_190990385-700x301.jpg" alt="">
-                                    </div>
-                                </div>
-                                <div class="span6">
-                                    <div class="content post_format_standart">
-                                        <h1><a href="post.html">Another Post with Preview picture</a></h1>
-                                        <ul class="info">
-                                            <li><i class="linecon-icon-user"></i>Posted by admin</li>
-                                            <li><i class="linecon-icon-bubble"></i>0 Comments</li>
-                                        </ul>
-                                        <div class="blog-content">
-                                            There are many variations of passages of Lorem Ipsum available, but the majority have suffered nel alteration in some form, by injected humour, or randomised words which don&#8217;t look even slightly statict believable. Injected humour, or randomised words which don&#8217;t look even slightly believable. </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                        <article id="post-3031" class="post-3031 post type-post status-publish format-standard has-post-thumbnail hentry category-new tag-javascript tag-picture tag-post row-fluid blog-article v2 normal">
-                            <div class="span12">
-                                <div class="span6">
-                                    <div class="media">
-                                        <img src="/resources/assets/ausart/assets/uploads/2015/01/shutterstock_173449544-700x301.jpg" alt="">
-                                    </div>
-                                </div>
-                                <div class="span6">
-                                    <div class="content post_format_standart">
-                                        <h1><a href="post.html">Example of Standart Post</a></h1>
-                                        <ul class="info">
-                                            <li><i class="linecon-icon-user"></i>Posted by admin</li>
-                                            <li><i class="linecon-icon-bubble"></i>0 Comments</li>
-                                        </ul>
-                                        <div class="blog-content">
-                                            There are many variations of passages of Lorem Ipsum available, but the majority have suffered nel alteration in some form, by injected humour, or randomised words which don&#8217;t look even slightly statict believable. Injected humour, or randomised words which don&#8217;t look even slightly believable. </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                        <article id="post-3026" class="post-3026 post type-post status-publish format-standard has-post-thumbnail hentry category-new tag-business tag-javascript tag-picture row-fluid blog-article v2 normal">
-                            <div class="span12">
-                                <div class="span6">
-                                    <div class="media">
-                                        <img src="/resources/assets/ausart/assets/uploads/2014/11/shutterstock_172121756-1-700x301.jpg" alt="">
-                                    </div>
-                                </div>
-                                <div class="span6">
-                                    <div class="content post_format_standart">
-                                        <h1><a href="post.html">Nunc malesuada ante purus ornare</a></h1>
-                                        <ul class="info">
-                                            <li><i class="linecon-icon-user"></i>Posted by admin</li>
-                                            <li><i class="linecon-icon-bubble"></i>0 Comments</li>
-                                        </ul>
-                                        <div class="blog-content">
-                                            There are many variations of passages of Lorem Ipsum available, but the majority have suffered nel alteration in some form, by injected humour, or randomised words which don&#8217;t look even slightly statict believable. Injected humour, or randomised words which don&#8217;t look even slightly believable. </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                        <article id="post-1" class="post-1 post type-post status-publish format-standard has-post-thumbnail hentry category-new row-fluid blog-article v2 normal">
-                            <div class="span12">
-                                <div class="span6">
-                                    <div class="media">
-                                        <img src="/resources/assets/ausart/assets/uploads/2014/11/shutterstock_185759639-700x301.jpg" alt="">
-                                    </div>
-                                </div>
-                                <div class="span6">
-                                    <div class="content post_format_standart">
-                                        <h1><a href="post.html">Standard Post with Featured Image</a></h1>
-                                        <ul class="info">
-                                            <li><i class="linecon-icon-user"></i>Posted by admin</li>
-                                            <li><i class="linecon-icon-bubble"></i>1 Comments</li>
-                                        </ul>
-                                        <div class="blog-content">
-                                            There are many variations of passages of Lorem Ipsum available, but the majority have suffered nel alteration in some form, by injected humour, or randomised words which don&#8217;t look even slightly statict believable. Injected humour, or randomised words which don&#8217;t look even slightly believable. </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
+                        @endforeach
                         <div class="p_pagination">
                             <div class="pull-right">
                                 <div class="nav-previous"></div>
