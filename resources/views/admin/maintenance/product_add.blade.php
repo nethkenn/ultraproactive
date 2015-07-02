@@ -29,8 +29,13 @@
             		<input name="product_name" value="{{Request::input('product_name')}}" required="required" class="form-control" id="" placeholder="" type="text">
             	</div>
                 <div class="form-group col-md-12">
+                    <label for="sku">SKU</label>
+                    <input name="sku" value="{{Request::input('sku')}}" required="required" class="form-control" id="" placeholder="" type="text">
+                </div>
+                <div class="form-group col-md-12">
                     <label for="product_category">Product Category</label>
-                    @if($_prod_cat)
+
+                    @if(!empty($_prod_cat))
                         <select id="prod_cat_input" class="form-control" name="product_category">
                             @foreach($_prod_cat as $prod_cat)
                                 <option value="{{$prod_cat->product_category_name}}" {{$selected = Request::input('product_category') == $prod_cat->product_category_name ? 'selected="seleted"' : '' }}>{{$prod_cat->product_category_name}}</option>

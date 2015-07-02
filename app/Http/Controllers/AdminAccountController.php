@@ -30,6 +30,8 @@ class AdminAccountController extends AdminController
 
 
     }
+
+    
 	public function add()
 	{
 		if(Request::isMethod("post"))

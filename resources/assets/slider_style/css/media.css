@@ -1,0 +1,231 @@
+@media (max-width: 1200px) {
+
+.nav > li > a:link, .nav > li > a:visited {
+font-size:14px;
+padding: 20px;
+}
+.navbar-brand {
+padding: 4px 15px;
+}
+
+
+.topicons {
+top:80px;
+}
+
+
+.apptextleftinner h4 {
+font-size:25px;
+margin-bottom:0;
+line-height:1;
+}
+
+.apptextleftinner h3 {
+text-transform:uppercase;
+background:#333333;
+
+font-weight:bold;
+font-size:27px;
+padding:20px 15px ;
+display:inline-block;
+line-height:1;
+}
+
+}
+
+
+
+@media (max-width: 1000px) {
+
+body{
+background:#333333 url(../images/parallax1.jpg) top center no-repeat;
+}
+
+
+
+
+.bxwrap p.subtitle1 {
+font-size:14px;
+}
+
+
+.bxwrap p.subtitle2 {
+font-size:22px;
+}
+
+.apptextleftinner {
+margin-top:0px;
+text-align:center;
+background:transparent;
+}
+
+
+
+.apptextleftinner h4 {
+font-size:25px;
+margin-bottom:0;
+line-height:1;
+display:block;
+max-width:100%;
+}
+
+.apptextleftinner h3 {
+text-transform:uppercase;
+background:#333333;
+
+font-weight:bold;
+font-size:27px;
+padding:20px 15px ;
+display:block;
+line-height:1;
+margin-bottom:22px;
+max-width:100%;
+}
+
+
+
+
+.contactarrow{
+margin-top:200px;
+}
+
+.blackpart4inner{
+height:10px;
+}
+
+
+.blackpart5{
+text-align:center;
+}
+
+.bottomicons {
+margin-top:44px;
+}
+
+
+}
+
+
+
+
+@media (max-width: 768px) {
+
+
+
+
+
+
+.sequence-theme h3{
+line-height:1.6;
+}
+
+
+.grid .element {
+width:49%;
+}
+
+
+.blackpart1 h3{
+font-size:44px;
+}
+
+
+#options ul li {
+display:block;
+}
+#options li a:link, #options li a:visited {
+display:block;
+font-size:14px;
+color:#333333;
+padding:15px;
+height:auto;
+}
+
+
+.additionalpagehome{
+display:block;
+}
+
+.navbar-nav > li > a {
+margin-bottom:5px;
+}
+.navbar-nav > li > a {                                           
+margin-left:0px;
+}
+.navbar-nav > li > a{
+margin-right:0px;
+color:#fff;
+}
+
+
+.navbar-nav > li {
+ width:100%;
+background:#333333;
+text-align:center;
+}
+
+.menudesktopcolor {
+ background-color:#333333;
+}
+
+.navbar-fixed-top{
+position:relative;
+}
+
+.navbar-brand img{
+margin:0px 0 0 -22px;
+}
+
+.topicons {
+position:relative;
+z-index:200;
+right:0 ;
+top:20px;
+text-align:center;
+}
+
+.hireusleftimg {
+display:none;
+}
+.blackpart4inner{
+display:none;
+}
+
+
+
+
+}
+
+
+
+@media (max-width: 650px) {
+
+
+
+.mainheadline h2{
+font-size:44px;
+}
+
+.mainheadlineblack h2{
+font-size:44px;
+}
+
+
+}
+
+
+@media (max-width: 420px) {
+
+
+
+.appwrapper1 {
+  margin: 0 auto;
+  width:270px;
+  background: url("../images/iphonebig.png") no-repeat;
+background-size:100% 100%;
+}
+
+
+}
+
+

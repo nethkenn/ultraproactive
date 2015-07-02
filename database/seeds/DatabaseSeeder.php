@@ -19,6 +19,9 @@ class DatabaseSeeder extends Seeder
         $this->call('tbl_slot');
         $this->call('tbl_country');
         $this->call('tbl_product_category');
+        $this->call('tbl_inventory_update_type');
+        $this->call('tbl_code_type');
+        $this->call('tbl_module');
     }
 }
 class tbl_account extends Seeder
@@ -45,7 +48,10 @@ class tbl_membership extends Seeder
     {
         DB::table('tbl_membership')->delete();
         DB::statement("INSERT INTO `tbl_membership` (`membership_id`, `membership_name`, `membership_price`, `archived`) VALUES
-                                                    (1, 'REGULAR',  500,    0);");
+                                                    (1, 'REGULAR',  500,    0),
+                                                    (2, 'GOLD', 30000,  0),
+                                                    (3, 'SILVER',   20000,  0),
+                                                    (4, 'BRONZE',   10000,  0);");
     } 
 }
 class tbl_slot extends Seeder
@@ -82,4 +88,58 @@ class tbl_product_category extends Seeder
         );
     } 
 }
+
+
+class tbl_inventory_update_type extends Seeder
+{
+    public function run()
+    {
+        DB::table('tbl_inventory_update_type')->delete();
+        DB::statement("INSERT INTO `tbl_inventory_update_type` (`inventory_update_type_id`, `inventory_update_type_name`) VALUES
+                (1, 'Claimable Voucher'),
+                (2, 'Deduct Rightr Away'),
+                (3, 'No Inventory Update');");
+    }
+}
+
+
+class tbl_code_type extends Seeder
+{
+    public function run()
+    {
+        DB::table('tbl_code_type')->delete();
+        DB::statement("INSERT INTO `tbl_code_type` (`code_type_id`, `code_type_name`) VALUES
+                        (1, 'All slot'),
+                        (2, 'Paid Slot'),
+                        (3, 'Free Slot'),
+                        (4, 'Comission Deductable');
+                    ");
+    }
+}
+
+class tbl_module extends Seeder
+{
+    public function run()
+    {
+        DB::table('tbl_module')->delete();
+        DB::statement("INSERT INTO `tbl_module` (`module_id`, `module_name`, `archived`) VALUES
+        (1, 'Transaction / Process Sale',   0),
+        (2, 'Transaction / Process Payout', 0),
+        (3, 'Transaction / Process Claims', 0),
+        (4, 'Transaction / Unilevel Distribution',  0),
+        (5, 'Maintenance / Accounts',   0),
+        (6, 'Maintenance / Membership Codes',   0),
+        (7, 'Maintenance / Package',    0),
+        (8, 'Maintenance / Product',    0),
+        (9, 'Maintenance / Slots',  0),
+        (10,    'Utitlities / Admin',   0),
+        (11,    'Utitlities / Admin Levels',    0),
+        (12,    'Utitlities / Company Settings',    0),
+        (13,    'Utitlities / Computation Plans',   0),
+        (14,    'Reports / Product Sales Report',   0),
+        (15,    'Reports / Membership Sales Report',    0);"
+        );
+    } 
+}
+
 

@@ -1,0 +1,364 @@
+.bxwrap img{
+border:10px solid #faeb6c;
+}
+
+
+.nav > li > a:link, .nav > li > a:visited {
+
+}
+
+.menudesktopcolor1 .nav > li:hover,
+.menudesktopcolor1 .nav > li:focus {
+ background-color: #faeb6c;
+ -webkit-transition: all 0.5s ease-in-out; 
+-moz-transition: all 0.5s ease-in-out; 
+-o-transition: all 0.5s ease-in-out; 
+transition: all 0.5s ease-in-out;
+
+}
+
+.menudesktopcolor1 .navbar-nav > .active > a:link,
+.menudesktopcolor1 .navbar-nav > .active > a:visited,
+.menudesktopcolor1 .navbar-nav > .active > a:hover,
+.menudesktopcolor1 .navbar-nav > .active > a:focus {
+   background-color:#faeb6c;
+ -webkit-transition: all 0.5s ease-in-out; 
+-moz-transition: all 0.5s ease-in-out; 
+-o-transition: all 0.5s ease-in-out; 
+transition: all 0.5s ease-in-out;
+
+}
+.menudesktopcolor .nav > li:hover,
+.menudesktopcolor .nav > li:focus {
+
+}
+
+.menudesktopcolor .nav > li a:hover,
+.menudesktopcolor .nav > li a:focus {
+color:#faeb6c;
+ -webkit-transition: all 0.5s ease-in-out; 
+-moz-transition: all 0.5s ease-in-out; 
+-o-transition: all 0.5s ease-in-out; 
+transition: all 0.5s ease-in-out;
+}
+
+
+.menudesktopcolor .navbar-nav > .active > a:link,
+.menudesktopcolor .navbar-nav > .active > a:visited,
+.menudesktopcolor .navbar-nav > .active > a:hover,
+.menudesktopcolor .navbar-nav > .active > a:focus {
+
+color:#faeb6c;
+}
+
+.menudesktopcolor1 .navbar-nav > li > ul > li > a:link, .menudesktopcolor1 .navbar-nav > li > ul > li > a:visited {
+
+}
+
+
+.menudesktopcolor1 .navbar-nav > li > ul > li > a:hover{
+background:#faeb6c;
+}
+
+
+
+.sequence-theme h2{
+color:#faeb6c;
+
+}
+
+.mainheadline h2{
+
+background: url(../../images/headlineline_yellow.png) bottom center no-repeat;
+}
+
+
+
+.mainheadlineblack h2{
+background: url(../../images/headlinelineblack_yellow.png) bottom center no-repeat;
+}
+
+
+a#topbutton:link, aa#topbutton:visited{
+background:url(../../images/model2_yellow.png) center center no-repeat;
+}
+
+
+.apptextleftinner {
+background: url(../../images/next1_yellow.png) right center no-repeat;
+}
+
+.apptextrightone{
+background: url(../../images/numberone_yellow.png) left top no-repeat;
+}
+
+
+
+.apptextrighttwo{
+background: url(../../images/numbertwo_yellow.png) left top no-repeat;
+}
+
+
+.apptextrightthree{
+background: url(../../images/numberthree_yellow.png) left top no-repeat;
+}
+.apptextrightfour{
+background: url(../../images/numberfour_yellow.png) left top no-repeat;
+}
+
+a#calltoaction:link, a#calltoaction:visited{
+background: url(../../images/calltoaction_yellow.png) center center no-repeat;
+}
+
+
+.bx-wrapper .bx-next:link, .bx-wrapper .bx-next:visited {
+background:url(../../images/next_yellow.png) center center no-repeat ;
+}
+.bx-wrapper .bx-prev:link, .bx-wrapper .bx-prev:visited {
+background: url(../../images/prev_yellow.png) center center no-repeat;
+}
+
+a#hireus:link, a#hireus:visited{
+background: url(../../images/hireusbutton_yellow.png) center center no-repeat;
+}
+
+.iconfacebook{
+background:url(../../images/iconfacebook_yellow.png) center center no-repeat;
+}
+
+.icontwitter{
+background:url(../../images/icontwitter_yellow.png) center center no-repeat;
+}
+
+
+.iconlinkedin{
+background:url(../../images/iconlinkedin_yellow.png) center center no-repeat;
+}
+
+.scrollbutton a:link, .scrollbutton a:visited{
+background: url(../../images/scrollbutton_yellow.png) top center no-repeat;
+}
+
+.scrollbutton a:hover{
+background: url(../../images/scrollbutton_yellow.png) bottom center no-repeat;
+}
+
+
+
+.apptextleftinner h3 {
+color:#faeb6c;
+}
+
+
+.blackpart1 h3 span{
+color:#faeb6c;
+}
+
+
+.onecolumnservice a:link, .onecolumnservice a:visited{
+
+border-top:2px solid #faeb6c;
+border-bottom:2px solid #faeb6c;
+ -webkit-transition: all 0.5s ease-in-out; 
+-moz-transition: all 0.5s ease-in-out; 
+-o-transition: all 0.5s ease-in-out; 
+transition: all 0.5s ease-in-out;
+}
+.onecolumnservice a:hover{
+background: #faeb6c;
+}
+
+
+.grid figcaption a:link, .grid figcaption a:visited {
+
+}
+
+.grid figcaption a:hover{
+
+	background:#faeb6c;
+
+}
+
+
+#options li a:link, #options li a:visited {
+
+-webkit-transition: all 0.5s ease;
+     -moz-transition: all 0.5s ease;
+       -o-transition: all 0.5s ease;
+          transition: all 0.5s ease;
+}
+
+#options li a:hover{
+background:#faeb6c;
+}
+
+
+#options li a:focus{
+background:#faeb6c;
+}
+
+
+
+.onecolumnteamtext{
+background:#faeb6c;
+}
+
+
+
+.progress-radial .overlay {
+
+ background: #faeb6c;
+
+
+}
+
+.progress-0 {
+  background-image: linear-gradient(90deg, #333333 50%, transparent 50%, transparent), linear-gradient(90deg, #faeb6c 50%, #333333 50%, #333333);
+}
+
+.progress-5 {
+  background-image: linear-gradient(90deg, #333333 50%, transparent 50%, transparent), linear-gradient(108deg, #faeb6c 50%, #333333 50%, #333333);
+}
+
+.progress-10 {
+  background-image: linear-gradient(90deg, #333333 50%, transparent 50%, transparent), linear-gradient(126deg, #faeb6c 50%, #333333 50%, #333333);
+}
+
+.progress-15 {
+  background-image: linear-gradient(90deg, #333333 50%, transparent 50%, transparent), linear-gradient(144deg, #faeb6c 50%, #333333 50%, #333333);
+}
+
+.progress-20 {
+  background-image: linear-gradient(90deg, #333333 50%, transparent 50%, transparent), linear-gradient(162deg, #faeb6c 50%, #333333 50%, #333333);
+}
+
+.progress-25 {
+  background-image: linear-gradient(90deg, #333333 50%, transparent 50%, transparent), linear-gradient(180deg, #faeb6c 50%, #333333 50%, #333333);
+}
+
+.progress-30 {
+  background-image: linear-gradient(90deg, #333333 50%, transparent 50%, transparent), linear-gradient(198deg, #faeb6c 50%, #333333 50%, #333333);
+}
+
+.progress-35 {
+  background-image: linear-gradient(90deg, #333333 50%, transparent 50%, transparent), linear-gradient(216deg, #faeb6c 50%, #333333 50%, #333333);
+}
+
+.progress-40 {
+  background-image: linear-gradient(90deg, #333333 50%, transparent 50%, transparent), linear-gradient(234deg, #faeb6c 50%, #333333 50%, #333333);
+}
+
+.progress-45 {
+  background-image: linear-gradient(90deg, #333333 50%, transparent 50%, transparent), linear-gradient(252deg, #faeb6c 50%, #333333 50%, #333333);
+}
+
+.progress-50 {
+  background-image: linear-gradient(-90deg, #faeb6c 50%, transparent 50%, transparent), linear-gradient(270deg, #333333 50%, #333333 50%, #333333);
+}
+
+.progress-55 {
+  background-image: linear-gradient(-72deg, #faeb6c 50%, transparent 50%, transparent), linear-gradient(270deg, #faeb6c 50%, #333333 50%, #333333);
+}
+
+.progress-60 {
+  background-image: linear-gradient(-54deg, #faeb6c 50%, transparent 50%, transparent), linear-gradient(270deg, #faeb6c 50%, #333333 50%, #333333);
+}
+
+.progress-65 {
+  background-image: linear-gradient(-36deg, #faeb6c 50%, transparent 50%, transparent), linear-gradient(270deg, #faeb6c 50%, #333333 50%, #333333);
+}
+
+.progress-70 {
+  background-image: linear-gradient(-18deg, #faeb6c 50%, transparent 50%, transparent), linear-gradient(270deg, #faeb6c 50%, #333333 50%, #333333);
+}
+
+.progress-75 {
+  background-image: linear-gradient(0deg, #faeb6c 50%, transparent 50%, transparent), linear-gradient(270deg, #faeb6c 50%, #333333 50%, #333333);
+}
+
+.progress-80 {
+  background-image: linear-gradient(18deg, #faeb6c 50%, transparent 50%, transparent), linear-gradient(270deg, #faeb6c 50%, #333333 50%, #333333);
+}
+
+.progress-85 {
+  background-image: linear-gradient(36deg, #faeb6c 50%, transparent 50%, transparent), linear-gradient(270deg, #faeb6c 50%, #333333 50%, #333333);
+}
+
+.progress-90 {
+  background-image: linear-gradient(54deg, #faeb6c 50%, transparent 50%, transparent), linear-gradient(270deg, #faeb6c 50%, #333333 50%, #333333);
+}
+
+.progress-95 {
+  background-image: linear-gradient(72deg, #faeb6c 50%, transparent 50%, transparent), linear-gradient(270deg, #faeb6c 50%, #333333 50%, #333333);
+}
+
+.progress-100 {
+  background-image: linear-gradient(90deg, #faeb6c 50%, transparent 50%, transparent), linear-gradient(270deg, #faeb6c 50%, #333333 50%, #333333);
+}
+
+
+
+.bxwrap p.subtitle2 {
+color:#faeb6c;
+}
+
+
+.onecolumnblogtext{
+background:#faeb6c;
+}
+
+
+.onecolumnblog a:link, .onecolumnblog a:visited{
+border-top:2px solid #faeb6c;
+border-bottom:2px solid #faeb6c;
+ -webkit-transition: all 0.5s ease-in-out; 
+-moz-transition: all 0.5s ease-in-out; 
+-o-transition: all 0.5s ease-in-out; 
+transition: all 0.5s ease-in-out;
+}
+.onecolumnblog a:hover{
+background: #faeb6c;
+}
+
+
+#main .buttoncontact {
+transition: all .1s;
+-moz-transition: all .1s; 
+-webkit-transition:all .1s; 
+-o-transition: all .1s; 
+}
+#main .buttoncontact:hover {
+transition: all .1s;
+-moz-transition: all .1s; 
+-webkit-transition:all .1s; 
+-o-transition: all .1s; 
+background:#faeb6c;
+border:#faeb6c 1px solid;
+}
+
+
+a.mapbutton:link, a.mapbutton:visited{
+
+transition: all .3s;
+-moz-transition: all .3s; 
+-webkit-transition:all .3s; 
+-o-transition: all .3s; 
+}
+
+a.mapbutton:hover{
+background:#faeb6c;
+
+}
+
+
+#map a:link, #map a:visited{
+
+}
+#map a:hover{
+color:#faeb6c;
+}
+
+
+
+
+
