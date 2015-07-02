@@ -37,7 +37,7 @@
 				<td>{{ $position->admin_position_name }}</td>
 				<td>{{ $position->admin_position_rank }}</td>
 				<td>{{ $position->modules}}</td>
-				<td></td>
+				<td><a href="/admin/utilities/position/edit?id={{ $position->admin_position_id }}">modify</a> | <a href="admin/utilities/position/delete?id={{ $position->admin_position_id }}">delete</a></td>
 			</tr>
 			@endforeach
 		</tbody>

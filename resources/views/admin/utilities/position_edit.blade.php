@@ -10,29 +10,31 @@
         </div>
     </div>
     <div class="col-md-12 form-group-container" style="overflow: hidden;">
-        <form id="country-add-form" class="form-horizontal" action="admin/utilities/position/add_submit" method="post">
+        <form id="country-add-form" class="form-horizontal" action="admin/utilities/position/edit_submit" method="post">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="id" value="{{ $position->admin_position_id }}">
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Position Name</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="name" name="name" required>
+                    <input type="text" class="form-control" id="name" name="name" value="{{ $position->admin_position_name }}" required>
                 </div>
             </div>
             <div class="form-group">
                 <label for="inputPassword3" class="col-sm-2 control-label">Position Level</label>
                 <div class="col-sm-10">
-                    <input type="number" class="form-control" id="level" name="level" required>
+                    <input type="number" class="form-control" id="level" name="level" value="{{ $position->admin_position_rank }}" required>
                 </div>
             </div> 
             <div class="form-group">
                 <label for="inputPassword3" class="col-sm-2 control-label">Modules</label>
                 <div class="col-sm-10">
                     @foreach($_module as $module)
-                    <div class="col-md-6">
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="module{{ $module->module_id }}" name="module[]" value="{{ $module->module_id }}"> {{ $module->module_name }}
-                        </label>
-                    </div>
+                        <div class="col-md-6">
+                            <label class="checkbox-inline">
+                                <input type="hidden" id="module{{ $module->module_id }}" name="module[{{ $module->module_id }}]" value="0">
+                                <input type="checkbox" id="module{{ $module->module_id }}" name="module[{{ $module->module_id }}]" value="{{ $module->module_id }}" {{ $module->modules == $module->module_id ? 'checked' : '' }}> {{ $module->module_name }}
+                            </label>
+                        </div>
                     @endforeach
                 </div>
             </div>

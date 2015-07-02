@@ -89,7 +89,8 @@ Route::get('admin/utilities/position', 'AdminPositionController@index');
 Route::get('admin/utilities/position/add', 'AdminPositionController@add');
 Route::any('admin/utilities/position/add_submit', 'AdminPositionController@add_submit');
 Route::get('admin/utilities/position/edit', 'AdminPositionController@edit');
-Route::get('admin/utilities/position/edit_submit', 'AdminPositionController@edit_submit');
+Route::any('admin/utilities/position/edit_submit', 'AdminPositionController@edit_submit');
+Route::any('admin/utilities/position/delete', 'AdminPositionController@delete');
 Route::get('admin/utilities/setting', 'AdminSettingsController@index');
 Route::get('admin/utilities/complan', 'AdminComplanController@index');
 

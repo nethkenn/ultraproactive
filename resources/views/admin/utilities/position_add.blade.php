@@ -30,7 +30,8 @@
                     @foreach($_module as $module)
                     <div class="col-md-6">
                         <label class="checkbox-inline">
-                            <input type="checkbox" id="module{{ $module->module_id }}" name="module[]" value="{{ $module->module_id }}"> {{ $module->module_name }}
+                            <input type="hidden" id="module{{ $module->module_id }}" name="module[{{ $module->module_id }}]" value="0">
+                            <input type="checkbox" id="module{{ $module->module_id }}" name="module[{{ $module->module_id }}]" value="{{ $module->module_id }}"> {{ $module->module_name }}
                         </label>
                     </div>
                     @endforeach
