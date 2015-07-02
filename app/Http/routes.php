@@ -30,8 +30,17 @@ Route::post('admin/maintenance/accounts/restore', 'AdminAccountController@restor
 
 Route::any('admin/maintenance/accounts/field', 'AdminAccountController@field');
 Route::get('admin/maintenance/accounts/field/delete', 'AdminAccountController@field_delete');
-Route::get('admin/maintenance/codes', 'AdminCodeController@index');
 
+/**
+ * MEMBERSHIP CODE GENERATOR
+ */
+Route::get('admin/maintenance/codes', 'AdminCodeController@index');
+Route::any('admin/maintenance/codes/add', 'AdminCodeController@add_code');
+Route::any('admin/maintenance/codes/edit', 'AdminCodeController@edit_code');
+Route::get('admin/maintenance/codes/get', 'AdminCodeController@ajax_get_membership_code');
+Route::post('admin/maintenance/codes/block', 'AdminCodeController@block');
+Route::post('admin/maintenance/codes/transfer_code', 'AdminCodeController@transfer_code');
+Route::get('admin/maintenance/codes/verify_code', 'AdminCodeController@verify_code');
 
 Route::get('admin/maintenance/product', 'AdminProductController@index');
 Route::any('admin/maintenance/product/add', 'AdminProductController@add_product');

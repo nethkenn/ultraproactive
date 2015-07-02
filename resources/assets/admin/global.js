@@ -4,6 +4,10 @@
      $(document).ready(function()
      {
         document_ready();
+
+          // $.ajaxSetup({
+          //    headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
+          // });
      });
  }
  
