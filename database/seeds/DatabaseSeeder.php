@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call('tbl_slot');
         $this->call('tbl_country');
         $this->call('tbl_product_category');
+        $this->call('tbl_module');
     }
 }
 class tbl_account extends Seeder
@@ -82,4 +83,30 @@ class tbl_product_category extends Seeder
         );
     } 
 }
+
+class tbl_module extends Seeder
+{
+    public function run()
+    {
+        DB::table('tbl_module')->delete();
+        DB::statement("INSERT INTO `tbl_module` (`module_id`, `module_name`, `archived`) VALUES
+        (1, 'Transaction / Process Sale',   0),
+        (2, 'Transaction / Process Payout', 0),
+        (3, 'Transaction / Process Claims', 0),
+        (4, 'Transaction / Unilevel Distribution',  0),
+        (5, 'Maintenance / Accounts',   0),
+        (6, 'Maintenance / Membership Codes',   0),
+        (7, 'Maintenance / Package',    0),
+        (8, 'Maintenance / Product',    0),
+        (9, 'Maintenance / Slots',  0),
+        (10,    'Utitlities / Admin',   0),
+        (11,    'Utitlities / Admin Levels',    0),
+        (12,    'Utitlities / Company Settings',    0),
+        (13,    'Utitlities / Computation Plans',   0),
+        (14,    'Reports / Product Sales Report',   0),
+        (15,    'Reports / Membership Sales Report',    0);"
+        );
+    } 
+}
+
 
