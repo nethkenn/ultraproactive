@@ -14,7 +14,7 @@ class CreateTblCodeType extends Migration
     {
         Schema::create('tbl_code_type', function (Blueprint $table) {
             $table->increments('code_type_id');
-            $table->increments('code_type_name');
+            $table->string('code_type_name');
         });
     }
 
