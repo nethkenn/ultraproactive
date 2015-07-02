@@ -5,6 +5,7 @@ use Request;
 use Input;
 use Mail;
 use App\Classes\Globals;
+use Redirect;
 
 class FrontController extends Controller
 {
