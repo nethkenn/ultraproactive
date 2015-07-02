@@ -43,7 +43,7 @@
                                                         <div class="wpb_wrapper">
                                                             <p>I am text block. Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
                                                             <p>&nbsp;</p>
-                                                            <a target="_self" href="#" class="btn-system normal default" style="background:#f6f6f6; border:1px solid #f6f6f6;"><i style="color:" class="none "></i><span style="color:#222">Purchase Now</span></a>
+                                                            <a target="_self" href="#" class="btn-system normal default" style="background:#f6f6f6; border:1px solid #f6f6f6;"><i style="color:" class="none "></i><span style="color:#222">Join us Now!</span></a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -132,7 +132,7 @@
                         <div class="vc_col-sm-12 wpb_column column_container" style="" data-animation="" data-delay="0">
                             <div class="wpb_wrapper">
                                 <div class="textbar-container wpb_content_element  style_1 " style="background:#f6f6f6; ;">
-                                    <h1 style="color: #000000">Solveto. Business has two functions - marketing &amp; innovation</h1><span class="subtitle" style="color: #000000"></span><a href="#" class="btn-system normal second_btn" style="color:#000000 background:#f6f6f6;">Purchase Now</a></div>
+                                    <h1 style="color: #000000">Prolife has two functions - marketing &amp; innovation</h1><span class="subtitle" style="color: #000000"></span><a href="#" class="btn-system normal second_btn" style="color:#000000 background:#f6f6f6;">Join us Now!</a></div>
                             </div>
                         </div>
                     </div>

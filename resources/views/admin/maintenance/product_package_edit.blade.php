@@ -154,6 +154,7 @@
 				$('#pop-up-input').val("");
 				$('#pop-up-input').attr('name', 'product['+$prod_id+'][quantity]');
 				$edit_product_pop_up.open();
+				$('#pop-up-input').focus();
 			});
 
 

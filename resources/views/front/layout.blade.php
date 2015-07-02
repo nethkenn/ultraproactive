@@ -85,7 +85,8 @@
                                         <form action="#" method="post">
                                             <input type="text" name="log" id="log" value="" size="20" placeholder="Username" />
                                             <input type="password" name="pwd" id="pwd" size="20" placeholder="Password" />
-                                            <input type="submit" name="submit" value="Send" class="button" />
+                                            <input type="submit" name="submit" value="Login" class="button" />
+                                            <a href="/register" name="submit" class="button">Register</a>
                                             <div class="check-login">
                                                 <label for="rememberme">
                                                     <input name="rememberme" id="rememberme" type="checkbox" checked="checked" value="forever" /> Remember me</label>
@@ -179,112 +180,13 @@
         <!-- Responsive Menu -->
         <div class="menu-small">
             <ul class="menu">
-                <li class="menu-small menu-item-has-children"><a href="index-2.html">Home</a></li>
-                <li><a href="#">Part 1</a></li>
-                <li><a href="index-2.html">Homepage 1</a></li>
-                <li><a href="homepage2.html">Homepage 2</a></li>
-                <li><a href="homepage3.html">Homepage 3</a></li>
-                <li><a href="homepage4.html">Homepage 4</a></li>
-                <li><a href="homepage5.html">Homepage 5</a></li>
-                <li><a href="#">Part 2</a></li>
-                <li><a href="homepage6.html">Homepage 6</a></li>
-                <li><a href="homepage7.html">Homepage 7</a></li>
-                <li><a href="homepage8.html">Homepage 8</a></li>
-                <li><a href="homepage9.html">Homepage 9</a></li>
-                <li><a href="homepage10.html">Homepage 10</a></li>
-                <li><a href="#">Part 3</a></li>
-                <li><a href="homepage11.html">Homepage 11</a></li>
-                <li><a href="homepage12.html">Homepage 12</a></li>
-                <li><a href="homepage13.html">Homepage 13</a></li>
-                <li><a href="homepage14.html">Homepage 14</a></li>
-                <li><a href="homepage15.html">Homepage 15</a></li>
-                <li class="menu-small menu-item-has-children"><a href="features.html">Features</a></li>
-                <li><a href="responsive_layout.html">Responsive Layouts</a></li>
-                <li><a href="rev_slider.html">Slider Revolution</a></li>
-                <li><a href="retina_ready.html">Retina Ready</a></li>
-                <li><a href="visual_composer.html">Visual Composer</a></li>
-                <li><a href="unlimited_colors.html">Unlimited Colors</a></li>
-                <li><a href="layout.html">Wide and Fullwidth</a></li>
-                <li><a href="seo.html">Seo Optimised</a></li>
-                <li><a href="wpml.html">Wpml</a></li>
-                <li><a href="dummy_data.html">Dummy Data</a></li>
-                <li><a href="icons.html">1500+ icons</a></li>
-                <li class="menu-small menu-item-has-children"><a href="#">Header</a></li>
-                <li class="menu-item  "><a title="header_1" href="header_1.html">Header 1</a></li>
-                <li class="menu-item  "><a title="header_2" href="header_2.html">Header 2</a></li>
-                <li class="menu-item  "><a title="header_3" href="header_3.html">Header 3</a></li>
-                <li class="menu-item  "><a title="header_4" href="header_4.html">Header 4</a></li>
-                <li class="menu-item  "><a title="header_5" href="header_5.html">Header 5</a></li>
-                <li class="menu-item  "><a title="header_6" href="header_6.html">Header 6</a></li>
-                <li class="menu-item  "><a title="header_7" href="header_7.html">Header 7</a></li>
-                <li class="menu-small menu-item-has-children"><a href="about_us.html">Pages</a></li>
-                <li><a href="about_us.html">About Us 1</a></li>
-                <li><a href="about_us_2.html">About Us 2</a></li>
-                <li><a href="about_us_3.html">About Us 3</a></li>
-                <li><a href="services.html">Service Page 1</a></li>
-                <li><a href="services_2.html">Services Page 2</a></li>
-                <li><a href="services_3.html">Services Page 3</a></li>
-                <li><a href="our_process.html">Our Process</a></li>
-                <li><a href="our_staff.html">Our Staff</a></li>
-                <li><a href="left_nav.html">Left Navigation</a></li>
-                <li><a href="price_table.html">Price Table</a></li>
-                <li><a href="faq.html">Faq</a></li>
-                <li class="menu-small menu-item-has-children"><a href="port_2_col.html">Portfolio</a></li>
-                <li><a href="#">Part 1</a></li>
-                <li><a href="port_2_col.html">Port 2 Columns</a></li>
-                <li><a href="port_3_col.html">Port 3 Columns</a></li>
-                <li><a href="port_4_col.html">Port 4 Columns</a></li>
-                <li><a href="port_5_col.html">Port 5 Columns</a></li>
-                <li><a href="#">Part 2</a></li>
-                <li><a href="port_sec_2_col.html">Port Second 2 Col</a></li>
-                <li><a href="port_sec_3_col.html">Port Second 3 Col</a></li>
-                <li><a href="port_sec_4_col.html">Port Second 4 Col</a></li>
-                <li><a href="port_sec_5_col.html">Port Second 5 Col</a></li>
-                <li><a href="#">Part 3</a></li>
-                <li><a href="port_wide_2_col.html">Port 2 Col Wide</a></li>
-                <li><a href="port_wide_3_col.html">Port 3 Col Wide</a></li>
-                <li><a href="port_wide_4_col.html">Por 4 Col Wide</a></li>
-                <li><a href="port_wide_5_col.html">Port 5 Col Wide</a></li>
-                <li><a href="#">Part 4</a></li>
-                <li><a href="port_left.html">Port Left Side</a></li>
-                <li><a href="port_right.html">Port Right Side</a></li>
-                <li class="menu-item  "><a href="port_single_left.html">Single Port Left</a></li>
-                <li class="menu-item  "><a href="port_single_right.html">Single Port Right</a></li>
-                <li class="menu-small menu-item-has-children"><a href="blockquote.html">Shortcodes</a></li>
-                <li><a href="#">Part 1</a></li>
-                <li><a href="blockquote.html">BlockQuotes</a></li>
-                <li><a href="blog_elem.html">Blog Elements</a></li>
-                <li><a href="recent_port.html">Recent Portfolio</a></li>
-                <li><a href="clients.html">Clients</a></li>
-                <li><a href="#">Part 2</a></li>
-                <li><a href="faq_shortcode.html">F.A.Q</a></li>
-                <li><a href="progress_skill.html">Progress Skill</a></li>
-                <li><a href="accordions.html">Accordions</a></li>
-                <li><a href="alerts.html">Alerts</a></li>
-                <li><a href="#">Part 3</a></li>
-                <li><a href="counter.html">Animated Counter</a></li>
-                <li><a href="buttons.html">Buttons</a></li>
-                <li><a href="chart_skill.html">Chart Skills</a></li>
-                <li><a href="dividers.html">Dividers</a></li>
-                <li><a href="#">Part 4</a></li>
-                <li><a href="dropcaps.html">Dropcaps</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="headings.html">Headings</a></li>
-                <li><a href="highlights.html">Highlights</a></li>
-                <li class="menu-small menu-item-has-children"><a href="blog.html">Blog</a></li>
-                <li class="menu-item  "><a title="blog_normal-sidebar_none" href="blog.html">Blog Full Width</a></li>
-                <li class="menu-item  "><a title="blog_normal-sidebar_right" href="blog_r_sidebar.html">Blog Right Sidebar</a></li>
-                <li class="menu-item  "><a title="blog_normal-sidebar_left" href="blog_l_sidebar.html">Blog Left Sidebar</a></li>
-                <li class="menu-item  "><a title="blog_masonry-sidebar_none" href="blog_masonry.html">Blog Masonry</a></li>
-                <li class="menu-item  "><a title="blog_masonry-sidebar_left" href="blog_masonry_l.html">Blog Masonry Sidebar Left</a></li>
-                <li class="menu-item  "><a title="blog_masonry-sidebar_right" href="blog_masonry_r.html">Blog Masonry Right Sidebar</a></li>
-                <li class="menu-item  "><a title="blog_second-sidebar_none" href="blog_2.html">Blog Second</a></li>
-                <li class="menu-item  "><a title="blog_second-sidebar_left" href="blog_2_l_sidebar.html">Blog Second Sidebar Left</a></li>
-                <li class="menu-item  "><a title="blog_second-sidebar_right" href="blog_2_r_sidebar.html">Blog Second Right Sidebar</a></li>
-                <li class="menu-small menu-item-has-children"><a href="contact-2.html">Contact Us</a></li>
-                <li><a href="contact.html">Contact Page</a></li>
-                <li><a href="contact_2.html">Contact Page 2</a></li>
-                <li><a href="contact_3.html">Contact Page 3</a></li>
+                <li class="{{ Request::segment(1) == '' ? 'current-menu-ancestor' : '' }} menu-item-has-children"><a href="/">Home</a></li>
+                <li class="{{ Request::segment(1) == 'about' ? 'current-menu-ancestor' : '' }} menu-item   menu-item-has-children"><a href="/about">About Us</a></li>
+                <li class="{{ Request::segment(1) == 'earn' ? 'current-menu-ancestor' : '' }} menu-item   menu-item-has-children"><a href="/earn">Earn</a></li>
+                <li class="{{ Request::segment(1) == 'service' ? 'current-menu-ancestor' : '' }} menu-item-has-children"><a href="/service">Services</a></li>
+                <li class="{{ Request::segment(1) == 'product' ? 'current-menu-ancestor' : '' }} menu-item   menu-item-has-children"><a href="/product">Products</a></li>
+                <li class="{{ Request::segment(1) == 'news' ? 'current-menu-ancestor' : '' }}  menu-item-has-children"><a href="/news">News</a></li>
+                <li class="{{ Request::segment(1) == 'contact' ? 'current-menu-ancestor' : '' }}  menu-item-has-children"><a href="/contact">Contact Us</a></li>
             </ul>
         </div>
         <!-- End Responsive Menu -->
@@ -301,14 +203,13 @@
                                 <div class="triangle"></div>
                                 <ul class='tweet_list' id='tweet_footer'>
                                     <li class="tweet">
-                                        <h5>THEMEPLE @ New wordpress business theme its now online. Take a look:
-<a href="http://t.co/502gW1SS6P" class="twitter-link">http://t.co/502gW1SS6P</a> <a href="http://t.co/wjUP9mGHGy" class="twitter-link">http://t.co/wjUP9mGHGy</a></h5></li>
+                                        <h5>
+<a href="http://t.co/502gW1SS6P" class="twitter-link"></a> <a href="http://t.co/wjUP9mGHGy" class="twitter-link"></a></h5></li>
                                     <li class="tweet">
-                                        <h5>THEMEPLE @ Adaptive Backgrounds - a jQuery plugin to extract dominant colors from &lt;img&gt; tags and apply them to their parent <a href="http://t.co/as9cYK9s52" class="twitter-link">http://t.co/as9cYK9s52</a></h5></li>
+                                        <h5><a href="http://t.co/as9cYK9s52" class="twitter-link"></a></h5></li>
                                     <li class="tweet">
-                                        <h5>THEMEPLE @ <a href="http://t.co/iNKRzkrcRq" class="twitter-link">http://t.co/iNKRzkrcRq</a>
-
-Check new business html5 template <a href="http://t.co/AoGpjeWaZw" class="twitter-link">http://t.co/AoGpjeWaZw</a></h5></li>
+                                        <h5><a href="http://t.co/iNKRzkrcRq" class="twitter-link"></a>
+<a href="http://t.co/AoGpjeWaZw" class="twitter-link"></a></h5></li>
                                 </ul>
                                 <div class="pagination pull-right"><a href="#" class="back"><i class="moon-arrow-left"></i></a><a href="#" class="next"><i class="moon-arrow-right-2"></i></a></div><span class="shadow_top_footer"></span></div>
                         </div>
@@ -375,7 +276,7 @@ Check new business html5 template <a href="http://t.co/AoGpjeWaZw" class="twitte
                                     <a href='#' class='tag-link-31' title='1 topic' style='font-size: 8pt;'>premium</a>
                                     <a href='#' class='tag-link-32' title='1 topic' style='font-size: 8pt;'>theme</a>
                                     <a href='#' class='tag-link-28' title='1 topic' style='font-size: 8pt;'>visual</a>
-                                    <a href='#' class='tag-link-4' title='1 topic' style='font-size: 8pt;'>wordpress</a>
+                                    <a href='#' class='tag-link-4' title='1 topic' style='font-size: 8pt;'></a>
                                     <a href='#' class='tag-link-33' title='1 topic' style='font-size: 8pt;'>wp theme</a></div>
                             </div>
                         </div>

@@ -313,7 +313,7 @@
                                                                     <a href="port_single_left.html"><i class="moon-redo"></i></a>
                                                                 </div>
                                                             </div>
-                                                            <a href="/resources/assets/ausart/assets/uploads/2015/01/free-psd-tshirt-multicolor-mockup-color.jpg" class="title a1 lightbox-gallery lightbox" data-animate="fadeInUp">WordPress Kind Website</a>
+                                                            <a href="/resources/assets/ausart/assets/uploads/2015/01/free-psd-tshirt-multicolor-mockup-color.jpg" class="title a1 lightbox-gallery lightbox" data-animate="fadeInUp"> Kind Website</a>
                                                             <a href="#" class="categories a2" data-animate="zoomIn">html java jquery new-2 php </a>
                                                         </div>
                                                     </div>
@@ -1004,7 +1004,7 @@
                             <div class="wpb_wrapper">
                                 <div class="dark_clients clients_el ">
                                     <div class="header">
-                                        <h2>Our Clients</h2></div>
+                                        <h2>Our Partners</h2></div>
                                     <section class="row clients clients_caro">
                                         <div class="item">
                                             <a href="#" title="">

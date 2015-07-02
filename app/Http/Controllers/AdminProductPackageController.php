@@ -119,7 +119,7 @@ class AdminProductPackageController extends AdminController
 		$prod_package_id = $prod_package->product_package_id;
 		$data["page"] = "Edit Package Maintenance";
 		$data['_error'] = null;
-		$data['_product'] = Tbl_product_package_has::Product()->where('product_package_id',4)->get();
+		$data['_product'] = Tbl_product_package_has::Product()->where('product_package_id',$prod_package_id)->get();
 
 		if(isset($_POST['product_package_name']))
 		{

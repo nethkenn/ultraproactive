@@ -9,7 +9,9 @@ Route::any('/earn', 'FrontController@earn');
 Route::any('/service', 'FrontController@service');
 Route::any('/product', 'FrontController@product');
 Route::any('/news', 'FrontController@news');
+Route::any('/news_content', 'FrontController@news_content');
 Route::any('/contact', 'FrontController@contact');
+Route::any('/register', 'FrontController@register');
 Route::any('/admin', 'AdminController@index');
 
 /* ADMIN / TRANSACTION */
@@ -29,8 +31,17 @@ Route::post('admin/maintenance/accounts/restore', 'AdminAccountController@restor
 
 Route::any('admin/maintenance/accounts/field', 'AdminAccountController@field');
 Route::get('admin/maintenance/accounts/field/delete', 'AdminAccountController@field_delete');
-Route::get('admin/maintenance/codes', 'AdminCodeController@index');
 
+/**
+ * MEMBERSHIP CODE GENERATOR
+ */
+Route::get('admin/maintenance/codes', 'AdminCodeController@index');
+Route::any('admin/maintenance/codes/add', 'AdminCodeController@add_code');
+Route::any('admin/maintenance/codes/edit', 'AdminCodeController@edit_code');
+Route::get('admin/maintenance/codes/get', 'AdminCodeController@ajax_get_membership_code');
+Route::post('admin/maintenance/codes/block', 'AdminCodeController@block');
+Route::post('admin/maintenance/codes/transfer_code', 'AdminCodeController@transfer_code');
+Route::get('admin/maintenance/codes/verify_code', 'AdminCodeController@verify_code');
 
 Route::get('admin/maintenance/product', 'AdminProductController@index');
 Route::any('admin/maintenance/product/add', 'AdminProductController@add_product');
@@ -38,6 +49,13 @@ Route::any('admin/maintenance/product/edit', 'AdminProductController@edit_produc
 Route::get('admin/maintenance/product/get_product', 'AdminProductController@ajax_get_product');
 Route::post('admin/maintenance/product/archive', 'AdminProductController@archive_product');
 Route::post('admin/maintenance/product/restore', 'AdminProductController@restore_product');
+
+Route::get('admin/maintenance/news', 'AdminNewsController@index');
+Route::get('admin/maintenance/news/add', 'AdminNewsController@add');
+Route::any('admin/maintenance/news/add_submit', 'AdminNewsController@add_submit');
+Route::get('admin/maintenance/news/edit', 'AdminNewsController@edit');
+Route::any('admin/maintenance/news/edit_submit', 'AdminNewsController@edit_submit');
+Route::any('admin/maintenance/news/delete', 'AdminNewsController@delete');
 
 /**
  * PRODUCT PACKAGE CONTROLLER

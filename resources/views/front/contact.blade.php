@@ -18,11 +18,7 @@
                 </style>
                 <h1 class="title">Contact Page 3</h1>
                 <div class="breadcrumbss">
-                    <ul class="page_parents pull-right">
-                        <li class="breadcrumbs_c"><i class="moon-home-3"></i>&nbsp;&nbsp;&nbsp;You are here</li>
-                        <li class="breadcrumbs_c"><a class="breadcrumbs_c" href="http://newthemes.themeple.co/ausart">Home</a></li>
-                        <li class="breadcrumbs_c"><a class="breadcrumbs_c" href="http://newthemes.themeple.co/ausart/?page_id=1614">Contact Page 3</a></li>
-                    </ul>
+      
                 </div>
             </div>
         </div>
