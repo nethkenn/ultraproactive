@@ -133,7 +133,7 @@
                     <div class="span12">
                         <!-- Logo -->
                         <div id="logo" class="">
-                            <a href='/'><img src='/resources/assets/ausart/assets/img/logo.png' alt='' /></a>
+                            <a href='/'><img style="height: 60px;" src='/resources/assets/frontend/img/logo.png' alt='' /></a>
                         </div>
                         <!-- #logo END -->
                         <div class="after_logo">
