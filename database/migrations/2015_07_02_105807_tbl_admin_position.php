@@ -28,6 +28,6 @@ class TblAdminPosition extends Migration
      */
     public function down()
     {
-        Schema::drop('tbl_product');
+        Schema::drop('tbl_admin_position');
     }
 }

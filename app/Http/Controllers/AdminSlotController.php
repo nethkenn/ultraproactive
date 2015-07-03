@@ -76,10 +76,6 @@ class AdminSlotController extends AdminController
 
 		if($check_placement)
 		{
-			$return["message"] = "The slot number you're trying to use was already used.";
-		}
-		elseif($check_id)
-		{
 			$return["message"] = "The position you're trying to use is already occupied";
 		}
 		elseif($data["message"] != "")
@@ -88,7 +84,6 @@ class AdminSlotController extends AdminController
 		}
 		else
 		{
-			$insert["slot_id"] =  Request::input("slot_number");
 			$insert["slot_membership"] =  Request::input("slot_membership");
 			$insert["slot_type"] =  Request::input("slot_type");
 			$insert["slot_rank"] =  Request::input("rank");
