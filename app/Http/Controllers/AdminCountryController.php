@@ -13,38 +13,17 @@ use App\Tbl_country;
 
 class AdminCountryController extends AdminController
 {
-
-	
 	public function index()
 	{	
-		// $query = DB::table('tbl_country');
-
-		// if(isset($_GET['archived']))
-		// {
-		// 	$query->where('archived', 1);
-		// }
-		// else
-		// {
-		// 	$query->where('archived', 0);
-		// }
-
-		// $data['_country'] = $query->get();
 		$data["page"] = "Country Maintenance";
-		
         return view('admin.maintenance.country', $data);
 	}
-
-
 	public function add_country()
 	{
-
 		$data['_error'] = null;
-
 
 		if(isset($_POST['country_name']))
 		{
-
-
 			$input['country_name'] = Request::input('country_name');
 			$rules['country_name'] = 'required|unique:tbl_country,country_name';
 
@@ -70,8 +49,6 @@ class AdminCountryController extends AdminController
 			{
 				$data['_error'] = $validator->errors()->all();
 			}
-
-
 		}
 
 		return view('admin.maintenance.country_add',$data);
@@ -79,13 +56,9 @@ class AdminCountryController extends AdminController
 
 	public function edit_country()
 	{
-
 		$data['_error'] = null;
-
 		$country_id = Request::input('id');
-		
 		$data['country'] = DB::table('tbl_country')->where('country_id',$country_id)->first();
-
 
 		if(isset($_POST['country_name']))
 		{
@@ -116,9 +89,6 @@ class AdminCountryController extends AdminController
 			}
 		}
 
-
-
-		
 		return view('admin.maintenance.country_edit', $data);
 	}
 
@@ -133,7 +103,6 @@ class AdminCountryController extends AdminController
 	
 	public function restore_country()
 	{	
-
 		$id = Request::input('id');
 		$data['query'] = DB::table('tbl_country')->where('country_id',$id)->update(['archived'=>'0']);
 

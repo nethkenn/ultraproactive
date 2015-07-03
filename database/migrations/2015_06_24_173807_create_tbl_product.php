@@ -12,7 +12,8 @@ class CreateTblProduct extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_product', function (Blueprint $table) {
+        Schema::create('tbl_product', function (Blueprint $table)
+        {
             $table->increments('product_id');
             $table->string('sku');
             // $table->string('barcode');
@@ -25,10 +26,7 @@ class CreateTblProduct extends Migration
             $table->string('image_file')->default('default.jpg');
             $table->timestamps();
             $table->tinyInteger('archived')->default(0);
-            $table->foreign('product_category_id')
-              ->references('product_category_id')->on('tbl_product_category')
-              ->onDelete('cascade');
-
+            $table->foreign('product_category_id')->references('product_category_id')->on('tbl_product_category')->onDelete('cascade');
         });
     }
 

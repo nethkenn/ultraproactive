@@ -1,7 +1,13 @@
 <?php namespace App\Http\Controllers;
 use DB;
 use Request;
+<<<<<<< HEAD
+use Validator;
+use Datatables;
+use App\Tbl_position;
+=======
 use Redirect;
+>>>>>>> eebf8cd45767dc8fac24238bf31c0e4f77169f71
 
 class AdminPositionController extends AdminController
 {
@@ -96,5 +102,12 @@ class AdminPositionController extends AdminController
 		DB::table("tbl_admin_position")->where("admin_position_id", $id)->update(['archived' => "1"]);
 
         return Redirect::to('/admin/utilities/position');
+	}
+	public function data()
+	{
+        $account = Tbl_position::select('*');
+        return Datatables::of($account)	->addColumn('edit','<a href="admin/maintenance/accounts/edit?id={{$account_id}}">EDIT</a>')
+        								->addColumn('archive','<a href="#" account-id="{{$account_id}}">ARCHIVE</a>')
+        								->make(true);
 	}
 }
