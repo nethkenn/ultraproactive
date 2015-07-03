@@ -12,7 +12,8 @@ class CreateTblProductPackageHas extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_product_package_has', function (Blueprint $table) {
+        Schema::create('tbl_product_package_has', function (Blueprint $table)
+        {
             $table->integer('product_id')->unsigned();
             $table->integer('product_package_id')->unsigned();
             $table->integer('quantity');

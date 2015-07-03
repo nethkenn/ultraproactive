@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class TblAdminPosition extends Migration
+class CreateTblAdminPosition extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,11 @@ class TblAdminPosition extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_admin_position', function (Blueprint $table) {
+        Schema::create('tbl_admin_position', function(Blueprint $table)
+        {
             $table->increments('admin_position_id');
             $table->string('admin_position_name');
-            $table->string('admin_position_rank');
-            $table->string('admin_position_module');
-            $table->tinyInteger('archived')->default(0);
+            $table->integer('admin_position_level');
         });
     }
 
