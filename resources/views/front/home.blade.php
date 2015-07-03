@@ -97,7 +97,7 @@
             <div id="fws_5559b27a70671" class="wpb_row animate_onoffset  vc_row-fluid   row-dynamic-el section-style parallax_section   " style="background-repeat: no-repeat; padding-top: 90px !important; padding-bottom: 90px !important; ">
                 <div class="parallax_bg" style="background-image: url(/resources/assets/ausart/assets/uploads/2015/01/4-1-copy.jpg); background-position: 50% 0px; background-attachment:fixed !important"></div>
                 <div class="container animate_onoffset light">
-                    <div class="section_clear">
+                    <div class="section_clear" style="opacity: 0;">
                         <div class="vc_col-sm-3 wpb_column column_container" style="" data-animation="" data-delay="0">
                             <div class="wpb_wrapper">
                                 <div class="animated_counter">
@@ -154,14 +154,14 @@
                     <div class="vc_col-sm-12 wpb_column column_container" style="" data-animation="" data-delay="0">
                         <div class="wpb_wrapper">
                             <div class="wpb_content_element dynamic_page_header style_3">
-                                <h1 style="font-size:36px; color:#3d3d3d">Our Recent Projects</h1>
+                                <h1 style="font-size:36px; color:#3d3d3d">Our Recent Products</h1>
                                 <div class="line_under">
                                     <div class="line_center"></div>
                                 </div>
                                 <div class="line_under below_line">
                                     <div class="line_center"></div>
                                 </div>
-                                <p class="description style_3">Showcase Your Work with Ausart It will be an Awesome Experience.</p>
+                                <p class="description style_3">Showcase Your Work with Prolife It will be an Awesome Experience.</p>
                             </div>
                         </div>
                     </div>
@@ -176,9 +176,10 @@
                                     <section id="portfolio-preview-items" class="four-cols animate_onoffset" data-nr="4">
                                         <!-- Portfolio Normal Mode -->
                                         <!-- item -->
+                                        @foreach($_product as $product)
                                         <div class="portfolio-item html java  v2" data-id="3537">
                                             <div class="he-wrap tpl2">
-                                                <img src="/resources/assets/ausart/assets/uploads/2015/01/pink_planet_full-514x360.png" alt="">
+                                                <img src="{{ $product->image }}" alt="">
                                                 <div class="overlay he-view">
                                                     <div class="bg a0" data-animate="fadeIn">
                                                         <div class="center-bar v1">
@@ -187,161 +188,16 @@
                                                                     <a href="port_single_left.html"><i class="moon-redo"></i></a>
                                                                 </div>
                                                             </div>
-                                                            <a href="/resources/assets/ausart/assets/uploads/2015/01/pink_planet_full.png" class="title a1 lightbox-gallery lightbox" data-animate="fadeInUp">Ilustation</a>
-                                                            <a href="#" class="categories a2" data-animate="zoomIn">html java </a>
+                                                            <a href="/resources/assets/ausart/assets/uploads/2015/01/pink_planet_full.png" class="title a1 lightbox-gallery lightbox" data-animate="fadeInUp">{{ $product->product_name }}</a>
+                                                            <a href="#" class="categories a2" data-animate="zoomIn">₱ {{ $product->price }}</a>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        @endforeach
                                         <!-- Portfolio Normal Mode End -->
                                         <!-- Portfolio Normal Mode -->
-                                        <!-- item -->
-                                        <div class="portfolio-item html java jquery new-2 php  v2" data-id="3406">
-                                            <div class="he-wrap tpl2">
-                                                <img src="/resources/assets/ausart/assets/uploads/2015/01/ebfb9010d5c8878c416b72aa60a21831-514x360.jpg" alt="">
-                                                <div class="overlay he-view">
-                                                    <div class="bg a0" data-animate="fadeIn">
-                                                        <div class="center-bar v1">
-                                                            <div class="centered">
-                                                                <div class="portfolio_go a0" data-animate="zoomIn">
-                                                                    <a href="port_single_left.html"><i class="moon-redo"></i></a>
-                                                                </div>
-                                                            </div>
-                                                            <a href="/resources/assets/ausart/assets/uploads/2015/01/ebfb9010d5c8878c416b72aa60a21831.jpg" class="title a1 lightbox-gallery lightbox" data-animate="fadeInUp">Simple Awesome</a>
-                                                            <a href="#" class="categories a2" data-animate="zoomIn">html java jquery new-2 php </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Portfolio Normal Mode End -->
-                                        <!-- Portfolio Normal Mode -->
-                                        <!-- item -->
-                                        <div class="portfolio-item single-right  v2" data-id="3394">
-                                            <div class="he-wrap tpl2">
-                                                <img src="/resources/assets/ausart/assets/uploads/2014/12/vintage-typewriter1-514x360.jpg" alt="">
-                                                <div class="overlay he-view">
-                                                    <div class="bg a0" data-animate="fadeIn">
-                                                        <div class="center-bar v1">
-                                                            <div class="centered">
-                                                                <div class="portfolio_go a0" data-animate="zoomIn">
-                                                                    <a href="port_single_left.html"><i class="moon-redo"></i></a>
-                                                                </div>
-                                                            </div>
-                                                            <a href="/resources/assets/ausart/assets/uploads/2014/12/vintage-typewriter1.jpg" class="title a1 lightbox-gallery lightbox" data-animate="fadeInUp">Single Portfolio Right</a>
-                                                            <a href="#" class="categories a2" data-animate="zoomIn">single-right </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Portfolio Normal Mode End -->
-                                        <!-- Portfolio Normal Mode -->
-                                        <!-- item -->
-                                        <div class="portfolio-item single-left  v2" data-id="3388">
-                                            <div class="he-wrap tpl2">
-                                                <img src="/resources/assets/ausart/assets/uploads/2015/01/fd737e4b1430f5885809111f91e80ef5-514x360.jpg" alt="">
-                                                <div class="overlay he-view">
-                                                    <div class="bg a0" data-animate="fadeIn">
-                                                        <div class="center-bar v1">
-                                                            <div class="centered">
-                                                                <div class="portfolio_go a0" data-animate="zoomIn">
-                                                                    <a href="port_single_left.html"><i class="moon-redo"></i></a>
-                                                                </div>
-                                                            </div>
-                                                            <a href="/resources/assets/ausart/assets/uploads/2015/01/fd737e4b1430f5885809111f91e80ef5.jpg" class="title a1 lightbox-gallery lightbox" data-animate="fadeInUp">Portfolio Sample Left</a>
-                                                            <a href="#" class="categories a2" data-animate="zoomIn">single-left </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Portfolio Normal Mode End -->
-                                        <!-- Portfolio Normal Mode -->
-                                        <!-- item -->
-                                        <div class="portfolio-item html java jquery new-2 php  v2" data-id="2354">
-                                            <div class="he-wrap tpl2">
-                                                <img src="/resources/assets/ausart/assets/uploads/2015/01/port15-514x360.jpg" alt="">
-                                                <div class="overlay he-view">
-                                                    <div class="bg a0" data-animate="fadeIn">
-                                                        <div class="center-bar v1">
-                                                            <div class="centered">
-                                                                <div class="portfolio_go a0" data-animate="zoomIn">
-                                                                    <a href="port_single_left.html"><i class="moon-redo"></i></a>
-                                                                </div>
-                                                            </div>
-                                                            <a href="/resources/assets/ausart/assets/uploads/2015/01/port15.jpg" class="title a1 lightbox-gallery lightbox" data-animate="fadeInUp">photography</a>
-                                                            <a href="#" class="categories a2" data-animate="zoomIn">html java jquery new-2 php </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Portfolio Normal Mode End -->
-                                        <!-- Portfolio Normal Mode -->
-                                        <!-- item -->
-                                        <div class="portfolio-item html java  v2" data-id="2342">
-                                            <div class="he-wrap tpl2">
-                                                <img src="/resources/assets/ausart/assets/uploads/2015/01/dd312af949db1347811b4d723f5ab1a7-514x360.jpg" alt="">
-                                                <div class="overlay he-view">
-                                                    <div class="bg a0" data-animate="fadeIn">
-                                                        <div class="center-bar v1">
-                                                            <div class="centered">
-                                                                <div class="portfolio_go a0" data-animate="zoomIn">
-                                                                    <a href="port_single_left.html"><i class="moon-redo"></i></a>
-                                                                </div>
-                                                            </div>
-                                                            <a href="/resources/assets/ausart/assets/uploads/2015/01/dd312af949db1347811b4d723f5ab1a7.jpg" class="title a1 lightbox-gallery lightbox" data-animate="fadeInUp">Photography</a>
-                                                            <a href="#" class="categories a2" data-animate="zoomIn">html java </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Portfolio Normal Mode End -->
-                                        <!-- Portfolio Normal Mode -->
-                                        <!-- item -->
-                                        <div class="portfolio-item html java jquery new-2 php  v2" data-id="2341">
-                                            <div class="he-wrap tpl2">
-                                                <img src="/resources/assets/ausart/assets/uploads/2015/01/free-psd-tshirt-multicolor-mockup-color-514x360.jpg" alt="">
-                                                <div class="overlay he-view">
-                                                    <div class="bg a0" data-animate="fadeIn">
-                                                        <div class="center-bar v1">
-                                                            <div class="centered">
-                                                                <div class="portfolio_go a0" data-animate="zoomIn">
-                                                                    <a href="port_single_left.html"><i class="moon-redo"></i></a>
-                                                                </div>
-                                                            </div>
-                                                            <a href="/resources/assets/ausart/assets/uploads/2015/01/free-psd-tshirt-multicolor-mockup-color.jpg" class="title a1 lightbox-gallery lightbox" data-animate="fadeInUp"> Kind Website</a>
-                                                            <a href="#" class="categories a2" data-animate="zoomIn">html java jquery new-2 php </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Portfolio Normal Mode End -->
-                                        <!-- Portfolio Normal Mode -->
-                                        <!-- item -->
-                                        <div class="portfolio-item html java jquery new-2 php  v2" data-id="2340">
-                                            <div class="he-wrap tpl2">
-                                                <img src="/resources/assets/ausart/assets/uploads/2015/01/realpixels-514x360.png" alt="">
-                                                <div class="overlay he-view">
-                                                    <div class="bg a0" data-animate="fadeIn">
-                                                        <div class="center-bar v1">
-                                                            <div class="centered">
-                                                                <div class="portfolio_go a0" data-animate="zoomIn">
-                                                                    <a href="port_single_left.html"><i class="moon-redo"></i></a>
-                                                                </div>
-                                                            </div>
-                                                            <a href="/resources/assets/ausart/assets/uploads/2015/01/realpixels.png" class="title a1 lightbox-gallery lightbox" data-animate="fadeInUp">Web Design</a>
-                                                            <a href="#" class="categories a2" data-animate="zoomIn">html java jquery new-2 php </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Portfolio Normal Mode End -->
                                     </section>
                                 </div>
                             </div>
@@ -355,64 +211,7 @@
                         <div class="vc_col-sm-12 wpb_column column_container" style="" data-animation="" data-delay="0">
                             <div class="wpb_wrapper">
                                 <div class="textbar-container wpb_content_element  style_1 " style="background:; border:none;;">
-                                    <h1 style="color: #222222">Ausart. Business has two functions - marketing &amp; innovation</h1><span class="subtitle" style="color: #222222"></span><a href="2.html" class="btn-system normal second_btn" style="color:#222222 background:;">PurcHase Now</a></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="fws_5559b27a84678" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="padding-top: 120px !important; padding-bottom: 90px !important; ">
-                <div class="container  dark">
-                    <div class="section_clear">
-                        <div class="vc_col-sm-6 wpb_column column_container" style="" data-animation="" data-delay="0">
-                            <div class="wpb_wrapper">
-                                <div class="wpb_content_element media media_el animate_onoffset"><img src="/resources/assets/ausart/assets/uploads/2015/01/66666.png" alt="" class="type_image media_animation animation_left alignment_left" style="" /></div>
-                            </div>
-                        </div>
-                        <div class="vc_col-sm-6 wpb_column column_container" style="" data-animation="" data-delay="0">
-                            <div class="wpb_wrapper">
-                                <div class="header " style="">
-                                    <h2>Recent News</h2></div>
-                                <div class="recent_news wpb_content_element">
-                                    <div class="pagination news">
-                                        <a href="#" class="prev"></a>
-                                        <a href="#" class="next"></a>
-                                    </div>
-                                    <div class="row">
-                                        <div class="news-carousel ">
-                                            <div class="news-carousel-item">
-                                                <dl class="news-article blog-article dl-horizontal">
-                                                    <dt><img src="/resources/assets/ausart/assets/uploads/2015/01/shutterstock_138847463w-80x77.jpg" alt=""></dt>
-                                                    <dd>
-                                                        <h5><a href="post.html">First Post with Featured Image</a></h5>
-                                                        <div class="blog-content">There are many variations of passages of Lorem Ipsum available, but the majority have suffered nel alteration in some...</div>
-                                                        <div class="read_more"><a href="post.html">Read More</a></div>
-                                                    </dd>
-                                                </dl>
-                                            </div>
-                                            <div class="news-carousel-item">
-                                                <dl class="news-article blog-article dl-horizontal">
-                                                    <dt><img src="/resources/assets/ausart/assets/uploads/2015/01/shutterstock_195025238-80x77.jpg" alt=""></dt>
-                                                    <dd>
-                                                        <h5><a href="post.html">Second Post with Featured Image</a></h5>
-                                                        <div class="blog-content">There are many variations of passages of Lorem Ipsum available, but the majority have suffered nel alteration in some...</div>
-                                                        <div class="read_more"><a href="post.html">Read More</a></div>
-                                                    </dd>
-                                                </dl>
-                                            </div>
-                                            <div class="news-carousel-item">
-                                                <dl class="news-article blog-article dl-horizontal">
-                                                    <dt><img src="/resources/assets/ausart/assets/uploads/2015/01/shutterstock_137898407-80x77.jpg" alt=""></dt>
-                                                    <dd>
-                                                        <h5><a href="post.html">New Post with Featured Image</a></h5>
-                                                        <div class="blog-content">There are many variations of passages of Lorem Ipsum available, but the majority have suffered nel alteration in some...</div>
-                                                        <div class="read_more"><a href="post.html">Read More</a></div>
-                                                    </dd>
-                                                </dl>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                    <h1 style="color: #222222">Prolife has two functions - marketing &amp; innovation</h1><span class="subtitle" style="color: #222222"></span><a href="2.html" class="btn-system normal second_btn" style="color:#222222 background:;">Join us Now!</a></div>
                             </div>
                         </div>
                     </div>
@@ -553,14 +352,14 @@
                     <div class="vc_col-sm-12 wpb_column column_container" style="" data-animation="" data-delay="0">
                         <div class="wpb_wrapper">
                             <div class="wpb_content_element dynamic_page_header style_3">
-                                <h1 style="font-size:36px; color:#3d3d3d">Our Recent Projects</h1>
+                                <h1 style="font-size:36px; color:#3d3d3d">Our Recent News</h1>
                                 <div class="line_under">
                                     <div class="line_center"></div>
                                 </div>
                                 <div class="line_under below_line">
                                     <div class="line_center"></div>
                                 </div>
-                                <p class="description style_3">Showcase Your Work with Ausart It will be an Awesome Experience.</p>
+                                <p class="description style_3">Showcase Your Work with Prolife It will be an Awesome Experience.</p>
                             </div>
                         </div>
                     </div>
@@ -569,28 +368,28 @@
             <div id="fws_5559b27a8f33b" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="padding-top: 30px !important; padding-bottom: 30px !important; ">
                 <div class="container  dark">
                     <div class="section_clear">
+                        @foreach($_news as $news)
                         <div class="vc_col-sm-4 wpb_column column_container" style="" data-animation="" data-delay="0">
                             <div class="wpb_wrapper">
                                 <div class="latest_blog wpb_content_element">
                                     <div class="blog_posts">
                                         <div class="posts">
-                                            <div class="blog-article grid"><img alt="image_blog" src="/resources/assets/ausart/assets/uploads/2015/01/shutterstock_138847463w-300x160.jpg">
+                                            <div class="blog-article grid"><img alt="image_blog" src="{{ $news->image }}">
                                                 <div class="blog_content">
                                                     <dl>
                                                         <dt class="dt_latest_blog">
-                                                            <div class="date_divs">16</div>
-                                                            <div class="month_div">Jan</div>
+                                                            <div class="date_divs">{{ $news->day }}</div>
+                                                            <div class="month_div">{{ $news->month }}</div>
                                                             <div class="post_type"><i class="moon-pencil"></i></div>
                                                         </dt>
                                                         <dd>
                                                             <div class="content">
-                                                                <h5><a href="post.html">First Post with Featured Image</a></h5>
+                                                                <h5><a href="/news_content?id={{ $news->news_id }}">{{ $news->news_title }}</a></h5>
                                                                 <ul class="overlay">
-                                                                    <li class="author">by admin</li>
-                                                                    <li class="author">|</li>
-                                                                    <li class="comments_nr">1 Comments</li>
+                                                                    <li class="author">by Prolife</li>
                                                                 </ul>
-                                                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered nel alteration in some form, by injected humour, or randomised words which </p><a class="readmore" href="post.html">Read More</a></div>
+                                                                <p>{!! substr($news->news_description, 0, 170) !!}</p><a class="readmore" href="/news_content?id={{ $news->news_id }}">Read More</a>
+                                                            </div>
                                                         </dd>
                                                     </dl>
                                                 </div>
@@ -600,68 +399,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="vc_col-sm-4 wpb_column column_container" style="" data-animation="" data-delay="0">
-                            <div class="wpb_wrapper">
-                                <div class="latest_blog wpb_content_element">
-                                    <div class="blog_posts">
-                                        <div class="posts">
-                                            <div class="blog-article grid"><img alt="image_blog" src="/resources/assets/ausart/assets/uploads/2015/01/shutterstock_195025238-300x160.jpg">
-                                                <div class="blog_content">
-                                                    <dl>
-                                                        <dt class="dt_latest_blog">
-                                                            <div class="date_divs">16</div>
-                                                            <div class="month_div">Jan</div>
-                                                            <div class="post_type"><i class="moon-pencil"></i></div>
-                                                        </dt>
-                                                        <dd>
-                                                            <div class="content">
-                                                                <h5><a href="post.html">Second Post with Featured Image</a></h5>
-                                                                <ul class="overlay">
-                                                                    <li class="author">by admin</li>
-                                                                    <li class="author">|</li>
-                                                                    <li class="comments_nr">0 Comments</li>
-                                                                </ul>
-                                                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered nel alteration in some form, by injected humour, or randomised words which </p><a class="readmore" href="post.html">Read More</a></div>
-                                                        </dd>
-                                                    </dl>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="vc_col-sm-4 wpb_column column_container" style="" data-animation="" data-delay="0">
-                            <div class="wpb_wrapper">
-                                <div class="latest_blog wpb_content_element">
-                                    <div class="blog_posts">
-                                        <div class="posts">
-                                            <div class="blog-article grid"><img alt="image_blog" src="/resources/assets/ausart/assets/uploads/2015/01/shutterstock_137898407-300x160.jpg">
-                                                <div class="blog_content">
-                                                    <dl>
-                                                        <dt class="dt_latest_blog">
-                                                            <div class="date_divs">16</div>
-                                                            <div class="month_div">Jan</div>
-                                                            <div class="post_type"><i class="moon-pencil"></i></div>
-                                                        </dt>
-                                                        <dd>
-                                                            <div class="content">
-                                                                <h5><a href="post.html">New Post with Featured Image</a></h5>
-                                                                <ul class="overlay">
-                                                                    <li class="author">by admin</li>
-                                                                    <li class="author">|</li>
-                                                                    <li class="comments_nr">0 Comments</li>
-                                                                </ul>
-                                                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered nel alteration in some form, by injected humour, or randomised words which </p><a class="readmore" href="post.html">Read More</a></div>
-                                                        </dd>
-                                                    </dl>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

@@ -56,6 +56,7 @@
     <script type='text/javascript' src='/resources/assets/ausart/assets/js/jquery.easing.1.3.js'></script>
     <script type='text/javascript' src='/resources/assets/ausart/assets/js/jquery.mobilemenu.js'></script>
     <script type='text/javascript' src='/resources/assets/ausart/assets/js/isotope.js'></script>
+    <script type='text/javascript' src='/resources/assets/ausart/assets/js/jquery.mixitup.js'></script>
     <script type='text/javascript' src='/resources/assets/ausart/assets/js/layout-mode.js'></script>
     <script type='text/javascript' src='/resources/assets/ausart/assets/js/masonry.pkgd.min.js'></script>
     <script type='text/javascript' src='/resources/assets/ausart/assets/js/jquery.cycle.all.js'></script>
@@ -222,15 +223,15 @@
                 <div class="container">
                     <div class="row-fluid ff">
                         <!-- widget -->
-                        <div class="span3">
+                        <div class="span4">
                             <div id="text-2" class="widget widget_text">
-                                <h4 class="widget-title">About Ausart</h4>
+                                <h4 class="widget-title">About Prolife</h4>
                                 <div class="textwidget">Lorem ipsum dolor slo onsec tueraliquet Morbi nec In Curabitur lreaoreet nisl lorem in pellente e vidicus pannel Morbi nec In Curabitur lreaoreet renis worbi lorem in pellente e vidicus pannel lorem in pellente e vidicus pannel nelly</div>
                             </div>
                         </div>
-                        <div class="span3">
+                        <div class="span4">
                             <div id="widget_recent_content-2" class="widget widget_recent_content">
-                                <h4 class="widget-title">Recent Posts</h4>
+                                <h4 class="widget-title">Recent News</h4>
                                 <div id="popular_widget">
                                     <dl>
                                         <dt>
@@ -262,32 +263,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="span3">
-                            <div id="tag_cloud-3" class="widget widget_tag_cloud">
-                                <h4 class="widget-title">Tags</h4>
-                                <div class="tagcloud"><a href='#' class='tag-link-27' title='1 topic' style='font-size: 8pt;'>business</a>
-                                    <a href='#' class='tag-link-29' title='1 topic' style='font-size: 8pt;'>composer</a>
-                                    <a href='#' class='tag-link-26' title='1 topic' style='font-size: 8pt;'>css3</a>
-                                    <a href='#' class='tag-link-30' title='1 topic' style='font-size: 8pt;'>drag and drop</a>
-                                    <a href='#' class='tag-link-25' title='1 topic' style='font-size: 8pt;'>html5</a>
-                                    <a href='#' class='tag-link-11' title='3 topics' style='font-size: 22pt;'>javascript</a>
-                                    <a href='#' class='tag-link-9' title='3 topics' style='font-size: 22pt;'>picture</a>
-                                    <a href='#' class='tag-link-10' title='2 topics' style='font-size: 16.4pt;'>post</a>
-                                    <a href='#' class='tag-link-31' title='1 topic' style='font-size: 8pt;'>premium</a>
-                                    <a href='#' class='tag-link-32' title='1 topic' style='font-size: 8pt;'>theme</a>
-                                    <a href='#' class='tag-link-28' title='1 topic' style='font-size: 8pt;'>visual</a>
-                                    <a href='#' class='tag-link-4' title='1 topic' style='font-size: 8pt;'></a>
-                                    <a href='#' class='tag-link-33' title='1 topic' style='font-size: 8pt;'>wp theme</a></div>
-                            </div>
-                        </div>
-                        <div class="span3">
+                        <div class="span4">
                             <div id="widget_contact_info-2" class="widget widget_contact_info">
                                 <h4 class="widget-title">Contact Info</h4>
                                 <ul>
                                     <li class="address"><i class="moon-location"></i><span>Address:</span>
                                         <br /><span> 102580 Santa Monica BLVD Los Angeles</span></li>
                                     <li class="email"><i class="moon-envelop"></i><span>Email:</span>
-                                        <br /><span>info@awesome-site.com</span></li>
+                                        <br /><span>admin@prolife.global</span></li>
                                     <li class="phone"><i class="moon-phone"></i><span>Phone:</span>
                                         <br /><span>+3 045 224 33 12, +3 045 224 48 </span></li>
                                 </ul>
@@ -303,7 +286,7 @@
                         <div class="span12 desc">
                             <div class="span4">
                                 <div id="text-3" class="widget widget_text">
-                                    <div class="textwidget">COPYRIGHT &copy; 2013 - ALL RIGHTS RESERVED</div>
+                                    <div class="textwidget">COPYRIGHT &copy; 2015 - ALL RIGHTS RESERVED</div>
                                 </div>
                             </div>
                             <div class="span4"></div>
@@ -311,10 +294,9 @@
                                 <div id="nav_menu-2" class="widget widget_nav_menu">
                                     <div class=" megamenu_container">
                                         <ul id="menu-footer" class="menu themeple_megemenu">
-                                            <li class="menu-item   current-menu-item current_page_item menu-item-home"><a href="index-2.html">Home</a></li>
-                                            <li class="  current_page_parent"><a href="#">Blog</a></li>
-                                            <li><a href="#">Features</a></li>
-                                            <li><a href="#">Contact Page</a></li>
+                                            <li class="{{ Request::segment(1) == '' ? 'current-menu-ancestor' : '' }} menu-item-has-children"><a href="/">Home</a></li>
+                                            <li class="{{ Request::segment(1) == 'news' ? 'current-menu-ancestor' : '' }}  menu-item-has-children"><a href="/news">News</a></li>
+                                            <li class="{{ Request::segment(1) == 'contact' ? 'current-menu-ancestor' : '' }}  menu-item-has-children"><a href="/contact">Contact Us</a></li>
                                         </ul>
                                     </div>
                                 </div>

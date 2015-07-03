@@ -11,7 +11,35 @@ class FrontController extends Controller
 {
 	public function index()
 	{
-        return view('front.home');
+		$data["_news"] = DB::table("tbl_news")->where("archived", 0)->take(3)->get();
+		foreach ($data["_news"] as $key => $value) 
+		{
+			$get = $value->news_image;
+			$imagee = Image::view($get, "300x160");
+			$data["_news"][$key]->image = $imagee;
+		}
+
+		foreach ($data["_news"] as $keys => $values) 
+		{
+			$datee = $values->news_date;
+			$time=strtotime($datee);
+			$month=date("F",$time);
+			$day=date("d",$time);
+			$data["_news"][$key]->month = $month;
+			$data["_news"][$key]->day = $day;
+		}
+
+		$data["_product"] = DB::table("tbl_product")->where("archived", 0)->take(8)->get();
+		foreach ($data["_product"] as $keyss => $valuess) 
+		{
+			$gets = $valuess->image_file;
+			$imagees = Image::view($gets, "514x360");
+			$data["_product"][$keyss]->image = $imagees;
+		}
+
+		// dd($data["_product"]);
+
+        return view('front.home', $data);
 	}
 	public function about()
 	{
@@ -27,7 +55,17 @@ class FrontController extends Controller
 	}
 	public function product()
 	{
-        return view('front.product');
+		$data["_product"] = DB::table("tbl_product")->where("archived", 0)->get();
+		foreach ($data["_product"] as $key => $value) 
+		{
+			$get = $value->image_file;
+			$imagee = Image::view($get, "256x180");
+			$data["_product"][$key]->image = $imagee;
+		}
+
+		$data["_category"] = DB::table("tbl_product_category")->where("archived", 0)->get();
+		
+        return view('front.product', $data);
 	}
 	public function news()
 	{
