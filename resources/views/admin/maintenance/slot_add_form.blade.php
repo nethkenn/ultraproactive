@@ -1,10 +1,24 @@
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        var config = {
+          '.chosen-select' : {}
+        }
+        for (var selector in config) {
+          $(selector).chosen(config[selector]);
+        }
+
+        $(".chosen-container").css('width','95%');
+    });
+</script>
+
 <div class="form">
     <form class="submit-add-save" method="post">
         <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
         <div class="fieldset">
             <div class="label">SLOT OWNER</div>
             <div class="field">
-                <select class="slot_owner_change" name="account_id">
+                <select class="slot_owner_change chosen-select" name="account_id">
                     <option value="0">NEW ACCOUNT</option>
                     @foreach($_account as $account)
                     <option value="{{ $account->account_id }}">{{ $account->account_name }} ({{ $account->account_username }})</option>
