@@ -5,9 +5,12 @@
         <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="resources/assets/genealogy/drag.js"></script>
         <script type="text/javascript" src="resources/assets/genealogy/genealogy.js"></script>
+        <script type="text/javascript" src="resources/assets/chosen_v1.4.2/chosen.jquery.min.js"></script>
+
         <script type="text/javascript" src="resources/assets/remodal/src/jquery.remodal.js"></script>
         <link rel="stylesheet" type="text/css" href="resources/assets/genealogy/genealogy.css" />
         <link rel="stylesheet" type="text/css" href="resources/assets/remodal/src/jquery.remodal.css" />
+        <link rel="stylesheet" type="text/css" href="resources/assets/chosen_v1.4.2/chosen.min.css" />
         <title>Genealogy</title>
     </head>
     <body id="body" class="body" style="height: 100%">
