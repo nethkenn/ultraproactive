@@ -71,6 +71,8 @@ Route::any('admin/maintenance/product_package/get_product', 'AdminProductPackage
 Route::post('admin/maintenance/product_package/archive', 'AdminProductPackageController@archive_product_package');
 Route::post('admin/maintenance/product_package/restore', 'AdminProductPackageController@restore_product_package');
 
+
+/* SLOTS MAINTENANCE */
 Route::get('admin/maintenance/slots', 'AdminSlotController@index');
 Route::get('admin/maintenance/slots/data', 'AdminSlotController@data');
 Route::get('admin/maintenance/slots/add', 'AdminSlotController@add');
@@ -81,6 +83,7 @@ Route::get('admin/maintenance/slots/edit_form', 'AdminSlotController@edit_form')
 Route::post('admin/maintenance/slots/add_form_submit', 'AdminSlotController@add_form_submit');
 Route::post('admin/maintenance/slots/edit_form_submit', 'AdminSlotController@edit_form_submit');
 Route::get('admin/maintenance/slots/downline', 'AdminSlotController@downline');
+Route::get('admin/maintenance/slots/delete', 'AdminSlotController@delete');
 
 Route::get('admin/maintenance/country', 'AdminCountryController@index');
 Route::any('admin/maintenance/country/add', 'AdminCountryController@add_country');
