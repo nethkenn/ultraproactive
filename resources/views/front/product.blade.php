@@ -48,7 +48,7 @@
                                     <div class="center-bar v1">
                                         <div class="centered">
                                             <div class="portfolio_go a0" data-animate="zoomIn">
-                                                <a href="port_2_col.html"><i class="moon-redo"></i></a>
+                                                <a href="/product_content?id={{ $product->product_id }}"><i class="moon-redo"></i></a>
                                             </div>
                                         </div>
                                         <a href="{{ $product->image }}" class="title a1 lightbox-gallery lightbox" data-animate="fadeInUp">{{ $product->product_name }}</a>

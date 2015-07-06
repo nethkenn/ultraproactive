@@ -47,7 +47,9 @@ class FrontController extends Controller
 	}
 	public function earn()
 	{
-        return view('front.earn');
+		$data["_earn"] = DB::table("tbl_earn")->where("archived", 0)->get();
+
+        return view('front.earn', $data);
 	}
 	public function service()
 	{
@@ -67,15 +69,43 @@ class FrontController extends Controller
 		
         return view('front.product', $data);
 	}
+	public function product_content()
+	{
+		$id = Request::input("id");
+		$data["product"] = DB::table("tbl_product")->where("archived", 0)->where("product_id", $id)->first();
+		$get = $data["product"]->image_file;
+		$imagee = Image::view($get, "726x750");
+		$data["product"]->image = $imagee;
+	
+		$date = $data["product"]->created_at;
+		$time=strtotime($date);
+		$month=date("F",$time);
+		$day=date("d",$time);
+		$year=date("Y",$time);
+
+		$data["product"]->month = $month;
+		$data["product"]->day = $day;
+		$data["product"]->year = $year;
+		return view('front.product_content', $data);
+	}
 	public function news()
 	{
 		$data["_news"] = DB::table("tbl_news")->where("archived", 0)->get();
+		$data["_newss"] = DB::table("tbl_news")->where("archived", 0)->orderBy('news_id', 'desc')->take(4)->get();
+		$data["_product"] =  DB::table("tbl_product")->where("archived", 0)->orderBy('product_id', 'desc')->take(6)->get();
 		foreach ($data["_news"] as $key => $value) 
 		{
 			$get = $value->news_image;
 			$imagee = Image::view($get, "700x301");
 			$data["_news"][$key]->image = $imagee;
 		}
+		foreach ($data["_product"] as $keys => $values) 
+		{
+			$gets = $values->image_file;
+			$imagees = Image::view($gets, "75x75");
+			$data["_product"][$keys]->image = $imagees;
+		}
+
         return view('front.news', $data);
 	}
 	public function news_content()
