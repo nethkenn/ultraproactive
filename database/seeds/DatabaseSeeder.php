@@ -59,8 +59,8 @@ class tbl_slot extends Seeder
     public function run()
     {
         DB::table('tbl_slot')->delete();
-        DB::statement("INSERT INTO `tbl_slot`   (`slot_id`, `slot_owner`, `slot_membership`, `slot_type`, `slot_rank`, `slot_wallet`, `slot_sponsor`, `slot_placement`, `slot_position`, `slot_binary_left`, `slot_binary_right`, `slot_personal_points`, `slot_group_points`, `slot_upgrade_points`, `created_at`, `updated_at`) VALUES
-                                                (1, 1,  1,  'PS',   1,  0,  999999999,  999999999,  'left', 0,  0,  0,  0,  0,  '0000-00-00 00:00:00',  '0000-00-00 00:00:00');");
+        DB::statement("INSERT INTO `tbl_slot`   (`slot_id`, `slot_owner`, `slot_membership`, `slot_type`, `slot_rank`, `slot_wallet`, `slot_sponsor`, `slot_placement`, `slot_position`, `slot_binary_left`, `slot_binary_right`, `slot_personal_points`, `slot_group_points`, `created_at`, `updated_at`) VALUES
+                                                (1, 1,  1,  'PS',   1,  0,  999999999,  999999999,  'left', 0,  0,  0,  0,   '0000-00-00 00:00:00',  '0000-00-00 00:00:00');");
     } 
 }
 class tbl_country extends Seeder
