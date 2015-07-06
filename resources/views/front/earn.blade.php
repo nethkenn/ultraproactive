@@ -33,39 +33,19 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            @foreach($_earn as $earn)
                                             <div class="vc_col-sm-3 wpb_column column_container" style="" data-animation="" data-delay="0">
                                                 <div class="wpb_wrapper">
                                                     <div class=" services_medium wpb_content_element ">
                                                         <div class="icon_wrapper">
                                                             <div class="overlay"></div><i class="steadysets-icon-box"></i></div>
-                                                        <h4><a href="#">1. Planning</a></h4>
-                                                        <p>Phasellus enim libero, blandit vel sapien vitae, condimentum ultricies magna et.</p>
+                                                        <h4><a href="#">{{ $earn->earn_title }}</a></h4>
+                                                        <p>{!! substr($earn->earn_description, 0, 80) !!}</p>
                                                         <div class="read_more"><a href="#" class="readmore">Read More</a></div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="vc_col-sm-3 wpb_column column_container" style="" data-animation="" data-delay="0">
-                                                <div class="wpb_wrapper">
-                                                    <div class=" services_medium wpb_content_element ">
-                                                        <div class="icon_wrapper">
-                                                            <div class="overlay"></div><i class="steadysets-icon-box"></i></div>
-                                                        <h4><a href="#">2. Design</a></h4>
-                                                        <p>Phasellus enim libero, blandit vel sapien vitae, condimentum ultricies magna et.</p>
-                                                        <div class="read_more"><a href="#" class="readmore">Read More</a></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="vc_col-sm-3 wpb_column column_container" style="" data-animation="" data-delay="0">
-                                                <div class="wpb_wrapper">
-                                                    <div class=" services_medium wpb_content_element ">
-                                                        <div class="icon_wrapper">
-                                                            <div class="overlay"></div><i class="steadysets-icon-box"></i></div>
-                                                        <h4><a href="#">3. Develop</a></h4>
-                                                        <p>Phasellus enim libero, blandit vel sapien vitae, condimentum ultricies magna et.</p>
-                                                        <div class="read_more"><a href="#" class="readmore">Read More</a></div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>

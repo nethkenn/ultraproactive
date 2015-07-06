@@ -53,6 +53,38 @@ function genealogy_loader()
     }
     function registration_form_event_bind()
     {
+        $(".delete-slot").unbind("click");
+        $(".delete-slot").bind("click", function(e)
+        {
+            $slot_id = $(e.currentTarget).attr("slot_id");
+
+            $(e.currentTarget).closest("form").find("button").attr("disabled", "disabled");
+
+            $.ajax(
+            {
+                url:"admin/maintenance/slots/delete",
+                dataType:"json",
+                data: {"slot_id":$slot_id},
+                success: function(data)
+                {
+                    $(e.currentTarget).closest("form").find("button").removeAttr("disabled");
+                    if(data.message == "")
+                    {
+                        load_downline(data.placement)
+                        var x = $(this).attr("href");      
+                        var url = window.location.href.split('#')[0];
+                        window.location.href = url+"#";
+                    }
+                    else
+                    {
+                        alert(data.message);
+                    }
+                }
+            });
+            
+            return false;
+        });
+
         $(".submit-add-save").unbind("submit");
         $(".submit-add-save").bind("submit", function(e)
         {

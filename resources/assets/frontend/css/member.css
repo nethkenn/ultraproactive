@@ -1,0 +1,177 @@
+a {
+  outline: none !important; }
+  a:hover {
+    outline: none !important;
+    text-decoration: none !important; }
+  a:focus {
+    outline: none !important;
+    text-decoration: none !important; }
+
+body {
+  font-family: "Open Sans", sans-serif !important; }
+
+.para {
+  overflow: auto;
+  clear: both; }
+
+.bg {
+  background-color: #efefef; }
+
+.wrapper {
+  text-align: center; }
+  .wrapper .header-nav .header .header-text {
+    display: inline-block;
+    color: #949494;
+    padding: 10px 20px;
+    margin: 15px 0;
+    border-right: 1px solid #c2c2c2; }
+  .wrapper .header-nav .header .header-text:last-child {
+    border-right: 0px solid #c2c2c2; }
+  .wrapper .header-nav .navbar {
+    clear: both;
+    position: relative; }
+    .wrapper .header-nav .navbar .nav li {
+      font-size: 14.58px; }
+      .wrapper .header-nav .navbar .nav li:hover {
+        background-color: #40c0c0; }
+    .wrapper .header-nav .navbar .shadow {
+      width: 100%;
+      position: absolute;
+      background: transparent url("/resources/assets/ausart/assets/img/header_shadow.png") no-repeat scroll center bottom;
+      height: 89px;
+      top: 34px; }
+  .wrapper .content {
+    margin-top: 35px; }
+    .wrapper .content .left {
+      padding: 0 !important; }
+      .wrapper .content .left .profile {
+        background-color: #fff; }
+        .wrapper .content .left .profile .profile-pic {
+          display: table-cell;
+          vertical-align: middle;
+          position: relative;
+          padding: 30px; }
+          .wrapper .content .left .profile .profile-pic img {
+            -webkit-border-radius: 100%;
+            -moz-border-radius: 100%;
+            border-radius: 100%;
+            border: 1px solid #bdc2ca;
+            width: 120px;
+            height: 120px; }
+          .wrapper .content .left .profile .profile-pic .borders {
+            border: 7px solid #BDC2CA;
+            position: absolute;
+            width: 145px;
+            height: 145px;
+            top: 17px;
+            left: 17px;
+            -webkit-border-radius: 100%;
+            -moz-border-radius: 100%;
+            border-radius: 100%; }
+        .wrapper .content .left .profile .profile-info {
+          display: table-cell;
+          vertical-align: middle;
+          padding: 20px; }
+          .wrapper .content .left .profile .profile-info .name {
+            color: #9ba0a7;
+            font-weight: 800;
+            font-size: 29.17px;
+            border-bottom: 1px solid #e3e3e4;
+            padding-bottom: 5px;
+            margin-bottom: 5px; }
+          .wrapper .content .left .profile .profile-info .email {
+            color: #36c1c8;
+            font-size: 14.58px; }
+      .wrapper .content .left .info .referral {
+        background-color: #f47265;
+        -webkit-transition: all ease 0.8s;
+        -moz-transition: all ease 0.8s;
+        -o-transition: all ease 0.8s;
+        transition: all ease 0.8s; }
+        .wrapper .content .left .info .referral:hover {
+          background-color: #f26153; }
+      .wrapper .content .left .info .inbox {
+        background-color: #474f71;
+        -webkit-transition: all ease 0.8s;
+        -moz-transition: all ease 0.8s;
+        -o-transition: all ease 0.8s;
+        transition: all ease 0.8s; }
+        .wrapper .content .left .info .inbox:hover {
+          background-color: #3f4664; }
+      .wrapper .content .left .info .leads {
+        background-color: #40c0c0;
+        -webkit-transition: all ease 0.8s;
+        -moz-transition: all ease 0.8s;
+        -o-transition: all ease 0.8s;
+        transition: all ease 0.8s; }
+        .wrapper .content .left .info .leads:hover {
+          background-color: #2bacac; }
+      .wrapper .content .left .info .box {
+        padding-bottom: 10px; }
+        .wrapper .content .left .info .box .img {
+          padding: 15px 0; }
+          .wrapper .content .left .info .box .img img {
+            height: 30px; }
+        .wrapper .content .left .info .box .text {
+          font-size: 12.5px;
+          color: white; }
+          .wrapper .content .left .info .box .text span {
+            font-size: 14.58px;
+            display: inline-block;
+            padding: 0 10px; }
+      .wrapper .content .left .detail .blue {
+        background-color: #474f71; }
+      .wrapper .content .left .detail .sblue {
+        background-color: #40c0c0; }
+      .wrapper .content .left .detail .header {
+        font-size: 20.83px;
+        margin: 30px 0;
+        color: white;
+        background-color: #aaafb6;
+        font-weight: 300; }
+        .wrapper .content .left .detail .header img {
+          padding: 15px 30px 15px 0; }
+      .wrapper .content .left .detail .holder {
+        background-color: #fff;
+        padding: 15px 25px;
+        margin-top: 10px; }
+        .wrapper .content .left .detail .holder .title {
+          font-size: 16.67px;
+          padding: 10px 0;
+          color: white;
+          margin: 20px auto 40px;
+          max-width: 500px; }
+        .wrapper .content .left .detail .holder .input {
+          margin-bottom: 10px; }
+        .wrapper .content .left .detail .holder .form-group {
+          margin-left: 0 !important;
+          margin-right: 0 !important; }
+        .wrapper .content .left .detail .holder label {
+          color: #a8a7a7;
+          font-style: italic; }
+    .wrapper .content .right .holder {
+      background-color: #fff;
+      padding: 0 20px; }
+      .wrapper .content .right .holder .header {
+        font-size: 14.58px;
+        color: #f47265;
+        padding: 20px 0 40px; }
+        .wrapper .content .right .holder .header img {
+          margin: 0 5px; }
+      .wrapper .content .right .holder .holders {
+        border-bottom: 1px solid #dedede;
+        padding-bottom: 5px;
+        margin-bottom: 10px; }
+        .wrapper .content .right .holder .holders .text {
+          text-align: left;
+          color: #a8a8a8;
+          padding: 5px 15px; }
+        .wrapper .content .right .holder .holders .date {
+          text-align: right;
+          font-size: 12.5px;
+          color: #cdcdcd;
+          padding: 5px 15px; }
+      .wrapper .content .right .holder .holders:last-child {
+        border-bottom: 0; }
+
+/*# sourceMappingURL=member.css.map */

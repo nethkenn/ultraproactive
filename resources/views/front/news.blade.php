@@ -57,27 +57,19 @@
                         <div id="widget_flickr-2" class="widget widget_flickr">
                             <h5 class="widget-title">Recent Products</h5>
                             <div class="flickr_container">
-                                <script type="text/javascript" src="http://www.flickr.com/badge_code_v2.gne?count=6&amp;display=latest&amp;size=s&amp;layout=x&amp;source=user&amp;user=52617155@N08"></script>
+                                @foreach($_product as $product)
+                                    <a href="/product_content?id={{ $product->product_id }}"><img src="{{ $product->image }}" height="75" width="75" style="margin-top: 3px;"></a>
+                                @endforeach
                             </div>
                         </div>
                         <div id="recent-posts-2" class="widget widget_recent_entries">
                             <h5 class="widget-title">Recent News</h5>
                             <ul>
+                                @foreach($_newss as $news)
                                 <li>
-                                    <a href="post.html">First Post with Featured Image</a>
+                                    <a href="/news_content?id={{ $news->news_id }}">{{ $news->news_title }}</a>
                                 </li>
-                                <li>
-                                    <a href="post.html">Second Post with Featured Image</a>
-                                </li>
-                                <li>
-                                    <a href="post.html">New Post with Featured Image</a>
-                                </li>
-                                <li>
-                                    <a href="post.html">Quis lectus elemvolu euismod atras</a>
-                                </li>
-                                <li>
-                                    <a href="post.html">Another Post with Preview picture</a>
-                                </li>
+                                @endforeach
                             </ul>
                         </div>
                         
