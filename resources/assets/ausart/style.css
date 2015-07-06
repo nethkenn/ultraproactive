@@ -14826,3 +14826,8 @@ h1.title {
 p.description.style_3 {
   line-height: 24px;
 }
+
+p
+{
+    word-break: break-all !important;
+}

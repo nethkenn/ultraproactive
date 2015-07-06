@@ -6,4 +6,8 @@ class MemberController extends Controller
 	{
         return view('member.dashboard');
 	}
+	public function code_vault()
+	{
+        return view('member.code_vault');
+	}
 }
