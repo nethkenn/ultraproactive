@@ -3,6 +3,8 @@ Route::any('/neil', 'NeilController@index');
 
 Route::any('/member', 'MemberController@index');
 
+/* MEMBER */
+Route::any('/member', 'MemberController@index');
 
 /* ADMIN */
 Route::any('/', 'FrontController@index');

@@ -99,7 +99,7 @@
                             </div>
                         </div>
                         <div id="widget_topinfo-2" class="widget widget_topinfo">
-                            <div class="topinfo"><span class="phone"><i class="moon-phone"></i>+1 00 222 654</span><span class="email"><i class="icon-envelope"></i>info@austart.to</span></div>
+                            <div class="topinfo"><span class="phone"><i class="moon-phone"></i>+1 00 222 654</span><span class="email"><i class="icon-envelope"></i>admin@prolife.global</span></div>
                         </div>
                     </div>
                 </div>
