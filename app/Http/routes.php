@@ -120,6 +120,9 @@ Route::any('admin/maintenance/ranking/edit', 'AdminRankingController@edit_rankin
 Route::any('admin/maintenance/ranking/delete', 'AdminRankingController@delete_ranking');
 Route::any('admin/maintenance/ranking/add', 'AdminRankingController@add_ranking');
 
+/* MAINTENANCE / INVENTORY */
+Route::get('admin/maintenance/inventory', 'AdminInventoryController@index');
+
 
 /* ADMIN / UTILITIES */
 Route::get('admin/utilities/admin', 'AdminAdminController@index');
