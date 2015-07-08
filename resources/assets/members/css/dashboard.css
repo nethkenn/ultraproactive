@@ -1,3 +1,6 @@
+.tinde {
+  color: #9ea7b3 !important; }
+
 .left {
   padding: 0 !important; }
   .left .profile {
@@ -102,32 +105,97 @@
     .left .detail .holder .form-group {
       margin-left: 0 !important;
       margin-right: 0 !important; }
+      .left .detail .holder .form-group input[type="text"] {
+        border: 0;
+        font-size: 14.58px;
+        color: #77818e;
+        text-align: center;
+        background-color: #fff;
+        box-shadow: none; }
     .left .detail .holder label {
-      color: #a8a7a7;
-      font-style: italic; }
+      color: #77818e;
+      font-style: italic;
+      font-weight: bold;
+      font-size: 12.5px;
+      text-align: center; }
 
 .right .holder {
   background-color: #fff;
   padding: 0 20px; }
   .right .holder .header {
     font-size: 14.58px;
-    color: #f47265;
-    padding: 20px 0 40px; }
+    color: #77818e;
+    padding: 20px 0 40px;
+    text-transform: uppercase; }
     .right .holder .header img {
       margin: 0 5px; }
+  .right .holder a {
+    color: white; }
+    .right .holder a button {
+      background-color: #f47265;
+      padding: 20px 60px;
+      border: 0;
+      border-radius: 5px;
+      margin: 20px 0;
+      border-bottom: 2px solid #e76356;
+      border-left: 1px solid #e76356;
+      border-right: 1px solid #e76356;
+      font-size: 14.58px; }
   .right .holder .holders {
-    border-bottom: 1px solid #dedede;
-    padding-bottom: 5px;
-    margin-bottom: 10px; }
+    width: 100%;
+    display: table;
+    table-layout: fixed; }
+    .right .holder .holders .linyanglinya {
+      display: table-cell;
+      width: 13px;
+      vertical-align: top;
+      background-image: url("/resources/assets/frontend/img/sobranglupetnalinya.png");
+      padding: 10px 15px;
+      background-repeat: no-repeat;
+      background-position: top center;
+      -webkit-box-sizing: content-box;
+      -moz-box-sizing: content-box;
+      box-sizing: content-box; }
+    .right .holder .holders .liness {
+      display: table-cell;
+      vertical-align: top; }
+      .right .holder .holders .liness .pix {
+        text-align: left;
+        display: table-cell;
+        vertical-align: top; }
+        .right .holder .holders .liness .pix img {
+          width: 50px;
+          height: 50px;
+          border-radius: 100%;
+          border: 1px solid #c3c8cf; }
+      .right .holder .holders .liness .text {
+        display: table-cell;
+        vertical-align: top; }
+        .right .holder .holders .liness .text .name {
+          font-size: 16.67px;
+          color: #40c0c0; }
+        .right .holder .holders .liness .text .email {
+          font-size: 12.5px;
+          color: #77818e; }
+      .right .holder .holders .liness .message {
+        color: #9ea7b3;
+        text-align: right;
+        padding-bottom: 25px; }
+        .right .holder .holders .liness .message img {
+          margin: 0 5px; }
+        .right .holder .holders .liness .message span:hover {
+          color: #77818e; }
     .right .holder .holders .text {
       text-align: left;
-      color: #a8a8a8;
-      padding: 5px 15px; }
+      color: #77818e;
+      padding: 5px 15px;
+      margin-bottom: 15px; }
     .right .holder .holders .date {
-      text-align: right;
+      text-align: left;
       font-size: 12.5px;
-      color: #cdcdcd;
-      padding: 5px 15px; }
+      color: #40c0c0;
+      padding: 5px 15px;
+      margin-bottom: 10px; }
   .right .holder .holders:last-child {
     border-bottom: 0; }
 

@@ -7,6 +7,10 @@ $gray: #aaafb6;
 $gray2: #9ea7b3;
 $font-color: #77818e;
 
+.tinde
+{
+	color: #9ea7b3 !important;
+}
 .left
 {
 	padding: 0 !important;
@@ -167,11 +171,23 @@ $font-color: #77818e;
 			{
 				margin-left: 0 !important;
 				margin-right: 0 !important;
+				input[type="text"]
+				{
+					border: 0;
+					font-size: 14.58px;
+					color: $font-color;
+					text-align: center;
+					background-color: #fff;
+					box-shadow: none;
+				}
 			}
 			label
 			{
-				color: #a8a7a7;
+				color: $font-color;
 				font-style: italic;
+				font-weight: bold;
+				font-size: 12.5px;
+				text-align: center;
 			}
 		}	
 	}
@@ -186,30 +202,120 @@ $font-color: #77818e;
 		.header
 		{
 			font-size: 14.58px;
-			color: $orange;
+			color: $font-color;
 			padding: 20px 0 40px;
+			text-transform: uppercase;
 			img
 			{
 				margin: 0 5px;
 			}
 		}
+		a
+		{
+			color: white;
+			button
+			{
+				background-color: $orange;
+				padding: 20px 60px;
+				border: 0;
+				border-radius: 5px;
+				margin: 20px 0;
+				border-bottom: 2px solid #e76356;
+				border-left: 1px solid #e76356;
+				border-right: 1px solid #e76356;
+				font-size: 14.58px;
+			}
+		}
 		.holders
 		{
-			border-bottom: 1px solid #dedede;
-			padding-bottom: 5px;
-			margin-bottom: 10px;
+			// padding-bottom: 5px;
+			// margin-bottom: 10px;
+			width: 100%;
+			display: table;
+			table-layout: fixed;
+			.linyanglinya
+			{
+				display: table-cell;
+				width: 13px;
+				vertical-align: top;
+				background-image: url("/resources/assets/frontend/img/sobranglupetnalinya.png");
+				padding: 10px 15px;
+				background-repeat: no-repeat;
+				background-position: top center;
+				-webkit-box-sizing: content-box;
+				   -moz-box-sizing: content-box;
+				        box-sizing: content-box;
+			}
+			.liness
+			{
+				display: table-cell;
+				vertical-align: top;
+
+				.pix
+				{
+					text-align: left;
+					display: table-cell;
+					vertical-align: top;
+					img
+					{
+						width: 50px;
+						height: 50px;
+						border-radius: 100%;
+						border: 1px solid #c3c8cf;
+					}
+				}
+				.text
+				{
+					display: table-cell;
+					vertical-align: top;
+					.name
+					{
+						font-size: 16.67px;
+						color: $sblue;
+					}
+					.email
+					{
+						font-size: 12.5px;
+						color: $font-color;
+					}
+				}
+				.pindutan
+				{
+
+				}
+				.message
+				{
+					color: $gray2;
+					text-align: right;
+					padding-bottom: 25px;
+					img
+					{
+						margin: 0 5px;
+					}
+					span
+					{
+					
+						&:hover
+						{
+							color: $font-color;
+						}
+					}
+				}
+			}
 			.text
 			{
 				text-align: left;
-				color: #a8a8a8;
+				color: $font-color;
 				padding: 5px 15px;
+				margin-bottom: 15px;
 			}
 			.date
 			{
-				text-align: right;
+				text-align: left;
 				font-size: 12.5px;
-				color: #cdcdcd;
+				color: $sblue;
 				padding: 5px 15px;
+				margin-bottom: 10px;
 			}
 		}	
 		.holders:last-child
