@@ -315,16 +315,29 @@ body
 		}
 		tbody
 		{
+			border-right: 1px solid #e8e8e8;
+			border-bottom: 1px solid #e8e8e8;
+			border-left: 1px solid #e8e8e8;
 			color: $font-color;
 			tr:nth-child(even) {background: #f7f7f7}
 			tr:nth-child(odd) {background: #eeeeee}
 			tr
 			{
+				border-bottom: 1px solid #e8e8e8;
 				td
 				{
 					padding: 10px 20px;
 					font-size: 12.5px;
+					border-right: 1px solid #e8e8e8;
 				}
+				td:last-child
+				{
+					border: 0;
+				}
+			}
+			tr:last-child
+			{
+				border: 0;
 			}
 		}
 	}
@@ -582,6 +595,24 @@ body
 				}
 			}
 		}
+	}
+}
+
+.referrals
+{
+	border-top: 0;
+	padding: 0 !important;
+	.header
+	{
+		background-color: $sblue;
+		color: white;
+		text-align: left;
+		padding: 10px 50px;
+	}
+	table
+	{
+		margin-bottom: 0;
+		margin: 10px 0;
 	}
 }
 

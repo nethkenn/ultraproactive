@@ -19,9 +19,9 @@
                 <input type="text">
             </div>
             <div class="input">
-                <input type="text">
+                <input type="password">
             </div>
-            <div class="forgot">Forgot Password?</div>
+            <div class="forgot"><a href="javascript:">Forgot Password?</a></div>
             <a href="javascript:">
                 <button>LOGIN</button>
             </a>

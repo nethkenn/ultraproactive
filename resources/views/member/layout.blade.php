@@ -731,4 +731,61 @@
     <br>
     <button class="checkawt" data-remodal-action="confirm">Submit Checkout</button>
 </div>
+<div class="remodal referrals create-slot" data-remodal-id="referral">
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <div class="header">
+        <img src="/resources/assets/frontend/img/icon-referral.png">
+        Referrals
+    </div>
+    <div class="col-md-12">
+        <table>
+            <thead>
+                <tr>
+                    <td>#</td>
+                    <td>Deduction</td>
+                    <td>Status</td>
+                    <td>Type</td>
+                    <td>Amount</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>13</td>
+                    <td>100.00</td>
+                    <td>Pending</td>
+                    <td>Bank Deposit</td>
+                    <td>462.00</td>
+                </tr>
+                <tr>
+                    <td>13</td>
+                    <td>100.00</td>
+                    <td>Pending</td>
+                    <td>Bank Deposit</td>
+                    <td>462.00</td>
+                </tr>
+                <tr>
+                    <td>13</td>
+                    <td>100.00</td>
+                    <td>Pending</td>
+                    <td>Bank Deposit</td>
+                    <td>462.00</td>
+                </tr>
+                <tr>
+                    <td>13</td>
+                    <td>100.00</td>
+                    <td>Pending</td>
+                    <td>Bank Deposit</td>
+                    <td>462.00</td>
+                </tr>
+                <tr>
+                    <td>13</td>
+                    <td>100.00</td>
+                    <td>Pending</td>
+                    <td>Bank Deposit</td>
+                    <td>462.00</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 </html>
