@@ -17,8 +17,8 @@
 		<div class="filters ">
 			<div class="col-md-8">
 				<a class="{{$active = Request::input('status') == null ? 'active' : ''}}" href="admin/maintenance/codes/">Company Codes</a>
-				<a class="{{$active = Request::input('status') == 'unused' ? 'active' : ''}}" href="admin/maintenance/codes?status=unused">Unused Membership Codes</a>
-				<a class="{{$active = Request::input('status') == 'used' ? 'active' : ''}}" href="admin/maintenance/codes?status=used">Used Membership Codes</a>
+				<a class="{{$active = Request::input('status') == 'unused' ? 'active' : ''}}" href="admin/maintenance/codes?status=unused">Unused Member Codes</a>
+				<a class="{{$active = Request::input('status') == 'used' ? 'active' : ''}}" href="admin/maintenance/codes?status=used">Used Member Codes</a>
 				<a class="{{$active = Request::input('status') == 'blocked' ? 'active' : ''}}" href="admin/maintenance/codes?status=blocked">Block</a>
 			</div>
 		</div>
@@ -26,14 +26,14 @@
 			<table id="table" class="table table-bordered">
 				<thead>
 					<tr class="text-center">
-						<th>Code ID</th>
-						<th>Code Activation</th>
+						<th>Pin</th>
+						<th>Activation</th>
 						<th>Membership</th>
 						<th>Code Type</th>
-						<th>Product Inclusion</th>
+						<th>Product</th>
 						<th>Owner</th>
-						<th>Claimable Voucher</th>
-						<th>Date Generated</th>
+						<th>Voucher</th>
+						<th>Date</th>
 						<th class="option-col"></th>
 						<th class="option-col"></th>
 					</tr>

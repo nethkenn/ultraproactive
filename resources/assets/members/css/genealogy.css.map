@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAaE,yBACA;EACC,KAAK,EATA,OAAO;EAUZ,MAAM,EAAE,MAAM;EACd,KAAK,EAAE,KAAK;EACZ,UAAU,EAAE,MAAM;EAClB,OAAO,EAAE,MAAM;EACf,aAAa,EAAE,CAAC;AAEjB,uBACA;EACC,OAAO,EAAE,KAAK",
+"sources": ["../sass/genealogy.scss"],
+"names": [],
+"file": "genealogy.css"
+}

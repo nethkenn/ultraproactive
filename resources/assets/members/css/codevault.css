@@ -1,0 +1,84 @@
+.code-vault .table {
+  background-color: white;
+  padding-bottom: 15px; }
+  .code-vault .table .table-head {
+    background-color: #474f71;
+    color: white;
+    padding: 20px;
+    font-size: 14.58px; }
+    .code-vault .table .table-head .aw {
+      text-align: left; }
+    .code-vault .table .table-head .ew {
+      text-align: right;
+      padding: 3px 0; }
+      .code-vault .table .table-head .ew a {
+        color: white; }
+      .code-vault .table .table-head .ew .button {
+        display: inline-block;
+        background-color: #f47265;
+        border-bottom: 2px solid #eb685b;
+        border-right: 1px solid #eb685b;
+        border-left: 1px solid #eb685b;
+        padding: 10px 30px;
+        font-size: 12.5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px; }
+    .code-vault .table .table-head img {
+      margin: 0 10px; }
+  .code-vault .table table {
+    width: 98%;
+    margin: auto; }
+    .code-vault .table table thead {
+      background-color: #9ea7b3; }
+      .code-vault .table table thead td {
+        padding: 10px 20px;
+        color: white;
+        font-size: 14.58px; }
+    .code-vault .table table tbody {
+      color: #77818e;
+      font-size: 12.5px;
+      border-left: 1px solid #eaeaea;
+      border-right: 1px solid #eaeaea;
+      border-bottom: 1px solid #eaeaea; }
+      .code-vault .table table tbody tr:nth-child(even) {
+        background: #f7f7f7; }
+      .code-vault .table table tbody tr:nth-child(odd) {
+        background: #eeeeee; }
+      .code-vault .table table tbody td {
+        padding: 10px 20px;
+        border-right: 1px solid #e8e8e8;
+        border-bottom: 1px solid #e8e8e8; }
+      .code-vault .table table tbody td:last-child {
+        border-right: 0;
+        border-bottom: 0; }
+      .code-vault .table table tbody a {
+        color: #77818e; }
+      .code-vault .table table tbody .check {
+        width: 23px;
+        height: 23px;
+        position: relative;
+        margin: auto; }
+        .code-vault .table table tbody .check input[type="checkbox"] {
+          width: 23px;
+          height: 23px;
+          position: absolute;
+          top: 0;
+          right: 0;
+          margin: 0 !important;
+          opacity: 0;
+          z-index: 20; }
+        .code-vault .table table tbody .check .bgs {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-image: url("/resources/assets/frontend/img/no-check.png");
+          z-index: 10; }
+        .code-vault .table table tbody .check input[type="checkbox"]:checked + .bgs {
+          background-image: url("/resources/assets/frontend/img/check.png"); }
+
+/*# sourceMappingURL=codevault.css.map */

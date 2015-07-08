@@ -74,6 +74,8 @@
 									<li><a href="admin/maintenance/membership">Membership</a></li>
 									<li><a href="admin/maintenance/ranking">Ranking</a></li>
 									<li><a href="admin/maintenance/news">News</a></li>
+									<li><a href="admin/maintenance/earn">Earn</a></li>
+									<li><a href="admin/maintenance/inventory">Inventory</a></li>
 								</ul>
 							</li>
 							<!-- UTILITIES -->
