@@ -42,7 +42,7 @@
 			        <li><a href="/member/code_vault">Code Vault</a></li>
 			        <li><a href="/member/genealogy">Genealogy</a></li>
 			        <li><a href="/member/encashment">Encashment</a></li>
-			        <li><a href="#">Product</a></li>
+			        <li><a href="/member/product">Product</a></li>
 			        <li><a href="/member/voucher">Voucher</a></li>
 			        <li><a href="/member/leads">Leads</a></li>
 			      </ul>
