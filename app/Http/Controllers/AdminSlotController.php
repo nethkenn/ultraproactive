@@ -201,4 +201,23 @@ class AdminSlotController extends AdminController
 
 		return $return;
 	}
+	public function delete()
+	{
+		$return["message"] = "";
+		$slot_info = Tbl_slot::id(Request::input("slot_id"))->first();
+		$return["placement"] = $slot_info->slot_placement;
+
+		$check_downline_exist = Tbl_slot::where("slot_placement", Request::input("slot_id"))->first();
+
+ 		if($check_downline_exist)
+ 		{
+ 			$return["message"] = "You can't delete a slot with downline(s).";
+ 		}
+ 		else
+ 		{
+ 			Tbl_slot::id(Request::input("slot_id"))->delete();
+ 		}
+
+		echo json_encode($return);
+	}
 }

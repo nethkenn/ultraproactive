@@ -25,17 +25,12 @@
 					<th>SKU</th>
 					<th>Name</th>
 					<th>Category</th>
-					<th>Unilevel Points</th>
-					<th>Binary Points</th>
+					<th>Unilevel PTS</th>
+					<th>Binary PTS</th>
 					<th>Price</th>
 					<th>Image</th>
 					<th></th>
 					<th></th>
-					
-					
-					
-					
-
 				</tr>
 			</thead>
 		</table>
