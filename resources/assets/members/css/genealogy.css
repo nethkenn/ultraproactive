@@ -1,0 +1,11 @@
+.genealogy .header select {
+  color: #9ea7b3;
+  margin: 0 10px;
+  width: 250px;
+  text-align: center;
+  display: inline;
+  border-radius: 0; }
+.genealogy .header span {
+  padding: 5px 0; }
+
+/*# sourceMappingURL=genealogy.css.map */

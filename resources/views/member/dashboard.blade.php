@@ -214,3 +214,6 @@
   </div>
 </div>
 @endsection
+@section('css')
+<link rel="stylesheet" type="text/css" href="/resources/assets/members/css/dashboard.css">
+@endsection

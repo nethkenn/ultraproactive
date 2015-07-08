@@ -1,0 +1,220 @@
+$font-family: "Open Sans", sans-serif !important;
+$background-color: #efefef;
+$blue: #474f71;
+$orange: #f47265;
+$sblue: #40c0c0;
+$gray: #aaafb6;
+$gray2: #9ea7b3;
+$font-color: #77818e;
+
+.left
+{
+	padding: 0 !important;
+	.profile
+	{
+		background-color: #fff;
+		.profile-pic
+		{
+			display: table-cell;
+			vertical-align: middle;
+			position: relative;
+			padding: 30px;
+			img
+			{
+				-webkit-border-radius: 100%;
+				   -moz-border-radius: 100%;
+				        border-radius: 100%;
+				border: 1px solid #bdc2ca;
+				width: 120px;
+				height: 120px;
+			}
+			.borders
+			{
+				border: 7px solid #BDC2CA;
+				position: absolute;
+				width: 145px;
+				height: 145px;
+				top: 17px;
+				left: 17px;
+				-webkit-border-radius: 100%;
+				   -moz-border-radius: 100%;
+				        border-radius: 100%;
+			}
+		}
+		.profile-info
+		{
+			display: table-cell;
+			vertical-align: middle;
+			padding: 20px;
+			.name
+			{
+				color: #9ba0a7;
+				font-weight: 800;
+				font-size: 29.17px;
+				border-bottom: 1px solid #e3e3e4;
+				padding-bottom: 5px;
+				margin-bottom: 5px;
+			}
+			.email
+			{
+				color: #36c1c8;
+				font-size: 14.58px;
+			}
+		}
+	}
+	.info
+	{
+		.referral
+		{
+			background-color: $orange;
+			-webkit-transition: all ease 0.8s;
+			   -moz-transition: all ease 0.8s;
+			     -o-transition: all ease 0.8s;
+			        transition: all ease 0.8s;
+			&:hover
+			{
+				background-color: #f26153;
+			}
+		}
+		.inbox
+		{
+			background-color: $blue;
+			-webkit-transition: all ease 0.8s;
+			   -moz-transition: all ease 0.8s;
+			     -o-transition: all ease 0.8s;
+			        transition: all ease 0.8s;
+			&:hover
+			{
+				background-color: #3f4664;
+			}
+		}
+		.leads
+		{
+			background-color: $sblue;
+			-webkit-transition: all ease 0.8s;
+			   -moz-transition: all ease 0.8s;
+			     -o-transition: all ease 0.8s;
+			        transition: all ease 0.8s;
+			&:hover
+			{
+				background-color: #2bacac;
+			}
+		}
+		.box
+		{
+			padding-bottom: 10px;
+			.img
+			{
+				padding: 15px 0;
+				img
+				{
+					height: 30px;
+				}
+			}
+			.text
+			{
+				font-size: 12.5px;
+				color: white;
+				span
+				{
+					font-size: 14.58px;
+					display: inline-block;
+					padding: 0 10px;
+				}
+			}
+		}
+	}
+	.detail
+	{
+		.blue
+		{
+			background-color: $blue;
+		}
+		.sblue
+		{
+			background-color: $sblue;
+		}
+		.header
+		{
+			font-size: 20.83px;
+			margin: 30px 0;
+			color: white;
+			background-color: $gray;
+			font-weight: 300;
+			img
+			{
+				padding: 15px 30px 15px 0;
+			}
+		}
+		.holder
+		{
+			background-color: #fff;
+			padding: 15px 25px;
+			margin-top: 10px;
+			.title
+			{
+				font-size: 16.67px;
+				padding: 10px 0;
+				color: white;
+				margin: 20px auto 40px;
+				max-width: 500px;
+			}
+			.input
+			{
+				margin-bottom: 10px;
+			}
+			.form-group
+			{
+				margin-left: 0 !important;
+				margin-right: 0 !important;
+			}
+			label
+			{
+				color: #a8a7a7;
+				font-style: italic;
+			}
+		}	
+	}
+}
+.right
+{
+	
+	.holder
+	{
+		background-color: #fff;
+		padding: 0 20px;
+		.header
+		{
+			font-size: 14.58px;
+			color: $orange;
+			padding: 20px 0 40px;
+			img
+			{
+				margin: 0 5px;
+			}
+		}
+		.holders
+		{
+			border-bottom: 1px solid #dedede;
+			padding-bottom: 5px;
+			margin-bottom: 10px;
+			.text
+			{
+				text-align: left;
+				color: #a8a8a8;
+				padding: 5px 15px;
+			}
+			.date
+			{
+				text-align: right;
+				font-size: 12.5px;
+				color: #cdcdcd;
+				padding: 5px 15px;
+			}
+		}	
+		.holders:last-child
+		{
+			border-bottom: 0;
+		}
+	}
+}

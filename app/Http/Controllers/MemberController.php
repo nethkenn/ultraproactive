@@ -6,8 +6,28 @@ class MemberController extends Controller
 	{
         return view('member.dashboard');
 	}
+	public function slot()
+	{
+        return view('member.slot');
+	}
 	public function code_vault()
 	{
         return view('member.code_vault');
+	}
+	public function encashment()
+	{
+        return view('member.encashment');
+	}
+	public function genealogy()
+	{
+        return view('member.genealogy');
+	}
+	public function voucher()
+	{
+        return view('member.voucher');
+	}
+	public function lead()
+	{
+        return view('member.lead');
 	}
 }

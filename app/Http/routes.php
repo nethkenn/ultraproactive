@@ -1,10 +1,14 @@
 <?php
 Route::any('/neil', 'NeilController@index');
 
-Route::any('/member', 'MemberController@index');
-
 /* MEMBER */
 Route::any('/member', 'MemberController@index');
+Route::any('/member/slot', 'MemberController@slot');
+Route::any('/member/code_vault', 'MemberController@code_vault');
+Route::any('/member/encashment', 'MemberController@encashment');
+Route::any('/member/genealogy', 'MemberController@genealogy');
+Route::any('/member/voucher', 'MemberController@voucher');
+Route::any('/member/leads', 'MemberController@lead');
 
 /* ADMIN */
 Route::any('/', 'FrontController@index');
