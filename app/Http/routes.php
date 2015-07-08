@@ -23,7 +23,8 @@ Route::any('/news_content', 'FrontController@news_content');
 Route::any('/contact', 'FrontController@contact');
 Route::any('/contact/submit', 'FrontController@contact_submit');
 Route::any('/register', 'FrontController@register');
-Route::any('/admin', 'AdminController@index');
+Route::get('/admin', 'AdminController@index');
+    Route::post('/admin','AdminController@postLogin');
 
 /* ADMIN / TRANSACTION */
 Route::get('admin/transaction/sales', 'AdminSalesController@index');
@@ -131,7 +132,7 @@ Route::get('admin/maintenance/inventory', 'AdminInventoryController@index');
 
 /* ADMIN / UTILITIES */
 Route::get('admin/utilities/admin', 'AdminAdminController@index');
-
+Route::get('admin/utilities/admin/data','AdminAdminController@data');//e2
 Route::get('admin/utilities/position', 'AdminPositionController@index');
 Route::any('admin/utilities/position/data', 'AdminPositionController@data');
 Route::get('admin/utilities/position/add', 'AdminPositionController@add');

@@ -37,6 +37,6 @@ class CreateTblProductPackageHas extends Migration
      */
     public function down()
     {
-        Schema::drop('tbl_has_product_package');
+        Schema::drop('tbl_product_package_has');
     }
 }
