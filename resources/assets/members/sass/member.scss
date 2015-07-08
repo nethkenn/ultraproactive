@@ -357,6 +357,18 @@ body
 		}
 	}
 }
+.message
+{
+	padding: 0 !important;
+	.remodal-close
+	{
+		display: none;
+	}
+	.header
+	{
+		background-color: $sblue;
+	}
+}
 
 //INCLUDE GLOBALS
 //ENCASHMENT

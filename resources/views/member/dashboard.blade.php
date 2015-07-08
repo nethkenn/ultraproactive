@@ -235,7 +235,7 @@
           <div class="name">John Doe</div>
           <div class="email">sample@gmail.com</div>
         </div>
-        <a href="javascript:" class="para pindutan">
+        <a href="#message" class="para pindutan">
           <div class="message">
             <img src="/resources/assets/frontend/img/icon-message.png">
             <span>send message</span>
@@ -253,7 +253,7 @@
           <div class="name">John Doe</div>
           <div class="email">sample@gmail.com</div>
         </div>
-        <a href="javascript:" class="para pindutan">
+        <a href="#message" class="para pindutan">
           <div class="message">
             <img src="/resources/assets/frontend/img/icon-message.png">
             <span>send message</span>
@@ -271,7 +271,7 @@
           <div class="name">John Doe</div>
           <div class="email">sample@gmail.com</div>
         </div>
-        <a href="javascript:" class="para pindutan">
+        <a href="#message" class="para pindutan">
           <div class="message">
             <img src="/resources/assets/frontend/img/icon-message.png">
             <span>send message</span>

@@ -240,6 +240,13 @@ body {
     .create-slot .potek img {
       margin-right: 10px; }
 
+.message {
+  padding: 0 !important; }
+  .message .remodal-close {
+    display: none; }
+  .message .header {
+    background-color: #40c0c0; }
+
 .encashment {
   overflow: hidden; }
   .encashment .header {

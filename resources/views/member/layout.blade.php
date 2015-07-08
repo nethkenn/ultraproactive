@@ -548,4 +548,11 @@
     <button data-remodal-action="cancel">Cancel</button>
     <button data-remodal-action="confirm">Buy Code</button>
 </div>
+<div class="remodal message" data-remodal-id="message">
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <div class="header">
+        <img src="/resources/assets/frontend/img/icon-messages.png">
+        Messages
+    </div>
+</div>
 </html>
