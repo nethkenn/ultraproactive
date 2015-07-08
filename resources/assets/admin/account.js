@@ -50,7 +50,7 @@ function accountJs()
 			    },
 
 			    error: function( xhr, status, errorThrown ) {
-			        // alert( "Sorry, there was a problem!" );
+			         alert( "Sorry, there was a problem!"+errorThrown );
 			        // console.log( "Error: " + errorThrown );
 			        // console.log( "Status: " + status );
 			        // console.dir( xhr );
@@ -96,7 +96,7 @@ function accountJs()
 			    },
 
 			    error: function( xhr, status, errorThrown ) {
-			        // alert( "Sorry, there was a problem!" );
+			        alert( "Sorry, there was a problem!"+errorThrown );
 			        // console.log( "Error: " + errorThrown );
 			        // console.log( "Status: " + status );
 			        // console.dir( xhr );

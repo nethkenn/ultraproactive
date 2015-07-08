@@ -11,8 +11,7 @@
 				<button onclick="location.href='admin/maintenance/accounts/add'" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> ADD ACCOUNT</button>
 			</div>
 		</div>
-		<div class="filters ">
-		</div>
+		<div class="filters "></div>
 	</div>
 		<div class="filters ">
 			<div class="col-md-8">
