@@ -21,16 +21,13 @@
 		<table id="product-table" class="table table-bordered">
 			<thead>
 				<tr>
-					<th>ID</th>
+					<th class="option-col">ID</th>
 					<th>SKU</th>
 					<th>Name</th>
 					<th>Category</th>
-					<th>Unilevel PTS</th>
-					<th>Binary PTS</th>
 					<th>Price</th>
-					<th>Image</th>
-					<th></th>
-					<th></th>
+					<th class="option-col"></th>
+					<th class="option-col"></th>
 				</tr>
 			</thead>
 		</table>
@@ -57,10 +54,7 @@
 	            {data: 'sku', name: 'sku'},
 	            {data: 'product_name', name: 'product_name'},
 	            {data: 'product_category_name', name: 'product_category_name'},
-	            {data: 'unilevel_pts', name: 'unilevel_pts'},
-	            {data: 'binary_pts' ,name: 'binary_pts'},
 	            {data: 'price' ,name: 'price'},
-	            {data: 'image_file' ,name: 'image_file'},
 	           	{data: 'edit' ,name: 'product_id'},
 	            {data: 'archive' ,name: 'product_id'},
 	            

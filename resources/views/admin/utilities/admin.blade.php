@@ -23,8 +23,8 @@
             <thead>
             <tr class="text-center">
                 <th>Admin ID</th>
-                <th>Account id</th>
-                <th>Admin position id</th>
+                <th>Account Name</th>
+                <th>Position</th>
             </tr>
             </thead>
         </table>
@@ -33,11 +33,30 @@
 
 @section('script')
     <script type="text/javascript">
-        $('#table').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: 'admin/utilities/admin/data'
-        });
+$(function() {
+   $accountTable = $('#table').DataTable({
+        processing: true,
+        serverSide: true,
+         ajax:{
+                url:'admin/utilities/admin/data',
+                data:{
+                    archived : "{{$archived = Request::input('archived') ? 1 : 0 }}"
+                   }
+            },
+        columns: [
+            { data: 'admin_id', name: 'admin_id' },
+            { data: 'account_name', name: 'account_name' },
+            { data: 'admin_position_name', name: 'admin_position_name' },
+        ],
+        "lengthMenu": [[8, 10, 25, 50, -1], [10, 25, 50, "All"]],
+        "oLanguage": 
+            {
+                "sSearch": "",
+                "sProcessing": ""
+            },
+        stateSave: true,
+    });
+});
     </script>
 
 
