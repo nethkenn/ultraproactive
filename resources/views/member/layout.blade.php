@@ -72,7 +72,7 @@
 <div class="remodal create-slot" data-remodal-id="create_slot">
     <button data-remodal-action="close" class="remodal-close"></button>
     <div class="header">
-        <img src="/resources/assets/frontend/img/icon-slot.png">
+        <img src="/resources/assets/frontend/img/icon-plis.png">
         Create Slot
     </div>
     <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
@@ -109,7 +109,7 @@
 <div class="remodal create-slot" data-remodal-id="transfer_code">
     <button data-remodal-action="close" class="remodal-close"></button>
     <div class="header">
-        <img src="/resources/assets/frontend/img/icon-slot.png">
+        <img src="/resources/assets/frontend/img/icon-transfer.png">
         Transfer Code
     </div>
     <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
@@ -144,7 +144,7 @@
 <div class="remodal create-slot" data-remodal-id="use_code">
     <button data-remodal-action="close" class="remodal-close"></button>
     <div class="header">
-        <img src="/resources/assets/frontend/img/icon-slot.png">
+        <img src="/resources/assets/frontend/img/icon-use.png">
         Use Code
     </div>
     <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
@@ -181,7 +181,7 @@
 <div class="remodal create-slot" data-remodal-id="claim_code">
     <button data-remodal-action="close" class="remodal-close"></button>
     <div class="header">
-        <img src="/resources/assets/frontend/img/icon-slot.png">
+        <img src="/resources/assets/frontend/img/icon-claim.png">
         Claim Code
     </div>
     <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
@@ -212,7 +212,7 @@
 <div class="remodal create-slot" data-remodal-id="buy_code">
     <button data-remodal-action="close" class="remodal-close"></button>
     <div class="header">
-        <img src="/resources/assets/frontend/img/icon-slot.png">
+        <img src="/resources/assets/frontend/img/icon-buy.png">
         Buy Codes
     </div>
     <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
