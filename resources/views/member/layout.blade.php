@@ -37,19 +37,24 @@
 			    <!-- Collect the nav links, forms, and other content for toggling -->
 			    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			      <ul class="nav navbar-nav">
-			        <li class="active"><a href="/member">Dashboard</a></li>
-			        <li><a href="/member/slot">My Slots</a></li>
-			        <li><a href="/member/code_vault">Code Vault</a></li>
-			        <li><a href="/member/genealogy">Genealogy</a></li>
-			        <li><a href="/member/encashment">Encashment</a></li>
-			        <li><a href="/member/product">Product</a></li>
-			        <li><a href="/member/voucher">Voucher</a></li>
-			        <li><a href="/member/leads">Leads</a></li>
+			        <li class="{{ Request::segment(2) == '' ? 'active' : '' }}"><a href="/member">Dashboard</a></li>
+			        <li class="{{ Request::segment(2) == 'slot' ? 'active' : '' }}"><a href="/member/slot">My Slots</a></li>
+			        <li class="{{ Request::segment(2) == 'code_vault' ? 'active' : '' }}"><a href="/member/code_vault">Code Vault</a></li>
+			        <li class="{{ Request::segment(2) == 'genealogy' ? 'active' : '' }}"><a href="/member/genealogy">Genealogy</a></li>
+			        <li class="{{ Request::segment(2) == 'encashment' ? 'active' : '' }}"><a href="/member/encashment">Encashment</a></li>
+			        <li class="{{ Request::segment(2) == 'product' ? 'active' : '' }}"><a href="/member/product">Product</a></li>
+			        <li class="{{ Request::segment(2) == 'voucher' ? 'active' : '' }}"><a href="/member/voucher">Voucher</a></li>
+			        <li class="{{ Request::segment(2) == 'leads' ? 'active' : '' }}"><a href="/member/leads">Leads</a></li>
 			      </ul>
-			      <form class="navbar-form navbar-left" role="search">
-			    
-			      <ul class="nav navbar-nav navbar-right">
-			     
+			      <ul class="nav navbar-nav navbar-right" style="margin-right: 0;">
+                    <li>
+                        <div class="select-label">You are using</div>
+                    </li>
+			         <li>
+                        <select class="form-control">
+                            <option>Slot #5 (1,200.00)</option>
+                         </select>
+                     </li>
 			      </ul>
 			    </div><!-- /.navbar-collapse -->
 			    <div class="shadow"></div>
@@ -675,5 +680,55 @@
             </div>
         </div>
     </div>
+</div>
+<div class="remodal create-slot" data-remodal-id="checkout">
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <div class="header">
+        <img src="/resources/assets/frontend/img/icon-checkout.png">
+        Checkout
+    </div>
+    <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
+    <div class="col-md-10 col-md-offset-1 para">
+        <form class="form-horizontal">
+            <div class="form-group para">
+                <label for="a1" class="col-sm-3 control-label">Wallet</label>
+                <div class="col-sm-9">
+                    <input type="text" value="Slot #8" class="form-control" id="a1" value="1,200.00">
+                </div>
+            </div>
+            <div class="form-group para">
+                <label for="a2" class="col-sm-3 control-label">Total Amount</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="a2" value="800.00">
+                </div>
+            </div>
+            <div class="form-group para">
+                <label for="a3" class="col-sm-3 control-label">Remaining</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="a3" value="400.00">
+                </div>
+            </div>
+            <div class="form-group para">
+                <label for="a4" class="col-sm-3 control-label">Total Unilevel Points</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="a4" value="100.00">
+                </div>
+            </div>
+            <div class="form-group para">
+                <label for="a5" class="col-sm-3 control-label">Total Binary Points</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="a5" value="120.00">
+                </div>
+            </div>
+            <div class="form-group para">
+                <label for="a6" class="col-sm-3 control-label">Points Recipient</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="a6" value="Slot #5">
+                </div>
+            </div>
+        </form>
+    </div>
+    <br>
+    <button class="checkawt" data-remodal-action="confirm">Submit Checkout</button>
 </div>
 </html>

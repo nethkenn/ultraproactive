@@ -34,4 +34,8 @@ class MemberController extends Controller
 	{
         return view('member.product');
 	}
+	public function login()
+	{
+        return view('member.login');
+	}
 }

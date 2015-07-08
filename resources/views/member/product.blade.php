@@ -106,7 +106,7 @@
             </tbody>
         </table>
         <div class="total">Total&nbsp;&nbsp;:&nbsp;&nbsp;<span>19,820.00</span></div>
-        <a href="javascript:">
+        <a href="#checkout">
         	<button type="button">
         		Checkout Now!
         	</button>

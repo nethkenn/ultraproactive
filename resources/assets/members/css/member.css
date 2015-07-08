@@ -137,6 +137,15 @@ body {
     border-right: 1px solid #c2c2c2; }
   .wrapper .header-nav .header .header-text:last-child {
     border-right: 0px solid #c2c2c2; }
+  .wrapper .header-nav .navbar-right {
+    padding: 8px 10px; }
+    .wrapper .header-nav .navbar-right select {
+      color: #77818e; }
+    .wrapper .header-nav .navbar-right .select-label {
+      color: #77818e;
+      padding: 6px 20px; }
+      .wrapper .header-nav .navbar-right .select-label:hover {
+        background-color: white; }
   .wrapper .header-nav .navbar {
     clear: both;
     position: relative; }
@@ -170,8 +179,7 @@ body {
   .create-slot .form-group {
     font-size: 12.5px; }
     .create-slot .form-group label {
-      color: #bec4cd !important;
-      margin-top: 6px;
+      color: #77818e !important;
       font-family: "Arial", sans-serif !important;
       font-style: italic; }
     .create-slot .form-group input[type="text"],
@@ -215,6 +223,10 @@ body {
       .create-slot table tbody tr td {
         padding: 10px 20px;
         font-size: 12.5px; }
+  .create-slot .checkawt {
+    background-color: #40c0c0;
+    color: white;
+    border-radius: 5px; }
   .create-slot .wew {
     color: #77818e; }
   .create-slot .epal {
