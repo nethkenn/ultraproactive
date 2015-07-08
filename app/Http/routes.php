@@ -9,6 +9,7 @@ Route::any('/member/encashment', 'MemberController@encashment');
 Route::any('/member/genealogy', 'MemberController@genealogy');
 Route::any('/member/voucher', 'MemberController@voucher');
 Route::any('/member/leads', 'MemberController@lead');
+Route::any('/member/product', 'MemberController@product');
 
 /* ADMIN */
 Route::any('/', 'FrontController@index');
