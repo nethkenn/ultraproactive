@@ -241,11 +241,140 @@ body {
       margin-right: 10px; }
 
 .message {
-  padding: 0 !important; }
+  padding: 0 !important;
+  max-width: 860px !important; }
   .message .remodal-close {
     display: none; }
   .message .header {
-    background-color: #40c0c0; }
+    background-color: #40c0c0;
+    color: white;
+    font-size: 14.58px;
+    padding: 10px;
+    z-index: 20;
+    position: relative; }
+    .message .header img {
+      margin: 0 10px; }
+    .message .header .nya {
+      text-align: left;
+      padding: 6px 15px; }
+    .message .header .nye {
+      text-align: right; }
+      .message .header .nye a {
+        color: #9ea7b3;
+        font-size: 12.5px; }
+        .message .header .nye a button {
+          padding: 5px 20px;
+          border: 0;
+          border-bottom: 2px solid #dfdfdf; }
+  .message .body {
+    display: table;
+    width: 100%;
+    table-layout: fixed; }
+    .message .body .message-list {
+      display: table-cell;
+      vertical-align: top;
+      width: 250px; }
+      .message .body .message-list .overflows {
+        overflow-y: auto;
+        height: 350px;
+        padding: 10px 0; }
+        .message .body .message-list .overflows .holder {
+          width: 100%; }
+          .message .body .message-list .overflows .holder .linyanglinya {
+            display: table-cell;
+            width: 13px;
+            vertical-align: top;
+            background-image: url("/resources/assets/frontend/img/grabenglinya.png");
+            padding: 10px 15px;
+            background-repeat: no-repeat;
+            background-position: top center;
+            -webkit-box-sizing: content-box;
+            -moz-box-sizing: content-box;
+            box-sizing: content-box; }
+          .message .body .message-list .overflows .holder .liness {
+            display: table-cell;
+            vertical-align: top;
+            width: 100%;
+            padding: 10px 0; }
+            .message .body .message-list .overflows .holder .liness .pix {
+              text-align: center;
+              display: table-cell;
+              vertical-align: middle; }
+              .message .body .message-list .overflows .holder .liness .pix img {
+                width: 50px;
+                height: 50px;
+                border-radius: 100%;
+                border: 1px solid #c3c8cf; }
+            .message .body .message-list .overflows .holder .liness .text {
+              display: table-cell;
+              vertical-align: middle;
+              padding: 0 20px;
+              text-align: left; }
+              .message .body .message-list .overflows .holder .liness .text .name {
+                font-size: 16.67px;
+                color: #40c0c0; }
+              .message .body .message-list .overflows .holder .liness .text .email {
+                font-size: 12.5px;
+                color: #77818e; }
+    .message .body .message-content {
+      display: table-cell;
+      vertical-align: top;
+      padding: 0 10px; }
+      .message .body .message-content .scrollpamore {
+        height: 260px;
+        overflow-y: auto; }
+        .message .body .message-content .scrollpamore .holder {
+          padding: 15px 0px;
+          border-bottom: 1px solid #e3e2e2; }
+          .message .body .message-content .scrollpamore .holder .pix {
+            display: table-cell;
+            vertical-align: top;
+            width: 50px;
+            padding: 0 10px; }
+            .message .body .message-content .scrollpamore .holder .pix img {
+              width: 50px;
+              height: 50px; }
+          .message .body .message-content .scrollpamore .holder .text {
+            display: table-cell;
+            vertical-align: top;
+            width: 100%;
+            text-align: left; }
+            .message .body .message-content .scrollpamore .holder .text .name {
+              color: #40c0c0;
+              font-size: 11.25px;
+              padding: 5px 0; }
+            .message .body .message-content .scrollpamore .holder .text .message {
+              font-size: 12.5px;
+              color: #77818e;
+              padding: 5px 0; }
+          .message .body .message-content .scrollpamore .holder .date {
+            text-align: right;
+            font-size: 11.25px;
+            color: #c9cbcb; }
+      .message .body .message-content .sulatan {
+        background-color: #e8e8e8;
+        display: table;
+        width: 100%;
+        padding: 5px;
+        table-layout: fixed; }
+        .message .body .message-content .sulatan .mensahe {
+          display: table-cell;
+          vertical-align: top; }
+          .message .body .message-content .sulatan .mensahe textarea {
+            border: 0;
+            resize: none;
+            padding: 10px;
+            width: 100%; }
+        .message .body .message-content .sulatan .muntingpindutan {
+          display: table-cell;
+          vertical-align: top;
+          width: 100px;
+          padding: 0 5px; }
+          .message .body .message-content .sulatan .muntingpindutan a button {
+            background-color: #f47265;
+            border: 0;
+            width: 100%;
+            height: 79px; }
 
 .encashment {
   overflow: hidden; }

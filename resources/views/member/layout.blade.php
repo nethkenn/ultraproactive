@@ -550,9 +550,130 @@
 </div>
 <div class="remodal message" data-remodal-id="message">
     <button data-remodal-action="close" class="remodal-close"></button>
-    <div class="header">
-        <img src="/resources/assets/frontend/img/icon-messages.png">
-        Messages
+    <div class="header para">
+        <div class="col-md-6 nya">
+            <img src="/resources/assets/frontend/img/icon-messages.png">
+            Messages
+        </div>
+        <div class="col-md-6 nye">
+            <a href="javascript:">
+                <button type="button">+ Send New Message</button>
+            </a>
+        </div>
+    </div>
+    <div class="body">
+        <div class="message-list">
+            <div class="overflows">
+                <div class="holder">
+                    <div class="linyanglinya"></div>
+                    <div class="liness">
+                    <div class="pix">
+                      <img src="/resources/assets/frontend/img/pix.png">
+                    </div>
+                    <div class="text">
+                      <div class="name">John Doe</div>
+                      <div class="email">sample@gmail.com</div>
+                    </div>
+                    </div>
+                </div>
+                <div class="holder">
+                    <div class="linyanglinya"></div>
+                    <div class="liness">
+                    <div class="pix">
+                      <img src="/resources/assets/frontend/img/pix.png">
+                    </div>
+                    <div class="text">
+                      <div class="name">John Doe</div>
+                      <div class="email">sample@gmail.com</div>
+                    </div>
+                    </div>
+                </div>
+                <div class="holder">
+                    <div class="linyanglinya"></div>
+                    <div class="liness">
+                    <div class="pix">
+                      <img src="/resources/assets/frontend/img/pix.png">
+                    </div>
+                    <div class="text">
+                      <div class="name">John Doe</div>
+                      <div class="email">sample@gmail.com</div>
+                    </div>
+                    </div>
+                </div>
+                <div class="holder">
+                    <div class="linyanglinya"></div>
+                    <div class="liness">
+                    <div class="pix">
+                      <img src="/resources/assets/frontend/img/pix.png">
+                    </div>
+                    <div class="text">
+                      <div class="name">John Doe</div>
+                      <div class="email">sample@gmail.com</div>
+                    </div>
+                    </div>
+                </div>
+                <div class="holder">
+                    <div class="linyanglinya"></div>
+                    <div class="liness">
+                    <div class="pix">
+                      <img src="/resources/assets/frontend/img/pix.png">
+                    </div>
+                    <div class="text">
+                      <div class="name">John Doe</div>
+                      <div class="email">sample@gmail.com</div>
+                    </div>
+                    </div>
+                </div>
+                <div class="holder">
+                    <div class="linyanglinya"></div>
+                    <div class="liness">
+                    <div class="pix">
+                      <img src="/resources/assets/frontend/img/pix.png">
+                    </div>
+                    <div class="text">
+                      <div class="name">John Doe</div>
+                      <div class="email">sample@gmail.com</div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="message-content">
+            <div class="scrollpamore">
+                <div class="holder">
+                    <div class="pix">
+                        <img src="/resources/assets/frontend/img/pix1.png">
+                    </div>
+                    <div class="text">
+                        <div class="name">Guillermo Tabligan</div>
+                        <div class="message">Hello there! I was wondering if you are free tomorrow?</div>
+                    </div>
+                    <div class="date">July 15, 2093</div>
+                </div>
+                <div class="holder">
+                    <div class="pix">
+                        <img src="/resources/assets/frontend/img/pix1.png">
+                    </div>
+                    <div class="text">
+                        <div class="name">Guillermo Tabligan</div>
+                        <div class="message">Hello there! I was wondering if you are free tomorrow?</div>
+                    </div>
+                    <div class="date">July 15, 2093</div>
+                </div>
+            </div>
+            <div class="sulatan">
+                <div class="mensahe">
+                    <textarea placeholder="Enter your message here.."></textarea>
+                </div>
+                <div class="muntingpindutan">
+                    <a href="javascript:">
+                        <button type="button">
+                            <img src="/resources/assets/frontend/img/icon-eroplano.png">
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </html>
