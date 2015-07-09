@@ -1,13 +1,11 @@
 <?php namespace App\Http\Controllers;
 use DB;
 use Request;
-<<<<<<< HEAD
 use Validator;
 use Datatables;
 use App\Tbl_position;
-=======
 use Redirect;
->>>>>>> eebf8cd45767dc8fac24238bf31c0e4f77169f71
+
 
 class AdminPositionController extends AdminController
 {

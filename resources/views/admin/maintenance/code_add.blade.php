@@ -1,6 +1,5 @@
 @extends('admin.layout')
 @section('content')
-
 	<div class="header col-md-12" >
 	    <div class="title col-md-8">
 	        <h2><i class="fa fa-tag"></i> Generate New Code</h2>
@@ -93,6 +92,21 @@
                     </select>
                 </div>
                 <div class="form-group col-md-12">
+                </div>
+                                <div class="form-group col-md-6">
+                    <label for="Recipient">Code multiplier</label>
+                    @if($_error['code_multiplier'])
+                        <div class="col-md-12 alert alert-danger form-errors">
+                            <ul>
+                                @foreach($_error['code_multiplier'] as $error)
+                                    <li>{{$error}}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <input class="form-control" type="number" value="1" name="code_multiplier"/>
+                </div>  
+                                <div class="form-group col-md-6">
                     <label for="Inventory Update">Inventory Update</label>
                     @if($_error['inventory_update_type_id'])
                         <div class="col-md-12 alert alert-danger form-errors">
@@ -110,7 +124,8 @@
                         @endforeach
                         @endif
                     </select>
-                </div>    	
+                </div>      
+
         </form>
     </div>
 @endsection
@@ -118,8 +133,6 @@
     <script type="text/javascript" src="resources/assets/chosen_v1.4.2/chosen.jquery.min.js"></script>
     <link rel="stylesheet" href="resources/assets/chosen_v1.4.2/chosen.css">
     <script type="text/javascript">
-        $(".chosen-select").chosen(
-        {
-        });
+        $(".chosen-select").chosen();
     </script>
 @endsection

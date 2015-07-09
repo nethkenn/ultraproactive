@@ -109,10 +109,9 @@ class tbl_code_type extends Seeder
     {
         DB::table('tbl_code_type')->delete();
         DB::statement("INSERT INTO `tbl_code_type` (`code_type_id`, `code_type_name`) VALUES
-                        (1, 'All slot'),
-                        (2, 'Paid Slot'),
-                        (3, 'Free Slot'),
-                        (4, 'Comission Deductable');
+                        (1, 'Paid Slot'),
+                        (2, 'Free Slot'),
+                        (3, 'Comission Deductable');
                     ");
     }
 }
