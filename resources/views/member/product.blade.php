@@ -117,3 +117,11 @@
 @section('css')
 <link rel="stylesheet" type="text/css" href="/resources/assets/members/css/product.css">
 @endsection
+@section('script')
+<script type="text/javascript">
+	jQuery('.cart').stickyfloat(
+		{
+			duration: 400
+		});
+</script>
+@endsection

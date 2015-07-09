@@ -69,10 +69,12 @@
 		</div>
 	</div>
 </div>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.3.0/es5-shim.js'></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="/resources/assets/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/resources/assets/remodal/src/jquery.remodal.js"></script>
 <script type="text/javascript" src="/resources/assets/jquery-ui/jquery-ui.js"></script>
+<script type="text/javascript" src="/resources/assets/stickyfloat/stickyfloat.js"></script>
 @yield('script')
 <div class="remodal create-slot" data-remodal-id="create_slot">
     <button data-remodal-action="close" class="remodal-close"></button>
