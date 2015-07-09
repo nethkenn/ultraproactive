@@ -7,17 +7,22 @@
     margin-top: 30px; }
     .wrapper .content .logo {
       margin-bottom: 50px; }
-    .wrapper .content .input input[type="text"] {
+    .wrapper .content .input input[type="text"],
+    .wrapper .content .input input[type="password"] {
       border: 1px solid #d2d2d2;
       height: 75px;
       width: 100%;
       border-radius: 5px;
-      margin: 10px 0; }
+      margin: 10px 0;
+      color: #77818e;
+      font-size: 16.67px;
+      padding: 15px; }
     .wrapper .content .forgot {
-      color: #9ea7b3;
       font-size: 14.58px;
       font-style: italic;
       margin-top: 15px; }
+      .wrapper .content .forgot a {
+        color: #9ea7b3; }
     .wrapper .content a {
       color: white; }
       .wrapper .content a button {

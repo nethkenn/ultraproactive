@@ -69,10 +69,12 @@
 		</div>
 	</div>
 </div>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.3.0/es5-shim.js'></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="/resources/assets/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/resources/assets/remodal/src/jquery.remodal.js"></script>
 <script type="text/javascript" src="/resources/assets/jquery-ui/jquery-ui.js"></script>
+<script type="text/javascript" src="/resources/assets/stickyfloat/stickyfloat.js"></script>
 @yield('script')
 <div class="remodal create-slot" data-remodal-id="create_slot">
     <button data-remodal-action="close" class="remodal-close"></button>
@@ -730,5 +732,62 @@
     </div>
     <br>
     <button class="checkawt" data-remodal-action="confirm">Submit Checkout</button>
+</div>
+<div class="remodal referrals create-slot" data-remodal-id="referral">
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <div class="header">
+        <img src="/resources/assets/frontend/img/icon-referral.png">
+        Referrals
+    </div>
+    <div class="col-md-12">
+        <table>
+            <thead>
+                <tr>
+                    <td>#</td>
+                    <td>Deduction</td>
+                    <td>Status</td>
+                    <td>Type</td>
+                    <td>Amount</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>13</td>
+                    <td>100.00</td>
+                    <td>Pending</td>
+                    <td>Bank Deposit</td>
+                    <td>462.00</td>
+                </tr>
+                <tr>
+                    <td>13</td>
+                    <td>100.00</td>
+                    <td>Pending</td>
+                    <td>Bank Deposit</td>
+                    <td>462.00</td>
+                </tr>
+                <tr>
+                    <td>13</td>
+                    <td>100.00</td>
+                    <td>Pending</td>
+                    <td>Bank Deposit</td>
+                    <td>462.00</td>
+                </tr>
+                <tr>
+                    <td>13</td>
+                    <td>100.00</td>
+                    <td>Pending</td>
+                    <td>Bank Deposit</td>
+                    <td>462.00</td>
+                </tr>
+                <tr>
+                    <td>13</td>
+                    <td>100.00</td>
+                    <td>Pending</td>
+                    <td>Bank Deposit</td>
+                    <td>462.00</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 </html>

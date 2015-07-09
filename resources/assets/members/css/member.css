@@ -215,14 +215,24 @@ body {
         padding: 8px 20px;
         font-size: 12.5px; }
     .create-slot table tbody {
+      border-right: 1px solid #e8e8e8;
+      border-bottom: 1px solid #e8e8e8;
+      border-left: 1px solid #e8e8e8;
       color: #77818e; }
       .create-slot table tbody tr:nth-child(even) {
         background: #f7f7f7; }
       .create-slot table tbody tr:nth-child(odd) {
         background: #eeeeee; }
-      .create-slot table tbody tr td {
-        padding: 10px 20px;
-        font-size: 12.5px; }
+      .create-slot table tbody tr {
+        border-bottom: 1px solid #e8e8e8; }
+        .create-slot table tbody tr td {
+          padding: 10px 20px;
+          font-size: 12.5px;
+          border-right: 1px solid #e8e8e8; }
+        .create-slot table tbody tr td:last-child {
+          border: 0; }
+      .create-slot table tbody tr:last-child {
+        border: 0; }
   .create-slot .checkawt {
     background-color: #40c0c0;
     color: white;
@@ -387,6 +397,18 @@ body {
             border: 0;
             width: 100%;
             height: 79px; }
+
+.referrals {
+  border-top: 0;
+  padding: 0 !important; }
+  .referrals .header {
+    background-color: #40c0c0;
+    color: white;
+    text-align: left;
+    padding: 10px 50px; }
+  .referrals table {
+    margin-bottom: 0;
+    margin: 10px 0; }
 
 .encashment {
   overflow: hidden; }
