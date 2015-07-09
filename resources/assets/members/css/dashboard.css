@@ -32,15 +32,17 @@
       vertical-align: middle;
       padding: 20px; }
       .left .profile .profile-info .name {
-        color: #9ba0a7;
+        color: #77818e;
         font-weight: 800;
         font-size: 29.17px;
         border-bottom: 1px solid #e3e3e4;
         padding-bottom: 5px;
         margin-bottom: 5px; }
       .left .profile .profile-info .email {
-        color: #36c1c8;
-        font-size: 14.58px; }
+        color: #9ea7b3;
+        font-size: 16.67px;
+        font-weight: 300;
+        letter-spacing: 1.5px; }
   .left .info .referral {
     background-color: #f47265;
     -webkit-transition: all ease 0.8s;

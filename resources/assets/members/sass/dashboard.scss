@@ -52,7 +52,7 @@ $font-color: #77818e;
 			padding: 20px;
 			.name
 			{
-				color: #9ba0a7;
+				color: $font-color;
 				font-weight: 800;
 				font-size: 29.17px;
 				border-bottom: 1px solid #e3e3e4;
@@ -61,8 +61,10 @@ $font-color: #77818e;
 			}
 			.email
 			{
-				color: #36c1c8;
-				font-size: 14.58px;
+				color: $gray2;
+				font-size: 16.67px;
+				font-weight: 300;
+				letter-spacing: 1.5px;
 			}
 		}
 	}

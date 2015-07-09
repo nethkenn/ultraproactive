@@ -9,7 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="/resources/assets/remodal/src/remodal-default-theme.css">
 	<link rel="stylesheet" type="text/css" href="/resources/assets/jquery-ui/jquery-ui.css">
     <link href="/resources/assets/footable/css/footable.core.css" rel="stylesheet" type="text/css" />
-    <link href="/resources/assets/footable/css/footable.standalone.css" rel="stylesheet" type="text/css" />
+    {{-- <link href="/resources/assets/footable/css/footable.standalone.css" rel="stylesheet" type="text/css" /> --}}
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300' rel='stylesheet' type='text/css'>
 </head>
 <div class="bg">
@@ -28,6 +28,11 @@
 			  <div>
 			    <!-- Brand and toggle get grouped for better mobile display -->
 			    <div class="navbar-header">
+                <span class="hidden-bury visible-xs visible-sm hidden-lg hidden-md pull-left">
+                    <select class="form-control">
+                        <option>Slot #5 (1,200.00)</option>
+                     </select>
+                </span>
 			      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
 			        <span class="sr-only">Toggle navigation</span>
 			        <span class="icon-bar"></span>
@@ -73,6 +78,7 @@
 </div>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.3.0/es5-shim.js'></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="/resources/assets/rutsen/js/global.js"></script>
 <script type="text/javascript" src="/resources/assets/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/resources/assets/remodal/src/jquery.remodal.js"></script>
 <script type="text/javascript" src="/resources/assets/footable/js/footable.js"></script>
@@ -80,7 +86,13 @@
 <script type="text/javascript" src="/resources/assets/stickyfloat/stickyfloat.js"></script>
 <script type="text/javascript">
     $(function () {
-        $('.footable').footable();
+        $('.footable').footable({
+            breakpoints: {
+                phone: 480,
+                phonie: 768,
+                tablet: 1024
+            }
+        });
     });
 </script>
 @yield('script')
@@ -118,8 +130,8 @@
         </form>
     </div>
     <br>
-    <button data-remodal-action="cancel">Cancel</button>
-    <button data-remodal-action="confirm">Create Slot</button>
+    <button class="button" data-remodal-action="cancel">Cancel</button>
+    <button class="button"  data-remodal-action="confirm">Create Slot</button>
 </div>
 <div class="remodal create-slot" data-remodal-id="transfer_code">
     <button data-remodal-action="close" class="remodal-close"></button>
@@ -153,8 +165,8 @@
         </form>
     </div>
     <br>
-    <button data-remodal-action="cancel">Cancel</button>
-    <button data-remodal-action="confirm">Create Slot</button>
+    <button class="button" data-remodal-action="cancel">Cancel</button>
+    <button class="button" data-remodal-action="confirm">Initiate Transfer</button>
 </div>
 <div class="remodal create-slot" data-remodal-id="use_code">
     <button data-remodal-action="close" class="remodal-close"></button>
@@ -190,8 +202,8 @@
         </form>
     </div>
     <br>
-    <button data-remodal-action="cancel">Cancel</button>
-    <button data-remodal-action="confirm">Create Slot</button>
+    <button class="button" data-remodal-action="cancel">Cancel</button>
+    <button class="button" data-remodal-action="confirm">Use Code</button>
 </div>
 <div class="remodal create-slot" data-remodal-id="claim_code">
     <button data-remodal-action="close" class="remodal-close"></button>
@@ -221,8 +233,8 @@
         </form>
     </div>
     <br>
-    <button data-remodal-action="cancel">Cancel</button>
-    <button data-remodal-action="confirm">Create Slot</button>
+    <button class="button" data-remodal-action="cancel">Cancel</button>
+    <button class="button" data-remodal-action="confirm">Buy Cpde</button>
 </div>
 <div class="remodal create-slot" data-remodal-id="buy_code">
     <button data-remodal-action="close" class="remodal-close"></button>
@@ -262,8 +274,8 @@
         </form>
     </div>
     <br>
-    <button data-remodal-action="cancel">Cancel</button>
-    <button data-remodal-action="confirm">Create Slot</button>
+    <button class="button" data-remodal-action="cancel">Cancel</button>
+    <button class="button" data-remodal-action="confirm">Buy Code</button>
 </div>
 <div class="remodal create-slot" data-remodal-id="encashment_history">
     <button data-remodal-action="close" class="remodal-close"></button>
@@ -371,7 +383,7 @@
         </form>
     </div>
     <br>
-    <button data-remodal-action="confirm" class="orange-btn">Confirm Encashment</button>
+    <button data-remodal-action="confirm" class="orange-btn button">Confirm Encashment</button>
 </div>
 <div class="remodal create-slot" data-remodal-id="upgrade_member">
     <button data-remodal-action="close" class="remodal-close"></button>
@@ -411,8 +423,8 @@
         </form>
     </div>
     <br>
-    <button data-remodal-action="cancel">Cancel</button>
-    <button data-remodal-action="confirm">Submit Upgrade</button>
+    <button class="button" data-remodal-action="cancel">Cancel</button>
+    <button class="button" data-remodal-action="confirm">Submit Upgrade</button>
 </div>
 <div class="remodal create-slot" data-remodal-id="transfer_slot">
     <button data-remodal-action="close" class="remodal-close"></button>
@@ -446,8 +458,8 @@
         </form>
     </div>
     <br>
-    <button data-remodal-action="cancel">Cancel</button>
-    <button data-remodal-action="confirm">Initiate Transfer</button>
+    <button class="button" data-remodal-action="cancel">Cancel</button>
+    <button class="button" data-remodal-action="confirm">Initiate Transfer</button>
 </div>
 <div class="remodal create-slot" data-remodal-id="voucher">
     <button data-remodal-action="close" class="remodal-close"></button>
@@ -534,7 +546,7 @@
     <div style="color: #77818e; font-size: 12p.5x;">You might invite people using this link. </br>People who gives their information using your link become your Leads</div>
     <div><input style="color: #f47265; font-size: 12.5px; width: 80%; margin: 20px auto; padding: 10px; text-align: center; border: 1px solid #eeeeee;" type="text" value="http://yourlink.yourcompanyurl.com"></div>
     <br>
-    <button data-remodal-action="confirm">Close</button>
+    <button class="button" data-remodal-action="confirm">Close</button>
 </div>
 <div class="remodal create-slot" data-remodal-id="add_lead">
     <button data-remodal-action="close" class="remodal-close"></button>
@@ -560,8 +572,8 @@
         </form>
     </div>
     <br>
-    <button data-remodal-action="cancel">Cancel</button>
-    <button data-remodal-action="confirm">Buy Code</button>
+    <button class="button" data-remodal-action="cancel">Cancel</button>
+    <button class="button" data-remodal-action="confirm">Buy Code</button>
 </div>
 <div class="remodal message" data-remodal-id="message">
     <button data-remodal-action="close" class="remodal-close"></button>
@@ -739,7 +751,7 @@
         </form>
     </div>
     <br>
-    <button class="checkawt" data-remodal-action="confirm">Submit Checkout</button>
+    <button class="checkawt button" data-remodal-action="confirm">Submit Checkout</button>
 </div>
 <div class="remodal referrals create-slot" data-remodal-id="referral">
     <button data-remodal-action="close" class="remodal-close"></button>

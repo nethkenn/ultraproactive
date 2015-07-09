@@ -10,6 +10,10 @@ $font-color: #77818e;
 
 .product
 {
+	@media screen and (max-width: 991px)
+	{
+		padding: 0 15px !important;
+	}
 	.header
 	{
 		font-size: 20.83px;
@@ -30,6 +34,11 @@ $font-color: #77818e;
 			{
 				display: table-cell;
 				vertical-align: top;
+				@media screen and (max-width: 600px)
+				{
+					display: block;
+					text-align: center;
+				}
 			}
 			.text
 			{
@@ -37,6 +46,12 @@ $font-color: #77818e;
 				vertical-align: top;
 				text-align: left;
 				padding: 0 20px;
+				@media screen and (max-width: 600px)
+				{
+					display: block;
+					text-align: center;
+					padding-top: 15px;
+				}
 				.name
 				{
 					color: $sblue;
@@ -53,6 +68,14 @@ $font-color: #77818e;
 					font-size: 12.5px;
 					color: #77818e;
 					margin: 15px 0;
+				}
+				.boton
+				{
+					text-align: left;
+					@media screen and (max-width: 600px)
+					{
+						text-align: center;
+					}
 				}
 				a
 				{
@@ -80,6 +103,14 @@ $font-color: #77818e;
 {
 	background-color: #fff;
 	border-top: 5px solid $orange;
+	@media screen and (max-width: 1200px)
+	{
+		padding: 0 !important;
+	}
+	@media screen and (max-width: 991px)
+	{
+		padding: 0 15px !important;
+	}
 	.header
 	{
 		color: $orange;
@@ -92,6 +123,14 @@ $font-color: #77818e;
 	.body
 	{
 		padding: 0 !important;
+		@media screen and (max-width: 1200px)
+		{
+			padding: 0 5px !important;
+		}
+		@media screen and (max-width: 991px)
+		{
+			padding: 0 !important;
+		}
 		table
 		{
 			width: 100%;
@@ -99,11 +138,13 @@ $font-color: #77818e;
 			thead
 			{
 				background-color: $gray2;
-				td
+				th
 				{
 					padding: 10px 20px;
 					color: white;
 					font-size: 14.58px;
+					font-weight: 400;
+					text-align: center;
 				}
 			}
 			tbody
