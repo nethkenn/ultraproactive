@@ -131,18 +131,11 @@
 $(function()
 {
 
-		// var options = {closeOnOutsideClick : 'false'};
 
-  //  var  test2 = $('[data-remodal-id=modal]').remodal(options);
-  //  test2.open();
 
 
    var $transfer_code_popup = $('[data-remodal-id=transfer_code_modal]').remodal();
    var $check_code_popup = $('[data-remodal-id=check_code_modal]').remodal();
-
-   // $check_code_popup.open();
-  // $check_code_popup.getState();
-
 
    var $membershipCodeTable = $('#table').DataTable(
    {
