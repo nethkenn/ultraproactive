@@ -8,6 +8,8 @@
 	<link rel="stylesheet" type="text/css" href="/resources/assets/remodal/src/jquery.remodal.css">
 	<link rel="stylesheet" type="text/css" href="/resources/assets/remodal/src/remodal-default-theme.css">
 	<link rel="stylesheet" type="text/css" href="/resources/assets/jquery-ui/jquery-ui.css">
+    <link href="/resources/assets/footable/css/footable.core.css" rel="stylesheet" type="text/css" />
+    <link href="/resources/assets/footable/css/footable.standalone.css" rel="stylesheet" type="text/css" />
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300' rel='stylesheet' type='text/css'>
 </head>
 <div class="bg">
@@ -73,8 +75,14 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="/resources/assets/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/resources/assets/remodal/src/jquery.remodal.js"></script>
+<script type="text/javascript" src="/resources/assets/footable/js/footable.js"></script>
 <script type="text/javascript" src="/resources/assets/jquery-ui/jquery-ui.js"></script>
 <script type="text/javascript" src="/resources/assets/stickyfloat/stickyfloat.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('.footable').footable();
+    });
+</script>
 @yield('script')
 <div class="remodal create-slot" data-remodal-id="create_slot">
     <button data-remodal-action="close" class="remodal-close"></button>
