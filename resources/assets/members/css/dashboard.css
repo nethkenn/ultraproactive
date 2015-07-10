@@ -4,12 +4,21 @@
 .left {
   padding: 0 !important; }
   .left .profile {
-    background-color: #fff; }
+    background-color: #fff;
+    display: table;
+    table-layout: fixed;
+    width: 100%; }
     .left .profile .profile-pic {
       display: table-cell;
       vertical-align: middle;
+      width: 180px;
       position: relative;
       padding: 30px; }
+      @media screen and (max-width: 600px) {
+        .left .profile .profile-pic {
+          display: block;
+          text-align: center;
+          margin: auto; } }
       .left .profile .profile-pic img {
         -webkit-border-radius: 100%;
         -moz-border-radius: 100%;
@@ -31,6 +40,10 @@
       display: table-cell;
       vertical-align: middle;
       padding: 20px; }
+      @media screen and (max-width: 600px) {
+        .left .profile .profile-info {
+          display: block;
+          text-align: center; } }
       .left .profile .profile-info .name {
         color: #77818e;
         font-weight: 800;

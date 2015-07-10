@@ -84,17 +84,6 @@
 <script type="text/javascript" src="/resources/assets/footable/js/footable.js"></script>
 <script type="text/javascript" src="/resources/assets/jquery-ui/jquery-ui.js"></script>
 <script type="text/javascript" src="/resources/assets/stickyfloat/stickyfloat.js"></script>
-<script type="text/javascript">
-    $(function () {
-        $('.footable').footable({
-            breakpoints: {
-                phone: 480,
-                phonie: 768,
-                tablet: 1024
-            }
-        });
-    });
-</script>
 @yield('script')
 <div class="remodal create-slot" data-remodal-id="create_slot">
     <button data-remodal-action="close" class="remodal-close"></button>
@@ -285,46 +274,46 @@
     </div>
     <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
     <div class="col-md-12 para">
-        <table>
+        <table class="footable">
             <thead>
                 <tr>
-                    <td>#</td>
-                    <td>Deduction</td>
-                    <td>Status</td>
-                    <td>Type</td>
-                    <td>Amount</td>
+                    <th>#</th>
+                    <th data-hide="phone">Deduction</th>
+                    <th data-hide="phone">Status</th>
+                    <th data-hide="phone">Type</th>
+                    <th data-hide="phone">Amount</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr class="tibolru">
                     <td>13</td>
                     <td>100.00</td>
                     <td>Pending</td>
                     <td>Bank Deposit</td>
                     <td>462.00</td>
                 </tr>
-                <tr>
+                <tr class="tibolru">
                     <td>13</td>
                     <td>100.00</td>
                     <td>Pending</td>
                     <td>Bank Deposit</td>
                     <td>462.00</td>
                 </tr>
-                <tr>
+                <tr class="tibolru">
                     <td>13</td>
                     <td>100.00</td>
                     <td>Pending</td>
                     <td>Bank Deposit</td>
                     <td>462.00</td>
                 </tr>
-                <tr>
+                <tr class="tibolru">
                     <td>13</td>
                     <td>100.00</td>
                     <td>Pending</td>
                     <td>Bank Deposit</td>
                     <td>462.00</td>
                 </tr>
-                <tr>
+                <tr class="tibolru">
                     <td>13</td>
                     <td>100.00</td>
                     <td>Pending</td>
@@ -486,41 +475,41 @@
         </div>
     </div>
     <div class="para tae">
-        <table>
+        <table class="footable">
             <thead>
                 <tr>
-                    <td>Product</td>
-                    <td>Price</td>
-                    <td>Quantity</td>
-                    <td>Total</td>
+                    <th>Product</th>
+                    <th data-hide="phone">Price</th>
+                    <th data-hide="phone">Quantity</th>
+                    <th data-hide="phone">Total</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr class="tibolru">
                     <td>Sample Product 1</td>
                     <td>12,500.00</td>
                     <td>3</td>
                     <td>38,500.00</td>
                 </tr>
-                <tr>
+                <tr class="tibolru">
                     <td>Sample Product 1</td>
                     <td>12,500.00</td>
                     <td>3</td>
                     <td>38,500.00</td>
                 </tr>
-                <tr>
+                <tr class="tibolru">
                     <td>Sample Product 1</td>
                     <td>12,500.00</td>
                     <td>3</td>
                     <td>38,500.00</td>
                 </tr>
-                <tr>
+                <tr class="tibolru">
                     <td>Sample Product 1</td>
                     <td>12,500.00</td>
                     <td>3</td>
                     <td>38,500.00</td>
                 </tr>
-                <tr>
+                <tr class="tibolru">
                     <td>Sample Product 1</td>
                     <td>12,500.00</td>
                     <td>3</td>
@@ -578,18 +567,21 @@
 <div class="remodal message" data-remodal-id="message">
     <button data-remodal-action="close" class="remodal-close"></button>
     <div class="header para">
-        <div class="col-md-6 nya">
+        <div class="col-sm-6 nya">
             <img src="/resources/assets/frontend/img/icon-messages.png">
             Messages
         </div>
-        <div class="col-md-6 nye">
+        <div class="col-sm-6 nye">
             <a href="javascript:">
                 <button type="button">+ Send New Message</button>
+            </a>
+            <a href="javascript:" class="contactses">
+                <button type="button">Show Contacts</button>
             </a>
         </div>
     </div>
     <div class="body">
-        <div class="message-list">
+        <div class="message-list nyek">
             <div class="overflows">
                 <div class="holder">
                     <div class="linyanglinya"></div>
@@ -754,20 +746,20 @@
     <button class="checkawt button" data-remodal-action="confirm">Submit Checkout</button>
 </div>
 <div class="remodal referrals create-slot" data-remodal-id="referral">
-    <button data-remodal-action="close" class="remodal-close"></button>
+    <button data-remodal-action="close" class="remodal-close" style="color: white;"></button>
     <div class="header">
         <img src="/resources/assets/frontend/img/icon-referral.png">
         Referrals
     </div>
     <div class="col-md-12">
-        <table>
+        <table class="footable">
             <thead>
                 <tr>
-                    <td>#</td>
-                    <td>Deduction</td>
-                    <td>Status</td>
-                    <td>Type</td>
-                    <td>Amount</td>
+                    <th>#</th>
+                    <th data-hide="phone">Deduction</th>
+                    <th data-hide="phone">Status</th>
+                    <th data-hide="phone">Type</th>
+                    <th data-hide="phone">Amount</th>
                 </tr>
             </thead>
             <tbody>
@@ -810,4 +802,32 @@
         </table>
     </div>
 </div>
+<script type="text/javascript">
+    $( ".contactses" ).click(function(e) {
+      $('.message-list').toggleClass('nyek');
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        $('.footable').footable({
+            breakpoints: {
+                phone: 480,
+                phonie: 768,
+                tablet: 1024
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+setInterval(
+    function()
+    {
+        if( $(".remodal").hasClass('remodal-is-opened') ) {
+             $('.footable').trigger('footable_initialize');
+         }
+        else{
+        
+        }
+    }, 1000);
+</script>
 </html>

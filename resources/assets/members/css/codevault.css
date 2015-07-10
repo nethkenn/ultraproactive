@@ -68,11 +68,8 @@
         border-right: 0;
         border-bottom: 0; }
       .code-vault .table table tbody a {
-        color: #77818e; }
-        @media screen and (max-width: 1200px) {
-          .code-vault .table table tbody a {
-            color: #f47265;
-            font-weight: 600; } }
+        color: #f47265;
+        font-weight: 600; }
       .code-vault .table table tbody .check {
         width: 23px;
         height: 23px;
