@@ -75,6 +75,7 @@
 									<li><a href="admin/maintenance/ranking">Ranking</a></li>
 									<li><a href="admin/maintenance/news">News</a></li>
 									<li><a href="admin/maintenance/earn">Earn</a></li>
+									<li><a href="admin/maintenance/slide">Slide</a></li>
 									<li><a href="admin/maintenance/inventory">Inventory</a></li>
 								</ul>
 							</li>
