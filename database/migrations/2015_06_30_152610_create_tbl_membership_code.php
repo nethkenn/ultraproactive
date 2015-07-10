@@ -27,6 +27,7 @@ class CreateTblMembershipCode extends Migration
 
             $table->tinyInteger('used')->default(0);
             $table->tinyInteger('archived')->default(0);
+            $table->tinyInteger('blocked')->default(0);
             $table->timestamps();
 
             $table->foreign('account_id')->references('account_id')->on('tbl_account');

@@ -17,8 +17,8 @@
 		<link href="resources/assets/bootstrap/bootstrap-switch.css" rel="stylesheet">
 		<!-- FONT AWESEOME -->
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-		<link rel="stylesheet" href="resources/assets/remodal/src/jquery.remodal.css">
-
+		<link rel="stylesheet" type="text/css" href="/resources/assets/remodal/src/jquery.remodal.css">
+		<link rel="stylesheet" type="text/css" href="/resources/assets/remodal/src/remodal-default-theme.css">
 		<!-- Custom styles for this template -->
 		<link href="resources/assets/admin/style.css" rel="stylesheet">
 		<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
@@ -75,6 +75,8 @@
 									<li><a href="admin/maintenance/ranking">Ranking</a></li>
 									<li><a href="admin/maintenance/news">News</a></li>
 									<li><a href="admin/maintenance/earn">Earn</a></li>
+									<li><a href="admin/maintenance/slide">Slide</a></li>
+									<li><a href="admin/maintenance/inventory">Inventory</a></li>
 								</ul>
 							</li>
 							<!-- UTILITIES -->
@@ -152,7 +154,7 @@
 		<script src="/resources/assets/bootstrap/bootstrap-switch.js"></script>
 		<script src="/resources/assets/primia/primia-admin.js"></script>
 		<script src="/resources/assets/admin/global.js"></script>
-		<script src="/resources/assets/remodal/src/jquery.remodal.js"></script>
+		<script type="text/javascript" src="/resources/assets/remodal/src/jquery.remodal.js"></script>
 		<script type="text/javascript" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
 		<script type="text/javascript" src="//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 		@yield('script')

@@ -6,10 +6,11 @@
         <script type="text/javascript" src="resources/assets/genealogy/drag.js"></script>
         <script type="text/javascript" src="resources/assets/genealogy/genealogy.js"></script>
         <script type="text/javascript" src="resources/assets/chosen_v1.4.2/chosen.jquery.min.js"></script>
-
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
         <script type="text/javascript" src="resources/assets/remodal/src/jquery.remodal.js"></script>
         <link rel="stylesheet" type="text/css" href="resources/assets/genealogy/genealogy.css" />
         <link rel="stylesheet" type="text/css" href="resources/assets/remodal/src/jquery.remodal.css" />
+        <link rel="stylesheet" type="text/css" href="resources/assets/remodal/src/remodal-default-theme.css" />
         <link rel="stylesheet" type="text/css" href="resources/assets/chosen_v1.4.2/chosen.min.css" />
         <title>Genealogy</title>
     </head>
@@ -41,4 +42,15 @@
         <div class="remodal slot-form pop-loading" data-remodal-id="loading"></div>
     </body>
 </html>
-
+<style type="text/css">
+body
+{
+    font-family: "Roboto", sans-serif !important;
+}
+select,
+input[type="text"],
+button
+{
+    font-family: "Roboto", sans-serif !important;
+}
+</style>

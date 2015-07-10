@@ -10,9 +10,9 @@
                             <div class="dynamic_slideshow wpb_content_element">
                                 <div class="slideshow_container flexslider slide_layout_fixed" id="flex">
                                     <ul class="slides slide_flexslider">
-                                        <li data-thumb='/resources/assets/ausart/assets/uploads/2015/01/shutterstock_190882586-125x96.jpg' class=' slide_element slide1 frame1'><img src='/resources/assets/ausart/assets/uploads/2015/01/shutterstock_190882586-1100x400.jpg' title='shutterstock_190882586' alt='' /> </li>
-                                        <li data-thumb='/resources/assets/ausart/assets/uploads/2015/01/shutterstock_187570835-125x96.jpg' class=' slide_element slide2 frame2'><img src='/resources/assets/ausart/assets/uploads/2015/01/shutterstock_187570835-1100x400.jpg' title='shutterstock_187570835' alt='' /> </li>
-                                        <li data-thumb='/resources/assets/ausart/assets/uploads/layerslider/LayerSlider-5-responsive-demo-slider/bg51-125x96.jpg' class=' slide_element slide3 frame3'><img src='/resources/assets/ausart/assets/uploads/layerslider/LayerSlider-5-responsive-demo-slider/bg51-1100x400.jpg' title='bg51' alt='' /> </li>
+                                        @foreach($_slide as $slide)
+                                        <li class="slide_element slide3 frame3"><img src='{{ $slide->image }}' /> </li>
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>
@@ -22,6 +22,15 @@
                 </div>
             </div>
         </div>
+        {{-- <div class="flexslider">
+          <ul class="slides">
+            @foreach($_slide as $slide)
+            <li>
+              <img src="{{ $slide->image }}" />
+            </li>
+            @endforeach
+          </ul>
+        </div> --}}
         <!-- .header -->
         <section id="content" style="" class="composer_content">
             <div id="fws_5559b27a6e0af" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="padding-top: 80px !important; padding-bottom: 0px !important; ">

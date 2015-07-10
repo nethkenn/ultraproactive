@@ -2,12 +2,7 @@
 
 class MemberController extends Controller
 {
-	public function index()
+	function __construct()
 	{
-        return view('member.dashboard');
-	}
-	public function code_vault()
-	{
-        return view('member.code_vault');
 	}
 }
