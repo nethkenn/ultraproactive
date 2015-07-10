@@ -12,10 +12,11 @@ class CreateTblSlide extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_slide', function (Blueprint $table) {
+        Schema::create('tbl_slide', function (Blueprint $table)
+        {
             $table->increments('slide_id');
             $table->string('slide_title');
-            $table->timestamps();;
+            $table->timestamps();
             $table->tinyInteger('archived')->default(0);
         });
     }
