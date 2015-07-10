@@ -4,7 +4,7 @@
 	<div class="header">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<div class="title col-md-8">
-			<h2><i class="fa fa-newspaper-o"></i> Slide MANAGEMENT</h2>
+			<h2><i class="fa fa-sliders"></i> SLIDE MANAGEMENT</h2>
 		</div>
 		<div class="buttons col-md-4 text-right">
 			<button onclick="location.href='admin/maintenance/slide/add'" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> ADD SLIDE</button>
