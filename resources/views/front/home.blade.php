@@ -11,7 +11,7 @@
                                 <div class="slideshow_container flexslider slide_layout_fixed" id="flex">
                                     <ul class="slides slide_flexslider">
                                         @foreach($_slide as $slide)
-                                        <li data-thumb='{{ $slide->image }}' class=' slide_element slide1 frame1'><img src='{{ $slide->image }}' title='{{ $slide->slide_title }}' alt='{{ $slide->slide_title }}' /> </li>
+                                        <li class="slide_element slide3 frame3"><img src='{{ $slide->image }}' /> </li>
                                         @endforeach
                                     </ul>
                                 </div>
@@ -22,6 +22,15 @@
                 </div>
             </div>
         </div>
+        {{-- <div class="flexslider">
+          <ul class="slides">
+            @foreach($_slide as $slide)
+            <li>
+              <img src="{{ $slide->image }}" />
+            </li>
+            @endforeach
+          </ul>
+        </div> --}}
         <!-- .header -->
         <section id="content" style="" class="composer_content">
             <div id="fws_5559b27a6e0af" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="padding-top: 80px !important; padding-bottom: 0px !important; ">

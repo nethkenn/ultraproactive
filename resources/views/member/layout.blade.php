@@ -42,7 +42,7 @@
 			    </div>
 
 			    <!-- Collect the nav links, forms, and other content for toggling -->
-			    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="overflow: hidden;">
 			      <ul class="nav navbar-nav">
 			        <li class="{{ Request::segment(2) == '' ? 'active' : '' }}"><a href="/member">Dashboard</a></li>
 			        <li class="{{ Request::segment(2) == 'slot' ? 'active' : '' }}"><a href="/member/slot">My Slots</a></li>
@@ -819,15 +819,24 @@
     });
 </script>
 <script type="text/javascript">
-setInterval(
-    function()
-    {
-        if( $(".remodal").hasClass('remodal-is-opened') ) {
-             $('.footable').trigger('footable_initialize');
-         }
-        else{
+// setInterval(
+//     function()
+//     {
+//         if( $(".remodal").hasClass('remodal-is-opened') ) {
+//              $('.footable').trigger('footable_initialize');
+//          }
+//         else{
         
-        }
-    }, 1000);
+//         }
+//     }, 1000);
+$(document).ready(function()
+{
+    myTimeoutFunction();
+});
+function myTimeoutFunction()
+{
+    $('.footable').trigger('footable_initialize');
+    timerId = setTimeout(myTimeoutFunction, 1000);
+}
 </script>
 </html>

@@ -44,7 +44,12 @@ class FrontController extends Controller
 			$imageess = Image::view($getss, "1110x400");
 			$data["_slide"][$keysss]->image = $imageess;
 		}
-		// dd($data["_product"]);
+		foreach ($data["_slide"] as $xx => $yy) {
+			$aa = $yy->slide_image;
+			$bb = Image::view($aa, "125x96");
+			$data["_slide"][$xx]->thumb = $bb;
+		}
+		// dd($data["_slide"]);
 
         return view('front.home', $data);
 	}
