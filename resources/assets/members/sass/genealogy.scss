@@ -11,18 +11,47 @@ $font-color: #77818e;
 {
 	.header
 	{
+		@media screen and (max-width: 768px)
+		{
+			padding: 15px;
+		}
+		.labels
+		{
+			@media screen and (max-width: 768px)
+			{
+				display: none;
+			}
+		}
 		select
 		{
-			color: $gray2;
+			color: $font-color;
 			margin: 0 10px;
 			width: 250px;
 			text-align: center;
 			display: inline;
 			border-radius: 0;
+			@media screen and (max-width: 768px)
+			{
+				margin: 0;
+			}
+			@media screen and (max-width: 525px)
+			{
+				width: 100%;
+			}
 		}
 		span
 		{
 			padding: 5px 0;
+		}
+		.pull-right
+		{
+			@media screen and (max-width: 525px)
+			{
+				float: none !important;
+				display: block !important;
+				padding-top: 20px;
+				text-align: center;
+			}
 		}
 	}
 }

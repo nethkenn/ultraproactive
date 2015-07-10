@@ -16,35 +16,35 @@
                 </a>
             </div>
         </div>
-        <table>
+        <table class="footable">
             <thead>
                 <tr>
-                    <td>Name</td>
-                    <td>Email</td>
-                    <td>Join Date</td>
-                    <td></td>
+                    <th>Name</th>
+                    <th data-hide="phone">Email</th>
+                    <th data-hide="phone">Join Date</th>
+                    <th data-hide="phone"></th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr class="tibolru">
                     <td>Guillermo Tabligan</td>
                     <td>guillermo129@gmail.com</td>
                     <td>October 17, 1568</td>
                     <td><a href="javascript:">Account Link</a></td>
                 </tr>
-                <tr>
+                <tr class="tibolru">
                     <td>Guillermo Tabligan</td>
                     <td>guillermo129@gmail.com</td>
                     <td>October 17, 1568</td>
                     <td><a href="#javascript:">Account Link</a></td>
                 </tr>
-                <tr>
+                <tr class="tibolru">
                     <td>Guillermo Tabligan</td>
                     <td>guillermo129@gmail.com</td>
                     <td>October 17, 1568</td>
                     <td><a href="#javascript:">Account Link</a></td>
                 </tr>
-                <tr>
+                <tr class="tibolru">
                     <td>Guillermo Tabligan</td>
                     <td>guillermo129@gmail.com</td>
                     <td>October 17, 1568</td>

@@ -17,6 +17,10 @@
     background-size: cover; }
     .encashment .body .header-button {
       text-align: right; }
+      @media screen and (max-width: 768px) {
+        .encashment .body .header-button {
+          text-align: center;
+          padding: 25px 0; } }
       .encashment .body .header-button a {
         color: white; }
         .encashment .body .header-button a button {
@@ -30,12 +34,26 @@
           border-right: 1px solid #919aa6;
           border-left: 1px solid #919aa6;
           margin: 10px 0; }
+          @media screen and (max-width: 460px) {
+            .encashment .body .header-button a button {
+              margin: 0px 20px !important; } }
+          @media screen and (max-width: 280px) {
+            .encashment .body .header-button a button {
+              width: 100%;
+              padding: 5px 10px !important;
+              margin: 0px 2px !important; } }
     .encashment .body .title {
       color: #9ea7b3;
       font-size: 14.58px; }
+      @media screen and (max-width: 460px) {
+        .encashment .body .title {
+          margin: 0 20px; } }
     .encashment .body .ui-sliders {
-      width: 460px;
+      max-width: 460px;
       margin: 35px auto; }
+      @media screen and (max-width: 460px) {
+        .encashment .body .ui-sliders {
+          margin: 35px 20px; } }
       .encashment .body .ui-sliders input[type="text"] {
         width: 100%;
         font-size: 14.58px;
@@ -70,5 +88,9 @@
           border-bottom: 2px solid #eb685b;
           border-left: 1px solid #eb685b;
           border-right: 1px solid #eb685b; }
+          @media screen and (max-width: 280px) {
+            .encashment .body .ui-sliders a button {
+              width: 100%;
+              padding: 5px 10px !important; } }
 
 /*# sourceMappingURL=encashment.css.map */

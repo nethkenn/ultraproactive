@@ -149,17 +149,22 @@ class AdminCodeController extends Controller {
 			$rules['product_package_id'] = 'required|exists:tbl_product_package,product_package_id';
 			$rules['inventory_update_type_id'] = 'required|exists:tbl_inventory_update_type,inventory_update_type_id';
 			$rules['account_id'] = 'exists:tbl_account,account_id';
-
+			$rules['code_multiplier'] = 'min:1|integer';
+			
 
 			$validator = Validator::make(Request::input(),$rules);
 			
 			if (!$validator->fails())
 			{
+				for ($i=0; $i < Request::input('code_multiplier'); $i++)
+				{ 
+					$membership_code = new Tbl_membership_code(Request::input());
+					$membership_code->code_activation = $this->check_code();
+					$membership_code->account_id =  Request::input('account_id') ?: null;
+					$membership_code->created_at = Carbon::now();
+					$membership_code->save();
+				}
 
-				$membership_code = new Tbl_membership_code(Request::input());
-				$membership_code->code_activation = $this->check_code(); 
-				$membership_code->created_at = Carbon::now();
-				$membership_code->save();
 
 				return Redirect('admin/maintenance/codes');
 
@@ -173,6 +178,9 @@ class AdminCodeController extends Controller {
 				$data['_error']['product_package_id'] = $error->get('product_package_id');
 				$data['_error']['inventory_update_type_id'] = $error->get('inventory_update_type_id');
 				$data['_error']['account_id'] = $error->get('account_id');
+				$data['_error']['code_multiplier'] = $error->get('code_multiplier');
+
+
 			}
 
 			

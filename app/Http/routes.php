@@ -25,7 +25,7 @@ Route::any('/contact', 'FrontController@contact');
 Route::any('/contact/submit', 'FrontController@contact_submit');
 Route::any('/register', 'FrontController@register');
 Route::get('/admin', 'AdminController@index');
-    Route::post('/admin','AdminController@postLogin');
+Route::post('/admin','AdminController@postLogin');
 
 /* ADMIN / TRANSACTION */
 Route::get('admin/transaction/sales', 'AdminSalesController@index');
@@ -44,6 +44,15 @@ Route::post('admin/maintenance/accounts/restore', 'AdminAccountController@restor
 
 Route::any('admin/maintenance/accounts/field', 'AdminAccountController@field');
 Route::get('admin/maintenance/accounts/field/delete', 'AdminAccountController@field_delete');
+
+/* SLIDE MANAGEMENT */
+Route::get('admin/maintenance/slide', 'AdminSlideController@index');
+Route::get('admin/maintenance/slide/add', 'AdminSlideController@add');
+Route::any('admin/maintenance/slide/add_submit', 'AdminSlideController@add_submit');
+Route::get('admin/maintenance/slide/edit', 'AdminSlideController@edit');
+Route::any('admin/maintenance/slide/edit_submit', 'AdminSlideController@edit_submit');
+Route::any('admin/maintenance/slide/delete', 'AdminSlideController@delete');
+
 
 /* NEWS MANAGEMENT */
 Route::get('admin/maintenance/news', 'AdminNewsController@index');

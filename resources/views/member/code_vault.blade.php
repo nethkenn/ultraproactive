@@ -16,23 +16,23 @@
                 </a>
             </div>
         </div>
-        <table>
+        <table class="footable">
             <thead>
                 <tr>
-                    <td>Pin</td>
-                    <td>Code</td>
-                    <td>Type</td>
-                    <td>Obtained Form</td>
-                    <td>Membership</td>
-                    <td>Locked</td>
-                    <td>Product Set</td>
-                    <td>Status</td>
-                    <td></td>
-                    <td></td>
+                    <th>Pin</th>
+                    <th data-hide="phone">Code</th>
+                    <th data-hide="phone">Type</th>
+                    <th data-hide="phone">Obtained Form</th>
+                    <th data-hide="phone,phonie">Membership</th>
+                    <th data-hide="phone,phonie">Locked</th>
+                    <th data-hide="phone,phonie">Product Set</th>
+                    <th data-hide="phone,phonie">Status</th>
+                    <th data-hide="phone,phonie,tablet"></th>
+                    <th data-hide="phone,phonie,tablet"></th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr class="tibolru">
                     <td>516</td>
                     <td>K65N4</td>
                     <td>PS</td>
@@ -44,7 +44,7 @@
                     <td><a href="#create_slot">Create Slot</a></td>
                     <td><a href="#transfer_code">Transfer Code</a></td>
                 </tr>
-                <tr>
+                <tr class="tibolru">
                     <td>516</td>
                     <td>K65N4</td>
                     <td>PS</td>
@@ -56,7 +56,7 @@
                     <td><a href="#create_slot">Create Slot</a></td>
                     <td><a href="#transfer_code">Transfer Code</a></td>
                 </tr>
-                <tr>
+                <tr class="tibolru">
                     <td>516</td>
                     <td>K65N4</td>
                     <td>PS</td>
@@ -68,7 +68,7 @@
                     <td><a href="#create_slot">Create Slot</a></td>
                     <td><a href="#transfer_code">Transfer Code</a></td>
                 </tr>
-                <tr>
+                <tr class="tibolru">
                     <td>516</td>
                     <td>K65N4</td>
                     <td>PS</td>
@@ -89,28 +89,25 @@
             <img src="/resources/assets/frontend/img/icon-product.png">
             Product Codes ( 2 )
         </div>
-        <div class="col-md-6 ew">
-
-        </div>
     </div>
-    <table>
+    <table class="footable">
         <thead>
             <tr>
-                <td>Pin</td>
-                <td>Code</td>
-                <td>Obtained Form</td>
-                <td>Locked</td>
-                <td>Product</td>
-                <td>Price</td>
-                <td>Unilevel Points</td>
-                <td>Binary Points</td>
-                <td>Status</td>
-                <td></td>
-                <td></td>
+                <th>Pin</th>
+                <th data-hide="phone">Code</th>
+                <th data-hide="phone">Obtained Form</th>
+                <th data-hide="phone,phonie">Locked</th>
+                <th data-hide="phone">Product</th>
+                <th data-hide="phone,phonie">Price</th>
+                <th data-hide="phone,phonie">Unilevel Points</th>
+                <th data-hide="phone,phonie">Binary Points</th>
+                <th data-hide="phone,phonie">Status</th>
+                <th data-hide="phone,phonie,tablet"></th>
+                <th data-hide="phone,phonie,tablet"></th>
             </tr>
         </thead>
         <tbody>
-            <tr>
+            <tr class="tibolru">
                 <td>516</td>
                 <td>K65N4</td>
                 <td>Guillermo Tabligan (Admin)</td>
@@ -123,7 +120,7 @@
                 <td><a href="#use_code">Use Code</a></td>
                 <td><a href="#transfer_code">Transfer Code</a></td>
             </tr>
-            <tr>
+            <tr class="tibolru">
                 <td>516</td>
                 <td>K65N4</td>
                 <td>Guillermo Tabligan (Admin)</td>
@@ -136,7 +133,7 @@
                 <td><a href="#use_code">Use Code</a></td>
                 <td><a href="#transfer_code">Transfer Code</a></td>
             </tr>
-            <tr>
+            <tr class="tibolru">
                 <td>516</td>
                 <td>K65N4</td>
                 <td>Guillermo Tabligan (Admin)</td>
@@ -149,7 +146,7 @@
                 <td><a href="#use_code">Use Code</a></td>
                 <td><a href="#transfer_code">Transfer Code</a></td>
             </tr>
-            <tr>
+            <tr class="tibolru">
                 <td>516</td>
                 <td>K65N4</td>
                 <td>Guillermo Tabligan (Admin)</td>
