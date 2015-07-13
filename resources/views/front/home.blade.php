@@ -11,7 +11,7 @@
                                 <div class="slideshow_container flexslider slide_layout_fixed" id="flex">
                                     <ul class="slides slide_flexslider">
                                         @foreach($_slide as $slide)
-                                        <li class="slide_element slide3 frame3"><img src='{{ $slide->image }}' /> </li>
+                                            <li class="slide_element slide3 frame3"><img src='{{ $slide->image }}' /> </li>
                                         @endforeach
                                     </ul>
                                 </div>
