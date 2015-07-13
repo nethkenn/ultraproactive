@@ -926,10 +926,6 @@ jQuery(function($) {
 
                 });
 
-                BackgroundCheck.init({
-                    targets: '.header_wrapper',
-                    images: '.flexslider img'
-                });
             },
             before: function(slider) {
                 var current_slide = $s.find(".slides > li").eq(slider.currentSlide);
@@ -950,7 +946,7 @@ jQuery(function($) {
 
                     $(this).removeClass("animated " + effect_out).addClass("animated " + effect_in);
                 });
-                BackgroundCheck.refresh();
+
             }
         });
     });
