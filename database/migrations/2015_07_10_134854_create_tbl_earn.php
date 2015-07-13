@@ -12,11 +12,12 @@ class CreateTblEarn extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_earn', function (Blueprint $table) {
+        Schema::create('tbl_earn', function (Blueprint $table)
+        {
             $table->increments('earn_id');
             $table->string('earn_title');
             $table->text('earn_description');
-            $table->timestamps();;
+            $table->timestamps();
             $table->tinyInteger('archived')->default(0);
         });
     }

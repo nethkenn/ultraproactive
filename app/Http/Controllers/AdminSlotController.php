@@ -22,13 +22,20 @@ class AdminSlotController extends AdminController
 	public function data()
 	{
         $account = Tbl_slot::rank()->membership()->account()->get();
-        return Datatables::of($account)	->addColumn('edit','<a href="admin/maintenance/accounts/edit?id={{$slot_id}}">EDIT</a>')
-        								->addColumn('archive','<a href="admin/maintenance/accounts/archive?id={{$slot_id}}">ARCHIVE</a>')
+        return Datatables::of($account)	->addColumn('gen','<a href="admin/maintenance/slots/add?id={{$slot_id}}">GENERATE SLOTS</a>')
         								->make(true);
 	}
 	public function add()
 	{
-		$data["slot"] = Tbl_slot::rank()->membership()->account()->first();
+		if(Request::input("id") != "")
+		{
+			$data["slot"] = Tbl_slot::rank()->membership()->account()->id(Request::input("id"))->first();
+		}
+		else
+		{
+			$data["slot"] = Tbl_slot::rank()->membership()->account()->first();
+		}
+		
 		return view('admin.maintenance.slot_add', $data);
 	}
 	public function add_form()
