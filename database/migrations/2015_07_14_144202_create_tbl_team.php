@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblSlide extends Migration
+class CreateTblTeam extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,13 @@ class CreateTblSlide extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_slide', function (Blueprint $table)
+        Schema::create('tbl_team', function (Blueprint $table)
         {
-            $table->increments('slide_id');
-            $table->string('slide_title');
-            $table->string('slide_image')->default('default.jpg');
+            $table->increments('team_id');
+            $table->string('team_title');
+            $table->string('team_role');
+            $table->text('team_description');
+            $table->string('team_image')->default('default.jpg');
             $table->timestamps();
             $table->tinyInteger('archived')->default(0);
         });
@@ -29,6 +31,6 @@ class CreateTblSlide extends Migration
      */
     public function down()
     {
-        Schema::drop('tbl_slide');
+        Schema::drop('tbl_team');
     }
 }

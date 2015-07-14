@@ -70,6 +70,14 @@ Route::get('admin/maintenance/earn/edit', 'AdminEarnController@edit');
 Route::any('admin/maintenance/earn/edit_submit', 'AdminEarnController@edit_submit');
 Route::any('admin/maintenance/earn/delete', 'AdminEarnController@delete');
 
+/* Team MANAGEMENT */
+Route::get('admin/maintenance/team', 'AdminTeamController@index');
+Route::get('admin/maintenance/team/add', 'AdminTeamController@add');
+Route::any('admin/maintenance/team/add_submit', 'AdminTeamController@add_submit');
+Route::get('admin/maintenance/team/edit', 'AdminTeamController@edit');
+Route::any('admin/maintenance/team/edit_submit', 'AdminTeamController@edit_submit');
+Route::any('admin/maintenance/team/delete', 'AdminTeamController@delete');
+
 /**
  * MEMBERSHIP CODE GENERATOR
  */
