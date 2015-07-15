@@ -17,12 +17,22 @@ $font-color: #77818e;
 	.profile
 	{
 		background-color: #fff;
+		display: table;
+		table-layout: fixed;
+		width: 100%;
 		.profile-pic
 		{
 			display: table-cell;
 			vertical-align: middle;
+			width: 180px;
 			position: relative;
 			padding: 30px;
+			@media screen and (max-width: 600px)
+			{
+				display: block;
+				text-align: center;
+				margin: auto;
+			}
 			img
 			{
 				-webkit-border-radius: 100%;
@@ -50,9 +60,14 @@ $font-color: #77818e;
 			display: table-cell;
 			vertical-align: middle;
 			padding: 20px;
+			@media screen and (max-width: 600px)
+			{
+				display: block;
+				text-align: center;
+			}
 			.name
 			{
-				color: #9ba0a7;
+				color: $font-color;
 				font-weight: 800;
 				font-size: 29.17px;
 				border-bottom: 1px solid #e3e3e4;
@@ -61,8 +76,10 @@ $font-color: #77818e;
 			}
 			.email
 			{
-				color: #36c1c8;
-				font-size: 14.58px;
+				color: $gray2;
+				font-size: 16.67px;
+				font-weight: 300;
+				letter-spacing: 1.5px;
 			}
 		}
 	}

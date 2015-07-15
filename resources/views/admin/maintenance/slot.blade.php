@@ -22,8 +22,7 @@
 						<th>Type</th>
 						<th>Wallet</th>
 						<th>Rank</th>
-						<th class="option-col"></th>
-						<th class="option-col"></th>
+						<th></th>
 					</tr>
 				</thead>
 			</table>
@@ -44,8 +43,7 @@ $(function() {
             {data: 'slot_type', name: 'slot_type'},
             {data: 'slot_wallet', name: 'slot_wallet'},
             {data: 'rank_name', name: 'rank_name'},
-            {data: 'edit', name: 'slot_id'},
-            {data: 'archive', name: 'slot_id'},
+            {data: 'gen', name: 'slot_id'},
         ],
         "lengthMenu": [[8, 10, 25, 50, -1], [10, 25, 50, "All"]],
         "oLanguage": 

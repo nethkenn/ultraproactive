@@ -8,39 +8,39 @@
                 Vouchers
             </div>
         </div>
-        <table>
+        <table class="footable">
             <thead>
                 <tr>
-                    <td>Voucher Reference No.</td>
-                    <td>Voucher Code.</td>
-                    <td>Claimed</td>
-                    <td>Total Amount</td>
-                    <td></td>
+                    <th>Voucher Reference No.</th>
+                    <th data-hide="phone">Voucher Code.</th>
+                    <th data-hide="phone,phonie">Claimed</th>
+                    <th data-hide="phone">Total Amount</th>
+                    <th data-hide="phone,phonie"></th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr class="tibolru">
                     <td>12</td>
                     <td>QV67L</td>
                     <td><div class="check"><input type="checkbox"><div class="bgs"></div></div></td>
                     <td>1,200.00</td>
                     <td><a href="#voucher">View Voucher</a></td>
                 </tr>
-                <tr>
+                <tr class="tibolru">
                     <td>12</td>
                     <td>QV67L</td>
                     <td><div class="check"><input type="checkbox"><div class="bgs"></div></div></td>
                     <td>1,200.00</td>
                     <td><a href="#voucher">View Voucher</a></td>
                 </tr>
-                <tr>
+                <tr class="tibolru">
                     <td>12</td>
                     <td>QV67L</td>
                     <td><div class="check"><input type="checkbox"><div class="bgs"></div></div></td>
                     <td>1,200.00</td>
                     <td><a href="#voucher">View Voucher</a></td>
                 </tr>
-                <tr>
+                <tr class="tibolru">
                     <td>12</td>
                     <td>QV67L</td>
                     <td><div class="check"><input type="checkbox"><div class="bgs"></div></div></td>

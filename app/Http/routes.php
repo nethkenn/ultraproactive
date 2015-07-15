@@ -2,15 +2,15 @@
 Route::any('/neil', 'NeilController@index');
 
 /* MEMBER */
-Route::any('/member', 'MemberController@index');
-Route::any('/member/slot', 'MemberController@slot');
-Route::any('/member/code_vault', 'MemberController@code_vault');
-Route::any('/member/encashment', 'MemberController@encashment');
-Route::any('/member/genealogy', 'MemberController@genealogy');
-Route::any('/member/voucher', 'MemberController@voucher');
-Route::any('/member/leads', 'MemberController@lead');
-Route::any('/member/product', 'MemberController@product');
-Route::any('/member/login', 'MemberController@login');
+Route::any('/member', 'MemberDashboardController@index');
+Route::any('/member/slot', 'MemberSlotController@index');
+Route::any('/member/code_vault', 'MemberCodeController@index');
+Route::any('/member/encashment', 'MemberEncashmentController@index');
+Route::any('/member/genealogy', 'MemberGenealogyController@index');
+Route::any('/member/voucher', 'MemberVoucherController@index');
+Route::any('/member/leads', 'MemberLeadController@index');
+Route::any('/member/product', 'MemberProductController@index');
+Route::any('/member/login', 'MemberLoginController@index');
 
 /* ADMIN */
 Route::any('/', 'FrontController@index');
@@ -25,7 +25,7 @@ Route::any('/contact', 'FrontController@contact');
 Route::any('/contact/submit', 'FrontController@contact_submit');
 Route::any('/register', 'FrontController@register');
 Route::get('/admin', 'AdminController@index');
-    Route::post('/admin','AdminController@postLogin');
+Route::post('/admin','AdminController@postLogin');
 
 /* ADMIN / TRANSACTION */
 Route::get('admin/transaction/sales', 'AdminSalesController@index');
@@ -45,6 +45,15 @@ Route::post('admin/maintenance/accounts/restore', 'AdminAccountController@restor
 Route::any('admin/maintenance/accounts/field', 'AdminAccountController@field');
 Route::get('admin/maintenance/accounts/field/delete', 'AdminAccountController@field_delete');
 
+/* SLIDE MANAGEMENT */
+Route::get('admin/maintenance/slide', 'AdminSlideController@index');
+Route::get('admin/maintenance/slide/add', 'AdminSlideController@add');
+Route::any('admin/maintenance/slide/add_submit', 'AdminSlideController@add_submit');
+Route::get('admin/maintenance/slide/edit', 'AdminSlideController@edit');
+Route::any('admin/maintenance/slide/edit_submit', 'AdminSlideController@edit_submit');
+Route::any('admin/maintenance/slide/delete', 'AdminSlideController@delete');
+
+
 /* NEWS MANAGEMENT */
 Route::get('admin/maintenance/news', 'AdminNewsController@index');
 Route::get('admin/maintenance/news/add', 'AdminNewsController@add');
@@ -60,6 +69,14 @@ Route::any('admin/maintenance/earn/add_submit', 'AdminEarnController@add_submit'
 Route::get('admin/maintenance/earn/edit', 'AdminEarnController@edit');
 Route::any('admin/maintenance/earn/edit_submit', 'AdminEarnController@edit_submit');
 Route::any('admin/maintenance/earn/delete', 'AdminEarnController@delete');
+
+/* Team MANAGEMENT */
+Route::get('admin/maintenance/team', 'AdminTeamController@index');
+Route::get('admin/maintenance/team/add', 'AdminTeamController@add');
+Route::any('admin/maintenance/team/add_submit', 'AdminTeamController@add_submit');
+Route::get('admin/maintenance/team/edit', 'AdminTeamController@edit');
+Route::any('admin/maintenance/team/edit_submit', 'AdminTeamController@edit_submit');
+Route::any('admin/maintenance/team/delete', 'AdminTeamController@delete');
 
 /**
  * MEMBERSHIP CODE GENERATOR

@@ -1,3 +1,6 @@
+@media screen and (max-width: 991px) {
+  .product {
+    padding: 0 15px !important; } }
 .product .header {
   font-size: 20.83px; }
   .product .header img {
@@ -11,11 +14,20 @@
     .product .body .holder .pix {
       display: table-cell;
       vertical-align: top; }
+      @media screen and (max-width: 600px) {
+        .product .body .holder .pix {
+          display: block;
+          text-align: center; } }
     .product .body .holder .text {
       display: table-cell;
       vertical-align: top;
       text-align: left;
       padding: 0 20px; }
+      @media screen and (max-width: 600px) {
+        .product .body .holder .text {
+          display: block;
+          text-align: center;
+          padding-top: 15px; } }
       .product .body .holder .text .name {
         color: #40c0c0;
         font-size: 20.83px;
@@ -27,6 +39,11 @@
         font-size: 12.5px;
         color: #77818e;
         margin: 15px 0; }
+      .product .body .holder .text .boton {
+        text-align: left; }
+        @media screen and (max-width: 600px) {
+          .product .body .holder .text .boton {
+            text-align: center; } }
       .product .body .holder .text a {
         color: #eee;
         font-size: 12.5px; }
@@ -42,6 +59,12 @@
 .cart {
   background-color: #fff;
   border-top: 5px solid #f47265; }
+  @media screen and (max-width: 1200px) {
+    .cart {
+      padding: 0 !important; } }
+  @media screen and (max-width: 991px) {
+    .cart {
+      padding: 0 15px !important; } }
   .cart .header {
     color: #f47265;
     padding: 20px 0 10px; }
@@ -49,15 +72,23 @@
       margin: 0 5px; }
   .cart .body {
     padding: 0 !important; }
+    @media screen and (max-width: 1200px) {
+      .cart .body {
+        padding: 0 5px !important; } }
+    @media screen and (max-width: 991px) {
+      .cart .body {
+        padding: 0 !important; } }
     .cart .body table {
       width: 100%;
       margin: auto; }
       .cart .body table thead {
         background-color: #9ea7b3; }
-        .cart .body table thead td {
+        .cart .body table thead th {
           padding: 10px 20px;
           color: white;
-          font-size: 14.58px; }
+          font-size: 14.58px;
+          font-weight: 400;
+          text-align: center; }
       .cart .body table tbody {
         color: #77818e;
         font-size: 12.5px;

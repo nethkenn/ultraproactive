@@ -37,13 +37,42 @@ class FrontController extends Controller
 			$data["_product"][$keyss]->image = $imagees;
 		}
 
-		// dd($data["_product"]);
+		$data["_slide"] = DB::table("tbl_slide")->where("archived", 0)->get();
+		foreach ($data["_slide"] as $keysss => $valuesss) 
+		{
+			$getss = $valuesss->slide_image;
+			$imageess = Image::view($getss, "1110x400");
+			$data["_slide"][$keysss]->image = $imageess;
+		}
+		foreach ($data["_slide"] as $xx => $yy) {
+			$aa = $yy->slide_image;
+			$bb = Image::view($aa, "125x96");
+			$data["_slide"][$xx]->thumb = $bb;
+		}
+
+		$data["_team"] = DB::table("tbl_team")->where("archived", 0)->get();
+		foreach ($data["_team"] as $susi => $halaga) 
+		{
+			$kuha = $halaga->team_image;
+			$litrato = Image::view($kuha, "415x415");
+			$data["_team"][$susi]->image = $litrato;
+		}
+
+		// dd($data["_team"]);
 
         return view('front.home', $data);
 	}
 	public function about()
 	{
-        return view('front.about');
+		$data["_team"] = DB::table("tbl_team")->where("archived", 0)->get();
+		foreach ($data["_team"] as $susi => $halaga) 
+		{
+			$kuha = $halaga->team_image;
+			$litrato = Image::view($kuha, "415x415");
+			$data["_team"][$susi]->image = $litrato;
+		}
+
+        return view('front.about', $data);
 	}
 	public function earn()
 	{

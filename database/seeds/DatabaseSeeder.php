@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call('tbl_inventory_update_type');
         $this->call('tbl_code_type');
         $this->call('tbl_module');
+        $this->call('tbl_team');
     }
 }
 class tbl_account extends Seeder
@@ -145,6 +146,17 @@ class tbl_module extends Seeder
 (22,    'Maintenance / Inventory',  0,  'inventory'),
 (23,    'Utitlities / Computation Plan',    0,  'complan');"
         );
+    } 
+}
+class tbl_team extends Seeder
+{
+    public function run()
+    {
+        DB::table('tbl_team')->delete();
+        DB::statement("INSERT INTO `tbl_team` (`team_id`, `team_title`, `team_description`, `team_role`, `team_image`, `created_at`, `updated_at`, `archived`) VALUES
+        (1, 'Mrs. Rose S. Rajeh',   '', '', '1436855352.jpg',   '2015-07-14 06:29:16',  '2015-07-14 06:29:32',  0),
+        (2, 'Mr. Gino Antonio S. Rajeh',    '', '', '1436855359.jpg',   '2015-07-14 06:29:49',  '0000-00-00 00:00:00',  0);
+        ");
     } 
 }
 
