@@ -6,11 +6,14 @@ use Carbon;
 use Datatables;
 use Crypt;
 use App\Tbl_account;
+use App\Classes\Admin;
 
 class AdminAccountController extends AdminController
 {
 	public function index()
 	{
+
+		// dd(Admin::info());
 		$data["page"] = "Account Maintenance";
         return view('admin.maintenance.account', $data);
 	}
@@ -19,11 +22,14 @@ class AdminAccountController extends AdminController
     {
 
 
-        $account = Tbl_account::select('*')->where('tbl_account.archived', Request::input('archived'))->leftJoin("tbl_country","tbl_account.account_country_id", "=", "tbl_country.country_id");
-
+    	$admin_rank = Admin::info()->admin_position_rank;
+    	$account = Tbl_account::select('*')->where('tbl_account.archived', Request::input('archived'))
+    										->where('tbl_admin_position.admin_position_rank', '>=',$admin_rank)
+    										->OrWhereNull('tbl_admin_position.admin_position_rank')
+    										->position()->country()->groupBy('tbl_account.account_id')->get();
+        // $account = Tbl_account::select('*')->where('tbl_account.archived', Request::input('archived'))->leftJoin("tbl_country","tbl_account.account_country_id", "=", "tbl_country.country_id");
         $text = Request::input('archived') ? 'RESTORE' : 'ARCHIVE';
 		$class = Request::input('archived') ? 'restore-account' : 'archive-account';
-
         return Datatables::of($account)	->addColumn('edit','<a href="admin/maintenance/accounts/edit?id={{$account_id}}">EDIT</a>')
         								->addColumn('archive','<a class="'.$class.'" href="#" account-id="{{$account_id}}">'.$text.'</a>')
         								->make(true);
