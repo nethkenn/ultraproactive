@@ -201,6 +201,88 @@ It can be self-paced or instructor-led and includes media in the form of text, i
                     </div>
                 </div>
             </div>
+            <div id="fws_556c48d32ea98" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="padding-top: 80px !important; padding-bottom: 80px !important; ">
+                <div class="bg-overlay" style="background:rgba(, , , 0.5);z-index:1;"></div>
+                <div class="container  dark">
+                    <div class="section_clear">
+                        <div class="vc_col-sm-8 wpb_column column_container" style="" data-animation="" data-delay="0">
+                            <div class="wpb_wrapper">
+                                <div class="header " style="">
+                                    <h2>E-Payment</h2></div>
+                                <div class="wpb_content_element block_skill">
+                                    <img src="/resources/assets/ausart/assets/uploads/picture/ngo.jpg">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="vc_col-sm-4 wpb_column column_container" style="" data-animation="" data-delay="0">
+                            <div class="wpb_wrapper">
+                                <div class="header " style="">
+                                    <h2>What are strong points</h2></div>
+                                <div class="wpb_text_column wpb_content_element ">
+                                    <div class="wpb_wrapper">
+                                        <div class="wpb_text_column wpb_content_element ">
+                                            <div class="wpb_wrapper">
+                                                <p style="white-space: pre-wrap;">The magic of technological advancements provides us comfort and ease of living. It’s what PROLIFE is offering with e-payments. Convenience!
+
+PROLIFE e-payment is the go-to service when it comes to on-line payments for your SSS, PAG-IBIG,
+Philhealth, Water and Electricity.
+
+Any time of the day.
+
+
+<a href="#" class="btn-system normal second_btn" style="color:#000000 background:#f6f6f6;">Enroll Now!</a>
+</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="fws_556c48d32ea98" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="padding-top: 80px !important; padding-bottom: 80px !important; ">
+                <div class="bg-overlay" style="background:rgba(, , , 0.5);z-index:1;"></div>
+                <div class="container  dark">
+                    <div class="section_clear">
+                        <div class="vc_col-sm-8 wpb_column column_container" style="" data-animation="" data-delay="0">
+                            <div class="wpb_wrapper">
+                                <div class="header " style="">
+                                    <h2>E-Remit</h2></div>
+                                <div class="wpb_content_element block_skill">
+                                    <img src="/resources/assets/ausart/assets/uploads/picture/finance.jpg">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="vc_col-sm-4 wpb_column column_container" style="" data-animation="" data-delay="0">
+                            <div class="wpb_wrapper">
+                                <div class="header " style="">
+                                    <h2>What are strong points</h2></div>
+                                <div class="wpb_text_column wpb_content_element ">
+                                    <div class="wpb_wrapper">
+                                        <div class="wpb_text_column wpb_content_element ">
+                                            <div class="wpb_wrapper">
+                                                <p style="white-space: pre-wrap;">How many hours have your wasted on traffic to get to an exchange house or to a bank?
+Have you ever experienced waiting on long  queues when transferring money?  
+
+PROLIFE introduces , E-REMIT service. 
+Now, you can conveniently transfer money  electronically from anywhere.
+You can use that extra time in doing something better or enjoyable.
+PROLIFE has partnered with secure, fast and reliable money transfer entities to deliver your cash right at the doorsteps of your beneficiary.
+With PROLIFE E-REMIT, simply log in to your portal account, fill up the details  and authorize the transfer. 
+It is as easy as One…Two…Three… 
+
+<a href="#" class="btn-system normal second_btn" style="color:#000000 background:#f6f6f6;">Enroll Now!</a>
+</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div id="fws_556c48d32ff40" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="padding-top: 0px !important; padding-bottom: 60px !important; ">
                 <div class="container  dark">
                     <div class="section_clear">

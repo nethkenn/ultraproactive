@@ -76,28 +76,8 @@
     <div class="top_nav">
         <div class="container">
             <div class="row-fluid">
-                <div class="span6">
+                <div class="span6" id="ewan">
                     <div class="pull-left">
-                        <div id="widget_topnav-2" class="widget widget_topnav">
-                            <div class="login small_widget">
-                                <div class="widget_activation"><a href="#" data-box="login">Welcome Guest. Login</a></div>
-                                <div class="top_nav_sub login">
-                                    <div class="sub-loggin">
-                                        <form action="#" method="post">
-                                            <input type="text" name="log" id="log" value="" size="20" placeholder="Username" />
-                                            <input type="password" name="pwd" id="pwd" size="20" placeholder="Password" />
-                                            <input type="submit" name="submit" value="Login" class="button" />
-                                            <a href="/register" name="submit" class="button">Register</a>
-                                            <div class="check-login">
-                                                <label for="rememberme">
-                                                    <input name="rememberme" id="rememberme" type="checkbox" checked="checked" value="forever" /> Remember me</label>
-                                            </div>
-                                            <input type="hidden" name="redirect_to" value="/ausart/" />
-                                        </form>
-                                        <a href="wp-loginc2b6c2b6.html?action=lostpassword">Recover password</a> </div>
-                                </div>
-                            </div>
-                        </div>
                         <div id="widget_topinfo-2" class="widget widget_topinfo">
                             <div class="topinfo"><span class="phone"><i class="moon-phone"></i>+1 00 222 654</span><span class="email"><i class="icon-envelope"></i>admin@prolife.global</span></div>
                         </div>
@@ -105,15 +85,12 @@
                 </div>
                 <div class="span6">
                     <div class="pull-right">
-                        <div id="social_widget-2" class="widget social_widget">
+                        <div class="widget social_widget">
                             <div class="row-fluid social_row">
-                                <div class="span12">
-                                    <ul class="footer_social_icons">
-                                        <li class="google_plus"><a href="#"><i class="moon-google_plus"></i></a></li>
-                                        <li class="linkedin"><a href="#"><i class="moon-linkedin"></i></a></li>
-                                        <li class="pinterest"><a href="#"><i class="moon-pinterest"></i></a></li>
-                                        <li class="twitter"><a href="#"><i class="moon-twitter"></i></a></li>
-                                        <li class="facebook"><a href="#"><i class="moon-facebook"></i></a></li>
+                                <div class="span12 account-button">
+                                    <ul class="text-center" style="margin-top: 0;">
+                                        <li><a href="/member/login">Login</a></li>
+                                        <li><a href="/member/register">Register</a></li>
                                     </ul>
                                 </div>
                             </div>

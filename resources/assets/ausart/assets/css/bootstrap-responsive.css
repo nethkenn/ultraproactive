@@ -867,7 +867,6 @@ footer .inner .widget_flickr .flickr_badge_image:nth-child(5){margin-bottom: aut
 
   .tabbable .nav-tabs li{width:99%;}
 
-  .top_nav{display:none;}
 
   .one-staff .social_widget ul li:first-child{margin-left:2px;}
 
@@ -1135,7 +1134,7 @@ footer .inner .widget_flickr .flickr_badge_image:nth-child(5){margin-bottom: aut
   #logo .light {opacity: 0 !important;}
   #logo{padding-top: 12px;}
   .header_1_body.page_header_yes .top_wrapper{padding-top: 0px !important;}
-  .top_nav{display:none;}
+  .ewan{display:none;}
   .clients .item{margin-left:0; border:none;}
   .widget_contact_info ul li{float:left; width:100%;}
   #copyright .pull-right{margin-top:13px;}

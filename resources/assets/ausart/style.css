@@ -14906,3 +14906,16 @@ h4 {
 .bs-callout-info h4 {
   color: #5bc0de;
 }
+
+.account-button li a
+{
+    margin: 0 10px;
+}
+
+@media screen and (max-width: 768px)
+{
+    #ewan
+    {
+        display: none;
+    }
+}
