@@ -16,6 +16,7 @@ class CreateTblSlide extends Migration
         {
             $table->increments('slide_id');
             $table->string('slide_title');
+            $table->string('slide_image')->default('default.jpg');
             $table->timestamps();
             $table->tinyInteger('archived')->default(0);
         });

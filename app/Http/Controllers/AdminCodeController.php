@@ -15,7 +15,7 @@ use Carbon\Carbon;
 use Datatables;
 use Validator;
 
-class AdminCodeController extends Controller {
+class AdminCodeController extends AdminController {
 
 	/**
 	 * Display a listing of the resource.

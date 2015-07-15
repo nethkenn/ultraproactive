@@ -5,6 +5,8 @@ use Session;
 use App\Classes\Image;
 use App\Classes\Globals;
 use Hash;
+use App\Tbl_admin;
+use App\Tbl_account;
 
 class Admin
 {
@@ -14,63 +16,80 @@ class Admin
 	/* CHECK IF ACCOUNT EXIST */
     public static function authenticate($email, $password)
     {
-		$email = DB::table(Admin::$table)->where("admin_username", $email)->first();
+		// $email = DB::table(Admin::$table)->where("admin_username", $email)->first();
+        $admin = Tbl_admin::leftJoin('tbl_account','tbl_account.account_id', '=', 'tbl_admin.account_id')
+                            ->leftJoin('tbl_admin_position','tbl_admin_position.admin_position_id','=','tbl_admin.admin_position_id')
+                            ->where('tbl_account.account_email', $email)
 
-		if($email)
-		{
-			if(Hash::check($password,$email->admin_password))
-			{
-				return $email;	
-			}
-			else
-			{
-				return false;
-			}
-		}
-		else
-		{
-			return false;
-		}
+                            // ->where('tbl_account.account_password', Crypt::encrypt($password))
+                            ->first();
+
+
+
+      
+        if($admin)
+        {
+            $decrypted_pass =  Crypt::decrypt($admin->account_password);
+            if($decrypted_pass == $password)
+            {
+                return $admin;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }   
     }
 
     /* SET LOGIN */
-    public static function login($customer_id)
+    public static function login($username, $password)
     {
-    	$customer_id = Crypt::encrypt($customer_id);
-    	Session::put(Admin::$primary, $customer_id);
+    	// $customer_id = Crypt::encrypt($customer_id);
+    	// Session::put(Admin::$primary, $customer_id);
+
+        Session::put('admin', ['username'=>$username, 'password'=>$password]);
+
+
+
+
+
+
     }
 
     /* SET LOGOUT */
     public static function logout()
     {
-    	Session::forget(Admin::$primary);
+    	Session::forget('admin');
     }
+
+
+
+
 
     /* GET INFORMATION OF LOGGED IN USER */
     public static function info()
     {
-    	$customer_id = Admin::id();
-    	if($customer_id)
-    	{
-    		$return = DB::table(Admin::$table)->where(Admin::$primary, $customer_id)->first();
-            return $return;
-    	}
-    	else
-    	{
-    		return false;
-    	}
+        $admin = Session::get('admin');
+
+        return Admin::authenticate($admin['username'], $admin['password']);
+
+
     }
     
-    /* GET ID OF LOGGED IN USER */
-    public static function id()
-    {
-    	if(Session::has(Admin::$primary))
-    	{
-    		return Crypt::decrypt(Session::get(Admin::$primary));
-    	}
-    	else
-    	{
-    		return false;
-    	}
-    }
+    // /* GET ID OF LOGGED IN USER */
+    // public static function id()
+    // {
+    // 	if(Session::has(Admin::$primary))
+    // 	{
+    // 		return Crypt::decrypt(Session::get(Admin::$primary));
+    // 	}
+    // 	else
+    // 	{
+    // 		return false;
+    // 	}
+    // }
 }

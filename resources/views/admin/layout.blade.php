@@ -9,7 +9,7 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		<meta name="_token" content="{{ csrf_token() }}">
-		<title>Admin Panel - Intogadgets</title>
+		<title></title>
 		<!-- GOOGLE FONT -->
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
 		<!-- BOOTSTRAP -->
@@ -76,6 +76,7 @@
 									<li><a href="admin/maintenance/news">News</a></li>
 									<li><a href="admin/maintenance/earn">Earn</a></li>
 									<li><a href="admin/maintenance/slide">Slide</a></li>
+									<li><a href="admin/maintenance/team">Team</a></li>
 									<li><a href="admin/maintenance/inventory">Inventory</a></li>
 								</ul>
 							</li>
@@ -83,7 +84,7 @@
 							<li class="dropdown {{ Request::segment(2) == 'utilities' ? 'active' : 'inactive' }}">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Utilities <span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
-									<li><a href="admin/utilities/admin">Admin</a></li>
+									<li><a href="admin/utilities/admin_maintenance">Admin</a></li>
 									<li><a href="admin/utilities/position">Admin Positions</a></li>
 									<li><a href="admin/utilities/setting">Company Settings</a></li>
 									<li><a href="admin/utilities/complan">Computation Plan</a></li>
@@ -108,7 +109,7 @@
 									<li><a href="admin/account/settings/change_pass">Change Password</a></li>
 								</ul>
 							</li>
-							<li><a href="admin/account/logout">Guillermo Tabligan (Logout)</a></li>
+							<li><a href="admin/account/logout"> {{$admin->account_username}} (Logout)</a></li>
 						</ul>
 					</div>
 				</div>

@@ -20,7 +20,12 @@
                                     <h1 style="font-size:30px; color:#3a3a3a">WE ARE INTRODUCING TO YOU PROLIFE</h1></div>
                                 <div class="wpb_text_column wpb_content_element ">
                                     <div class="wpb_wrapper">
-                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros.</p>
+                                        <p>PROLIFE NWT is a company formed by Filipino professionals based in the United Arab Emirates. Bound together by a common goal, each with their own expertise, they have decided it’s about time that expatriates in the UAE will be given a free choice and be catered with all their needs. 
+
+    By providing convenient e-services, the main aim is to help and alleviate the lives of expatriates around the globe. PROLIFE NWT envisions prosperity for all.
+
+    PROLIFE NWT also promotes real estate investments, free entrepreneurships, encourages self development and offers a wide array of natural  skincare and healthcare products.
+</p>
                                     </div>
                                 </div>
                             </div>
@@ -35,42 +40,49 @@
                             <div class="wpb_wrapper">
                                 <div class=" services_small wpb_content_element">
                                     <div class="services_small_container">
-                                        <div class=" services_small_icon yes" style=""><i class="moon-support" style="color:#000000;"></i> </div>
+                                        <div class=" services_small_icon yes" style=""><i class="fa fa-flag"></i></div>
                                         <div class="services_small_title">
-                                            <h4><a href="#">Help &amp; Support</a></h4>
-                                            <p>High Quality Photos on all types of devices. All icons are Retina. Rutrum consetetur sadipscing dolor elitr, sed diam nonumy lore at volutpat</p>
+                                            <h4><a href="#">Mission</a></h4>
+                                            <p>“To provide globally, the convenience of affordable on-line products and services, with the aim of encouraging free entrepreneurship for a better future of our members”</p>
                                         </div>
-                                    </div><a class="readmore" href="#">Read More <i class="moon-arrow-right-2"></i></a></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="vc_col-sm-4 wpb_column column_container" style="" data-animation="" data-delay="0">
                             <div class="wpb_wrapper">
                                 <div class=" services_small wpb_content_element">
                                     <div class="services_small_container">
-                                        <div class=" services_small_icon yes" style=""><i class="steadysets-icon-unlocked" style="color:#0c0000;"></i> </div>
+                                        <div class=" services_small_icon yes" style=""><i class="fa fa-eye"></i> </div>
                                         <div class="services_small_title">
-                                            <h4><a href="#">Security One</a></h4>
-                                            <p>High Quality Photos on all types of devices. All icons are Retina. Rutrum consetetur sadipscing dolor elitr, sed diam nonumy lore at volutpat</p>
+                                            <h4><a href="#">Vision</a></h4>
+                                            <p>“Through high quality products, service excellence, continuous improvement and team work, we will be the leading e-commerce business worldwide“</p>
                                         </div>
-                                    </div><a class="readmore" href="#">Read More <i class="moon-arrow-right-2"></i></a></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="vc_col-sm-4 wpb_column column_container" style="" data-animation="" data-delay="0">
                             <div class="wpb_wrapper">
                                 <div class=" services_small wpb_content_element">
                                     <div class="services_small_container">
-                                        <div class=" services_small_icon yes" style=""><i class="linecon-icon-display" style="color:#000000;"></i> </div>
+                                        <div class=" services_small_icon yes" style=""><i class="fa fa-book"></i></div>
                                         <div class="services_small_title">
-                                            <h4><a href="#">All in one</a></h4>
-                                            <p>High Quality Photos on all types of devices. All icons are Retina. Rutrum consetetur sadipscing dolor elitr, sed diam nonumy lore at volutpat</p>
+                                            <h4><a href="#">Philosophy</a></h4>
+                                            <p>“We do not only aim to expand our business in a global perspective but we will work collectively as a team to contribute to our society”
+“It is our intention to prosper hand in hand with our members, encouraging and motivating them to bring out their full potential and to drive them towards boundless opportunities.”
+</br>
+“We are the PROLIFE Family!”
+</p>
                                         </div>
-                                    </div><a class="readmore" href="#">Read More <i class="moon-arrow-right-2"></i></a></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div id="fws_556c47c7c4569" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    borders  " style="background-image: url(/resources/assets/ausart/assets/uploads/2015/01/shutterstock_178717754.jpg); background-position: center center; background-repeat: no-repeat; padding-top: 100px !important; padding-bottom: 100px !important; ">
+            {{-- <div id="fws_556c47c7c4569" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    borders  " style="background-image: url(/resources/assets/ausart/assets/uploads/2015/01/shutterstock_178717754.jpg); background-position: center center; background-repeat: no-repeat; padding-top: 100px !important; padding-bottom: 100px !important; ">
                 <div class="bg-overlay" style="background:rgba(247, 247, 247, 0.5);z-index:1;"></div>
                 <div class="container  dark">
                     <div class="section_clear">
@@ -98,7 +110,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <div id="fws_556c47c7c5bef" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="padding-top: 90px !important; padding-bottom: 60px !important; ">
                 <div class="container  dark">
                     <div class="section_clear">
@@ -111,18 +123,19 @@
                     </div>
                 </div>
             </div>
-            <div id="fws_556c47c7c695d" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="padding-top: 0px !important; padding-bottom: 90px !important; ">
+            <div id="fws_556866fa6eded" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="background-color: #f6f6f6; padding-top: 0px !important; padding-bottom: 90px !important; ">
                 <div class="container  dark">
                     <div class="section_clear">
-                        <div class="vc_col-sm-4 wpb_column column_container" style="" data-animation="" data-delay="0">
+                        @foreach($_team as $team)
+                        <div class="vc_col-sm-3 wpb_column column_container" style="" data-animation="" data-delay="0">
                             <div class="wpb_wrapper">
                                 <div class="wpb_content_element">
                                     <div class="one-staff">
-                                        <div class="img_staff"><img src="/resources/assets/ausart/assets/uploads/2015/01/shutterstock_95201956.min-1.jpg" alt=""></div>
+                                        <div class="img_staff"><img src="{{ $team->image }}" alt=""></div>
                                         <div class="content ">
-                                            <h6>Desara Wong</h6>
-                                            <div class="position_title"><span class="position">Ceo & Developer</span></div>
-                                            <p>Sed at odio ut arcu fringilla dictum magna nisi.Aliquam at erat in purus velit vel dolo dictum magna nisi.</p>
+                                            <h6>{{ $team->team_title }}</h6>
+                                            <div class="position_title"><span class="position">{{ $team->team_role }}</span></div>
+                                            <p>{{ $team->team_description }}</p>
                                         </div>
                                         <div class="social_widget">
                                             <ul>
@@ -138,58 +151,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="vc_col-sm-4 wpb_column column_container" style="" data-animation="" data-delay="0">
-                            <div class="wpb_wrapper">
-                                <div class="wpb_content_element">
-                                    <div class="one-staff">
-                                        <div class="img_staff"><img src="/resources/assets/ausart/assets/uploads/2015/01/shutterstock_130103273.min_.jpg" alt=""></div>
-                                        <div class="content ">
-                                            <h6>Ben Dessaritus</h6>
-                                            <div class="position_title"><span class="position">Ceo & Developer</span></div>
-                                            <p>Sed at odio ut arcu fringilla dictum magna nisi.Aliquam at erat in purus velit vel dolo dictum magna nisi.</p>
-                                        </div>
-                                        <div class="social_widget">
-                                            <ul>
-                                                <li class="facebook"><a href="#" title="Facebook"><i class="moon-facebook"></i></a></li>
-                                                <li class="twitter"><a href="#" title="Twitter"><i class="moon-twitter"></i></a></li>
-                                                <li class="google_plus"><a href="#" title="Google Plus"><i class="moon-google_plus"></i></a></li>
-                                                <li class="pinterest"><a href="#" title="Pinterest"><i class="moon-pinterest"></i></a></li>
-                                                <li class="linkedin"><a href="#" title="Linkedin"><i class="moon-linkedin"></i></a></li>
-                                                <li class="main"><a href="#" title="Mail"><i class="moon-mail"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="vc_col-sm-4 wpb_column column_container" style="" data-animation="" data-delay="0">
-                            <div class="wpb_wrapper">
-                                <div class="wpb_content_element">
-                                    <div class="one-staff">
-                                        <div class="img_staff"><img src="/resources/assets/ausart/assets/uploads/2015/01/shutterstock_95201956.min-1.jpg" alt=""></div>
-                                        <div class="content ">
-                                            <h6>Desara Wong</h6>
-                                            <div class="position_title"><span class="position">Ceo & Developer</span></div>
-                                            <p>Sed at odio ut arcu fringilla dictum magna nisi.Aliquam at erat in purus velit vel dolo dictum magna nisi.</p>
-                                        </div>
-                                        <div class="social_widget">
-                                            <ul>
-                                                <li class="facebook"><a href="#" title="Facebook"><i class="moon-facebook"></i></a></li>
-                                                <li class="twitter"><a href="#" title="Twitter"><i class="moon-twitter"></i></a></li>
-                                                <li class="google_plus"><a href="#" title="Google Plus"><i class="moon-google_plus"></i></a></li>
-                                                <li class="pinterest"><a href="#" title="Pinterest"><i class="moon-pinterest"></i></a></li>
-                                                <li class="linkedin"><a href="#" title="Linkedin"><i class="moon-linkedin"></i></a></li>
-                                                <li class="main"><a href="#" title="Mail"><i class="moon-mail"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
-            <div id="fws_556c47c7d1094" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    borders  " style="background-color: #f6f6f6; padding-top: 0px !important; padding-bottom: 0px !important; ">
+            {{-- <div id="fws_556c47c7d1094" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    borders  " style="background-color: #f6f6f6; padding-top: 0px !important; padding-bottom: 0px !important; ">
                 <div class="container  dark">
                     <div class="section_clear">
                         <div class="vc_col-sm-12 wpb_column column_container" style="" data-animation="" data-delay="0">
@@ -301,7 +267,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </section>
         <!-- Social Profiles -->
         <!-- Footer -->

@@ -21,10 +21,10 @@ class Tbl_account extends Model
 	public $timestamps = false;
 
 
-	// public function code()
- //    {
- //        return $this->belongsTo('App\Tbl_membership_code','code_pin');
- //    }
+	public function code()
+    {
+        return $this->belongsTo('App\Tbl_membership_code','code_pin');
+    }
 
     public function admin()
     {

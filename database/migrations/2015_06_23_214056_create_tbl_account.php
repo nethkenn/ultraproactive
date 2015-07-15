@@ -26,7 +26,7 @@ class CreateTblAccount extends Migration {
 			$table->string('account_created_from', 40)->default('Back Office');
             $table->integer('admin_id')->unsigned();
 			$table->tinyInteger('archived')->default(0);
-		});
+
 	}
 
 	/**
