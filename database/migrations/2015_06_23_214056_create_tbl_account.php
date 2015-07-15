@@ -30,11 +30,10 @@ class CreateTblAccount extends Migration {
          //   $table->foreign('admin_id')
            //     ->references('admin_id')
              //   ->on('tbl_admin');
-		});
 
-        Schema::table('tbl_account', function($table) {
-            $table->foreign('admin_id')->references('admin_id')->on('tbl_admin');
-        });
+			
+		});
+		
 	}
 
 	/**

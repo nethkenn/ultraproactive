@@ -132,15 +132,20 @@ Route::get('admin/maintenance/inventory', 'AdminInventoryController@index');
 
 
 /* ADMIN / UTILITIES */
-Route::get('admin/utilities/admin', 'AdminAdminController@index');
-Route::get('admin/utilities/admin/data','AdminAdminController@data');//e2
+Route::get('admin/utilities/admin_maintenance', 'AdminAdminController@index');
+Route::get('admin/utilities/admin_maintenance/data','AdminAdminController@data');
+Route::get('admin/utilities/admin_maintenance/add','AdminAdminController@admin_add');
+Route::post('admin/utilities/admin_maintenance/add','AdminAdminController@create_admin');
+Route::get('admin/utilities/admin_maintenance/edit','AdminAdminController@admin_edit');
+Route::post('admin/utilities/admin_maintenance/edit','AdminAdminController@update_admin');
+Route::post('admin/utilities/admin_maintenance/delete','AdminAdminController@delete_admin');
 Route::get('admin/utilities/position', 'AdminPositionController@index');
-Route::any('admin/utilities/position/data', 'AdminPositionController@data');
+Route::get('admin/utilities/position/data', 'AdminPositionController@data');
 Route::get('admin/utilities/position/add', 'AdminPositionController@add');
-Route::any('admin/utilities/position/add_submit', 'AdminPositionController@add_submit');
-Route::get('admin/utilities/position/edit', 'AdminPositionController@edit');
-Route::any('admin/utilities/position/edit_submit', 'AdminPositionController@edit_submit');
-Route::any('admin/utilities/position/delete', 'AdminPositionController@delete');
+Route::post('admin/utilities/position/add', 'AdminPositionController@create');
+Route::any('admin/utilities/position/edit', 'AdminPositionController@edit');
+Route::post('admin/utilities/position/edit', 'AdminPositionController@update');
+Route::post('admin/utilities/position/delete', 'AdminPositionController@delete');
 
 Route::get('admin/utilities/setting', 'AdminSettingsController@index');
 Route::get('admin/utilities/complan', 'AdminComplanController@index');
@@ -148,3 +153,8 @@ Route::get('admin/utilities/complan', 'AdminComplanController@index');
 /* ADMIN / UTILITIES */
 Route::get('admin/reports/product_sales', 'AdminReportController@product_sales');
 Route::get('admin/reports/membership_sales', 'AdminReportController@membership_sales');
+
+
+Route::any('admin/login', 'AdminLoginController@index');
+Route::any('admin/account/logout', 'AdminProfileController@logout');
+

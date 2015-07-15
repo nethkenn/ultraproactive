@@ -121,22 +121,29 @@ class tbl_module extends Seeder
     public function run()
     {
         DB::table('tbl_module')->delete();
-        DB::statement("INSERT INTO `tbl_module` (`module_id`, `module_name`, `archived`) VALUES
-        (1, 'Transaction / Process Sale',   0),
-        (2, 'Transaction / Process Payout', 0),
-        (3, 'Transaction / Process Claims', 0),
-        (4, 'Transaction / Unilevel Distribution',  0),
-        (5, 'Maintenance / Accounts',   0),
-        (6, 'Maintenance / Membership Codes',   0),
-        (7, 'Maintenance / Package',    0),
-        (8, 'Maintenance / Product',    0),
-        (9, 'Maintenance / Slots',  0),
-        (10,    'Utitlities / Admin',   0),
-        (11,    'Utitlities / Admin Levels',    0),
-        (12,    'Utitlities / Company Settings',    0),
-        (13,    'Utitlities / Computation Plans',   0),
-        (14,    'Reports / Product Sales Report',   0),
-        (15,    'Reports / Membership Sales Report',    0);"
+        DB::statement("INSERT INTO `tbl_module` (`module_id`, `module_name`, `archived`, `url_segment`) VALUES
+(1, 'Transaction / Process Sale',   0,  'sales'),
+(2, 'Transaction / Process Payout', 0,  'payout'),
+(3, 'Transaction / Process Claims', 0,  'claims'),
+(4, 'Transaction / Unilevel Distribution',  0,  'unilevel'),
+(5, 'Maintenance / Accounts',   0,  'accounts'),
+(6, 'Maintenance / Membership Codes',   0,  'codes'),
+(7, 'Maintenance / Package',    0,  'product_package'),
+(8, 'Maintenance / Product',    0,  'product'),
+(9, 'Maintenance / Slots',  0,  'slots'),
+(10,    'Utitlities / Admin',   0,  'admin_maintenance'),
+(11,    'Utitlities / Admin Levels',    0,  'position'),
+(12,    'Utitlities / Company Settings',    0,  'setting'),
+(14,    'Reports / Product Sales Report',   0,  'product_sales'),
+(15,    'Reports / Membership Sales Report',    0,  'membership_sales'),
+(16,    'Maintenance / Product',    0,  'country'),
+(17,    'Maintenance / Deduction',  0,  'deduction'),
+(18,    'Maintenance / membership', 0,  'membership'),
+(19,    'Maintenance / Ranking',    0,  'ranking'),
+(20,    'Maintenance / News',   0,  'news'),
+(21,    'Maintenance / Earn',   0,  'earn'),
+(22,    'Maintenance / Inventory',  0,  'inventory'),
+(23,    'Utitlities / Computation Plan',    0,  'complan');"
         );
     } 
 }
