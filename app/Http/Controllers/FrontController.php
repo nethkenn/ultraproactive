@@ -49,13 +49,30 @@ class FrontController extends Controller
 			$bb = Image::view($aa, "125x96");
 			$data["_slide"][$xx]->thumb = $bb;
 		}
-		// dd($data["_slide"]);
+
+		$data["_team"] = DB::table("tbl_team")->where("archived", 0)->get();
+		foreach ($data["_team"] as $susi => $halaga) 
+		{
+			$kuha = $halaga->team_image;
+			$litrato = Image::view($kuha, "415x415");
+			$data["_team"][$susi]->image = $litrato;
+		}
+
+		// dd($data["_team"]);
 
         return view('front.home', $data);
 	}
 	public function about()
 	{
-        return view('front.about');
+		$data["_team"] = DB::table("tbl_team")->where("archived", 0)->get();
+		foreach ($data["_team"] as $susi => $halaga) 
+		{
+			$kuha = $halaga->team_image;
+			$litrato = Image::view($kuha, "415x415");
+			$data["_team"][$susi]->image = $litrato;
+		}
+
+        return view('front.about', $data);
 	}
 	public function earn()
 	{

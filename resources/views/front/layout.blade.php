@@ -268,7 +268,7 @@
                                 <h4 class="widget-title">Contact Info</h4>
                                 <ul>
                                     <li class="address"><i class="moon-location"></i><span>Address:</span>
-                                        <br /><span> 102580 Santa Monica BLVD Los Angeles</span></li>
+                                        <br /><span> Office 107, Al Rigga Building, Port Said, Deira Dubai, UAE</span></li>
                                     <li class="email"><i class="moon-envelop"></i><span>Email:</span>
                                         <br /><span>admin@prolife.global</span></li>
                                     <li class="phone"><i class="moon-phone"></i><span>Phone:</span>

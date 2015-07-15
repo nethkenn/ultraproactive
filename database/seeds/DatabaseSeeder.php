@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call('tbl_inventory_update_type');
         $this->call('tbl_code_type');
         $this->call('tbl_module');
+        $this->call('tbl_team');
     }
 }
 class tbl_account extends Seeder
@@ -121,23 +122,41 @@ class tbl_module extends Seeder
     public function run()
     {
         DB::table('tbl_module')->delete();
-        DB::statement("INSERT INTO `tbl_module` (`module_id`, `module_name`, `archived`) VALUES
-        (1, 'Transaction / Process Sale',   0),
-        (2, 'Transaction / Process Payout', 0),
-        (3, 'Transaction / Process Claims', 0),
-        (4, 'Transaction / Unilevel Distribution',  0),
-        (5, 'Maintenance / Accounts',   0),
-        (6, 'Maintenance / Membership Codes',   0),
-        (7, 'Maintenance / Package',    0),
-        (8, 'Maintenance / Product',    0),
-        (9, 'Maintenance / Slots',  0),
-        (10,    'Utitlities / Admin',   0),
-        (11,    'Utitlities / Admin Levels',    0),
-        (12,    'Utitlities / Company Settings',    0),
-        (13,    'Utitlities / Computation Plans',   0),
-        (14,    'Reports / Product Sales Report',   0),
-        (15,    'Reports / Membership Sales Report',    0);"
+        DB::statement("INSERT INTO `tbl_module` (`module_id`, `module_name`, `archived`, `url_segment`) VALUES
+(1, 'Transaction / Process Sale',   0,  'sales'),
+(2, 'Transaction / Process Payout', 0,  'payout'),
+(3, 'Transaction / Process Claims', 0,  'claims'),
+(4, 'Transaction / Unilevel Distribution',  0,  'unilevel'),
+(5, 'Maintenance / Accounts',   0,  'accounts'),
+(6, 'Maintenance / Membership Codes',   0,  'codes'),
+(7, 'Maintenance / Package',    0,  'product_package'),
+(8, 'Maintenance / Product',    0,  'product'),
+(9, 'Maintenance / Slots',  0,  'slots'),
+(10,    'Utitlities / Admin',   0,  'admin_maintenance'),
+(11,    'Utitlities / Admin Levels',    0,  'position'),
+(12,    'Utitlities / Company Settings',    0,  'setting'),
+(14,    'Reports / Product Sales Report',   0,  'product_sales'),
+(15,    'Reports / Membership Sales Report',    0,  'membership_sales'),
+(16,    'Maintenance / Product',    0,  'country'),
+(17,    'Maintenance / Deduction',  0,  'deduction'),
+(18,    'Maintenance / membership', 0,  'membership'),
+(19,    'Maintenance / Ranking',    0,  'ranking'),
+(20,    'Maintenance / News',   0,  'news'),
+(21,    'Maintenance / Earn',   0,  'earn'),
+(22,    'Maintenance / Inventory',  0,  'inventory'),
+(23,    'Utitlities / Computation Plan',    0,  'complan');"
         );
+    } 
+}
+class tbl_team extends Seeder
+{
+    public function run()
+    {
+        DB::table('tbl_team')->delete();
+        DB::statement("INSERT INTO `tbl_team` (`team_id`, `team_title`, `team_description`, `team_role`, `team_image`, `created_at`, `updated_at`, `archived`) VALUES
+        (1, 'Mrs. Rose S. Rajeh',   '', '', '1436855352.jpg',   '2015-07-14 06:29:16',  '2015-07-14 06:29:32',  0),
+        (2, 'Mr. Gino Antonio S. Rajeh',    '', '', '1436855359.jpg',   '2015-07-14 06:29:49',  '0000-00-00 00:00:00',  0);
+        ");
     } 
 }
 
