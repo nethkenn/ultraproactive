@@ -24,7 +24,7 @@
                     </ul>
                 </div>
                 @endif
-                <select class="form-control" name="account_id" disabled>
+                <select class="form-control chosen-select" name="account_id" disabled>
                     <option>Select Admin</option>
                     @if($_account)
                     @foreach ($_account as $element)
@@ -44,7 +44,7 @@
                     </ul>
                 </div>
                 @endif
-                <select class="form-control" name="admin_position_id">
+                <select class="form-control chosen-select-2" name="admin_position_id">
                     <option>Select Position</option>
                     @if($_position)
                     @foreach ($_position as $element)
@@ -55,4 +55,12 @@
               </div>
         </form>
     </div>
+@endsection
+@section('script')
+    <script type="text/javascript" src="resources/assets/chosen_v1.4.2/chosen.jquery.min.js"></script>
+    <link rel="stylesheet" href="resources/assets/chosen_v1.4.2/chosen.css">
+    <script type="text/javascript">
+        $(".chosen-select").chosen();
+        $(".chosen-select-2").chosen();
+    </script>
 @endsection
