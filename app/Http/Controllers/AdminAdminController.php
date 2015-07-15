@@ -51,7 +51,8 @@ class AdminAdminController extends AdminController
     public function create_admin(AdminAddRequest $request)
     {
      
-             $admin = new Tbl_admin(Request::input());
+
+            $admin = new Tbl_admin($request->all());
             $admin->save();
             return redirect('admin/utilities/admin_maintenance');
 
