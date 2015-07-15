@@ -21,7 +21,7 @@
                 </div>
                 <div class="col-md-6 grabe">
                     <div class="header-text">Account Setting</div>
-                    <div class="header-text">Guillermo Tabligan ( Logout )</div>
+                    <div class="header-text"><a href="/member/logout">{{$member->account_name}} ( Logout )</a></div>
                 </div>
 			</div>
 			<nav class="navbar navbar-default">
@@ -29,9 +29,16 @@
 			    <!-- Brand and toggle get grouped for better mobile display -->
 			    <div class="navbar-header">
                 <span class="hidden-bury visible-xs visible-sm hidden-lg hidden-md pull-left">
-                    <select class="form-control">
-                        <option>Slot #5 (1,200.00)</option>
+                @if($slot)
+                    <select class="form-control">    
+                            <option>Slot #{{$slotnow->slot_id}} ({{$slotnow->slot_wallet}})</option>                                             
+                            @foreach($slot as $slots)
+                            <option>Slot #{{$slots->slot_id}} ({{$slots->slot_wallet}})</option>
+                            @endforeach
                      </select>
+                @else
+                <div class="select-label">You have no slots</div>   
+                @endif
                 </span>
 			      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
 			        <span class="sr-only">Toggle navigation</span>
@@ -55,12 +62,21 @@
 			      </ul>
 			      <ul class="nav navbar-nav navbar-right" style="margin-right: 0;">
                     <li>
+                        @if($slot)
                         <div class="select-label">You are using</div>
+                        @endif
                     </li>
 			         <li>
-                        <select class="form-control">
-                            <option>Slot #5 (1,200.00)</option>
-                         </select>
+                        @if($slot)
+                            <select class="form-control"> 
+                                    <option>Slot #{{$slotnow->slot_id}} ({{$slotnow->slot_wallet}})</option>                                                     
+                                    @foreach($slot as $slots)
+                                    <option>Slot #{{$slots->slot_id}} ({{$slots->slot_wallet}})</option>
+                                    @endforeach
+                             </select>
+                        @else
+                        <div class="select-label">You have no slots</div>   
+                        @endif
                      </li>
 			      </ul>
 			    </div><!-- /.navbar-collapse -->
@@ -374,7 +390,7 @@
     <br>
     <button data-remodal-action="confirm" class="orange-btn button">Confirm Encashment</button>
 </div>
-<div class="remodal create-slot" data-remodal-id="upgrade_member">
+<div class="remodal create-slot" data-remodal-id="upgrade_member" data-remodal-options="hashTracking: false">
     <button data-remodal-action="close" class="remodal-close"></button>
     <div class="header">
         <img src="/resources/assets/frontend/img/icon-membership.png">
@@ -382,38 +398,48 @@
     </div>
     <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
     <div class="col-md-10 col-md-offset-1 para">
-        <form class="form-horizontal">
+        <form class="form-horizontal" method="POST">
+            <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
+            <input type="hidden" class="token" name="tols" id="tols" value="">
+            <div class="alerted alert alert-danger">
+                You don't have enough balance in your wallet for upgrade.
+            </div>
             <div class="form-group para">
                 <label for="wan" class="col-sm-3 control-label">Choose Membership</label>
                 <div class="col-sm-9">
-                    <select class="form-control" id="wan">
-                        <option>Director</option>
+                    <select class="form-control" id="wan" name="membership">
+                        @if($membership)
+                            @foreach($membership as $m)
+                              <option value="{{$m->membership_id}}" amount="{{$m->membership_price}}">{{$m->membership_name}}</option>
+                            @endforeach
+                        @endif    
                     </select>
                 </div>
             </div>
             <div class="form-group para">
                 <label for="tu" class="col-sm-3 control-label">Your Wallet</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="tu">
+                    <input type="text" class="form-control" id="tu" disabled>
                 </div>
             </div>
             <div class="form-group para">
                 <label for="tri" class="col-sm-3 control-label">Upgrade Amount</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="tri">
+                    <input type="text" class="form-control" id="tri" disabled>
                 </div>
             </div>
             <div class="form-group para">
                 <label for="por" class="col-sm-3 control-label">Enter Your Password</label>
                 <div class="col-sm-9">
-                    <input type="password" class="form-control" id="por">
+                    <input type="password" class="form-control" id="por" name="pass">
                 </div>
             </div>
+            <br>
+            <button class="button" data-remodal-action="cancel">Cancel</button>
+            <button class="button" type="submit" id="subup" name="subup" value="1">Submit Upgrade</button>
         </form>
     </div>
-    <br>
-    <button class="button" data-remodal-action="cancel">Cancel</button>
-    <button class="button" data-remodal-action="confirm">Submit Upgrade</button>
+
 </div>
 <div class="remodal create-slot" data-remodal-id="transfer_slot">
     <button data-remodal-action="close" class="remodal-close"></button>
@@ -838,5 +864,6 @@ function myTimeoutFunction()
     $('.footable').trigger('footable_initialize');
     timerId = setTimeout(myTimeoutFunction, 1000);
 }
+
 </script>
 </html>
