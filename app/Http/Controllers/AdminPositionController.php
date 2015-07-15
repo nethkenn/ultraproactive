@@ -25,7 +25,7 @@ class AdminPositionController extends AdminController
 	{
 
 		$admin_id = Admin::info()->admin_position_id;
-		$data["_module"] = Tbl_admin_position_has_module::module()->where('tbl_admin_position_has_module.admin_position_id', $admin_id)->get();
+		$data["_module"] = Tbl_admin_position_has_module::module()->where('tbl_admin_position_has_module.admin_position_id', $admin_id)->orderBy('tbl_module.module_name','asc')->get();
 
 
         return view('admin.utilities.position_add', $data);
