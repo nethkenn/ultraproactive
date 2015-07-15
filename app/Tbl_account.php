@@ -34,7 +34,8 @@ class Tbl_account extends Model
 
     public function scopePosition($query)
     {
-        return $query->leftJoin('tbl_admin','tbl_admin.account_id','=','tbl_account.account_id')->leftJoin('tbl_admin_position','tbl_admin_position.admin_position_id','=', 'tbl_admin.admin_position_id' );
+        return $query->leftJoin('tbl_admin','tbl_admin.account_id','=','tbl_account.account_id')
+        ->leftJoin('tbl_admin_position','tbl_admin_position.admin_position_id','=', 'tbl_admin.admin_position_id' );
 
         // ->leftJoin('tbl_admin_position', 'tbl_admin_position.admin_position_id', '=', 'tbl_admin.admin_position_id');
     }
