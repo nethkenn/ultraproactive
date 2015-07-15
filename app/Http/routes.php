@@ -11,7 +11,8 @@ Route::any('/member/voucher', 'MemberVoucherController@index');
 Route::any('/member/leads', 'MemberLeadController@index');
 Route::any('/member/product', 'MemberProductController@index');
 Route::any('/member/login', 'MemberLoginController@index');
-
+Route::any('/member/logout', 'MemberLoginController@logout');
+Route::any('/member/register', 'MemberRegisterController@index');
 /* ADMIN */
 Route::any('/', 'FrontController@index');
 Route::any('/about', 'FrontController@about');

@@ -7,7 +7,7 @@
     <div class="borders"></div>
     </div>
     <div class="profile-info">
-      <div class="name">Mr. Guillermo Tabligan</div>
+      <div class="name">{{$member->account_name}}</div>
       <div class="email">primiaph@gmail.com</div>
     </div>
   </div>
