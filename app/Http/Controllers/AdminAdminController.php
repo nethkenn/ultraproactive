@@ -52,7 +52,7 @@ class AdminAdminController extends AdminController
     {
      
 
-            $admin = new Tbl_admin($request->input());
+            $admin = new Tbl_admin($request->all());
             $admin->save();
             return redirect('admin/utilities/admin_maintenance');
 
