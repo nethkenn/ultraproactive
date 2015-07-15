@@ -14919,3 +14919,116 @@ h4 {
         display: none;
     }
 }
+.register
+{
+    text-align: center;
+    padding-top: 80px !important;
+}
+.register .title-header
+{
+    background-color: #009dcd;
+    color: white;
+    max-width: 567px;
+    margin: auto;
+    font-size: 20.83px;
+    font-weight: bold;
+    padding: 10px;
+    margin-bottom: 100px;
+}
+.register .title-header span
+{
+    font-size: 14.58px;
+    font-weight: 400;
+}
+.register .columnz
+{
+    padding: 0 30px;
+}
+.register .column-title
+{
+
+}
+.register .column-title span
+{
+    color: #009dcd;
+    display: inline;
+    font-size: 16.67px;
+    font-weight: 600;
+    font-style: italic;
+}
+.register img
+{
+    padding: 10px 0 30px;
+    max-width: 100%;
+}
+.register .columnz input[type="text"], input[type="password"], input[type="email"], select
+{
+    border-radius: 0 !important;
+    border: 1px solid #d8d8d8;
+    font-size: 16.67px !important;
+    height: 32px !important;
+    width: 100% !important;
+    margin: 0 !important;
+}
+.register .columnz textarea
+{
+    height: 135px;
+    resize: none;
+    border-radius: 0;
+    border: 1px solid #d8d8d8;
+    font-size: 16.67px;
+    width: 100%;
+}
+.register .columnz .vc_col-md-4:first-child
+{
+    padding-left: 0 !important;
+}
+.register .columnz .vc_col-md-4:last-child
+{
+    padding-right: 0 !important;
+}
+.register .columnz .teybol 
+{
+    display: table;
+    width: 100%;
+}
+.register .columnz .form-group
+{
+    overflow: auto;
+    clear: both;
+    display: table-row;
+    width: 100%;
+}
+.register .columnz .form-group .labelz
+{
+    display: table-cell;
+    vertical-align: middle;
+    color: #797b7d;
+    text-align: left;
+    padding: 0 15px;
+    width: 150px;
+}
+.register .columnz .form-group .inputz
+{
+    display: table-cell;
+    vertical-align: middle;
+    text-align: left;
+    padding: 10px 0;
+    height: 32px;
+}
+.register .columnz .form-group .inputz input[type="radio"]
+{
+    vertical-align: middle;
+    margin: 0;
+    width: 32px;
+    height: 32px;
+}
+.register .columnz .form-group .inputz span
+{
+    vertical-align: middle;
+}
+.register .columnz .form-group .vc_col-md-4
+{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
