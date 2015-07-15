@@ -27,8 +27,7 @@ class CreateTblAccount extends Migration {
             $table->integer('admin_id')->unsigned();
 			$table->tinyInteger('archived')->default(0);
 
-<<<<<<< HEAD
-=======
+
 
          //   $table->foreign('admin_id')
            //     ->references('admin_id')
@@ -36,7 +35,6 @@ class CreateTblAccount extends Migration {
 
 			
 		});
->>>>>>> 342aa54d7cbfd4fa36c233ab54954a5262236347
 	}
 
 	/**
