@@ -14,17 +14,19 @@ class Admin
 	public static $primary = 'admin_id';
 
 	/* CHECK IF ACCOUNT EXIST */
-    public static function authenticate($email, $password)
+    public static function authenticate($username, $password)
     {
 		// $email = DB::table(Admin::$table)->where("admin_username", $email)->first();
+
         $admin = Tbl_admin::leftJoin('tbl_account','tbl_account.account_id', '=', 'tbl_admin.account_id')
                             ->leftJoin('tbl_admin_position','tbl_admin_position.admin_position_id','=','tbl_admin.admin_position_id')
-                            ->where('tbl_account.account_email', $email)
+                            ->where('tbl_account.account_username', $username)
 
                             // ->where('tbl_account.account_password', Crypt::encrypt($password))
                             ->first();
 
-
+                            // Session::forget('admin');
+                            // dd($admin ,  Session::get('admin'));
 
       
         if($admin)
@@ -76,7 +78,6 @@ class Admin
         $admin = Session::get('admin');
 
         return Admin::authenticate($admin['username'], $admin['password']);
-
 
     }
     

@@ -46,9 +46,9 @@
       {{$_error}}
     </div>
     @endif
-    <label for="username" class="col-sm-2 control-label">Email</label>
+    <label for="username" class="col-sm-2 control-label">Username</label>
     <div class="col-sm-10">
-      <input type="text" name="username" class="form-control" id="" placeholder="Email">
+      <input type="text" name="username" class="form-control" id="" placeholder="Username">
     </div>
   </div>
   <div class="form-group">

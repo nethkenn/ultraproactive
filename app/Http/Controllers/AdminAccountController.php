@@ -54,7 +54,6 @@ class AdminAccountController extends AdminController
 			$insert["custom_field_value"] = serialize(Request::input('custom_field'));
 			DB::table("tbl_account")->insert($insert);
 			return Redirect::to('admin/maintenance/accounts');
-        //    return $insert;
 		}
 		else
 		{
