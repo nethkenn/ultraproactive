@@ -29,13 +29,18 @@
 			    <!-- Brand and toggle get grouped for better mobile display -->
 			    <div class="navbar-header">
                 <span class="hidden-bury visible-xs visible-sm hidden-lg hidden-md pull-left">
-                @if($slot)
-                    <select class="form-control">    
-                            <option>Slot #{{$slotnow->slot_id}} ({{$slotnow->slot_wallet}})</option>                                             
-                            @foreach($slot as $slots)
-                            <option>Slot #{{$slots->slot_id}} ({{$slots->slot_wallet}})</option>
-                            @endforeach
-                     </select>
+                @if($slotnow)
+                    <form method="post" name="myform">
+                        <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
+                        <select class="form-control" name="slotnow" onchange="this.form.submit()">    
+                                <option value="{{$slotnow->slot_id}}">Slot #{{$slotnow->slot_id}} ({{$slotnow->slot_wallet}})</option>
+                                @if($slot)                                             
+                                    @foreach($slot as $slots)
+                                    <option value="{{$slots->slot_id}}">Slot #{{$slots->slot_id}} ({{$slots->slot_wallet}})</option>
+                                    @endforeach
+                                @endif    
+                         </select>
+                    </form>
                 @else
                 <div class="select-label">You have no slots</div>   
                 @endif
@@ -62,18 +67,23 @@
 			      </ul>
 			      <ul class="nav navbar-nav navbar-right" style="margin-right: 0;">
                     <li>
-                        @if($slot)
+                        @if($slotnow)
                         <div class="select-label">You are using</div>
                         @endif
                     </li>
 			         <li>
-                        @if($slot)
-                            <select class="form-control"> 
-                                    <option>Slot #{{$slotnow->slot_id}} ({{$slotnow->slot_wallet}})</option>                                                     
-                                    @foreach($slot as $slots)
-                                    <option>Slot #{{$slots->slot_id}} ({{$slots->slot_wallet}})</option>
-                                    @endforeach
-                             </select>
+                        @if($slotnow)
+                            <form method="post" name="myform">
+                                <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
+                                <select class="form-control" onchange="this.form.submit()" name="slotnow"> 
+                                        <option value="{{$slotnow->slot_id}}">Slot #{{$slotnow->slot_id}} ({{$slotnow->slot_wallet}})</option> 
+                                        @if($slot)                                                    
+                                            @foreach($slot as $slots)
+                                            <option value="{{$slots->slot_id}}">Slot #{{$slots->slot_id}} ({{$slots->slot_wallet}})</option>
+                                            @endforeach
+                                        @endif    
+                                 </select>
+                            </form>
                         @else
                         <div class="select-label">You have no slots</div>   
                         @endif
@@ -858,6 +868,7 @@
 $(document).ready(function()
 {
     myTimeoutFunction();
+  
 });
 function myTimeoutFunction()
 {

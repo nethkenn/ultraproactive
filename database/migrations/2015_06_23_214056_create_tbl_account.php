@@ -24,19 +24,9 @@ class CreateTblAccount extends Migration {
 			$table->text('account_password');
 			$table->text('custom_field_value');
 			$table->string('account_created_from', 40)->default('Back Office');
-            $table->integer('admin_id')->unsigned();
 			$table->tinyInteger('archived')->default(0);
 
-<<<<<<< HEAD
-=======
-
-         //   $table->foreign('admin_id')
-           //     ->references('admin_id')
-             //   ->on('tbl_admin');
-
-			
 		});
->>>>>>> 342aa54d7cbfd4fa36c233ab54954a5262236347
 	}
 
 	/**

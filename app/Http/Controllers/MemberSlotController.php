@@ -34,7 +34,7 @@ class MemberSlotController extends MemberController
 		if(Request::input('changeslot'))
 		{
 			Session::put('currentslot',Request::input('changeslot'));
-			return Redirect::to('/member/slot');
+			return redirect()->back();
 		}
 
 

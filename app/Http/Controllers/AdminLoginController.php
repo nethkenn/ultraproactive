@@ -18,7 +18,7 @@ class AdminLoginController extends Controller
             if($admin)
             {
                 
-                Admin::login($admin->account_email, Request::input('password'));
+                Admin::login($admin->account_username, Request::input('password'));
                 return Redirect::to("admin");
 
             }

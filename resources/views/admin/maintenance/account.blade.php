@@ -23,8 +23,10 @@
 			<table id="table" class="table table-bordered">
 				<thead>
 					<tr class="text-center">
+
 						<th>Full Name</th>
 						<th>Email</th>
+						<th>Username</th>
 						<th>Contact Number</th>
 						<th>Country Name</th>
 						<th class="option-col"></th>
@@ -50,6 +52,7 @@ $(function() {
         columns: [
             {data: 'account_name', name: 'account_name'},
             {data: 'account_email', name: 'account_email'},
+            {data: 'account_username', name: 'account_username'},
             {data: 'account_contact_number', name: 'account_contact_number'},
             {data: 'country_name', name: 'country_name'},
             {data: 'edit', name: 'account_id'},

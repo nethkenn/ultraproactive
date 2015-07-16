@@ -42,7 +42,7 @@ class Customer
     	$member_id = Crypt::encrypt($member_id);
     	Session::put(Customer::$primary, $member_id);
         Session::put(Customer::$secondary, $member_password);
-        if(isset($data))
+        if($data)
         {
             Session::put("currentslot", $data[0]->slot_id);
         }

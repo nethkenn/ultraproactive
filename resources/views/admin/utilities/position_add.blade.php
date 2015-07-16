@@ -1,8 +1,5 @@
 @extends('admin.layout')
 @section('content')
-    <pre>
-        {{var_dump(Request::input('admin_position_name'))}}
-    </pre>
     <div class="row header">
         <div class="title col-md-8">
             <h2><i class="fa fa-users"></i>  Add Levels</h2>
@@ -29,13 +26,13 @@
                 <label for="inputEmail3" class="col-sm-2 control-label">Position Name</label>
 
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="name" name="admin_position_name" required>
+                    <input type="text" class="form-control" id="name" name="admin_position_name" value="{{Session::get('_old_input')['admin_position_name']}}" required>
                 </div>
             </div>
             <div class="form-group">
                 <label for="inputPassword3" class="col-sm-2 control-label">Position Level</label>
                 <div class="col-sm-10">
-                    <input type="number" class="form-control" id="level" name="admin_position_rank" required>
+                    <input type="number" class="form-control" id="level" name="admin_position_rank" value="{{Session::get('_old_input')['admin_position_rank']}}" required>
                 </div>
             </div> 
             <div class="form-group">

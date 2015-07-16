@@ -13,7 +13,6 @@ class AdminAccountController extends AdminController
 	public function index()
 	{
 
-		// dd(Admin::info());
 		$data["page"] = "Account Maintenance";
         return view('admin.maintenance.account', $data);
 	}
@@ -22,11 +21,14 @@ class AdminAccountController extends AdminController
     {
 
 
-    	$admin_rank = Admin::info()->admin_position_rank;
-    	$account = Tbl_account::select('*')->where('tbl_account.archived', Request::input('archived'))
+		    	$admin_rank = Admin::info()->admin_position_rank;
+    	$account = Tbl_account::select('tbl_account.*','tbl_admin_position.admin_position_rank','tbl_country.country_name')->where('tbl_account.archived', 0)
     										->where('tbl_admin_position.admin_position_rank', '>=',$admin_rank)
     										->OrWhereNull('tbl_admin_position.admin_position_rank')
-    										->position()->country()->groupBy('tbl_account.account_id')->get();
+    										->position()
+    										->country()
+    										->get();
+
         // $account = Tbl_account::select('*')->where('tbl_account.archived', Request::input('archived'))->leftJoin("tbl_country","tbl_account.account_country_id", "=", "tbl_country.country_id");
         $text = Request::input('archived') ? 'RESTORE' : 'ARCHIVE';
 		$class = Request::input('archived') ? 'restore-account' : 'archive-account';
@@ -52,7 +54,6 @@ class AdminAccountController extends AdminController
 			$insert["custom_field_value"] = serialize(Request::input('custom_field'));
 			DB::table("tbl_account")->insert($insert);
 			return Redirect::to('admin/maintenance/accounts');
-        //    return $insert;
 		}
 		else
 		{

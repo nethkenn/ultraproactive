@@ -5,7 +5,7 @@
         <div class="table-head para">
             <div class="col-md-6 aw">
                 <img src="/resources/assets/frontend/img/icon-member.png">
-                Membership Codes ( 2 )
+                Membership Codes ({{$count}})
             </div>
             <div class="col-md-6 ew">
                 <a href="#buy_code">
@@ -17,12 +17,13 @@
             </div>
         </div>
         <table class="footable">
+            @if($code)
             <thead>
                 <tr>
                     <th>Pin</th>
                     <th data-hide="phone">Code</th>
                     <th data-hide="phone">Type</th>
-                    <th data-hide="phone">Obtained Form</th>
+                    <th data-hide="phone">Obtained From</th>
                     <th data-hide="phone,phonie">Membership</th>
                     <th data-hide="phone,phonie">Locked</th>
                     <th data-hide="phone,phonie">Product Set</th>
@@ -32,7 +33,24 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="tibolru">
+    
+                    @foreach($code as $c)
+                    <tr class="tibolru">
+                        <td>{{$c->code_pin}}</td>
+                        <td>{{$c->code_activation}}</td>
+                        <td>{{$c->code_type_name}}</td>
+                        <td>Sample(Admin)</td>
+                        <td>{{$c->membership_name}}</td>
+                        <td><div class="check"><input type="checkbox"><div class="bgs"></div></div></td>
+                        <td>{{$c->product_package_name}}</td>
+                        <td>{{$c->used == 0 ? "Available" : "Used"}}</td>
+                        <td><a href="#create_slot">Create Slot</a></td>
+                        <td><a href="#transfer_code">Transfer Code</a></td>
+                    </tr>
+                    @endforeach
+                @endif 
+
+                <!-- <tr class="tibolru">
                     <td>516</td>
                     <td>K65N4</td>
                     <td>PS</td>
@@ -67,19 +85,7 @@
                     <td>Available</td>
                     <td><a href="#create_slot">Create Slot</a></td>
                     <td><a href="#transfer_code">Transfer Code</a></td>
-                </tr>
-                <tr class="tibolru">
-                    <td>516</td>
-                    <td>K65N4</td>
-                    <td>PS</td>
-                    <td>Guillermo Tabligan (Admin)</td>
-                    <td>Associate</td>
-                    <td><div class="check"><input type="checkbox"><div class="bgs"></div></div></td>
-                    <td>Set A</td>
-                    <td>Available</td>
-                    <td><a href="#create_slot">Create Slot</a></td>
-                    <td><a href="#transfer_code">Transfer Code</a></td>
-                </tr>
+                </tr> !-->
             </tbody>
         </table>
     </div>
@@ -95,7 +101,7 @@
             <tr>
                 <th>Pin</th>
                 <th data-hide="phone">Code</th>
-                <th data-hide="phone">Obtained Form</th>
+                <th data-hide="phone">Obtained From</th>
                 <th data-hide="phone,phonie">Locked</th>
                 <th data-hide="phone">Product</th>
                 <th data-hide="phone,phonie">Price</th>
