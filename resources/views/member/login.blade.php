@@ -25,7 +25,10 @@
                 </div>
                 <div class="forgot"><a href="javascript:">Forgot Password?</a></div>
                 <a href="javascript:">
-                    <button type="submit" name="login">LOGIN</button>
+                    <button type="submit" name="login" style="margin-top: 20px;">LOGIN</button>
+                </a>
+                <a href="/">
+                    <button onClick="location.href='/'" style="margin-top: 5px;">GO BACK</button>
                 </a>
                 <div class="create">
                     <a href="register">New here? Create an account.</a>
