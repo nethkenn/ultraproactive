@@ -43,7 +43,7 @@
 				</div>
 
             	<div class="form-group col-md-12">
-{{--             		@if($_error['product'])
+<!--             		@if($_error['product'])
                         <div class="col-md-12 alert alert-danger form-errors">
                             <ul>
                                 @foreach($_error['product'] as $error)
@@ -51,7 +51,7 @@
                                 @endforeach
                             </ul>
                         </div>
-                    @endif --}}
+                    @endif !-->
             		<table id="added-product-table" class="table table-bordered table-hover">
 						<thead>
 							<tr>

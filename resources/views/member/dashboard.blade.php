@@ -8,7 +8,7 @@
     </div>
     <div class="profile-info">
       <div class="name">{{$member->account_name}}</div>
-      <div class="email">primiaph@gmail.com</div>
+      <div class="email">{{$member->account_email}}</div>
     </div>
   </div>
   <div class="info para">
@@ -28,32 +28,32 @@
     </div>
   </div>
   <div class="detail para">
-    <div class="header"><img src="/resources/assets/frontend/img/icon-book.png">Details For Slot #5</div>
+    <div class="header"><img src="/resources/assets/frontend/img/icon-book.png">Details For Slot #{{$slotnow->slot_id}}</div>
     <div class="holder para">
       <div class="title blue tinde">Overview</div>
       <div class="input form-horizontal para">
         <div class="form-group">
           <label for="1" class="col-sm-3 control-label">Wallet</label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" id="1" readonly value="1,200.00">
+            <input type="text" class="form-control" id="1" readonly value="{{$slotnow->slot_wallet}}">
           </div>
         </div>
         <div class="form-group">
           <label for="2" class="col-sm-3 control-label">Membership</label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" id="2" readonly value="Associate">
+            <input type="text" class="form-control" id="2" readonly value="{{$slotnow->membership_name}}">
           </div>
         </div>
         <div class="form-group">
           <label for="3" class="col-sm-3 control-label">Ranking</label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" id="3" readonly value="Regular">
+            <input type="text" class="form-control" id="3" readonly value="{{$slotnow->rank_name}}">
           </div>
         </div>
         <div class="form-group">
           <label for="4" class="col-sm-3 control-label">Total Income</label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" id="4" readonly value="70,900.00">
+            <input type="text" class="form-control" id="4" readonly value="{{$slotnow->slot_total_earning}}">
           </div>
         </div>
       </div>

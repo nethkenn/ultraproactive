@@ -54,7 +54,7 @@ class MemberRegisterController extends Controller
 					'account_name' => 'required|min:5|regex:/^[\pL\s]+$/u',
 					'account_country_id' => 'required', 
 					'custom_field_value' => 'required',
-					'account_email' => 'required|email',
+					'account_email' => 'required|email|unique:tbl_account,account_email',
 					'account_username' => 'required|unique:tbl_account,account_username',
 					'account_contact_number' => 'required|min:9',
 					// 'customer_province' => "required|exists:tbl_location,location_id",

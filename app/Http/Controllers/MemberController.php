@@ -4,6 +4,7 @@ use Redirect;
 use DB;
 use App\Classes\Product;
 use Session;
+use Request;
 class MemberController extends Controller
 {
 	function __construct()
@@ -20,20 +21,34 @@ class MemberController extends Controller
 				if(Session::get("currentslot"))
 				{
 		    		$data2 = DB::table('tbl_slot')->where('slot_owner',$id)
-							  					  ->where('slot_id','!=',Session::get("currentslot"))
+							  					  ->where('slot_id','!=',Session::get("currentslot"))							  					  
 							 					  ->get();	
 	  	    		$data3 = DB::table('tbl_slot')->where('slot_owner',$id)
 												  ->where('slot_id',Session::get("currentslot"))
+												  ->join('tbl_membership','tbl_membership.membership_id','=','tbl_slot.slot_membership')
+												  ->join('tbl_rank','tbl_rank.rank_id','=','tbl_slot.slot_rank')
 												  ->first();
 				}	
 				else
 				{
-		    		$data2 = DB::table('tbl_slot')->where('slot_owner',$id)
-							 					  ->get();	
-	  	    		$data3 = DB::table('tbl_slot')->where('slot_owner',$id)
-												  ->first();							 					  
+		    		$data3 = DB::table('tbl_slot')->where('slot_owner',$id)
+		    									  ->join('tbl_membership','tbl_membership.membership_id','=','tbl_slot.membership_id')
+		    									  ->join('tbl_rank','tbl_rank.rank_id','=','tbl_slot.slot_rank')
+							 					  ->first();	
+
+				    if($data3)
+				    {
+		  	    	 	$data2 = DB::table('tbl_slot')->where('slot_owner','=',$id)
+							  					  	  ->where('slot_id','!=',$data3->slot_id)		  	    	 	
+							  						  ->get();	
+				    }
+				    else
+				    {
+		  	    	 	$data2 = null;	
+				    }
+						 					  
 				}			 
-	
+				
 
 
 
@@ -69,7 +84,13 @@ class MemberController extends Controller
 	            //         return abort(404);
 	            //     }
 
-	            // }         
+	            // } 
+
+	            if(Request::input('slotnow'))
+				{
+					Session::put('currentslot',Request::input('slotnow'));
+					return Redirect::to(Request::url())->send();				
+				}        
 	        }
 	        else
 	        {
