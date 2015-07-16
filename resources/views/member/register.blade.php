@@ -103,6 +103,9 @@
 				</div>
 			</div>
 		</div>
+		<div class="vc_col-md-12">
+			<input type="submit" value="Register Now" class="register-button">
+		</div>
 		</div>
 	</form>
 </div>

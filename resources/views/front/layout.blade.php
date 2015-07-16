@@ -148,7 +148,7 @@
                         </div>
                         <!-- #navigation -->
                         <!-- End custom menu here -->
-                        <a href="#" class="mobile_small_menu open"></a>
+                        <a href="/#" class="mobile_small_menu open"></a>
                     </div>
                 </div>
             </div>
