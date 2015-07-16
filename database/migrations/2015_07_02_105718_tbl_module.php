@@ -15,6 +15,7 @@ class TblModule extends Migration
         Schema::create('tbl_module', function (Blueprint $table) {
             $table->increments('module_id');
             $table->string('module_name');
+             $table->string('url_segment');
             $table->tinyInteger('archived')->default(0);
         });
     }
