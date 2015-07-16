@@ -27,6 +27,7 @@
       <div class="text"><span>5</span>Leads</div>
     </div>
   </div>
+  @if($slotnow)
   <div class="detail para">
     <div class="header"><img src="/resources/assets/frontend/img/icon-book.png">Details For Slot #{{$slotnow->slot_id}}</div>
     <div class="holder para">
@@ -146,6 +147,7 @@
       </div>
     </div>
   </div>
+@endif
 </div>
 <div class="col-md-5 right">
   <div class="holder">

@@ -32,7 +32,7 @@ class MemberController extends Controller
 				else
 				{
 		    		$data3 = DB::table('tbl_slot')->where('slot_owner',$id)
-		    									  ->join('tbl_membership','tbl_membership.membership_id','=','tbl_slot.membership_id')
+		    									  ->join('tbl_membership','tbl_membership.membership_id','=','tbl_slot.slot_membership')
 		    									  ->join('tbl_rank','tbl_rank.rank_id','=','tbl_slot.slot_rank')
 							 					  ->first();	
 
