@@ -1,6 +1,5 @@
 @extends('admin.layout')
 @section('content')
-
     <div class="row header">
         <div class="title col-md-8">
             <h2><i class="fa fa-users"></i>  Add Admin</h2>
@@ -29,7 +28,7 @@
                     <option>Select Admin</option>
                     @if($_account)
                     @foreach ($_account as $element)
-                        <option value="{{$element->account_id}}" >{{$element->account_name}}</option>
+                        <option value="{{$element->account_id}}" {{Session::get('_old_input')['account_id'] == $element->account_id ? 'selected' : '' }} >{{$element->account_name}}</option>
                     @endforeach
                     @endif
                 </select>
@@ -50,7 +49,7 @@
                     <option>Select Position</option>
                     @if($_position)
                     @foreach ($_position as $element)
-                        <option value="{{$element->admin_position_id}}">{{$element->admin_position_name}}</option>
+                        <option value="{{$element->admin_position_id}}" {{Session::get('_old_input')['admin_position_id'] == $element->admin_position_id ? 'selected' : ''}} >{{$element->admin_position_name}}</option>
                     @endforeach
                     @endif
                 </select>

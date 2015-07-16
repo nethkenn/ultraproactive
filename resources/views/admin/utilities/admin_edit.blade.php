@@ -1,6 +1,5 @@
 @extends('admin.layout')
 @section('content')
-
     <div class="row header">
         <div class="title col-md-8">
             <h2><i class="fa fa-users"></i>  Edit Admin</h2>

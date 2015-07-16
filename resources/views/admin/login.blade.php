@@ -48,13 +48,13 @@
     @endif
     <label for="username" class="col-sm-2 control-label">Username</label>
     <div class="col-sm-10">
-      <input type="text" name="username" class="form-control" id="" placeholder="Username">
+      <input type="text" value="{{Request::input('username')}}" name="username" class="form-control" id="" placeholder="Username">
     </div>
   </div>
   <div class="form-group">
     <label for="password" class="col-sm-2 control-label">Password</label>
     <div class="col-sm-10">
-      <input name="password" type="password" class="form-control" id="" placeholder="Password">
+      <input name="password" type="password" class="form-control" id="" placeholder="Password" value="{{Request::input('password')}}">
     </div>
   </div>
   <div class="form-group">

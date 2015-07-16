@@ -1,10 +1,12 @@
 <?php namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+
 use App\Classes\Admin;
 use App\Tbl_admin_position_has_module;
 use App\Tbl_admin;
 use App\Tbl_position;
+
 class AdminEditRequest extends Request {
 
     /**

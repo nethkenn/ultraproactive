@@ -23,8 +23,19 @@ class DatabaseSeeder extends Seeder
         $this->call('tbl_code_type');
         $this->call('tbl_module');
         $this->call('tbl_team');
+        $this->call('tbl_admin_position');
+        $this->call('tbl_admin_position_has_module');
+        $this->call('tbl_admin');
+
+        
+
     }
 }
+
+
+
+
+
 class tbl_account extends Seeder
 {
     public function run()
@@ -159,5 +170,91 @@ class tbl_team extends Seeder
         ");
     } 
 }
+
+
+class tbl_admin_position extends Seeder
+{
+    public function run()
+    {
+        DB::table('tbl_admin_position')->delete();
+        DB::statement("INSERT INTO `tbl_admin_position` (`admin_position_id`, `admin_position_name`, `admin_position_rank`, `admin_position_module`, `archived`) VALUES
+    (1,    'super_admin',  '0',    '', 0),
+    (2,    'admin',    '1',    '', 0),
+    (3,    'Secretary',    '2',    '', 0);");
+    } 
+}
+
+
+
+class tbl_admin_position_has_module extends Seeder
+{
+    public function run()
+    {
+        DB::table('tbl_admin_position_has_module')->delete();
+        DB::statement("INSERT INTO `tbl_admin_position_has_module` (`admin_position_id`, `module_id`) VALUES
+            (1,    1),
+            (1,    2),
+            (1,    3),
+            (1,    4),
+            (1,    5),
+            (1,    6),
+            (1,    7),
+            (1,    8),
+            (1,    9),
+            (1,    10),
+            (1,    11),
+            (1,    12),
+            (1,    14),
+            (1,    15),
+            (1,    16),
+            (1,    17),
+            (1,    18),
+            (1,    19),
+            (1,    20),
+            (1,    21),
+            (1,    22),
+            (1,    23),
+            (2,    1),
+            (2,    2),
+            (2,    3),
+            (2,    4),
+            (2,    6),
+            (2,    7),
+            (2,    8),
+            (2,    9),
+            (2,    10),
+            (2,    11),
+            (2,    12),
+            (2,    14),
+            (2,    15),
+            (2,    16),
+            (2,    17),
+            (2,    18),
+            (2,    19),
+            (2,    20),
+            (2,    21),
+            (2,    22),
+            (2,    23),
+            (3,    5),
+            (3,    21);
+            ");
+    } 
+}
+
+
+class tbl_admin extends Seeder
+{
+    public function run()
+    {
+        DB::table('tbl_admin')->delete();
+        DB::statement("INSERT INTO `tbl_admin` (`admin_id`, `account_id`, `admin_position_id`) VALUES
+        (1, 1,1);");
+    } 
+}
+
+
+
+
+
 
 
