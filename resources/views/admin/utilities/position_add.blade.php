@@ -41,7 +41,7 @@
                     @foreach($_module as $module)
                     <div class="col-md-6">
                         <label class="checkbox-inline">
-                            <input type="checkbox" name="module[]" value="{{$module->module_id}}" {{in_array($module->module_id, (array)Session::get('_old_input')['module']) ? 'selected' : '' }}>{{$module->module_name}}
+                            <input type="checkbox" name="module[]" value="{{$module->module_id}}">{{$module->module_name}}
                         </label>
                     </div>
                     @endforeach

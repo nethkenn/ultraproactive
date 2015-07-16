@@ -26,13 +26,13 @@
                 <label for="inputEmail3" class="col-sm-2 control-label">Position Name</label>
                 
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="admin_position_name" name="admin_position_name" value="{{ $position->admin_position_name }}" required>
+                    <input type="text" class="form-control" id="admin_position_name" name="admin_position_name" value="{{ Session::get('_old_input')['admin_position_name'] ? Session::get('_old_input')['admin_position_name'] : $position->admin_position_name }}" required>
                 </div>
             </div>
             <div class="form-group">
                 <label for="inputPassword3" class="col-sm-2 control-label">Position Level</label>
                 <div class="col-sm-10">
-                    <input type="number" class="form-control" id="admin_position_rank" name="admin_position_rank" value="{{ $position->admin_position_rank }}" required>
+                    <input type="number" class="form-control" id="admin_position_rank" name="admin_position_rank" value="{{ Session::get('_old_input')['admin_position_rank'] ? Session::get('_old_input')['admin_position_rank'] : $position->admin_position_rank }}" required>
                 </div>
             </div> 
             <div class="form-group">
@@ -41,7 +41,7 @@
                     @foreach($_module as $module)
                     <div class="col-md-6">
                         <label class="checkbox-inline">
-                            <input type="checkbox" name="module[]" value="{{$module->module_id}}" {{$module->checked}}>{{$module->module_name}}
+                            <input type="checkbox" name="module[]" value="{{$module->module_id}}">{{$module->module_name}}
                         </label>
                     </div>
                     @endforeach
