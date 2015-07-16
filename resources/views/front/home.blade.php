@@ -22,7 +22,7 @@
 			</div>
 		</div>
 	</div>
-	{{-- <div class="flexslider">
+	<!-- <div class="flexslider">
 		<ul class="slides">
 			@foreach($_slide as $slide)
 			<li>
@@ -30,7 +30,7 @@
 			</li>
 			@endforeach
 		</ul>
-	</div> --}}
+	</div>-->
 	<!-- .header -->
 	<section id="content" style="" class="composer_content">
 		<div id="fws_5559b27a6e0af" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="padding-top: 80px !important; padding-bottom: 0px !important; ">
@@ -464,7 +464,7 @@
 																						</div>
 																					</div>
 																				</div>
-																				{{-- <div id="fws_5559b27a9503d" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    borders  " style="background-image: url(/resources/assets/ausart/assets/uploads/2015/01/slider7.jpg); background-position: center top; background-repeat: no-repeat; padding-top: 90px !important; padding-bottom: 90px !important; ">
+																				<!-- <div id="fws_5559b27a9503d" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    borders  " style="background-image: url(/resources/assets/ausart/assets/uploads/2015/01/slider7.jpg); background-position: center top; background-repeat: no-repeat; padding-top: 90px !important; padding-bottom: 90px !important; ">
 																					<div class="bg-overlay" style="background:rgba(, , , 0.7);z-index:1;"></div>
 																					<div class="container  light">
 																						<div class="section_clear">
@@ -682,7 +682,7 @@
 																						</div>
 																					</div>
 																				</div>
-																			</div> --}}
+																			</div> -->
 																			<div id="fws_5559b27a9a709" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="background-color: #f6f6f6; padding-top: 90px !important; padding-bottom: 60px !important; ">
 																				<div class="container  dark">
 																					<div class="section_clear">

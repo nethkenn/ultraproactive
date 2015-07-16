@@ -1,19 +1,16 @@
 <?php namespace App\Http\Controllers;
-
 use Datatables;
 use DB;
 use App\Tbl_account;
 use App\Tbl_admin;
 use App\Tbl_position;
 use App\Classes\Admin;
+use App\Http\Requests;
 use App\Http\Requests\AdminAddRequest;
 use App\Http\Requests\AdminEditRequest;
-use Session;
 
-// use Illuminate\Http\Request;
+use Illuminate\Http\Request;
 use App\Http\Requests;
-use Request;
-
 class AdminAdminController extends AdminController
 {
 	public function index()
@@ -41,6 +38,7 @@ class AdminAdminController extends AdminController
     public function admin_add()
     {
         
+
        
         $data['_account'] = Tbl_account::all();
         $admin_rank = Admin::info()->admin_position_rank;
@@ -56,7 +54,7 @@ class AdminAdminController extends AdminController
     public function create_admin(AdminAddRequest $request)
     {
      
-            // var_dump($request->all());
+            var_dump($request->all());
             $admin = new Tbl_admin($request->all());
             $admin->save();
             return redirect('admin/utilities/admin_maintenance');
