@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
         $this->call('tbl_admin');
         $this->call('tbl_slide');
         $this->call('tbl_testimony');
+        $this->call('tbl_product');
     }
 }
 
@@ -92,10 +93,10 @@ class tbl_product_category extends Seeder
     public function run()
     {
         DB::table('tbl_product_category')->delete();
-        DB::statement("INSERT INTO `tbl_product_category`   (`product_category_id`, `product_category_name`, `slug`, `created_at`, `updated_at`) VALUES
-                                                            (1, 'test prod cat 1',  'test-prod-cat-1',  '0000-00-00 00:00:00',  '0000-00-00 00:00:00'),
-                                                            (2, 'test prod cat  2', 'test-prod-cat-2',  '0000-00-00 00:00:00',  '0000-00-00 00:00:00'),
-                                                            (3, 'test prod cat  3', 'test-prod-cat-3',  '0000-00-00 00:00:00',  '0000-00-00 00:00:00');"
+        DB::statement("INSERT INTO `tbl_product_category` (`product_category_id`, `product_category_name`, `slug`, `created_at`, `updated_at`, `archived`) VALUES
+        (4, 'Beverages',    'beverages',    '2015-07-17 07:58:38',  '2015-07-17 07:58:38',  0),
+        (5, 'Beauty Products',  'beauty-products',  '2015-07-17 08:11:29',  '2015-07-17 08:11:29',  0),
+        (6, 'Hygiene',  'hygiene',  '2015-07-17 08:34:40',  '2015-07-17 08:34:40',  0);"
         );
     } 
 }
@@ -287,7 +288,29 @@ class tbl_testimony extends Seeder
     }
 }
 
-
+class tbl_product extends Seeder
+{
+    public function run()
+    {
+        DB::table('tbl_product')->delete();
+        DB::statement("INSERT INTO `tbl_product` (`product_id`, `product_info`, `sku`, `product_name`, `slug`, `product_category_id`, `unilevel_pts`, `binary_pts`, `price`, `image_file`, `created_at`, `updated_at`, `archived`) VALUES
+        (1, 'A stimulating and refreshing coffee drink enriched with distinct aromatic taste. It is made from natural and organic blend of Acai Berries, Moringa, Barley, Spirulina, Green Tea, Chlorella, Stevia and Green Coffee. PROLIFE CAFÉ VERDE will surely perk up your mood anytime of the day.\r\n\r\nPROLIFE CAFE VERDE is caffeine-free, contains natural  sweet compound that has no carcinogenic activity. It is  loaded with protein, fibre, essential fatty acids, anti-oxidants, amino acids, vitamins and minerals that helps to reduce the risks of damaged cells, helps in lowering bad cholesterol, treats unpleasant body and breath odour, cleanses digestive tracts, helps reduce body fats and improves  the body’s rate of metabolism for a completely healthy lifestyle.\r\n',   '0',    'Cafe Verde',   'cafe-verde',   4,  0,  0,  0,  '1437119789.jpg',   '2015-07-17 07:58:38',  '2015-07-17 07:58:38',  0),
+        (2, 'A delicious and nutritious chocolate drink that helps to strengthen the immune system and enhances regeneration of damaged tissues. CHOCO-RITE helps to maintain mental alertness and sharpen memory. \r\n \r\nFortified with calcium, CHOCO-RITE is made from Ginkgo Biloba and Chlorella Growth Factor that is known to regulate the production of body enzymes, gives energy and protein for a complete and balance development of neuro-mechanism.\r\n \r\nThe right chocolate drink for everybody!\r\n',  '1',    'Chocorite',    'chocorite',    4,  1,  1,  1,  '1437119806.jpg',   '2015-07-17 08:10:06',  '2015-07-17 08:10:06',  0),
+        (3, 'Helps to deeply moisturize and lighten the skin. \r\nContains special sun-filters that helps protect the skin from damaging free radicals.\r\nHelps to prevent dark spots and hyper-pigmentation caused by aging and over-exposure to the sun.\r\nComprises of Vitamin B3 as a triple Vitamin Sunscreen. \r\nEnriched with Anti-oxidants such as Vitamin B5, Vitamin E and Glutathione.\r\nMade from Grapefruit and Apple Extract.\r\n100% Paraben free and Mercury free.\r\n',    '2',    'Pearl White Cream',    'pearl-white-cream',    5,  2,  2,  2,  '1437119893.jpg',   '2015-07-17 08:11:29',  '2015-07-17 08:11:29',  0),
+        (4, 'With its rich and generous texture, Pearl White Lotion will help plump the skin, hydrate and deeply nourish through the epidermis.\r\nHelps provide natural radiance to the skin.\r\nUltrafine protection from UV rays of the sun.\r\nMoisturize and softens the skin.\r\nPrevents dry, itchy skin and minor skin irritations.\r\n',   '3',    'Pearl White Lotion',   'pearl-white-lotion',   5,  3,  3,  3,  '1437119902.jpg',   '2015-07-17 08:12:30',  '2015-07-17 08:12:30',  0),
+        (5, 'Under-arm protection from odour and sweat.\r\nDries quickly, non-sticky and does not sting.\r\nWhitening effect on armpit.\r\n',   '4',    'Pearl White Deodorant',    'pearl-white-deodorant',    5,  4,  4,  4,  '1437119898.jpg',   '2015-07-17 08:26:31',  '2015-07-17 08:26:31',  0),
+        (6, 'For whole day protection and freshness.\r\nReduces rashes and irritation.\r\nHelps to absorb moisture.\r\nPrevents chafing. \r\n', '5',    'Pearl White Talcum Powder',    'pearl-white-talcum-powder',    5,  5,  5,  5,  '1437119906.jpg',   '2015-07-17 08:27:44',  '2015-07-17 08:27:44',  0),
+        (7, 'Enhanced whitening for bright, light and beautiful skin. Brings out your skin’s natural radiance.\r\nAs part of your daily skin care regime, use this toner to help brighten skin, refine skin texture and minimize pores.\r\nRemoves make-up, dirt and excess oil. Leaving your skin fresh and clean.\r\n',   '6',    'Pearl White Facial Toner', 'pearl-white-facial-toner', 5,  6,  6,  6,  'default.jpg',  '2015-07-17 08:29:55',  '2015-07-17 08:29:55',  0),
+        (8, 'A fragrance soap that utilizes the properties of fruit stem cell and Kojic Acid. \r\n\r\nCell Allure Soap helps to:\r\nRENEW and trim dormant cells.\r\nREPAIR damaged cells due to UV radiation exposure\r\nREGENERATE healthy cells for total protection of skin at cellular level\r\nREJUVENATE for smooth and silky skin. \r\n',   '7',    'Cell Allure Soap', 'cell-allure-soap', 5,  7,  7,  7,  '1437119799.jpg',   '2015-07-17 08:30:44',  '2015-07-17 08:30:44',  0),
+        (9, 'This unique and refreshing soap has a combination of essential ingredients that create a feeling of complete, refreshing and detoxifying bath experience. \r\nThe gentle lather of PROLIFE ROSE ESSENCE SOAP removes impurities, smoothens and tones skin, leaving it soft, supple and looking younger. \r\n\r\nPROLIFE ROSE ESSENCE SOAP - for fresh and youthful glowing skin.\r\n', '8',    'Prolife Rose Essence Soap',    'prolife-rose-essence-soap',    5,  8,  8,  8,  '1437119915.jpg',   '2015-07-17 08:31:18',  '2015-07-17 08:31:18',  0),
+        (10,    'A unique soap noted for its moisturizing and cleansing abilities, leaves your skin clean, smoother and softer. Flavored with essences of vanilla and sunburst orange fragrance, it gives a sensual aroma that lingers in the skin.\r\nWith a blend of moisturizers and essential oils, PROLIFE NONI SOAP also contains premium ingredients such as coconut oil, morinda seed oil, alkali builders, dried noni fruits and leaves.\r\n\r\nPROLIFE NONI SOAP - cleanses, moisturizes and keeps skin free from harmful bacteria.\r\n', '9',    'Prolife Noni Soap',    'prolife-noni-soap',    5,  9,  9,  9,  '1437119824.jpg',   '2015-07-17 08:32:11',  '2015-07-17 08:32:11',  0),
+        (11,    'PROLIFE GREEN KOJIC SOAP is formulated with pure Kojic acid derived from mushrooms that has been successfully used to lighten pigment spots, removes blemishes and helps to whiten skin without the usual drying effect. It helps in removing pimples, freckles and other skin blemishes. \r\n  \r\nPROLIFE GREEN  KOJIC SOAP is primarily an exfoliating skincare product that  helps to break down the top layer of skin cells and peel away damaged skin.\r\n\r\nPROLIFE GREEN KOJIC SOAP - the safest herbal extract for fresh and healthier skin.\r\n',   '10',   'Prolife Green Kojic Soap', 'prolife-green-kojic-soap', 5,  10, 10, 10, '1437119814.jpg',   '2015-07-17 08:32:59',  '2015-07-17 08:32:59',  0),
+        (12,    'PROLIFE GLUTA PLUS SOAP helps to remove toxins produced by the body, assists to inhibit the skin’s production of melanin, resulting in natural lightening of the skin.\r\n\r\nPROLIFE GLUTA PLUS SOAP contributes to remove free radicals and harmful toxins in the skin. It is also often used to treat hyper-pigmentation, freckles, melasma, age spots, blemishes and other uneven skin tones.  \r\n \r\nPROLIFE GLUTA PLUS SOAP - for a fairer and lovelier skin.\r\n\r\n',    '11',   'Prolife Gluta Plus Soap',  'prolife-gluta-plus-soap',  5,  11, 11, 11, 'default.jpg',  '2015-07-17 08:33:52',  '2015-07-17 08:33:52',  0),
+        (13,    'Prolife Hand Sanitizer has 2 active ingredients:\r\n\r\nEthyl Alcohol - helps destroy transient germs. Monolaurin - a germicide that aids in moisturizing the skin. \r\n\r\nProlife Hand Sanitizer helps prevent dryness and itchiness making your hands smooth and germ-free. \r\n\r\n\r\n\r\n\r\n\r\n\r\n',  '12',   'Prolife Hand Sanitizer',   'prolife-hand-sanitizer',   6,  12, 12, 12, '1437119819.jpg',   '2015-07-17 08:34:40',  '2015-07-17 08:34:40',  0),
+        (14,    '   Prolife Regime Oil is formulated from the combination of  specially selected oils. \r\n\r\n Prolife Regime Oil helps:\r\nNourishes the skin to promote cell turn-over\r\nCombat irritation and inflammation\r\nTo heal damaged tissues\r\nReduce unwanted fats effectively\r\nStimulate the production of Collagen and Elastin which can soften and hydrate the skin.\r\n', '13',   'Prolife Regime Oil',   'prolife-regime-oil',   6,  13, 13, 13, '1437119910.jpg',   '2015-07-17 08:35:24',  '2015-07-17 08:35:24',  0);
+        ")
+    }
+}
 
 
 
