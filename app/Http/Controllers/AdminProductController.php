@@ -179,8 +179,14 @@ class AdminProductController extends AdminController
 				var_dump(Request::input());
 				$product = Tbl_product::findOrFail(Request::input('product_id'));
 				$product->product_category_id = $this->get_prod_cat(Request::input('product_category'));
+				$product->price = Request::input('price');
+				$product->product_info = Request::input('product_info');
+				$product->product_name = Request::input('product_name');
+				$product->unilevel_pts = Request::input('unilevel_pts');
+				$product->binary_pts = Request::input('binary_pts');
+				$product->image_file = Request::input('image_file');
 				$product->sku = Request::input('sku');
-				$product->update(Request::input());
+				$product->save();
 
 				return redirect('admin/maintenance/product');
 			}

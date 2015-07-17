@@ -176,3 +176,7 @@ Route::get('admin/reports/membership_sales', 'AdminReportController@membership_s
 Route::any('admin/login', 'AdminLoginController@index');
 Route::any('admin/account/logout', 'AdminProfileController@logout');
 
+Route::get('cart', 'CartController@index');
+Route::post('cart/add', 'CartController@add_to_cart');
+Route::post('cart/remove', 'CartController@remove_to_cart');
+Route::any('cart/checkout', 'MemberCheckoutController@checkout');

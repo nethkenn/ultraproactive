@@ -5,11 +5,12 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 use App\Classes\Image;
+use App\Classes\Product;
 class Tbl_product extends Model implements SluggableInterface
 {
 	protected $table = 'tbl_product';
 	protected $primaryKey = 'product_id';
-	protected $fillable = ['product_name', 'slug','product_category_id', 'unilevel_pts', 'binary_pts', 'price','image_file','barcode'];
+	protected $fillable = ['product_name', 'slug','product_category_id', 'unilevel_pts', 'binary_pts', 'price','image_file','barcode','product_info'];
 	
 
     // protected $attributes = array(
@@ -51,5 +52,27 @@ class Tbl_product extends Model implements SluggableInterface
     public function category()
     {
         return $this->hasOne('App\Tbl_product_category','product_category_id');
+    }
+
+
+
+
+   
+    public function getImageFileAttribute($value)
+    {
+
+        // dd($value);
+        if($value == "default.jpg" || $value == null)
+        {
+            $value =  '/resources/assets/img/1428733091.jpg';
+        }
+        else
+        {
+            $value = Image::view($value, "250x250");
+        }
+
+
+
+        return $value;
     }
 }

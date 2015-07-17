@@ -5,6 +5,7 @@
 <!-- Mirrored from newthemes.themeple.co/ausart_html/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 30 Jun 2015 10:28:03 GMT -->
 <head>
     <meta charset="UTF-8" />
+    <base href="{{URL::to('/')}}">
     <!-- Title -->
     <title>Prolife</title>
     <!-- Responsive Meta -->

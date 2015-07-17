@@ -19,6 +19,7 @@ class CreateTblProduct extends Migration
             // $table->string('barcode');
             $table->string('product_name');
             $table->string('slug');
+            $table->text('product_info');
             $table->integer('product_category_id')->unsigned();
             $table->double('unilevel_pts')->default(0);
             $table->double('binary_pts')->default(0);

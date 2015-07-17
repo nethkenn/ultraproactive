@@ -9,8 +9,14 @@
 	<link rel="stylesheet" type="text/css" href="/resources/assets/remodal/src/remodal-default-theme.css">
 	<link rel="stylesheet" type="text/css" href="/resources/assets/jquery-ui/jquery-ui.css">
     <link href="/resources/assets/footable/css/footable.core.css" rel="stylesheet" type="text/css" />
-    {{-- <link href="/resources/assets/footable/css/footable.standalone.css" rel="stylesheet" type="text/css" /> --}}
+    <!-- <link href="/resources/assets/footable/css/footable.standalone.css" rel="stylesheet" type="text/css" /> -->
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300' rel='stylesheet' type='text/css'>
+    <!--<base href="{{$_SERVER['SERVER_NAME']}}">-->
+    <base href="{{URL::to('/')}}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+
+
 </head>
 <div class="bg">
 	<div class="wrapper container">
@@ -839,12 +845,20 @@
     </div>
 </div>
 <script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
+<script type="text/javascript">
     $( ".contactses" ).click(function(e) {
       $('.message-list').toggleClass('nyek');
     });
 </script>
 <script type="text/javascript">
     $(function () {
+
         $('.footable').footable({
             breakpoints: {
                 phone: 480,
@@ -855,16 +869,16 @@
     });
 </script>
 <script type="text/javascript">
-// setInterval(
-//     function()
-//     {
-//         if( $(".remodal").hasClass('remodal-is-opened') ) {
-//              $('.footable').trigger('footable_initialize');
-//          }
-//         else{
+setInterval(
+    function()
+    {
+        if( $(".remodal").hasClass('remodal-is-opened') ) {
+             $('.footable').trigger('footable_initialize');
+         }
+        else{
         
-//         }
-//     }, 1000);
+        }
+    }, 1000);
 $(document).ready(function()
 {
     myTimeoutFunction();
