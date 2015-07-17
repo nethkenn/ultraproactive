@@ -280,13 +280,13 @@
 											</div>
 											<div id="fws_5559b27a89da7" class="wpb_row animate_onoffset  vc_row-fluid   row-dynamic-el section-style parallax_section   borders  " style="background-repeat: no-repeat; padding-top: 100px !important; padding-bottom: 100px !important; ">
 												<div class="parallax_bg" style="background-image: url(/resources/assets/ausart/assets/uploads/2015/01/yteydf67y.jpg); background-position: 50% 0px; background-attachment:fixed !important"></div>
-												<div class="container animate_onoffset light" style="opacity: 0;">
+												<div class="container animate_onoffset light">
 													<div class="section_clear">
 														<div class="vc_col-sm-12 wpb_column column_container" style="" data-animation="" data-delay="0">
 															<div class="wpb_wrapper">
 																<div class="wpb_content_element full_testimonials full">
 																	<div class="row">
-																		<h2>What the say</h2>
+																		<h2>What they say</h2>
 																		<div class="header style_3">
 																			<div class="line_under">
 																				<div class="line_center"></div>
@@ -298,21 +298,21 @@
 																		<div class="carousel carousel_single_testimonial">
 																			<div class="single_testimonial ">
 																				<div class="content">
-																					<p>Sed at odio ut arcu fringilla dictum magna nisi. Aliquam at erat in purus velit vel dolo dictum magna nisi.  We've crafted some handsome templates for you to use.</p>
+																					<p>“The products are excellent! I love using the organic soaps, it makes me feel cleaner and refreshed all day long”</p>
 																					<div class="data">
-																						<h6>Skyler Doe, <span class="position"> Ceo & Developer</span></h6></div>
+																						<h6>Marieta Gutierrez, <span class="position"> Advance Fastnener</span></h6></div>
 																						</div><span class="img_testimonial"><img width="65" height="65" src="/resources/assets/ausart/assets/uploads/2015/01/shutterstock_95201956.min-1-150x150.jpg" class="attachment-65x65 wp-post-image" alt="shutterstock_95201956.min (1)" /></span></div>
 																						<div class="single_testimonial ">
 																							<div class="content">
-																								<p>Lorem ipsum dolor slo onsec tueraliquet Morbi nec In Curabitur lreaoreet nel nislsuslorem in pellente e vidicus pannel lorem in pellente e vidicus pannelus lorem in pellente e vidicus pannel Lorem ipsum dolor  vidicus pannelus lorem in pellente e vidicus pannel Lorem ipsum dolor</p>
+																								<p>“The on-line services are easy and user-friendly. The technical support are awesome!”</p>
 																								<div class="data">
-																									<h6>Walter White, <span class="position"> Musican</span></h6></div>
+																									<h6>Lorenz Pasion, <span class="position"> Pinoy Express</span></h6></div>
 																									</div><span class="img_testimonial"><img width="65" height="65" src="/resources/assets/ausart/assets/uploads/2014/12/testimonial-150x150.jpg" class="attachment-65x65 wp-post-image" alt="testimonial" /></span></div>
 																									<div class="single_testimonial ">
 																										<div class="content">
-																											<p>Lorem ipsum dolor slo onsec tueraliquet Morbi nec In Curabitur lreaoreet nel nislsuslorem in pellente e vidicus pannel lorem in pellente e vidicus pannelus lorem in pellente e vidicus pannel Lorem ipsum dolor slo onsec tueraliquet Morbi nec In Curabitur lreaoreet nel nislsuslorem in pellente e vidicus pannel lorem</p>
+																											<p>“In one word, Fantastic! This is what I was waiting for. A company with a heart and concern for its members”</p>
 																											<div class="data">
-																												<h6>Denis Lover, <span class="position"> Happy Customer</span></h6></div>
+																												<h6>Jerry Macatuno, <span class="position"> Painter / Designer</span></h6></div>
 																												</div><span class="img_testimonial"><img width="65" height="65" src="/resources/assets/ausart/assets/uploads/2014/12/anon_user-150x150.png" class="attachment-65x65 wp-post-image" alt="anon_user" /></span></div>
 																											</div>
 																										</div>
