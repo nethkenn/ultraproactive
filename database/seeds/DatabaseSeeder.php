@@ -26,9 +26,8 @@ class DatabaseSeeder extends Seeder
         $this->call('tbl_admin_position');
         $this->call('tbl_admin_position_has_module');
         $this->call('tbl_admin');
-
-        
-
+        $this->call('tbl_slide');
+        $this->call('tbl_testimony');
     }
 }
 
@@ -258,6 +257,34 @@ class tbl_admin extends Seeder
         DB::statement("INSERT INTO `tbl_admin` (`admin_id`, `account_id`, `admin_position_id`) VALUES
         (1, 1,1);");
     } 
+}
+
+class tbl_slide extends Seeder
+{
+    public function run()
+    {
+        DB::table('tbl_slide')->delete();
+        DB::statement("INSERT INTO `tbl_slide` (`slide_id`, `slide_title`, `slide_image`, `created_at`, `updated_at`, `archived`) VALUES
+        (1, 'Skin Care',    '1436764123.jpg',   '2015-07-17 07:45:25',  '0000-00-00 00:00:00',  0),
+        (2, 'OFW',  '1436763703.jpg',   '2015-07-17 07:45:48',  '0000-00-00 00:00:00',  0),
+        (3, 'Cafe Verde',   '1436763174.jpg',   '2015-07-17 07:46:03',  '0000-00-00 00:00:00',  0),
+        (4, 'Chocorite',    '1436763179.jpg',   '2015-07-17 07:46:14',  '0000-00-00 00:00:00',  0);
+        ")
+    }
+}
+
+class tbl_testimony extends Seeder
+{
+    public function run()
+    {
+        DB::table('tbl_testimony')->delete();
+        DB::statement("INSERT INTO `tbl_testimony` (`testimony_id`, `testimony_text`, `testimony_person`, `testimony_position`, `created_at`, `updated_at`, `archived`) VALUES
+        (1, '“The products are excellent! I love using the organic soaps, it makes me feel cleaner and refreshed all day long”',    'Marieta Gutierrez',    'Advance Fasteners',    '2015-07-17 07:00:40',  '2015-07-17 07:09:49',  0),
+        (2, '“The products are excellent! I love using the organic soaps, it makes me feel cleaner and refreshed all day long”',    'Marieta Gutierrez',    'Advance Fasteners',    '2015-07-17 07:01:08',  '0000-00-00 00:00:00',  1),
+        (3, '“The on-line services are easy and user-friendly. The technical support are awesome!”',    'Lorenz Pasion',    'Pinoy Express',    '2015-07-17 07:10:55',  '0000-00-00 00:00:00',  0),
+        (4, '“In one word, Fantastic! This is what I was waiting for. A company with a heart and concern for its members”\r\n', 'Jerry Macatuno',   'Painter / Designer',   '2015-07-17 07:11:17',  '0000-00-00 00:00:00',  0);
+        ")
+    }
 }
 
 

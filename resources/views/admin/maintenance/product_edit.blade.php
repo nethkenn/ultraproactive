@@ -33,6 +33,7 @@
                 <div class="form-group col-md-12">
                     <label for="product_info">Product Description</label>
                      <textarea class="form-control" name="product_info">{{Request::input('product_info') ? Request::input('product_info') : $product->product_info}}</textarea>
+
                 </div>
                     <div class="form-group col-md-12">
                     <label for="sku">SKU</label>

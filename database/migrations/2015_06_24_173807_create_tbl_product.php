@@ -18,6 +18,7 @@ class CreateTblProduct extends Migration
             $table->string('sku');
             // $table->string('barcode');
             $table->string('product_name');
+            $table->text('product_info');
             $table->string('slug');
             $table->text('product_info');
             $table->integer('product_category_id')->unsigned();

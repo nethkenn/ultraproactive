@@ -58,6 +58,7 @@ class FrontController extends Controller
 			$data["_team"][$susi]->image = $litrato;
 		}
 
+		$data["_testimony"] = DB::table("tbl_testimony")->where("archived", 0)->get();
 		// dd($data["_team"]);
 
         return view('front.home', $data);

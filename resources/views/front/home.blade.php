@@ -296,24 +296,19 @@
 																			</div>
 																		</div>
 																		<div class="carousel carousel_single_testimonial">
-																			<div class="single_testimonial ">
-																				<div class="content">
-																					<p>“The products are excellent! I love using the organic soaps, it makes me feel cleaner and refreshed all day long”</p>
-																					<div class="data">
-																						<h6>Marieta Gutierrez, <span class="position"> Advance Fastnener</span></h6></div>
-																						</div><span class="img_testimonial"><img width="65" height="65" src="/resources/assets/ausart/assets/uploads/2015/01/shutterstock_95201956.min-1-150x150.jpg" class="attachment-65x65 wp-post-image" alt="shutterstock_95201956.min (1)" /></span></div>
-																						<div class="single_testimonial ">
-																							<div class="content">
-																								<p>“The on-line services are easy and user-friendly. The technical support are awesome!”</p>
-																								<div class="data">
-																									<h6>Lorenz Pasion, <span class="position"> Pinoy Express</span></h6></div>
-																									</div><span class="img_testimonial"><img width="65" height="65" src="/resources/assets/ausart/assets/uploads/2014/12/testimonial-150x150.jpg" class="attachment-65x65 wp-post-image" alt="testimonial" /></span></div>
-																									<div class="single_testimonial ">
-																										<div class="content">
-																											<p>“In one word, Fantastic! This is what I was waiting for. A company with a heart and concern for its members”</p>
-																											<div class="data">
-																												<h6>Jerry Macatuno, <span class="position"> Painter / Designer</span></h6></div>
-																												</div><span class="img_testimonial"><img width="65" height="65" src="/resources/assets/ausart/assets/uploads/2014/12/anon_user-150x150.png" class="attachment-65x65 wp-post-image" alt="anon_user" /></span></div>
+																		@foreach($_testimony as $testimony)
+																		<div class="single_testimonial ">
+																			<div class="content">
+																				<p>{{ $testimony->testimony_text }}</p>
+																				<div class="data">
+																					<h6>{{ $testimony->testimony_person }}, <span class="position"> {{ $testimony->testimony_position }}</span></h6>
+																				</div>
+																			</div>
+																			<span class="img_testimonial">
+																				<img width="65" height="65" src="/resources/assets/ausart/assets/uploads/2015/01/shutterstock_95201956.min-1-150x150.jpg" class="attachment-65x65 wp-post-image" alt="shutterstock_95201956.min (1)" />
+																			</span>
+																		</div>
+																		@endforeach
 																											</div>
 																										</div>
 																										<div class="controls">
@@ -326,7 +321,7 @@
 																						</div>
 																					</div>
 																				</div>
-																				<div id="fws_5559b27a8caaf" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="background-color: #f6f6f6; padding-top: 60px !important; padding-bottom: 60px !important; ">
+																				{{-- <div id="fws_5559b27a8caaf" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="background-color: #f6f6f6; padding-top: 60px !important; padding-bottom: 60px !important; ">
 																					<div class="container  dark">
 																						<div class="section_clear">
 																							<div class="vc_col-sm-12 wpb_column column_container" style="" data-animation="" data-delay="0">
@@ -407,7 +402,7 @@
 																							</div>
 																						</div>
 																					</div>
-																				</div>
+																				</div> --}}
 																				<div id="fws_5559b27a8eabd" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el full-width-content section-style    " style="padding-top: 90px !important; padding-bottom: 0px !important; ">
 																					<div class="col span_12  dark">
 																						<div class="vc_col-sm-12 wpb_column column_container" style="" data-animation="" data-delay="0">
