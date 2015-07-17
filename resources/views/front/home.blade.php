@@ -444,7 +444,7 @@
 																																<ul class="overlay">
 																																	<li class="author">by Prolife</li>
 																																</ul>
-																																<p>{!! substr($news->news_description, 0, 170) !!}</p><a class="readmore" href="/news_content?id={{ $news->news_id }}">Read More</a>
+																																<p>{!! substr($news->news_description, 0, 170) !!}...</p><a class="readmore" href="/news_content?id={{ $news->news_id }}">Read More</a>
 																															</div>
 																															</dd>
 																														</dl>

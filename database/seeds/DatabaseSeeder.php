@@ -312,6 +312,18 @@ class tbl_product extends Seeder
     }
 }
 
+class tbl_news extends Seeder
+{
+    public function run()
+    {
+        DB::table('tbl_news')->delete();
+        DB::statement("INSERT INTO `tbl_news` (`news_id`, `news_title`, `news_description`, `news_date`, `news_image`, `archived`) VALUES
+        (1, 'Green coffee extract', 'A green coffee extract is an extract of unroasted, green coffee beans. Green coffee extract has been used as a weight-loss supplement and as an ingredient in other weight-loss products. Its efficacy and mechanism of action have been the subject of controversy.\r\n\r\nThere is tentative evidence of benefit; however, the quality of the evidence is poor.[1] In 2014 one of the primary trials showing benefit was retracted and the company that sponsored the study, Applied Food Sciences, was fined by the Federal Trade Commission for making baseless weight-loss claims using the flawed study.[2]\r\n\r\nGreen coffee extract is sold under various proprietary brand names including Svetol, and is included in weight-loss products such as CoffeeSlender.[1]',  '2015-07-17 17:13:58',  '1437123725.png',   0),
+        (2, 'Chocolate is made of cocoa',   'The cocoa bean, also cacao bean[1] or simply cocoa is the dried and fully fermented fatty seed of Theobroma cacao, from which cocoa solids and cocoa butter are extracted.[2] They are the basis of chocolate, as well as many Mesoamerican foods such as mole sauce and tejate.\r\n\r\nA cocoa pod (fruit) has a rough and leathery rind about 2 cm (0.79 in) to 3 cm (1.2 in) thick (this varies with the origin and variety of pod). It is filled with sweet, mucilaginous pulp (called \'baba de cacao\' in South America) with a lemonade like taste enclosing 30 to 50 large seeds that are fairly soft and a pale lavender to dark brownish purple color. Due to heat buildup in the fermentation process, cacao beans lose most of the purplish hue and become mostly brown in color, with an adhered skin which includes the dried remains of the fruity pulp. This skin is released easily after roasting by winnowing. White seeds are found in some rare varieties, usually mixed with purples, and are considered of higher value.[3][4][5] Historically, white cacao was cultivated by the Rama people of Nicaragua.',   '2015-07-17 17:14:39',  '1437124031.jpg',   0);
+        ");
+    }
+}
+
 
 
 

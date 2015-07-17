@@ -36,13 +36,3 @@
         </form>
     </div>
 @endsection
-@section('script')
-    <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
-    <script>tinymce.init({
-        selector:'textarea',
-        toolbar: "undo redo | bold italic",
-        menubar: "view edit",
-        force_br_newlines : true,
-        force_p_newlines : false
-    });</script>
-@endsection

@@ -25,8 +25,8 @@ class FrontController extends Controller
 			$time=strtotime($datee);
 			$month=date("F",$time);
 			$day=date("d",$time);
-			$data["_news"][$key]->month = $month;
-			$data["_news"][$key]->day = $day;
+			$data["_news"][$keys]->month = $month;
+			$data["_news"][$keys]->day = $day;
 		}
 
 		$data["_product"] = DB::table("tbl_product")->where("image_file", "!=", "default.jpg")->where("archived", 0)->take(8)->get();
@@ -59,7 +59,7 @@ class FrontController extends Controller
 		}
 
 		$data["_testimony"] = DB::table("tbl_testimony")->where("archived", 0)->get();
-		// dd($data["_team"]);
+		// dd($data["_news"]);
 
         return view('front.home', $data);
 	}
