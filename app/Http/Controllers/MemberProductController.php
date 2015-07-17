@@ -10,16 +10,16 @@ class MemberProductController extends MemberController
 	{	
 
 		$data['_product'] = null;
-		$_product = Tbl_product::all();
-
-		if($_product)
-		{
-			foreach ($_product as $key => $value)
-			{
-				$data['_product'][$key] = $value;
-				$data['_product'][$key]->price = Product::currency_format($value->price); 
-			}
-		}
+		// $_product = Tbl_product::all();
+			$data['_product'] = Tbl_product::all();
+		// if($_product)
+		// {
+		// 	foreach ($_product as $key => $value)
+		// 	{
+		// 		$data['_product'][$key] = $value;
+		// 		$data['_product'][$key]->price = ($value->price); 
+		// 	}
+		// }
 
 
 

@@ -196,4 +196,5 @@ Route::any('admin/account/logout', 'AdminProfileController@logout');
 Route::get('cart', 'CartController@index');
 Route::post('cart/add', 'CartController@add_to_cart');
 Route::post('cart/remove', 'CartController@remove_to_cart');
-Route::any('cart/checkout', 'MemberCheckoutController@checkout');
+Route::get('cart/checkout', 'MemberCheckoutController@checkout');
+Route::post('cart/checkout', 'MemberCheckoutController@checkout');

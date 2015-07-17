@@ -33,9 +33,6 @@ class MemberCheckoutController extends Controller
 
 
 
-        // dd($cart);
-
-
 
         if(isset($_POST['slot_id']))
         {
@@ -70,6 +67,7 @@ class MemberCheckoutController extends Controller
                 $insert['slot_id'] = Request::input('slot_id');
                 $insert['voucher_code'] = $this->check_code();
                 $insert['total_amount'] = $data['final_total'];
+                $insert['account_id'] = $customer->account_id;
                 Tbl_slot::where('slot_id',Request::input('slot_id') )->lockForUpdate()->update(['slot_wallet'=>$data['remaining_bal']]);             
                 $voucher = new Tbl_voucher($insert);
                 $voucher->save();
@@ -84,6 +82,9 @@ class MemberCheckoutController extends Controller
                                         'qty'=> $value['qty'],
                                         'sub_total' => $value['total']
                                         );
+
+
+
 
                     $voucher_has_product = new Tbl_voucher_has_product($insert_prod);
                     $voucher_has_product->save();
@@ -106,7 +107,7 @@ class MemberCheckoutController extends Controller
              
 
             
-        return view('member.checkout', $data)->render();
+        return view('member.checkout', $data);
 
     }
 

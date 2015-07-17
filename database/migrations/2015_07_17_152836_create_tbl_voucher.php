@@ -14,6 +14,7 @@ class CreateTblVoucher extends Migration
     {
         Schema::create('tbl_voucher', function (Blueprint $table) {
             $table->integer('slot_id')->unsigned();
+            $table->integer('account_id')->unsigned();
             $table->increments('voucher_id');
             $table->string('voucher_code');
             $table->tinyInteger('claimed')->default(0);
@@ -22,6 +23,10 @@ class CreateTblVoucher extends Migration
             $table->foreign('slot_id')
                 ->references('slot_id')
                 ->on('tbl_slot')
+                ->onDelete('cascade');
+                            $table->foreign('account_id')
+                ->references('account_id')
+                ->on('tbl_account')
                 ->onDelete('cascade');
         });
     }

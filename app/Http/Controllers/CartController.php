@@ -16,13 +16,18 @@ class CartController extends MemberController
 			foreach ($data['_cart'] as $key => $value)
 			{
 
-				$data['_cart'][$key]['price'] = Product::currency_format($value['price']); 
-				$data['_cart'][$key]['total'] = Product::currency_format($value['total']); 
+				// $data['_cart'][$key]['price'] = Product::currency_format($value['price']); 
+				// $data['_cart'][$key]['total'] = Product::currency_format($value['total']); 
+
+				$data['_cart'][$key]['price'] = $value['price']; 
+				$data['_cart'][$key]['total'] = $value['total'];
+
 				$final_total[] = $value['total'];
 			}
 		}
 
-		$data['final_total'] =  Product::currency_format(array_sum($final_total));
+		// $data['final_total'] =  Product::currency_format(array_sum($final_total));
+		$data['final_total'] = array_sum($final_total);
 		
 
 		return view('cart.cart', $data);

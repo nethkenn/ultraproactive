@@ -47,8 +47,11 @@
 					</div>
 					<div class="text">
 						<div class="name">{{$product->product_name}}</div>
-						<div class="price">{{$product->price}}</div>
+						<div class="price">Wallet Price {{$product->price}}</div>
+                        <div class="description">Unilevel Points : {{$product->unilevel_pts}}</div>
+                        <div class="description">Binary Points : {{$product->binary_pts}}</div>
 						<div class="description">{{$product->product_info}}</div>
+
 						<div class="boton">
 							<a href="#" class="add-to-cart" product-id="{{$product->product_id}}">
 								<button>Add to Cart</button>
