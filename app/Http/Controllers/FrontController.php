@@ -74,10 +74,12 @@ class FrontController extends Controller
 
         return view('front.about', $data);
 	}
+	public function partner()
+	{
+        return view('front.partner');
+	}
 	public function earn()
 	{
-		$data["_earn"] = DB::table("tbl_earn")->where("archived", 0)->get();
-
         return view('front.earn', $data);
 	}
 	public function service()
@@ -188,11 +190,6 @@ class FrontController extends Controller
 	}
 	public function register()
 	{
-
-
-
-
-		
         return view('front.register');
 	}
 }

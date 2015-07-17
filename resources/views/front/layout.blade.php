@@ -140,6 +140,7 @@
                                     <li class="{{ Request::segment(1) == '' ? 'current-menu-ancestor' : '' }} menu-item-has-children"><a href="/">Home</a></li>
                                     <li class="{{ Request::segment(1) == 'about' ? 'current-menu-ancestor' : '' }} menu-item   menu-item-has-children"><a href="/about">About Us</a></li>
                                     <li class="{{ Request::segment(1) == 'earn' ? 'current-menu-ancestor' : '' }} menu-item   menu-item-has-children"><a href="/earn">Earn</a></li>
+                                    <li class="{{ Request::segment(1) == 'partner' ? 'current-menu-ancestor' : '' }} menu-item   menu-item-has-children"><a href="/partner">Partners</a></li>
                                     <li class="{{ Request::segment(1) == 'service' ? 'current-menu-ancestor' : '' }} menu-item-has-children"><a href="/service">Services</a></li>
                                     <li class="{{ Request::segment(1) == 'product' ? 'current-menu-ancestor' : '' }} menu-item   menu-item-has-children"><a href="/product">Products</a></li>
                                     <li class="{{ Request::segment(1) == 'news' ? 'current-menu-ancestor' : '' }}  menu-item-has-children"><a href="/news">News</a></li>

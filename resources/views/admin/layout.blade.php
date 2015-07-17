@@ -77,6 +77,8 @@
 									<li><a href="admin/maintenance/earn">Earn</a></li>
 									<li><a href="admin/maintenance/slide">Slide</a></li>
 									<li><a href="admin/maintenance/team">Team</a></li>
+									<li><a href="admin/maintenance/testimony">Testimonial</a></li>
+									<li><a href="admin/maintenance/partner">Partners</a></li>
 									<li><a href="admin/maintenance/inventory">Inventory</a></li>
 								</ul>
 							</li>

@@ -17,6 +17,7 @@ Route::any('/member/register', 'MemberRegisterController@index');
 Route::any('/', 'FrontController@index');
 Route::any('/about', 'FrontController@about');
 Route::any('/earn', 'FrontController@earn');
+Route::any('/partner', 'FrontController@partner');
 Route::any('/service', 'FrontController@service');
 Route::any('/product', 'FrontController@product');
 Route::any('/product_content', 'FrontController@product_content');
@@ -45,6 +46,22 @@ Route::post('admin/maintenance/accounts/restore', 'AdminAccountController@restor
 
 Route::any('admin/maintenance/accounts/field', 'AdminAccountController@field');
 Route::get('admin/maintenance/accounts/field/delete', 'AdminAccountController@field_delete');
+
+/* PARTNER MANAGEMENT */
+Route::get('admin/maintenance/partner', 'AdminPartnerController@index');
+Route::get('admin/maintenance/partner/add', 'AdminPartnerController@add');
+Route::any('admin/maintenance/partner/add_submit', 'AdminPartnerController@add_submit');
+Route::get('admin/maintenance/partner/edit', 'AdminPartnerController@edit');
+Route::any('admin/maintenance/partner/edit_submit', 'AdminPartnerController@edit_submit');
+Route::any('admin/maintenance/partner/delete', 'AdminPartnerController@delete');
+
+/* TESTIMONY MANAGEMENT */
+Route::get('admin/maintenance/testimony', 'AdminTestimonyController@index');
+Route::get('admin/maintenance/testimony/add', 'AdminTestimonyController@add');
+Route::any('admin/maintenance/testimony/add_submit', 'AdminTestimonyController@add_submit');
+Route::get('admin/maintenance/testimony/edit', 'AdminTestimonyController@edit');
+Route::any('admin/maintenance/testimony/edit_submit', 'AdminTestimonyController@edit_submit');
+Route::any('admin/maintenance/testimony/delete', 'AdminTestimonyController@delete');
 
 /* SLIDE MANAGEMENT */
 Route::get('admin/maintenance/slide', 'AdminSlideController@index');
