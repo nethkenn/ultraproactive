@@ -10,6 +10,10 @@ class Tbl_membership extends Model
 	public $timestamps = false;
 	protected $fillable = ['membership_name', 'membership_price','archived'];
 	protected $guarded = ['membership_id'];
+
+
+
+
 	
 
 }

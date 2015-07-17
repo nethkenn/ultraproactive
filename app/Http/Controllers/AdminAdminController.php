@@ -5,7 +5,7 @@ use App\Tbl_account;
 use App\Tbl_admin;
 use App\Tbl_position;
 use App\Classes\Admin;
-use App\Http\Requests;
+
 use App\Http\Requests\AdminAddRequest;
 use App\Http\Requests\AdminEditRequest;
 
