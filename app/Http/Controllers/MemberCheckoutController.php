@@ -22,34 +22,6 @@ class MemberCheckoutController extends Controller
      */
     public function checkout()
     {
-
-        
-        // $customer = Customer::info();
-
-        // $slot= Tbl_slot::where('slot_id', Request::input('slot_id'))->where('slot_owner', $customer->account_id)->first();
-        // if($slot==null)
-        // {
-        //     $returnHTML  =  '<div class="col-md-12 alert alert-danger">'.
-        //                 'Invalid User or Slot'.
-        //            '</div>';
-
-        // }
-        // else
-        // {
-
-
-        //     if(isset($_POST['slot_id']))
-        //     {
-                
-        //     }
-
-
-        //   $returnHTML = view('member.checkout')->render();
-             
-        // }
-
-
-
         $data['_error'] = null;
         $customer = Customer::info();
         $slot = Tbl_slot::where('slot_id', Request::input('slot_id'))->where('slot_owner', $customer->account_id)->first();
@@ -61,8 +33,7 @@ class MemberCheckoutController extends Controller
 
 
 
-
-        
+        // dd($cart);
 
 
 
@@ -70,45 +41,72 @@ class MemberCheckoutController extends Controller
         {
 
             $validate_slot_wallet = $slot->slot_wallet >= $data['final_total'];
+            $cart_count = count($cart) >= 1;
+
             $request['slot_id'] = Request::input('slot_id');
             $rules['slot_id'] = 'required|exists:tbl_slot,slot_id,slot_owner,'.$customer->account_id;
 
             $request['slot_wallet'] = $validate_slot_wallet;
             $rules['slot_wallet'] = 'accepted';
 
+            $request['cart'] = $cart_count;
+            $rules['cart'] = 'accepted';
+
             $message = [
-                            'slot_wallet.accepted' => 'Not enough :attribute'
+                            'slot_wallet.accepted' => 'Not enough :attribute',
+                            'cart.accepted' => 'The :attribute is empty.'
                         ];
+
+
 
 
             $validator = $validator = Validator::make($request, $rules, $message);
             if($validator->fails())
             {
                 $data['_error'] = $validator->errors()->all();
-                // dd( $data['_error'] );
             }
             else
             {
                 $insert['slot_id'] = Request::input('slot_id');
                 $insert['voucher_code'] = $this->check_code();
                 $insert['total_amount'] = $data['final_total'];
-                Tbl_slot::where('slot_id',Request::input('slot_id') )->update(['slot_wallet'=>$data['remaining_bal']]);             
+                Tbl_slot::where('slot_id',Request::input('slot_id') )->lockForUpdate()->update(['slot_wallet'=>$data['remaining_bal']]);             
                 $voucher = new Tbl_voucher($insert);
                 $voucher->save();
 
+                foreach ((array)$cart as $key => $value)
+                {
+   
+                    $insert_prod =  array(
+                                        'product_id' =>  $key,
+                                        'voucher_id'=> $voucher->voucher_id,
+                                        'price' => $value['price'],
+                                        'qty'=> $value['qty'],
+                                        'sub_total' => $value['total']
+                                        );
+
+                    $voucher_has_product = new Tbl_voucher_has_product($insert_prod);
+                    $voucher_has_product->save();
 
 
-                dd($voucher);
+                }
+
+                Session::put('cart',[]);
+
+
+                return '<div class="col-ms-12">
+                          <p class="col-ms-12 alert alert-success">
+                            Checkout Successfull!!!
+                          </p>
+                              <a  id="back-to-product" href="#" class="btn btn-default">Return to Product page</a>
+                              <a class="btn btn-default" href="/member/voucher">View Vouchers</a>
+                        </div>';
             }        
         }
-
-        $returnHTML = view('member.checkout', $data)->render();
              
 
-
-
             
-        return $returnHTML;
+        return view('member.checkout', $data)->render();
 
     }
 

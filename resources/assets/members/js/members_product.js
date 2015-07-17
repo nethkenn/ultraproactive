@@ -27,9 +27,11 @@ $(document).ready(function()
 
 
 
+    	
 
     	$(document).on('opened', $checkout_remodal, function ()
     	{
+
 
     		var $current_slot = $('select[name="slotnow"]').val();
     		console.log('current_slot : ' + $current_slot);
@@ -100,8 +102,24 @@ $(document).ready(function()
 				$checkout_remodal.close();
 			});
 
-		});
+
+
+			$('#checkout-form-container').on('click', '#back-to-product', function(event) {
+				event.preventDefault();
+				$checkout_remodal.close();
+				load_cart();
+			});
+
+
+
+
+
+			
+
+		});	
     }
+
+
 
 	function remove_to_cart_init()
 	{
