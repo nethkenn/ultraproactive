@@ -270,7 +270,7 @@ class tbl_slide extends Seeder
         (2, 'OFW',  '1436763703.jpg',   '2015-07-17 07:45:48',  '0000-00-00 00:00:00',  0),
         (3, 'Cafe Verde',   '1436763174.jpg',   '2015-07-17 07:46:03',  '0000-00-00 00:00:00',  0),
         (4, 'Chocorite',    '1436763179.jpg',   '2015-07-17 07:46:14',  '0000-00-00 00:00:00',  0);
-        ")
+        ");
     }
 }
 
@@ -284,7 +284,7 @@ class tbl_testimony extends Seeder
         (2, '“The products are excellent! I love using the organic soaps, it makes me feel cleaner and refreshed all day long”',    'Marieta Gutierrez',    'Advance Fasteners',    '2015-07-17 07:01:08',  '0000-00-00 00:00:00',  1),
         (3, '“The on-line services are easy and user-friendly. The technical support are awesome!”',    'Lorenz Pasion',    'Pinoy Express',    '2015-07-17 07:10:55',  '0000-00-00 00:00:00',  0),
         (4, '“In one word, Fantastic! This is what I was waiting for. A company with a heart and concern for its members”\r\n', 'Jerry Macatuno',   'Painter / Designer',   '2015-07-17 07:11:17',  '0000-00-00 00:00:00',  0);
-        ")
+        ");
     }
 }
 
@@ -308,7 +308,7 @@ class tbl_product extends Seeder
         (12,    'PROLIFE GLUTA PLUS SOAP helps to remove toxins produced by the body, assists to inhibit the skin’s production of melanin, resulting in natural lightening of the skin.\r\n\r\nPROLIFE GLUTA PLUS SOAP contributes to remove free radicals and harmful toxins in the skin. It is also often used to treat hyper-pigmentation, freckles, melasma, age spots, blemishes and other uneven skin tones.  \r\n \r\nPROLIFE GLUTA PLUS SOAP - for a fairer and lovelier skin.\r\n\r\n',    '11',   'Prolife Gluta Plus Soap',  'prolife-gluta-plus-soap',  5,  11, 11, 11, 'default.jpg',  '2015-07-17 08:33:52',  '2015-07-17 08:33:52',  0),
         (13,    'Prolife Hand Sanitizer has 2 active ingredients:\r\n\r\nEthyl Alcohol - helps destroy transient germs. Monolaurin - a germicide that aids in moisturizing the skin. \r\n\r\nProlife Hand Sanitizer helps prevent dryness and itchiness making your hands smooth and germ-free. \r\n\r\n\r\n\r\n\r\n\r\n\r\n',  '12',   'Prolife Hand Sanitizer',   'prolife-hand-sanitizer',   6,  12, 12, 12, '1437119819.jpg',   '2015-07-17 08:34:40',  '2015-07-17 08:34:40',  0),
         (14,    '   Prolife Regime Oil is formulated from the combination of  specially selected oils. \r\n\r\n Prolife Regime Oil helps:\r\nNourishes the skin to promote cell turn-over\r\nCombat irritation and inflammation\r\nTo heal damaged tissues\r\nReduce unwanted fats effectively\r\nStimulate the production of Collagen and Elastin which can soften and hydrate the skin.\r\n', '13',   'Prolife Regime Oil',   'prolife-regime-oil',   6,  13, 13, 13, '1437119910.jpg',   '2015-07-17 08:35:24',  '2015-07-17 08:35:24',  0);
-        ")
+        ");
     }
 }
 
