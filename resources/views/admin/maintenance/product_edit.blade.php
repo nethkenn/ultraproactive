@@ -29,6 +29,10 @@
             		<label for="product_name">Product Name</label>
             		<input name="product_name" value="{{Request::input('product_name') ? Request::input('product_name') : $product->product_name}}" required="required" class="form-control" id="" placeholder="" type="text">
             	</div>
+                <div class="form-group col-md-12">
+                    <label for="product_info">Product Info</label>
+                    <textarea name="product_info" value="{{Request::input('product_description') ? Request::input('product_description') : $product->product_name}}" required="required" class="form-control" id="" placeholder=""></textarea>
+                </div>
                     <div class="form-group col-md-12">
                     <label for="sku">SKU</label>
                     <input name="sku" value="{{Request::input('sku') ? Request::input('sku') : $product->sku}}" required="required" class="form-control" id="" placeholder="" type="text">
