@@ -18,8 +18,8 @@ class Admin
     {
 
 
-  //       var_dump(Crypt::decrypt('eyJpdiI6IkJpMFE0ejVUNGhacVRoNDMzOWxBTHc9PSIsInZhbHVlIjoiR25YazdybnJzTlYrZWNtYVpxMTVIQ3MwQm50Wkx2bkNLdGJvUExSbENPTT0iLCJtYWMiOiJjMmZlMjNiNDliZWIwNDhiNjZmZDI3NmY5ZWVmMDU4ZTg4ZDcyODQwYThmMGJmZTA1ZTU1NDJmNjFiNTRkNWE0In0='));
-  //       var_dump(Session::get('admin'));
+        // var_dump(Crypt::decrypt('eyJpdiI6IkJpMFE0ejVUNGhacVRoNDMzOWxBTHc9PSIsInZhbHVlIjoiR25YazdybnJzTlYrZWNtYVpxMTVIQ3MwQm50Wkx2bkNLdGJvUExSbENPTT0iLCJtYWMiOiJjMmZlMjNiNDliZWIwNDhiNjZmZDI3NmY5ZWVmMDU4ZTg4ZDcyODQwYThmMGJmZTA1ZTU1NDJmNjFiNTRkNWE0In0='));
+        // var_dump(Session::get('admin'));
         
         $admin = Tbl_admin::leftJoin('tbl_account','tbl_account.account_id', '=', 'tbl_admin.account_id')
                             ->leftJoin('tbl_admin_position','tbl_admin_position.admin_position_id','=','tbl_admin.admin_position_id')

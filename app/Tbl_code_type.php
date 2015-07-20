@@ -10,5 +10,8 @@ class Tbl_code_type extends Model
 	public $timestamps = false;
 
 
-
+	public function code()
+    {
+        return $this->belongsTo('App\Tbl_membership_code','code_type_id');
+    }
 }

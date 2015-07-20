@@ -72,42 +72,20 @@
   <button data-remodal-action="confirm" class="remodal-confirm" id="transfer-code-submit">OK</button>
 </div>
 
-<div class="remodal" data-remodal-id="check_code_modal" >
-	 {{-- <button data-remodal-action="close" class="remodal-close"></button> --}}
- <form id="check-code-form">
+<div class="remodal" data-remodal-id="check_code_modal" data-remodal-options="hashTracking: false">
+	 <button data-remodal-action="close" class="remodal-close"></button>
+<form id="check-code-form">
  	<input type="hidden" name="_token" value="{{ csrf_token() }}">
  		<div class="form-group">
  		<div id="check-code-error" style="display: none;" class="col-md-12 alert alert-warning">
 	  		No results found.
 	  	</div>
 	  	<label>Enter Code Pin</label>
-	  	<input class="form-control text-center" type="text" value="" name="code_pin">
+	  	<input id="input_pin" class="form-control text-center" type="text" value="" name="code_pin">
         </select>
-	  </div>
-	   <div class="form-group">
-	  	<label>Code Status</label>
-	  	<input class="form-control text-center" type="text" value="" name="code_status" disabled>
-        </select>
-	  </div>
-	  <div class="form-group">
-	  	<label>Used by/ Own By</label>
-	  	<input class="form-control text-center" type="text" value="" name="used_by" disabled>
-        </select>
-	  </div>
-	 <div class="form-group">
-	  	<label>Slot# Generated</label>
-	  	<input class="form-control text-center" type="text" value="" name="slot_generated" disabled>
-        </select>
-	  </div>
-	  <div class="form-group">
-	  	<label>Code Issued By</label>
-	  	<input class="form-control text-center" type="text" value="" name="code_issued_by" disabled>
-        </select>
-	  </div>
-	  <div class="form-group">
-	  	<label>Claimable Voucher</label>
-	  	<input class="form-control text-center" type="text" value="" name="claimable_voucher" disabled>
-        </select>
+	  </div >
+	  <div id="check-code-result">
+
 	  </div>
 </form>
   {{-- <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button> --}}
@@ -309,11 +287,14 @@ $(function()
 				
 	})
 
-
+	$(document).on('closed', $check_code_popup , function (e) {
+		$('#check-code-result').empty();
+	  // Reason: 'confirmation', 'cancellation'
+	  // console.log('Modal is closing' + (e.reason ? ', reason: ' + e.reason : ''));
+	});
 	$('#check-code-btn').on('click', function(event)
 	{
 		event.preventDefault();
-
 		$check_code_popup.open();
 		// alert(1241251254645678568);
 		/* Act on the event */
@@ -321,86 +302,29 @@ $(function()
 
 
 	$('#check-code-submit').on('click',function(event)
-	{
+	{	var $code_pin = $('#input_pin').val();
+		$('#check-code-result').empty();
 		event.preventDefault();
-		var $loading = $('#check-code-loading');
-		var $check_error = $('#check-code-error');
-		$loading.fadeIn();
-		var $_input = $('#check-code-form').serialize();
+		console.log($code_pin);
 		$.ajax({
 			url: 'admin/maintenance/codes/verify_code',
 			type: 'get',
-			dataType: 'json',
-			data:  $_input,
+			dataType: 'html',
+			data: {code_pin: $code_pin},
 		})
-		.done(function(data) {
+		.done(function($data) {
 			// console.log("success");
-			
-			setTimeout(function()
-			{
-
-				$('#check-code-form input:not(input[name="code_pin"])').val('');
-				$check_error.fadeOut();
-				if(data)
-				{
-
-
-					console.log(data);
-					var $used_by = data['account_name'] ? data['account_name'] : 'No recipient';
-					var $voucher = data['inventory_update_type_id'] <= 1 ?  'Yes': 'No';
-					$('#check-code-form input[name="code_status"]').val(data['stat']);
-					$('#check-code-form input[name="used_by"]').val($used_by);
-					$('#check-code-form input[name="slot_generated"]').val();
-					$('#check-code-form input[name="code_issued_by"]').val(data['admin_id']);
-					$('#check-code-form input[name="claimable_voucher"]').val($voucher);
-					// if(data['inventory_update_type_id']==1)
-					// {
-					// 	console.log('inventory_update_type_id :' + data['inventory_update_type_id']);
-					// 	$('#check-code-form input[name="claimable_voucher"]').attr('checked','checked');
-					// }
-					// else
-					// {
-					// 	$('#check-code-form input[name="claimable_voucher"]').attr('checked','');
-					// }
-					// $('#check-code-form input[name="used_by"]').val(data['account_name']);
-
-				}
-				else
-				{
-					$('#check-code-form input:not(input[name="code_pin"])').val('');
-					$check_error.fadeIn();
-				}
-
-				$loading.fadeOut();
-
-			}, 1000);
-
+			$('#check-code-result').append($data);
 		})
 		.fail(function() {
-			// console.log("error");
-			alert('Opps! An error on checking code pin has occur.');
+			console.log("error");
 		})
 		.always(function() {
-			// console.log("complete");
-		});
-
-		function clear_check_input()
-		{
-			$('#check-code-form input').val('');
-			// $('#check-code-form input[name="claimable_voucher"]').attr('checked','');
-			$('#check-code-error').hide();
-
-		}
-
-
-		$(document).on('closed', '.remodal[data-remodal-id="check_code_modal"]', function (e)
-		{
-	  		clear_check_input();
-			// console.log('Modal is closed' + (e.reason ? ', reason: ' + e.reason : ''));
+			console.log("complete");
 		});
 		
-		
 
+	
 		/* Act on the event */
 	});
 

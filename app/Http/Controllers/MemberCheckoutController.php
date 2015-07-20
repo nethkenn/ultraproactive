@@ -1,0 +1,193 @@
+<?php
+
+namespace App\Http\Controllers;
+
+// use Illuminate\Http\Request;
+use Request;
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+use App\Classes\Customer;
+use App\Tbl_slot;
+use App\Tbl_product;
+use App\Tbl_voucher;
+use App\Tbl_voucher_has_product;
+use Session;
+use Validator;
+class MemberCheckoutController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function checkout()
+    {
+        $data['_error'] = null;
+        $customer = Customer::info();
+        $slot = Tbl_slot::where('slot_id', Request::input('slot_id'))->where('slot_owner', $customer->account_id)->first();
+        $data['slot'] = $slot;
+        $cart = Session::get('cart');
+        $data['final_total'] = $this->get_final_total($cart);
+        $data['remaining_bal'] = $slot->slot_wallet - $data['final_total'];
+        $data['pts'] = $this->get_product_point($cart);
+
+
+
+
+        if(isset($_POST['slot_id']))
+        {
+
+            $validate_slot_wallet = $slot->slot_wallet >= $data['final_total'];
+            $cart_count = count($cart) >= 1;
+
+            $request['slot_id'] = Request::input('slot_id');
+            $rules['slot_id'] = 'required|exists:tbl_slot,slot_id,slot_owner,'.$customer->account_id;
+
+            $request['slot_wallet'] = $validate_slot_wallet;
+            $rules['slot_wallet'] = 'accepted';
+
+            $request['cart'] = $cart_count;
+            $rules['cart'] = 'accepted';
+
+            $message = [
+                            'slot_wallet.accepted' => 'Not enough :attribute',
+                            'cart.accepted' => 'The :attribute is empty.'
+                        ];
+
+
+
+
+            $validator = $validator = Validator::make($request, $rules, $message);
+            if($validator->fails())
+            {
+                $data['_error'] = $validator->errors()->all();
+            }
+            else
+            {
+                $insert['slot_id'] = Request::input('slot_id');
+                $insert['voucher_code'] = $this->check_code();
+                $insert['total_amount'] = $data['final_total'];
+                $insert['account_id'] = $customer->account_id;
+                Tbl_slot::where('slot_id',Request::input('slot_id') )->lockForUpdate()->update(['slot_wallet'=>$data['remaining_bal']]);             
+                $voucher = new Tbl_voucher($insert);
+                $voucher->save();
+
+                foreach ((array)$cart as $key => $value)
+                {
+   
+                    $insert_prod =  array(
+                                        'product_id' =>  $key,
+                                        'voucher_id'=> $voucher->voucher_id,
+                                        'price' => $value['price'],
+                                        'qty'=> $value['qty'],
+                                        'sub_total' => $value['total']
+                                        );
+
+
+
+
+                    $voucher_has_product = new Tbl_voucher_has_product($insert_prod);
+                    $voucher_has_product->save();
+
+
+                }
+
+                Session::put('cart',[]);
+
+
+                return '<div class="col-ms-12">
+                          <p class="col-ms-12 alert alert-success">
+                            Checkout Successfull!!!
+                          </p>
+                              <a  id="back-to-product" href="#" class="btn btn-default">Return to Product page</a>
+                              <a class="btn btn-default" href="/member/voucher">View Vouchers</a>
+                        </div>';
+            }        
+        }
+             
+
+            
+        return view('member.checkout', $data);
+
+    }
+
+
+
+    public function code_generator()
+    {
+        
+        $chars="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $res = "";
+        for ($i = 0; $i < 8; $i++) {
+            $res .= $chars[mt_rand(0, strlen($chars)-1)];
+        }
+
+        return $res;
+
+    }
+
+
+    public function check_code()
+    {
+
+        $stop=false;
+        while($stop==false)
+        {
+            $code = $this->code_generator();
+
+            $check = Tbl_voucher::where('voucher_code', $code )->first();
+            if($check==null)
+            {
+                $stop = true;
+            }
+        }
+
+        return $code;
+    }
+
+
+
+
+
+
+    public function get_product_point($cart)
+    {
+        $pts['unilevel'] = 0;
+        $pts['binary'] = 0;
+        if($cart)
+        {
+            foreach ($cart as $key => $value)
+            {
+                $unilevel_pts =  Tbl_product::select('unilevel_pts')->where('product_id', $key)->first()->unilevel_pts;
+                $binary_pts =  Tbl_product::select('binary_pts')->where('product_id', $key)->first()->binary_pts;
+
+
+                $pts['unilevel'] = $pts['unilevel'] + $unilevel_pts;
+                $pts['binary'] = $pts['binary'] + $binary_pts;
+
+            }          
+        }
+
+   
+        return $pts;
+
+    }
+
+
+    public function get_final_total($cart)
+    {
+        $total = 0;
+        if($cart)
+        {
+            foreach ($cart as $key => $value)
+            {
+                $total = $total + $value['total'];
+
+            }          
+        }
+
+   
+        return $total;
+
+    }
+}

@@ -5,8 +5,9 @@
     <div class="header">Encashment ( Slot #{{$slotnow->slot_id}} )</div>
     <div class="body">
         <div class="col-md-12 header-button">
-            <a href="#encashment_history">
-                <button type="button" onclick="location.href='#encashment_history'">Encashment History ( {{$counth}} )</button>
+
+            <a style="cursor: pointer;" class="forhistory">
+                <button type="button">Encashment History ( {{$counth}} )</button>
             </a>
         </div>
         <input type="hidden" class="forhidden" value="{{$json}}">
@@ -22,9 +23,11 @@
             <option value"Bank Deposit">Bank Deposit</option>
             <option value="Cheque">Cheque</option>
           </select>
-          <a href="javascript:">
+
+          <a style="cursor: pointer;">
             <button type="button" id="clickencash" >Submit Encashment</button>
           </a>
+
         </div>
     </div>
     @else

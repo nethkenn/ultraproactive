@@ -16,7 +16,7 @@
       <div class="img"><img src="/resources/assets/frontend/img/icon-inbox.png"></div>
       <div class="text"><span>5</span>Inbox</div>
     </div>
-    <a href="#referral">
+    <a href="/member#referral">
       <div class="box col-md-4 referral">
         <div class="img"><img src="/resources/assets/frontend/img/icon-referral.png"></div>
         <div class="text"><span>5</span>Referrals</div>
@@ -239,7 +239,7 @@
           <div class="name">John Doe</div>
           <div class="email">sample@gmail.com</div>
         </div>
-        <a href="#message" class="para pindutan">
+        <a href="/member#message" class="para pindutan">
           <div class="message">
             <img src="/resources/assets/frontend/img/icon-message.png">
             <span>send message</span>
@@ -257,7 +257,7 @@
           <div class="name">John Doe</div>
           <div class="email">sample@gmail.com</div>
         </div>
-        <a href="#message" class="para pindutan">
+        <a href="/member#message" class="para pindutan">
           <div class="message">
             <img src="/resources/assets/frontend/img/icon-message.png">
             <span>send message</span>
@@ -275,7 +275,7 @@
           <div class="name">John Doe</div>
           <div class="email">sample@gmail.com</div>
         </div>
-        <a href="#message" class="para pindutan">
+        <a href="/member#message" class="para pindutan">
           <div class="message">
             <img src="/resources/assets/frontend/img/icon-message.png">
             <span>send message</span>

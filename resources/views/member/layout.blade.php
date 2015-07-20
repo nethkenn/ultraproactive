@@ -9,8 +9,14 @@
 	<link rel="stylesheet" type="text/css" href="/resources/assets/remodal/src/remodal-default-theme.css">
 	<link rel="stylesheet" type="text/css" href="/resources/assets/jquery-ui/jquery-ui.css">
     <link href="/resources/assets/footable/css/footable.core.css" rel="stylesheet" type="text/css" />
-    {{-- <link href="/resources/assets/footable/css/footable.standalone.css" rel="stylesheet" type="text/css" /> --}}
+    <!-- <link href="/resources/assets/footable/css/footable.standalone.css" rel="stylesheet" type="text/css" /> -->
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300' rel='stylesheet' type='text/css'>
+    <!--<base href="{{$_SERVER['SERVER_NAME']}}">-->
+    <base href="{{URL::to('/')}}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+
+
 </head>
 <div class="bg">
 	<div class="wrapper container">
@@ -229,7 +235,7 @@
     <button class="button" type="submit">Use Code</button>
 </form>
 </div>
-<div class="remodal create-slot" data-remodal-id="claim_code">
+<div class="remodal create-slot" data-remodal-id="claim_code" data-remodal-options="hashTracking: false">
     <button data-remodal-action="close" class="remodal-close"></button>
     <div class="header">
         <img src="/resources/assets/frontend/img/icon-claim.png">
@@ -394,7 +400,7 @@
     <button class="button" data-remodal-action="cancel">Cancel</button>
     <button class="button" data-remodal-action="confirm">Initiate Transfer</button>
 </div>
-<div class="remodal create-slot" data-remodal-id="voucher">
+<!--<div class="remodal create-slot" data-remodal-id="voucher">
     <button data-remodal-action="close" class="remodal-close"></button>
     <div class="header">
         <img src="/resources/assets/frontend/img/icon-vouchers.png">
@@ -468,7 +474,7 @@
             </a>
         </div>
     </div>
-</div>
+</div>-->
 <div class="remodal create-slot" data-remodal-id="generate_lead">
     <button data-remodal-action="close" class="remodal-close"></button>
     <div class="header">
@@ -773,12 +779,21 @@
 
 
 <script type="text/javascript">
+    $.ajaxSetup({
+        cache: false,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
+<script type="text/javascript">
     $( ".contactses" ).click(function(e) {
       $('.message-list').toggleClass('nyek');
     });
 </script>
 <script type="text/javascript">
     $(function () {
+
         $('.footable').footable({
             breakpoints: {
                 phone: 480,
@@ -789,16 +804,16 @@
     });
 </script>
 <script type="text/javascript">
-// setInterval(
-//     function()
-//     {
-//         if( $(".remodal").hasClass('remodal-is-opened') ) {
-//              $('.footable').trigger('footable_initialize');
-//          }
-//         else{
+setInterval(
+    function()
+    {
+        if( $(".remodal").hasClass('remodal-is-opened') ) {
+             $('.footable').trigger('footable_initialize');
+         }
+        else{
         
-//         }
-//     }, 1000);
+        }
+    }, 1000);
 $(document).ready(function()
 {
     myTimeoutFunction();

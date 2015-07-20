@@ -17,7 +17,7 @@
                         <div class="vc_col-sm-12 wpb_column column_container" style="" data-animation="" data-delay="0">
                             <div class="wpb_wrapper">
                                 <div class="wpb_content_element dynamic_page_header style_2">
-                                    <h1 style="font-size:30px; color:#3a3a3a">WE ARE INTRODUCING TO YOU PROLIFE</h1></div>
+                                    <h1 style="font-size:30px; color:#3a3a3a">WE ARE INTRODUCING YOU TO PROLIFE</h1></div>
                                 <div class="wpb_text_column wpb_content_element ">
                                     <div class="wpb_wrapper">
                                         <p>PROLIFE NWT is a company formed by Filipino professionals based in the United Arab Emirates. Bound together by a common goal, each with their own expertise, they have decided it’s about time that expatriates in the UAE will be given a free choice and be catered with all their needs. 

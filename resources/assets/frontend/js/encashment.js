@@ -38,6 +38,11 @@ function encashment()
 			var inst = $('[data-remodal-id=encashment]').remodal();
           	inst.open(); 
 		});
+
+		$(".forhistory").click(function(){
+			var inst = $('[data-remodal-id=encashment_history]').remodal();
+          	inst.open(); 
+		});
 	}
 	function compute_country()
 	{

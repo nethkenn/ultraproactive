@@ -40,20 +40,18 @@ class MemberRegisterController extends Controller
 
 				$validator = Validator::make(
 				[
-					'account_name' => $data['fname']." ".$data['lname'],
+					'account_name' => $data['fname']." ".$data['mname']." ".$data['lname'],
 					'account_username'=>$data['user'],
 					'account_email'=>$data['email'],
 					'account_remail'=>$data['remail'],
 					'account_contact_number'=>$data['contact'],
 					'account_country_id'=>$data['country'],
-					'custom_field_value'=>$data['custom'],
 					'account_password' => $data['pass'],
 					'account_rpassword' => $data['rpass'],			
 				],
 				[
 					'account_name' => 'required|min:5|regex:/^[a-zA-Z\s]*$/',
 					'account_country_id' => 'required', 
-					'custom_field_value' => 'required',
 					'account_email' => 'required|email|unique:tbl_account,account_email|same:account_remail',
 					'account_username' => 'required|unique:tbl_account,account_username',
 					'account_contact_number' => 'required|min:9',
@@ -71,9 +69,8 @@ class MemberRegisterController extends Controller
 					$insert['account_email']		  = $data['email'];
 					$insert['account_contact_number'] = $data['contact'];
 					$insert['account_country_id']	  = $data['country'];
-					$insert['custom_field_value']	  = $data['custom'];
 					$insert['account_password']		  = Crypt::encrypt($data['pass']);
-					$insert['account_name']	 		  = $data['fname']." ".$data['lname'];
+					$insert['account_name']	 		  = $data['fname']." ".$data['mname']." ".$data['lname'];
 					$insert['account_date_created']   = date('Y-m-d H:i:s');
 					$info = DB::table('tbl_account')->insertGetId($insert);
 					Customer::login($info,$insert['account_password']);

@@ -28,6 +28,10 @@
 					<div class="inputz"><input type="text" name="fname"></div>
 				</div>
 				<div class="form-group">
+					<div class="labelz">Middle Name*</div>
+					<div class="inputz"><input type="text" name="mname"></div>
+				</div>
+				<div class="form-group">
 					<div class="labelz">Last Name*</div>
 					<div class="inputz"><input type="text" name="lname"></div>
 				</div>
@@ -67,14 +71,6 @@
 					<div class="inputz"><textarea></textarea></div>
 				</div>
 				<div class="form-group">
-					<div class="labelz">City*</div>
-					<div class="inputz"><input type="text" name="custom"></div>
-				</div>
-				<div class="form-group">
-					<div class="labelz">State/Province*</div>
-					<div class="inputz"><input type="text"></div>
-				</div>
-				<div class="form-group">
 					<div class="labelz">Country*</div>
 					<div class="inputz">
 						<select name="country">
@@ -83,10 +79,6 @@
 							@endforeach
 						</select>
 					</div>	
-				</div>
-				<div class="form-group">
-					<div class="labelz">Zip Code*</div>
-					<div class="inputz"><input type="text"></div>
 				</div>
 			</div>
 		</div>

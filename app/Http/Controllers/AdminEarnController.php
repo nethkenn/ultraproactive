@@ -10,11 +10,11 @@ class AdminEarnController extends AdminController
 	{
 		$data["_earn"] = DB::table("tbl_earn")->where("archived", 0)->get();
 	
-        return view('admin.maintenance.earn', $data);
+        return view('admin.content.earn', $data);
 	}
 	public function add()
 	{
-        return view('admin.maintenance.earn_add');
+        return view('admin.content.earn_add');
 	}
 	public function add_submit()
 	{
@@ -24,14 +24,14 @@ class AdminEarnController extends AdminController
 
 		DB::table("tbl_earn")->insert(['earn_title' => $title, 'earn_description' => $description, 'created_at' => $date]);
 
-        return Redirect::to("/admin/maintenance/earn");
+        return Redirect::to("/admin/content/earn");
 	}	
 	public function edit()
 	{
 		$id = Request::input("id");
 		$data["earn"] = DB::table("tbl_earn")->where("earn_id", $id)->first();
 
-        return view('admin.maintenance.earn_edit', $data);
+        return view('admin.content.earn_edit', $data);
 	}
 	public function edit_submit()
 	{
@@ -42,7 +42,7 @@ class AdminEarnController extends AdminController
 
 		DB::table("tbl_earn")->where("earn_id", $id)->update(['earn_title' => $title, 'earn_description' => $description, 'updated_at' => $date]);
 
-        return Redirect::to("/admin/maintenance/earn");
+        return Redirect::to("/admin/content/earn");
 	}	
 	public function delete()
 	{
@@ -50,6 +50,6 @@ class AdminEarnController extends AdminController
 
 		DB::table("tbl_earn")->where("earn_id", $id)->update(['archived' => 1]);
 
-        return Redirect::to("/admin/maintenance/earn");
+        return Redirect::to("/admin/content/earn");
 	}	
 }
