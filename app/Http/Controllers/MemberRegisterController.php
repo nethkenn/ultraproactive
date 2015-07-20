@@ -12,12 +12,11 @@ class MemberRegisterController extends Controller
 {
 	public function index()
 	{
-		$message = Session::get('message');
+		$data = Session::get('message');
 		if(Request::input('submit'))
 		{	
 			$data =	$this->checkifvalidate(Request::input());
-			$message = "";
-			return Redirect::to('member/register')->with('message',$message);
+			return Redirect::to('member/register')->with('message',$data);
 		}
 
 		//Auto Redirect if login already... or after registration success
@@ -41,9 +40,10 @@ class MemberRegisterController extends Controller
 
 				$validator = Validator::make(
 				[
-					'account_name' => $data['name'],
+					'account_name' => $data['fname']." ".$data['lname'],
 					'account_username'=>$data['user'],
 					'account_email'=>$data['email'],
+					'account_remail'=>$data['remail'],
 					'account_contact_number'=>$data['contact'],
 					'account_country_id'=>$data['country'],
 					'custom_field_value'=>$data['custom'],
@@ -51,10 +51,10 @@ class MemberRegisterController extends Controller
 					'account_rpassword' => $data['rpass'],			
 				],
 				[
-					'account_name' => 'required|min:5|regex:/^[\pL\s]+$/u',
+					'account_name' => 'required|min:5|regex:/^[a-zA-Z\s]*$/',
 					'account_country_id' => 'required', 
 					'custom_field_value' => 'required',
-					'account_email' => 'required|email|unique:tbl_account,account_email',
+					'account_email' => 'required|email|unique:tbl_account,account_email|same:account_remail',
 					'account_username' => 'required|unique:tbl_account,account_username',
 					'account_contact_number' => 'required|min:9',
 					// 'customer_province' => "required|exists:tbl_location,location_id",
@@ -73,7 +73,7 @@ class MemberRegisterController extends Controller
 					$insert['account_country_id']	  = $data['country'];
 					$insert['custom_field_value']	  = $data['custom'];
 					$insert['account_password']		  = Crypt::encrypt($data['pass']);
-					$insert['account_name']	 		  = $data['name'];
+					$insert['account_name']	 		  = $data['fname']." ".$data['lname'];
 					$insert['account_date_created']   = date('Y-m-d H:i:s');
 					$info = DB::table('tbl_account')->insertGetId($insert);
 					Customer::login($info,$insert['account_password']);
@@ -81,7 +81,7 @@ class MemberRegisterController extends Controller
 			}
 			else
 			{
-				$data2['error_message'] = $validator->messages();
+					$data2['error'] = $validator->messages();
 			}		
 
 		return $data2;
