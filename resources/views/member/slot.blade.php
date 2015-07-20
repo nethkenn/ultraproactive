@@ -27,8 +27,8 @@
                     </div>
                     <div class="col-md-3">
                         <div class="btn-holder">
-                            <a href="#upgrade_member">
-                                <button class="upbtn" type="button" onClick="location.href='#upgrade_member'" tols="{{$s->slot_id}}" wallet="{{$s->slot_wallet}}" memship="{{$s->membership_price}}">Upgrade Membership</button>
+                            <a href="/member/slot#upgrade_member">
+                                <button class="upbtn" type="button" onClick="location.href='/member/slot#upgrade_member'" tols="{{$s->slot_id}}" wallet="{{$s->slot_wallet}}" memship="{{$s->membership_price}}">Upgrade Membership</button>
                             </a>
                         </div>
                         <div class="btn-holder">           
@@ -37,8 +37,8 @@
                             </a>
                         </div>
                         <div class="btn-holder">
-                            <a href="#transfer_slot">
-                                <button type="button" onClick="location.href='#transfer_slot'">Transfer Slot</button>
+                            <a href="/member/slot#transfer_slot">
+                                <button type="button" onClick="location.href='/member/slot#transfer_slot'">Transfer Slot</button>
                             </a>
                         </div>
                     </div>

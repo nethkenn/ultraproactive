@@ -8,10 +8,10 @@
                 Membership Codes ({{$count}})
             </div>
             <div class="col-md-6 ew">
-                <a href="#buy_code">
+                <a href="member/code_vault#buy_code">
                     <div class="button">Buy Membership Codes</div>
                 </a>
-                <a href="#claim_code">
+                <a href="member/code_vault#claim_code">
                     <div class="button">Claim Code</div>
                 </a>
             </div>
@@ -44,8 +44,8 @@
                         <td><div class="check"><input type="checkbox"><div class="bgs"></div></div></td>
                         <td>{{$c->product_package_name}}</td>
                         <td>{{$c->used == 0 ? "Available" : "Used"}}</td>
-                        <td><a href="#create_slot">Create Slot</a></td>
-                        <td><a href="#transfer_code">Transfer Code</a></td>
+                        <td><a href="member/code_vault#create_slot">Create Slot</a></td>
+                        <td><a href="member/code_vault#transfer_code">Transfer Code</a></td>
                     </tr>
                     @endforeach
                 @endif 
@@ -123,8 +123,8 @@
                 <td>30.00</td>
                 <td>40.00</td>
                 <td>Available</td>
-                <td><a href="#use_code">Use Code</a></td>
-                <td><a href="#transfer_code">Transfer Code</a></td>
+                <td><a href="member/code_vault#use_code">Use Code</a></td>
+                <td><a href="member/code_vault#transfer_code">Transfer Code</a></td>
             </tr>
             <tr class="tibolru">
                 <td>516</td>
@@ -136,8 +136,8 @@
                 <td>30.00</td>
                 <td>40.00</td>
                 <td>Available</td>
-                <td><a href="#use_code">Use Code</a></td>
-                <td><a href="#transfer_code">Transfer Code</a></td>
+                <td><a href="member/code_vault#use_code">Use Code</a></td>
+                <td><a href="member/code_vault#transfer_code">Transfer Code</a></td>
             </tr>
             <tr class="tibolru">
                 <td>516</td>
@@ -149,8 +149,8 @@
                 <td>30.00</td>
                 <td>40.00</td>
                 <td>Available</td>
-                <td><a href="#use_code">Use Code</a></td>
-                <td><a href="#transfer_code">Transfer Code</a></td>
+                <td><a href="member/code_vault#use_code">Use Code</a></td>
+                <td><a href="member/code_vault#transfer_code">Transfer Code</a></td>
             </tr>
             <tr class="tibolru">
                 <td>516</td>
@@ -162,8 +162,8 @@
                 <td>30.00</td>
                 <td>40.00</td>
                 <td>Available</td>
-                <td><a href="#use_code">Use Code</a></td>
-                <td><a href="#transfer_code">Transfer Code</a></td>
+                <td><a href="member/code_vault#use_code">Use Code</a></td>
+                <td><a href="member/code_vault#transfer_code">Transfer Code</a></td>
             </tr>
         </tbody>
     </table>

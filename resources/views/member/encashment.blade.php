@@ -4,8 +4,8 @@
     <div class="header">Encashment ( Slot #5 )</div>
     <div class="body">
         <div class="col-md-12 header-button">
-            <a href="#encashment_history">
-                <button type="button" onclick="location.href='#encashment_history'">Encashment History ( 2 )</button>
+            <a href="member/encashment#encashment_history">
+                <button type="button" onclick="location.href='member/encashment#encashment_history'">Encashment History ( 2 )</button>
             </a>
         </div>
         <div class="title">
@@ -19,8 +19,8 @@
           <select>
             <option>Bank Deposit</option>
           </select>
-          <a href="#encashment">
-            <button type="button" onclick="location.href='#encashment'">Submit Encashment</button>
+          <a href="member/encashment#encashment">
+            <button type="button" onclick="location.href='member/encashment#encashment'">Submit Encashment</button>
           </a>
         </div>
     </div>
