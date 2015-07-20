@@ -26,6 +26,7 @@ class CreateTblMembershipCode extends Migration
 
 
             $table->tinyInteger('used')->default(0);
+            $table->tinyInteger('lock')->default(0);
             $table->tinyInteger('archived')->default(0);
             $table->tinyInteger('blocked')->default(0);
             $table->timestamps();

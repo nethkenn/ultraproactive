@@ -3,16 +3,17 @@
 
 <div class="register top_wrapper no-transparent">
 	<div class="title-header">User Registration Form</br><span>register here to become a member of our website.</span></div>
-	@if (count($errors) > 0)
-	<div class="alert alert-danger">
-		<strong>Whoops!</strong> There were some problems with your input.<br><br>
-		<ul>
-			@foreach ($errors->all() as $error)
-				<li>{{ $error }}</li>
-			@endforeach
-		</ul>
-	</div>
+
+	@if(Session::has('message'))
+		<div class="alert alert-danger">
+			<ul>
+				@foreach ($error->all() as $error)
+					<li>{{ $error }}</li>
+				@endforeach
+			</ul>
+		</div>
 	@endif
+
 	<form method="POST">
 		<div class="container">
 		<input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
@@ -24,15 +25,15 @@
 			<div class="teybol">
 				<div class="form-group">
 					<div class="labelz">First Name*</div>
-					<div class="inputz"><input type="text"></div>
+					<div class="inputz"><input type="text" name="fname"></div>
 				</div>
 				<div class="form-group">
 					<div class="labelz">Middle Name*</div>
-					<div class="inputz"><input type="text"></div>
+					<div class="inputz"><input type="text" name="mname"></div>
 				</div>
 				<div class="form-group">
 					<div class="labelz">Last Name*</div>
-					<div class="inputz"><input type="text"></div>
+					<div class="inputz"><input type="text" name="lname"></div>
 				</div>
 				<div class="form-group">
 					<div class="labelz">Gender*</div>
@@ -43,15 +44,15 @@
 				</div>
 				<div class="form-group">
 					<div class="labelz">Email*</div>
-					<div class="inputz"><input type="text"></div>
+					<div class="inputz"><input type="text" name="email"></div>
 				</div>
 				<div class="form-group">
 					<div class="labelz">Confirm Email*</div>
-					<div class="inputz"><input type="text"></div>
+					<div class="inputz"><input type="text" name="remail"></div>
 				</div>
 				<div class="form-group">
 					<div class="labelz">Phone Number*</div>
-					<div class="inputz"><input type="text"></div>
+					<div class="inputz"><input type="text" name="contact"></div>
 				</div>
 				<div class="form-group">
 					<div class="labelz">Telephone Number*</div>
@@ -71,7 +72,13 @@
 				</div>
 				<div class="form-group">
 					<div class="labelz">Country*</div>
-					<div class="inputz"><input type="text"></div>
+					<div class="inputz">
+						<select name="country">
+							@foreach($country as $c)
+							<option value="{{$c->country_id}}">{{$c->country_name}}</option>
+							@endforeach
+						</select>
+					</div>	
 				</div>
 			</div>
 		</div>
@@ -83,20 +90,20 @@
 			<div class="teybol">
 				<div class="form-group">
 					<div class="labelz">User Name*</div>
-					<div class="inputz"><input type="text"></div>
+					<div class="inputz"><input type="text" name="user"></div>
 				</div>
 				<div class="form-group">
 					<div class="labelz">Password*</div>
-					<div class="inputz"><input type="password"></div>
+					<div class="inputz"><input type="password" name="pass"></div>
 				</div>
 				<div class="form-group">
 					<div class="labelz">Re-type Password*</div>
-					<div class="inputz"><input type="password"></div>
+					<div class="inputz"><input type="password" name="rpass"></div>
 				</div>
 			</div>
 		</div>
 		<div class="vc_col-md-12">
-			<input type="submit" value="Register Now" class="register-button">
+			<input type="submit" name="submit" value="Register Now" class="register-button">
 		</div>
 		</div>
 	</form>

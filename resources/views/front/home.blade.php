@@ -39,14 +39,14 @@
 					<div class="vc_col-sm-12 wpb_column column_container" style="" data-animation="" data-delay="0">
 						<div class="wpb_wrapper">
 							<div class="wpb_content_element dynamic_page_header style_3">
-								<h1 style="font-size:36px; color:#009dcd">Welcome to PROLIFE Family!</h1>
+								<h1 style="font-size:36px; color:#555656">Welcome to PROLIFE Family!</h1>
 								<div class="line_under">
 									<div class="line_center"></div>
 								</div>
 								<div class="line_under below_line">
 									<div class="line_center"></div>
 								</div>
-								<p class="description style_3">PROLIFE NWT believes in Family, the fundamental unit of a society. It is the living treasure of gold. It is made strong not by the headcounts but by the root of valued culture, commitment of time and harmony.
+								<p class="description style_3" style="color: #a3a5a7; font-size: 16px;">PROLIFE NWT believes in Family, the fundamental unit of a society. It is the living treasure of gold. It is made strong not by the headcounts but by the root of valued culture, commitment of time and harmony.
 									Just like in Prolife Family, we want the best and all the convenience we can share to our members.
 									Together, we have established a company that delivers high quality products and excellent e-services that brings each home the benefits of our natural environment and the comfort of technology.
 									Prolife NWT  has strategically ventured with trusted and reputed companies for our associates to enjoy hassle-free online services  and privileges at their fingertips.
@@ -166,7 +166,7 @@
 							<div class="vc_col-sm-4 wpb_column column_container" style="" data-animation="" data-delay="0">
 								<div class="wpb_wrapper">
 									<div class="wpb_content_element services_media">
-										<div class="img_div port3"><img src="/resources/assets/ausart/assets/uploads/picture/healthy.jpg" alt="" /></div>
+										<div class="img_div port3" style="border: 5px solid #e2e2e2;"><img src="/resources/assets/ausart/assets/uploads/picture/healthy.jpg" alt="" /></div>
 										<h1><a href="#">Be Healthy</a></h1>
 										<div class="serv_content">
 											<p></p>
@@ -185,7 +185,7 @@
 									<div class="vc_col-sm-4 wpb_column column_container" style="" data-animation="" data-delay="0">
 										<div class="wpb_wrapper">
 											<div class="wpb_content_element services_media">
-												<div class="img_div port3"><img src="/resources/assets/ausart/assets/uploads/picture/house.jpg" alt="" /></div>
+												<div class="img_div port3" style="border: 5px solid #e2e2e2;"><img src="/resources/assets/ausart/assets/uploads/picture/house.jpg" alt="" /></div>
 												<h1><a href="#">Be Free</a></h1>
 												<div class="serv_content">
 													<p></p>
@@ -204,7 +204,7 @@
 											<div class="vc_col-sm-4 wpb_column column_container" style="" data-animation="" data-delay="0">
 												<div class="wpb_wrapper">
 													<div class="wpb_content_element services_media">
-														<div class="img_div port3"><img src="/resources/assets/ausart/assets/uploads/picture/technology.jpg" alt="" /></div>
+														<div class="img_div port3" style="border: 5px solid #e2e2e2;"><img src="/resources/assets/ausart/assets/uploads/picture/technology.jpg" alt="" /></div>
 														<h1><a href="#">Be Connected</a></h1>
 														<div class="serv_content">
 															<p></p>
@@ -246,11 +246,11 @@
 														<div class="wpb_wrapper">
 															<div class="home_portfolio ">
 																<div class="">
-																	<section id="portfolio-preview-items" class="four-cols animate_onoffset" data-nr="4">
+																	<section id="portfolio-preview-items" class=" animate_onoffset">
 																		<!-- Portfolio Normal Mode -->
 																		<!-- item -->
 																		@foreach($_product as $product)
-																		<div class="portfolio-item html java  v2" data-id="3537">
+																		<div class="portfolio-item html java  v2 vc_col-md-4" data-id="3537">
 																			<div class="he-wrap tpl2">
 																				<img src="{{ $product->image }}" alt="">
 																				<div class="overlay he-view">

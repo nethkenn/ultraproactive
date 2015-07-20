@@ -2,7 +2,7 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use DB;
 // use Illuminate\Http\Request;
 use Request;
 use App\Tbl_membership;
@@ -14,6 +14,7 @@ use App\Tbl_membership_code;
 use Carbon\Carbon;
 use Datatables;
 use Validator;
+use Session;
 
 class AdminCodeController extends AdminController {
 
@@ -197,11 +198,18 @@ class AdminCodeController extends AdminController {
 			{
 				for ($i=0; $i < Request::input('code_multiplier'); $i++)
 				{ 
+					$name =DB::table('tbl_account')->where('account_username',Session::get('admin')['username'])->first();
 					$membership_code = new Tbl_membership_code(Request::input());
 					$membership_code->code_activation = $this->check_code();
 					$membership_code->account_id =  Request::input('account_id') ?: null;
 					$membership_code->created_at = Carbon::now();
 					$membership_code->save();
+					$insert['code_pin'] = $membership_code->code_pin;
+					$insert['by_account_id'] = $name->account_id;
+					$insert['to_account_id'] = $membership_code->account_id;
+					$insert['updated_at'] = $membership_code->created_at;
+					$insert['description'] = "Created by ".$name->account_name;
+					DB::table("tbl_member_code_history")->insert($insert);
 				}
 
 

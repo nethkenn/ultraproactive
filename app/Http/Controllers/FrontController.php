@@ -29,7 +29,7 @@ class FrontController extends Controller
 			$data["_news"][$keys]->day = $day;
 		}
 
-		$data["_product"] = DB::table("tbl_product")->where("image_file", "!=", "default.jpg")->where("archived", 0)->take(8)->get();
+		$data["_product"] = DB::table("tbl_product")->where("image_file", "!=", "default.jpg")->where("image_file", "!=", "")->where("archived", 0)->take(6)->get();
 		foreach ($data["_product"] as $keyss => $valuess) 
 		{
 			$gets = $valuess->image_file;
