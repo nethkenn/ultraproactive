@@ -492,7 +492,7 @@
     <button class="button" data-remodal-action="cancel">Cancel</button>
     <button class="button" data-remodal-action="confirm">Initiate Transfer</button>
 </div>
-<div class="remodal create-slot" data-remodal-id="voucher">
+<!--<div class="remodal create-slot" data-remodal-id="voucher">
     <button data-remodal-action="close" class="remodal-close"></button>
     <div class="header">
         <img src="/resources/assets/frontend/img/icon-vouchers.png">
@@ -566,7 +566,7 @@
             </a>
         </div>
     </div>
-</div>
+</div>-->
 <div class="remodal create-slot" data-remodal-id="generate_lead">
     <button data-remodal-action="close" class="remodal-close"></button>
     <div class="header">

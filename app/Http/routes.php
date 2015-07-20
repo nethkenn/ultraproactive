@@ -7,7 +7,11 @@ Route::any('/member/slot', 'MemberSlotController@index');
 Route::any('/member/code_vault', 'MemberCodeController@index');
 Route::any('/member/encashment', 'MemberEncashmentController@index');
 Route::any('/member/genealogy', 'MemberGenealogyController@index');
+
 Route::any('/member/voucher', 'MemberVoucherController@index');
+Route::get('/member/voucher/product', 'MemberVoucherController@showVoucherProduct');
+
+
 Route::any('/member/leads', 'MemberLeadController@index');
 Route::any('/member/product', 'MemberProductController@index');
 Route::any('/member/login', 'MemberLoginController@index');
