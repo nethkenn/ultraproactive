@@ -17,7 +17,7 @@
                 font-size: 50px
             }
             </style>
-            <h1 class="title">Portfolio Sample Right</h1>
+            <h1 class="title">Product Content</h1>
             <div class="breadcrumbss">
 
             </div>
@@ -44,20 +44,19 @@
                                     <h1>{{ $product->product_name }}</h1>
                                 </div>
                                 <div class="details_content">
-                                    <p></p>
+                                    <p style="white-space: pre-wrap;">{{ $product->product_info }}</p>
                                 </div>
-                                <div class="meta-content">
-                                    <div class="meta">
-                                        <h1>Date</h1>
-                                        <span> {{ $product->month }} {{ $product->day }}, {{ $product->year }} </span>
-                                    </div>
-                                    <div class="meta">
-                                        <span class="uppertitle">Our Crazy Skills</span>
-                                        <h1>Things We are Good for</h1>
-                                        <div class="custom_content">
-                                            <p>Test this for your enjoy</p>
-                                        </div>
-                                    </div>
+                                <div class="details_side" style="margin-top: 20px;">
+                                    <h1>Date</h1>
+                                </div>
+                                <div class="details_content">
+                                    <p>{{ $product->month }} {{ $product->day }}, {{ $product->year }}</p>
+                                </div>
+                                <div class="details_side" style="margin-top: 20px;">
+                                    <h1>Price</h1>
+                                </div>
+                                <div class="details_content">
+                                    <p style="white-space: pre-wrap;">{{ $product->price }}</p>
                                 </div>
                             </div>
                             

@@ -41,10 +41,20 @@ class Tbl_membership_code extends Model
 
     public function scopeGetUsedBy($query)
     {   
-
-
         return $query->leftJoin('tbl_account','tbl_account.account_id','=','tbl_membership_code.account_id');
+        // ->OrWhereNull('tbl_membership_code.account_id')
+        // ->OrWhereNotNull('tbl_membership_code.account_id');
     }
+
+
+
+    public function codetype()
+    {
+        return $this->hasOne('App\Tbl_code_type');
+    }
+
+
+    
 
 
 

@@ -94,8 +94,6 @@ class Customer
             {
                 return false;
             }
-
-
     	}
     	else
     	{

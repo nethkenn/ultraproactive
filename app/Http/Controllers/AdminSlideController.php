@@ -15,11 +15,11 @@ class AdminSlideController extends AdminController
 			$data["_slide"][$key]->image = $imagee;
 		}
 
-        return view('admin.maintenance.slide', $data);
+        return view('admin.content.slide', $data);
 	}
 	public function add()
 	{
-        return view('admin.maintenance.slide_add');
+        return view('admin.content.slide_add');
 	}
 	public function add_submit()
 	{
@@ -29,7 +29,7 @@ class AdminSlideController extends AdminController
 
 		DB::table("tbl_slide")->insert(['slide_title' => $title, 'created_at' => $date, 'slide_image' => $image]);
 
-        return Redirect::to("/admin/maintenance/slide");
+        return Redirect::to("/admin/content/slide");
 	}	
 	public function edit()
 	{
@@ -39,7 +39,7 @@ class AdminSlideController extends AdminController
 		$imagee = Image::view($data["slide"]->slide_image, "255x255");
 		$data["slide"]->image = $imagee;
 
-        return view('admin.maintenance.slide_edit', $data);
+        return view('admin.content.slide_edit', $data);
 	}
 	public function edit_submit()
 	{
@@ -50,7 +50,7 @@ class AdminSlideController extends AdminController
 
 		DB::table("tbl_slide")->where("slide_id", $id)->update(['slide_title' => $title, 'updated_at' => $date, 'slide_image' => $image]);
 
-        return Redirect::to("/admin/maintenance/slide");
+        return Redirect::to("/admin/content/slide");
 	}	
 	public function delete()
 	{
@@ -58,6 +58,6 @@ class AdminSlideController extends AdminController
 
 		DB::table("tbl_slide")->where("slide_id", $id)->update(['archived' => 1]);
 
-        return Redirect::to("/admin/maintenance/slide");
+        return Redirect::to("/admin/content/slide");
 	}	
 }

@@ -7,7 +7,7 @@
 			<h2><i class="fa fa-newspaper-o"></i> EARN MANAGEMENT</h2>
 		</div>
 		<div class="buttons col-md-4 text-right">
-			<button onclick="location.href='admin/maintenance/earn/add'" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> ADD EARN</button>
+			<button onclick="location.href='admin/content/earn/add'" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> ADD EARN</button>
 		</div>
 	</div>
 	<div class="filters ">
@@ -15,8 +15,8 @@
 </div>
 	{{-- <div class="filters ">
 		<div class="col-md-8">
-			<a class="{{$active = Request::input('archived') ? '' : 'active' }}" href="admin/maintenance/accounts/">ACTIVE</a>
-			<a class="{{$active = Request::input('archived') ? 'active' : '' }}" href="admin/maintenance/accounts/?archived=1">ARCHIVED</a>
+			<a class="{{$active = Request::input('archived') ? '' : 'active' }}" href="admin/content/accounts/">ACTIVE</a>
+			<a class="{{$active = Request::input('archived') ? 'active' : '' }}" href="admin/content/accounts/?archived=1">ARCHIVED</a>
 		</div>
 	</div> --}}
 <div class="col-md-12">
@@ -33,7 +33,7 @@
 			<tr class="text-center">
 				<td>{{ $earn->earn_id }}</td>
 				<td>{{ $earn->earn_title }}</td>
-				<td><a href="admin/maintenance/earn/edit?id={{ $earn->earn_id }}">modify</a> | <a href="admin/maintenance/earn/delete?id={{ $earn->earn_id }}">delete</a></td>
+				<td><a href="admin/content/earn/edit?id={{ $earn->earn_id }}">modify</a> | <a href="admin/content/earn/delete?id={{ $earn->earn_id }}">delete</a></td>
 			</tr>
 			@endforeach
 		</tbody>

@@ -8,10 +8,10 @@
                 Leads ( 5 )
             </div>
             <div class="col-md-6 ew">
-                <a href="#generate_lead">
+                <a href="/member/leads/#generate_lead">
                     <div class="button">How to Generate Leads?</div>
                 </a>
-                <a href="#add_lead">
+                <a href="/member/leads/#add_lead">
                     <div class="button">Add Leads ( Manually )</div>
                 </a>
             </div>

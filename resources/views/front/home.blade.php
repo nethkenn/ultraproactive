@@ -39,14 +39,14 @@
 					<div class="vc_col-sm-12 wpb_column column_container" style="" data-animation="" data-delay="0">
 						<div class="wpb_wrapper">
 							<div class="wpb_content_element dynamic_page_header style_3">
-								<h1 style="font-size:36px; color:#009dcd">Welcome to PROLIFE Family!</h1>
+								<h1 style="font-size:36px; color:#555656">Welcome to PROLIFE Family!</h1>
 								<div class="line_under">
 									<div class="line_center"></div>
 								</div>
 								<div class="line_under below_line">
 									<div class="line_center"></div>
 								</div>
-								<p class="description style_3">PROLIFE NWT believes in Family, the fundamental unit of a society. It is the living treasure of gold. It is made strong not by the headcounts but by the root of valued culture, commitment of time and harmony.
+								<p class="description style_3" style="color: #a3a5a7; font-size: 16px;">PROLIFE NWT believes in Family, the fundamental unit of a society. It is the living treasure of gold. It is made strong not by the headcounts but by the root of valued culture, commitment of time and harmony.
 									Just like in Prolife Family, we want the best and all the convenience we can share to our members.
 									Together, we have established a company that delivers high quality products and excellent e-services that brings each home the benefits of our natural environment and the comfort of technology.
 									Prolife NWT  has strategically ventured with trusted and reputed companies for our associates to enjoy hassle-free online services  and privileges at their fingertips.
@@ -166,7 +166,7 @@
 							<div class="vc_col-sm-4 wpb_column column_container" style="" data-animation="" data-delay="0">
 								<div class="wpb_wrapper">
 									<div class="wpb_content_element services_media">
-										<div class="img_div port3"><img src="/resources/assets/ausart/assets/uploads/picture/healthy.jpg" alt="" /></div>
+										<div class="img_div port3" style="border: 5px solid #e2e2e2;"><img src="/resources/assets/ausart/assets/uploads/picture/healthy.jpg" alt="" /></div>
 										<h1><a href="#">Be Healthy</a></h1>
 										<div class="serv_content">
 											<p></p>
@@ -185,7 +185,7 @@
 									<div class="vc_col-sm-4 wpb_column column_container" style="" data-animation="" data-delay="0">
 										<div class="wpb_wrapper">
 											<div class="wpb_content_element services_media">
-												<div class="img_div port3"><img src="/resources/assets/ausart/assets/uploads/picture/house.jpg" alt="" /></div>
+												<div class="img_div port3" style="border: 5px solid #e2e2e2;"><img src="/resources/assets/ausart/assets/uploads/picture/house.jpg" alt="" /></div>
 												<h1><a href="#">Be Free</a></h1>
 												<div class="serv_content">
 													<p></p>
@@ -204,7 +204,7 @@
 											<div class="vc_col-sm-4 wpb_column column_container" style="" data-animation="" data-delay="0">
 												<div class="wpb_wrapper">
 													<div class="wpb_content_element services_media">
-														<div class="img_div port3"><img src="/resources/assets/ausart/assets/uploads/picture/technology.jpg" alt="" /></div>
+														<div class="img_div port3" style="border: 5px solid #e2e2e2;"><img src="/resources/assets/ausart/assets/uploads/picture/technology.jpg" alt="" /></div>
 														<h1><a href="#">Be Connected</a></h1>
 														<div class="serv_content">
 															<p></p>
@@ -246,11 +246,11 @@
 														<div class="wpb_wrapper">
 															<div class="home_portfolio ">
 																<div class="">
-																	<section id="portfolio-preview-items" class="four-cols animate_onoffset" data-nr="4">
+																	<section id="portfolio-preview-items" class=" animate_onoffset">
 																		<!-- Portfolio Normal Mode -->
 																		<!-- item -->
 																		@foreach($_product as $product)
-																		<div class="portfolio-item html java  v2" data-id="3537">
+																		<div class="portfolio-item html java  v2 vc_col-md-4" data-id="3537">
 																			<div class="he-wrap tpl2">
 																				<img src="{{ $product->image }}" alt="">
 																				<div class="overlay he-view">
@@ -280,13 +280,13 @@
 											</div>
 											<div id="fws_5559b27a89da7" class="wpb_row animate_onoffset  vc_row-fluid   row-dynamic-el section-style parallax_section   borders  " style="background-repeat: no-repeat; padding-top: 100px !important; padding-bottom: 100px !important; ">
 												<div class="parallax_bg" style="background-image: url(/resources/assets/ausart/assets/uploads/2015/01/yteydf67y.jpg); background-position: 50% 0px; background-attachment:fixed !important"></div>
-												<div class="container animate_onoffset light" style="opacity: 0;">
+												<div class="container animate_onoffset light">
 													<div class="section_clear">
 														<div class="vc_col-sm-12 wpb_column column_container" style="" data-animation="" data-delay="0">
 															<div class="wpb_wrapper">
 																<div class="wpb_content_element full_testimonials full">
 																	<div class="row">
-																		<h2>What the say</h2>
+																		<h2>What they say</h2>
 																		<div class="header style_3">
 																			<div class="line_under">
 																				<div class="line_center"></div>
@@ -296,24 +296,19 @@
 																			</div>
 																		</div>
 																		<div class="carousel carousel_single_testimonial">
-																			<div class="single_testimonial ">
-																				<div class="content">
-																					<p>Sed at odio ut arcu fringilla dictum magna nisi. Aliquam at erat in purus velit vel dolo dictum magna nisi.  We've crafted some handsome templates for you to use.</p>
-																					<div class="data">
-																						<h6>Skyler Doe, <span class="position"> Ceo & Developer</span></h6></div>
-																						</div><span class="img_testimonial"><img width="65" height="65" src="/resources/assets/ausart/assets/uploads/2015/01/shutterstock_95201956.min-1-150x150.jpg" class="attachment-65x65 wp-post-image" alt="shutterstock_95201956.min (1)" /></span></div>
-																						<div class="single_testimonial ">
-																							<div class="content">
-																								<p>Lorem ipsum dolor slo onsec tueraliquet Morbi nec In Curabitur lreaoreet nel nislsuslorem in pellente e vidicus pannel lorem in pellente e vidicus pannelus lorem in pellente e vidicus pannel Lorem ipsum dolor  vidicus pannelus lorem in pellente e vidicus pannel Lorem ipsum dolor</p>
-																								<div class="data">
-																									<h6>Walter White, <span class="position"> Musican</span></h6></div>
-																									</div><span class="img_testimonial"><img width="65" height="65" src="/resources/assets/ausart/assets/uploads/2014/12/testimonial-150x150.jpg" class="attachment-65x65 wp-post-image" alt="testimonial" /></span></div>
-																									<div class="single_testimonial ">
-																										<div class="content">
-																											<p>Lorem ipsum dolor slo onsec tueraliquet Morbi nec In Curabitur lreaoreet nel nislsuslorem in pellente e vidicus pannel lorem in pellente e vidicus pannelus lorem in pellente e vidicus pannel Lorem ipsum dolor slo onsec tueraliquet Morbi nec In Curabitur lreaoreet nel nislsuslorem in pellente e vidicus pannel lorem</p>
-																											<div class="data">
-																												<h6>Denis Lover, <span class="position"> Happy Customer</span></h6></div>
-																												</div><span class="img_testimonial"><img width="65" height="65" src="/resources/assets/ausart/assets/uploads/2014/12/anon_user-150x150.png" class="attachment-65x65 wp-post-image" alt="anon_user" /></span></div>
+																		@foreach($_testimony as $testimony)
+																		<div class="single_testimonial ">
+																			<div class="content">
+																				<p>{{ $testimony->testimony_text }}</p>
+																				<div class="data">
+																					<h6>{{ $testimony->testimony_person }}, <span class="position"> {{ $testimony->testimony_position }}</span></h6>
+																				</div>
+																			</div>
+																			<span class="img_testimonial">
+																				<img width="65" height="65" src="/resources/assets/ausart/assets/uploads/2015/01/shutterstock_95201956.min-1-150x150.jpg" class="attachment-65x65 wp-post-image" alt="shutterstock_95201956.min (1)" />
+																			</span>
+																		</div>
+																		@endforeach
 																											</div>
 																										</div>
 																										<div class="controls">
@@ -326,7 +321,7 @@
 																						</div>
 																					</div>
 																				</div>
-																				<div id="fws_5559b27a8caaf" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="background-color: #f6f6f6; padding-top: 60px !important; padding-bottom: 60px !important; ">
+																				{{-- <div id="fws_5559b27a8caaf" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="background-color: #f6f6f6; padding-top: 60px !important; padding-bottom: 60px !important; ">
 																					<div class="container  dark">
 																						<div class="section_clear">
 																							<div class="vc_col-sm-12 wpb_column column_container" style="" data-animation="" data-delay="0">
@@ -407,7 +402,7 @@
 																							</div>
 																						</div>
 																					</div>
-																				</div>
+																				</div> --}}
 																				<div id="fws_5559b27a8eabd" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el full-width-content section-style    " style="padding-top: 90px !important; padding-bottom: 0px !important; ">
 																					<div class="col span_12  dark">
 																						<div class="vc_col-sm-12 wpb_column column_container" style="" data-animation="" data-delay="0">
@@ -449,7 +444,7 @@
 																																<ul class="overlay">
 																																	<li class="author">by Prolife</li>
 																																</ul>
-																																<p>{!! substr($news->news_description, 0, 170) !!}</p><a class="readmore" href="/news_content?id={{ $news->news_id }}">Read More</a>
+																																<p>{!! substr($news->news_description, 0, 170) !!}...</p><a class="readmore" href="/news_content?id={{ $news->news_id }}">Read More</a>
 																															</div>
 																															</dd>
 																														</dl>

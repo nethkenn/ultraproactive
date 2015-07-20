@@ -36,7 +36,7 @@
                                 <h1><a href="javascript:" style="padding: 0 20px;">{{ $news->news_title }}</a></h1>
                                 <div class="blog-content" style="white-space: pre-wrap;">{!! $news->news_description !!}</div>.
                                 <ul class="info">
-                                    <li><i class="moon-user"></i>Posted by admin&nbsp; <i class="moon-calendar"></i> Posted on 16 Jan&nbsp; <i class="moon-bubble"></i> 1 Comments</li>
+                                    <li><i class="moon-user"></i>Posted by Prolife&nbsp; <i class="moon-calendar"></i> Posted on {{ $news->day }} {{ $news->month }}&nbsp; </li>
                                     <li></li>
                                 </ul>
                                 </dd>
