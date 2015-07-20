@@ -5,12 +5,12 @@
             <h2><i class="fa fa-user-plus"></i> Add Partner</h2>
         </div>
         <div class="buttons col-md-4 text-right">
-            <button onclick="location.href='admin/maintenance/partner'" type="button" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back</button>
+            <button onclick="location.href='admin/content/partner'" type="button" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back</button>
             <button onclick="$('#country-add-form').submit();" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
         </div>
     </div>
     <div class="col-md-12 form-group-container" style="overflow: hidden;">
-        <form id="country-add-form" class="form-horizontal" action="admin/maintenance/partner/edit_submit" method="post">
+        <form id="country-add-form" class="form-horizontal" action="admin/content/partner/edit_submit" method="post">
             <div class="form-group col-md-8">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="id" value="{{ $partner->partner_id }}">
