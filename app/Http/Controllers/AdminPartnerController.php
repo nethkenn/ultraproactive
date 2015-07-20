@@ -15,11 +15,11 @@ class AdminPartnerController extends AdminController
 			$data["_partner"][$key]->image = $imagee;
 		}
 
-        return view('admin.maintenance.partner', $data);
+        return view('admin.content.partner', $data);
 	}
 	public function add()
 	{
-        return view('admin.maintenance.partner_add');
+        return view('admin.content.partner_add');
 	}
 	public function add_submit()
 	{
@@ -29,7 +29,7 @@ class AdminPartnerController extends AdminController
 
 		DB::table("tbl_partner")->insert(['partner_title' => $title, 'created_at' => $date, 'partner_image' => $image]);
 
-        return Redirect::to("/admin/maintenance/partner");
+        return Redirect::to("/admin/content/partner");
 	}	
 	public function edit()
 	{
@@ -39,7 +39,7 @@ class AdminPartnerController extends AdminController
 		$imagee = Image::view($data["partner"]->partner_image, "255x255");
 		$data["partner"]->image = $imagee;
 
-        return view('admin.maintenance.partner_edit', $data);
+        return view('admin.content.partner_edit', $data);
 	}
 	public function edit_submit()
 	{
@@ -50,7 +50,7 @@ class AdminPartnerController extends AdminController
 
 		DB::table("tbl_partner")->where("partner_id", $id)->update(['partner_title' => $title, 'updated_at' => $date, 'partner_image' => $image]);
 
-        return Redirect::to("/admin/maintenance/partner");
+        return Redirect::to("/admin/content/partner");
 	}	
 	public function delete()
 	{
@@ -58,6 +58,6 @@ class AdminPartnerController extends AdminController
 
 		DB::table("tbl_partner")->where("partner_id", $id)->update(['archived' => 1]);
 
-        return Redirect::to("/admin/maintenance/partner");
+        return Redirect::to("/admin/content/partner");
 	}	
 }

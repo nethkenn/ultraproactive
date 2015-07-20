@@ -7,7 +7,7 @@
 			<h2><i class="fa fa-book"></i> TESTIMONY MANAGEMENT</h2>
 		</div>
 		<div class="buttons col-md-4 text-right">
-			<button onclick="location.href='admin/maintenance/testimony/add'" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> ADD Testimony</button>
+			<button onclick="location.href='admin/content/testimony/add'" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> ADD Testimony</button>
 		</div>
 	</div>
 	<div class="filters ">
@@ -15,8 +15,8 @@
 </div>
 	{{-- <div class="filters ">
 		<div class="col-md-8">
-			<a class="{{$active = Request::input('archived') ? '' : 'active' }}" href="admin/maintenance/accounts/">ACTIVE</a>
-			<a class="{{$active = Request::input('archived') ? 'active' : '' }}" href="admin/maintenance/accounts/?archived=1">ARCHIVED</a>
+			<a class="{{$active = Request::input('archived') ? '' : 'active' }}" href="admin/content/accounts/">ACTIVE</a>
+			<a class="{{$active = Request::input('archived') ? 'active' : '' }}" href="admin/content/accounts/?archived=1">ARCHIVED</a>
 		</div>
 	</div> --}}
 <div class="col-md-12">
@@ -37,7 +37,7 @@
 				<td>{{ substr($testimony->testimony_text, 0, 50) }}...</td>
 				<td>{{ $testimony->testimony_person }}</td>
 				<td>{{ $testimony->testimony_position }}</td>
-				<td><a href="admin/maintenance/testimony/edit?id={{ $testimony->testimony_id }}">modify</a> | <a href="admin/maintenance/testimony/delete?id={{ $testimony->testimony_id }}">delete</a></td>
+				<td><a href="admin/content/testimony/edit?id={{ $testimony->testimony_id }}">modify</a> | <a href="admin/content/testimony/delete?id={{ $testimony->testimony_id }}">delete</a></td>
 			</tr>
 			@endforeach
 		</tbody>

@@ -73,12 +73,6 @@
 									<li><a href="admin/maintenance/deduction">Deductions</a></li>
 									<li><a href="admin/maintenance/membership">Membership</a></li>
 									<li><a href="admin/maintenance/ranking">Ranking</a></li>
-									<li><a href="admin/maintenance/news">News</a></li>
-									<li><a href="admin/maintenance/earn">Earn</a></li>
-									<li><a href="admin/maintenance/slide">Slide</a></li>
-									<li><a href="admin/maintenance/team">Team</a></li>
-									<li><a href="admin/maintenance/testimony">Testimonial</a></li>
-									<li><a href="admin/maintenance/partner">Partners</a></li>
 									<li><a href="admin/maintenance/inventory">Inventory</a></li>
 								</ul>
 							</li>
@@ -101,7 +95,19 @@
 								</ul>
 							</li>
 							<!-- USER MANUAL -->
-							<li class="{{ Request::segment(2) == 'manual' ? 'active' : 'inactive' }}"><a href="admin/">User Manual</a></li>
+							<!-- <li class="{{ Request::segment(2) == 'manual' ? 'active' : 'inactive' }}"><a href="admin/">User Manual</a></li> -->
+							<!-- CONTENT -->
+							<li class="dropdown {{ Request::segment(2) == 'content' ? 'active' : 'inactive' }}">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Content <span class="caret"></span></a>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="admin/content/news">News</a></li>
+									<li><a href="admin/content/earn">Earn</a></li>
+									<li><a href="admin/content/slide">Slide</a></li>
+									<li><a href="admin/content/team">Team</a></li>
+									<li><a href="admin/content/testimony">Testimonial</a></li>
+									<li><a href="admin/content/partner">Partners</a></li>
+								</ul>
+							</li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							<li class="dropdown {{ Request::segment(2) == 'account' ? 'active' : 'inactive' }}">

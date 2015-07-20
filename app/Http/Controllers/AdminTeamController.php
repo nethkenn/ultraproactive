@@ -15,11 +15,11 @@ class AdminTeamController extends AdminController
 			$data["_team"][$key]->image = $imagee;
 		}
 
-        return view('admin.maintenance.team', $data);
+        return view('admin.content.team', $data);
 	}
 	public function add()
 	{
-        return view('admin.maintenance.team_add');
+        return view('admin.content.team_add');
 	}
 	public function add_submit()
 	{
@@ -31,7 +31,7 @@ class AdminTeamController extends AdminController
 
 		DB::table("tbl_team")->insert(['team_title' => $title, 'team_description' => $description, 'created_at' => $date, 'team_image' => $image]);
 
-        return Redirect::to("/admin/maintenance/team");
+        return Redirect::to("/admin/content/team");
 	}	
 	public function edit()
 	{
@@ -41,7 +41,7 @@ class AdminTeamController extends AdminController
 		$imagee = Image::view($data["team"]->team_image, "255x255");
 		$data["team"]->image = $imagee;
 
-        return view('admin.maintenance.team_edit', $data);
+        return view('admin.content.team_edit', $data);
 	}
 	public function edit_submit()
 	{
@@ -53,7 +53,7 @@ class AdminTeamController extends AdminController
 
 		DB::table("tbl_team")->where("team_id", $id)->update(['team_title' => $title, 'team_description' => $description, 'updated_at' => $date, 'team_image' => $image]);
 
-        return Redirect::to("/admin/maintenance/team");
+        return Redirect::to("/admin/content/team");
 	}	
 	public function delete()
 	{
@@ -61,6 +61,6 @@ class AdminTeamController extends AdminController
 
 		DB::table("tbl_team")->where("team_id", $id)->update(['archived' => 1]);
 
-        return Redirect::to("/admin/maintenance/team");
+        return Redirect::to("/admin/content/team");
 	}	
 }

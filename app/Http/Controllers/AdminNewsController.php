@@ -15,11 +15,11 @@ class AdminNewsController extends AdminController
 			$data["_news"][$key]->image = $imagee;
 		}
 
-        return view('admin.maintenance.news', $data);
+        return view('admin.content.news', $data);
 	}
 	public function add()
 	{
-        return view('admin.maintenance.news_add');
+        return view('admin.content.news_add');
 	}
 	public function add_submit()
 	{
@@ -30,7 +30,7 @@ class AdminNewsController extends AdminController
 
 		DB::table("tbl_news")->insert(['news_title' => $title, 'news_description' => $description, 'news_date' => $date, 'news_image' => $image]);
 
-        return Redirect::to("/admin/maintenance/news");
+        return Redirect::to("/admin/content/news");
 	}	
 	public function edit()
 	{
@@ -40,7 +40,7 @@ class AdminNewsController extends AdminController
 		$imagee = Image::view($data["news"]->news_image, "255x255");
 		$data["news"]->image = $imagee;
 
-        return view('admin.maintenance.news_edit', $data);
+        return view('admin.content.news_edit', $data);
 	}
 	public function edit_submit()
 	{
@@ -52,7 +52,7 @@ class AdminNewsController extends AdminController
 
 		DB::table("tbl_news")->where("news_id", $id)->update(['news_title' => $title, 'news_description' => $description, 'news_date' => $date, 'news_image' => $image]);
 
-        return Redirect::to("/admin/maintenance/news");
+        return Redirect::to("/admin/content/news");
 	}	
 	public function delete()
 	{
@@ -60,6 +60,6 @@ class AdminNewsController extends AdminController
 
 		DB::table("tbl_news")->where("news_id", $id)->update(['archived' => 1]);
 
-        return Redirect::to("/admin/maintenance/news");
+        return Redirect::to("/admin/content/news");
 	}	
 }

@@ -10,11 +10,11 @@ class AdminTestimonyController extends AdminController
 	{
 		$data["_testimony"] = DB::table("tbl_testimony")->where("archived", 0)->get();
 
-        return view('admin.maintenance.testimony', $data);
+        return view('admin.content.testimony', $data);
 	}
 	public function add()
 	{
-        return view('admin.maintenance.testimony_add');
+        return view('admin.content.testimony_add');
 	}
 	public function add_submit()
 	{
@@ -25,14 +25,14 @@ class AdminTestimonyController extends AdminController
 
 		DB::table("tbl_testimony")->insert(['testimony_text' => $text, 'testimony_person' => $person, 'testimony_position' => $position, 'created_at' => $date]);
 
-        return Redirect::to("/admin/maintenance/testimony");
+        return Redirect::to("/admin/content/testimony");
 	}	
 	public function edit()
 	{
 		$id = Request::input("id");
 		$data["testimony"] = DB::table("tbl_testimony")->where("testimony_id", $id)->first();
 
-        return view('admin.maintenance.testimony_edit', $data);
+        return view('admin.content.testimony_edit', $data);
 	}
 	public function edit_submit()
 	{
@@ -44,7 +44,7 @@ class AdminTestimonyController extends AdminController
 
 		DB::table("tbl_testimony")->where("testimony_id", $id)->update(['testimony_text' => $text, 'testimony_person' => $person, 'testimony_position' => $position, 'updated_at' => $date]);
 
-        return Redirect::to("/admin/maintenance/testimony");
+        return Redirect::to("/admin/content/testimony");
 	}	
 	public function delete()
 	{
@@ -52,6 +52,6 @@ class AdminTestimonyController extends AdminController
 
 		DB::table("tbl_testimony")->where("testimony_id", $id)->update(['archived' => 1]);
 
-        return Redirect::to("/admin/maintenance/testimony");
+        return Redirect::to("/admin/content/testimony");
 	}	
 }

@@ -52,53 +52,53 @@ Route::any('admin/maintenance/accounts/field', 'AdminAccountController@field');
 Route::get('admin/maintenance/accounts/field/delete', 'AdminAccountController@field_delete');
 
 /* PARTNER MANAGEMENT */
-Route::get('admin/maintenance/partner', 'AdminPartnerController@index');
-Route::get('admin/maintenance/partner/add', 'AdminPartnerController@add');
-Route::any('admin/maintenance/partner/add_submit', 'AdminPartnerController@add_submit');
-Route::get('admin/maintenance/partner/edit', 'AdminPartnerController@edit');
-Route::any('admin/maintenance/partner/edit_submit', 'AdminPartnerController@edit_submit');
-Route::any('admin/maintenance/partner/delete', 'AdminPartnerController@delete');
+Route::get('admin/content/partner', 'AdminPartnerController@index');
+Route::get('admin/content/partner/add', 'AdminPartnerController@add');
+Route::any('admin/content/partner/add_submit', 'AdminPartnerController@add_submit');
+Route::get('admin/content/partner/edit', 'AdminPartnerController@edit');
+Route::any('admin/content/partner/edit_submit', 'AdminPartnerController@edit_submit');
+Route::any('admin/content/partner/delete', 'AdminPartnerController@delete');
 
 /* TESTIMONY MANAGEMENT */
-Route::get('admin/maintenance/testimony', 'AdminTestimonyController@index');
-Route::get('admin/maintenance/testimony/add', 'AdminTestimonyController@add');
-Route::any('admin/maintenance/testimony/add_submit', 'AdminTestimonyController@add_submit');
-Route::get('admin/maintenance/testimony/edit', 'AdminTestimonyController@edit');
-Route::any('admin/maintenance/testimony/edit_submit', 'AdminTestimonyController@edit_submit');
-Route::any('admin/maintenance/testimony/delete', 'AdminTestimonyController@delete');
+Route::get('admin/content/testimony', 'AdminTestimonyController@index');
+Route::get('admin/content/testimony/add', 'AdminTestimonyController@add');
+Route::any('admin/content/testimony/add_submit', 'AdminTestimonyController@add_submit');
+Route::get('admin/content/testimony/edit', 'AdminTestimonyController@edit');
+Route::any('admin/content/testimony/edit_submit', 'AdminTestimonyController@edit_submit');
+Route::any('admin/content/testimony/delete', 'AdminTestimonyController@delete');
 
 /* SLIDE MANAGEMENT */
-Route::get('admin/maintenance/slide', 'AdminSlideController@index');
-Route::get('admin/maintenance/slide/add', 'AdminSlideController@add');
-Route::any('admin/maintenance/slide/add_submit', 'AdminSlideController@add_submit');
-Route::get('admin/maintenance/slide/edit', 'AdminSlideController@edit');
-Route::any('admin/maintenance/slide/edit_submit', 'AdminSlideController@edit_submit');
-Route::any('admin/maintenance/slide/delete', 'AdminSlideController@delete');
+Route::get('admin/content/slide', 'AdminSlideController@index');
+Route::get('admin/content/slide/add', 'AdminSlideController@add');
+Route::any('admin/content/slide/add_submit', 'AdminSlideController@add_submit');
+Route::get('admin/content/slide/edit', 'AdminSlideController@edit');
+Route::any('admin/content/slide/edit_submit', 'AdminSlideController@edit_submit');
+Route::any('admin/content/slide/delete', 'AdminSlideController@delete');
 
 
 /* NEWS MANAGEMENT */
-Route::get('admin/maintenance/news', 'AdminNewsController@index');
-Route::get('admin/maintenance/news/add', 'AdminNewsController@add');
-Route::any('admin/maintenance/news/add_submit', 'AdminNewsController@add_submit');
-Route::get('admin/maintenance/news/edit', 'AdminNewsController@edit');
-Route::any('admin/maintenance/news/edit_submit', 'AdminNewsController@edit_submit');
-Route::any('admin/maintenance/news/delete', 'AdminNewsController@delete');
+Route::get('admin/content/news', 'AdminNewsController@index');
+Route::get('admin/content/news/add', 'AdminNewsController@add');
+Route::any('admin/content/news/add_submit', 'AdminNewsController@add_submit');
+Route::get('admin/content/news/edit', 'AdminNewsController@edit');
+Route::any('admin/content/news/edit_submit', 'AdminNewsController@edit_submit');
+Route::any('admin/content/news/delete', 'AdminNewsController@delete');
 
 /* EARN MANAGEMENT */
-Route::get('admin/maintenance/earn', 'AdminEarnController@index');
-Route::get('admin/maintenance/earn/add', 'AdminEarnController@add');
-Route::any('admin/maintenance/earn/add_submit', 'AdminEarnController@add_submit');
-Route::get('admin/maintenance/earn/edit', 'AdminEarnController@edit');
-Route::any('admin/maintenance/earn/edit_submit', 'AdminEarnController@edit_submit');
-Route::any('admin/maintenance/earn/delete', 'AdminEarnController@delete');
+Route::get('admin/content/earn', 'AdminEarnController@index');
+Route::get('admin/content/earn/add', 'AdminEarnController@add');
+Route::any('admin/content/earn/add_submit', 'AdminEarnController@add_submit');
+Route::get('admin/content/earn/edit', 'AdminEarnController@edit');
+Route::any('admin/content/earn/edit_submit', 'AdminEarnController@edit_submit');
+Route::any('admin/content/earn/delete', 'AdminEarnController@delete');
 
 /* Team MANAGEMENT */
-Route::get('admin/maintenance/team', 'AdminTeamController@index');
-Route::get('admin/maintenance/team/add', 'AdminTeamController@add');
-Route::any('admin/maintenance/team/add_submit', 'AdminTeamController@add_submit');
-Route::get('admin/maintenance/team/edit', 'AdminTeamController@edit');
-Route::any('admin/maintenance/team/edit_submit', 'AdminTeamController@edit_submit');
-Route::any('admin/maintenance/team/delete', 'AdminTeamController@delete');
+Route::get('admin/content/team', 'AdminTeamController@index');
+Route::get('admin/content/team/add', 'AdminTeamController@add');
+Route::any('admin/content/team/add_submit', 'AdminTeamController@add_submit');
+Route::get('admin/content/team/edit', 'AdminTeamController@edit');
+Route::any('admin/content/team/edit_submit', 'AdminTeamController@edit_submit');
+Route::any('admin/content/team/delete', 'AdminTeamController@delete');
 
 /**
  * MEMBERSHIP CODE GENERATOR

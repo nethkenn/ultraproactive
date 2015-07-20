@@ -7,7 +7,7 @@
 			<h2><i class="fa fa-teampaper-o"></i> team MANAGEMENT</h2>
 		</div>
 		<div class="buttons col-md-4 text-right">
-			<button onclick="location.href='admin/maintenance/team/add'" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> ADD team</button>
+			<button onclick="location.href='admin/content/team/add'" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> ADD team</button>
 		</div>
 	</div>
 	<div class="filters ">
@@ -15,8 +15,8 @@
 </div>
 	{{-- <div class="filters ">
 		<div class="col-md-8">
-			<a class="{{$active = Request::input('archived') ? '' : 'active' }}" href="admin/maintenance/accounts/">ACTIVE</a>
-			<a class="{{$active = Request::input('archived') ? 'active' : '' }}" href="admin/maintenance/accounts/?archived=1">ARCHIVED</a>
+			<a class="{{$active = Request::input('archived') ? '' : 'active' }}" href="admin/content/accounts/">ACTIVE</a>
+			<a class="{{$active = Request::input('archived') ? 'active' : '' }}" href="admin/content/accounts/?archived=1">ARCHIVED</a>
 		</div>
 	</div> --}}
 <div class="col-md-12">
@@ -37,7 +37,7 @@
 				<td><a href="{{ $team->image }}">{{ $team->team_image }}</a></td>
 				<td>{{ $team->team_title }}</td>
 				<td>{{ $team->team_role }}</td>
-				<td><a href="admin/maintenance/team/edit?id={{ $team->team_id }}">modify</a> | <a href="admin/maintenance/team/delete?id={{ $team->team_id }}">delete</a></td>
+				<td><a href="admin/content/team/edit?id={{ $team->team_id }}">modify</a> | <a href="admin/content/team/delete?id={{ $team->team_id }}">delete</a></td>
 			</tr>
 			@endforeach
 		</tbody>
