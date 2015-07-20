@@ -22,7 +22,7 @@ class MemberCheckoutController extends Controller
      */
     public function checkout()
     {
-        $data['_error'] = null;
+                $data['_error'] = null;
         $customer = Customer::info();
         $slot = Tbl_slot::where('slot_id', Request::input('slot_id'))->where('slot_owner', $customer->account_id)->first();
         $data['slot'] = $slot;
@@ -37,8 +37,34 @@ class MemberCheckoutController extends Controller
         if(isset($_POST['slot_id']))
         {
 
+
             $validate_slot_wallet = $slot->slot_wallet >= $data['final_total'];
             $cart_count = count($cart) >= 1;
+
+
+
+            /**
+             * VALIDATOR REQUEST PRODUCT CART
+             */
+            foreach( (array)$cart as $key => $val)
+            {
+
+                $request['product_'.$key] = $key;
+
+
+            }
+
+
+             /**
+             * VALIDATOR RULES PRODUCT CART
+             */
+            foreach( (array)$cart as $key => $val)
+            {
+
+                $product = Tbl_product::where('product_id', $key)->first();
+                $rules['product_'.$key] = 'integer|has_stock:'.$product->stock_qty .','. $val['qty'];
+
+            }
 
             $request['slot_id'] = Request::input('slot_id');
             $rules['slot_id'] = 'required|exists:tbl_slot,slot_id,slot_owner,'.$customer->account_id;
@@ -54,10 +80,46 @@ class MemberCheckoutController extends Controller
                             'cart.accepted' => 'The :attribute is empty.'
                         ];
 
+            /**
+             * VALIDATOR MESSAGE PRODUCT CART
+             */
+            foreach((array)$cart as $key => $val)
+            {
+                    
+                $message['product_'.$key.'.has_stock'] = 'The :attribute has unsufficient stock.';
+
+            }  
 
 
 
-            $validator = $validator = Validator::make($request, $rules, $message);
+            Validator::extend('has_stock', function($attribute, $value, $parameters)
+            {
+     
+                $stock_qty = $parameters[0];
+                $cart_qty = $parameters[1];
+                $stock_minus_cart_qty = $stock_qty-$cart_qty;
+
+                if($stock_qty < $cart_qty || $stock_minus_cart_qty < 0)
+                {
+                    
+                   
+                    $cart = Session::get('cart');
+                    unset($cart[$value]);
+                    Session::forget('cart');
+                    Session::put('cart',$cart );
+                    return false;
+
+                }
+                else
+                {
+                    return $value;
+                }
+            });
+
+
+            
+
+            $validator = Validator::make($request, $rules, $message);
             if($validator->fails())
             {
                 $data['_error'] = $validator->errors()->all();
@@ -75,22 +137,25 @@ class MemberCheckoutController extends Controller
                 foreach ((array)$cart as $key => $value)
                 {
    
+
                     $insert_prod =  array(
-                                        'product_id' =>  $key,
-                                        'voucher_id'=> $voucher->voucher_id,
-                                        'price' => $value['price'],
-                                        'qty'=> $value['qty'],
-                                        'sub_total' => $value['total']
-                                        );
+                        'product_id' =>  $key,
+                        'voucher_id'=> $voucher->voucher_id,
+                        'price' => $value['price'],
+                        'qty'=> $value['qty'],
+                        'sub_total' => $value['total']
+                    );
 
-
-
+                    // $product = Tbl_product::find($key);
+                    // $updated_stock_qty = $product->stock_qty - $value['qty'];
+                    // Tbl_product::where('product_id', $key)->lockForUpdate()->update(['stock_qty'=>$updated_stock_qty]);
 
                     $voucher_has_product = new Tbl_voucher_has_product($insert_prod);
                     $voucher_has_product->save();
 
-
                 }
+
+
 
                 Session::put('cart',[]);
 
@@ -102,6 +167,9 @@ class MemberCheckoutController extends Controller
                               <a  id="back-to-product" href="#" class="btn btn-default">Return to Product page</a>
                               <a class="btn btn-default" href="/member/voucher">View Vouchers</a>
                         </div>';
+
+
+
             }        
         }
              
