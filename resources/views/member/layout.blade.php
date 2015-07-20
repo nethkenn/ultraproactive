@@ -804,16 +804,16 @@
     });
 </script>
 <script type="text/javascript">
-setInterval(
-    function()
-    {
-        if( $(".remodal").hasClass('remodal-is-opened') ) {
-             $('.footable').trigger('footable_initialize');
-         }
-        else{
+// setInterval(
+//     function()
+//     {
+//         if( $(".remodal").hasClass('remodal-is-opened') ) {
+//              $('.footable').trigger('footable_initialize');
+//          }
+//         else{
         
-        }
-    }, 1000);
+//         }
+//     }, 1000);
 $(document).ready(function()
 {
     myTimeoutFunction();
