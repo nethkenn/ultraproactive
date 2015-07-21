@@ -165,13 +165,24 @@ body {
           display: none; } }
       .wrapper .header-nav .navbar-right .select-label:hover {
         background-color: white; }
+    .wrapper .header-nav .navbar-right .slot-number-container {
+      text-transform: uppercase;
+      width: 200px;
+      text-align: left;
+      color: #000; }
+      .wrapper .header-nav .navbar-right .slot-number-container option {
+        padding: 5px; }
   .wrapper .header-nav .navbar {
     clear: both;
     position: relative; }
-    .wrapper .header-nav .navbar .nav li {
-      font-size: 14.58px; }
-      .wrapper .header-nav .navbar .nav li:hover {
-        background-color: #40c0c0; }
+    .wrapper .header-nav .navbar .select-label {
+      font-size: 14.48px; }
+    .wrapper .header-nav .navbar .nav {
+      text-transform: uppercase; }
+      .wrapper .header-nav .navbar .nav li {
+        font-size: 13px; }
+        .wrapper .header-nav .navbar .nav li:hover {
+          background-color: #40c0c0; }
     .wrapper .header-nav .navbar .hidden-bury select {
       margin: 8px 20px; }
     .wrapper .header-nav .navbar .shadow {
@@ -179,12 +190,13 @@ body {
       position: absolute;
       background: transparent url("/resources/assets/ausart/assets/img/header_shadow.png") no-repeat scroll center bottom;
       height: 89px;
-      top: 34px; }
+      background-size: 100%;
+      top: 50px; }
       @media screen and (max-width: 991px) {
         .wrapper .header-nav .navbar .shadow {
           display: none; } }
   .wrapper .content {
-    margin-top: 60px; }
+    margin-top: 40px; }
 
 .create-slot {
   border-top: 5px #f47265 solid;

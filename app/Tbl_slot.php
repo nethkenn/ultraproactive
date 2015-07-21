@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
 class Tbl_slot extends Model
 {
 	protected $table = 'tbl_slot';
@@ -24,6 +23,10 @@ class Tbl_slot extends Model
     public function scopeId($query, $slot_id)
     {
         return $query->where("slot_id", $slot_id);
+    }
+    public function scopePlacement($query, $slot_id)
+    {
+        return $query->where("placement", $slot_id);
     }
     public function scopeCheckposition($query, $placement, $position)
     {

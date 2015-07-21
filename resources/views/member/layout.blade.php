@@ -19,7 +19,7 @@
 
 </head>
 <div class="bg">
-	<div class="wrapper container">
+	<div class="wrapper">
 		<div class="header-nav">
 			<div class="header">
 				<div class="col-md-6 ubod">
@@ -59,7 +59,7 @@
 			      </button>
 			    </div>
 
-			    <!-- Collect the nav links, forms, and other content for toggling -->
+			    <!-- NAVIGATION -->
 			    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="overflow: hidden;">
 			      <ul class="nav navbar-nav">
 			        <li class="{{ Request::segment(2) == '' ? 'active' : '' }}"><a href="/member">Dashboard</a></li>
@@ -72,20 +72,16 @@
 			        <li class="{{ Request::segment(2) == 'leads' ? 'active' : '' }}"><a href="/member/leads">Leads</a></li>
 			      </ul>
 			      <ul class="nav navbar-nav navbar-right" style="margin-right: 0;">
-                    <li>
-                        @if($slotnow)
-                        <div class="select-label">You are using</div>
-                        @endif
-                    </li>
+
 			         <li>
                         @if($slotnow)
                             <form method="post" name="myform">
                                 <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
-                                <select class="form-control" onchange="this.form.submit()" name="slotnow"> 
-                                        <option value="{{$slotnow->slot_id}}">Slot #{{$slotnow->slot_id}} ({{$slotnow->slot_wallet}})</option> 
+                                <select class="form-control slot-number-container" onchange="this.form.submit()" name="slotnow"> 
+                                        <option value="{{$slotnow->slot_id}}">SLOT #{{$slotnow->slot_id}} [ {{ number_format($slotnow->slot_wallet, 2)}} ]</option> 
                                         @if($slot)                                                    
                                             @foreach($slot as $slots)
-                                            <option value="{{$slots->slot_id}}">Slot #{{$slots->slot_id}} ({{$slots->slot_wallet}})</option>
+                                            <option value="{{$slots->slot_id}}">SLOT #{{$slots->slot_id}} [ {{ number_format($slots->slot_wallet, 2)}} ]</option>
                                             @endforeach
                                         @endif    
                                  </select>
@@ -95,12 +91,13 @@
                         @endif
                      </li>
 			      </ul>
-			    </div><!-- /.navbar-collapse -->
+			    </div>
+
 			    <div class="shadow"></div>
 			  </div><!-- /.container-fluid -->
 			</nav>
 		</div>
-		<div class="content para">
+		<div class="content para container">
 		@yield('content')
 		</div>
 		<div class="footer">
