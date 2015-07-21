@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
         $this->call('tbl_testimony');
         $this->call('tbl_product');
         $this->call('tbl_news');
-        $this->call('tbl_partner')
+        $this->call('tbl_partner');
     }
 }
 
