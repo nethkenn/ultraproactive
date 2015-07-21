@@ -42,7 +42,8 @@ Route::get('admin/transaction/sales', 'AdminSalesController@index');
 Route::get('admin/transaction/claims', 'AdminClaimController@index');
 Route::get('admin/transaction/claims/data', 'AdminClaimController@data');
 Route::any('admin/transaction/claims/check', 'AdminClaimController@check');
-
+Route::post('admin/transaction/claims/claim', 'AdminClaimController@claim');
+Route::post('admin/transaction/claims/void', 'AdminClaimController@void');
 
 Route::get('admin/transaction/payout', 'AdminPayoutController@index');
 Route::get('admin/transaction/unilevel', 'AdminUnilevelController@index');
