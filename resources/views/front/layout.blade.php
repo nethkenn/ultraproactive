@@ -118,9 +118,9 @@
                         <div class="after_logo">
                             <!-- Search -->
                             <div class="header_search">
-                                <div class="right_search">
+                                {{-- <div class="right_search">
                                     <i class="moon-search-2"></i>
-                                </div>
+                                </div> --}}
                                 <div class="right_search_container">
                                     <form action="#" id="search-form">
                                         <div class="input-append">
@@ -219,7 +219,7 @@
                                             <i class='moon-pencil'></i>
                                         </dt>
                                         <dd>
-                                            <div class="title"><a href="post.html">{{ $newsfooter->news_title }}</a></div>
+                                            <div class="title"><a href="/news_content?id={{ $newsfooter->news_id     }}">{{ $newsfooter->news_title }}</a></div>
                                             <span>{{ $newsfooter->month }} {{ $newsfooter->day }}, {{ $newsfooter->year }}</span>
                                         </dd>
                                     </dl>
