@@ -736,7 +736,7 @@
 																									<section class="row clients clients_caro weaktype">
 																										@foreach($_partner as $partner)
 																										<div class="item">
-																											<a href="{{ $partner->partner_link }}" title="">
+																											<a href="{{ $partner->partner_link }}" title="" target="_blank">
 																												<img src="{{ $partner->image }}" alt="">
 																											</a>
 																										</div>

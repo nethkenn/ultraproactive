@@ -34,6 +34,54 @@ Just click on our partner’s links for more details.
 				</div>
 			</div>
 		</div>
+		<div id="fws_556c48d32ea98" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="padding-top: 0px !important; padding-bottom: 80px !important; ">
+            <div class="bg-overlay" style="background:rgba(, , , 0.5);z-index:1;"></div>
+            <div class="container  dark">
+                <div class="section_clear">
+                    <div class="vc_col-sm-4 wpb_column column_container" style="" data-animation="" data-delay="0">
+                        <div class="wpb_wrapper">
+                            <div class="header " style="">
+                                <h2>We Provide</h2></div>
+                            <div class="wpb_content_element block_skill">
+                               <ul style="padding-left: 20px;">
+                               		<li>Beauty Products</li>
+                               		<li>Health Drinks</li>
+                               		<li>Hygienic Products</li>
+                               		<li>On line remittance 24/7</li>
+                               		<li>E- learning</li>
+                               		<li>E-payments</li>
+                               		<li>Airline ticket discounts</li>
+                               </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="vc_col-sm-8 wpb_column column_container" style="" data-animation="" data-delay="0">
+                        <div class="wpb_wrapper">
+                            <div class="header " style="margin-top: 13px;">
+                                <h2>Testimonials</h2></div>
+                            <div class="wpb_text_column wpb_content_element ">
+                                <div class="wpb_wrapper">
+                                    <div class="wpb_text_column wpb_content_element ">
+                                        <div class="wpb_wrapper">
+                                        	@foreach($_testimony as $testimony)
+                                            <div class="testi-holder">
+                                            	<div class="testi-text">
+                                            		{{ $testimony->testimony_text }}
+                                            	</div>
+                                            	<div class="testi-name">
+                                            		- {{ $testimony->testimony_person }}, {{ $testimony->testimony_position }}
+                                            	</div>	
+                                            </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 		<div id="fws_556c48d32ff40" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="padding-top: 0px !important; padding-bottom: 60px !important; ">
 			<div class="container  dark">
 				<div class="section_clear">
@@ -45,7 +93,7 @@ Just click on our partner’s links for more details.
 								<section class="row clients clients_caro weaktype">
 									@foreach($_partner as $partner)
 									<div class="item">
-										<a href="{{ $partner->partner_link }}" title="">
+										<a href="{{ $partner->partner_link }}" title="" target="_blank">
 											<img src="{{ $partner->image }}" alt="">
 										</a>
 									</div>

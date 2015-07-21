@@ -15091,3 +15091,23 @@ h4 {
     padding-top: 0 !important;
     float: none !important;
 }
+.testi-holder:first-child
+{
+    margin-top: 0;
+}
+.testi-holder
+{
+    clear: both;
+    overflow: auto;
+    margin-top: 30px;
+}
+.testi-holder .testi-text
+{
+    
+}
+.testi-holder .testi-name
+{
+    float: right;
+    margin-top: 15px;
+    color: #009DCE;
+}

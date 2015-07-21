@@ -93,6 +93,8 @@ class FrontController extends Controller
 			$imagee = Image::view($get, "150x60");
 			$data["_partner"][$key]->image = $imagee;
 		}
+
+		$data["_testimony"] = DB::table("tbl_testimony")->where("archived", 0)->get();
         return view('front.partner', $data);
 	}
 	public function earn()
@@ -140,7 +142,7 @@ class FrontController extends Controller
 	{
 		$data["_news"] = DB::table("tbl_news")->where("archived", 0)->get();
 		$data["_newss"] = DB::table("tbl_news")->where("archived", 0)->orderBy('news_id', 'desc')->take(4)->get();
-		$data["_product"] =  DB::table("tbl_product")->where("archived", 0)->orderBy('product_id', 'desc')->take(6)->get();
+		$data["_product"] =  DB::table("tbl_product")->where("archived", 0)->where("image_file", "!=", "default.jpg")->where("image_file", "!=", "")->orderBy('product_id', 'desc')->take(6)->get();
 		foreach ($data["_news"] as $key => $value) 
 		{
 			$get = $value->news_image;
