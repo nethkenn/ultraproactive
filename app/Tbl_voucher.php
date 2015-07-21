@@ -40,10 +40,10 @@ class Tbl_voucher extends Model
     }
 
 
-    public function getStatusAttribute($value)
-    {
-        return ucfirst($value);
-    }
+    // public function getStatusAttribute($value)
+    // {
+    //     return ucfirst($value);
+    // }
 
 
 }
