@@ -23,7 +23,7 @@ class AdminClaimController extends AdminController
 		$voucher = Tbl_voucher::all();
 
 		return Datatables::of($voucher)	->editColumn('status','{{$status}}')
-										->addColumn('cancel_or_view_voucher','<a class="cancel-voucher" voucher-id="">Cancel</a>|<a class="view-voucher" voucher-id="">View Voucher</a>')
+										->addColumn('cancel_or_view_voucher','<a style="cursor: pointer;" class="view-voucher" voucher-id="{{$voucher_id}}">View Voucher</a>')
 			                            ->make(true);
 	}
 
@@ -228,7 +228,7 @@ class AdminClaimController extends AdminController
 		$current_admin_pass = Crypt::decrypt(Admin::info()->account_password);
 
 
-		$rules['voucher_id'] = 'required|exists:tbl_voucher,voucher_id,status,unclaimed';
+		$rules['voucher_id'] = 'required|exists:tbl_voucher,voucher_id,status,unclaimed,status,processed';
 		$rules['account_password'] = 'required|check_pass:'.$current_admin_pass;
 
 		$messages['account_password.check_pass'] = "Invalid Password.";
@@ -248,13 +248,43 @@ class AdminClaimController extends AdminController
 			$data['_error'] = $validator->messages()->all();
 		}
 		else
-		{
+		{	
+
+
+			$voucher_product = Tbl_voucher_has_product::where('voucher_id', Request::input('voucher_id'))->get()->toArray();
+
+
+
+
+
 			Tbl_voucher::where('voucher_id', Request::input('voucher_id'))->lockForUpdate()->update(['status'=>'cancelled']);
+			$voucher = Tbl_voucher::find(Request::input('voucher_id'));
+			if($voucher->status="processed")
+			{
+				foreach ($voucher_product as $key => $product)
+				{
+					$current_product = Tbl_product::find($product['product_id']);
+
+					$updated_stock = $current_product->stock_qty + $product['qty'];
+					Tbl_product::where('product_id',$product['product_id'])->lockForUpdate()->update(['stock_qty'=> $updated_stock] );
+				}
+			}
 
 		}
 
 		return $data;
 	}
+
+
+	public function show_product()
+	{
+				$voucher_id = Request::input('voucher_id');
+				$data['voucher'] = 	Tbl_voucher::find($voucher_id);
+				$data['_voucher_product']  = Tbl_voucher_has_product::where('voucher_id', $voucher_id)->product()->get();
+	
+				return view('admin.transaction.claim_voucher_product', $data);
+	}
+
 
 
 
