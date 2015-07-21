@@ -25,9 +25,10 @@ class AdminPartnerController extends AdminController
 	{
 		$title = Request::input("title");
 		$date = date('Y-m-d H:i:s');
+		$link = Request::input("link");
 		$image = Request::input("image_file");
 
-		DB::table("tbl_partner")->insert(['partner_title' => $title, 'created_at' => $date, 'partner_image' => $image]);
+		DB::table("tbl_partner")->insert(['partner_title' => $title, 'created_at' => $date, 'partner_image' => $image, 'partner_link' => $link]);
 
         return Redirect::to("/admin/content/partner");
 	}	
@@ -45,10 +46,11 @@ class AdminPartnerController extends AdminController
 	{
 		$id = Request::input("id");
 		$title = Request::input("title");
+		$link = Request::input("link");
 		$date = date('Y-m-d H:i:s');
 		$image = Request::input("image_file");
 
-		DB::table("tbl_partner")->where("partner_id", $id)->update(['partner_title' => $title, 'updated_at' => $date, 'partner_image' => $image]);
+		DB::table("tbl_partner")->where("partner_id", $id)->update(['partner_title' => $title, 'updated_at' => $date, 'partner_image' => $image, 'partner_link' => $link]);
 
         return Redirect::to("/admin/content/partner");
 	}	

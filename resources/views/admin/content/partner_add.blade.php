@@ -19,6 +19,12 @@
                         <input type="text" class="form-control" id="title" name="title" required>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label for="link" class="col-sm-2 control-label">Partner Link</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="link" name="link" required>
+                    </div>
+                </div>
             </div>
              <div class="form-group col-md-4 text-center">
                 <label for="p-tags">Partner Image</label>
