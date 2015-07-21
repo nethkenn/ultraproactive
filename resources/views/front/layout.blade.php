@@ -140,7 +140,7 @@
                                     <li class="{{ Request::segment(1) == '' ? 'current-menu-ancestor' : '' }} menu-item-has-children"><a href="/">Home</a></li>
                                     <li class="{{ Request::segment(1) == 'about' ? 'current-menu-ancestor' : '' }} menu-item   menu-item-has-children"><a href="/about">About Us</a></li>
                                     <li class="hide {{ Request::segment(1) == 'earn' ? 'current-menu-ancestor' : '' }} menu-item   menu-item-has-children"><a href="/earn">Earn</a></li>
-                                    <li class="hide {{ Request::segment(1) == 'partner' ? 'current-menu-ancestor' : '' }} menu-item   menu-item-has-children"><a href="/partner">Partners</a></li>
+                                    <li class="{{ Request::segment(1) == 'partner' ? 'current-menu-ancestor' : '' }} menu-item   menu-item-has-children"><a href="/partner">Partners</a></li>
                                     <li class="{{ Request::segment(1) == 'service' ? 'current-menu-ancestor' : '' }} menu-item-has-children"><a href="/service">Services</a></li>
                                     <li class="{{ Request::segment(1) == 'product' ? 'current-menu-ancestor' : '' }} menu-item   menu-item-has-children"><a href="/product">Products</a></li>
                                     <li class="{{ Request::segment(1) == 'news' ? 'current-menu-ancestor' : '' }}  menu-item-has-children"><a href="/news">News</a></li>
@@ -150,7 +150,7 @@
                         </div>
                         <!-- #navigation -->
                         <!-- End custom menu here -->
-                        <a href="/#" class="mobile_small_menu open"></a>
+                        <a href="#" class="mobile_small_menu open"></a>
                     </div>
                 </div>
             </div>
@@ -162,7 +162,8 @@
             <ul class="menu">
                 <li class="{{ Request::segment(1) == '' ? 'current-menu-ancestor' : '' }} menu-item-has-children"><a href="/">Home</a></li>
                 <li class="{{ Request::segment(1) == 'about' ? 'current-menu-ancestor' : '' }} menu-item   menu-item-has-children"><a href="/about">About Us</a></li>
-                <li class="{{ Request::segment(1) == 'earn' ? 'current-menu-ancestor' : '' }} menu-item   menu-item-has-children"><a href="/earn">Earn</a></li>
+                <li class="hide {{ Request::segment(1) == 'earn' ? 'current-menu-ancestor' : '' }} menu-item   menu-item-has-children"><a href="/earn">Earn</a></li>
+                <li class="{{ Request::segment(1) == 'partner' ? 'current-menu-ancestor' : '' }} menu-item   menu-item-has-children"><a href="/partner">Partners</a></li>
                 <li class="{{ Request::segment(1) == 'service' ? 'current-menu-ancestor' : '' }} menu-item-has-children"><a href="/service">Services</a></li>
                 <li class="{{ Request::segment(1) == 'product' ? 'current-menu-ancestor' : '' }} menu-item   menu-item-has-children"><a href="/product">Products</a></li>
                 <li class="{{ Request::segment(1) == 'news' ? 'current-menu-ancestor' : '' }}  menu-item-has-children"><a href="/news">News</a></li>
@@ -173,7 +174,7 @@
     </div>
     @yield('content')
     <div class="footer_wrapper">
-        <div class="footer_social_bar">
+        {{-- <div class="footer_social_bar">
             <div class="container">
                 <div class="row-fluid">
                     <div class="span12">
@@ -196,7 +197,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <footer id="footer" class="type_">
             <div class="inner">
                 <div class="container">
@@ -205,40 +206,24 @@
                         <div class="span4">
                             <div id="text-2" class="widget widget_text">
                                 <h4 class="widget-title">About Prolife</h4>
-                                <div class="textwidget">Lorem ipsum dolor slo onsec tueraliquet Morbi nec In Curabitur lreaoreet nisl lorem in pellente e vidicus pannel Morbi nec In Curabitur lreaoreet renis worbi lorem in pellente e vidicus pannel lorem in pellente e vidicus pannel nelly</div>
+                                <div class="textwidget">PROLIFE NWT is a company formed by Filipino professionals based in the United Arab Emirates. Bound together by a common goal, each with their own expertise, they have decided it’s about time that expatriates in the UAE will be given a free choice and be catered with all their needs. By providing convenient e-services, the main aim is to help and alleviate the lives of expatriates around the globe. PROLIFE NWT envisions prosperity for all. PROLIFE NWT also promotes real estate investments, free entrepreneurships, encourages self development and offers a wide array of natural skincare and healthcare products. </div>
                             </div>
                         </div>
                         <div class="span4">
                             <div id="widget_recent_content-2" class="widget widget_recent_content">
                                 <h4 class="widget-title">Recent News</h4>
                                 <div id="popular_widget">
+                                    @foreach($_newsfooter as $newsfooter)
                                     <dl>
                                         <dt>
                                             <i class='moon-pencil'></i>
                                         </dt>
                                         <dd>
-                                            <div class="title"><a href="post.html">Quis lectus elemvolu euismod...</a></div>
-                                            <span>January 16, 2015</span>
+                                            <div class="title"><a href="post.html">{{ $newsfooter->news_title }}</a></div>
+                                            <span>{{ $newsfooter->month }} {{ $newsfooter->day }}, {{ $newsfooter->year }}</span>
                                         </dd>
                                     </dl>
-                                    <dl>
-                                        <dt>
-                                            <i class='moon-pencil'></i>
-                                        </dt>
-                                        <dd>
-                                            <div class="title"><a href="post.html">Standard Post with Featured...</a></div>
-                                            <span>November 22, 2014</span>
-                                        </dd>
-                                    </dl>
-                                    <dl>
-                                        <dt>
-                                            <i class='moon-pencil'></i>
-                                        </dt>
-                                        <dd>
-                                            <div class="title"><a href="post.html">First Post with Featured...</a></div>
-                                            <span>January 16, 2015</span>
-                                        </dd>
-                                    </dl>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>

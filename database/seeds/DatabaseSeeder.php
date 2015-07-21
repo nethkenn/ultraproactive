@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
         $this->call('tbl_slide');
         $this->call('tbl_testimony');
         $this->call('tbl_product');
+        $this->call('tbl_news');
     }
 }
 
@@ -266,10 +267,10 @@ class tbl_slide extends Seeder
     {
         DB::table('tbl_slide')->delete();
         DB::statement("INSERT INTO `tbl_slide` (`slide_id`, `slide_title`, `slide_image`, `created_at`, `updated_at`, `archived`) VALUES
-        (1, 'Skin Care',    '1436764123.jpg',   '2015-07-17 07:45:25',  '0000-00-00 00:00:00',  0),
-        (2, 'OFW',  '1436763703.jpg',   '2015-07-17 07:45:48',  '0000-00-00 00:00:00',  0),
-        (3, 'Cafe Verde',   '1436763174.jpg',   '2015-07-17 07:46:03',  '0000-00-00 00:00:00',  0),
-        (4, 'Chocorite',    '1436763179.jpg',   '2015-07-17 07:46:14',  '0000-00-00 00:00:00',  0);
+        (1, 'Skin Care',    '1436764123.jpg',   '2015-07-16 23:45:25',  '0000-00-00 00:00:00',  0),
+        (2, 'OFW',  '1436763703.jpg',   '2015-07-16 23:45:48',  '0000-00-00 00:00:00',  0),
+        (3, 'Cafe Verde',   '1437449561.jpg',   '2015-07-16 23:46:03',  '2015-07-21 03:32:30',  0),
+        (4, 'Chocorite',    '1436763179.jpg',   '2015-07-16 23:46:14',  '0000-00-00 00:00:00',  0);
         ");
     }
 }

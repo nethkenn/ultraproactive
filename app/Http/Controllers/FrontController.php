@@ -9,6 +9,7 @@ use Redirect;
 
 class FrontController extends Controller
 {
+
 	public function index()
 	{
 		$data["_news"] = DB::table("tbl_news")->where("archived", 0)->take(3)->get();
@@ -59,6 +60,14 @@ class FrontController extends Controller
 		}
 
 		$data["_testimony"] = DB::table("tbl_testimony")->where("archived", 0)->get();
+
+		$data["_partner"] = DB::table("tbl_partner")->where("archived", 0)->get();
+		foreach ($data["_partner"] as $edi => $wow) 
+		{
+			$nice = $wow->partner_image;
+			$pre = Image::view($nice, "150x60");
+			$data["_partner"][$edi]->image = $pre;
+		}
 		// dd($data["_news"]);
 
         return view('front.home', $data);
@@ -77,7 +86,14 @@ class FrontController extends Controller
 	}
 	public function partner()
 	{
-        return view('front.partner');
+		$data["_partner"] = DB::table("tbl_partner")->where("archived", 0)->get();
+		foreach ($data["_partner"] as $key => $value) 
+		{
+			$get = $value->partner_image;
+			$imagee = Image::view($get, "150x60");
+			$data["_partner"][$key]->image = $imagee;
+		}
+        return view('front.partner', $data);
 	}
 	public function earn()
 	{

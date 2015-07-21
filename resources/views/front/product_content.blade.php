@@ -56,7 +56,7 @@
                                     <h1>Price</h1>
                                 </div>
                                 <div class="details_content">
-                                    <p style="white-space: pre-wrap;">{{ $product->price }}</p>
+                                    <p style="white-space: pre-wrap; word-break: keep-all !important;">{{ $product->price }}</p>
                                 </div>
                             </div>
                             

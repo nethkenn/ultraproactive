@@ -283,67 +283,6 @@ It is as easy as One…Two…Three…
                     </div>
                 </div>
             </div>
-            <div id="fws_556c48d32ff40" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="padding-top: 0px !important; padding-bottom: 60px !important; ">
-                <div class="container  dark">
-                    <div class="section_clear">
-                        <div class="vc_col-sm-12 wpb_column column_container" style="" data-animation="" data-delay="0">
-                            <div class="wpb_wrapper">
-                                <div class="dark_clients clients_el ">
-                                    <div class="header">
-                                        <h2>Our Partners</h2></div>
-                                    <section class="row clients clients_caro">
-                                        <div class="item">
-                                            <a href="#" title="">
-                                                <img src="/resources/assets/ausart/assets/uploads/2014/11/Untitled-26.png" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="item">
-                                            <a href="#" title="">
-                                                <img src="/resources/assets/ausart/assets/uploads/2014/11/Untitled-212.png" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="item">
-                                            <a href="#" title="">
-                                                <img src="/resources/assets/ausart/assets/uploads/2014/11/Untitled-222.png" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="separator"></div>
-                                        <div class="item">
-                                            <a href="#" title="">
-                                                <img src="/resources/assets/ausart/assets/uploads/2014/11/Untitled-242.png" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="item">
-                                            <a href="#" title="">
-                                                <img src="/resources/assets/ausart/assets/uploads/2014/11/Untitled-252.png" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="item">
-                                            <a href="#" title="">
-                                                <img src="/resources/assets/ausart/assets/uploads/2014/11/Untitled-252.png" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="item">
-                                            <a href="#" title="">
-                                                <img src="/resources/assets/ausart/assets/uploads/2014/11/Untitled-222.png" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="item">
-                                            <a href="#" title="">
-                                                <img src="/resources/assets/ausart/assets/uploads/2014/11/Untitled-212.png" alt="">
-                                            </a>
-                                        </div>
-                                    </section>
-                                    <div class="controls">
-                                        <a class="prev"></a>
-                                        <a class="next"></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </section>
         <!-- Social Profiles -->
         <!-- Footer -->
