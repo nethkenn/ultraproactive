@@ -36,10 +36,10 @@
                                                 <div class="wpb_wrapper">
                                                     <div class=" services_small wpb_content_element">
                                                         <div class="services_small_container">
-                                                            <div class=" services_small_icon yes" style=""><i class="moon-pencil-6" style="color:;"></i> </div>
+                                                            <div class=" services_small_icon yes" style=""><i class="fa fa-shopping-cart"></i> </div>
                                                             <div class="services_small_title">
                                                                 <h4><a href="#">Wellness Product</a></h4>
-                                                                <p>Nulla consequat massa quis enim. Veronum versus designus Donec pede justo, fringilla vel, aliquet neclive</p>
+                                                                <p></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -49,11 +49,22 @@
                                                 <div class="wpb_wrapper">
                                                     <div class=" services_small wpb_content_element">
                                                         <div class="services_small_container">
-                                                            <div class=" services_small_icon yes" style=""><i class="moon-pencil-6" style="color:;"></i> </div>
+                                                            <div class=" services_small_icon yes" style=""><i class="fa fa-money"></i> </div>
                                                             <div class="services_small_title">
                                                                 <h4><a href="#">Online Remittance</a></h4>
                                                                 <p></p>
-                                                                <p>Nulla consequat massa quis enim. Veronum versus designus Donec pede justo, fringilla vel, aliquet neclive.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="vc_col-sm-3 wpb_column column_container" style="" data-animation="" data-delay="0">
+                                                <div class="wpb_wrapper">
+                                                    <div class=" services_small wpb_content_element">
+                                                        <div class="services_small_container">
+                                                            <div class=" services_small_icon yes" style=""><i class="fa fa-building"></i> </div>
+                                                            <div class="services_small_title">
+                                                                <h4><a href="#">Real Estate Discounts</a></h4>
                                                                 <p></p>
                                                             </div>
                                                         </div>
@@ -64,23 +75,10 @@
                                                 <div class="wpb_wrapper">
                                                     <div class=" services_small wpb_content_element">
                                                         <div class="services_small_container">
-                                                            <div class=" services_small_icon yes" style=""><i class="moon-pencil-6" style="color:;"></i> </div>
-                                                            <div class="services_small_title">
-                                                                <h4><a href="#">Real Estate Discounts</a></h4>
-                                                                <p>Nulla consequat massa quis enim. Veronum versus designus Donec pede justo, fringilla vel, aliquet neclive.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="vc_col-sm-3 wpb_column column_container" style="" data-animation="" data-delay="0">
-                                                <div class="wpb_wrapper">
-                                                    <div class=" services_small wpb_content_element">
-                                                        <div class="services_small_container">
-                                                            <div class=" services_small_icon yes" style=""><i class="moon-pencil-6" style="color:;"></i> </div>
+                                                            <div class=" services_small_icon yes" style=""><i class="fa fa-credit-card"></i> </div>
                                                             <div class="services_small_title">
                                                                 <h4><a href="#">E-Payments</a></h4>
-                                                                <p>Nulla consequat massa quis enim. Veronum versus designus Donec pede justo, fringilla vel, aliquet neclive.</p>
+                                                                <p></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -90,10 +88,10 @@
                                                 <div class="wpb_wrapper">
                                                     <div class=" services_small wpb_content_element">
                                                         <div class="services_small_container">
-                                                            <div class=" services_small_icon yes" style=""><i class="moon-pencil-6" style="color:;"></i> </div>
+                                                            <div class=" services_small_icon yes" style=""><i class="fa fa-cutlery"></i> </div>
                                                             <div class="services_small_title">
                                                                 <h4><a href="#">Food Cart Franchise</a></h4>
-                                                                <p>Nulla consequat massa quis enim. Veronum versus designus Donec pede justo, fringilla vel, aliquet neclive.</p>
+                                                                <p></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -103,10 +101,10 @@
                                                 <div class="wpb_wrapper">
                                                     <div class=" services_small wpb_content_element">
                                                         <div class="services_small_container">
-                                                            <div class=" services_small_icon yes" style=""><i class="moon-pencil-6" style="color:;"></i> </div>
+                                                            <div class=" services_small_icon yes" style=""><i class="fa fa-plane"></i> </div>
                                                             <div class="services_small_title">
                                                                 <h4><a href="#">Airline Ticket</a></h4>
-                                                                <p>Nulla consequat massa quis enim. Veronum versus designus Donec pede justo, fringilla vel, aliquet neclive.</p>
+                                                                <p></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -116,10 +114,10 @@
                                                 <div class="wpb_wrapper">
                                                     <div class=" services_small wpb_content_element">
                                                         <div class="services_small_container">
-                                                            <div class=" services_small_icon yes" style=""><i class="moon-pencil-6" style="color:;"></i> </div>
+                                                            <div class=" services_small_icon yes" style=""><i class="fa fa-briefcase"></i> </div>
                                                             <div class="services_small_title">
                                                                 <h4><a href="#">Merchant Program</a></h4>
-                                                                <p>Nulla consequat massa quis enim. Veronum versus designus Donec pede justo, fringilla vel, aliquet neclive.</p>
+                                                                <p></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -129,10 +127,10 @@
                                                 <div class="wpb_wrapper">
                                                     <div class=" services_small wpb_content_element">
                                                         <div class="services_small_container">
-                                                            <div class=" services_small_icon yes" style=""><i class="moon-pencil-6" style="color:;"></i> </div>
+                                                            <div class=" services_small_icon yes" style=""><i class="fa fa-paper-plane"></i> </div>
                                                             <div class="services_small_title">
                                                                 <h4><a href="#">Prosperity Plan</a></h4>
-                                                                <p>Nulla consequat massa quis enim. Veronum versus designus Donec pede justo, fringilla vel, aliquet neclive.</p>
+                                                                <p></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -146,18 +144,6 @@
                     </div>
                 </div>
             </div>
-            {{-- <div id="fws_556c48d32e26c" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="padding-top: 60px !important; padding-bottom: 0px !important; ">
-                <div class="container  dark">
-                    <div class="section_clear">
-                        <div class="vc_col-sm-12 wpb_column column_container" style="" data-animation="" data-delay="0">
-                            <div class="wpb_wrapper">
-                                <div class="textbar-container wpb_content_element  style_1 " style="background:#f6f6f6; ;">
-                                    <h1 style="color: #000000">Prolife has two functions - marketing &amp; innovation</h1><span class="subtitle" style="color: #000000"></span><a href="#" class="btn-system normal second_btn" style="color:#000000 background:#f6f6f6;">Join us Now!</a></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
             <div id="fws_556c48d32ea98" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="padding-top: 80px !important; padding-bottom: 80px !important; ">
                 <div class="bg-overlay" style="background:rgba(, , , 0.5);z-index:1;"></div>
                 <div class="container  dark">
@@ -167,7 +153,7 @@
                                 <div class="header " style="">
                                     <h2>E-Learning</h2></div>
                                 <div class="wpb_content_element block_skill">
-                                    <img src="/resources/assets/ausart/assets/uploads/picture/online-training.jpg">
+                                    <img src="/resources/assets/ausart/assets/uploads/picture/online-training.jpg" style="width: 100%;">
                                 </div>
                             </div>
                         </div>
@@ -210,7 +196,7 @@ It can be self-paced or instructor-led and includes media in the form of text, i
                                 <div class="header " style="">
                                     <h2>E-Payment</h2></div>
                                 <div class="wpb_content_element block_skill">
-                                    <img src="/resources/assets/ausart/assets/uploads/picture/ngo.jpg">
+                                    <img src="/resources/assets/ausart/assets/uploads/picture/ngo.jpg" style="width: 100%;">
                                 </div>
                             </div>
                         </div>
@@ -250,7 +236,7 @@ Any time of the day.
                                 <div class="header " style="">
                                     <h2>E-Remit</h2></div>
                                 <div class="wpb_content_element block_skill">
-                                    <img src="/resources/assets/ausart/assets/uploads/picture/finance.jpg">
+                                    <img src="/resources/assets/ausart/assets/uploads/picture/finance.jpg" style="width: 100%;">
                                 </div>
                             </div>
                         </div>
