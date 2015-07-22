@@ -16,8 +16,8 @@ use App\Tbl_code_type;
 use App\Tbl_inventory_update_type;
 use Datatables;
 use Validator;
-
-
+use App\Tbl_tree_placement;
+use App\Classes\MLM;
 
 class MemberCodeController extends MemberController
 {
@@ -26,10 +26,6 @@ class MemberCodeController extends MemberController
 		$id = Customer::id();
 		$data = $this->getslotbyid($id);
 		$data['_error'] = Session::get('message');
-		if(isset($data['error']))
-		{
-			dd($data['error']);
-		}
 		$data['success']  = Session::get('success');
 		$data['availprod'] = Tbl_product_package::where('archived',0)->get();
 
@@ -60,6 +56,15 @@ class MemberCodeController extends MemberController
 			$data['error'] = $this->transfer(Request::input('code'),Request::input('account'),Request::input('pass'),$id,$s);
 			return Redirect::to('member/code_vault')->with('message',$data['error']);
 		}
+		if(isset($_POST['slot_position']))
+		{	
+			$info = $this->addslot(Request::input());
+			if(isset($info['success']))
+			{
+				$message = $info['success'];
+				return Redirect::to('member/code_vault')->with('success',$message);	
+			}
+		}
 		if(isset($_POST['sbmitbuy']))
 		{
 			if( Request::input('memid') && Request::input('package'))
@@ -82,18 +87,78 @@ class MemberCodeController extends MemberController
         return view('member.code_vault',$data);
 	}
 
-	// public function create_slot($data)
-	// {
-	// 	$check_position = Tbl_slot::checkposition(Request::input("placement"), strtolower(Request::input("position")))->first();
-	// 	if($check_position)
-	// 	{
+	public function addslot($data)
+	{
 
-	// 	}
-	// 	else
-	// 	{
+		$return["message"] = "";
+		$data["message"] = "";
+		
+		// if(Request::input("account_id") == 0)
+		// {
+		// 	$data = $this->add_form_submit_new_account($data);
+		// 	$account_id = $data["account_id"];
+		// }
+		// else
+		// {
+		// 	$account_id = Request::input("account_id");
+		// }
+		$getslot = Tbl_slot::where('slot_id',$data['code_number'])->membership()->first();
+		$check_placement = Tbl_slot::checkposition(Request::input("placement"), strtolower(Request::input("slot_position")))->first();
+		$check_id = Tbl_slot::id(Request::input("slot_number"))->first();
+		$checkifowned = Tbl_account::where('tbl_account.account_id',Customer::id())->belongstothis()->get();
+		$checking = false;
+		$ifused = Tbl_membership_code::where('code_pin',$data['code_number'])->where('used',1)->first();
 
-	// 	}
-	// }
+		foreach($checkifowned as $c)
+		{
+			if($c->code_pin == $data['code_number'])
+			{
+				$checking = true;
+			}
+		}
+
+		if($check_placement)
+		{
+			$return["message"] = "The position you're trying to use is already occupied";
+		}
+		elseif($ifused)
+		{
+			$return["message"] = "This code is already used";
+		}
+		elseif($data["message"] != "")
+		{
+			$return["message"] = $data["message"];
+		}
+		else
+		{
+			if($checking == true)
+			{
+				$insert["slot_membership"] =  $getslot->membership_id;
+				$insert["slot_type"] =  "PS";
+				$insert["slot_rank"] =  1;
+				$insert["slot_wallet"] =  0;
+				$insert["slot_sponsor"] =  $data['sponsor'];
+				$insert["slot_placement"] =  $data['placement'];
+				$insert["slot_position"] =  strtolower($data['slot_position']);
+				$insert["slot_binary_left"] =  0;
+				$insert["slot_binary_right"] =  0;
+				$insert["slot_personal_points"] =  0;
+				$insert["slot_group_points"] =  0;
+				$insert["slot_upgrade_points"] = 0;
+				$insert["slot_total_withrawal"] =  0;
+				$insert["slot_total_earning"] =  0;
+				$insert["slot_owner"] =  Customer::id();
+				$slot_id = Tbl_slot::insertGetId($insert);
+				MLM::tree($slot_id);
+				MLM::binary($slot_id);
+				$return["placement"] = Request::input("placement");
+
+				Tbl_membership_code::where('code_pin',$data['code_number'])->update(['used'=>1]);
+				$message['success'] = "Slot Created.";
+				return $message;
+			}
+		}
+	}
 
 	public function getslotbyid($id)
 	{
@@ -115,6 +180,13 @@ class MemberCodeController extends MemberController
         	$data['code'][$key]->encrypt    = Crypt::encrypt($d->code_pin);									     
         }
 		$data['count']= DB::table('tbl_membership_code')->where('archived',0)->where('account_id','=',$id)->count();
+		
+		$data['allslot']= Tbl_slot::get();
+
+		$data['downline'] = Tbl_tree_placement::where('placement_tree_parent_id',Session::get('currentslot'))->get();
+
+
+
 		return $data;
 	}
 
@@ -286,58 +358,93 @@ class MemberCodeController extends MemberController
 
 			$check = Tbl_membership::where('membership_id',$x['memid'])->first();
 			$rcheck = Tbl_slot::where('slot_id',Session::get('currentslot'))->first();
-			if($rcheck && $check)
+
+
+
+			$checkifexist = Tbl_product_package::where('membership_id',$x['memid'])->get();
+
+			$checking = false;
+			foreach($checkifexist as $s)
 			{
-					$total = $rcheck->slot_wallet - $check->membership_price;
-					$validator = Validator::make($d,$rules);
-					if($total >= 0)
-					{
-						if (!$validator->fails())
-						{
-							for ($i=0; $i < 1; $i++)
-							{ 
-								$membership_code = new Tbl_membership_code($d);
-								$membership_code->code_activation = $this->check_code();
-								$membership_code->account_id =  Customer::id() ?: null;
-								$membership_code->created_at = Carbon::now();
-								$membership_code->save();
-								$insert['code_pin'] = $membership_code->code_pin;
-								$insert['by_account_id'] = Customer::id();
-								$insert['to_account_id'] = Customer::id();
-								$insert['updated_at'] = $membership_code->created_at;
-								$insert['description'] = "Bought by $n->account_name";
-								DB::table("tbl_member_code_history")->insert($insert);
-								Tbl_slot::where('slot_id',Session::get('currentslot'))->update(['slot_wallet'=>$total]);
-								$message['success'] = "Successfully bought.";
-								return $message;
-							}
-						}
-						else
-						{
-							$error =  $validator->errors();
-							$data['_error']['code_type_id'] = $error->get('code_type_id');
-							$data['_error']['membership_id'] = $error->get('membership_id');
-							$data['_error']['product_package_id'] = $error->get('product_package_id');
-							$data['_error']['inventory_update_type_id'] = $error->get('inventory_update_type_id');
-							$data['_error']['account_id'] = $error->get('account_id');
-							$data['_error']['code_multiplier'] = $error->get('code_multiplier');
-			     		    return $data;
-						}				
-					}
-					else
-					{
-						$data['_error']['not'] = "Not enough balance.";
-						return $data;
-					}				
+				if($s->product_package_id == $x['package'])
+				{
+					$checking = true;
+				}
 			}
 
 
-			
-
-
-
-			
-		
+			if($checking == true)
+			{
+				if($rcheck && $check)
+				{
+						$total = $rcheck->slot_wallet - $check->membership_price;
+						$validator = Validator::make($d,$rules);
+						if($total >= 0)
+						{
+							if (!$validator->fails())
+							{
+								for ($i=0; $i < 1; $i++)
+								{ 
+									$membership_code = new Tbl_membership_code($d);
+									$membership_code->code_activation = $this->check_code();
+									$membership_code->account_id =  Customer::id() ?: null;
+									$membership_code->created_at = Carbon::now();
+									$membership_code->save();
+									$insert['code_pin'] = $membership_code->code_pin;
+									$insert['by_account_id'] = Customer::id();
+									$insert['to_account_id'] = Customer::id();
+									$insert['updated_at'] = $membership_code->created_at;
+									$insert['description'] = "Bought by $n->account_name";
+									DB::table("tbl_member_code_history")->insert($insert);
+									Tbl_slot::where('slot_id',Session::get('currentslot'))->update(['slot_wallet'=>$total]);
+									$message['success'] = "Successfully bought.";
+									return $message;
+								}
+							}
+							else
+							{
+								$error =  $validator->errors();
+								$data['_error']['code_type_id'] = $error->get('code_type_id');
+								$data['_error']['membership_id'] = $error->get('membership_id');
+								$data['_error']['product_package_id'] = $error->get('product_package_id');
+								$data['_error']['inventory_update_type_id'] = $error->get('inventory_update_type_id');
+								$data['_error']['account_id'] = $error->get('account_id');
+								$data['_error']['code_multiplier'] = $error->get('code_multiplier');
+				     		    return $data;
+							}				
+						}
+						else
+						{
+							$data['_error']['not'] = "Not enough balance.";
+							return $data;
+						}				
+				}				
+			}		
 	}
 	
+	public function add_form_submit()
+	{
+
+		$return["message"] = "";
+		$data["message"] = "";
+		$check_placement = Tbl_slot::checkposition(Request::input("placement"), strtolower(Request::input("slot_position")))->first();
+		$check_id = Tbl_slot::id(Request::input("slot_number"))->first();
+		$ifused = Tbl_membership_code::where('code_pin',Request::input("code_number"))->where('used',1)->first();
+
+		if($check_placement)
+		{
+			$return["message"] = "The position you're trying to use is already occupied";
+		}
+		elseif($ifused)
+		{
+			$return["message"] = "This code is already used";
+		}
+		elseif($data["message"] != "")
+		{
+			$return["message"] = $data["message"];
+		}
+
+		
+		echo json_encode($return);
+	}
 }

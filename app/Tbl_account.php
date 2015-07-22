@@ -52,7 +52,6 @@ class Tbl_account extends Model
 
         // ->leftJoin('tbl_admin_position', 'tbl_admin_position.admin_position_id', '=', 'tbl_admin.admin_position_id');
     }
-    
 
 }
 

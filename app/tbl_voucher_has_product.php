@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Tbl_voucher_has_product extends Model
 {
 	protected $table = 'tbl_voucher_has_product';
-    protected $fillable = ['product_id', 'voucher_id', 'price' , 'qty' , 'sub_total' ];
+    protected $primaryKey = 'voucher_item_id';
+    protected $fillable = ['product_id', 'voucher_id', 'price' , 'qty' , 'sub_total', 'binary_pts','unilevel_pts' ];
 
     public $timestamps = false;
 

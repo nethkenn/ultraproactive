@@ -655,5 +655,39 @@ class Globals
             $bottom++;
         }        
         return false;
+    }
+
+    public static function code_generator()
+    {
+        
+        $chars="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $res = "";
+        for ($i = 0; $i < 8; $i++) {
+            $res .= $chars[mt_rand(0, strlen($chars)-1)];
+        }
+
+        return $res;
+
+    }
+
+
+    public static function check_code($query)
+    {
+
+
+
+        $stop=false;
+        while($stop==false)
+        {
+            $code = Globals::code_generator();
+
+            $check = $query;
+            if($check==null)
+            {
+                $stop = true;
+            }
+        }
+
+        return $code;
     } 
 }

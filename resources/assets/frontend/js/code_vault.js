@@ -18,6 +18,7 @@ function code_vault()
 		onmembershipchange();	
 		add_event_active_product();
 		product_included();
+		checkifavailable();
 	}
 	// function getdata()
 	// {
@@ -49,6 +50,8 @@ function code_vault()
 
 		$(".createslot").click(function()
 		{
+			$val = $(this).attr('value');
+			$("#code_number").val($val);
 			var inst = $('[data-remodal-id=create_slot]').remodal();
           	inst.open(); 
 		});
@@ -66,7 +69,10 @@ function code_vault()
 			var inst = $('[data-remodal-id=transfer_code]').remodal();
           	inst.open(); 
 		})
-
+		$(".alertused").click(function()
+		{
+			alert("Already used.");
+		})
 
 	      if($('#11111').data('options') == undefined)
 	      {
@@ -161,11 +167,13 @@ function code_vault()
 		                $('#packageincluded').append('<option value="" class="shouldremove">No package available for this membership</option>');  
 		             	$('#ifbuttoncode').prop("disabled", true);
 		             	$(".includer").hide();
+		             	checkvalue();
 		              }
 		              else
 		              {
 		              	$(".includer").show();
 		              	$('#ifbuttoncode').prop("disabled", false);
+		              	checkvalue();
 		              }
 		});
 
@@ -196,6 +204,38 @@ function code_vault()
                         '</tr>';
                 $(".productinclude").append(str);      
             }); 
+    }
+    function checkifavailable()
+    {
+    	$(".c_slot").unbind("click");
+        $(".c_slot").bind("click", function(e)
+        {
+    	    e.preventDefault();
+			var form = this;
+            $('.c_slot').prop("disabled", true);	
+            $.ajax(
+            {
+                url:"member/code_vault/check",
+                dataType:"json",
+                data: {'placement':$("#2").val(),'slot_position':$("#3").val(),'code_number' : $("#code_number").val()},
+                type:"post",
+                success: function(data)
+                {
+                    if(data.message == "")
+                    {
+                    	$("#createslot").submit();
+                    }
+                    else
+                    {
+                    	$('.c_slot').prop("disabled", false);
+                    	$(e.currentTarget).find("button").removeAttr("disabled");
+                        alert(data.message);
+                        return false;
+                    }
+                }
+            });
+            
+        });
     }
 }
 

@@ -13,7 +13,6 @@
                 <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
                 <div class="form-group col-md-6">
                      <label for="voucher id">Voucher ID</label>
-
             		<input name="voucher_id" value="{{Request::input('voucher_id')}}" class="form-control" id="" placeholder="" type="text">
             	</div>
                 <div class="form-group col-md-6">
@@ -96,7 +95,7 @@
                             <tr>
                                 <td>{{$voucher_product->product_id}}</td>
                                 <td>{{$voucher_product->product_name}}</td>
-                                <td>{{$voucher_product->product_price}}</td>
+                                <td>{{$voucher_product->price}}</td>
                                 <td>{{$voucher_product->unilevel_pts}}</td>
                                 <td>{{$voucher_product->binary_pts}}</td>
                                 <td>{{$voucher_product->qty}}</td>
