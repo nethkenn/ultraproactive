@@ -118,9 +118,6 @@
                         <div class="after_logo">
                             <!-- Search -->
                             <div class="header_search">
-                                {{-- <div class="right_search">
-                                    <i class="moon-search-2"></i>
-                                </div> --}}
                                 <div class="right_search_container">
                                     <form action="#" id="search-form">
                                         <div class="input-append">
@@ -174,7 +171,7 @@
     </div>
     @yield('content')
     <div class="footer_wrapper">
-        {{-- <div class="footer_social_bar">
+        <!-- <div class="footer_social_bar">
             <div class="container">
                 <div class="row-fluid">
                     <div class="span12">
@@ -197,7 +194,7 @@
                     </div>
                 </div>
             </div>
-        </div> --}}
+        </div> !-->
         <footer id="footer" class="type_">
             <div class="inner">
                 <div class="container">

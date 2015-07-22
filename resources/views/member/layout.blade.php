@@ -114,43 +114,7 @@
 <script type="text/javascript" src="/resources/assets/jquery-ui/jquery-ui.js"></script>
 <script type="text/javascript" src="/resources/assets/stickyfloat/stickyfloat.js"></script>
 @yield('script')
-<div class="remodal create-slot" data-remodal-id="create_slot" data-remodal-options="hashTracking: false">
-    <button data-remodal-action="close" class="remodal-close"></button>
-    <div class="header">
-        <img src="/resources/assets/frontend/img/icon-plis.png">
-        Create Slot
-    </div>
-    <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
-    <div class="col-md-10 col-md-offset-1 para">
-        <form class="form-horizontal">
-            <div class="form-group para">
-                <label for="1" class="col-sm-3 control-label">Sponsor</label>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control" id="1">
-                </div>
-            </div>
-            <div class="form-group para">
-                <label for="2" class="col-sm-3 control-label">Placement</label>
-                <div class="col-sm-9">
-                    <select class="form-control" id="2">
-                        <option>Slot #8</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group para">
-                <label for="3" class="col-sm-3 control-label">Position</label>
-                <div class="col-sm-9">
-                    <select class="form-control" id="3">
-                        <option>Left</option>
-                    </select>
-                </div>
-            </div>
-        </form>
-    </div>
-    <br>
-    <button class="button" data-remodal-action="cancel">Cancel</button>
-    <button class="button"  data-remodal-action="confirm">Create Slot</button>
-</div>
+
     <div class="remodal create-slot" data-remodal-id="transfer_code" data-remodal-options="hashTracking: false">
         <button data-remodal-action="close" class="remodal-close"></button>
         <div class="header">
@@ -260,56 +224,7 @@
                 <button class="button" type="submit" name="sbmtclaim">Claim Code</button>
         </form>
 </div>
-<div class="remodal create-slot" data-remodal-id="buy_code" data-remodal-options="hashTracking: false">
-    <button data-remodal-action="close" class="remodal-close"></button>
-    <div class="header">
-        <img src="/resources/assets/frontend/img/icon-buy.png">
-        Buy Codes
-    </div>
-    <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
-    <div class="col-md-10 col-md-offset-1 para">
-        <form class="form-horizontal" method="POST">
-            <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
-            <div class="form-group para">
-                <label for="11111" class="col-sm-3 control-label">Membership</label>
-                <div class="col-sm-9">
-                    <select class="form-control" id="11111">
-                        @if($membership)
-                            @foreach($membership as $m)    
-                                <option value="{{$m->membership_id}}" amount="{{$m->membership_price}}">{{$m->membership_name}}</option>
-                            @endforeach
-                        @endif
-                    </select>
-                </div>
-            </div>
-            <div class="form-group para">
-                <label for="22222" class="col-sm-3 control-label">Wallet</label>
-                <div class="col-sm-9">
-                    @if($slotnow)
-                    <input type="text" class="form-control" id="22222" name="wallet" value="{{$slotnow->slot_wallet}}" disabled>
-                    @else
-                    <input type="text" class="form-control" id="22222" name="wallet" value="0" disabled>
-                    @endif
-                </div>
-            </div>
-            <div class="form-group para">
-                <label for="33333" class="col-sm-3 control-label">Amount</label>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control" id="33333" disabled>
-                </div>
-            </div>
-            <div class="form-group para">
-                <label for="44444" class="col-sm-3 control-label">Remaining</label>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control" id="44444" readonly style="background-color: #f47265; border: 0; color: white; text-align: center;" value="">
-                </div>
-            </div>
-    </div>
-            <br>
-                <button class="button" data-remodal-action="cancel">Cancel</button>
-                <button class="button" type="submit" id="ifbuttoncode" name="sbmitbuy" value="Buy Code" disabled>Buy Code</button>
-        </form>    
-</div>
+
 
 <div class="remodal create-slot" data-remodal-id="upgrade_member" data-remodal-options="hashTracking: false">
     <button data-remodal-action="close" class="remodal-close"></button>
@@ -362,41 +277,7 @@
     </div>
 
 </div>
-<div class="remodal create-slot" data-remodal-id="transfer_slot">
-    <button data-remodal-action="close" class="remodal-close"></button>
-    <div class="header">
-        <img src="/resources/assets/frontend/img/icon-transfer.png">
-        Transfer Slot
-    </div>
-    <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
-    <div class="col-md-10 col-md-offset-1 para">
-        <form class="form-horizontal">
-            <div class="form-group para">
-                <label for="isa" class="col-sm-3 control-label">Slot Being Transferred</label>
-                <div class="col-sm-9">
-                    <input type="text" value="Slot #8" class="form-control" id="isa">
-                </div>
-            </div>
-            <div class="form-group para">
-                <label for="dalawa" class="col-sm-3 control-label">Transfer to the account of</label>
-                <div class="col-sm-9">
-                    <select class="form-control" id="dalawa">
-                        <option>primiaph@gmail.com</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group para">
-                <label for="tatlo" class="col-sm-3 control-label">Enter Password</label>
-                <div class="col-sm-9">
-                    <input type="password" class="form-control" id="tatlo">
-                </div>
-            </div>
-        </form>
-    </div>
-    <br>
-    <button class="button" data-remodal-action="cancel">Cancel</button>
-    <button class="button" data-remodal-action="confirm">Initiate Transfer</button>
-</div>
+
 <!--<div class="remodal create-slot" data-remodal-id="voucher">
     <button data-remodal-action="close" class="remodal-close"></button>
     <div class="header">
@@ -472,19 +353,8 @@
         </div>
     </div>
 </div>-->
-<div class="remodal create-slot" data-remodal-id="generate_lead">
-    <button data-remodal-action="close" class="remodal-close"></button>
-    <div class="header">
-        <img src="/resources/assets/frontend/img/icon-how.png">
-        How to Generate Leads
-    </div>
-    <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
-    <div style="color: #77818e; font-size: 12p.5x;">You might invite people using this link. </br>People who gives their information using your link become your Leads</div>
-    <div><input style="color: #f47265; font-size: 12.5px; width: 80%; margin: 20px auto; padding: 10px; text-align: center; border: 1px solid #eeeeee;" type="text" value="http://yourlink.yourcompanyurl.com"></div>
-    <br>
-    <button class="button" data-remodal-action="confirm">Close</button>
-</div>
-<div class="remodal create-slot" data-remodal-id="add_lead">
+
+<div class="remodal create-slot" data-remodal-id="add_lead" data-remodal-options="hashTracking: false">
     <button data-remodal-action="close" class="remodal-close"></button>
     <div class="header">
         <img src="/resources/assets/frontend/img/icon-plis.png">
@@ -492,25 +362,27 @@
     </div>
     <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
     <div class="col-md-10 col-md-offset-1 para">
-        <form class="form-horizontal">
+        <form class="form-horizontal" method="POST">
+            <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
             <div class="form-group para">
                 <label for="una" class="col-sm-3 control-label">Name</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="una">
+                    <input type="text" class="form-control" id="una" name="name">
                 </div>
             </div>
             <div class="form-group para">
                 <label for="pangalawa" class="col-sm-3 control-label">Email</label>
                 <div class="col-sm-9">
-                    <input type="email" class="form-control" id="pangalawa">
+                    <input type="email" class="form-control" id="pangalawa" name="email">
                 </div>
             </div>
-        </form>
     </div>
     <br>
-    <button class="button" data-remodal-action="cancel">Cancel</button>
-    <button class="button" data-remodal-action="confirm">Buy Code</button>
+    <button class="button" type="button" data-remodal-action="cancel">Cancel</button>
+    <button class="button" type="submit" name="addlead">Add Lead</button>
+    </form>
 </div>
+
 <div class="remodal message" data-remodal-id="message">
     <button data-remodal-action="close" class="remodal-close"></button>
     <div class="header para">

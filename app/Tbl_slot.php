@@ -7,7 +7,8 @@ class Tbl_slot extends Model
 {
 	protected $table = 'tbl_slot';
 	protected $primaryKey = 'slot_id';
-
+    public $timestamps = false;
+    
     public function scopeRank($query)
     {
         return $query->leftJoin("tbl_rank", "tbl_rank.rank_id", "=", "tbl_slot.slot_rank");
@@ -32,4 +33,5 @@ class Tbl_slot extends Model
     {
         return $query->where("slot_position", $position)->where("slot_placement", $placement);
     }
+
 }

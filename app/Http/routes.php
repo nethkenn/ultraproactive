@@ -14,6 +14,7 @@ Route::get('/member/voucher/product', 'MemberVoucherController@showVoucherProduc
 
 
 Route::any('/member/leads', 'MemberLeadController@index');
+Route::any('/member/leads/{slug}', 'MemberLeadController@link');
 Route::any('/member/product', 'MemberProductController@index');
 Route::any('/member/login', 'MemberLoginController@index');
 Route::any('/member/logout', 'MemberLoginController@logout');
@@ -48,6 +49,12 @@ Route::post('admin/transaction/claims/void', 'AdminClaimController@void');
 Route::get('admin/transaction/claims/show_product', 'AdminClaimController@show_product');
 
 Route::get('admin/transaction/payout', 'AdminPayoutController@index');
+Route::get('admin/transaction/payout/data', 'AdminPayoutController@data');
+Route::get('admin/transaction/payout/edit', 'AdminPayoutController@edit');
+Route::get('admin/transaction/payout/add', 'AdminPayoutController@add');
+Route::get('admin/transaction/payout/archive', 'AdminPayoutController@archive');
+Route::get('admin/transaction/payout/restore', 'AdminPayoutController@restore');
+
 Route::get('admin/transaction/unilevel', 'AdminUnilevelController@index');
 
 /* ADMIN / MAINTENANCE */

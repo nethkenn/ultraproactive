@@ -31,7 +31,6 @@ class Tbl_account extends Model
         return $this->hasOne('App\Tbl_admin','account_id');
     }
 
-
     public function scopePosition($query)
     {
         return $query->leftJoin('tbl_admin','tbl_admin.account_id','=','tbl_account.account_id')

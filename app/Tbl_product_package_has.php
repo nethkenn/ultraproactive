@@ -17,4 +17,8 @@ class Tbl_product_package_has extends Model
         return $query	->leftJoin('tbl_product','tbl_product.product_id','=','tbl_product_package_has.product_id')
         				->leftJoin('tbl_product_category','tbl_product_category.product_category_id','=','tbl_product.product_category_id');
     }
+    public function scopePackage($query)
+    {
+    	 return $query	->leftJoin('tbl_product_package','tbl_product_package.product_package_id','=','tbl_product_package_has.product_package_id');
+    }
 }

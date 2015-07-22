@@ -112,7 +112,7 @@
                 @if($history)
                     @foreach($history as $h)
                         <tr class="tibolru">
-                            <td>{{$h->slot_id}}</td>
+                            <td>{{$h->request_id}}</td>
                             <td>{{$h->deduction}}</td>
                             <td>{{$h->status}}</td>
                             <td>{{$h->type}}</td>

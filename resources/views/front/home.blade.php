@@ -324,7 +324,7 @@
 																						</div>
 																					</div>
 																				</div>
-																				{{-- <div id="fws_5559b27a8caaf" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="background-color: #f6f6f6; padding-top: 60px !important; padding-bottom: 60px !important; ">
+																				<!-- <div id="fws_5559b27a8caaf" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="background-color: #f6f6f6; padding-top: 60px !important; padding-bottom: 60px !important; ">
 																					<div class="container  dark">
 																						<div class="section_clear">
 																							<div class="vc_col-sm-12 wpb_column column_container" style="" data-animation="" data-delay="0">
@@ -405,7 +405,7 @@
 																							</div>
 																						</div>
 																					</div>
-																				</div> --}}
+																				</div> -->
 																				<div id="fws_5559b27a8eabd" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el full-width-content section-style    " style="padding-top: 90px !important; padding-bottom: 0px !important; ">
 																					<div class="col span_12  dark">
 																						<div class="vc_col-sm-12 wpb_column column_container" style="" data-animation="" data-delay="0">
