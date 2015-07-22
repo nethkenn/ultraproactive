@@ -38,6 +38,7 @@ Route::post('/admin','AdminController@postLogin');
 
 /* ADMIN / TRANSACTION */
 Route::get('admin/transaction/sales', 'AdminSalesController@index');
+Route::get('admin/transaction/sales/process', 'AdminSalesController@process');
 /**
  * ADMIN TRANSACTION CLAIMS
  */

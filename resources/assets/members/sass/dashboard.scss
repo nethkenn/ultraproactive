@@ -3,7 +3,7 @@ $background-color: #efefef;
 $blue: #474f71;
 $orange: #f47265;
 $sblue: #40c0c0;
-$gray: #aaafb6;
+$gray:#2C324F;
 $gray2: #9ea7b3;
 $font-color: #77818e;
 
@@ -147,21 +147,19 @@ $font-color: #77818e;
 	}
 	.detail
 	{
-		.blue
-		{
-			background-color: $blue;
-		}
-		.sblue
-		{
-			background-color: $sblue;
-		}
+
 		.header
 		{
-			font-size: 20.83px;
-			margin: 30px 0;
+			font-size: 20px;
+			margin-top: 20px;
 			color: white;
 			background-color: $gray;
-			font-weight: 300;
+			font-weight: bold;
+			font-family: "Open Sans";
+			text-transform: uppercase;
+			border-top-left-radius: 3px;
+			border-top-right-radius: 3px;
+
 			img
 			{
 				padding: 15px 30px 15px 0;
@@ -170,15 +168,22 @@ $font-color: #77818e;
 		.holder
 		{
 			background-color: #fff;
-			padding: 15px 25px;
-			margin-top: 10px;
+			padding: 25px 0;
+
+
+
 			.title
 			{
 				font-size: 16.67px;
-				padding: 10px 0;
-				color: white;
-				margin: 20px auto 40px;
-				max-width: 500px;
+				padding: 5px 10px;
+				color: #fff !important;
+				font-weight: bold;
+				text-transform: uppercase;
+				margin-bottom: 20px;
+				background-color: #39BABA;
+				display: inline-block;
+				border-radius: 3px;
+				min-width: 400px;
 			}
 			.input
 			{
@@ -188,12 +193,13 @@ $font-color: #77818e;
 			{
 				margin-left: 0 !important;
 				margin-right: 0 !important;
+
 				input[type="text"]
 				{
 					border: 0;
 					font-size: 14.58px;
 					color: $font-color;
-					text-align: center;
+					text-align: left;
 					background-color: #fff;
 					box-shadow: none;
 				}
@@ -201,10 +207,10 @@ $font-color: #77818e;
 			label
 			{
 				color: $font-color;
-				font-style: italic;
+				text-transform: uppercase;
 				font-weight: bold;
 				font-size: 12.5px;
-				text-align: center;
+				text-align: right;
 			}
 		}	
 	}
@@ -233,7 +239,8 @@ $font-color: #77818e;
 			button
 			{
 				background-color: $orange;
-				padding: 20px 60px;
+				padding: 5px 60px;
+
 				border: 0;
 				border-radius: 5px;
 				margin: 20px 0;
@@ -242,14 +249,18 @@ $font-color: #77818e;
 				border-right: 1px solid #e76356;
 				font-size: 14.58px;
 			}
+			button:hover
+			{
+				background-color: #CE5B50;
+			}
 		}
 		.holders
 		{
-			// padding-bottom: 5px;
-			// margin-bottom: 10px;
 			width: 100%;
 			display: table;
 			table-layout: fixed;
+
+
 			.linyanglinya
 			{
 				display: table-cell;
@@ -329,10 +340,12 @@ $font-color: #77818e;
 			.date
 			{
 				text-align: left;
-				font-size: 12.5px;
+				font-size: 14px;
 				color: $sblue;
-				padding: 5px 15px;
+				padding: 0px 15px;
+				margin-top: -3px;
 				margin-bottom: 10px;
+				font-weight: bold;
 			}
 		}	
 		.holders:last-child

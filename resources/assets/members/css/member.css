@@ -168,8 +168,7 @@ body {
     .wrapper .header-nav .navbar-right .slot-number-container {
       text-transform: uppercase;
       width: 200px;
-      text-align: left;
-      color: #000; }
+      text-align: left; }
       .wrapper .header-nav .navbar-right .slot-number-container option {
         padding: 5px; }
   .wrapper .header-nav .navbar {
@@ -407,7 +406,6 @@ body {
         height: 260px;
         overflow-y: auto; }
         .message .body .message-content .scrollpamore .holder {
-          padding: 15px 0px;
           border-bottom: 1px solid #e3e2e2; }
           .message .body .message-content .scrollpamore .holder .pix {
             display: table-cell;
