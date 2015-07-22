@@ -24,6 +24,17 @@
                         </div>
                     @endif
             		<input name="product_package_name" value="{{Request::input('product_package_name')}}" required="required" class="form-control" id="" placeholder="" type="text">
+            		
+            		<label for="mem">Membership</label>
+            		<select name="membership" id="mem" class="form-control">
+            			@if($membership)
+		            		@foreach($membership as $m)
+		            			<option value="{{$m->membership_id}}">{{$m->membership_name}}</option>
+		            		@endforeach
+	            		@else
+	            			<option value="">No available membership please add one.</option>
+	            		@endif
+            		</select>
             	</div>
 
             	<div class="form-group col-md-12">

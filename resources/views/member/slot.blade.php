@@ -26,23 +26,26 @@
             @foreach($slot2 as $s)
                 <div class="holder para">
                     <div class="col-md-3">
-                        <img src="/resources/assets/frontend/img/boxbox.png">
+                        <div class="slot-box">
+                            <div class="labels-slot">SLOT</div>
+                            <div class="values-slot">#{{$s->slot_id}}</div>
+                        </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="col-xs-6">
+                        <div class="col-xs-6 labels-container">
                             <div class="labels">Wallet</div>
                             <div class="labels">Membership</div>
                             <div class="labels">Rank</div>
                             <div class="labels">Downlines</div>
                         </div>
-                        <div class="col-xs-6">
-                            <div class="values">{{$s->slot_wallet}}</div>
+                        <div class="col-xs-6 labels-container">
+                            <div class="values">{{number_format($s->slot_wallet, 2)}}</div>
                             <div class="values">{{$s->membership_name}}</div>
                             <div class="values">{{$s->rank_name}}</div>
                             <div class="values">7</div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 top-container">
                         <div class="btn-holder">
                             <a style="cursor: pointer;">
                                 <button class="upbtn" type="button" tols="{{$s->slot_id}}" wallet="{{$s->slot_wallet}}" memship="{{$s->membership_price}}">Upgrade Membership</button>

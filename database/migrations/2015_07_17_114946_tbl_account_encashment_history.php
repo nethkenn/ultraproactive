@@ -14,6 +14,7 @@ class TblAccountEncashmentHistory extends Migration
     {
         Schema::create('tbl_account_encashment_history', function (Blueprint $table) {
 
+            $table->increments('request_id');
             $table->integer('slot_id')->unsigned();
             $table->integer('account_id')->unsigned();
             $table->double('amount');
