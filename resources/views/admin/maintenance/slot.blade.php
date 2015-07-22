@@ -23,6 +23,7 @@
 						<th>Wallet</th>
 						<th>Rank</th>
 						<th></th>
+						<th></th>
 					</tr>
 				</thead>
 			</table>
@@ -41,9 +42,10 @@ $(function() {
             {data: 'account_name', name: 'account_name'},
             {data: 'membership_name', name: 'membership_name'},
             {data: 'slot_type', name: 'slot_type'},
-            {data: 'slot_wallet', name: 'slot_wallet'},
+            {data: 'wallet', name: 'slot_wallet'},
             {data: 'rank_name', name: 'rank_name'},
             {data: 'gen', name: 'slot_id'},
+            {data: 'info', name: 'slot_id'},
         ],
         "lengthMenu": [[8, 10, 25, 50, -1], [10, 25, 50, "All"]],
         "oLanguage": 
@@ -53,6 +55,8 @@ $(function() {
          	},
         stateSave: true,
     });
+
+    $.fn.dataTableExt.sErrMode = 'throw';
 });
 </script>
 @endsection

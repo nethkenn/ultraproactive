@@ -21,8 +21,10 @@ class AdminSlotController extends AdminController
 	}
 	public function data()
 	{
-        $account = Tbl_slot::rank()->membership()->account()->get();
-        return Datatables::of($account)	->addColumn('gen','<a href="admin/maintenance/slots/add?id={{$slot_id}}">GENERATE SLOTS</a>')
+        $_account = Tbl_slot::rank()->membership()->account()->get();
+        return Datatables::of($_account)->addColumn('gen','<a href="admin/maintenance/slots/add?id={{$slot_id}}">GENEALOGY</a>')
+        								->addColumn('info','<a href="admin/maintenance/slots/view?id={{$slot_id}}">INFO</a>')
+        								->addColumn('wallet','{{number_format($slot_wallet, 2)}}')
         								->make(true);
 	}
 	public function add()
