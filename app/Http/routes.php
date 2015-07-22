@@ -214,6 +214,9 @@ Route::get('admin/utilities/complan', 'AdminComplanController@index');
 
 /* ADMIN / UTITLITIES / COMPTATION*/
 Route::get('admin/utilities/binary', 'AdminComplanController@binary');
+Route::any('admin/utilities/binary/edit', 'AdminComplanController@binary_edit');
+Route::any('admin/utilities/binary/add', 'AdminComplanController@binary_add');
+Route::any('admin/utilities/binary/membership/edit', 'AdminComplanController@binary_membership_edit');
 
 
 /* ADMIN / REPORTS */

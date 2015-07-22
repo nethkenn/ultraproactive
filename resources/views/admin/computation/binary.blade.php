@@ -7,7 +7,7 @@
 				<h2><i class="fa fa-bullseye"></i> PAIRING COMBINATIONS</h2>
 			</div>
 			<div class="buttons col-md-4 text-right">
-				<button onclick="location.href='admin/maintenance/product_package/add'" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> ADD PAIRING COMBINATIONS</button>
+				<button onclick="location.href='admin/utilities/binary/add'" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> ADD PAIRING COMBINATIONS</button>
 			</div>
 		</div>
 	</div>
@@ -19,15 +19,19 @@
 					<th>POINT (R)</th>
 					<th>INCOME</th>
 					<th class="option-col"></th>
+					<th class="option-col"></th>
 				</tr>
 			</thead>
 			<tbody>
+				@foreach($_pairing as $pairing)
 				<tr>
-					<td>10.00</td>
-					<td>10.00</td>
-					<td>1,200.00</td>
-					<td><a href="">EDIT</a></td>
+					<td>{{ number_format($pairing->pairing_point_l, 2) }}</td>
+					<td>{{ number_format($pairing->pairing_point_r, 2) }}</td>
+					<td>{{ number_format($pairing->pairing_income, 2) }}</td>
+					<td><a href="admin/utilities/binary/edit?id={{ $pairing->pairing_id }}">EDIT</a></td>
+					<td><a href="admin/utilities/binary/delete?id={{ $pairing->pairing_id }}">DELETE</a></td>
 				</tr>
+				@endforeach
 			</tbody>
 		</table>
 	</div>
