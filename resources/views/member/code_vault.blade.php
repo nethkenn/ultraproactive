@@ -25,7 +25,7 @@
             </div>
             <div class="col-md-6 ew">
 
-                <a href="member/code_vault#buy_code">
+                <a style="cursor: pointer;">
                     <div class="button" id="buymember">Buy Membership Codes</div>
                 </a>
                 <a style="cursor: pointer;" class="claim_code">
@@ -69,8 +69,11 @@
                         </td>
                         <td>{{$c->product_package_name}}</td>
                         <td>{{$c->used == 0 ? "Available" : "Used"}}</td>
-
-                        <td><a style="cursor: pointer;" class="createslot">Create Slot</a></td>
+                        @if($c->used == 0)
+                        <td><a style="cursor: pointer;" class="createslot" value="{{$c->code_pin}}">Create Slot</a></td>
+                        @else
+                        <td><a style="cursor: pointer;" class="alertused">Already Used</a></td>
+                        @endif
                         <td><a style="cursor: pointer;" class="transferer" value="{{$c->code_pin}} @ {{$c->code_activation}}" val="{{$c->code_pin}}">Transfer Code</a></td>
                     </tr>
                     @endforeach
@@ -205,26 +208,37 @@
     </div>
     <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
     <div class="col-md-10 col-md-offset-1 para">
-        <form class="form-horizontal" method="POST">
+        <form class="form-horizontal" method="POST" id="createslot">
             <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
             <div class="form-group para">
                 <label for="1" class="col-sm-3 control-label">Sponsor</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="1">
+                    <select class="form-control" id="1" name="sponsor">
+                        @if($allslot)
+                            @foreach($allslot as $a)
+                            <option value="{{$a->slot_id}}">Slot #{{$a->slot_id}}</option>
+                            @endforeach
+                        @endif
+                    </select>
                 </div>
             </div>
             <div class="form-group para">
                 <label for="2" class="col-sm-3 control-label">Placement</label>
                 <div class="col-sm-9">
-                    <select class="form-control" id="2">
-                        <option>Slot #8</option>
+                    <select class="form-control" id="2" name="placement">
+                        @if($downline)
+                            @foreach($downline as $d)
+                            <option value="{{$d->placement_tree_child_id}}">Slot #{{$d->placement_tree_child_id}}</option>
+                            @endforeach
+                        @endif
                     </select>
                 </div>
+                <input type="hidden" id="code_number" value"" name="code_number">
             </div>
             <div class="form-group para">
                 <label for="3" class="col-sm-3 control-label">Position</label>
                 <div class="col-sm-9">
-                    <select class="form-control" id="3" name="position">
+                    <select class="form-control" id="3" name="slot_position">
                         <option value="left">Left</option>
                         <option value="right">Right</option>
                     </select>
@@ -233,7 +247,7 @@
     </div>
     <br>
     <button class="button" type="button" data-remodal-action="cancel">Cancel</button>
-    <button class="button"  type="submit" name="c_slot">Create Slot</button>
+    <button class="c_slot button"  type="submit" name="c_slot">Create Slot</button>
     </form>
 </div>
 
