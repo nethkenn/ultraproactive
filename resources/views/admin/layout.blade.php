@@ -89,7 +89,7 @@
 									<li><a href="admin/utilities/position">Admin Positions</a></li>
 									<li><a href="admin/utilities/setting">Company Settings</a></li>
 									<li class="divider" role="separator"></li>
-									<li><a href="admin/utilities/complan">Binary Computation</a></li>
+									<li><a href="admin/utilities/binary">Binary Computation</a></li>
 								</ul>
 							</li>
 							<!-- REPORTS -->

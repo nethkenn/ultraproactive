@@ -212,7 +212,11 @@ Route::post('admin/utilities/position/delete', 'AdminPositionController@delete')
 Route::get('admin/utilities/setting', 'AdminSettingsController@index');
 Route::get('admin/utilities/complan', 'AdminComplanController@index');
 
-/* ADMIN / UTILITIES */
+/* ADMIN / UTITLITIES / COMPTATION*/
+Route::get('admin/utilities/binary', 'AdminComplanController@binary');
+
+
+/* ADMIN / REPORTS */
 Route::get('admin/reports/product_sales', 'AdminReportController@product_sales');
 Route::get('admin/reports/membership_sales', 'AdminReportController@membership_sales');
 

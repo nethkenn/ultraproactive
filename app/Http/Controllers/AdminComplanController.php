@@ -6,4 +6,8 @@ class AdminComplanController extends AdminController
 	{
         return view('admin.utilities.complan');
 	}
+	public function binary()
+	{
+		return view('admin.comptation.binary');
+	}
 }
