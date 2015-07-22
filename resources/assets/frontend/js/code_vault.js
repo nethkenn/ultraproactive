@@ -1,4 +1,5 @@
 var code_vault = new code_vault();
+var list = null;
 
 function code_vault()
 {
@@ -16,6 +17,7 @@ function code_vault()
 		initialize();
 		onmembershipchange();	
 		add_event_active_product();
+		product_included();
 	}
 	// function getdata()
 	// {
@@ -64,6 +66,32 @@ function code_vault()
 			var inst = $('[data-remodal-id=transfer_code]').remodal();
           	inst.open(); 
 		})
+
+
+	      if($('#11111').data('options') == undefined)
+	      {
+	          $('#11111').data('options',$('#packageincluded option').clone());
+	      } 
+	      var id = $('option:selected', '#11111').attr('included');
+
+	      var options = $('#11111').data('options').filter('[included=' + id + ']');
+	      $('#packageincluded').html(options);
+
+	      if($('#packageincluded option').size() == 0)
+	      {
+	        $('#packageincluded').append('<option value="" class="shouldremove">No package available for this membership</option>');  
+	     	$('#ifbuttoncode').prop("disabled", true);
+	     	$(".includer").hide();
+	      }
+	      else
+	      {
+	      	$(".includer").show();
+	      	$('#ifbuttoncode').prop("disabled", false);
+	      }
+
+	      list = jQuery.parseJSON($('option:selected', "#packageincluded").attr('json'));
+		  $(".productinclude").empty();
+		  showlist();
 	}
 	function checkvalue()
 	{
@@ -114,5 +142,60 @@ function code_vault()
             }
         })
     } 
+    function product_included()
+    {
+		$("#11111").change(function() 
+		{
+
+		              if($(this).data('options') == undefined)
+		              {
+		                  $(this).data('options',$('#packageincluded option').clone());
+		              } 
+		              var id = $('option:selected', this).attr('included');
+
+		              var options = $(this).data('options').filter('[included=' + id + ']');
+		              $('#packageincluded').html(options);
+
+		              if($('#packageincluded option').size() == 0)
+		              {
+		                $('#packageincluded').append('<option value="" class="shouldremove">No package available for this membership</option>');  
+		             	$('#ifbuttoncode').prop("disabled", true);
+		             	$(".includer").hide();
+		              }
+		              else
+		              {
+		              	$(".includer").show();
+		              	$('#ifbuttoncode').prop("disabled", false);
+		              }
+		});
+
+		$("#packageincluded").change(function()
+		{
+	    	list = jQuery.parseJSON($('option:selected', this).attr('json'));
+			$(".productinclude").empty();
+    		showlist();
+		});
+    }
+    function showlist()
+    {
+           $.each(list, function( key, value ) 
+            {
+	            var id = value.product_id;
+                var name = value.product_name;
+                var price = value.price;
+                var quantity = value.quantity;
+                var total = parseInt(price) * parseInt(quantity);
+                var str="";
+
+                 str =  '<tr class="text-center">'+
+                            '<td>'+id+'</td>'+
+                            '<td>'+name+'</td>'+
+                            '<td>'+price+'</td>'+
+                            '<td>'+total+'</td>'+
+                            '<td>'+quantity+'</td>'+
+                        '</tr>';
+                $(".productinclude").append(str);      
+            }); 
+    }
 }
 

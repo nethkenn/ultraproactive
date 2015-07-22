@@ -24,6 +24,18 @@
                         </div>
                     @endif
             		<input name="product_package_name" value="{{Request::input('product_package_name') ? Request::input('product_package_name') : $prod_package->product_package_name}}" required="required" class="form-control" id="" placeholder="" type="text">
+            	
+            		<label for="mem">Membership</label>
+            		<select name="membership" id="mem" class="form-control">
+            			@if($membership)
+		            		@foreach($membership as $m)
+		            			<option value="{{$m->membership_id}}" {{$prod_package->membership_id == $m->membership_id ? "selected" : ""}}>{{$m->membership_name}}</option>
+		            		@endforeach
+	            		@else
+	            			<option value="">No available membership please add one.</option>
+	            		@endif
+            		</select>
+
             	</div>
 
             	<div class="form-group col-md-12">
@@ -43,7 +55,7 @@
 				</div>
 
             	<div class="form-group col-md-12">
-{{--             		@if($_error['product'])
+<!--             		@if($_error['product'])
                         <div class="col-md-12 alert alert-danger form-errors">
                             <ul>
                                 @foreach($_error['product'] as $error)
@@ -51,7 +63,7 @@
                                 @endforeach
                             </ul>
                         </div>
-                    @endif --}}
+                    @endif !-->
             		<table id="added-product-table" class="table table-bordered table-hover">
 						<thead>
 							<tr>

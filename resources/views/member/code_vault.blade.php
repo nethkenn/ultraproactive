@@ -1,14 +1,23 @@
 @extends('member.layout')
 @section('content')
 <div class="code-vault">
-    <div class="table">
         @if(Session::has('message'))
             <div class="alert alert-danger">
-                <ul>
+                <ul>   
+                       @foreach($_error as $error) 
                         <li>{{ $error }}</li>
+                       @endforeach
                 </ul>
             </div>
         @endif
+        @if(Session::has('success'))
+            <div class="alert alert-success">
+                <ul>
+                        <li>{{ $success }}</li>
+                </ul>
+            </div>
+        @endif
+    <div class="table">
         <div class="table-head para">
             <div class="col-md-6 aw">
                 <img src="/resources/assets/frontend/img/icon-member.png">
@@ -45,7 +54,7 @@
             </thead>
             <tbody>
                     @foreach($code as $c)
-                    <tr class="tibolru" loading="$c->code_pin">
+                    <tr class="tibolru" loading="{{$c->code_pin}}">
                         <td>{{$c->code_pin}}</td>
                         <td>{{$c->code_activation}}</td>
                         <td>{{$c->code_type_name}}</td>
@@ -226,6 +235,88 @@
     <button class="button" type="button" data-remodal-action="cancel">Cancel</button>
     <button class="button"  type="submit" name="c_slot">Create Slot</button>
     </form>
+</div>
+
+
+<div class="remodal create-slot" data-remodal-id="buy_code" data-remodal-options="hashTracking: false">
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <div class="header">
+        <img src="/resources/assets/frontend/img/icon-buy.png">
+        Buy Codes
+    </div>
+    <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
+    <div class="col-md-10 col-md-offset-1 para">
+     <form class="form-horizontal" method="POST">
+            <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
+            <div class="form-group para">
+                <label for="11111" class="col-sm-3 control-label">Membership</label>
+                <div class="col-sm-9">
+                    <select class="form-control" id="11111" name="memid">
+                        @if($membership)
+                            @foreach($membership as $m)    
+                                <option value="{{$m->membership_id}}" amount="{{$m->membership_price}}" included="{{$m->membership_id}}">{{$m->membership_name}}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
+            </div>
+            <div class="form-group para">
+                <label for="11111" class="col-sm-3 control-label">Product Package</label>
+                <div class="col-sm-9">
+                    <select id="packageincluded" class="form-control"  name="package">
+                        @if($availprod)
+                            @foreach($availprod as $a)    
+                                <option value="{{$a->product_package_id}}" included="{{$a->membership_id}}" json="{{$a->productlist}}">{{$a->product_package_name}}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
+            </div>
+            <div class="includer form-group para">
+
+                <table>
+                    <thead>
+                        <tr class="text-center">
+                            <th>ID</th>
+                            <th>Product Name</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody class="productinclude">
+
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="form-group para">
+                <label for="22222" class="col-sm-3 control-label">Wallet</label>
+                <div class="col-sm-9">
+                    @if($slotnow)
+                    <input type="text" class="form-control" id="22222" name="wallet" value="{{$slotnow->slot_wallet}}" disabled>
+                    @else
+                    <input type="text" class="form-control" id="22222" name="wallet" value="0" disabled>
+                    @endif
+                </div>
+            </div>
+            <div class="form-group para">
+                <label for="33333" class="col-sm-3 control-label">Amount</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="33333" disabled>
+                </div>
+            </div>
+            <div class="form-group para">
+                <label for="44444" class="col-sm-3 control-label">Remaining</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="44444" readonly style="background-color: #f47265; border: 0; color: white; text-align: center;" value="">
+                </div>
+            </div>
+    </div>
+            <br>
+                <button class="button" data-remodal-action="cancel">Cancel</button>
+                <button class="button" type="submit" id="ifbuttoncode" name="sbmitbuy" value="Buy Code" disabled>Buy Code</button>
+        </form>    
 </div>
 
 @endsection

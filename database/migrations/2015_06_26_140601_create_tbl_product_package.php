@@ -17,6 +17,11 @@ class CreateTblProductPackage extends Migration
             $table->string('product_package_name');
             $table->tinyInteger('archived');
             $table->string('slug');
+            $table->integer('membership_id')->unsigned();
+
+            $table->foreign('membership_id')
+                  ->references('membership_id')->on('tbl_membership')
+                  ->onDelete('cascade');
         });
     }
 
