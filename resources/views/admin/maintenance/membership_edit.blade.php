@@ -26,7 +26,7 @@
                     @endif
             		<input name="membership_name" value="{{Request::input('membership_name') ? Request::input('membership_name') : $membership->membership_name }}" required="required" class="form-control" id="" placeholder="" type="text">
             	</div>
-            	<div class="form-group col-md-12">
+            	<div class="form-group col-md-6">
                     <label for="membership_price">Membership Price</label>
                     @if($_error['membership_price'])
                         <div class="col-md-12 alert alert-danger form-errors">
@@ -40,7 +40,7 @@
             		<input name="membership_price" value="{{Request::input('membership_price') ? Request::input('membership_price') : $membership->membership_price }}" required="required" class="form-control" id="" placeholder="" type="number">
             	</div>
 
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-6">
                     <label for="discount">Discount</label>
                     @if($_error['discount'])
                         <div class="col-md-12 alert alert-danger form-errors">
@@ -52,7 +52,40 @@
                         </div>
                     @endif
                     <input name="discount" value="{{Request::input('discount') ? Request::input('discount') : $membership->discount }}" required="required" class="form-control" id="" placeholder="" type="number">
-                </div>     	
+                </div>  
+                <div class="form-group col-md-6">
+                    <label for="discount">Enable Entry</label>
+                    @if($_error['membership_entry'])
+                        <div class="col-md-12 alert alert-danger form-errors">
+                            <ul>
+                                @foreach($_error['discount'] as $error)
+                                    <li>{{$error}}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <select name="membership_entry" class="form-control">
+                        <option {{ $membership->membership_entry == 1 ? 'selected' : '' }} value="1">YES</option>
+                        <option {{ $membership->membership_entry == 0 ? 'selected' : '' }} value="0">NO</option>
+                    </select>
+                </div> 
+
+                <div class="form-group col-md-6">
+                    <label for="discount">Enable Upgrade</label>
+                    @if($_error['membership_entry'])
+                        <div class="col-md-12 alert alert-danger form-errors">
+                            <ul>
+                                @foreach($_error['discount'] as $error)
+                                    <li>{{$error}}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <select name="membership_upgrade" class="form-control">
+                        <option {{ $membership->membership_upgrade == 1 ? 'selected' : '' }} value="1">YES</option>
+                        <option {{ $membership->membership_upgrade == 0 ? 'selected' : '' }} value="0">NO</option>
+                    </select>
+                </div>  
         </form>
     </div>
 @endsection

@@ -64,16 +64,21 @@
 							<li class="dropdown {{ Request::segment(2) == 'maintenance' ? 'active' : 'inactive' }}">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Maintenance <span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
-									<li><a href="admin/maintenance/accounts">Accounts</a></li>
-									<li><a href="admin/maintenance/codes">Codes</a></li>
-									<li><a href="admin/maintenance/product_package">Package</a></li>
+									<li><a href="admin/maintenance/accounts">Account</a></li>
+									<li><a href="admin/maintenance/slots">Account Slots</a></li>
+									<li class="divider" role="separator"></li>
 									<li><a href="admin/maintenance/product">Product</a></li>
-									<li><a href="admin/maintenance/slots">Slots</a></li>
+									<li><a href="admin/maintenance/product_package">Product Package</a></li>
+									<li><a href="admin/maintenance/product_category">Product Categories</a></li>
+									<li><a href="admin/maintenance/inventory">Product Inventory</a></li>
+									<li class="divider" role="separator"></li>
+									<li><a href="admin/maintenance/membership">Membership</a></li>
+									<li><a href="admin/maintenance/codes">Membership Codes</a></li>
+									<li class="divider" role="separator"></li>
 									<li><a href="admin/maintenance/country">Country</a></li>
 									<li><a href="admin/maintenance/deduction">Deductions</a></li>
-									<li><a href="admin/maintenance/membership">Membership</a></li>
 									<li><a href="admin/maintenance/ranking">Ranking</a></li>
-									<li><a href="admin/maintenance/inventory">Inventory</a></li>
+
 								</ul>
 							</li>
 							<!-- UTILITIES -->
@@ -83,7 +88,8 @@
 									<li><a href="admin/utilities/admin_maintenance">Admin</a></li>
 									<li><a href="admin/utilities/position">Admin Positions</a></li>
 									<li><a href="admin/utilities/setting">Company Settings</a></li>
-									<li><a href="admin/utilities/complan">Computation Plan</a></li>
+									<li class="divider" role="separator"></li>
+									<li><a href="admin/utilities/complan">Binary Computation</a></li>
 								</ul>
 							</li>
 							<!-- REPORTS -->
@@ -94,8 +100,6 @@
 									<li><a href="admin/reports/membership_sales">Membership Sales Report</a></li>
 								</ul>
 							</li>
-							<!-- USER MANUAL -->
-							<!-- <li class="{{ Request::segment(2) == 'manual' ? 'active' : 'inactive' }}"><a href="admin/">User Manual</a></li> -->
 							<!-- CONTENT -->
 							<li class="dropdown {{ Request::segment(2) == 'content' ? 'active' : 'inactive' }}">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Content <span class="caret"></span></a>

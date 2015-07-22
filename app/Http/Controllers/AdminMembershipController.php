@@ -21,8 +21,10 @@ class AdminMembershipController extends AdminController
         $text = Request::input('archived') ? 'RESTORE' : 'ARCHIVE';
 		$class = Request::input('archived') ? 'restore-membership' : 'archive-membership';	
 		
-        return Datatables::of($account)	->addColumn('edit','<a href="admin/maintenance/membership/edit?id={{$membership_id}}">EDIT</a>')
-        								->addColumn('archive','<a class="'.$class.'" href="#" membership-id="{{$membership_id}}">'.$text.'</a>')
+        return Datatables::of($account)	->addColumn('entry','<input type="checkbox" disabled="disabled" {{ $membership_entry == 1 ? "checked" : "" }}>')
+        								->addColumn('upgrade','<input type="checkbox" disabled="disabled" {{ $membership_upgrade == 1 ? "checked" : "" }}>')
+        								->addColumn('edit','<a href="admin/maintenance/membership/edit?id={{$membership_id}}">EDIT</a>')
+        								->addColumn('archive','<a class="'.$class.'" href="#" membership-id="{{ $membership_id}}">'.$text.'</a>')
         								->make(true);
 	
 	}
@@ -55,6 +57,8 @@ class AdminMembershipController extends AdminController
 
 				$insert['membership_name'] = strtoupper(Request::input('membership_name'));
 				$insert['membership_price'] = Request::input('membership_price');
+				$insert['membership_entry'] = Request::input('membership_entry');
+				$insert['membership_upgrade'] = Request::input('membership_upgrade');
 				$insert['discount'] = Request::input('discount');
 				$membership = Tbl_membership::where('membership_id',$id)->update($insert);
 				return Redirect('admin/maintenance/membership');
