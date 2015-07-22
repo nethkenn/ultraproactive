@@ -57,7 +57,7 @@
                     @if($_error['membership_entry'])
                         <div class="col-md-12 alert alert-danger form-errors">
                             <ul>
-                                @foreach($_error['discount'] as $error)
+                                @foreach($_error['membership_entry'] as $error)
                                     <li>{{$error}}</li>
                                 @endforeach
                             </ul>
@@ -71,10 +71,10 @@
 
                 <div class="form-group col-md-6">
                     <label for="discount">Enable Upgrade</label>
-                    @if($_error['membership_entry'])
+                    @if($_error['membership_upgrade'])
                         <div class="col-md-12 alert alert-danger form-errors">
                             <ul>
-                                @foreach($_error['discount'] as $error)
+                                @foreach($_error['membership_upgrade'] as $error)
                                     <li>{{$error}}</li>
                                 @endforeach
                             </ul>

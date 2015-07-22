@@ -46,6 +46,8 @@ class AdminMembershipController extends AdminController
 			$rules['membership_name'] = 'required|unique:tbl_membership,membership_name,'.$id.',membership_id|regex:/^[A-Za-z0-9\s-_]+$/';
 			$rules['membership_price'] = 'required|unique:tbl_membership,membership_price,'.$id.',membership_id|numeric|min:0';
 			$rules['discount'] = 'numeric|min:0|max:100';
+			$rules['membership_entry'] = 'numeric|numeric|min:0|max:1';
+			$rules['membership_upgrade'] = 'numeric|min:0|max:1';
 			$message = [
 				'product_name.regex' => 'The :attribute must only have letters , numbers, spaces, hypens ( - ) and underscores ( _ )',
 					];
@@ -65,12 +67,12 @@ class AdminMembershipController extends AdminController
 			}
 			else
 			{
-
 				$errors =  $validator->errors();
 				$data['_error']['membership_name'] = $errors->get('membership_name');
 				$data['_error']['membership_price'] = $errors->get('membership_price');
+				$data['_error']['membership_entry'] = $errors->get('membership_entry');
+				$data['_error']['membership_upgrade'] = $errors->get('membership_upgrade');
 				$data['_error']['discount'] = $errors->get('discount');
-
 			}
 
 			
@@ -105,6 +107,8 @@ class AdminMembershipController extends AdminController
 
 				$insert['membership_name'] = strtoupper(Request::input('membership_name'));
 				$insert['membership_price'] = Request::input('membership_price');
+				$insert['membership_entry'] = Request::input('membership_entry');
+				$insert['membership_upgrade'] = Request::input('membership_upgrade');
 				$insert['discount'] = Request::input('discount');
 
 				// dd($insert);
@@ -121,7 +125,8 @@ class AdminMembershipController extends AdminController
 				$data['_error']['membership_name'] = $errors->get('membership_name');
 				$data['_error']['membership_price'] = $errors->get('membership_price');
 				$data['_error']['discount'] = $errors->get('discount');
-				
+				$data['_error']['membership_entry'] = $errors->get('membership_entry');
+				$data['_error']['membership_upgrade'] = $errors->get('membership_upgrade');
 
 			}
 
