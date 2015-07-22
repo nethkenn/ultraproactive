@@ -25,6 +25,7 @@ class CreateTblProduct extends Migration
             $table->double('binary_pts')->default(0);
             $table->double('price')->default(0);
             $table->string('image_file')->default('default.jpg');
+            $table->integer('stock_qty')->default(0);
             $table->timestamps();
             $table->tinyInteger('archived')->default(0);
             $table->foreign('product_category_id')->references('product_category_id')->on('tbl_product_category')->onDelete('cascade');

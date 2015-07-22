@@ -11,7 +11,7 @@ use App\Tbl_country;
 use App\Tbl_rank;
 use Crypt;
 use Validator;
-
+use App\Classes\MLM;
 
 class AdminSlotController extends AdminController
 {
@@ -65,6 +65,7 @@ class AdminSlotController extends AdminController
 	}
 	public function add_form_submit()
 	{
+
 		$return["message"] = "";
 		$data["message"] = "";
 		
@@ -106,8 +107,10 @@ class AdminSlotController extends AdminController
 			$insert["slot_total_withrawal"] =  Request::input("total_withrawal");
 			$insert["slot_total_earning"] =  Request::input("total_earning");
 			$insert["slot_owner"] =  $account_id;
-			Tbl_slot::insert($insert);
+			$slot_id = Tbl_slot::insertGetId($insert);
 
+			MLM::tree($slot_id);
+			MLM::binary($slot_id);
 			$return["placement"] = Request::input("placement");
 		}
 		

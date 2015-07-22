@@ -153,8 +153,10 @@ body
 {
 	text-align: center;
 	//HOME
+
 	.header-nav
 	{
+
 		.header
 		{
 			.ubod
@@ -218,16 +220,33 @@ body
 					background-color: white;
 				}
 			}
+			.slot-number-container
+			{
+				text-transform: uppercase;
+				width: 200px;
+				text-align: left;
+				color: #000;
+				option
+				{
+					padding: 5px;
+				}
+			}
+
 		}
 		.navbar
 		{
 			clear: both;
 			position: relative;
+			.select-label
+			{
+				font-size: 14.48px;
+			}
 			.nav
 			{
+				text-transform: uppercase;
 				li
 				{
-					font-size: 14.58px;
+					font-size: 13px;
 					&:hover
 					{
 						background-color: #40c0c0;
@@ -251,7 +270,8 @@ body
 				position: absolute;
 				background: transparent url("/resources/assets/ausart/assets/img/header_shadow.png") no-repeat scroll center bottom;
 				height: 89px;
-				top: 34px;
+				background-size: 100%;
+				top: 50px;
 				@media screen and (max-width: 991px)
 				{
 					display: none;
@@ -261,12 +281,8 @@ body
 	}
 	.content
 	{
-		margin-top: 60px;
-		
-		
-		
-		
-		
+		margin-top: 40px;
+
 		.voucher
 		{
 

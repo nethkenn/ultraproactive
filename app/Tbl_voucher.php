@@ -28,8 +28,22 @@ class Tbl_voucher extends Model
     {
     	$carbon = new Carbon($value);
     	return $carbon->format('F, d Y');
-
-
+        // return $carbon->toDayDateTimeString();s
     }
+
+
+    public function getUpdatedAtAttribute($value)
+    {
+        $carbon = new Carbon($value);
+        // return $carbon->format('F, d Y');
+        return $carbon->toDayDateTimeString();
+    }
+
+
+    // public function getStatusAttribute($value)
+    // {
+    //     return ucfirst($value);
+    // }
+
 
 }

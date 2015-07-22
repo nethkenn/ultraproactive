@@ -1,6 +1,5 @@
 @extends('admin.layout')
 @section('content')
-	Under Development (Admin)
     <div class="row">
         <div class="header">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">

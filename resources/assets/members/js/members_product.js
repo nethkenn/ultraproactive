@@ -27,7 +27,12 @@ $(document).ready(function()
 
 
 
-    	
+    	$(document).on('closing', $checkout_remodal, function ()
+    	{
+
+    		load_cart();
+    		$('#checkout-form-container').empty();
+    	});
 
     	$(document).on('opened', $checkout_remodal, function ()
     	{
@@ -110,7 +115,7 @@ $(document).ready(function()
 			$('#checkout-form-container').on('click', '#back-to-product', function(event) {
 				event.preventDefault();
 				$checkout_remodal.close();
-				load_cart();
+				
 			});	
     }
 

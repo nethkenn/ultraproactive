@@ -16,6 +16,7 @@ class CreateTblPartner extends Migration
         {
             $table->increments('partner_id');
             $table->string('partner_title');
+            $table->string('partner_link');
             $table->string('partner_image')->default('default.jpg');
             $table->timestamps();
             $table->tinyInteger('archived')->default(0);

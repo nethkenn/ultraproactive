@@ -26,6 +26,7 @@
                     <div class="button">How to Generate Leads?</div>
                 </a>
                 <a style="cursor: pointer;" class="a_lead">
+
                     <div class="button">Add Leads ( Manually )</div>
                 </a>
             </div>

@@ -36,7 +36,7 @@
 </div>
 <div id="section-to-print" class="remodal" data-remodal-id="view-voucher-product" data-remodal-options="hashTracking: false, closeOnOutsideClick: false">
     <img class="voucher_preloader" src="/resources/assets/img/preloader_cart.png" style="display:none;">
-    <div id="view-voucher-product-container">
+    <div id="view-voucher-product-container" class="">
 
     </div>
 </div>

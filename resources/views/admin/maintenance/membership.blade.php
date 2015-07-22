@@ -26,6 +26,7 @@
 						<th class="option-col">ID</th>
 						<th>Membership Name</th>
 						<th>Membership Price</th>
+						<th>Discount(%)</th>
 						<th class="option-col"></th>
 						<th class="option-col"></th>
 					</tr>
@@ -50,6 +51,7 @@ $(function() {
             {data: 'membership_id', name: 'membership_id'},
             {data: 'membership_name', name: 'membership_name'},
             {data: 'membership_price', name: 'membership_price'},
+            {data: 'discount', name: 'discount'},
             {data: 'edit', name: 'membership_id'},
             {data: 'archive', name: 'membership_id'},
         ],

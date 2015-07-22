@@ -7,7 +7,7 @@
 			<h2><i class="fa fa-user-plus"></i> PARTNER MANAGEMENT</h2>
 		</div>
 		<div class="buttons col-md-4 text-right">
-			<button onclick="location.href='admin/content/partner/add'" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> ADD partner</button>
+			<button onclick="location.href='admin/content/partner/add'" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> ADD Partner</button>
 		</div>
 	</div>
 	<div class="filters ">
@@ -26,6 +26,7 @@
 				<td>Partner ID</td>
 				<td>Partner Image</td>
 				<td>Partner Title</td>
+				<td>Partner Link</td>
 				<td></td>
 			</tr>
 		</thead>
@@ -35,6 +36,7 @@
 				<td>{{ $partner->partner_id }}</td>
 				<td><a href="{{ $partner->image }}">{{ $partner->partner_image }}</a></td>
 				<td>{{ $partner->partner_title }}</td>
+				<td>{{ $partner->partner_link }}</td>
 				<td><a href="admin/content/partner/edit?id={{ $partner->partner_id }}">modify</a> | <a href="admin/content/partner/delete?id={{ $partner->partner_id }}">delete</a></td>
 			</tr>
 			@endforeach

@@ -10,7 +10,7 @@ use App\Http\Requests\AdminAddRequest;
 use App\Http\Requests\AdminEditRequest;
 
 use Illuminate\Http\Request;
-use App\Http\Requests;
+
 class AdminAdminController extends AdminController
 {
 	public function index()
