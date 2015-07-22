@@ -94,7 +94,7 @@ class MemberCheckoutController extends Controller
 
             Validator::extend('has_stock', function($attribute, $value, $parameters)
             {
-     
+        
                 $stock_qty = $parameters[0];
                 $cart_qty = $parameters[1];
                 $stock_minus_cart_qty = $stock_qty-$cart_qty;
@@ -258,4 +258,8 @@ class MemberCheckoutController extends Controller
         return $total;
 
     }
+
+
+
+    
 }

@@ -23,16 +23,25 @@
 				<thead>
 					<tr class="text-center">
 
-						<th>Voucher ID</th>
+						<th style="width:100px;">ID</th>
 						<th>Voucher Code</th>
 						<th>Total Amount</th>
 						<th>Status</th>
 						<th>Date</th>
-						<th class="option-col"></th>
+						<th style="width:200px;" class="option-col"></th>
 					</tr>
 				</thead>
 			</table>
 	</div>
+<div class="remodal" data-remodal-id="view_prod_modal"
+  data-remodal-options="hashTracking: false, closeOnOutsideClick: true">
+  <button data-remodal-action="close" class="remodal-close"></button>
+  <div id="voucher-prod-container">
+
+  </div>
+  <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
+  <button data-remodal-action="confirm" class="remodal-confirm">OK</button>
+</div>
 @endsection
 
 @section('script')
@@ -60,5 +69,8 @@ $(function() {
         stateSave: true,
     });
 });
+</script>
+<script type="text/javascript" src="resources/assets/admin/claim.js">
+	
 </script>
 @endsection

@@ -1,6 +1,5 @@
 @extends('admin.layout')
 @section('content')
-
 	<div class="header col-md-12" >
 	    <div class="title col-md-8">
 	        <h2><i class="fa fa-tag"></i> Add New membership</h2>
@@ -24,7 +23,7 @@
                             </ul>
                         </div>
                     @endif
-            		<input name="membership_name" value="" required="required" class="form-control" id="" placeholder="" type="text">
+            		<input name="membership_name" value="{{Request::input('membership_name')}}" required="required" class="form-control" id="" placeholder="" type="text">
             	</div>
             	<div class="form-group col-md-12">
                     <label for="membership_price">Membership Price</label>
@@ -37,8 +36,21 @@
                             </ul>
                         </div>
                     @endif
-            		<input name="membership_price" value="" required="required" class="form-control" id="" placeholder="" type="number">
-            	</div>    	
+            		<input name="membership_price" value="{{Request::input('membership_price')}}" required="required" class="form-control" id="" placeholder="" type="number">
+            	</div>
+                <div class="form-group col-md-12">
+                    <label for="discount">Discount</label>
+                    @if($_error['discount'])
+                        <div class="col-md-12 alert alert-danger form-errors">
+                            <ul>
+                                @foreach($_error['discount'] as $error)
+                                    <li>{{$error}}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <input name="discount" value="{{Request::input('discount')}}" required="required" class="form-control" id="" placeholder="" type="number">
+                </div>    	
         </form>
     </div>
 @endsection

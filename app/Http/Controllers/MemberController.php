@@ -19,7 +19,7 @@ class MemberController extends Controller
 	    												 ->orderBy('membership_price','ASC')
 	    												 ->get();
 	    		$data4 = DB::table('tbl_account')->where('account_id','!=',$id)->get();
-	    												 
+						 
 				if(Session::get("currentslot"))
 				{
 		    		$data2 = DB::table('tbl_slot')->where('slot_owner',$id)
@@ -36,7 +36,8 @@ class MemberController extends Controller
 		    		$data3 = DB::table('tbl_slot')->where('slot_owner',$id)
 		    									  ->join('tbl_membership','tbl_membership.membership_id','=','tbl_slot.slot_membership')
 		    									  ->join('tbl_rank','tbl_rank.rank_id','=','tbl_slot.slot_rank')
-							 					  ->first();	
+							 					  ->first();
+
 							 					 	
 				    if($data3)
 				    {

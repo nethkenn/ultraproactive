@@ -29,6 +29,8 @@ class DatabaseSeeder extends Seeder
         $this->call('tbl_slide');
         $this->call('tbl_testimony');
         $this->call('tbl_product');
+        $this->call('tbl_news');
+        $this->call('tbl_partner');
     }
 }
 
@@ -266,10 +268,10 @@ class tbl_slide extends Seeder
     {
         DB::table('tbl_slide')->delete();
         DB::statement("INSERT INTO `tbl_slide` (`slide_id`, `slide_title`, `slide_image`, `created_at`, `updated_at`, `archived`) VALUES
-        (1, 'Skin Care',    '1436764123.jpg',   '2015-07-17 07:45:25',  '0000-00-00 00:00:00',  0),
-        (2, 'OFW',  '1436763703.jpg',   '2015-07-17 07:45:48',  '0000-00-00 00:00:00',  0),
-        (3, 'Cafe Verde',   '1436763174.jpg',   '2015-07-17 07:46:03',  '0000-00-00 00:00:00',  0),
-        (4, 'Chocorite',    '1436763179.jpg',   '2015-07-17 07:46:14',  '0000-00-00 00:00:00',  0);
+        (1, 'Skin Care',    '1436764123.jpg',   '2015-07-16 23:45:25',  '0000-00-00 00:00:00',  0),
+        (2, 'OFW',  '1436763703.jpg',   '2015-07-16 23:45:48',  '0000-00-00 00:00:00',  0),
+        (3, 'Cafe Verde',   '1437449561.jpg',   '2015-07-16 23:46:03',  '2015-07-21 03:32:30',  0),
+        (4, 'Chocorite',    '1436763179.jpg',   '2015-07-16 23:46:14',  '0000-00-00 00:00:00',  0);
         ");
     }
 }
@@ -324,7 +326,23 @@ class tbl_news extends Seeder
     }
 }
 
-
+class tbl_partner extends Seeder
+{
+    public function run()
+    {
+        DB::table('tbl_partner')->delete();
+        DB::statement("INSERT INTO `tbl_partner` (`partner_id`, `partner_title`, `partner_link`, `partner_image`, `created_at`, `updated_at`, `archived`) VALUES
+        (1, 'SMDC', 'http://www.smdc.com/', '1437461037.jpg',   '2015-07-21 05:52:29',  '2015-07-21 06:43:28',  0),
+        (2, 'Marco Polo',   'http://www.marcopolohotels.com',   '1437460919.jpg',   '2015-07-21 05:54:41',  '2015-07-21 06:41:29',  0),
+        (3, 'Vista Land',   'http://www.vistaland.com.ph',  '1437460828.jpg',   '2015-07-21 05:57:18',  '2015-07-21 06:40:27',  0),
+        (4, 'E-Concept Business',   'http://www.econceptbusiness.com.ph/',  '1437460813.jpg',   '2015-07-21 06:02:08',  '2015-07-21 06:39:58',  0),
+        (5, 'Al Zari & Al Fardan Exchange', 'http://www.alfardanexchange.com/', '1437461543.jpg',   '2015-07-21 06:51:53',  '0000-00-00 00:00:00',  0),
+        (6, 'Philippine Medical Center',    'http://www.philippinemedicalcenter.ae/',   '1437462083.jpg',   '2015-07-21 07:00:53',  '0000-00-00 00:00:00',  0),
+        (7, 'Dr. Sanjay Medical Center',    'http://drsanjaymedical.com',   '1437462306.jpg',   '2015-07-21 07:04:37',  '0000-00-00 00:00:00',  0),
+        (8, 'Magic Trading Co.',    'http://www.mtc.ae',    '1437462510.jpg',   '2015-07-21 07:08:02',  '0000-00-00 00:00:00',  0);
+        ");
+    }
+}
 
 
 

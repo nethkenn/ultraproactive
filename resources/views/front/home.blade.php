@@ -46,7 +46,7 @@
 								<div class="line_under below_line">
 									<div class="line_center"></div>
 								</div>
-								<p class="description style_3" style="color: #a3a5a7; font-size: 16px;">PROLIFE NWT believes in Family, the fundamental unit of a society. It is the living treasure of gold. It is made strong not by the headcounts but by the root of valued culture, commitment of time and harmony.
+								<p class="description style_3" style="color: #a3a5a7; font-size: 16px; word-break: keep-all !important;">PROLIFE NWT believes in Family, the fundamental unit of a society. It is the living treasure of gold. It is made strong not by the headcounts but by the root of valued culture, commitment of time and harmony.
 									Just like in Prolife Family, we want the best and all the convenience we can share to our members.
 									Together, we have established a company that delivers high quality products and excellent e-services that brings each home the benefits of our natural environment and the comfort of technology.
 									Prolife NWT  has strategically ventured with trusted and reputed companies for our associates to enjoy hassle-free online services  and privileges at their fingertips.
@@ -66,7 +66,7 @@
 								<div class="icon_wrapper">
 									<div class="overlay"></div><i class="fa fa-pagelines"></i></div>
 									<h4><a href="#">NATURE</a></h4>
-									<p>We offer various lines of natural and organic beauty products that keeps you beautiful and healthy inside and out.
+									<p style="word-break: keep-all !important;">We offer various lines of natural and organic beauty products that keeps you beautiful and healthy inside and out.
 										PROLIFE wants to bring out the best in you! Our essential beauty products can help you achieve what you want. Fairer and beautiful skin is not only for the few. Regular use of PROLIFE beauty soaps will help you achieve that radiant and supple skin .
 										Start your day with our herbal power drinks, from green coffee to  chocolate to the very healthy  and revitalizing juice!
 									</p>
@@ -80,7 +80,7 @@
 									<div class="icon_wrapper">
 										<div class="overlay"></div><i class="fa fa-money"></i></div>
 										<h4><a href="#">WEALTH</a></h4>
-										<p>Unravel the mystery of financial freedom. Unlock your ability to earn more money, save and get what you dream. We can show you how it can be done.
+										<p style="word-break: keep-all !important;">Unravel the mystery of financial freedom. Unlock your ability to earn more money, save and get what you dream. We can show you how it can be done.
 											Everybody wishes of alleviating their financial status. Venture into a world wherein you can have the chance to break free from financial lock-ups.
 											Build your dream house, buy a new car or travel as often as you want. Everything is possible. All you need to do is just to invest your time. Act now!
 										</p>
@@ -94,7 +94,7 @@
 										<div class="icon_wrapper">
 											<div class="overlay"></div><i class="moon-mobile-2"></i></div>
 											<h4><a href="#">TECHNOLOGY</a></h4>
-											<p>Experience the speed and comfort at your fingertips through our fast and reliable on –line services.
+											<p style="word-break: keep-all !important;">Experience the speed and comfort at your fingertips through our fast and reliable on –line services.
 												PROLIFE is your one-stop shop from sending your remittances to booking your flights.
 												We want you to avoid the long queue to send money.
 												Move out of the line and do all these at the comfort of your home.
@@ -173,13 +173,14 @@
 											<div class="col_one_third nobottommargin">
 												<div class="feature-box media-box">
 													<div class="fbox-desc">
-														<p>“Live a life of beauty and youth.”</p>
+														<p style="word-break: keep-all !important;">Live a life of beauty and youth.</p>
 													</div>
 												</div>
 											</div>
 											<div class="col_one_third nobottommargin"></div>
 											<p></p>
-											</div><span class="read_more"><a href="/about">Learn More</a></span></div>
+											</div>
+										</div>
 										</div>
 									</div>
 									<div class="vc_col-sm-4 wpb_column column_container" style="" data-animation="" data-delay="0">
@@ -192,13 +193,14 @@
 													<div class="col_one_third nobottommargin">
 														<div class="feature-box media-box">
 															<div class="fbox-desc">
-																<p>“Enjoy financial freedom. Earn more, save more... for a better future. “</p>
+																<p style="word-break: keep-all !important;">Enjoy financial freedom. Earn more, save more... for a better future.</p>
 															</div>
 														</div>
 													</div>
 													<div class="col_one_third nobottommargin"></div>
 													<p></p>
-													</div><span class="read_more"><a href="/about">Learn More</a></span></div>
+													</div>
+												</div>
 												</div>
 											</div>
 											<div class="vc_col-sm-4 wpb_column column_container" style="" data-animation="" data-delay="0">
@@ -211,13 +213,14 @@
 															<div class="col_one_third nobottommargin">
 																<div class="feature-box media-box">
 																	<div class="fbox-desc">
-																		<p>“Your e-services at your fingertips”.</p>
+																		<p style="word-break: keep-all !important;">Your e-services at your fingertips.</p>
 																	</div>
 																</div>
 															</div>
 															<div class="col_one_third nobottommargin"></div>
 															<p></p>
-															</div><span class="read_more"><a href="/about">Learn More</a></span></div>
+															</div>
+														</div>
 														</div>
 													</div>
 												</div>
@@ -226,7 +229,7 @@
 												<div class="col span_12  dark">
 													<div class="vc_col-sm-12 wpb_column column_container" style="" data-animation="" data-delay="0">
 														<div class="wpb_wrapper">
-															<div class="wpb_content_element dynamic_page_header style_3">
+															<div class="wpb_content_element dynamic_page_header style_3" style="padding-bottom: 20px;">
 																<h1 style="font-size:36px; color:#3d3d3d">Our Products</h1>
 																<div class="line_under">
 																	<div class="line_center"></div>
@@ -234,7 +237,7 @@
 																<div class="line_under below_line">
 																	<div class="line_center"></div>
 																</div>
-																<p class="description style_3">NATURE’S MASTERPIECE. “Take advantage of nature’s gift to us”.</p>
+																<p class="description style_3" style="padding: 0;">NATURE’S MASTERPIECE. “Take advantage of nature’s gift to us”.</p>
 															</div>
 														</div>
 													</div>
@@ -244,24 +247,24 @@
 												<div class="col span_12  dark">
 													<div class="vc_col-sm-12 wpb_column column_container" style="" data-animation="" data-delay="0">
 														<div class="wpb_wrapper">
-															<div class="home_portfolio ">
+															<div class="home_portfolio container">
 																<div class="">
 																	<section id="portfolio-preview-items" class=" animate_onoffset">
 																		<!-- Portfolio Normal Mode -->
 																		<!-- item -->
 																		@foreach($_product as $product)
 																		<div class="portfolio-item html java  v2 vc_col-md-4" data-id="3537">
-																			<div class="he-wrap tpl2">
-																				<img src="{{ $product->image }}" alt="">
+																			<div class="he-wrap tpl2" style="background-color: black;">
+																				<img src="{{ $product->image }}" alt="" style="opacity: 0.9;">
 																				<div class="overlay he-view">
 																					<div class="bg a0" data-animate="fadeIn">
 																						<div class="center-bar v1">
 																							<div class="centered">
 																								<div class="portfolio_go a0" data-animate="zoomIn">
-																									<a href="port_single_left.html"><i class="moon-redo"></i></a>
+																									<a href="/product_content?id={{ $product->product_id }}"><i class="moon-redo"></i></a>
 																								</div>
 																							</div>
-																							<a href="/resources/assets/ausart/assets/uploads/2015/01/pink_planet_full.png" class="title a1 lightbox-gallery lightbox" data-animate="fadeInUp">{{ $product->product_name }}</a>
+																							<a href="{{ $product->image }}" class="title a1 lightbox-gallery lightbox" data-animate="fadeInUp">{{ $product->product_name }}</a>
 																							<a href="#" class="categories a2" data-animate="zoomIn">₱ {{ $product->price }}</a>
 																						</div>
 																					</div>
@@ -730,48 +733,14 @@
 																								<div class="dark_clients clients_el ">
 																									<div class="header">
 																									<h2>Our Partners</h2></div>
-																									<section class="row clients clients_caro">
+																									<section class="row clients clients_caro weaktype">
+																										@foreach($_partner as $partner)
 																										<div class="item">
-																											<a href="#" title="">
-																												<img src="/resources/assets/ausart/assets/uploads/2014/11/Untitled-26.png" alt="">
+																											<a href="{{ $partner->partner_link }}" title="" target="_blank">
+																												<img src="{{ $partner->image }}" alt="">
 																											</a>
 																										</div>
-																										<div class="item">
-																											<a href="#" title="">
-																												<img src="/resources/assets/ausart/assets/uploads/2014/11/Untitled-212.png" alt="">
-																											</a>
-																										</div>
-																										<div class="item">
-																											<a href="#" title="">
-																												<img src="/resources/assets/ausart/assets/uploads/2014/11/Untitled-222.png" alt="">
-																											</a>
-																										</div>
-																										<div class="separator"></div>
-																										<div class="item">
-																											<a href="#" title="">
-																												<img src="/resources/assets/ausart/assets/uploads/2014/11/Untitled-242.png" alt="">
-																											</a>
-																										</div>
-																										<div class="item">
-																											<a href="#" title="">
-																												<img src="/resources/assets/ausart/assets/uploads/2014/11/Untitled-252.png" alt="">
-																											</a>
-																										</div>
-																										<div class="item">
-																											<a href="#" title="">
-																												<img src="/resources/assets/ausart/assets/uploads/2014/11/Untitled-252.png" alt="">
-																											</a>
-																										</div>
-																										<div class="item">
-																											<a href="#" title="">
-																												<img src="/resources/assets/ausart/assets/uploads/2014/11/Untitled-222.png" alt="">
-																											</a>
-																										</div>
-																										<div class="item">
-																											<a href="#" title="">
-																												<img src="/resources/assets/ausart/assets/uploads/2014/11/Untitled-212.png" alt="">
-																											</a>
-																										</div>
+																										@endforeach
 																									</section>
 																									<div class="controls">
 																										<a class="prev"></a>

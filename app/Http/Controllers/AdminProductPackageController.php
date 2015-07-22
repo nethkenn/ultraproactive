@@ -95,7 +95,7 @@ class AdminProductPackageController extends AdminController
 				$data['_error']['product_package_name'] = $errors->get('product_package_name');
 				// $data['_error']['product'] = $errors->get('product');
 			}
-
+			return Redirect::to('admin/maintenance/product_package');
 		}
 
 		
