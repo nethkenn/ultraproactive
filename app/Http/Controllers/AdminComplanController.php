@@ -1,4 +1,5 @@
 <?php namespace App\Http\Controllers;
+use App\Tbl_membership;
 
 class AdminComplanController extends AdminController
 {
@@ -8,6 +9,7 @@ class AdminComplanController extends AdminController
 	}
 	public function binary()
 	{
-		return view('admin.comptation.binary');
+		$data["_membership"] = Tbl_membership::active()->entry()->get();
+		return view('admin.computation.binary', $data);
 	}
 }

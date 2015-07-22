@@ -13,8 +13,13 @@ class Tbl_membership extends Model
 
 
 
-
-	
-
+    public function scopeActive($query)
+    {
+        return $query->where('archived', 0);
+    }
+    public function scopeEntry($query)
+    {
+        return $query->where('membership_entry', 1);
+    }
 }
 
