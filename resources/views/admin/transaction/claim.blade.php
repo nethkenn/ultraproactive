@@ -14,8 +14,8 @@
 	</div>
 		<div class="filters ">
 			<div class="col-md-8">
-				<a class="" href="">Today's Claims</a>
-				<a class="active" href="">All Claims</a>
+				<a class="{{Request::input('filter')=='today' ? 'active' : '' }}" href="admin/transaction/claims?filter=today">Today's Claims</a>
+				<a class="{{!Request::input('filter') || Request::input('filter')!='today'? 'active' : ''}}" href="/admin/transaction/claims">All Claims</a>
 			</div>
 		</div>
 	<div class="col-md-12">
@@ -51,7 +51,10 @@ $(function() {
         processing: true,
         serverSide: true,
          ajax:{
-	        	url:'admin/transaction/claims/data'
+	        	url:'admin/transaction/claims/data',
+	        	data:{
+	        		filter: "{{Request::input('filter')}}"
+	        	}
 	    	},
         columns: [
             {data: 'voucher_id', name: 'voucher_id'},

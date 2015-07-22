@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Datatables;
 use Validator;
 use Session;
+use App\Classes\Globals;
 
 class AdminCodeController extends AdminController {
 
@@ -133,39 +134,39 @@ class AdminCodeController extends AdminController {
     }
 
 
-	public function code_generator()
-	{
+	// public function code_generator()
+	// {
 		
-		$chars="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-		$res = "";
-		for ($i = 0; $i < 8; $i++) {
-		    $res .= $chars[mt_rand(0, strlen($chars)-1)];
-		}
+	// 	$chars="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	// 	$res = "";
+	// 	for ($i = 0; $i < 8; $i++) {
+	// 	    $res .= $chars[mt_rand(0, strlen($chars)-1)];
+	// 	}
 
-		return $res;
+	// 	return $res;
 
-	}
-
-
-	public function check_code()
-	{
+	// }
 
 
+	// public function check_code()
+	// {
 
-		$stop=false;
-		while($stop==false)
-		{
-			$code = $this->code_generator();
 
-			$check = Tbl_membership_code::where('code_activation', $code )->first();
-			if($check==null)
-			{
-				$stop = true;
-			}
-		}
 
-		return $code;
-	}
+	// 	$stop=false;
+	// 	while($stop==false)
+	// 	{
+	// 		$code = $this->code_generator();
+
+	// 		$check = Tbl_membership_code::where('code_activation', $code )->first();
+	// 		if($check==null)
+	// 		{
+	// 			$stop = true;
+	// 		}
+	// 	}
+
+	// 	return $code;
+	// }
 	/**
 	 * Show the form for creating a new resource.
 	 *
@@ -200,7 +201,10 @@ class AdminCodeController extends AdminController {
 				{ 
 					$name =DB::table('tbl_account')->where('account_username',Session::get('admin')['username'])->first();
 					$membership_code = new Tbl_membership_code(Request::input());
-					$membership_code->code_activation = $this->check_code();
+
+					$query = Tbl_membership_code::where('code_activation', Globals::code_generator())->first();
+					$membership_code->code_activation = Globals::check_code($query);
+					
 					$membership_code->account_id =  Request::input('account_id') ?: null;
 					$membership_code->created_at = Carbon::now();
 					$membership_code->save();

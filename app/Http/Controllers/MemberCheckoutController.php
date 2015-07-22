@@ -13,6 +13,8 @@ use App\Tbl_voucher;
 use App\Tbl_voucher_has_product;
 use Session;
 use Validator;
+use App\Classes\Globals;
+use App\Tbl_product_code;
 class MemberCheckoutController extends Controller
 {
     /**
@@ -22,7 +24,7 @@ class MemberCheckoutController extends Controller
      */
     public function checkout()
     {
-                $data['_error'] = null;
+        $data['_error'] = null;
         $customer = Customer::info();
         $slot = Tbl_slot::where('slot_id', Request::input('slot_id'))->where('slot_owner', $customer->account_id)->first();
         $data['slot'] = $slot;
@@ -30,8 +32,6 @@ class MemberCheckoutController extends Controller
         $data['final_total'] = $this->get_final_total($cart);
         $data['remaining_bal'] = $slot->slot_wallet - $data['final_total'];
         $data['pts'] = $this->get_product_point($cart);
-
-
 
 
         if(isset($_POST['slot_id']))
@@ -127,23 +127,32 @@ class MemberCheckoutController extends Controller
             else
             {
                 $insert['slot_id'] = Request::input('slot_id');
-                $insert['voucher_code'] = $this->check_code();
+
+                $query = Tbl_voucher::where('voucher_code', Globals::code_generator())->first();
+                $insert['voucher_code'] = Globals::check_code($query);
+
                 $insert['total_amount'] = $data['final_total'];
                 $insert['account_id'] = $customer->account_id;
                 Tbl_slot::where('slot_id',Request::input('slot_id') )->lockForUpdate()->update(['slot_wallet'=>$data['remaining_bal']]);             
+                
+
+
+
                 $voucher = new Tbl_voucher($insert);
                 $voucher->save();
 
                 foreach ((array)$cart as $key => $value)
                 {
    
-
+                    $prod_pts = Tbl_product::find($key);
                     $insert_prod =  array(
                         'product_id' =>  $key,
                         'voucher_id'=> $voucher->voucher_id,
                         'price' => $value['price'],
                         'qty'=> $value['qty'],
-                        'sub_total' => $value['total']
+                        'sub_total' => $value['total'],
+                        'binary_pts' => $prod_pts->binary_pts,
+                        'unilevel_pts' => $prod_pts->unilevel_pts
                     );
 
                     // $product = Tbl_product::find($key);
@@ -152,6 +161,16 @@ class MemberCheckoutController extends Controller
 
                     $voucher_has_product = new Tbl_voucher_has_product($insert_prod);
                     $voucher_has_product->save();
+
+                    // dd($voucher_has_product->voucher_item_id);
+                    $query = Tbl_product_code::where('code_activation', Globals::code_generator())->first();
+                    $insert_prod_code['code_activation'] = Globals::check_code($query);
+                    $insert_prod_code['voucher_item_id'] = $voucher_has_product->voucher_item_id;
+                    
+                    $product_code = new Tbl_product_code($insert_prod_code);
+                    $product_code->save();
+
+
 
                 }
 
@@ -181,37 +200,37 @@ class MemberCheckoutController extends Controller
 
 
 
-    public function code_generator()
-    {
+    // public function code_generator()
+    // {
         
-        $chars="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        $res = "";
-        for ($i = 0; $i < 8; $i++) {
-            $res .= $chars[mt_rand(0, strlen($chars)-1)];
-        }
+    //     $chars="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    //     $res = "";
+    //     for ($i = 0; $i < 8; $i++) {
+    //         $res .= $chars[mt_rand(0, strlen($chars)-1)];
+    //     }
 
-        return $res;
+    //     return $res;
 
-    }
+    // }
 
 
-    public function check_code()
-    {
+    // public function check_code()
+    // {
 
-        $stop=false;
-        while($stop==false)
-        {
-            $code = $this->code_generator();
+    //     $stop=false;
+    //     while($stop==false)
+    //     {
+    //         $code = $this->code_generator();
 
-            $check = Tbl_voucher::where('voucher_code', $code )->first();
-            if($check==null)
-            {
-                $stop = true;
-            }
-        }
+    //         $check = Tbl_voucher::where('voucher_code', $code )->first();
+    //         if($check==null)
+    //         {
+    //             $stop = true;
+    //         }
+    //     }
 
-        return $code;
-    }
+    //     return $code;
+    // }
 
 
 

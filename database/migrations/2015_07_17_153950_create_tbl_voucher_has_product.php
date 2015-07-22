@@ -13,11 +13,15 @@ class CreateTblVoucherHasProduct extends Migration
     public function up()
     {
         Schema::create('tbl_voucher_has_product', function (Blueprint $table) {
+                
+            $table->increments('voucher_item_id');
             $table->integer('product_id')->unsigned();
             $table->integer('voucher_id')->unsigned();
             $table->double('price');
             $table->integer('qty')->unsigned();
             $table->double('sub_total');
+            $table->double('unilevel_pts');
+            $table->double('binary_pts');
 
 
             $table->foreign('product_id')
