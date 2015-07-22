@@ -14,6 +14,7 @@ Route::get('/member/voucher/product', 'MemberVoucherController@showVoucherProduc
 
 
 Route::any('/member/leads', 'MemberLeadController@index');
+Route::any('/member/leads/{slug}', 'MemberLeadController@link');
 Route::any('/member/product', 'MemberProductController@index');
 Route::any('/member/login', 'MemberLoginController@index');
 Route::any('/member/logout', 'MemberLoginController@logout');

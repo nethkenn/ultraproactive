@@ -72,6 +72,7 @@ class MemberRegisterController extends Controller
 					$insert['account_password']		  = Crypt::encrypt($data['pass']);
 					$insert['account_name']	 		  = $data['fname']." ".$data['mname']." ".$data['lname'];
 					$insert['account_date_created']   = date('Y-m-d H:i:s');
+					$insert['account_created_from']   = "Front Register";
 					$info = DB::table('tbl_account')->insertGetId($insert);
 					Customer::login($info,$insert['account_password']);
 					$data2 = true;

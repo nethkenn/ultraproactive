@@ -8,6 +8,7 @@ use Crypt;
 use Carbon\Carbon;
 use App\Tbl_account;
 use App\Tbl_membership_code;
+use App\Tbl_slot;
 class MemberCodeController extends MemberController
 {
 	public function index()
@@ -16,7 +17,37 @@ class MemberCodeController extends MemberController
 		$data = $this->getslotbyid($id);
 		$data['error'] = Session::get('message');
 		$s = Tbl_account::where('tbl_account.account_id',$id)->belongstothis()->get();
+		// $n = array();
+		// $slot  = DB::table('tbl_slot')->where('slot_placement',Session::get('currentslot'))->get();
+		// $stop  = false;
+		// $stop2 = false;
+		// $ctr = 1;
 
+
+
+		// while($stop==false && $stop2==false)
+		// {
+		// 	if(!isset($k))
+		// 	{
+		// 			foreach($slot as $key => $s2)
+		// 			{
+		// 				$k[$key] = DB::table('tbl_slot')->where('slot_placement',$s2->slot_id)->get();
+		// 			}
+		// 	}
+		// 	else
+		// 	{
+		// 			foreach($slot as $key => $s2)
+		// 			{
+		// 				$k[$key] = DB::table('tbl_slot')->where('slot_placement',$s2->slot_id)->get();
+		// 			}
+		// 	}
+		// 	dd("Counting downline is under construction...");
+		// }
+
+
+		// dd($n);
+
+		// dd($slotted);
 		if(isset($_POST['sbmtclaim']))
 		{
 			$data['error'] = $this->claim_code(Request::input(),$id);
@@ -32,9 +63,27 @@ class MemberCodeController extends MemberController
 			$data['error'] = $this->transfer(Request::input('code'),Request::input('account'),Request::input('pass'),$id,$s);
 			return Redirect::to('member/code_vault')->with('message',$data['error']);
 		}
+		// if(isset($_POST['c_slot']))
+		// {
+		// 	$s = $this->create_slot(Request::input());
+		// 	dd($s);
+		// }
 
         return view('member.code_vault',$data);
 	}
+
+	// public function create_slot($data)
+	// {
+	// 	$check_position = Tbl_slot::checkposition(Request::input("placement"), strtolower(Request::input("position")))->first();
+	// 	if($check_position)
+	// 	{
+
+	// 	}
+	// 	else
+	// 	{
+
+	// 	}
+	// }
 
 	public function getslotbyid($id)
 	{
@@ -143,7 +192,7 @@ class MemberCodeController extends MemberController
 	public function set_active()
 	{
 	  $pin = Request::input('pin');
-	  $pin = Crypt::decrypt($pin);
+
 	  DB::table('tbl_membership_code')->where('code_pin',$pin)->update(['lock'=>Request::input('value')]);
 	}
 
@@ -172,90 +221,5 @@ class MemberCodeController extends MemberController
 
 	  return $info;
 	}
-	// public function code_generator()
-	// {
-		
-	// 	$chars="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	// 	$res = "";
-	// 	for ($i = 0; $i < 8; $i++) {
-	// 	    $res .= $chars[mt_rand(0, strlen($chars)-1)];
-	// 	}
-
-	// 	return $res;
-
-	// }
-
-
-	// public function check_code()
-	// {
-	// 	$stop=false;
-	// 	while($stop==false)
-	// 	{
-	// 		$code = $this->code_generator();
-
-	// 		$check = Tbl_membership_code::where('code_activation', $code )->first();
-	// 		if($check==null)
-	// 		{
-	// 			$stop = true;
-	// 		}
-	// 	}
-
-	// 	return $code;
-	// }
-	// /**
-	//  * Show the form for creating a new resource.
-	//  *
-	//  * @return Response
-	//  */
-	// public function add_code()
-	// {
-	// 	if(isset($_POST['membership_id']))
-	// 	{
-	// 		$rules['code_type_id'] = 'required|exists:tbl_code_type,code_type_id';
-	// 		$rules['membership_id'] = 'required|exists:tbl_membership,membership_id';
-	// 		$rules['product_package_id'] = 'required|exists:tbl_product_package,product_package_id';
-	// 		$rules['inventory_update_type_id'] = 'required|exists:tbl_inventory_update_type,inventory_update_type_id';
-	// 		$rules['account_id'] = 'exists:tbl_account,account_id';
-	// 		$rules['code_multiplier'] = 'min:1|integer';
-			
-
-	// 		$validator = Validator::make(Request::input(),$rules);
-			
-	// 		if (!$validator->fails())
-	// 		{
-	// 			for ($i=0; $i < Request::input('code_multiplier'); $i++)
-	// 			{ 
-	// 				$name =DB::table('tbl_account')->where('account_username',Session::get('admin')['username'])->first();
-
-	// 				$insert['code_pin'] = $membership_code->code_pin;
-	// 				$insert['by_account_id'] = $name->account_id;
-	// 				$insert['to_account_id'] = $membership_code->account_id;
-	// 				$insert['updated_at'] = $membership_code->created_at;
-	// 				$insert['description'] = "Created by ".$name->account_name;
-	// 				DB::table("tbl_member_code_history")->insert($insert);
-	// 			}
-
-
-	// 			return Redirect('admin/maintenance/codes');
-
-	// 		}
-	// 		else
-	// 		{
-	// 			$error =  $validator->errors();
-
-	// 			$data['_error']['code_type_id'] = $error->get('code_type_id');
-	// 			$data['_error']['membership_id'] = $error->get('membership_id');
-	// 			$data['_error']['product_package_id'] = $error->get('product_package_id');
-	// 			$data['_error']['inventory_update_type_id'] = $error->get('inventory_update_type_id');
-	// 			$data['_error']['account_id'] = $error->get('account_id');
-	// 			$data['_error']['code_multiplier'] = $error->get('code_multiplier');
-
-
-	// 		}
-
-			
-	// 	}
-
-	// 	return view('admin.maintenance.code_add',$data);
-	// }
+	
 }

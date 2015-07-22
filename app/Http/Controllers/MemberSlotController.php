@@ -5,21 +5,25 @@ use Request;
 use Crypt;
 use Redirect;
 use Session;
-
+use App\Tbl_slot;
+use App\Tbl_lead;
+use App\Tbl_account;
 class MemberSlotController extends MemberController
 {
 	public function index()
 	{
 		$id = Customer::id();
 		$data = $this->getslotbyid($id);
+		$data['error'] = Session::get('message');
+		$data['success']  = Session::get('success');
 		$data['currentslot'] = Session::get('currentslot');
+		$data['getlead'] = Tbl_lead::where('lead_account_id',Customer::id())->getaccount()->get();
 
-
+		
 		if(Request::input('subup'))
 		{
 			$pass = DB::table('tbl_account')->where("account_id",$id)->first();
 			$pass =	Crypt::decrypt($pass->account_password);
-
 			if($pass == Request::input('pass'))
 			{
 				$data = $this->getcompute(Request::input('tols'),Request::input('membership'));
@@ -36,7 +40,20 @@ class MemberSlotController extends MemberController
 			Session::put('currentslot',Request::input('changeslot'));
 			return redirect()->back();
 		}
-
+		if(isset($_POST['initsbmt']))
+		{
+			$info = $this->transfer_slot(Request::input());
+			if(isset($info['success']))
+			{
+			   $message = $info['success'];
+			   return Redirect::to('/member/slot')->with('success',$message);
+			}
+			else
+			{
+			   $message = $info['error'];
+			   return Redirect::to('/member/slot')->with('message',$message);
+			}
+		}
 
 
         return view('member.slot',$data);
@@ -72,8 +89,41 @@ class MemberSlotController extends MemberController
 
 		return $data;
 	}
-	// public function getcurrentslot()
-	// {
+	public function transfer_slot($data)
+	{
+		$checking = false;
+		$rpass = Tbl_account::where('account_id',Customer::id())->first();
+		$rpass = Crypt::decrypt($rpass->account_password);
+		$info = null;
+		$slot = Tbl_slot::where('slot_owner',Customer::id())->get();
 
-	// }
+
+		foreach($slot as $s)
+		{
+			if($s->slot_id == $data['slot'])
+			{
+				$checking = true;
+			}
+		}
+
+		if($checking == true && isset($data['acct']))
+		{
+				if($rpass == $data['pass'])
+				{	
+					Tbl_slot::where('slot_id',$data['slot'])->update(['slot_owner'=>$data['acct']]);
+					Session::forget('currentslot');
+					$info['success'] = "Success";
+				}
+				else
+				{
+					$info['error'] = "Wrong Password";	
+				}
+		}
+		else
+		{
+			$info['error'] = "Transfer failed";
+		}
+
+		return $info;
+	}
 }

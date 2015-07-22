@@ -45,7 +45,7 @@
             </thead>
             <tbody>
                     @foreach($code as $c)
-                    <tr class="tibolru" loading="{{$c->encrypt}}">
+                    <tr class="tibolru" loading="$c->code_pin">
                         <td>{{$c->code_pin}}</td>
                         <td>{{$c->code_activation}}</td>
                         <td>{{$c->code_type_name}}</td>
@@ -63,9 +63,6 @@
 
                         <td><a style="cursor: pointer;" class="createslot">Create Slot</a></td>
                         <td><a style="cursor: pointer;" class="transferer" value="{{$c->code_pin}} @ {{$c->code_activation}}" val="{{$c->code_pin}}">Transfer Code</a></td>
-<!--                        <td><a href="member/code_vault#create_slot">Create Slot</a></td>
-                        <td><a href="member/code_vault#transfer_code">Transfer Code</a></td>
-!-->
                     </tr>
                     @endforeach
                 @endif 
@@ -189,6 +186,48 @@
     </table>
 </div>
 </div>
+
+
+<div class="remodal create-slot" data-remodal-id="create_slot" data-remodal-options="hashTracking: false">
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <div class="header">
+        <img src="/resources/assets/frontend/img/icon-plis.png">
+        Create Slot
+    </div>
+    <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
+    <div class="col-md-10 col-md-offset-1 para">
+        <form class="form-horizontal" method="POST">
+            <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
+            <div class="form-group para">
+                <label for="1" class="col-sm-3 control-label">Sponsor</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="1">
+                </div>
+            </div>
+            <div class="form-group para">
+                <label for="2" class="col-sm-3 control-label">Placement</label>
+                <div class="col-sm-9">
+                    <select class="form-control" id="2">
+                        <option>Slot #8</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group para">
+                <label for="3" class="col-sm-3 control-label">Position</label>
+                <div class="col-sm-9">
+                    <select class="form-control" id="3" name="position">
+                        <option value="left">Left</option>
+                        <option value="right">Right</option>
+                    </select>
+                </div>
+            </div>
+    </div>
+    <br>
+    <button class="button" type="button" data-remodal-action="cancel">Cancel</button>
+    <button class="button"  type="submit" name="c_slot">Create Slot</button>
+    </form>
+</div>
+
 @endsection
 @section('script')
 <script type="text/javascript" src="/resources/assets/frontend/js/code_vault.js"></script>

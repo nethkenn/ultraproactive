@@ -24,6 +24,14 @@ function slot()
 			var inst = $('[data-remodal-id=upgrade_member]').remodal();
           	inst.open(); 
 		});
+
+		$('.trans_click').bind('click',function(){
+			var transferred = $(this).attr('value');
+			$("#hiddenisa").val(transferred);
+			$("#isa").val("Slot #"+transferred);
+			var inst = $('[data-remodal-id=transfer_slot]').remodal();
+          	inst.open(); 
+		});
 	}
 	function onmembershipchange()
 	{
@@ -55,6 +63,8 @@ function slot()
         	$('#subup').prop("disabled", false);
         }
 		$("#tri").val($("#wan").find(':selected').attr('amount'));
+
+
 	}
 	function checkvalue()
 	{
