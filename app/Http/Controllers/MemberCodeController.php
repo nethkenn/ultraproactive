@@ -9,45 +9,42 @@ use Carbon\Carbon;
 use App\Tbl_account;
 use App\Tbl_membership_code;
 use App\Tbl_slot;
+use App\Tbl_product_package_has;
+use App\Tbl_product_package;
+use App\Tbl_membership;
+use App\Tbl_code_type;
+use App\Tbl_inventory_update_type;
+use Datatables;
+use Validator;
+
+
+
 class MemberCodeController extends MemberController
 {
 	public function index()
 	{
 		$id = Customer::id();
 		$data = $this->getslotbyid($id);
-		$data['error'] = Session::get('message');
+		$data['_error'] = Session::get('message');
+		if(isset($data['error']))
+		{
+			dd($data['error']);
+		}
+		$data['success']  = Session::get('success');
+		$data['availprod'] = Tbl_product_package::where('archived',0)->get();
+
+		if($data['availprod'])
+		{
+			foreach($data['availprod'] as $key => $d)
+			{
+				$s = Tbl_product_package_has::where('product_package_id',$d->product_package_id)->product()->get();
+				$data['availprod'][$key]->productlist  = json_encode($s);
+			}	
+		}
+
+
 		$s = Tbl_account::where('tbl_account.account_id',$id)->belongstothis()->get();
-		// $n = array();
-		// $slot  = DB::table('tbl_slot')->where('slot_placement',Session::get('currentslot'))->get();
-		// $stop  = false;
-		// $stop2 = false;
-		// $ctr = 1;
 
-
-
-		// while($stop==false && $stop2==false)
-		// {
-		// 	if(!isset($k))
-		// 	{
-		// 			foreach($slot as $key => $s2)
-		// 			{
-		// 				$k[$key] = DB::table('tbl_slot')->where('slot_placement',$s2->slot_id)->get();
-		// 			}
-		// 	}
-		// 	else
-		// 	{
-		// 			foreach($slot as $key => $s2)
-		// 			{
-		// 				$k[$key] = DB::table('tbl_slot')->where('slot_placement',$s2->slot_id)->get();
-		// 			}
-		// 	}
-		// 	dd("Counting downline is under construction...");
-		// }
-
-
-		// dd($n);
-
-		// dd($slotted);
 		if(isset($_POST['sbmtclaim']))
 		{
 			$data['error'] = $this->claim_code(Request::input(),$id);
@@ -63,11 +60,24 @@ class MemberCodeController extends MemberController
 			$data['error'] = $this->transfer(Request::input('code'),Request::input('account'),Request::input('pass'),$id,$s);
 			return Redirect::to('member/code_vault')->with('message',$data['error']);
 		}
-		// if(isset($_POST['c_slot']))
-		// {
-		// 	$s = $this->create_slot(Request::input());
-		// 	dd($s);
-		// }
+		if(isset($_POST['sbmitbuy']))
+		{
+			if( Request::input('memid') && Request::input('package'))
+			{
+				$info = $this->add_code(Request::input());	
+				if(isset($info['success']))
+				{
+					$message = $info['success'];
+					return Redirect::to('member/code_vault')->with('success',$message);	
+				}
+				else
+				{
+					$message = $info['_error'];
+					return Redirect::to('member/code_vault')->with('message',$message);
+				}
+		
+			}
+		}
 
         return view('member.code_vault',$data);
 	}
@@ -198,7 +208,6 @@ class MemberCodeController extends MemberController
 
 	public function unlock($pin,$pass,$login)
 	{
-	  $pin = Crypt::decrypt($pin);
 	  $info = null;
 	  $checkpass = DB::table('tbl_membership_code')->where('code_pin',$pin)
 	  											   ->join('tbl_account','tbl_account.account_id','=','tbl_membership_code.account_id')
@@ -220,6 +229,115 @@ class MemberCodeController extends MemberController
  	  }
 
 	  return $info;
+	}
+	public function code_generator()
+	{
+		
+		$chars="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		$res = "";
+		for ($i = 0; $i < 8; $i++) {
+		    $res .= $chars[mt_rand(0, strlen($chars)-1)];
+		}
+
+		return $res;
+
+	}
+
+
+	public function check_code()
+	{
+
+
+
+		$stop=false;
+		while($stop==false)
+		{
+			$code = $this->code_generator();
+
+			$check = Tbl_membership_code::where('code_activation', $code )->first();
+			if($check==null)
+			{
+				$stop = true;
+			}
+		}
+
+		return $code;
+	}
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Response
+	 */
+	public function add_code($x)
+	{
+			$rules['code_type_id'] = 'required|exists:tbl_code_type,code_type_id';
+			$rules['membership_id'] = 'required|exists:tbl_membership,membership_id';
+			$rules['product_package_id'] = 'required|exists:tbl_product_package,product_package_id';
+			$rules['inventory_update_type_id'] = 'required|exists:tbl_inventory_update_type,inventory_update_type_id';
+			$rules['account_id'] = 'exists:tbl_account,account_id';
+			$rules['code_multiplier'] = 'min:1|integer';
+			$n = Tbl_account::where('account_id',Customer::id())->first();
+			$d['code_type_id'] = 1;
+			$d['membership_id'] = $x['memid'];
+			$d['product_package_id'] = $x['package'];
+			$d['inventory_update_type_id'] = 1;
+			$d['account_id'] = Customer::id();
+			$d['code_multiplier'] = 1;
+
+			$check = Tbl_membership::where('membership_id',$x['memid'])->first();
+			$rcheck = Tbl_slot::where('slot_id',Session::get('currentslot'))->first();
+			if($rcheck && $check)
+			{
+					$total = $rcheck->slot_wallet - $check->membership_price;
+					$validator = Validator::make($d,$rules);
+					if($total >= 0)
+					{
+						if (!$validator->fails())
+						{
+							for ($i=0; $i < 1; $i++)
+							{ 
+								$membership_code = new Tbl_membership_code($d);
+								$membership_code->code_activation = $this->check_code();
+								$membership_code->account_id =  Customer::id() ?: null;
+								$membership_code->created_at = Carbon::now();
+								$membership_code->save();
+								$insert['code_pin'] = $membership_code->code_pin;
+								$insert['by_account_id'] = Customer::id();
+								$insert['to_account_id'] = Customer::id();
+								$insert['updated_at'] = $membership_code->created_at;
+								$insert['description'] = "Bought by $n->account_name";
+								DB::table("tbl_member_code_history")->insert($insert);
+								Tbl_slot::where('slot_id',Session::get('currentslot'))->update(['slot_wallet'=>$total]);
+								$message['success'] = "Successfully bought.";
+								return $message;
+							}
+						}
+						else
+						{
+							$error =  $validator->errors();
+							$data['_error']['code_type_id'] = $error->get('code_type_id');
+							$data['_error']['membership_id'] = $error->get('membership_id');
+							$data['_error']['product_package_id'] = $error->get('product_package_id');
+							$data['_error']['inventory_update_type_id'] = $error->get('inventory_update_type_id');
+							$data['_error']['account_id'] = $error->get('account_id');
+							$data['_error']['code_multiplier'] = $error->get('code_multiplier');
+			     		    return $data;
+						}				
+					}
+					else
+					{
+						$data['_error']['not'] = "Not enough balance.";
+						return $data;
+					}				
+			}
+
+
+			
+
+
+
+			
+		
 	}
 	
 }

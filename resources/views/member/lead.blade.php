@@ -47,7 +47,7 @@
                         <td>{{$l->account_name}}</td>
                         <td>{{$l->account_email}}</td>
                         <td>{{$l->join_date}}</td>
-                        <td><a href="javascript:">Account Link</a></td>
+                        <td><a href="member/leads/{{$l->account_email}}">Account Link</a></td>
                     </tr>
                     @endforeach
                 @endif

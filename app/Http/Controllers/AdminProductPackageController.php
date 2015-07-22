@@ -16,7 +16,7 @@ use App\Tbl_product_package;
 use App\Tbl_product_package_has;
 use App\Classes\Image;
 use Crypt;
-
+use App\Tbl_membership;
 class AdminProductPackageController extends AdminController
 {
 	public function index()
@@ -58,7 +58,7 @@ class AdminProductPackageController extends AdminController
 
 		$data["page"] = "Add Package Maintenance";
 		$data['_error'] = null;
-
+		$data['membership'] = Tbl_membership::where('archived',0)->get();
 
 		if(isset($_POST['product_package_name']))
 		{
@@ -83,6 +83,7 @@ class AdminProductPackageController extends AdminController
 
 				$product_package =  new Tbl_product_package;
 				$product_package->product_package_name = Request::input('product_package_name');
+				$product_package->membership_id = Request::input('membership');
 				$product_package->save();
 				$id = $product_package->product_package_id;
 				$this->save_product_package($id, Request::input('product'));
@@ -120,7 +121,7 @@ class AdminProductPackageController extends AdminController
 		$data["page"] = "Edit Package Maintenance";
 		$data['_error'] = null;
 		$data['_product'] = Tbl_product_package_has::Product()->where('product_package_id',$prod_package_id)->get();
-
+		$data['membership'] = Tbl_membership::where('archived',0)->get();
 		if(isset($_POST['product_package_name']))
 		{
 			
@@ -142,6 +143,7 @@ class AdminProductPackageController extends AdminController
 
 				$product_package = Tbl_product_package::find($prod_package_id);
 				$product_package->product_package_name = Request::input('product_package_name');
+				$product_package->membership_id = Request::input('membership');
 				$product_package->save();
 				$this->save_product_package($prod_package_id, Request::input('product'));
 				return Redirect('admin/maintenance/product_package');

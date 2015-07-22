@@ -224,56 +224,7 @@
                 <button class="button" type="submit" name="sbmtclaim">Claim Code</button>
         </form>
 </div>
-<div class="remodal create-slot" data-remodal-id="buy_code" data-remodal-options="hashTracking: false">
-    <button data-remodal-action="close" class="remodal-close"></button>
-    <div class="header">
-        <img src="/resources/assets/frontend/img/icon-buy.png">
-        Buy Codes
-    </div>
-    <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
-    <div class="col-md-10 col-md-offset-1 para">
-        <form class="form-horizontal" method="POST">
-            <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
-            <div class="form-group para">
-                <label for="11111" class="col-sm-3 control-label">Membership</label>
-                <div class="col-sm-9">
-                    <select class="form-control" id="11111">
-                        @if($membership)
-                            @foreach($membership as $m)    
-                                <option value="{{$m->membership_id}}" amount="{{$m->membership_price}}">{{$m->membership_name}}</option>
-                            @endforeach
-                        @endif
-                    </select>
-                </div>
-            </div>
-            <div class="form-group para">
-                <label for="22222" class="col-sm-3 control-label">Wallet</label>
-                <div class="col-sm-9">
-                    @if($slotnow)
-                    <input type="text" class="form-control" id="22222" name="wallet" value="{{$slotnow->slot_wallet}}" disabled>
-                    @else
-                    <input type="text" class="form-control" id="22222" name="wallet" value="0" disabled>
-                    @endif
-                </div>
-            </div>
-            <div class="form-group para">
-                <label for="33333" class="col-sm-3 control-label">Amount</label>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control" id="33333" disabled>
-                </div>
-            </div>
-            <div class="form-group para">
-                <label for="44444" class="col-sm-3 control-label">Remaining</label>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control" id="44444" readonly style="background-color: #f47265; border: 0; color: white; text-align: center;" value="">
-                </div>
-            </div>
-    </div>
-            <br>
-                <button class="button" data-remodal-action="cancel">Cancel</button>
-                <button class="button" type="submit" id="ifbuttoncode" name="sbmitbuy" value="Buy Code" disabled>Buy Code</button>
-        </form>    
-</div>
+
 
 <div class="remodal create-slot" data-remodal-id="upgrade_member" data-remodal-options="hashTracking: false">
     <button data-remodal-action="close" class="remodal-close"></button>
