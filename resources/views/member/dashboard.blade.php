@@ -69,7 +69,7 @@
                 <div class="form-group">
                     <label for="1" class="col-sm-6 control-label">Wallet</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="1" readonly value="{{$slotnow->slot_wallet}}">
+                        <input type="text" class="form-control highlight" id="1" readonly value="{{ number_format($slotnow->slot_wallet, 2) }}">
                     </div>
                 </div>
                 <div class="form-group">
