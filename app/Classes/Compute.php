@@ -9,12 +9,12 @@ class Compute
     public static function tree($new_slot_id)
     {
     	$slot_info = Tbl_slot::id($new_slot_id)->first();
-    	MLM::insert_tree_placement($slot_info, $new_slot_id, 1); /* TREE RECORD FOR BINARY GENEALOGY */
-    	MLM::insert_tree_sponsor($slot_info, $new_slot_id, 1); /* TREE RECORD FOR SPONSORSHIP GENEALOGY */
+    	Compute::insert_tree_placement($slot_info, $new_slot_id, 1); /* TREE RECORD FOR BINARY GENEALOGY */
+    	Compute::insert_tree_sponsor($slot_info, $new_slot_id, 1); /* TREE RECORD FOR SPONSORSHIP GENEALOGY */
     }
     public static function computation($new_slot_id, $method = "SLOT CREATION")
     {
-        MLM::binary($new_slot_id, $method);
+        Compute::binary($new_slot_id, $method);
     }
     public static function insert_tree_placement($slot_info, $new_slot_id, $level)
     {
@@ -28,7 +28,7 @@ class Compute
             $insert["placement_tree_level"] = $level;
             Tbl_tree_placement::insert($insert);
             $level++;
-            MLM::insert_tree_placement($upline_info, $new_slot_id, $level);  
+            Compute::insert_tree_placement($upline_info, $new_slot_id, $level);  
         }   
     }
     public static function insert_tree_sponsor($slot_info, $new_slot_id, $level)
@@ -42,7 +42,7 @@ class Compute
             $insert["sponsor_tree_level"] = $level;
             Tbl_tree_sponsor::insert($insert);
             $level++;
-            MLM::insert_tree_sponsor($upline_info, $new_slot_id, $level);  
+            Compute::insert_tree_sponsor($upline_info, $new_slot_id, $level);  
         }
     }
     public static function binary($new_slot_id, $method = "SLOT CREATION")
