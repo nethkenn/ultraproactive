@@ -216,7 +216,7 @@ class MemberCodeController extends MemberController
 				$pint = $data['pin'];
 				$fromname = DB::table('tbl_account')->where('account_id',$getId->account_id)->first();
 				DB::table("tbl_member_code_history")->insert($insert);
-				Log::account(Customer::id(),"You claimed membership code from $fromname->account_name  (Pin #$pint))");
+				Log::account(Customer::id(),"You claimed a membership code from $fromname->account_name  (Pin #$pint))");
 			}
 			else
 			{
