@@ -11,11 +11,12 @@ class MemberVoucherController extends MemberController
 	public function index()
 	{
 
-		$data['_voucher'] = Tbl_voucher::all();
+		$data['_voucher'] = Tbl_voucher::where('status','unclaimed')->orWhere('status','processed')
+																	->get();
 
 		// dd($data['voucher'] );
 
-
+																	
 
         return view('member.voucher' , $data);
 	}

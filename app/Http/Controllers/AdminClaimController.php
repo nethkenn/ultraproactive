@@ -259,7 +259,7 @@ class AdminClaimController extends AdminController
 			/**
 			 * UPDATE ACCOUNT/ADMIN LOG
 			 */
-            $log2 = "Process Voucher # ".Request::input('voucher_id'). " as ".  Admin::info()->admin_position_name.".";
+            $log2 = "Processed Voucher # ".Request::input('voucher_id'). " as ".  Admin::info()->admin_position_name.".";
             Log::account(Admin::info()->account_id, $log2);
 		}
 
