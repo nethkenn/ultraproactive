@@ -1,7 +1,7 @@
 $(document).ready(function()
 {	
 
-
+    
 	add_to_cart_init();
 	load_cart();
 	remove_to_cart_init();
@@ -74,6 +74,7 @@ $(document).ready(function()
 				event.preventDefault();
 
 				var $current_slot = $('select[name="slotnow"]').val();
+
 	    		console.log('current_slot : ' + $current_slot);
 	    		$('.checkout_preloader').fadeIn();
 	    		$('#checkout-form-container').empty("");
@@ -99,7 +100,7 @@ $(document).ready(function()
 	    			$checkout_remodal.close();
 	    		})
 	    		.always(function() {
-	    			console.log("complete");
+	    			// console.log("complete");
 	    		});
 
 			});
@@ -127,14 +128,13 @@ $(document).ready(function()
 		{	
 			event.preventDefault();
 			var $prod_id = $(this).attr('product-id');
-			console.log($prod_id);
 
 			$.ajax({
 				url: 'cart/remove',
 				type: 'post',
 				dataType: 'json',
 				data: {
-					product_id: $prod_id 
+					product_id: $prod_id,
 				},
 			})
 			.done(function() {
@@ -142,10 +142,12 @@ $(document).ready(function()
 				load_cart();
 			})
 			.fail(function() {
-				console.log("error");
+				// console.log("error");
+				alert("Error on removing item/s on cart");				
+
 			})
 			.always(function() {
-				console.log("complete");
+				// console.log("complete");
 			});
 			
 			/* Act on the event */
@@ -159,14 +161,17 @@ $(document).ready(function()
 		{
 			event.preventDefault();
 			var $prod_id = $(this).attr('product-id');
-			console.log($prod_id);
+			var $current_slot = $('select[name="slotnow"]').val();
+
+
 
 			$.ajax({
 				url: 'cart/add',
 				type: 'post',
 				dataType: 'json',
 				data: {
-					product_id: $prod_id 
+					product_id: $prod_id,
+					slot_id: $current_slot
 				},
 			})
 			.done(function() {
@@ -174,10 +179,11 @@ $(document).ready(function()
 				load_cart();
 			})
 			.fail(function() {
-				console.log("error");
+				// console.log("error");
+				alert("Error on adding to cart");				
 			})
 			.always(function() {
-				console.log("complete");
+				// console.log("complete");
 			});
 			
 			/* Act on the event */
