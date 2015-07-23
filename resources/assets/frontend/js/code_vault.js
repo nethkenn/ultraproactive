@@ -19,6 +19,8 @@ function code_vault()
 		add_event_active_product();
 		product_included();
 		checkifavailable();
+		init_showdownline();
+		showdownline();
 	}
 	// function getdata()
 	// {
@@ -93,11 +95,12 @@ function code_vault()
 	      {
 	      	$(".includer").show();
 	      	$('#ifbuttoncode').prop("disabled", false);
+	      	list = jQuery.parseJSON($('option:selected', "#packageincluded").attr('json'));
+		    $(".productinclude").empty();
+			showlist();
 	      }
 
-	      list = jQuery.parseJSON($('option:selected', "#packageincluded").attr('json'));
-		  $(".productinclude").empty();
-		  showlist();
+
 	}
 	function checkvalue()
 	{
@@ -112,6 +115,15 @@ function code_vault()
 		else
 		{
 			$('#ifbuttoncode').prop("disabled", true);
+		}
+
+		if($('#packageincluded').val() == 0)
+		{
+			$('#ifbuttoncode').prop("disabled", true);	
+		}
+		else
+		{
+			$('#ifbuttoncode').prop("disabled", false);
 		}
 	}
 	function add_event_active_product()
@@ -136,7 +148,6 @@ function code_vault()
     }
     function set_active($lock, $value)
     {
-
         $.ajax(
         {
             url:"/member/code_vault/lock",
@@ -166,14 +177,15 @@ function code_vault()
 		              {
 		                $('#packageincluded').append('<option value="" class="shouldremove">No package available for this membership</option>');  
 		             	$('#ifbuttoncode').prop("disabled", true);
-		             	$(".includer").hide();
-		             	checkvalue();
+		             	$(".includer").hide();	
 		              }
 		              else
 		              {
 		              	$(".includer").show();
 		              	$('#ifbuttoncode').prop("disabled", false);
+		              	list = jQuery.parseJSON($('option:selected', "#packageincluded").attr('json'));
 		              	checkvalue();
+		              	showlist();
 		              }
 		});
 
@@ -186,6 +198,7 @@ function code_vault()
     }
     function showlist()
     {
+    	  $(".productinclude").empty();
            $.each(list, function( key, value ) 
             {
 	            var id = value.product_id;
@@ -237,5 +250,103 @@ function code_vault()
             
         });
     }
+    function showdownline()
+    {
+		$(".sponse").keyup(function()
+		{
+		            $.ajax(
+		            {
+		                url:"member/code_vault/get",
+		                dataType:"json",
+		                data: {'slot':$(".sponse").val()},
+		                type:"post",
+		                success: function(data)
+		                {
+		                	if(data != "x")
+		                	{
+		                	  $(".treecon").show();		                		
+		    				  $(".tree").empty(); 
+		    				  $x = jQuery.parseJSON(data);
+		    				  var str ="<option value='"+$(".sponse").val()+"'>Slot #"+$(".sponse").val()+"</option>";
+				              $.each($x, function( key, value ) 
+				              {
+				              		str = str + '<option value="'+value+'">Slot #'+value+'</option>';  
+				              }); 	
+				              $(".tree").append(str); 
+				              $('.c_slot').prop("disabled", false);		                		
+		                	}
+		                	else
+		                	{
+		                		if($('.sponse').val() == "")
+		                		{
+			                		$('.c_slot').prop("disabled", true);
+			                		$(".tree").empty();
+			                		$(".tree").append('<option value="">Input a slot sponsor</option>');
+		                		} 
+		                		else
+		                		{
+			                		$('.c_slot').prop("disabled", true);
+			                		$(".tree").empty();
+			                		$(".tree").append('<option value="">Sponsor slot number does not exist.</option>');
+		                		}
+ 
+		                	}
+		                }
+		            }); 
+		});
+    }
+    function init_showdownline()
+    {
+		            $.ajax(
+		            {
+		                url:"member/code_vault/get",
+		                dataType:"json",
+		                data: {'slot':$(".sponse").val()},
+		                type:"post",
+		                success: function(data)
+		                {
+		                	if(data != "x")
+		                	{
+		                	  $(".treecon").show();
+		    				  $(".tree").empty(); 
+		    				  $x = jQuery.parseJSON(data);
+		    				  var str ="<option value='"+$(".sponse").val()+"'>Slot #"+$(".sponse").val()+"</option>";
+				              $.each($x, function( key, value ) 
+				              {
+				              		str = str + '<option value="'+value+'">Slot #'+value+'</option>';  
+				              }); 	
+				              $(".tree").append(str); 
+				              $('.c_slot').prop("disabled", false);		                		
+		                	}
+		                	else
+		                	{
+		                		if($('.sponse').val() == "")
+		                		{
+			                		$('.c_slot').prop("disabled", true);
+			                		$(".tree").empty();
+			                		$(".tree").append('<option value="">Input a slot sponsor</option>');
+		                		} 
+		                		else
+		                		{
+			                		$('.c_slot').prop("disabled", true);
+			                		$(".tree").empty();
+			                		$(".tree").append('<option value="">Sponsor slot number does not exist.</option>');
+		                		}
+ 
+		                	}
+ 
+		                }
+		            }); 
+    }
+
+
+    // function checkifavailable()
+    // {
+    //     $(".c_slot").bind("click", function(e)
+    //     {	
+
+            
+    //     });
+    // }   
 }
 

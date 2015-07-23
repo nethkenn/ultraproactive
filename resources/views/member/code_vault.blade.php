@@ -3,10 +3,8 @@
 <div class="code-vault">
         @if(Session::has('message'))
             <div class="alert alert-danger">
-                <ul>   
-                       @foreach($_error as $error) 
-                        <li>{{ $error }}</li>
-                       @endforeach
+                <ul>    
+                        <li>{{ $_error }}</li>
                 </ul>
             </div>
         @endif
@@ -122,10 +120,10 @@
     <div class="table-head para">
         <div class="col-md-6 aw">
             <img src="/resources/assets/frontend/img/icon-product.png">
-            Product Codes ( 2 )
+            Product Codes ( 0 )
         </div>
     </div>
-    <table class="footable">
+   <!-- <table class="footable">
         <thead>
             <tr>
                 <th>Pin</th>
@@ -195,8 +193,8 @@
                 <td><a href="member/code_vault#transfer_code">Transfer Code</a></td>
             </tr>
         </tbody>
-    </table>
-</div>
+    </table> -->
+    </div>
 </div>
 
 
@@ -213,24 +211,14 @@
             <div class="form-group para">
                 <label for="1" class="col-sm-3 control-label">Sponsor</label>
                 <div class="col-sm-9">
-                    <select class="form-control" id="1" name="sponsor">
-                        @if($allslot)
-                            @foreach($allslot as $a)
-                            <option value="{{$a->slot_id}}">Slot #{{$a->slot_id}}</option>
-                            @endforeach
-                        @endif
-                    </select>
+                    <input class="sponse form-control" id="1" name="sponsor" value="">
                 </div>
             </div>
             <div class="form-group para">
                 <label for="2" class="col-sm-3 control-label">Placement</label>
-                <div class="col-sm-9">
-                    <select class="form-control" id="2" name="placement">
-                        @if($downline)
-                            @foreach($downline as $d)
-                            <option value="{{$d->placement_tree_child_id}}">Slot #{{$d->placement_tree_child_id}}</option>
-                            @endforeach
-                        @endif
+                <div class="treecon col-sm-9">
+                    <select class="tree form-control" id="2" name="placement" required>
+                     <option value="">Input a slot sponsor</option>
                     </select>
                 </div>
                 <input type="hidden" id="code_number" value"" name="code_number">
@@ -329,7 +317,7 @@
     </div>
             <br>
                 <button class="button" data-remodal-action="cancel">Cancel</button>
-                <button class="button" type="submit" id="ifbuttoncode" name="sbmitbuy" value="Buy Code" disabled>Buy Code</button>
+                <button class="ifbuttoncode button" type="submit" id="ifbuttoncode" name="sbmitbuy" value="Buy Code" disabled>Buy Code</button>
         </form>    
 </div>
 

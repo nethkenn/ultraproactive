@@ -15,6 +15,8 @@ use Session;
 use Validator;
 use App\Classes\Globals;
 use App\Tbl_product_code;
+use App\Classes\Product;
+use App\Classes\Log;
 class MemberCheckoutController extends Controller
 {
     /**
@@ -26,10 +28,15 @@ class MemberCheckoutController extends Controller
     {
         $data['_error'] = null;
         $customer = Customer::info();
-        $slot = Tbl_slot::where('slot_id', Request::input('slot_id'))->where('slot_owner', $customer->account_id)->first();
+        $slot = Tbl_slot::select('tbl_slot.*', 'tbl_membership.discount')->leftJoin('tbl_membership', 'tbl_membership.membership_id','=','tbl_slot.slot_membership')
+                                                                        ->where('slot_id', Request::input('slot_id'))
+                                                                        ->where('slot_owner', $customer->account_id)
+                                                                        ->first();
         $data['slot'] = $slot;
         $cart = Session::get('cart');
-        $data['final_total'] = $this->get_final_total($cart);
+
+        $sum_cart = $this->get_final_total($cart);
+        $data['final_total'] = $sum_cart - (($slot->discount/100) * $sum_cart);
         $data['remaining_bal'] = $slot->slot_wallet - $data['final_total'];
         $data['pts'] = $this->get_product_point($cart);
 
@@ -126,20 +133,26 @@ class MemberCheckoutController extends Controller
             }
             else
             {
+
                 $insert['slot_id'] = Request::input('slot_id');
 
                 $query = Tbl_voucher::where('voucher_code', Globals::code_generator())->first();
                 $insert['voucher_code'] = Globals::check_code($query);
 
+                $insert ['discount'] = $slot->discount;
                 $insert['total_amount'] = $data['final_total'];
                 $insert['account_id'] = $customer->account_id;
                 Tbl_slot::where('slot_id',Request::input('slot_id') )->lockForUpdate()->update(['slot_wallet'=>$data['remaining_bal']]);             
                 
+               
 
 
 
                 $voucher = new Tbl_voucher($insert);
                 $voucher->save();
+                $log = "Purchase Product worth ".Product::return_format_num($insert['total_amount']). " with Voucher Num: ".$voucher->voucher_id." , Voucher Code: ".$voucher->voucher_code.".";
+                Log::slot(Request::input('slot_id'), $log, $data['remaining_bal']);
+                Log::account($customer->account_id, $log);
 
                 foreach ((array)$cart as $key => $value)
                 {
@@ -170,8 +183,6 @@ class MemberCheckoutController extends Controller
                     $product_code = new Tbl_product_code($insert_prod_code);
                     $product_code->save();
 
-
-
                 }
 
 
@@ -200,37 +211,6 @@ class MemberCheckoutController extends Controller
 
 
 
-    // public function code_generator()
-    // {
-        
-    //     $chars="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    //     $res = "";
-    //     for ($i = 0; $i < 8; $i++) {
-    //         $res .= $chars[mt_rand(0, strlen($chars)-1)];
-    //     }
-
-    //     return $res;
-
-    // }
-
-
-    // public function check_code()
-    // {
-
-    //     $stop=false;
-    //     while($stop==false)
-    //     {
-    //         $code = $this->code_generator();
-
-    //         $check = Tbl_voucher::where('voucher_code', $code )->first();
-    //         if($check==null)
-    //         {
-    //             $stop = true;
-    //         }
-    //     }
-
-    //     return $code;
-    // }
 
 
 

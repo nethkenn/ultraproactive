@@ -41,7 +41,9 @@
 							<td>{{$voucher_product->sub_total}}</td>
 						</tr>
 					@endforeach
-					<tr><td class="text-right" colspan="5">Total {{$voucher->total_amount}}</td></tr>
+                    <tr><td class="text-right" colspan="5">Total {{ $prod_sum }}</td></tr>
+                    <tr><td class="text-right" colspan="5">Discount {{$voucher->discount}} % ({{$discount_decimal}})</td></tr>
+                    <tr><td class="text-right" colspan="5">Final Total: {{$voucher->total_amount}}</td></tr>
 				@else
 					<tr><td colspan="5">No products</td></tr>
 				@endif

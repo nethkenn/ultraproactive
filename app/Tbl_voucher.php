@@ -9,7 +9,7 @@ class Tbl_voucher extends Model
 {
 	protected $table = 'tbl_voucher';
 	protected $primaryKey = 'voucher_id';
-    protected $fillable = ['slot_id', 'voucher_code', 'claimed' , 'total_amount' , 'account_id'];
+    protected $fillable = ['slot_id', 'voucher_code', 'claimed' , 'total_amount' , 'account_id', 'discount'];
 
    	// protected $dates = ['created_at', 'updated_at'];
     // protected $dateFormat = 'Y-m-d';

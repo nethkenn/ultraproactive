@@ -24,7 +24,7 @@
                         <tr class="tibolru">
                             <td>{{$voucher->voucher_id}}</td>
                             <td>{{$voucher->voucher_code}}</td>
-                            <td><div class="check"><input disabled type="checkbox" {{$voucher->claimed == 1 ? 'checked' : '' }}><div class="bgs"></div></div></td>
+                            <td><div class="check"><input disabled type="checkbox" {{$voucher->status =='processed'  ? 'checked' : '' }}><div class="bgs"></div></div></td>
                             <td>{{$voucher->total_amount}}</td>
                             <td><a href="#voucher" class="view-voucher" voucher-id="{{$voucher->voucher_id}}">View Voucher</a></td>
                         </tr>

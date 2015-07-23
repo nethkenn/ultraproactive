@@ -75,7 +75,7 @@
                 <img class="cart_preloader" src="/resources/assets/img/preloader_cart.gif" style="width: 60px; height: 64px;">
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>ID</th>
                         <th>Product</th>
                         <th data-hide="phone">Price</th>
                         <th data-hide="phone">Quantity</th>
@@ -144,6 +144,8 @@
         {
             duration: 400
         });
+
+
 </script>
 <script type="text/javascript" src="/resources/assets/members/js/members_product.js"></script>
 @endsection
