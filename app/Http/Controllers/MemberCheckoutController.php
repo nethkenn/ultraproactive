@@ -15,6 +15,8 @@ use Session;
 use Validator;
 use App\Classes\Globals;
 use App\Tbl_product_code;
+use App\Classes\Product;
+use App\Classes\Log;
 class MemberCheckoutController extends Controller
 {
     /**
@@ -142,11 +144,15 @@ class MemberCheckoutController extends Controller
                 $insert['account_id'] = $customer->account_id;
                 Tbl_slot::where('slot_id',Request::input('slot_id') )->lockForUpdate()->update(['slot_wallet'=>$data['remaining_bal']]);             
                 
+               
 
 
 
                 $voucher = new Tbl_voucher($insert);
                 $voucher->save();
+                $log = "Purchase Product worth ".Product::return_format_num($insert['total_amount']). " with Voucher Num: ".$voucher->voucher_id." , Voucher Code: ".$voucher->voucher_code.".";
+                Log::slot(Request::input('slot_id'), $log, $data['remaining_bal']);
+                Log::account($customer->account_id, $log);
 
                 foreach ((array)$cart as $key => $value)
                 {
@@ -176,8 +182,6 @@ class MemberCheckoutController extends Controller
                     
                     $product_code = new Tbl_product_code($insert_prod_code);
                     $product_code->save();
-
-
 
                 }
 

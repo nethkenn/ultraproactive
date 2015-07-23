@@ -12,6 +12,7 @@ class Log
 		$insert["account_log_date"] = Carbon\Carbon::now();
 		Tbl_account_log::insert($insert);
 	}
+	
 	public static function slot($slot_id, $log, $wallet_update)
 	{
 		$insert["slot_id"] = $slot_id;
