@@ -1,7 +1,5 @@
 @extends('member.layout')
 @section('content')
-<pre>
-</pre>
 <div class="cart col-md-5 hidden-lg hidden-md" style="margin-bottom: 25px;">
     <div class="header">
         <img src="/resources/assets/frontend/img/icon-cart.png">
