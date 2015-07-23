@@ -1,6 +1,7 @@
 <?php namespace App\Classes;
 use App\Tbl_account_log;
 use App\Tbl_slot_log;
+use Carbon;
 
 class Log
 {
@@ -17,6 +18,6 @@ class Log
 		$insert["slot_log_details"] = $log;
 		$insert["slot_log_wallet_update"] = $wallet_update;
 		$insert["slot_log_date"] = Carbon\Carbon::now();
-		Tbl_account_log::insert($insert);
+		Tbl_slot_log::insert($insert);
 	}
 }
