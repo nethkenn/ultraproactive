@@ -21,8 +21,10 @@ class AdminMembershipController extends AdminController
         $text = Request::input('archived') ? 'RESTORE' : 'ARCHIVE';
 		$class = Request::input('archived') ? 'restore-membership' : 'archive-membership';	
 		
-        return Datatables::of($account)	->addColumn('edit','<a href="admin/maintenance/membership/edit?id={{$membership_id}}">EDIT</a>')
-        								->addColumn('archive','<a class="'.$class.'" href="#" membership-id="{{$membership_id}}">'.$text.'</a>')
+        return Datatables::of($account)	->addColumn('entry','<input type="checkbox" disabled="disabled" {{ $membership_entry == 1 ? "checked" : "" }}>')
+        								->addColumn('upgrade','<input type="checkbox" disabled="disabled" {{ $membership_upgrade == 1 ? "checked" : "" }}>')
+        								->addColumn('edit','<a href="admin/maintenance/membership/edit?id={{$membership_id}}">EDIT</a>')
+        								->addColumn('archive','<a class="'.$class.'" href="#" membership-id="{{ $membership_id}}">'.$text.'</a>')
         								->make(true);
 	
 	}
@@ -44,6 +46,8 @@ class AdminMembershipController extends AdminController
 			$rules['membership_name'] = 'required|unique:tbl_membership,membership_name,'.$id.',membership_id|regex:/^[A-Za-z0-9\s-_]+$/';
 			$rules['membership_price'] = 'required|unique:tbl_membership,membership_price,'.$id.',membership_id|numeric|min:0';
 			$rules['discount'] = 'numeric|min:0|max:100';
+			$rules['membership_entry'] = 'numeric|numeric|min:0|max:1';
+			$rules['membership_upgrade'] = 'numeric|min:0|max:1';
 			$message = [
 				'product_name.regex' => 'The :attribute must only have letters , numbers, spaces, hypens ( - ) and underscores ( _ )',
 					];
@@ -55,18 +59,20 @@ class AdminMembershipController extends AdminController
 
 				$insert['membership_name'] = strtoupper(Request::input('membership_name'));
 				$insert['membership_price'] = Request::input('membership_price');
+				$insert['membership_entry'] = Request::input('membership_entry');
+				$insert['membership_upgrade'] = Request::input('membership_upgrade');
 				$insert['discount'] = Request::input('discount');
 				$membership = Tbl_membership::where('membership_id',$id)->update($insert);
 				return Redirect('admin/maintenance/membership');
 			}
 			else
 			{
-
 				$errors =  $validator->errors();
 				$data['_error']['membership_name'] = $errors->get('membership_name');
 				$data['_error']['membership_price'] = $errors->get('membership_price');
+				$data['_error']['membership_entry'] = $errors->get('membership_entry');
+				$data['_error']['membership_upgrade'] = $errors->get('membership_upgrade');
 				$data['_error']['discount'] = $errors->get('discount');
-
 			}
 
 			
@@ -101,6 +107,8 @@ class AdminMembershipController extends AdminController
 
 				$insert['membership_name'] = strtoupper(Request::input('membership_name'));
 				$insert['membership_price'] = Request::input('membership_price');
+				$insert['membership_entry'] = Request::input('membership_entry');
+				$insert['membership_upgrade'] = Request::input('membership_upgrade');
 				$insert['discount'] = Request::input('discount');
 
 				// dd($insert);
@@ -117,7 +125,8 @@ class AdminMembershipController extends AdminController
 				$data['_error']['membership_name'] = $errors->get('membership_name');
 				$data['_error']['membership_price'] = $errors->get('membership_price');
 				$data['_error']['discount'] = $errors->get('discount');
-				
+				$data['_error']['membership_entry'] = $errors->get('membership_entry');
+				$data['_error']['membership_upgrade'] = $errors->get('membership_upgrade');
 
 			}
 

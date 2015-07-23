@@ -212,7 +212,15 @@ Route::post('admin/utilities/position/delete', 'AdminPositionController@delete')
 Route::get('admin/utilities/setting', 'AdminSettingsController@index');
 Route::get('admin/utilities/complan', 'AdminComplanController@index');
 
-/* ADMIN / UTILITIES */
+/* ADMIN / UTITLITIES / COMPTATION*/
+Route::get('admin/utilities/binary', 'AdminComplanController@binary');
+Route::any('admin/utilities/binary/edit', 'AdminComplanController@binary_edit');
+Route::any('admin/utilities/binary/add', 'AdminComplanController@binary_add');
+Route::any('admin/utilities/binary/delete', 'AdminComplanController@binary_delete');
+Route::any('admin/utilities/binary/membership/edit', 'AdminComplanController@binary_membership_edit');
+Route::any('admin/utilities/binary/product/edit', 'AdminComplanController@binary_product_edit');
+
+/* ADMIN / REPORTS */
 Route::get('admin/reports/product_sales', 'AdminReportController@product_sales');
 Route::get('admin/reports/membership_sales', 'AdminReportController@membership_sales');
 

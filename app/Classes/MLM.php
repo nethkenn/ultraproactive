@@ -5,11 +5,15 @@ use App\Tbl_tree_sponsor;
 
 class MLM
 {
+    public statid function computation($new_slot_id, $method = "SLOT CREATION")
+    {
+        MLM::binary($new_slot_id, $method);
+    }
     public static function tree($new_slot_id)
     {
     	$slot_info = Tbl_slot::id($new_slot_id)->first();
-    	MLM::insert_tree_placement($slot_info, $new_slot_id, 1);
-    	MLM::insert_tree_sponsor($slot_info, $new_slot_id, 1);
+    	MLM::insert_tree_placement($slot_info, $new_slot_id, 1); /* TREE RECORD FOR BINARY GENEALOGY */
+    	MLM::insert_tree_sponsor($slot_info, $new_slot_id, 1); /* TREE RECORD FOR SPONSORSHIP GENEALOGY */
     }
     public static function insert_tree_placement($slot_info, $new_slot_id, $level)
     {

@@ -145,9 +145,9 @@ class tbl_module extends Seeder
         (7, 'Maintenance / Package',    'product_package',  0),
         (8, 'Maintenance / Product',    'product',  0),
         (9, 'Maintenance / Slots',  'slots',    0),
-        (10,    'Utitlities / Admin',   'admin_maintenance',    0),
-        (11,    'Utitlities / Admin Levels',    'position', 0),
-        (12,    'Utitlities / Company Settings',    'setting',  0),
+        (10,    'Utilities / Admin',   'admin_maintenance',    0),
+        (11,    'Utilities / Admin Levels',    'position', 0),
+        (12,    'Utilities / Company Settings',    'setting',  0),
         (14,    'Reports / Product Sales Report',   'product_sales',    0),
         (15,    'Reports / Membership Sales Report',    'membership_sales', 0),
         (16,    'Maintenance / Product',    'country',  0),
@@ -161,7 +161,10 @@ class tbl_module extends Seeder
         (24,    'Maintenance / Slide',  'slide',    0),
         (25,    'Maintenance / Team',   'team', 0),
         (26,    'Maintenance / Testimonial',    'testimony',    0),
-        (27,    'Maintenance / Partners',   'partner',  0);"
+        (27,    'Maintenance / Partners',   'partner',  0),
+        (28,    'Utilities / Binary',   'binary',  0),
+        (29,    'Utilities / Direct Referral',   'direct',  0),
+        (30,    'Utilities / Indirect Referral Bonus',   'indirect',  0);"
         );
     } 
 }
@@ -246,7 +249,10 @@ class tbl_admin_position_has_module extends Seeder
         (46,    1,  24),
         (47,    1,  25),
         (48,    1,  26),
-        (49,    1,  27);
+        (49,    1,  27),
+        (50,    1,  28),
+        (51,    1,  29),
+        (52,    1,  30);
         ");
     } 
 }
