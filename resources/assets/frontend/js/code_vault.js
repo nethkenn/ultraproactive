@@ -95,12 +95,12 @@ function code_vault()
 	      {
 	      	$(".includer").show();
 	      	$('#ifbuttoncode').prop("disabled", false);
-	      	checkvalue();
+	      	list = jQuery.parseJSON($('option:selected', "#packageincluded").attr('json'));
+		    $(".productinclude").empty();
+			showlist();
 	      }
 
-	      list = jQuery.parseJSON($('option:selected', "#packageincluded").attr('json'));
-		  $(".productinclude").empty();
-		  showlist();
+
 	}
 	function checkvalue()
 	{
@@ -115,6 +115,15 @@ function code_vault()
 		else
 		{
 			$('#ifbuttoncode').prop("disabled", true);
+		}
+
+		if($('#packageincluded').val() == 0)
+		{
+			$('#ifbuttoncode').prop("disabled", true);	
+		}
+		else
+		{
+			$('#ifbuttoncode').prop("disabled", false);
 		}
 	}
 	function add_event_active_product()
@@ -174,7 +183,9 @@ function code_vault()
 		              {
 		              	$(".includer").show();
 		              	$('#ifbuttoncode').prop("disabled", false);
+		              	list = jQuery.parseJSON($('option:selected', "#packageincluded").attr('json'));
 		              	checkvalue();
+		              	showlist();
 		              }
 		});
 
@@ -187,6 +198,7 @@ function code_vault()
     }
     function showlist()
     {
+    	  $(".productinclude").empty();
            $.each(list, function( key, value ) 
             {
 	            var id = value.product_id;
