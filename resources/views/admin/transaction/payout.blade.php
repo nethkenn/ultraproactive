@@ -37,6 +37,40 @@
 				</thead>
 			</table>
 	</div>
+
+
+<!--<div class="remodal create-slot" data-remodal-id="process" data-remodal-options="hashTracking: false">
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <div class="header">
+        Process Payout
+    </div>
+    <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
+    <div class="col-md-10 col-md-offset-1 para">
+    <form class="form-horizontal" method="POST" id="createslot">
+            <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
+            <div class="form-group para">
+                <label for="1" class="col-sm-3 control-label">Request From</label>
+                <div class="col-sm-9">
+                    <input class="sponse form-control" id="1" name="sponsor" value="">
+                </div>
+            </div>
+
+            <div class="form-group para">
+                <label for="1" class="col-sm-3 control-label">Request From</label>
+                <div class="col-sm-9">
+                    <input class="sponse form-control" id="1" name="sponsor" value="">
+                </div>
+            </div>
+    </div>
+    <br>
+    <button class="button" type="button" data-remodal-action="cancel">Cancel</button>
+    <button class="c_slot button"  type="submit" name="proccess">Process Payout</button>
+    </form>
+</div>-->
+
+
+
+
 @endsection
 
 @section('script')
