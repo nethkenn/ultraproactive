@@ -37,9 +37,6 @@ class CreateTblMembershipCode extends Migration
             $table->foreign('product_package_id')->references('product_package_id')->on('tbl_product_package');
             $table->foreign('inventory_update_type_id')->references('inventory_update_type_id')->on('tbl_inventory_update_type');
         });
-
-
-
     }
 
     /**

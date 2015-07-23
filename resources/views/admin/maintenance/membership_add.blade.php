@@ -13,7 +13,7 @@
         <form id="membership-add-form" method="post">
                 <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
                 <div class="form-group col-md-12">
-                    <label for="membership_name">membership Name</label>
+                    <label for="membership_name">Membership Name</label>
                     @if($_error['membership_name'])
                         <div class="col-md-12 alert alert-danger form-errors">
                             <ul>
@@ -25,7 +25,7 @@
                     @endif
             		<input name="membership_name" value="{{Request::input('membership_name')}}" required="required" class="form-control" id="" placeholder="" type="text">
             	</div>
-            	<div class="form-group col-md-12">
+            	<div class="form-group col-md-6">
                     <label for="membership_price">Membership Price</label>
                     @if($_error['membership_price'])
                         <div class="col-md-12 alert alert-danger form-errors">
@@ -38,7 +38,7 @@
                     @endif
             		<input name="membership_price" value="{{Request::input('membership_price')}}" required="required" class="form-control" id="" placeholder="" type="number">
             	</div>
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-6">
                     <label for="discount">Discount</label>
                     @if($_error['discount'])
                         <div class="col-md-12 alert alert-danger form-errors">
@@ -50,7 +50,41 @@
                         </div>
                     @endif
                     <input name="discount" value="{{Request::input('discount')}}" required="required" class="form-control" id="" placeholder="" type="number">
-                </div>    	
+                </div>   
+
+                <div class="form-group col-md-6">
+                    <label for="discount">Enable Entry</label>
+                    @if($_error['membership_entry'])
+                        <div class="col-md-12 alert alert-danger form-errors">
+                            <ul>
+                                @foreach($_error['membership_entry'] as $error)
+                                    <li>{{$error}}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <select name="membership_entry" class="form-control">
+                        <option value="1">YES</option>
+                        <option value="0">NO</option>
+                    </select>
+                </div> 
+
+                <div class="form-group col-md-6">
+                    <label for="discount">Enable Upgrade</label>
+                    @if($_error['membership_upgrade'])
+                        <div class="col-md-12 alert alert-danger form-errors">
+                            <ul>
+                                @foreach($_error['membership_upgrade'] as $error)
+                                    <li>{{$error}}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <select name="membership_upgrade" class="form-control">
+                        <option value="1">YES</option>
+                        <option value="0">NO</option>
+                    </select>
+                </div>  
         </form>
     </div>
 @endsection
