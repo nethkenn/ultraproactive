@@ -27,7 +27,7 @@ class AdminPayoutController extends AdminController
 
         // $account = Tbl_account::select('*')->where('tbl_account.archived', Request::input('archived'))->leftJoin("tbl_country","tbl_account.account_country_id", "=", "tbl_country.country_id");
         return Datatables::of($account)	->addColumn('Breakdown','<a href="javascript:">Breakdown</a>')
-        								->addColumn('Process','<a href="javascript:">Process</a>')
+        								->addColumn('Process','<a href="javascript:" class="showmodal-p">Process</a>')
         								->make(true);
     }
 }

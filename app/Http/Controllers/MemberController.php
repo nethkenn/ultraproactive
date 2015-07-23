@@ -10,7 +10,6 @@ class MemberController extends Controller
 	function __construct()
 	{
 		$customer_info = Customer::info();
-
         if($customer_info)
         {
 	            $id = Customer::id();

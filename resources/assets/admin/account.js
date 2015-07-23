@@ -44,6 +44,7 @@ function accountJs()
 			    success: function( data ) {
 			    	if( data['query']==1 )
 			    	{
+	
 			    		$accountTable.draw();
 			    	}
 			    	// console.log(data['query']);
