@@ -217,9 +217,7 @@ body {
   .create-slot .form-group {
     font-size: 12.5px; }
     .create-slot .form-group label {
-      color: #77818e !important;
-      font-family: "Arial", sans-serif !important;
-      font-style: italic; }
+      color: #77818e !important; }
     .create-slot .form-group input[type="text"],
     .create-slot .form-group input[type="password"],
     .create-slot .form-group select,
@@ -234,8 +232,6 @@ body {
     background-color: #eeeeee;
     color: #bbc4d0;
     padding: 10px 35px;
-    font-style: italic;
-    font-family: "Arial", sans-serif !important;
     margin: 10px 0; }
   .create-slot .orange-btn {
     background-color: #f47265;

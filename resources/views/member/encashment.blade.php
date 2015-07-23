@@ -18,7 +18,7 @@
           <div id="slider-range-min"></div>
           <div class="col-xs-6 slider-info text-left">1</div>
           <div class="max col-xs-6 slider-info text-right" val="{{$slotnow->slot_wallet}}">{{$slotnow->slot_wallet}}</div>
-          <input type="text" id="amount" value="1" name="val" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+          <input type="text" id="amount" value="1" name="val" onkeydown="return ( event.ctrlKey || event.altKey || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) || (95<event.keyCode && event.keyCode<106) || (event.keyCode==8) || (event.keyCode==9) || (event.keyCode>34 && event.keyCode<40) || (event.keyCode==46) )">
           <select id="typeencashment">
             <option value"Bank Deposit">Bank Deposit</option>
             <option value="Cheque">Cheque</option>

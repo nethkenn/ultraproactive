@@ -202,13 +202,14 @@ $font-color: #77818e;
 					text-align: left;
 					background-color: #fff;
 					box-shadow: none;
+					font-weight: bold;
 				}
 			}
 			label
 			{
 				color: $font-color;
 				text-transform: uppercase;
-				font-weight: bold;
+				font-weight: 300;
 				font-size: 12.5px;
 				text-align: right;
 			}

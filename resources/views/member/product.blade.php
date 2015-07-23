@@ -95,7 +95,7 @@
         </a>
     </div>
 </div>
-<div class="remodal" data-remodal-id="check-out-modal" data-remodal-options="hashTracking: false, closeOnOutsideClick: false">
+<div class="remodal create-slot" data-remodal-id="check-out-modal" data-remodal-options="hashTracking: false, closeOnOutsideClick: false">
     <img class="checkout_preloader" src="/resources/assets/img/preloader_cart.gif" style="width: 60px; height: 64px;">
     <div id="checkout-form-container">
     </div>
