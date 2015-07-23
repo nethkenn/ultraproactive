@@ -11,7 +11,7 @@ use App\Tbl_country;
 use App\Tbl_rank;
 use Crypt;
 use Validator;
-use App\Classes\MLM;
+use App\Classes\Compute;
 
 class AdminSlotController extends AdminController
 {
@@ -111,8 +111,9 @@ class AdminSlotController extends AdminController
 			$insert["slot_owner"] =  $account_id;
 			$slot_id = Tbl_slot::insertGetId($insert);
 
-			MLM::tree($slot_id);
-			MLM::binary($slot_id);
+			Compute::tree($slot_id);
+			Compute::binary($slot_id);
+			
 			$return["placement"] = Request::input("placement");
 		}
 		
