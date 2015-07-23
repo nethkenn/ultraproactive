@@ -7,13 +7,17 @@ use App\Tbl_product_code;
 use Datatables;
 use Request;
 use Validator;
-use app\Classes\Admin;
+use App\Classes\Admin;
+use App\Classes\Product;
+use App\Classes\Log;
 use Crypt;
 use Carbon\Carbon;
 class AdminClaimController extends AdminController
 {
 	public function index()
 	{
+
+		// dd(Admin::info());
 
         return view('admin.transaction.claim');
 	}
@@ -45,6 +49,9 @@ class AdminClaimController extends AdminController
 		return Datatables::of($voucher)	->editColumn('status','{{$status}}')
 										->addColumn('cancel_or_view_voucher','<a style="cursor: pointer;" class="view-voucher" voucher-id="{{$voucher_id}}">View Voucher</a>')
 			                            ->make(true);
+
+
+
 	}
 
 	public function check()
@@ -245,6 +252,15 @@ class AdminClaimController extends AdminController
 					Tbl_product::where('product_id', $value->product_id)->lockForUpdate()->update(['stock_qty'=>$stock_minus_voucher_qty]);
 				}
 			}
+
+
+
+
+			/**
+			 * UPDATE ACCOUNT/ADMIN LOG
+			 */
+            $log2 = "Process Voucher # ".Request::input('voucher_id'). " as ".  Admin::info()->admin_position_name.".";
+            Log::account(Admin::info()->account_id, $log2);
 		}
 
 		return $data;
@@ -350,9 +366,8 @@ class AdminClaimController extends AdminController
 			 */
 			$voucher_slot = Tbl_slot::find($voucher_query->slot_id);
 			$updated_wallet = $voucher_slot->slot_wallet + $voucher_query->total_amount;
-
-
 			Tbl_slot::where('slot_id', $voucher_slot->slot_id)->lockForUpdate()->update(['slot_wallet'=>$updated_wallet]);
+			
 			/**
 			 * IF THE VOUCHER STATUS IS "PROCESSED" RETURN THE DEDUCTED INVENTORY
 			 */
@@ -369,8 +384,26 @@ class AdminClaimController extends AdminController
 				}
 			}
 
+
+            /**
+			 * CHANGE THE VOUCHER STATUS TO CANCELLED;
+			 */
 			Tbl_voucher::where('voucher_id', Request::input('voucher_id'))->lockForUpdate()->update(['status'=>'cancelled']);
 
+
+			 /**
+			 * UPDATE WALLET LOG
+			 */
+
+			$log = "Voucher no. ".Request::input('voucher_id')." has been voided by ".Admin::info()->account_username." (".Admin::info()->admin_position_name ."). ".  Product::return_format_num($voucher_query->total_amount)." slot wallet return." ;
+            Log::slot($voucher_slot->slot_id, $log, $updated_wallet);
+            
+
+			/**
+			 * UPDATE ACCOUNT/ADMIN LOG
+			 */
+            $log2 = "Voided Voucher # ".Request::input('voucher_id'). " as ".  Admin::info()->admin_position_name.".";
+            Log::account(Admin::info()->account_id, $log2);
 
 
 			/**
