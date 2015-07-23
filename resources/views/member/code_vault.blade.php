@@ -3,10 +3,8 @@
 <div class="code-vault">
         @if(Session::has('message'))
             <div class="alert alert-danger">
-                <ul>   
-                       @foreach($_error as $error) 
-                        <li>{{ $error }}</li>
-                       @endforeach
+                <ul>    
+                        <li>{{ $_error }}</li>
                 </ul>
             </div>
         @endif
