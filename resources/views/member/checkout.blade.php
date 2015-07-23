@@ -66,6 +66,15 @@
         <img src="/resources/assets/frontend/img/icon-checkout.png">
         Checkout
     </div>
+    @if($_error)
+      <div class="text-left col-md-12 alert alert-danger">
+        <ul class="col-md-12">
+          @foreach ($_error as $error)
+            <li>{{$error}}</li>
+          @endforeach
+        </ul>
+      </div>
+    @endif
     <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
     <div class="col-md-10 col-md-offset-1 para">
         <form class="form-horizontal">

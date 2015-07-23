@@ -211,6 +211,10 @@ $font-color: #77818e;
 					background-color: #fff;
 					box-shadow: none;
 					font-weight: bold;
+					@media screen and (max-width: 991px)
+					{
+						text-align: center;
+					}
 				}
 				a
 				{
@@ -223,6 +227,10 @@ $font-color: #77818e;
 					font-weight: bold;
 					display: block;
 					padding: 4px 10px;
+					@media screen and (max-width: 991px)
+					{
+						text-align: center;
+					}
 				}
 				a:hover
 				{
@@ -236,6 +244,10 @@ $font-color: #77818e;
 				font-weight: normal;
 				font-size: 16px;
 				text-align: right;
+				@media screen and (max-width: 991px)
+				{
+					margin-top: 15px;
+				}
 			}
 		}	
 	}
