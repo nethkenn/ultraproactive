@@ -159,7 +159,7 @@ $font-color: #77818e;
 			text-transform: uppercase;
 			border-top-left-radius: 3px;
 			border-top-right-radius: 3px;
-
+			padding: 20px !important;
 			img
 			{
 				padding: 15px 30px 15px 0;
@@ -169,6 +169,8 @@ $font-color: #77818e;
 		{
 			background-color: #fff;
 			padding: 25px 0;
+			border-radius: 3px;
+			margin-bottom: 0px;
 
 
 
@@ -179,7 +181,8 @@ $font-color: #77818e;
 				color: #fff !important;
 				font-weight: bold;
 				text-transform: uppercase;
-				margin-bottom: 20px;
+				margin-bottom: 10px;
+				margin-top: 18px;
 				background-color: #39BABA;
 				display: inline-block;
 				border-radius: 3px;
@@ -193,23 +196,45 @@ $font-color: #77818e;
 			{
 				margin-left: 0 !important;
 				margin-right: 0 !important;
-
+				margin-bottom: 0 !important;
+				.highlight
+				{
+					font-weight: bold;
+					color: #27ADA2 !important;
+				}
 				input[type="text"]
 				{
 					border: 0;
-					font-size: 14.58px;
+					font-size: 18px;
 					color: $font-color;
 					text-align: left;
 					background-color: #fff;
 					box-shadow: none;
+					font-weight: bold;
+				}
+				a
+				{
+					border: 0;
+					font-size: 18px;
+					color: #39BABA;
+					text-align: left;
+					background-color: #fff;
+					box-shadow: none;
+					font-weight: bold;
+					display: block;
+					padding: 4px 10px;
+				}
+				a:hover
+				{
+					color: #2AA3A3;
 				}
 			}
 			label
 			{
 				color: $font-color;
 				text-transform: uppercase;
-				font-weight: bold;
-				font-size: 12.5px;
+				font-weight: normal;
+				font-size: 16px;
 				text-align: right;
 			}
 		}	
@@ -248,6 +273,7 @@ $font-color: #77818e;
 				border-left: 1px solid #e76356;
 				border-right: 1px solid #e76356;
 				font-size: 14.58px;
+				width: 90%;
 			}
 			button:hover
 			{

@@ -21,6 +21,7 @@ class CreateTblVoucher extends Migration
             $table->string('status')->default('unclaimed');
             $table->double('discount');
             $table->double('total_amount');
+            $table->tinyInteger('payment_mode')->default(0);
             $table->timestamps();  
             $table->foreign('slot_id')
                 ->references('slot_id')

@@ -282,7 +282,7 @@ body
 	.content
 	{
 		margin-top: 40px;
-
+		padding-bottom: 40px;
 		.voucher
 		{
 
@@ -319,6 +319,7 @@ body
 	.form-group
 	{
 		font-size: 12.5px;
+
 		label
 		{
 			color: $font-color !important;
@@ -336,6 +337,7 @@ body
 			font-size: 14.58px;
 			color: #9ea7b3;
 		}
+		
 	}
 	.button
 	{
