@@ -56,7 +56,10 @@ class Tbl_product extends Model implements SluggableInterface
 
 
 
-
+    public function scopeActive($query)
+    {
+        return $query->where('archived', 0);
+    }
    
     public function getImageFileAttribute($value)
     {
