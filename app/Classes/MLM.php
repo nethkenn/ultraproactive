@@ -2,18 +2,19 @@
 use App\Tbl_slot;
 use App\Tbl_tree_placement;
 use App\Tbl_tree_sponsor;
+use App\Tbl_binary_pairing;
 
 class MLM
 {
-    public statid function computation($new_slot_id, $method = "SLOT CREATION")
-    {
-        MLM::binary($new_slot_id, $method);
-    }
     public static function tree($new_slot_id)
     {
     	$slot_info = Tbl_slot::id($new_slot_id)->first();
     	MLM::insert_tree_placement($slot_info, $new_slot_id, 1); /* TREE RECORD FOR BINARY GENEALOGY */
     	MLM::insert_tree_sponsor($slot_info, $new_slot_id, 1); /* TREE RECORD FOR SPONSORSHIP GENEALOGY */
+    }
+    public static function computation($new_slot_id, $method = "SLOT CREATION")
+    {
+        MLM::binary($new_slot_id, $method);
     }
     public static function insert_tree_placement($slot_info, $new_slot_id, $level)
     {
@@ -46,6 +47,8 @@ class MLM
     }
     public static function binary($new_slot_id, $method = "SLOT CREATION")
     {
+        $new_slot_info = Tbl_slot::id($new_slot_id)->membership()->first();
+
     	/* GET SETTINGS */
     	$required_pairing_points = 100;
 
@@ -65,7 +68,7 @@ class MLM
     		$binary["right"] = $slot_recipient->slot_binary_right; 
 
     		/* ADD NECESARRY POINTS */
-    		$binary[$tree->placement_tree_position] = $binary[$tree->placement_tree_position] + 120; 
+    		$binary[$tree->placement_tree_position] = $binary[$tree->placement_tree_position] + $new_slot_info->membership_binary_points; 
 
     		/* CHECK PAIRING */
     		while($binary["left"] >= $required_pairing_points && $binary["right"] >= $required_pairing_points)

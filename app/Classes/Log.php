@@ -2,7 +2,7 @@
 use App\Tbl_account_log;
 use App\Tbl_slot_log;
 
-class MLM
+class Log
 {
 	public static function account($account_id, $log)
 	{
