@@ -18,6 +18,7 @@ use Datatables;
 use Validator;
 use App\Tbl_tree_placement;
 use App\Classes\Compute;
+use App\Classes\Log;
 
 class MemberCodeController extends MemberController
 {
@@ -212,8 +213,10 @@ class MemberCodeController extends MemberController
 				$insert['to_account_id'] = $id;
 				$insert['updated_at'] = Carbon::now();
 				$insert['description'] = "Claimed by ".$getName->account_name;
+				$pint = $data['pin'];
+				$fromname = DB::table('tbl_account')->where('account_id',$getId->account_id)->first();
 				DB::table("tbl_member_code_history")->insert($insert);
-
+				Log::account(Customer::id(),"You claimed membership code from $fromname->account_name  (Pin #$pint))");
 			}
 			else
 			{
@@ -393,6 +396,7 @@ class MemberCodeController extends MemberController
 									DB::table("tbl_member_code_history")->insert($insert);
 									Tbl_slot::where('slot_id',Session::get('currentslot'))->update(['slot_wallet'=>$total]);
 									$message['success'] = "Successfully bought.";
+									Log::account(Customer::id(),"Bought a membership code (Pin #$membership_code->code_pin)");
 									return $message;
 								}
 							}
