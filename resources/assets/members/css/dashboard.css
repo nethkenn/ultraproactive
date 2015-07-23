@@ -140,6 +140,9 @@
         background-color: #fff;
         box-shadow: none;
         font-weight: bold; }
+        @media screen and (max-width: 991px) {
+          .left .detail .holder .form-group input[type="text"] {
+            text-align: center; } }
       .left .detail .holder .form-group a {
         border: 0;
         font-size: 18px;
@@ -150,6 +153,9 @@
         font-weight: bold;
         display: block;
         padding: 4px 10px; }
+        @media screen and (max-width: 991px) {
+          .left .detail .holder .form-group a {
+            text-align: center; } }
       .left .detail .holder .form-group a:hover {
         color: #2AA3A3; }
     .left .detail .holder label {
@@ -158,6 +164,9 @@
       font-weight: normal;
       font-size: 16px;
       text-align: right; }
+      @media screen and (max-width: 991px) {
+        .left .detail .holder label {
+          margin-top: 15px; } }
 
 .right .holder {
   background-color: #fff;

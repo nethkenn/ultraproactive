@@ -28,7 +28,7 @@
                     <button type="submit" name="login" style="margin-top: 20px;">LOGIN</button>
                 </a>
                 <a href="/">
-                    <button onClick="location.href='/'" style="margin-top: 5px;">GO BACK</button>
+                    <button type="button" style="margin-top: 5px;">GO BACK</button>
                 </a>
                 <div class="create">
                     <a href="register">New here? Create an account.</a>

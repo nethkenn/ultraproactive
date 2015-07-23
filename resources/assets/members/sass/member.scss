@@ -323,8 +323,6 @@ body
 		label
 		{
 			color: $font-color !important;
-			font-family: "Arial", sans-serif !important;
-			font-style: italic;
 		}
 		input[type="text"],
 		input[type="password"],
@@ -342,12 +340,11 @@ body
 	.button
 	{
 		border: 0;
-		background-color: #eeeeee;
-		color: #bbc4d0;
+		background-color: #DDDBDB;
+		color: #778192;
 		padding: 10px 35px;
-		font-style: italic;
-		font-family: "Arial", sans-serif !important;
 		margin: 10px 0;
+		font-weight: 600;
 	}
 	.orange-btn
 	{
