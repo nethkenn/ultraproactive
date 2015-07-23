@@ -42,9 +42,16 @@
     </div>
   </div>
    <div class="form-group">
-    <label for="points recipient" class="col-sm-4 control-label">Points Recipient</label>
+    <label for="points recipient" class="col-sm-4 control-label">Slot #</label>
     <div class="col-sm-8">
-      <input type="number" class="form-control" id="" placeholder="dasf" name="points_recipient" value="{{$slot->slot_id}}">
+      <input type="number" class="form-control" id="" placeholder="" name="points_recipient" value="{{$slot->slot_id}}">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="points recipient" class="col-sm-4 control-label">Slot Membership Discount(%)</label>
+    <div class="col-sm-8">
+      <input type="number" class="form-control" id="" placeholder="" name="points_recipient" value="{{$slot->discount}}">
     </div>
   </div>
   <div class="form-group">
