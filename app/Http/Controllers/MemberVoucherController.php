@@ -5,6 +5,7 @@ use App\Tbl_voucher_has_product;
 use Request;
 use App\Tbl_account;
 use App\Classes\Customer;
+use App\Classes\Product;
 class MemberVoucherController extends MemberController
 {
 	public function index()
@@ -37,6 +38,18 @@ class MemberVoucherController extends MemberController
 		$data['_voucher_product'] = $_voucher_product;
 		$data['account'] = $account;
 		$data['voucher'] = $voucher;
+		$sub_total = array();
+		foreach ($_voucher_product as $key => $value) {
+
+			$sub_total[] = $value->sub_total;
+		}
+
+		$data['prod_sum'] = Product::return_format_num(array_sum($sub_total));
+		$data['discount_decimal'] = Product::return_format_num($data['prod_sum'] *  ($voucher->discount / 100));
+
+
+
+
 		// dd($_voucher_product);
 
 		return view('member.voucher_product', $data);

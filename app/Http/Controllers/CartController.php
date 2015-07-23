@@ -3,14 +3,22 @@ use Session;
 use Request;
 use App\Tbl_product;
 use App\Classes\Product;
-
+use App\Tbl_slot;
+use App\Classes\Customer;
 class CartController extends MemberController
 {
 	public function index()
 	{	
 		$data['_cart'] = Session::get('cart');
 		$final_total = [];
+		$slot_id = Session::get('currentslot');
+		$customer = Customer::info();
+		$slot = Tbl_slot::select('tbl_slot.*', 'tbl_membership.discount')->leftJoin('tbl_membership', 'tbl_membership.membership_id','=','tbl_slot.slot_membership')
+                                                                        ->where('slot_id', $slot_id)
+                                                                        ->where('slot_owner', $customer->account_id)
+                       	                                                 ->first();
 
+        // dd($slot->discount);     	                                                 
 		if($data['_cart'])
 		{
 			foreach ($data['_cart'] as $key => $value)
@@ -27,10 +35,25 @@ class CartController extends MemberController
 		}
 
 		// $data['final_total'] =  Product::currency_format(array_sum($final_total));
-		$data['final_total'] = array_sum($final_total);
+		$discount= $slot->discount;
+		$product_sum_total = array_sum($final_total);
+
+		$final_total = $product_sum_total - ($discount/100 * ($product_sum_total));
+		$discount_in_decimal = $discount/100 * $product_sum_total;
+
+		$data['sum_product'] = $this->return_format_num( $product_sum_total );
+		$data['discount'] =    $this->return_format_num($discount_in_decimal) . " (".$discount . "%)";
+		$data['final_total'] = $this->return_format_num($final_total);
+
 		
 
 		return view('cart.cart', $data);
+	}
+
+
+	public function return_format_num($val)
+	{
+		return number_format($val, 2, '.',',');
 	}
 
 	public function remove_to_cart()
@@ -57,6 +80,8 @@ class CartController extends MemberController
 
 		$data['success'] = false;
 		$prod_id = Request::input('product_id');
+		$slot_id = Request::input('slot_id');
+
 		$product = Tbl_product::find(Request::input('product_id'));
 
 		if($product)
@@ -75,6 +100,7 @@ class CartController extends MemberController
 				$_cart[$product->product_id]['product_name'] =  $product->product_name;
 				$_cart[$product->product_id]['price'] =  $product->price;
 				$_cart[$product->product_id]['qty'] = 1;
+				// $_cart[$product->product_id]['discount'] = ;
 				$_cart[$product->product_id]['total'] = $product->price * $_cart[$product->product_id]['qty'];	
 				
 			}

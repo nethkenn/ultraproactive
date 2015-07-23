@@ -454,4 +454,10 @@ class Product
 
     }
 
+
+    public static function return_format_num($val)
+    {
+        return number_format($val, 2, '.',',');
+    }
+
 }

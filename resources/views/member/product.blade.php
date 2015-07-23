@@ -1,5 +1,7 @@
 @extends('member.layout')
 @section('content')
+<pre>
+</pre>
 <div class="cart col-md-5 hidden-lg hidden-md" style="margin-bottom: 25px;">
     <div class="header">
         <img src="/resources/assets/frontend/img/icon-cart.png">
@@ -75,7 +77,7 @@
                 <img class="cart_preloader" src="/resources/assets/img/preloader_cart.gif" style="width: 60px; height: 64px;">
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>ID</th>
                         <th>Product</th>
                         <th data-hide="phone">Price</th>
                         <th data-hide="phone">Quantity</th>
@@ -144,6 +146,8 @@
         {
             duration: 400
         });
+
+
 </script>
 <script type="text/javascript" src="/resources/assets/members/js/members_product.js"></script>
 @endsection
