@@ -73,7 +73,7 @@ class Compute
     		$binary[$tree->placement_tree_position] = $binary[$tree->placement_tree_position] + $new_slot_info->membership_binary_points; 
             
             /* INSERT LOG FOR EARNED POINTS IN ACCOUNT */
-            $log = "Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($new_slot_info->membership_binary_points, 2) . " binary points</b> on " . $tree->placement_tree_position . " when " . $new_slot_info->account_name . " with " . $new_slot_info->membership_name . " MEMBERSHIP created a new slot(" . $new_slot_info->slot_id . ").";
+            $log = "Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($new_slot_info->membership_binary_points, 2) . " binary points</b> on " . $tree->placement_tree_position . " when " . $new_slot_info->account_name . " with " . $new_slot_info->membership_name . " MEMBERSHIP created a new slot (#" . $new_slot_info->slot_id . ").";
             
             Log::account($slot_recipient->slot_owner, $log);
 

@@ -27,9 +27,42 @@
             <div class="text"><span>5</span>Leads</div>
         </div>
     </div>
+
+    <div class="detail para">
+        <div class="header">Account Summary</div>
+        <div class="holder para">
+            <div class="input form-horizontal para">
+                <div class="form-group">
+                    <label for="1" class="col-sm-6 control-label">Total Wallet</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control highlight" id="1" readonly value="{{ number_format($total_wallet, 2) }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="2" class="col-sm-6 control-label">Total Number of Slots</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="2" readonly value="{{$total_count}} SLOT(S)">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="3" class="col-sm-6 control-label">Email</label>
+                    <div class="col-sm-6">
+                        <a href="mailto:{{ $member->account_email }}">{{ $member->account_email }}</a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="4" class="col-sm-6 control-label">Date Joined</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="4" readonly value="{{ date('F d, Y',strtotime($member->account_date_created)) }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @if($slotnow)
     <div class="detail para">
-        <div class="header"><img src="/resources/assets/frontend/img/icon-book.png">Details For Slot #{{$slotnow->slot_id}}</div>
+        <div class="header">Details For Slot #{{$slotnow->slot_id}}</div>
         <div class="holder para">
             <div class="title blue tinde">Overview</div>
             <div class="input form-horizontal para">
@@ -155,73 +188,17 @@
             <img src="/resources/assets/frontend/img/icon-notification.png">
             Latest Notification
         </div>
+        @foreach($_notification as $log)
         <div class="holders para">
             <div class="linyanglinya"></div>
             <div class="liness para">
-                <div class="date col-md-12">August 25, 2015</div>
-                <div class="text col-md-11">You earned Php 12.00 fro pairing bonus because John Doe created Slot #15</div>
+                <div class="date col-md-12">{{ $log->date }}</div>
+                <div class="text col-md-11">{!! $log->account_log_details !!}</div>
             </div>
         </div>
-        <div class="holders para">
-            <div class="linyanglinya"></div>
-            <div class="liness para">
-                <div class="date col-md-12">August 25, 2015</div>
-                <div class="text col-md-11">You earned Php 12.00 fro pairing bonus because John Doe created Slot #15</div>
-            </div>
-        </div>
-        <div class="holders para">
-            <div class="linyanglinya"></div>
-            <div class="liness para">
-                <div class="date col-md-12">August 25, 2015</div>
-                <div class="text col-md-11">You earned Php 12.00 fro pairing bonus because John Doe created Slot #15</div>
-            </div>
-        </div>
-        <div class="holders para">
-            <div class="linyanglinya"></div>
-            <div class="liness para">
-                <div class="date col-md-12">August 25, 2015</div>
-                <div class="text col-md-11">You earned Php 12.00 fro pairing bonus because John Doe created Slot #15</div>
-            </div>
-        </div>
+        @endforeach
         <a href="javascript:">
-            <button type="button">View More</button>
-        </a>
-    </div>
-    <div class="holder">
-        <div class="header">
-            <img src="/resources/assets/frontend/img/icon-news.png">
-            News & Announcements
-        </div>
-        <div class="holders para">
-            <div class="linyanglinya"></div>
-            <div class="liness para">
-                <div class="date col-md-12">August 25, 2015</div>
-                <div class="text col-md-11">You earned Php 12.00 fro pairing bonus because John Doe created Slot #15</div>
-            </div>
-        </div>
-        <div class="holders para">
-            <div class="linyanglinya"></div>
-            <div class="liness para">
-                <div class="date col-md-12">August 25, 2015</div>
-                <div class="text col-md-11">You earned Php 12.00 fro pairing bonus because John Doe created Slot #15</div>
-            </div>
-        </div>
-        <div class="holders para">
-            <div class="linyanglinya"></div>
-            <div class="liness para">
-                <div class="date col-md-12">August 25, 2015</div>
-                <div class="text col-md-11">You earned Php 12.00 fro pairing bonus because John Doe created Slot #15</div>
-            </div>
-        </div>
-        <div class="holders para">
-            <div class="linyanglinya"></div>
-            <div class="liness para">
-                <div class="date col-md-12">August 25, 2015</div>
-                <div class="text col-md-11">You earned Php 12.00 fro pairing bonus because John Doe created Slot #15</div>
-            </div>
-        </div>
-        <a href="javascript:">
-            <button type="button">View More</button>
+            <button type="button">View More Notifications</button>
         </a>
     </div>
     <div class="holder">
@@ -230,7 +207,6 @@
             Top Earner's of the Month
         </div>
         <div class="holders para">
-            <div class="linyanglinya"></div>
             <div class="liness para">
                 <div class="pix">
                     <img src="/resources/assets/frontend/img/pix.png">
@@ -248,7 +224,6 @@
             </div>
         </div>
         <div class="holders para">
-            <div class="linyanglinya"></div>
             <div class="liness para">
                 <div class="pix">
                     <img src="/resources/assets/frontend/img/pix.png">
@@ -266,7 +241,6 @@
             </div>
         </div>
         <div class="holders para">
-            <div class="linyanglinya"></div>
             <div class="liness para">
                 <div class="pix">
                     <img src="/resources/assets/frontend/img/pix.png">

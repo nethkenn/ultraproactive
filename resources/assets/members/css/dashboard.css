@@ -102,19 +102,23 @@
     font-family: "Open Sans";
     text-transform: uppercase;
     border-top-left-radius: 3px;
-    border-top-right-radius: 3px; }
+    border-top-right-radius: 3px;
+    padding: 20px !important; }
     .left .detail .header img {
       padding: 15px 30px 15px 0; }
   .left .detail .holder {
     background-color: #fff;
-    padding: 25px 0; }
+    padding: 25px 0;
+    border-radius: 3px;
+    margin-bottom: 0px; }
     .left .detail .holder .title {
       font-size: 16.67px;
       padding: 5px 10px;
       color: #fff !important;
       font-weight: bold;
       text-transform: uppercase;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
+      margin-top: 18px;
       background-color: #39BABA;
       display: inline-block;
       border-radius: 3px;
@@ -123,19 +127,36 @@
       margin-bottom: 10px; }
     .left .detail .holder .form-group {
       margin-left: 0 !important;
-      margin-right: 0 !important; }
+      margin-right: 0 !important;
+      margin-bottom: 0 !important; }
+      .left .detail .holder .form-group .highlight {
+        font-weight: bold;
+        color: #27ADA2 !important; }
       .left .detail .holder .form-group input[type="text"] {
         border: 0;
-        font-size: 14.58px;
+        font-size: 18px;
         color: #77818e;
         text-align: left;
         background-color: #fff;
-        box-shadow: none; }
+        box-shadow: none;
+        font-weight: bold; }
+      .left .detail .holder .form-group a {
+        border: 0;
+        font-size: 18px;
+        color: #39BABA;
+        text-align: left;
+        background-color: #fff;
+        box-shadow: none;
+        font-weight: bold;
+        display: block;
+        padding: 4px 10px; }
+      .left .detail .holder .form-group a:hover {
+        color: #2AA3A3; }
     .left .detail .holder label {
       color: #77818e;
       text-transform: uppercase;
-      font-weight: bold;
-      font-size: 12.5px;
+      font-weight: normal;
+      font-size: 16px;
       text-align: right; }
 
 .right .holder {
@@ -159,7 +180,8 @@
       border-bottom: 2px solid #e76356;
       border-left: 1px solid #e76356;
       border-right: 1px solid #e76356;
-      font-size: 14.58px; }
+      font-size: 14.58px;
+      width: 90%; }
     .right .holder a button:hover {
       background-color: #CE5B50; }
   .right .holder .holders {

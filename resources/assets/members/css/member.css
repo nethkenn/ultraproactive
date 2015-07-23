@@ -195,7 +195,8 @@ body {
         .wrapper .header-nav .navbar .shadow {
           display: none; } }
   .wrapper .content {
-    margin-top: 40px; }
+    margin-top: 40px;
+    padding-bottom: 40px; }
 
 .create-slot {
   border-top: 5px #f47265 solid;
