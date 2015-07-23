@@ -17,7 +17,7 @@ use App\Tbl_inventory_update_type;
 use Datatables;
 use Validator;
 use App\Tbl_tree_placement;
-use App\Classes\MLM;
+use App\Classes\Compute;
 
 class MemberCodeController extends MemberController
 {
@@ -93,27 +93,28 @@ class MemberCodeController extends MemberController
 		$return["message"] = "";
 		$data["message"] = "";
 		
-		// if(Request::input("account_id") == 0)
-		// {
-		// 	$data = $this->add_form_submit_new_account($data);
-		// 	$account_id = $data["account_id"];
-		// }
-		// else
-		// {
-		// 	$account_id = Request::input("account_id");
-		// }
-		$getslot = Tbl_slot::where('slot_id',$data['code_number'])->membership()->first();
+
+		$getslot = Tbl_membership_code::where('code_pin',$data['code_number'])->getmembership()->first();
 		$check_placement = Tbl_slot::checkposition(Request::input("placement"), strtolower(Request::input("slot_position")))->first();
 		$check_id = Tbl_slot::id(Request::input("slot_number"))->first();
 		$checkifowned = Tbl_account::where('tbl_account.account_id',Customer::id())->belongstothis()->get();
-		$checking = false;
 		$ifused = Tbl_membership_code::where('code_pin',$data['code_number'])->where('used',1)->first();
-
+		$checkslot = Tbl_slot::get();
+		$checking = false;
+		$checking2 = false;
 		foreach($checkifowned as $c)
 		{
 			if($c->code_pin == $data['code_number'])
 			{
 				$checking = true;
+			}
+		}
+
+		foreach($checkslot as $c)
+		{
+			if($c->slot_id == $data['sponsor'])
+			{
+				$checking2 = true;
 			}
 		}
 
@@ -131,7 +132,7 @@ class MemberCodeController extends MemberController
 		}
 		else
 		{
-			if($checking == true)
+			if($checking == true && $checking2 == true)
 			{
 				$insert["slot_membership"] =  $getslot->membership_id;
 				$insert["slot_type"] =  "PS";
@@ -149,8 +150,8 @@ class MemberCodeController extends MemberController
 				$insert["slot_total_earning"] =  0;
 				$insert["slot_owner"] =  Customer::id();
 				$slot_id = Tbl_slot::insertGetId($insert);
-				MLM::tree($slot_id);
-				MLM::binary($slot_id);
+				Compute::tree($slot_id);
+				Compute::binary($slot_id);
 				$return["placement"] = Request::input("placement");
 
 				Tbl_membership_code::where('code_pin',$data['code_number'])->update(['used'=>1]);
@@ -179,12 +180,7 @@ class MemberCodeController extends MemberController
         	$data['code'][$key]->transferer = $get->account_name;	
         	$data['code'][$key]->encrypt    = Crypt::encrypt($d->code_pin);									     
         }
-		$data['count']= DB::table('tbl_membership_code')->where('archived',0)->where('account_id','=',$id)->count();
-		
-		$data['allslot']= Tbl_slot::get();
-
-		$data['downline'] = Tbl_tree_placement::where('placement_tree_parent_id',Session::get('currentslot'))->get();
-
+		$data['count']= DB::table('tbl_membership_code')->where('archived',0)->where('account_id','=',$id)->count();		
 
 
 		return $data;
@@ -315,7 +311,6 @@ class MemberCodeController extends MemberController
 
 	}
 
-
 	public function check_code()
 	{
 
@@ -443,8 +438,19 @@ class MemberCodeController extends MemberController
 		{
 			$return["message"] = $data["message"];
 		}
-
-		
 		echo json_encode($return);
 	}
+
+	public function get()
+	{
+		$e = Tbl_tree_placement::where('placement_tree_parent_id',Request::input('slot'))->lists('placement_tree_child_id');
+		$r = json_encode($e);
+		$check = Tbl_slot::where('slot_id',Request::input('slot'))->first();
+		if($check == null)
+		{
+			$r = "x";
+		}
+		echo json_encode($r);
+	}
+
 }
