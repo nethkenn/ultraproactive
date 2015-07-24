@@ -432,7 +432,7 @@ label
 
 .panel-header
 {
-    margin-left: 10px;
+    
 }
 
 .panel-header-tab
@@ -613,4 +613,42 @@ label
 .admin-position
 {
 
+}
+
+.dashboard
+{
+    text-align: center;
+}
+.dashboard .panel-header
+{
+    padding: 0;
+}
+
+.dashboard .panel-header .panel-box
+{
+    background-color: #2a80b9;
+    color: white;
+    font-size: 18px;
+    padding: 30px 0;
+}
+
+.dashboard .panel-header .panel-box .fa
+{
+    font-size: 30px;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.dashboard .panel-header .panel-box span
+{
+    vertical-align: middle;
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.dashboard .panel-header .panel-box .panel-label
+{
+    margin-top: 15px;
+    font-weight: 400;
 }

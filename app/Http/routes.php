@@ -72,6 +72,18 @@ Route::post('admin/maintenance/accounts/restore', 'AdminAccountController@restor
 Route::any('admin/maintenance/accounts/field', 'AdminAccountController@field');
 Route::get('admin/maintenance/accounts/field/delete', 'AdminAccountController@field_delete');
 
+/* SERVICES MANAGEMENT */
+Route::get('admin/content/service', 'AdminServiceController@index');
+Route::get('admin/content/service/add', 'AdminServiceController@add');
+Route::any('admin/content/service/add_submit', 'AdminServiceController@add_submit');
+Route::get('admin/content/service/edit', 'AdminServiceController@edit');
+Route::any('admin/content/service/edit_submit', 'AdminServiceController@edit_submit');
+Route::any('admin/content/service/delete', 'AdminServiceController@delete');
+
+/* ABOUT MANAGEMENT */
+Route::get('admin/content/about/', 'AdminAboutController@index');
+Route::any('admin/content/about/submit', 'AdminAboutController@submit');
+
 /* PARTNER MANAGEMENT */
 Route::get('admin/content/partner', 'AdminPartnerController@index');
 Route::get('admin/content/partner/add', 'AdminPartnerController@add');

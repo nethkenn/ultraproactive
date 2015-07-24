@@ -31,6 +31,8 @@ class DatabaseSeeder extends Seeder
         $this->call('tbl_product');
         $this->call('tbl_news');
         $this->call('tbl_partner');
+        $this->call('tbl_about');
+        $this->call('tbl_service');
     }
 }
 
@@ -135,7 +137,8 @@ class tbl_module extends Seeder
     public function run()
     {
         DB::table('tbl_module')->delete();
-        DB::statement("INSERT INTO `tbl_module` (`module_id`, `module_name`, `url_segment`, `archived`) VALUES
+        DB::statement("
+        INSERT INTO `tbl_module` (`module_id`, `module_name`, `url_segment`, `archived`) VALUES
         (1, 'Transaction / Process Sale',   'sales',    0),
         (2, 'Transaction / Process Payout', 'payout',   0),
         (3, 'Transaction / Process Claims', 'claims',   0),
@@ -145,17 +148,17 @@ class tbl_module extends Seeder
         (7, 'Maintenance / Package',    'product_package',  0),
         (8, 'Maintenance / Product',    'product',  0),
         (9, 'Maintenance / Slots',  'slots',    0),
-        (10,    'Utilities / Admin',   'admin_maintenance',    0),
-        (11,    'Utilities / Admin Levels',    'position', 0),
-        (12,    'Utilities / Company Settings',    'setting',  0),
+        (10,    'Utilities / Admin',    'admin_maintenance',    0),
+        (11,    'Utilities / Admin Levels', 'position', 0),
+        (12,    'Utilities / Company Settings', 'setting',  0),
         (14,    'Reports / Product Sales Report',   'product_sales',    0),
         (15,    'Reports / Membership Sales Report',    'membership_sales', 0),
         (16,    'Maintenance / Product',    'country',  0),
         (17,    'Maintenance / Deduction',  'deduction',    0),
         (18,    'Maintenance / membership', 'membership',   0),
         (19,    'Maintenance / Ranking',    'ranking',  0),
-        (20,    'Maintenance / News',   'news', 0),
-        (21,    'Maintenance / Earn',   'earn', 0),
+        (20,    'Content / News',   'news', 0),
+        (21,    'Content / Earn',   'earn', 0),
         (22,    'Maintenance / Inventory',  'inventory',    0),
         (23,    'Utitlities / Computation Plan',    'complan',  0),
         (24,    'Maintenance / Slide',  'slide',    0),
@@ -164,9 +167,11 @@ class tbl_module extends Seeder
         (27,    'Maintenance / Partners',   'partner',  0),
         (28,    'Utilities / Binary',   'binary',  0),
         (29,    'Utilities / Direct Referral',   'direct',  0),
-        (31,    'Utilities / Matching Bonus',   'matching',  0),
-        (30,    'Utilities / Indirect Referral Bonus',   'indirect',  0);"
-        );
+        (30,    'Utilities / Matching Bonus',   'matching',  0),
+        (31,    'Utilities / Indirect Referral Bonus',   'indirect',  0),
+        (32,    'Utilities / Unilevel Computation',   'unilevel',  0),
+        (33,    'Content / Others', 'about',    0),
+        (34,    'Content / Services',   'service',  0);");
     } 
 }
 class tbl_team extends Seeder
@@ -253,8 +258,11 @@ class tbl_admin_position_has_module extends Seeder
         (49,    1,  27),
         (50,    1,  28),
         (51,    1,  29),
+        (52,    1,  30),
         (53,    1,  31),
-        (52,    1,  30);
+        (54,    1,  32),
+        (55,    1,  33),
+        (56,    1,  34)
         ");
     } 
 }
@@ -329,7 +337,7 @@ class tbl_news extends Seeder
         DB::table('tbl_news')->delete();
         DB::statement("INSERT INTO `tbl_news` (`news_id`, `news_title`, `news_description`, `news_date`, `news_image`, `archived`) VALUES
         (1, 'Green coffee extract', 'A green coffee extract is an extract of unroasted, green coffee beans. Green coffee extract has been used as a weight-loss supplement and as an ingredient in other weight-loss products. Its efficacy and mechanism of action have been the subject of controversy.\r\n\r\nThere is tentative evidence of benefit; however, the quality of the evidence is poor.[1] In 2014 one of the primary trials showing benefit was retracted and the company that sponsored the study, Applied Food Sciences, was fined by the Federal Trade Commission for making baseless weight-loss claims using the flawed study.[2]\r\n\r\nGreen coffee extract is sold under various proprietary brand names including Svetol, and is included in weight-loss products such as CoffeeSlender.[1]',  '2015-07-17 17:13:58',  '1437123725.png',   0),
-        (2, 'Chocolate is made of cocoa',   'The cocoa bean, also cacao bean[1] or simply cocoa is the dried and fully fermented fatty seed of Theobroma cacao, from which cocoa solids and cocoa butter are extracted.[2] They are the basis of chocolate, as well as many Mesoamerican foods such as mole sauce and tejate.\r\n\r\nA cocoa pod (fruit) has a rough and leathery rind about 2 cm (0.79 in) to 3 cm (1.2 in) thick (this varies with the origin and variety of pod). It is filled with sweet, mucilaginous pulp (called \'baba de cacao\' in South America) with a lemonade like taste enclosing 30 to 50 large seeds that are fairly soft and a pale lavender to dark brownish purple color. Due to heat buildup in the fermentation process, cacao beans lose most of the purplish hue and become mostly brown in color, with an adhered skin which includes the dried remains of the fruity pulp. This skin is released easily after roasting by winnowing. White seeds are found in some rare varieties, usually mixed with purples, and are considered of higher value.[3][4][5] Historically, white cacao was cultivated by the Rama people of Nicaragua.',   '2015-07-17 17:14:39',  '1437124031.jpg',   0);
+        (2, 'Chocolate is made of cocoa',   'The cocoa bean, also cacao bean[1] or simply cocoa is the dried and fully fermented fatty seed of Theobroma cacao, from which cocoa solids and cocoa butter are extracted.[2] They are the basis of chocolate, as well as many Mesoamerican foods such as mole sauce and tejate.\r\n\r\nA cocoa pod (fruit) has a rough and leathery rind about 2 cm (0.79 in) to 3 cm (1.2 in) thick (this varies with the origin and variety of pod). It is filled with sweet, mucilaginous pulp (called baba de cacao in South America) with a lemonade like taste enclosing 30 to 50 large seeds that are fairly soft and a pale lavender to dark brownish purple color. Due to heat buildup in the fermentation process, cacao beans lose most of the purplish hue and become mostly brown in color, with an adhered skin which includes the dried remains of the fruity pulp. This skin is released easily after roasting by winnowing. White seeds are found in some rare varieties, usually mixed with purples, and are considered of higher value.[3][4][5] Historically, white cacao was cultivated by the Rama people of Nicaragua.',   '2015-07-17 17:14:39',  '1437124031.jpg',   0);
         ");
     }
 }
@@ -352,5 +360,31 @@ class tbl_partner extends Seeder
     }
 }
 
+class tbl_about extends Seeder
+{
+    public function run()
+    {
+        DB::table('tbl_about')->delete();
+        DB::statement("INSERT INTO `tbl_about` (`about_id`, `about_name`, `about_description`, `created_at`, `updated_at`, `archived`) VALUES
+        (1, 'About',    'PROLIFE NWT is a company formed by Filipino professionals based in the United Arab Emirates. Bound together by a common goal, each with their own expertise, they have decided it’s about time that expatriates in the UAE will be given a free choice and be catered with all their needs. \r\n\r\nBy providing convenient e-services, the main aim is to help and alleviate the lives of expatriates around the globe. PROLIFE NWT envisions prosperity for all.\r\n\r\n PROLIFE NWT also promotes real estate investments, free entrepreneurships, encourages self development and offers a wide array of natural  skincare and healthcare products.',  '2015-07-24 03:33:54',  '2015-07-24 03:33:54',  0),
+        (2, 'Vision',   'Through high quality products, service excellence, continuous improvement and team work, we will be the leading e-commerce business worldwide',    '2015-07-24 03:33:54',  '2015-07-24 03:33:54',  0),
+        (3, 'Mission',  'To provide globally, the convenience of affordable on-line products and services, with the aim of encouraging free entrepreneurship for a better future of our members',   '2015-07-24 03:33:54',  '2015-07-24 03:33:54',  0),
+        (4, 'Philosophy',   'We do not only aim to expand our business in a global perspective but we will work collectively as a team to contribute to our society”\r\n“It is our intention to prosper hand in hand with our members, encouraging and motivating them to bring out their full potential and to drive them towards boundless opportunities.”</br>\r\n“We are the PROLIFE Family!',  '2015-07-24 03:33:54',  '2015-07-24 03:33:54',  0),
+        (5, 'Partners', 'Do you want to buy a house or a condo unit? Travel and relax in a city of your choice with airline discount? Or simply dine in a recommended restaurant? As a PROLIFE MEMBER, you are entitled for exclusive discounts and privileges. We have various partners from different industries like, real estate developers, medical centers, travel and tours, restaurants, hotels and many more. Just present your membership card and you can instantly avail from 10% to 50% discounts. Just click on our partner’s links for more details. \r\n\r\n*Subject to the terms and conditions of the affiliated partners',   '2015-07-24 03:33:54',  '2015-07-24 03:33:54',  0),
+        (6, 'Contact',  'Dummy Text Text',  '2015-07-24 03:33:54',  '2015-07-24 03:33:54',  0);
+        ");
+    }
+}
 
-
+class tbl_service extends Seeder
+{
+    public function run()
+    {
+        DB::table('tbl_service')->delete();
+        DB::statement("INSERT INTO `tbl_service` (`service_id`, `service_title`, `service_description`, `service_image`, `created_at`, `updated_at`, `archived`) VALUES
+        (1, 'E-Learning',   'Do you want to earn a certified degree? Do you want to boost your career? Do you want to develop a skill? PROLIFE e-learning provides you with an up-to-date training system that includes modules complete with certificates. Simply by enrolling on our online learning programs, you can avail of the latest educational know-how to jump-start your career. It is a complete package designed for busy working individuals.   PROLIFE E-LEARNING is a computer and network-enabled transfer of skills and knowledge. It includes web-based learning, virtual education opportunities and digital collaboration. Content is delivered to your portal account. It can be self-paced or instructor-led and includes media in the form of text, image, animation, streaming video and audio.', '1437710882.jpg',   '2015-07-24 04:09:10',  '2015-07-24 04:10:32',  0),
+        (2, 'E-Payment',    'The magic of technological advancements provides us comfort and ease of living. It’s what PROLIFE is offering with e-payments. Convenience! PROLIFE e-payment is the go-to service when it comes to on-line payments for your SSS, PAG-IBIG, Philhealth, Water and Electricity. Any time of the day.', '1437711080.jpg',   '2015-07-24 04:11:46',  '0000-00-00 00:00:00',  0),
+        (3, 'E-Remit',  'How many hours have your wasted on traffic to get to an exchange house or to a bank? Have you ever experienced waiting on long queues when transferring money? PROLIFE introduces , E-REMIT service. Now, you can conveniently transfer money electronically from anywhere. You can use that extra time in doing something better or enjoyable. PROLIFE has partnered with secure, fast and reliable money transfer entities to deliver your cash right at the doorsteps of your beneficiary. With PROLIFE E-REMIT, simply log in to your portal account, fill up the details and authorize the transfer. It is as easy as One…Two…Three… ',   '1437711154.jpg',   '2015-07-24 04:12:43',  '0000-00-00 00:00:00',  0);
+        ");
+    }
+}

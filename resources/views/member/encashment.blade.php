@@ -93,8 +93,8 @@
 <div class="remodal create-slot" data-remodal-id="encashment_history">
     <button data-remodal-action="close" class="remodal-close"></button>
     <div class="header">
-        Encashment History
         <img src="/resources/assets/frontend/img/icon-encashment.png">
+        Encashment History
     </div>
     <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
     <div class="col-md-12 para">

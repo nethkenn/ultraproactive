@@ -19,14 +19,7 @@
 							</div>
 							<div class="wpb_text_column wpb_content_element ">
 								<div class="wpb_wrapper">
-									<p style="word-break: keep-all !important; white-space: pre-wrap;">Do you want to buy a house or a condo unit? Travel and relax in a city of your choice with airline discount? Or simply dine in a recommended restaurant?
-As a PROLIFE MEMBER,  you are entitled for exclusive discounts and privileges.
-We have  various partners from different industries like, real estate developers, medical centers, travel and tours, restaurants, hotels and many more.
-Just present your membership card and you can instantly avail  from 10% to 50% discounts.
-Just click on our partner’s links for more details.
-
-*Subject to the terms and conditions of the affiliated partners
-									</p>
+									<p style="word-break: keep-all !important; white-space: pre-wrap;">{{ $partner->about_description }}</p>
 								</div>
 							</div>
 						</div>
@@ -34,7 +27,7 @@ Just click on our partner’s links for more details.
 				</div>
 			</div>
 		</div>
-		<div id="fws_556c48d32ea98" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="padding-top: 0px !important; padding-bottom: 80px !important; ">
+		<div id="fws_556c48d32ea98" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="padding-top: 0px !important; padding-bottom: 80px !important; background-color: #F6F6F6;">
             <div class="bg-overlay" style="background:rgba(, , , 0.5);z-index:1;"></div>
             <div class="container  dark">
                 <div class="section_clear">
