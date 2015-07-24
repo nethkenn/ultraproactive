@@ -36,7 +36,7 @@
                                 <div class="line_under below_line">
                                     <div class="line_center"></div>
                                 </div>
-                                <p class="description style_3">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor</p>
+                                <p class="description style_3">{{ $contact->about_description }}</p>
                             </div>
                         </div>
                     </div>

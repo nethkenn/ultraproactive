@@ -2,7 +2,7 @@
 @section('content')
     <div class="row header">
         <div class="title col-md-8">
-            <h2><i class="fa fa-rss"></i> Update About</h2>
+            <h2><i class="fa fa-rss"></i> Others</h2>
         </div>
         <div class="buttons col-md-4 text-right">
             <button onclick="$('#country-add-form').submit();" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Update</button>

@@ -110,7 +110,8 @@
 									<li><a href="admin/content/team">Team</a></li>
 									<li><a href="admin/content/testimony">Testimonial</a></li>
 									<li><a href="admin/content/partner">Partners</a></li>
-									<li><a href="admin/content/about">About</a></li>
+									<li><a href="admin/content/service">Services</a></li>
+									<li><a href="admin/content/about">Others</a></li>
 								</ul>
 							</li>
 						</ul>

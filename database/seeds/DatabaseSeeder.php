@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
         $this->call('tbl_news');
         $this->call('tbl_partner');
         $this->call('tbl_about');
+        $this->call('tbl_service');
     }
 }
 
@@ -167,7 +168,8 @@ class tbl_module extends Seeder
         (28,    'Utilities / Binary',   'binary',   0),
         (29,    'Utilities / Direct Referral',  'direct',   0),
         (30,    'Utilities / Indirect Referral Bonus',  'indirect', 0),
-        (31,    'Content / About',  'about',    0);
+        (31,    'Content / Others', 'about',    0),
+        (32,    'Content / Services',   'service',  0);
         ");
     } 
 }
@@ -256,7 +258,8 @@ class tbl_admin_position_has_module extends Seeder
         (50,    1,  28),
         (51,    1,  29),
         (52,    1,  30),
-        (53,    1,  31);
+        (53,    1,  31),
+        (55,    1,  32);
         ");
     } 
 }
@@ -360,10 +363,25 @@ class tbl_about extends Seeder
     {
         DB::table('tbl_about')->delete();
         DB::statement("INSERT INTO `tbl_about` (`about_id`, `about_name`, `about_description`, `created_at`, `updated_at`, `archived`) VALUES
-        (1, 'About',    '', '2015-07-24 03:06:25',  '2015-07-24 03:06:25',  0),
-        (2, 'Vision',   '', '2015-07-24 03:06:25',  '2015-07-24 03:06:25',  0),
-        (3, 'Mission',  '\r\n', '2015-07-24 03:06:25',  '2015-07-24 03:06:25',  0),
-        (4, 'Philosophy',   '', '0000-00-00 00:00:00',  '0000-00-00 00:00:00',  0);
+        (1, 'About',    'PROLIFE NWT is a company formed by Filipino professionals based in the United Arab Emirates. Bound together by a common goal, each with their own expertise, they have decided it’s about time that expatriates in the UAE will be given a free choice and be catered with all their needs. \r\n\r\nBy providing convenient e-services, the main aim is to help and alleviate the lives of expatriates around the globe. PROLIFE NWT envisions prosperity for all.\r\n\r\n PROLIFE NWT also promotes real estate investments, free entrepreneurships, encourages self development and offers a wide array of natural  skincare and healthcare products.',  '2015-07-24 03:33:54',  '2015-07-24 03:33:54',  0),
+        (2, 'Vision',   'Through high quality products, service excellence, continuous improvement and team work, we will be the leading e-commerce business worldwide',    '2015-07-24 03:33:54',  '2015-07-24 03:33:54',  0),
+        (3, 'Mission',  'To provide globally, the convenience of affordable on-line products and services, with the aim of encouraging free entrepreneurship for a better future of our members',   '2015-07-24 03:33:54',  '2015-07-24 03:33:54',  0),
+        (4, 'Philosophy',   'We do not only aim to expand our business in a global perspective but we will work collectively as a team to contribute to our society”\r\n“It is our intention to prosper hand in hand with our members, encouraging and motivating them to bring out their full potential and to drive them towards boundless opportunities.”</br>\r\n“We are the PROLIFE Family!',  '2015-07-24 03:33:54',  '2015-07-24 03:33:54',  0),
+        (5, 'Partners', 'Do you want to buy a house or a condo unit? Travel and relax in a city of your choice with airline discount? Or simply dine in a recommended restaurant? As a PROLIFE MEMBER, you are entitled for exclusive discounts and privileges. We have various partners from different industries like, real estate developers, medical centers, travel and tours, restaurants, hotels and many more. Just present your membership card and you can instantly avail from 10% to 50% discounts. Just click on our partner’s links for more details. \r\n\r\n*Subject to the terms and conditions of the affiliated partners',   '2015-07-24 03:33:54',  '2015-07-24 03:33:54',  0),
+        (6, 'Contact',  'Dummy Text Text',  '2015-07-24 03:33:54',  '2015-07-24 03:33:54',  0);
+        ");
+    }
+}
+
+class tbl_service extends Seeder
+{
+    public function run()
+    {
+        DB::table('tbl_service')->delete();
+        DB::statement("INSERT INTO `tbl_service` (`service_id`, `service_title`, `service_description`, `service_image`, `created_at`, `updated_at`, `archived`) VALUES
+        (1, 'E-Learning',   'Do you want to earn a certified degree? Do you want to boost your career? Do you want to develop a skill? PROLIFE e-learning provides you with an up-to-date training system that includes modules complete with certificates. Simply by enrolling on our online learning programs, you can avail of the latest educational know-how to jump-start your career. It is a complete package designed for busy working individuals.   PROLIFE E-LEARNING is a computer and network-enabled transfer of skills and knowledge. It includes web-based learning, virtual education opportunities and digital collaboration. Content is delivered to your portal account. It can be self-paced or instructor-led and includes media in the form of text, image, animation, streaming video and audio.', '1437710882.jpg',   '2015-07-24 04:09:10',  '2015-07-24 04:10:32',  0),
+        (2, 'E-Payment',    'The magic of technological advancements provides us comfort and ease of living. It’s what PROLIFE is offering with e-payments. Convenience! PROLIFE e-payment is the go-to service when it comes to on-line payments for your SSS, PAG-IBIG, Philhealth, Water and Electricity. Any time of the day.', '1437711080.jpg',   '2015-07-24 04:11:46',  '0000-00-00 00:00:00',  0),
+        (3, 'E-Remit',  'How many hours have your wasted on traffic to get to an exchange house or to a bank? Have you ever experienced waiting on long queues when transferring money? PROLIFE introduces , E-REMIT service. Now, you can conveniently transfer money electronically from anywhere. You can use that extra time in doing something better or enjoyable. PROLIFE has partnered with secure, fast and reliable money transfer entities to deliver your cash right at the doorsteps of your beneficiary. With PROLIFE E-REMIT, simply log in to your portal account, fill up the details and authorize the transfer. It is as easy as One…Two…Three… ',   '1437711154.jpg',   '2015-07-24 04:12:43',  '0000-00-00 00:00:00',  0);
         ");
     }
 }
