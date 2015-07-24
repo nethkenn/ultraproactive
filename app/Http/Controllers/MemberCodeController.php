@@ -205,6 +205,7 @@ class MemberCodeController extends MemberController
 
 			else if($pin->code_activation == $data['activation'])
 			{
+
 				$getId = DB::table('tbl_membership_code')->where('code_pin','=',$data['pin'])->first();
 				DB::table('tbl_membership_code')->where('code_pin','=',$data['pin'])->update(['account_id'=>$id]);
 				$getName = DB::table('tbl_account')->where('account_id',$id)->first();
@@ -216,7 +217,8 @@ class MemberCodeController extends MemberController
 				$pint = $data['pin'];
 				$fromname = DB::table('tbl_account')->where('account_id',$getId->account_id)->first();
 				DB::table("tbl_member_code_history")->insert($insert);
-				Log::account(Customer::id(),"You claimed membership code from $fromname->account_name  (Pin #$pint))");
+				Log::account(Customer::id(),"$getName->account_name claimed a membership code from $fromname->account_name  (Pin #$pint))");
+				// Log::account($fromname->account_id,"$getName->account_name claimed your membership code (Pin #$pint))");
 			}
 			else
 			{
@@ -396,7 +398,9 @@ class MemberCodeController extends MemberController
 									DB::table("tbl_member_code_history")->insert($insert);
 									Tbl_slot::where('slot_id',Session::get('currentslot'))->update(['slot_wallet'=>$total]);
 									$message['success'] = "Successfully bought.";
-									Log::account(Customer::id(),"Bought a membership code (Pin #$membership_code->code_pin)");
+									Log::account(Customer::id(),"$n->account_name bought a membership code (Pin #$membership_code->code_pin)");
+									$c = Tbl_membership_code::where('code_pin',$membership_code->code_pin)->getmembership()->first();
+									DB::table('tbl_membership_sales')->insert(['code_pin'=>$c->code_pin,'payment'=>$c->membership_price,'created_at'=>Carbon::now()]);
 									return $message;
 								}
 							}

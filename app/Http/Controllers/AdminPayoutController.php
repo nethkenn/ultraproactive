@@ -7,27 +7,69 @@ use Datatables;
 use Crypt;
 use App\Tbl_account_encashment_history;
 use App\Classes\Admin;
-
+use Config;
 class AdminPayoutController extends AdminController
 {
 	public function index()
 	{
 		$data["page"] = "Process Payout"; 
-        return view('admin.transaction.payout');
-	}
 
-	public function data()
-    {
-    	$account = Tbl_account_encashment_history::where('status','Pending')->account()->get();
 
-        foreach($account as $key => $a)
+
+        if(isset($_POST['processall']))
         {
-            $account[$key]->total = $a->amount - $a->deduction;
+            dd();
         }
 
-        // $account = Tbl_account::select('*')->where('tbl_account.archived', Request::input('archived'))->leftJoin("tbl_country","tbl_account.account_country_id", "=", "tbl_country.country_id");
-        return Datatables::of($account)	->addColumn('Breakdown','<a href="javascript:">Breakdown</a>')
-        								->addColumn('Process','<a href="javascript:" class="showmodal-p">Process</a>')
-        								->make(true);
+
+
+        if(Request::input('processed') == 1)
+        {
+            $request = 'Processed';
+        }
+        else
+        {
+            $request = 'Pending';
+        }
+
+        $account = Tbl_account_encashment_history::selectRaw('tbl_account_encashment_history.account_id, sum(amount) as sum')
+                                                ->account()
+                                                ->selectRaw('tbl_account.account_name, tbl_account.account_name')
+                                                ->selectRaw('tbl_account_encashment_history.account_id, sum(deduction) as deduction')
+                                                ->selectRaw('count(*) as count, slot_id')
+                                                ->selectRaw('tbl_account_encashment_history.account_id, tbl_account_encashment_history.account_id')
+                                                ->selectRaw('type, type')
+                                                ->where('status',$request)
+                                                ->groupBy('account_id')
+                                                ->groupBy('type')
+                                                ->get();  
+
+            foreach($account as $key => $a)
+            {
+                if(!isset($account[$key]->total))
+                {
+                    $account[$key]->total = $this->currency_format(($a->sum - $a->deduction)); 
+                }
+                else
+                {
+                    $account[$key]->total =  $this->currency_format(($account[$key]->total + $a->sum) - $a->deduction); 
+                }
+                 $account[$key]->sum =  $this->currency_format($a->sum);
+                 $account[$key]->deduction = $this->currency_format($a->deduction);
+                 $account[$key]->json = json_encode(Tbl_account_encashment_history::where('account_id',$a->account_id)->where('status','Pending')->where('type',$a->type)->get());
+                 $d  = Tbl_account_encashment_history::where('account_id',$a->account_id)->orderBy('encashment_date','DESC')->where('status','Pending')->where('type',$a->type)->first();
+                 $account[$key]->date = $d->encashment_date;   
+            }
+        $data['data'] = $account;   
+
+        return view('admin.transaction.payout',$data);
+	}
+
+
+
+    public static function currency_format($price)
+    {
+        $currency = Config::get('app.currency');
+        return number_format($price, 2);
     }
 }
