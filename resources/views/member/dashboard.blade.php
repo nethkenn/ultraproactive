@@ -187,24 +187,38 @@
     @endif
 </div>
 <div class="col-md-5 right">
+    <!-- NOTIFICATIONS -->
     <div class="holder">
         <div class="header">
             <img src="/resources/assets/frontend/img/icon-notification.png">
             Latest Notification
         </div>
-        @foreach($_notification as $log)
-        <div class="holders para">
-            <div class="linyanglinya"></div>
-            <div class="liness para">
-                <div class="date col-md-12">{{ $log->date }}</div>
-                <div class="text col-md-11">{!! $log->account_log_details !!}</div>
+        @if($_notification)
+            @foreach($_notification as $log)
+            <div class="holders para">
+                <div class="linyanglinya"></div>
+                <div class="liness para">
+                    <div class="date col-md-12">{{ $log->date }}</div>
+                    <div class="text col-md-11">{!! $log->account_log_details !!}</div>
+                </div>
             </div>
-        </div>
-        @endforeach
-        <a href="javascript:">
-            <button type="button">View More Notifications</button>
-        </a>
+            @endforeach
+            <a href="javascript:">
+                <button type="button">View All Notification(s)</button>
+            </a>
+        @else
+            <div class="holders para">
+                <div class="linyanglinya"></div>
+                <div class="liness para">
+                    <div class="date col-md-12">{{ date('F d, Y') }}</div>
+                    <div class="text col-md-11">You don't have any notifications yet.</div>
+                </div>
+            </div>
+        @endif
+
     </div>
+
+    <!-- TOP EARNERS OF THE MONTH -->
     <div class="holder">
         <div class="header">
             <img src="/resources/assets/frontend/img/icon-earner.png">
