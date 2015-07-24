@@ -234,7 +234,8 @@ body {
     color: #778192;
     padding: 10px 35px;
     margin: 10px 0;
-    font-weight: 600; }
+    font-weight: 600;
+    border-radius: 5px; }
   .create-slot .orange-btn {
     background-color: #f47265;
     color: white;

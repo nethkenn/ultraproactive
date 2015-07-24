@@ -81,7 +81,7 @@
             <div class="form-group para">
                 <label for="a1" class="col-sm-3 control-label">Wallet</label>
                 <div class="col-sm-9">
-                    <input type="text" value="Slot #8" class="form-control" id="a1" value="{{$slot->slot_wallet}}" readonly>
+                    <input type="text" class="form-control" id="a1" value="{{$slot->slot_wallet}}" readonly>
                 </div>
             </div>
             <div class="form-group para">
@@ -123,7 +123,8 @@
         </form>
     </div>
     <br>
-    <button class="checkawt button" data-remodal-action="confirm">Submit Checkout</button>
+    <button id="cancel-checkout" class="button">Cancel</button>
+    <button type="submit" class="checkawt button" id="submit-checkout">Submit Checkout</button>
 </form>
 
 

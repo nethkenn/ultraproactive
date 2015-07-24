@@ -81,7 +81,10 @@ class FrontController extends Controller
 			$litrato = Image::view($kuha, "415x415");
 			$data["_team"][$susi]->image = $litrato;
 		}
-
+		$data["about"] = DB::table("tbl_about")->where("archived", 0)->where("about_name", "About")->first();
+		$data["vision"] = DB::table("tbl_about")->where("archived", 0)->where("about_name", "Vision")->first();
+		$data["mission"] = DB::table("tbl_about")->where("archived", 0)->where("about_name", "Mission")->first();
+		$data["philosophy"] = DB::table("tbl_about")->where("archived", 0)->where("about_name", "philosophy")->first();
         return view('front.about', $data);
 	}
 	public function partner()

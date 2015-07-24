@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
         $this->call('tbl_product');
         $this->call('tbl_news');
         $this->call('tbl_partner');
+        $this->call('tbl_about');
     }
 }
 
@@ -135,7 +136,8 @@ class tbl_module extends Seeder
     public function run()
     {
         DB::table('tbl_module')->delete();
-        DB::statement("INSERT INTO `tbl_module` (`module_id`, `module_name`, `url_segment`, `archived`) VALUES
+        DB::statement("
+        INSERT INTO `tbl_module` (`module_id`, `module_name`, `url_segment`, `archived`) VALUES
         (1, 'Transaction / Process Sale',   'sales',    0),
         (2, 'Transaction / Process Payout', 'payout',   0),
         (3, 'Transaction / Process Claims', 'claims',   0),
@@ -145,27 +147,28 @@ class tbl_module extends Seeder
         (7, 'Maintenance / Package',    'product_package',  0),
         (8, 'Maintenance / Product',    'product',  0),
         (9, 'Maintenance / Slots',  'slots',    0),
-        (10,    'Utilities / Admin',   'admin_maintenance',    0),
-        (11,    'Utilities / Admin Levels',    'position', 0),
-        (12,    'Utilities / Company Settings',    'setting',  0),
+        (10,    'Utilities / Admin',    'admin_maintenance',    0),
+        (11,    'Utilities / Admin Levels', 'position', 0),
+        (12,    'Utilities / Company Settings', 'setting',  0),
         (14,    'Reports / Product Sales Report',   'product_sales',    0),
         (15,    'Reports / Membership Sales Report',    'membership_sales', 0),
         (16,    'Maintenance / Product',    'country',  0),
         (17,    'Maintenance / Deduction',  'deduction',    0),
         (18,    'Maintenance / membership', 'membership',   0),
         (19,    'Maintenance / Ranking',    'ranking',  0),
-        (20,    'Maintenance / News',   'news', 0),
-        (21,    'Maintenance / Earn',   'earn', 0),
+        (20,    'Content / News',   'news', 0),
+        (21,    'Content / Earn',   'earn', 0),
         (22,    'Maintenance / Inventory',  'inventory',    0),
         (23,    'Utitlities / Computation Plan',    'complan',  0),
-        (24,    'Maintenance / Slide',  'slide',    0),
-        (25,    'Maintenance / Team',   'team', 0),
-        (26,    'Maintenance / Testimonial',    'testimony',    0),
-        (27,    'Maintenance / Partners',   'partner',  0),
-        (28,    'Utilities / Binary',   'binary',  0),
-        (29,    'Utilities / Direct Referral',   'direct',  0),
-        (30,    'Utilities / Indirect Referral Bonus',   'indirect',  0);"
-        );
+        (24,    'Content / Slide',  'slide',    0),
+        (25,    'Content / Team',   'team', 0),
+        (26,    'Content / Testimonial',    'testimony',    0),
+        (27,    'Content / Partners',   'partner',  0),
+        (28,    'Utilities / Binary',   'binary',   0),
+        (29,    'Utilities / Direct Referral',  'direct',   0),
+        (30,    'Utilities / Indirect Referral Bonus',  'indirect', 0),
+        (31,    'Content / About',  'about',    0);
+        ");
     } 
 }
 class tbl_team extends Seeder
@@ -252,7 +255,8 @@ class tbl_admin_position_has_module extends Seeder
         (49,    1,  27),
         (50,    1,  28),
         (51,    1,  29),
-        (52,    1,  30);
+        (52,    1,  30),
+        (53,    1,  31);
         ");
     } 
 }
@@ -350,5 +354,16 @@ class tbl_partner extends Seeder
     }
 }
 
-
-
+class tbl_about extends Seeder
+{
+    public function run()
+    {
+        DB::table('tbl_about')->delete();
+        DB::statement("INSERT INTO `tbl_about` (`about_id`, `about_name`, `about_description`, `created_at`, `updated_at`, `archived`) VALUES
+        (1, 'About',    '', '2015-07-24 03:06:25',  '2015-07-24 03:06:25',  0),
+        (2, 'Vision',   '', '2015-07-24 03:06:25',  '2015-07-24 03:06:25',  0),
+        (3, 'Mission',  '\r\n', '2015-07-24 03:06:25',  '2015-07-24 03:06:25',  0),
+        (4, 'Philosophy',   '', '0000-00-00 00:00:00',  '0000-00-00 00:00:00',  0);
+        ");
+    }
+}
