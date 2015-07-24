@@ -34,7 +34,7 @@
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 	</head>
-	<body>
+	<body style="overflow: scroll">
 		<div class="container">
 			<nav class="navbar navbar-default">
 				<div class="container-fluid">
@@ -90,6 +90,10 @@
 									<li><a href="admin/utilities/setting">Company Settings</a></li>
 									<li class="divider" role="separator"></li>
 									<li><a href="admin/utilities/binary">Binary Computation</a></li>
+									<li><a href="admin/utilities/matching">Matching Bonus Computation</a></li>
+									<li><a href="admin/utilities/direct">Direct Sponsorship Bonus</a></li>
+									<li><a href="admin/utilities/indirect">Indirect Sponsorship Bonus</a></li>
+									<li><a href="admin/utilities/unilevel">Unilevel Computation</a></li>
 								</ul>
 							</li>
 							<!-- REPORTS -->

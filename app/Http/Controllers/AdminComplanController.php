@@ -4,6 +4,7 @@ use Redirect;
 use App\Tbl_membership;
 use App\Tbl_binary_pairing;
 use App\Tbl_product;
+use App\Tbl_indirect_setting;
 
 class AdminComplanController extends AdminController
 {
@@ -67,7 +68,6 @@ class AdminComplanController extends AdminController
 			$data["data"] = Tbl_membership::where("membership_id", Request::input("id"))->first();
 			return view('admin.computation.binary_membership_edit', $data);	
 		}
-
 	}
 	public function binary_product_edit()
 	{
@@ -82,5 +82,89 @@ class AdminComplanController extends AdminController
 			$data["data"] = Tbl_product::where("product_id", Request::input("id"))->first();
 			return view('admin.computation.binary_product_edit', $data);
 		}	
+	}
+
+	public function direct()
+	{
+		$data["_membership"] = Tbl_membership::active()->entry()->get();
+		$data["_pairing"] = Tbl_binary_pairing::get();
+		$data["_product"] = Tbl_product::active()->get();
+		return view('admin.computation.direct', $data);
+	}
+	public function direct_edit()
+	{
+		if(Request::isMethod("post"))
+		{
+			$update["membership_direct_sponsorship_bonus"] = Request::input("membership_direct_sponsorship_bonus");
+			Tbl_membership::where("membership_id", Request::input("id"))->update($update);
+			return Redirect::to('/admin/utilities/direct');
+		}
+		else
+		{
+			$data["data"] = Tbl_membership::where("membership_id", Request::input("id"))->first();
+			return view('admin.computation.direct_edit', $data);	
+		}
+	}
+	public function indirect()
+	{
+		$data["_membership"] = Tbl_membership::active()->entry()->get();
+		$data["_pairing"] = Tbl_binary_pairing::get();
+		$data["_product"] = Tbl_product::active()->get();
+		return view('admin.computation.indirect', $data);
+	}
+	public function indirect_edit()
+	{
+		if(Request::isMethod("post"))
+		{
+			$update["membership_indirect_level"] = Request::input("membership_indirect_level");
+			Tbl_membership::where("membership_id", Request::input("id"))->update($update);
+
+			$ctr = 0;
+			Tbl_indirect_setting::where("membership_id", Request::input("id"))->delete();
+			foreach(Request::input("level") as $level => $value)
+			{
+				$insert[$ctr]["level"] = $level;
+				$insert[$ctr]["value"] = $value;
+				$insert[$ctr]["membership_id"] = Request::input("id");
+				$ctr++;
+			}
+			Tbl_indirect_setting::insert($insert);
+
+			return Redirect::to('/admin/utilities/indirect');
+		}
+		else
+		{
+			$data["data"] = Tbl_membership::where("membership_id", Request::input("id"))->first();
+			$data["_level"] = Tbl_indirect_setting::where("membership_id", Request::input("id"))->get();
+			return view('admin.computation.indirect_edit', $data);	
+		}
+	}
+	public function matching()
+	{
+		$data["_membership"] = Tbl_membership::active()->entry()->get();
+		$data["_pairing"] = Tbl_binary_pairing::get();
+		$data["_product"] = Tbl_product::active()->get();
+		return view('admin.computation.matching', $data);
+	}
+	public function matching_edit()
+	{
+		if(Request::isMethod("post"))
+		{
+			$update["membership_matching_bonus"] = Request::input("membership_matching_bonus");
+			Tbl_membership::where("membership_id", Request::input("id"))->update($update);
+			return Redirect::to('/admin/utilities/matching');
+		}
+		else
+		{
+			$data["data"] = Tbl_membership::where("membership_id", Request::input("id"))->first();
+			return view('admin.computation.matching_edit', $data);	
+		}
+	}
+	public function unilevel()
+	{
+		$data["_membership"] = Tbl_membership::active()->entry()->get();
+		$data["_pairing"] = Tbl_binary_pairing::get();
+		$data["_product"] = Tbl_product::active()->get();
+		return view('admin.computation.unilevel', $data);
 	}
 }

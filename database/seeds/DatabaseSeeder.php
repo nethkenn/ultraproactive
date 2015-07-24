@@ -164,6 +164,7 @@ class tbl_module extends Seeder
         (27,    'Maintenance / Partners',   'partner',  0),
         (28,    'Utilities / Binary',   'binary',  0),
         (29,    'Utilities / Direct Referral',   'direct',  0),
+        (31,    'Utilities / Matching Bonus',   'matching',  0),
         (30,    'Utilities / Indirect Referral Bonus',   'indirect',  0);"
         );
     } 
@@ -252,6 +253,7 @@ class tbl_admin_position_has_module extends Seeder
         (49,    1,  27),
         (50,    1,  28),
         (51,    1,  29),
+        (53,    1,  31),
         (52,    1,  30);
         ");
     } 
