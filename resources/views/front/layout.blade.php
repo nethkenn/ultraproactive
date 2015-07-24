@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <html lang="en-US" class="css3transitions">
-
-
-<!-- Mirrored from newthemes.themeple.co/ausart_html/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 30 Jun 2015 10:28:03 GMT -->
 <head>
     <meta charset="UTF-8" />
     <base href="{{URL::to('/')}}">
@@ -68,6 +65,16 @@
     <script type='text/javascript' src='/resources/assets/ausart/assets/js/jquery.carouFredSel-6.1.0-packed.js'></script>
     <script type='text/javascript' src='/resources/assets/ausart/assets/js/tooltip.js'></script>
     <!--[if IE 8]><link rel="stylesheet" type="text/css" href="http://newthemes.themeple.co/ausart//resources/assets/ausart/assets/plugins/js_composer//resources/assets/ausart/assets/css/vc-ie8.css" media="screen"><![endif]-->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-65562848-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
 </head>
 <!-- End of Header -->
 
@@ -289,9 +296,16 @@
     <script type='text/javascript' src='/resources/assets/ausart/assets/includes/js/jquery/ui/core.min.js'></script>
     <script type='text/javascript' src='/resources/assets/ausart/assets/includes/js/jquery/ui/widget.min.js'></script>
     <script type='text/javascript' src='/resources/assets/ausart/assets/includes/js/jquery/ui/accordion.min.js'></script>
-
 </body>
-
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-KQRVHV"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KQRVHV');</script>
+<!-- End Google Tag Manager -->
 
 
 </html>

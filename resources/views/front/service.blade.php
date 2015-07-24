@@ -145,7 +145,7 @@
                 </div>
             </div>
             @foreach($_service as $service)
-            <div id="fws_556c48d32ea98" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="padding-top: 80px !important; padding-bottom: 80px !important; ">
+            <div id="fws_556c48d32ea98" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="padding-top: 80px !important; padding-bottom: 80px !important; background-color: #F6F6F6; ">
                 <div class="bg-overlay" style="background:rgba(, , , 0.5);z-index:1;"></div>
                 <div class="container  dark">
                     <div class="section_clear">
