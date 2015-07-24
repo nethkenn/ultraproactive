@@ -354,34 +354,6 @@
     </div>
 </div>-->
 
-<div class="remodal create-slot" data-remodal-id="add_lead" data-remodal-options="hashTracking: false">
-    <button data-remodal-action="close" class="remodal-close"></button>
-    <div class="header">
-        <img src="/resources/assets/frontend/img/icon-plis.png">
-        Add Leads
-    </div>
-    <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
-    <div class="col-md-10 col-md-offset-1 para">
-        <form class="form-horizontal" method="POST">
-            <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
-            <div class="form-group para">
-                <label for="una" class="col-sm-3 control-label">Name</label>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control" id="una" name="name">
-                </div>
-            </div>
-            <div class="form-group para">
-                <label for="pangalawa" class="col-sm-3 control-label">Email</label>
-                <div class="col-sm-9">
-                    <input type="email" class="form-control" id="pangalawa" name="email">
-                </div>
-            </div>
-    </div>
-    <br>
-    <button class="button" type="button" data-remodal-action="cancel">Cancel</button>
-    <button class="button" type="submit" name="addlead">Add Lead</button>
-    </form>
-</div>
 
 <div class="remodal message" data-remodal-id="message">
     <button data-remodal-action="close" class="remodal-close"></button>

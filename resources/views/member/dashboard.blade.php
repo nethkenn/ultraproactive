@@ -215,7 +215,6 @@
                 </div>
             </div>
         @endif
-
     </div>
 
     <!-- TOP EARNERS OF THE MONTH -->

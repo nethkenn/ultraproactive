@@ -1,111 +1,78 @@
 
-var payout = new accountJs();
-
+var payout = new payout();
+var breakdown = null;
 
 function payout()
 {
 	$(document).ready(function()
 	{
 		
-		
-	    $accountTable.on( 'draw.dt', function () {
-			init_archive_account();
-			init_restore_account();
-		})
+
+		initialize();
 
 
 	});
 
-	function init_archive_account()
+	function initialize()
 	{
-		$('.archive-account').on('click', function(e)
-		{
-			e.preventDefault();
-			var token = $('input[name="_token"]').val();
-			var id = $(this).attr('account-id');
+       $('.processor').on('click', '.showmodal-p', function()
+       {
+			var inst = $('[data-remodal-id=process]').remodal();
+          	inst.open(); 
+       });
 
-			// console.log(token + ' =  '+ id );
-			var selected_account = $(this);
+       $('.processor').on('click', '.showmodal-b', function()
+       {
+			var inst = $('[data-remodal-id=breakdown]').remodal();
+          	inst.open(); 
+          	breakdown = jQuery.parseJSON($(this).attr('json'));
+          	showbreakdown();
+       });
 
-			// console.log(token, id);
-			$.ajax(
-			{
-			    url: "admin/maintenance/accounts/archive",
-			 
-			    data: {
-			        id: id,
-			        _token: token
-			    },
-		
-			    type: "post",
-			 
-			    dataType : "json",
-
-			    success: function( data ) {
-			    	if( data['query']==1 )
-			    	{
-			    		$accountTable.draw();
-			    	}
-			    	// console.log(data['query']);
-			    },
-
-			    error: function( xhr, status, errorThrown ) {
-			         alert( "Sorry, there was a problem!"+errorThrown );
-			        // console.log( "Error: " + errorThrown );
-			        // console.log( "Status: " + status );
-			        // console.dir( xhr );
-			    },
-	
-			    complete: function( xhr, status ) {
-			        // alert( "The request is complete!" );
-			    }
-			});
-		});
+       $("#processall").click(function(){
+       		var inst = $('[data-remodal-id=processall]').remodal();
+          	inst.open(); 
+       });
 	}
 
-
-	function init_restore_account()
+	function showbreakdown()
 	{
-		$('.restore-account').on('click', function(e)
-		{
-			e.preventDefault();
-			var token = $('input[name="_token"]').val();
-			var id = $(this).attr('account-id');
-			var selected_account = $(this);
+			var overall = 0;
+			var str="";
+			$(".break").empty();
+			$.each(breakdown, function( key, value ) 
+            {
+	            var slot = value.slot_id;
+                var amount = value.amount;
+                var deduction = value.deduction;
+                var total = parseInt(amount) - parseInt(deduction);
+                overall  = (parseInt(overall) + parseInt(amount)) - parseInt(deduction);
 
-			// console.log(token, id);
-			$.ajax(
-			{
-			    url: "admin/maintenance/accounts/restore",
-			 
-			    data: {
-			        id: id,
-			        _token: token
-			    },
-		
-			    type: "post",
-			 
-			    dataType : "json",
+                 str =  str + 
+                 			'<tr class="text-center">'+
+                            '<td>'+slot+'</td>'+
+                            '<td>'+currency_format(amount)+'</td>'+
+                            '<td>'+currency_format(deduction)+'</td>'+
+                            '<td>'+currency_format(total)+'</td>'+
+                        '</tr>';     
+            }); 
 
-			    success: function( data ) {
-			    	if( data['query']==1 )
-			    	{
-			    		$accountTable.draw();
-			    	}
-			    	// console.log(data['query']);
-			    },
-
-			    error: function( xhr, status, errorThrown ) {
-			        alert( "Sorry, there was a problem!"+errorThrown );
-			        // console.log( "Error: " + errorThrown );
-			        // console.log( "Status: " + status );
-			        // console.dir( xhr );
-			    },
-	
-			    complete: function( xhr, status ) {
-			        // alert( "The request is complete!" );
-			    }
-			});
-		});
+				$("#totalcontainer").text(currency_format(overall));
+                $(".break").append(str); 
 	}
+
+	function currency_format($price)
+	{
+		Amount = $price;
+		var DecimalSeparator = Number("1.2").toLocaleString().substr(1,1);
+
+		var AmountWithCommas = Amount.toLocaleString();
+		var arParts = String(AmountWithCommas).split(DecimalSeparator);
+		var intPart = arParts[0];
+		var decPart = (arParts.length > 1 ? arParts[1] : '');
+		decPart = (decPart + '00').substr(0,2);
+
+		return  intPart + DecimalSeparator + decPart;
+	}
+
 }
