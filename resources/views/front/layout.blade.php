@@ -71,7 +71,7 @@
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-      ga('create', 'UA-65562848-1', 'auto');
+      ga('create', 'UA-65579552-1', 'auto');
       ga('send', 'pageview');
 
     </script>
@@ -297,15 +297,6 @@
     <script type='text/javascript' src='/resources/assets/ausart/assets/includes/js/jquery/ui/widget.min.js'></script>
     <script type='text/javascript' src='/resources/assets/ausart/assets/includes/js/jquery/ui/accordion.min.js'></script>
 </body>
-<!-- Google Tag Manager -->
-<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-KQRVHV"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-KQRVHV');</script>
-<!-- End Google Tag Manager -->
 
 
 </html>
