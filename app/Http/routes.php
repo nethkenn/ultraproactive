@@ -222,8 +222,8 @@ Route::any('admin/utilities/binary/membership/edit', 'AdminComplanController@bin
 Route::any('admin/utilities/binary/product/edit', 'AdminComplanController@binary_product_edit');
 
 /* ADMIN / REPORTS */
-Route::get('admin/reports/product_sales', 'AdminReportController@product_sales');
-Route::get('admin/reports/membership_sales', 'AdminReportController@membership_sales');
+Route::any('admin/reports/product_sales', 'AdminReportController@product_sales');
+Route::any('admin/reports/membership_sales', 'AdminReportMembershipController@index');
 
 
 Route::any('admin/login', 'AdminLoginController@index');

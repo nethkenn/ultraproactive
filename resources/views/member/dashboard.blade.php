@@ -192,6 +192,7 @@
             <img src="/resources/assets/frontend/img/icon-notification.png">
             Latest Notification
         </div>
+        @if($_notification)
         @foreach($_notification as $log)
         <div class="holders para">
             <div class="linyanglinya"></div>
@@ -204,6 +205,7 @@
         <a href="javascript:">
             <button type="button">View More Notifications</button>
         </a>
+        @endif
     </div>
     <div class="holder">
         <div class="header">
