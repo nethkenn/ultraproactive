@@ -239,6 +239,7 @@ Route::post('admin/utilities/position/add', 'AdminPositionController@create');
 Route::any('admin/utilities/position/edit', 'AdminPositionController@edit');
 Route::post('admin/utilities/position/edit', 'AdminPositionController@update');
 Route::post('admin/utilities/position/delete', 'AdminPositionController@delete');
+Route::post('admin/utilities/position/restore', 'AdminPositionController@restore');
 
 /* ADMIN / SETTINGS */
 Route::get('admin/utilities/setting', 'AdminSettingsController@index');

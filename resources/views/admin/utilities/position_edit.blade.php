@@ -41,7 +41,7 @@
                     @foreach($_module as $module)
                     <div class="col-md-6">
                         <label class="checkbox-inline">
-                            <input type="checkbox" name="module[]" value="{{$module->module_id}}">{{$module->module_name}}
+                            <input type="checkbox" name="module[]" value="{{$module->module_id}}" @if(in_array($module->module_id,$selected_position_module_array) && !in_array($module->module_id, (array)Request::old('module')) ) checked @endif  {{in_array($module->module_id, (array)Request::old('module'))  ? 'checked' : '' }}>{{$module->module_name}}
                         </label>
                     </div>
                     @endforeach

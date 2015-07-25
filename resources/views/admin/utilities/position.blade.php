@@ -64,42 +64,72 @@
 	    	});
 
 
-			$positionTable.on( 'draw.dt', function ()
+			$('#postion-table').on('click', '.archived-position', function(event)
 			{
-				$('.archived-position').on('click', function(event)
-				{
+				event.preventDefault();
+				var $token  = $('input[name="_token"]').val();
+				var $id = $(this).attr('position-id');
+				// console.log($token);
+				// console.log($id);
+				event.preventDefault();
 
-					var $token  = $('input[name="_token"]').val();
-					var $id = $(this).attr('position-id');
-					// console.log($token);
-					// console.log($id);
-					event.preventDefault();
-
-					$.ajax({
-						url: 'admin/utilities/position/delete',
-						type: 'post',
-						dataType: 'json',
-						data: {admin_position_id: $id,
-								_token : $token
-								},
-					})
-					.done(function(data) {
-						console.log(data);
-						$positionTable.draw();
-					})
-					.fail(function() {
-						// console.log("error");
-						alert("Error on archiving position");
-					})
-					.always(function() {
-						console.log("complete");
-					});
-					
+				$.ajax({
+					url: 'admin/utilities/position/delete',
+					type: 'post',
+					dataType: 'json',
+					data: {admin_position_id: $id,
+							_token : $token
+							},
 				})
-			});
+				.done(function(data) {
+					console.log(data);
+					$positionTable.draw();
+				})
+				.fail(function() {
+					// console.log("error");
+					alert("Error on archiving position");
+				})
+				.always(function() {
+					console.log("complete");
+				});
+			})
 
 
-			
+			$('#postion-table').on('click', '.restore-position', function(event)
+			{
+				event.preventDefault();
+				var $token  = $('input[name="_token"]').val();
+				var $id = $(this).attr('position-id');
+				// console.log($token);
+				// console.log($id);
+				event.preventDefault();
+
+				$.ajax({
+					url: 'admin/utilities/position/restore',
+					type: 'post',
+					dataType: 'json',
+					data: {admin_position_id: $id,
+							_token : $token
+							},
+				})
+				.done(function(data) {
+					console.log(data);
+					$positionTable.draw();
+				})
+				.fail(function() {
+					// console.log("error");
+					alert("Error on restoring position");
+				})
+				.always(function() {
+					console.log("complete");
+				});
+			})
+
+
+
+
+
+					
 		});
 	</script>
 @endsection

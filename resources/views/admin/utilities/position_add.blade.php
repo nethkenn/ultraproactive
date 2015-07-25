@@ -38,10 +38,10 @@
             <div class="form-group">
                 <label for="Modules" class="col-sm-2 control-label">Modules</label>
                 <div class="col-sm-10">
-                    @foreach($_module as $module)
+                    @foreach($_module as $key => $module)
                     <div class="col-md-6">
                         <label class="checkbox-inline">
-                            <input type="checkbox" name="module[]" value="{{$module->module_id}}">{{$module->module_name}}
+                            <input type="checkbox" name="module[]" value="{{$module->module_id}}" {{in_array($module->module_id, (array)Request::old('module'))  ? 'checked' : '' }}>{{$module->module_name}}
                         </label>
                     </div>
                     @endforeach
