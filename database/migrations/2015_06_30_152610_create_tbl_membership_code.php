@@ -20,7 +20,7 @@ class CreateTblMembershipCode extends Migration
             $table->integer('code_type_id')->unsigned();
             $table->integer('membership_id')->unsigned();
             $table->integer('product_package_id')->unsigned();
-            $table->integer('admin_id')->unsigned();
+            $table->integer('admin_id')->unsigned()->nullable();
             $table->integer('inventory_update_type_id')->unsigned();
             $table->integer('account_id')->unsigned()->nullable();
 

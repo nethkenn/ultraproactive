@@ -129,9 +129,13 @@ class AdminClaimController extends AdminController
 		$voucher_id = Request::input('voucher_id');
 		$voucher = Tbl_voucher::find($voucher_id);
 		$voucher_slot = Tbl_slot::find($voucher->slot_id); 
-		$request['slot_wallet'] = $voucher_slot->slot_wallet;
-		$rules['slot_wallet'] = 'check_wallet:'.$voucher->total_amount;
-		// dd($request, $rules);
+		// if($voucher_slot)
+		// {
+		// 	$request['slot_wallet'] = $voucher_slot->slot_wallet;
+		// 	$rules['slot_wallet'] = 'check_wallet:'.$voucher->total_amount;
+		// }
+		
+
 		$request['account_password'] = Request::input('account_password');
 		$rules['account_password'] = 'required|check_pass:'.$current_admin_pass;
 
@@ -175,23 +179,23 @@ class AdminClaimController extends AdminController
 	    $messages['voucher_id.exists'] = "The selected vouher might have been already processed or cancelled.";
 	    $messages['product_count.prod_count'] = "Voucher's product is empty.";
 	    $messages['account_password.check_pass'] = "Invalid Password.";
-	    $messages['slot_wallet.check_wallet'] = "Slot wallet balance is not enough.";
-	   	Validator::extend('check_wallet', function($attribute, $value, $parameters)
-        {
-        	$slot_wallet = $value;
-        	$voucher_total = $parameters[0];
-        	$deducted = $slot_wallet - $voucher_total;
+	    // $messages['slot_wallet.check_wallet'] = "Slot wallet balance is not enough.";
+	   	// Validator::extend('check_wallet', function($attribute, $value, $parameters)
+     //    {
+     //    	$slot_wallet = $value;
+     //    	$voucher_total = $parameters[0];
+     //    	$deducted = $slot_wallet - $voucher_total;
 
-        	if($slot_wallet < $voucher_total || $deducted < 0)
-        	{
-        		return false;
-        	}
-        	else
-        	{
-        		return true;
-        	}
+     //    	if($slot_wallet < $voucher_total || $deducted < 0)
+     //    	{
+     //    		return false;
+     //    	}
+     //    	else
+     //    	{
+     //    		return true;
+     //    	}
 
-        });
+     //    });
 
 	    Validator::extend('check_pass', function($attribute, $value, $parameters)
         {
@@ -236,11 +240,10 @@ class AdminClaimController extends AdminController
 		else
 		{
 			
-
-			// $updated_wallet = $voucher_slot->slot_wallet - $voucher->total_amount;
-			// dd($updated_wallet);
-			// Tbl_slot::where('slot_id', $voucher->slot_id)->lockForUpdate()->update(['slot_wallet'=>$updated_wallet]);
-			Tbl_voucher::where('voucher_id', $voucher_id)->lockForUpdate()->update(['status'=>'processed']);
+            $update_v['status'] = 'processed';
+            $update_v['processed_by'] = Admin::info()->admin_id;
+ 			$update_v['processed_by_name'] = Admin::info()->account_username ." (" .Admin::info()->admin_position_name. ")";
+			Tbl_voucher::where('voucher_id', $voucher_id)->lockForUpdate()->update($update_v);
 			if($_voucher_product)
 			{
 
@@ -362,12 +365,16 @@ class AdminClaimController extends AdminController
 			
 
 			/**
-			 * RETURN THE DEDUCTED PTS FROM SLOT WALLET
+			 * RETURN THE DEDUCTED PTS FROM SLOT WALLET IF VOUCHER IS FROM A MEMBER
 			 */
-			$voucher_slot = Tbl_slot::find($voucher_query->slot_id);
-			$updated_wallet = $voucher_slot->slot_wallet + $voucher_query->total_amount;
-			Tbl_slot::where('slot_id', $voucher_slot->slot_id)->lockForUpdate()->update(['slot_wallet'=>$updated_wallet]);
+
 			
+			if($voucher_query->slot_id != 0)
+			{
+				$voucher_slot = Tbl_slot::find($voucher_query->slot_id);
+				$updated_wallet = $voucher_slot->slot_wallet + $voucher_query->total_amount;
+				Tbl_slot::where('slot_id', $voucher_slot->slot_id)->lockForUpdate()->update(['slot_wallet'=>$updated_wallet]);
+			}
 			/**
 			 * IF THE VOUCHER STATUS IS "PROCESSED" RETURN THE DEDUCTED INVENTORY
 			 */
@@ -388,17 +395,20 @@ class AdminClaimController extends AdminController
             /**
 			 * CHANGE THE VOUCHER STATUS TO CANCELLED;
 			 */
-			Tbl_voucher::where('voucher_id', Request::input('voucher_id'))->lockForUpdate()->update(['status'=>'cancelled']);
 
+            $update_v['status'] = 'cancelled';
+            $update_v['processed_by'] = Admin::info()->admin_id;
+ 			$update_v['processed_by_name'] = Admin::info()->account_username ." ( " .Admin::info()->admin_position_name. " )";
+			Tbl_voucher::where('voucher_id', Request::input('voucher_id'))->lockForUpdate()->update($update_v);
 
 			 /**
 			 * UPDATE WALLET LOG
 			 */
-
-			$log = "Voucher no. ".Request::input('voucher_id')." has been voided by ".Admin::info()->account_username." (".Admin::info()->admin_position_name ."). ".  Product::return_format_num($voucher_query->total_amount)." slot wallet return." ;
-            Log::slot($voucher_slot->slot_id, $log, $updated_wallet);
-            
-
+			if($voucher_query->slot_id != 0)
+			{
+				$log = "Voucher no. ".Request::input('voucher_id')." has been voided by ".Admin::info()->account_username." (".Admin::info()->admin_position_name ."). ".  Product::return_format_num($voucher_query->total_amount)." slot wallet return." ;
+	            Log::slot($voucher_slot->slot_id, $log, $updated_wallet);
+            }
 			/**
 			 * UPDATE ACCOUNT/ADMIN LOG
 			 */
@@ -425,7 +435,25 @@ class AdminClaimController extends AdminController
 				$voucher_id = Request::input('voucher_id');
 				$data['voucher'] = 	Tbl_voucher::find($voucher_id);
 				$data['_voucher_product']  = Tbl_voucher_has_product::where('voucher_id', $voucher_id)->product()->get();
-	
+				if($data['_voucher_product'])
+				{
+					foreach ($data['_voucher_product'] as $key => $value)
+					{
+						$total_product[] =  $value->sub_total;
+					}
+				}else
+				{
+					$total_product = [];
+				}
+
+				$data['product_total'] = array_sum($total_product);
+				$data['discount_pts'] = ($data['voucher']->discount / 100) * $data['product_total'] ;
+
+
+
+
+
+
 				return view('admin.transaction.claim_voucher_product', $data);
 	}
 
