@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
         $this->call('tbl_partner');
         $this->call('tbl_about');
         $this->call('tbl_service');
+        $this->call('tbl_company');
     }
 }
 
@@ -165,13 +166,15 @@ class tbl_module extends Seeder
         (25,    'Maintenance / Team',   'team', 0),
         (26,    'Maintenance / Testimonial',    'testimony',    0),
         (27,    'Maintenance / Partners',   'partner',  0),
-        (28,    'Utilities / Binary',   'binary',  0),
-        (29,    'Utilities / Direct Referral',   'direct',  0),
-        (30,    'Utilities / Matching Bonus',   'matching',  0),
-        (31,    'Utilities / Indirect Referral Bonus',   'indirect',  0),
-        (32,    'Utilities / Unilevel Computation',   'unilevel',  0),
+        (28,    'Utilities / Binary',   'binary',   0),
+        (29,    'Utilities / Direct Referral',  'direct',   0),
+        (30,    'Utilities / Matching Bonus',   'matching', 0),
+        (31,    'Utilities / Indirect Referral Bonus',  'indirect', 0),
+        (32,    'Utilities / Unilevel Computation', 'unilevel', 0),
         (33,    'Content / Others', 'about',    0),
-        (34,    'Content / Services',   'service',  0);");
+        (34,    'Content / Services',   'service',  0),
+        (35,    'Maintenance / Product Category',   'product_category', 0);
+        ");
     } 
 }
 class tbl_team extends Seeder
@@ -262,7 +265,8 @@ class tbl_admin_position_has_module extends Seeder
         (53,    1,  31),
         (54,    1,  32),
         (55,    1,  33),
-        (56,    1,  34)
+        (56,    1,  34),
+        (57,    1,  35);
         ");
     } 
 }
@@ -388,3 +392,15 @@ class tbl_service extends Seeder
         ");
     }
 }
+
+class tbl_company extends Seeder
+{
+    public function run()
+    {
+        DB::table('tbl_company')->delete();
+        DB::statement("INSERT INTO `tbl_company` (`company_name`, `company_email`, `company_mobile`, `company_telephone`, `company_address`) VALUES
+        ('Prolife', 'admin@prolife.global', '', '', 'Office 107, Al Rigga Building, Port Said, Deira Dubai, UAE');
+        ");
+    }
+}
+

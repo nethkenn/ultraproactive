@@ -73,6 +73,14 @@ Route::post('admin/maintenance/accounts/restore', 'AdminAccountController@restor
 Route::any('admin/maintenance/accounts/field', 'AdminAccountController@field');
 Route::get('admin/maintenance/accounts/field/delete', 'AdminAccountController@field_delete');
 
+/* PRODUCT CATEGORY */
+Route::get('admin/maintenance/product_category', 'AdminProductCategoryController@index');
+Route::get('admin/maintenance/product_category/add', 'AdminProductCategoryController@add');
+Route::any('admin/maintenance/product_category/add_submit', 'AdminProductCategoryController@add_submit');
+Route::get('admin/maintenance/product_category/edit', 'AdminProductCategoryController@edit');
+Route::any('admin/maintenance/product_category/edit_submit', 'AdminProductCategoryController@edit_submit');
+Route::any('admin/maintenance/product_category/delete', 'AdminProductCategoryController@delete');
+
 /* SERVICES MANAGEMENT */
 Route::get('admin/content/service', 'AdminServiceController@index');
 Route::get('admin/content/service/add', 'AdminServiceController@add');
@@ -224,7 +232,10 @@ Route::any('admin/utilities/position/edit', 'AdminPositionController@edit');
 Route::post('admin/utilities/position/edit', 'AdminPositionController@update');
 Route::post('admin/utilities/position/delete', 'AdminPositionController@delete');
 
+/* ADMIN / SETTINGS */
 Route::get('admin/utilities/setting', 'AdminSettingsController@index');
+Route::any('admin/utilities/setting/submit', 'AdminSettingsController@submit');
+
 Route::get('admin/utilities/complan', 'AdminComplanController@index');
 
 /* ADMIN / UTITLITIES / COMPTATION */
