@@ -236,11 +236,13 @@
                                 <h4 class="widget-title">Contact Info</h4>
                                 <ul>
                                     <li class="address"><i class="moon-location"></i><span>Address:</span>
-                                        <br /><span> Office 107, Al Rigga Building, Port Said, Deira Dubai, UAE</span></li>
+                                        <br /><span>{{ $_setting->company_address }}</span></li>
                                     <li class="email"><i class="moon-envelop"></i><span>Email:</span>
-                                        <br /><span>admin@prolife.global</span></li>
-                                    <li class="phone"><i class="moon-phone"></i><span>Phone:</span>
-                                        <br /><span>+3 045 224 33 12, +3 045 224 48 </span></li>
+                                        <br /><span>{{ $_setting->company_email }}</span></li>
+                                    <li class="phone"><i class="moon-phone"></i><span>Telephone:</span>
+                                        <br /><span>{{ $_setting->company_telephone }}</span></li>
+                                    <li class="phone"><i class="moon-mobile"></i><span>Phone:</span>
+                                        <br /><span>{{ $_setting->company_mobile }}</span></li>
                                 </ul>
                             </div>
                         </div>

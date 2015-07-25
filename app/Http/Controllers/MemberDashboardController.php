@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 use App\Tbl_account_log;
 use App\Tbl_slot;
+use App\Tbl_lead;
 use App\Classes\Customer;
 
 class MemberDashboardController extends MemberController
@@ -10,6 +11,7 @@ class MemberDashboardController extends MemberController
 		$data["_notification"] = $this->get_notifications(false);
 		$data["total_wallet"] = Tbl_slot::where("slot_owner", Customer::id())->sum('slot_wallet');
 		$data["total_count"] = Tbl_slot::where("slot_owner", Customer::id())->count();
+		$data['leadc'] = Tbl_lead::where('lead_account_id',Customer::id())->count();
         return view('member.dashboard', $data);
 	}
 	public function notification()

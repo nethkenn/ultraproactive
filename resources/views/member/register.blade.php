@@ -37,9 +37,9 @@
 				</div>
 				<div class="form-group">
 					<div class="labelz">Gender*</div>
-					<div class="inputz">
-						<input name="gender" type="radio"><span>Male</span>
-						<input name="gender" type="radio"><span>Female</span>
+					<div class="inputz" name="gender">
+						<input name="gender" type="radio" value="Male" checked><span>Male</span>
+						<input name="gender" type="radio" value="Female"><span>Female</span>
 					</div>
 				</div>
 				<div class="form-group">
@@ -52,23 +52,54 @@
 				</div>
 				<div class="form-group">
 					<div class="labelz">Phone Number*</div>
-					<div class="inputz"><input type="text" name="contact"></div>
+					<div class="inputz"><input type="text" name="cp"></div>
 				</div>
 				<div class="form-group">
 					<div class="labelz">Telephone Number*</div>
-					<div class="inputz"><input type="text"></div>
+					<div class="inputz"><input type="text" name="tp"></div>
 				</div>
 				<div class="form-group">
 					<div class="labelz">Birthday*</div>
 					<div class="inputz">
-						<div class="vc_col-md-4"><select></select></div>
-						<div class="vc_col-md-4"><select></select></div>
-						<div class="vc_col-md-4"><select></select></div>
+						<div class="vc_col-md-4">
+								<select name="rmonth" id="mbirthday">
+									<option value="1">January</option>
+									<option value="2">February</option>
+									<option value="3">March</option>
+									<option value="4">April</option>
+									<option value="5">May</option>
+									<option value="6">June</option>
+									<option value="7">July</option>
+									<option value="8">August</option>
+									<option value="9">September</option>
+									<option value="10">October</option>
+									<option value="11">November</option>
+									<option value="12">December</option>
+	 							</select>
+	 				    </div>
+	 					<div class="vc_col-md-4">
+								<select id = "dbirthday" name = "rday" required = "required">	
+	 									@for($birthday = 1; $birthday <= 31; $birthday++)
+											<option value="{{$birthday}}"> 
+												{{ $birthday }}
+											</option>
+										@endfor				
+	 							</select>
+	 					</div>
+						<div class="vc_col-md-4">
+							<select id = "ybirthday" name = "ryear">
+		 							@for($birthday=(date("Y")-120);$birthday<=date("Y");$birthday++)
+										<option value="{{$birthday}}">
+											{{ $birthday }}
+										</option>
+									@endfor
+	 						</select>
+	 					</div>
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="labelz">Address</div>
-					<div class="inputz"><textarea></textarea></div>
+					<div class="inputz"><textarea name="address"></textarea></div>
 				</div>
 				<div class="form-group">
 					<div class="labelz">Country*</div>

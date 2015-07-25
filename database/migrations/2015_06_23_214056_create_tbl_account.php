@@ -21,8 +21,13 @@ class CreateTblAccount extends Migration {
 			$table->string('account_contact_number');
 			$table->integer('account_country_id');
 			$table->dateTime('account_date_created');
+			$table->date('birthday');
+			$table->string('telephone');
+			$table->string('gender');
+			$table->string('address');
 			$table->text('account_password');
 			$table->text('custom_field_value');
+			$table->string('image');
 			$table->string('account_created_from', 40)->default('Back Office');
 			$table->tinyInteger('archived')->default(0);
 
