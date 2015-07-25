@@ -21,6 +21,10 @@ abstract class Controller extends BaseController
 			$_newsfooter[$key]->day = $day;
 			$_newsfooter[$key]->year = $year;
 		}
+
+		$_setting = DB::table("tbl_company")->first();
+
 		View()->share("_newsfooter", $_newsfooter);
+		View()->share("_setting", $_setting);
 	}
 }
