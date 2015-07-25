@@ -8,6 +8,7 @@ use Crypt;
 use App\Tbl_account_encashment_history;
 use App\Classes\Admin;
 use Config;
+use App\Tbl_slot;
 class AdminPayoutController extends AdminController
 {
 	public function index()
@@ -18,10 +19,12 @@ class AdminPayoutController extends AdminController
 
         if(isset($_POST['processall']))
         {
-            dd();
+            
         }
-
-
+        if(isset($_POST['encashall']))
+        {
+            
+        }
 
         if(Request::input('processed') == 1)
         {
@@ -65,7 +68,10 @@ class AdminPayoutController extends AdminController
         return view('admin.transaction.payout',$data);
 	}
 
+    public function encashallwallet()
+    {
 
+    }
 
     public static function currency_format($price)
     {

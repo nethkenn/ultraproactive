@@ -33,6 +33,11 @@ function payout()
        		var inst = $('[data-remodal-id=processall]').remodal();
           	inst.open(); 
        });
+
+      $("#autoencash").click(function(){
+       		var inst = $('[data-remodal-id=autoencash]').remodal();
+          	inst.open(); 
+       });
 	}
 
 	function showbreakdown()

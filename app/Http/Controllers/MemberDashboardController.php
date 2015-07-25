@@ -14,6 +14,7 @@ class MemberDashboardController extends MemberController
 	}
 	public function notification()
 	{
+
 		$data["_notification"] = $this->get_notifications(true);
         return view('member.notification', $data);
 	}
@@ -25,8 +26,9 @@ class MemberDashboardController extends MemberController
 		{
 			$_notification->take(6);
 		}
-
+		$_notification = $_notification->where('account_id',Customer::id());
 		$_notification = $_notification->get();
+
 
 
 		$data["_notification"] = null;

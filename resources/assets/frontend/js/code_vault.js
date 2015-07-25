@@ -17,6 +17,7 @@ function code_vault()
 		initialize();
 		onmembershipchange();	
 		add_event_active_product();
+		add_event_active_product2();
 		product_included();
 		checkifavailable();
 		init_showdownline();
@@ -70,11 +71,28 @@ function code_vault()
 			$("#11s").val($(this).attr('val'));
 			var inst = $('[data-remodal-id=transfer_code]').remodal();
           	inst.open(); 
-		})
+		});
+
+		$(".use-p").click(function()
+		{
+			var inst = $('[data-remodal-id=use_code]').remodal();
+          	inst.open(); 
+		});
+
+		$(".transferer-p").click(function()
+		{
+			$("#11z").val($(this).attr('value'));
+			$("#11sz").val($(this).attr('val'));
+			$("#11szz").val($(this).attr('vals'));
+			var inst = $('[data-remodal-id=transfer_product]').remodal();
+          	inst.open(); 
+		});
+
+
 		$(".alertused").click(function()
 		{
 			alert("Already used.");
-		})
+		});
 
 	      if($('#11111').data('options') == undefined)
 	      {
@@ -151,6 +169,41 @@ function code_vault()
         $.ajax(
         {
             url:"/member/code_vault/lock",
+            dataType:"json",
+            data:{ "pin":$lock, "value": $value, "_token": $(".token").val() },
+            type:"post",
+            success: function(data)
+            {
+            }
+        })
+    } 
+
+
+	function add_event_active_product2()
+    {
+        $(".checklock2").unbind("click");
+        $(".checklock2").bind("click", function(e)
+        {
+            $lock = $(e.currentTarget).closest("tr").attr("loading");
+            if($(this).prop('checked')==false)
+            {
+            	var inst = $('[data-remodal-id=required_pass2]').remodal();
+            	$("#yuan2").val($lock);
+          		inst.open();
+          		return false;
+            }
+            else
+            {
+                $(this).prop('checked',true);    
+                set_active2($lock, 1);
+            }
+        });
+    }
+    function set_active2($lock, $value)
+    {
+        $.ajax(
+        {
+            url:"/member/code_vault/lock2",
             dataType:"json",
             data:{ "pin":$lock, "value": $value, "_token": $(".token").val() },
             type:"post",

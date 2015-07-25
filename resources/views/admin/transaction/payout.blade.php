@@ -127,6 +127,20 @@
     </form>
 </div>
 
+<div class="remodal create-slot" data-remodal-id="autoencash" data-remodal-options="hashTracking: false">
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <div class="header">
+        Encash All Wallet
+    </div>
+    <form class="form-horizontal" method="POST">
+
+    <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
+
+    <button class="button" type="button" data-remodal-action="cancel">Cancel</button>
+    <button class="c_slot button"  type="submit" name="encashall">Encash All Wallet</button>
+    </form>
+</div>
+
 <div class="remodal create-slot" data-remodal-id="breakdown" data-remodal-options="hashTracking: false">
     <button data-remodal-action="close" class="remodal-close"></button>
     <div class="header">

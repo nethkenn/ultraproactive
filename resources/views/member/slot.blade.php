@@ -148,10 +148,75 @@
     <br>
     <button class="button" type="button" data-remodal-action="cancel">Cancel</button>
     <button class="button" type="submit" name="initsbmt">Initiate Transfer</button>
-    <form>
+    </form>
 </div>
 
+<div class="remodal create-slot" data-remodal-id="upgrade_member" data-remodal-options="hashTracking: false">
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <div class="header">
+        <img src="/resources/assets/frontend/img/icon-membership.png">
+        Claim Code
+    </div>
+    <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
+    <div class="col-md-10 col-md-offset-1 para">
+        <form class="form-horizontal" method="get">
+            <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
+            <input type="hidden" class="token" name="tols" id="tols" value="">
+            <div class="alerted alert alert-danger">
+                You don't have enough balance in your wallet for upgrade.
+            </div>
+            <div class="form-group para">
+                <label for="wan" class="col-sm-3 control-label">Choose Membership</label>
+                <div class="col-sm-9">
+                    <select class="form-control" id="wan" name="membership">
+                        @if($membership)
+                            @foreach($membership as $m)
+                              <option value="{{$m->membership_id}}" amount="{{$m->membership_price}}">{{$m->membership_name}}</option>
+                            @endforeach
+                        @endif    
+                    </select>
+                </div>
+            </div>
+            <div class="form-group para">
+                <label for="tuu" class="col-sm-3 control-label">Choose product</label>
+                <div class="col-sm-9">
+                    <select class="form-control" id="tuu" name="product"> 
+                        @if($slot2)
+                            @foreach($slot2 as $s)
+                                @foreach($s->productlist as $p)
+                                  <option value="{{$p->product_id}}" slot="{{$s->slot_id}}">{{$p->product_name}}</option>
+                                @endforeach
+                            @endforeach
+                        @endif   
+                    </select>
+                </div>
+            </div>
+            <div class="form-group para">
+                <label for="tu" class="col-sm-3 control-label">Your Wallet</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="tu" disabled>
+                </div>
+            </div>
+            <div class="form-group para">
+                <label for="tri" class="col-sm-3 control-label">Upgrade Amount</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="tri" disabled>
+                </div>
+            </div>
+            <div class="form-group para">
+                <label for="por" class="col-sm-3 control-label">Enter Your Password</label>
+                <div class="col-sm-9">
+                    <input type="password" class="form-control" id="por" name="pass">
+                </div>
+            </div>
+            <br>
+            <button class="button" data-remodal-action="cancel">Cancel</button>
+            <button class="button" type="submit" id="subup" name="subup" value="1">Submit Upgrade</button>
+        </form>
+    </div>
 
+</div>
+    
 @endsection
 @section('script')
 <script type="text/javascript" src="/resources/assets/frontend/js/slot.js"></script>

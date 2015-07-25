@@ -16,7 +16,7 @@ use Datatables;
 use Validator;
 use Session;
 use App\Classes\Globals;
-
+use App\Rel_membership_code;
 class AdminCodeController extends AdminController {
 
 	/**
@@ -214,6 +214,9 @@ class AdminCodeController extends AdminController {
 					$insert['updated_at'] = $membership_code->created_at;
 					$insert['description'] = "Created by ".$name->account_name;
 					DB::table("tbl_member_code_history")->insert($insert);
+					$insert2['code_pin'] = $membership_code->code_pin;
+					$insert2['product_package_id'] = Request::input('product_package_id');
+					Rel_membership_code::insert($insert2);
 				}
 
 
