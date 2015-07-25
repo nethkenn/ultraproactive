@@ -33,5 +33,14 @@ class Tbl_slot extends Model
     {
         return $query->where("slot_position", $position)->where("slot_placement", $placement);
     }
+    public function scopeChosenProduct($query)
+    {
+        return $query->leftjoin('Rel_membership_product','Rel_membership_product.slot_id','=','Tbl_slot.slot_id');
+    }
+    public function scopeGetChosen($query)
+    {
+        return $query->leftjoin('tbl_product_package_has','tbl_product_package_has.product_package_id','=','Rel_membership_product.product_package_id');
+    }
+
 
 }

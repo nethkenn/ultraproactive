@@ -1,5 +1,5 @@
 <?php
-Route::any('/neil', 'NeilController@index');
+// Route::any('/neil', 'NeilController@index');
 
 /* MEMBER */
 Route::any('/member', 'MemberDashboardController@index');
@@ -8,6 +8,7 @@ Route::any('/member/code_vault', 'MemberCodeController@index');
 Route::any('/member/code_vault/check', 'MemberCodeController@add_form_submit');
 Route::any('/member/code_vault/get', 'MemberCodeController@get');
 Route::post('/member/code_vault/lock', 'MemberCodeController@set_active');
+Route::post('/member/code_vault/lock2', 'MemberCodeController@set_active2');
 Route::any('/member/encashment', 'MemberEncashmentController@index');
 Route::any('/member/genealogy', 'MemberGenealogyController@index');
 

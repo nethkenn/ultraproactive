@@ -8,6 +8,15 @@ use Session;
 use App\Tbl_slot;
 use App\Tbl_lead;
 use App\Tbl_account;
+use App\Tbl_product_package_has;
+use App\Classes\Globals;
+use App\Tbl_voucher;
+use App\Tbl_voucher_has_product;
+use App\Classes\Product;
+use App\Classes\Log;
+use App\Tbl_product;
+use App\Tbl_product_code;
+
 class MemberSlotController extends MemberController
 {
 	public function index()
@@ -19,14 +28,13 @@ class MemberSlotController extends MemberController
 		$data['currentslot'] = Session::get('currentslot');
 		$data['getlead'] = Tbl_lead::where('lead_account_id',Customer::id())->getaccount()->get();
 
-		
 		if(Request::input('subup'))
 		{
 			$pass = DB::table('tbl_account')->where("account_id",$id)->first();
 			$pass =	Crypt::decrypt($pass->account_password);
 			if($pass == Request::input('pass'))
 			{
-				$data = $this->getcompute(Request::input('tols'),Request::input('membership'));
+				$data = $this->getcompute(Request::input('tols'),Request::input('membership'),Request::input('product'));
 				return Redirect::to('/member/slot');
 			}
 			else
@@ -61,21 +69,47 @@ class MemberSlotController extends MemberController
 	public function getslotbyid($id)
 	{
 		$data['slot2'] = DB::table('tbl_slot')->where('slot_owner','=',$id)
-											  ->orderBy('slot_id','ASC')
+											  ->orderBy('tbl_slot.slot_id','ASC')
 											  ->join('tbl_rank','rank_id','=','slot_rank')
 											  ->join('tbl_membership','tbl_membership.membership_id','=','tbl_slot.slot_membership')
 											  ->get();
-
+		foreach($data['slot2'] as $key => $d)
+		{
+			$data['slot2'][$key]->productlist = DB::table('rel_membership_product')->join('tbl_product_package_has','tbl_product_package_has.product_package_id','=','rel_membership_product.product_package_id')
+																	  			   ->join('tbl_product','tbl_product.product_id','=','tbl_product_package_has.product_id')
+																	  			   ->where('rel_membership_product.slot_id',$d->slot_id)
+																	  			   ->get();
+ 		}
 
 		$data['count']= DB::table('tbl_slot')->where('slot_owner','=',$id)->count();
 		return $data;
 	}
-	public function getcompute($id,$memid)
+	public function getcompute($id,$memid,$pid)
 	{
 		$slot = DB::table('tbl_slot')->where('slot_id',$id)->first();
 		$membership = DB::table('tbl_membership')->where('membership_id',$memid)->first();
 
+		$datas = DB::table('tbl_slot')->leftjoin('rel_membership_product','rel_membership_product.slot_id','=','tbl_slot.slot_id')
+									  ->where('tbl_slot.slot_id','=',$id)
+									  ->leftjoin('tbl_product_package_has','tbl_product_package_has.product_package_id','=','rel_membership_product.product_package_id')
+									  ->leftJoin('tbl_product','Tbl_product.product_id','=','tbl_product_package_has.product_id')
+									  ->get();
+
 		$remaining = $slot->slot_wallet - $membership->membership_price;
+		
+		$check = false;
+		foreach($datas as $d)
+		{
+			if($d->product_id == $pid)
+			{
+				$check = true;
+			}
+		}
+		return $pid;
+		if($check == true)
+		{
+			$this->additional($pid,$id);
+		}
 
 		if($remaining >= 0)
 		{
@@ -125,5 +159,68 @@ class MemberSlotController extends MemberController
 		}
 
 		return $info;
+	}
+	public function additional($pid,$slotid)
+	{
+		// $data['_error'] = null;
+        $customer = Customer::info();
+        $slot = Tbl_slot::select('tbl_slot.*', 'tbl_membership.discount')->leftJoin('tbl_membership', 'tbl_membership.membership_id','=','tbl_slot.slot_membership')
+                                                                        ->where('slot_id', $slotid)
+                                                                        ->where('slot_owner', $customer->account_id)
+                                                                        ->first();
+        $data['slot'] = $slot;
+  //       $cart = Session::get('cart');
+ 		$prod_pts = Tbl_product::find($pid);
+        // $sum_cart = $this->get_final_total($cart);
+        $data['final_total'] = $prod_pts->price + (($slot->discount/100) * $prod_pts->price);
+        // $data['remaining_bal'] = $slot->slot_wallet - $data['final_total'];
+        // $data['pts'] = $this->get_product_point($cart);
+         	   
+                $insert['slot_id'] = $slotid;
+
+                $query = Tbl_voucher::where('voucher_code', Globals::code_generator())->first();
+                $insert['voucher_code'] = Globals::check_code($query);
+
+                $insert ['discount'] = $slot->discount;
+                $insert['total_amount'] = $data['final_total'];
+                $insert['account_id'] = $customer->account_id;
+      
+                
+               
+
+
+
+                $voucher = new Tbl_voucher($insert);
+                $voucher->save();
+                $log = "Upgrade member include product worth ".Product::return_format_num($insert['total_amount']). " with Voucher Num: ".$voucher->voucher_id." , Voucher Code: ".$voucher->voucher_code.".";
+                Log::account($customer->account_id, $log);
+
+                 
+                    $insert_prod =  array(
+                        'product_id' =>  $pid,
+                        'voucher_id'=> $voucher->voucher_id,
+                        'price' => $prod_pts->price,
+                        'qty'=> 1,
+                        'sub_total' => $prod_pts->price,
+                        'binary_pts' => $prod_pts->binary_pts,
+                        'unilevel_pts' => $prod_pts->unilevel_pts
+                    );
+
+                    // $product = Tbl_product::find($key);
+                    // $updated_stock_qty = $product->stock_qty - $value['qty'];
+                    // Tbl_product::where('product_id', $key)->lockForUpdate()->update(['stock_qty'=>$updated_stock_qty]);
+
+                    $voucher_has_product = new Tbl_voucher_has_product($insert_prod);
+                    $voucher_has_product->save();
+
+                    // dd($voucher_has_product->voucher_item_id);
+                    $query = Tbl_product_code::where('code_activation', Globals::code_generator())->first();
+                    $insert_prod_code['code_activation'] = Globals::check_code($query);
+                    $insert_prod_code['voucher_item_id'] = $voucher_has_product->voucher_item_id;
+                    $insert_prod_code['used'] = 1;
+                    $product_code = new Tbl_product_code($insert_prod_code);
+                    $product_code->save();
+
+                
 	}
 }

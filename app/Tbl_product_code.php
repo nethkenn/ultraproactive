@@ -20,7 +20,5 @@ class Tbl_product_code extends Model
 	
 
 
-    
-
 }
 

@@ -14,7 +14,7 @@ class MemberDashboardController extends MemberController
 	}
 	public function get_notifications()
 	{
-		$_notification = Tbl_account_log::orderBy('account_log_id', 'desc')->take(6)->get();
+		$_notification = Tbl_account_log::orderBy('account_log_id', 'desc')->where('account_id',Customer::id())->take(6)->get();
 		$data["_notification"] = null;
 
 		foreach($_notification as $key => $notification)

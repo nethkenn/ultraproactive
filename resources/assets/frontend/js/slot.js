@@ -21,6 +21,20 @@ function slot()
 			$('#tols').val($(this).attr('tols'));
 			$('#tu').val($(this).attr('wallet'));
 			checkvalue();
+
+			if($('#tuu').data('options') == undefined)
+			{
+			  $('#tuu').data('options',$('#tuu option').clone());
+			}  
+			var id = $(this).attr('tols');
+			var options = $('#tuu').data('options').filter('[slot=' + id + ']');
+			$('#tuu').html(options);
+
+			if($('#tuu option').size() == 0)
+			{
+			$('#tuu').append('<option value="" class="shouldremove">No included product for this slow.</option>');  
+			}
+
 			var inst = $('[data-remodal-id=upgrade_member]').remodal();
           	inst.open(); 
 		});
@@ -32,6 +46,24 @@ function slot()
 			var inst = $('[data-remodal-id=transfer_slot]').remodal();
           	inst.open(); 
 		});
+
+		// $("#wan").change(function() 
+		// {
+  //             if($('#tuu').data('options') == undefined)
+  //             {
+  //                 $('#tuu').data('options',$('#tuu option').clone());
+  //             }  
+  //             var id = $('#wan').val();
+  //             var options = $('#tuu').data('options').filter('[member=' + id + ']');
+  //             $('#tuu').html(options);
+
+  //             if($('#tuu option').size() == 0)
+		//       {
+		//         $('#tuu').append('<option value="" class="shouldremove">No product available for this membership</option>');  
+		//       }
+
+		// });
+
 	}
 	function onmembershipchange()
 	{

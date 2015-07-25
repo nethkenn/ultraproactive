@@ -115,87 +115,10 @@
 <script type="text/javascript" src="/resources/assets/stickyfloat/stickyfloat.js"></script>
 @yield('script')
 
-    <div class="remodal create-slot" data-remodal-id="transfer_code" data-remodal-options="hashTracking: false">
-        <button data-remodal-action="close" class="remodal-close"></button>
-        <div class="header">
-            <img src="/resources/assets/frontend/img/icon-transfer.png">
-            Transfer Code
-        </div>
-        <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
-        <div class="col-md-10 col-md-offset-1 para">
-            <form class="form-horizontal" method="POST">
-                <div class="form-group para">
-                    <label for="11" class="col-sm-3 control-label">Code</label>
-                    <div class="col-sm-9">
-                        <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
-                        <input type="hidden" class="form-control" id="11s" name="code">
-                        <input type="text" class="form-control" id="11" disabled>
-                    </div>
-                </div>
-                <div class="form-group para">
-                    <label for="22" class="col-sm-3 control-label">Recipient</label>
-                    <div class="col-sm-9">
-                        <select class="form-control" id="22" name="account">
-                            @if($accountlist)
-                                @foreach($accountlist  as $a)
-                                     <option value="{{$a->account_id}}">{{$a->account_email}}({{$a->account_name}})</option>
-                                @endforeach
-                            @endif
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group para">
-                    <label for="33" class="col-sm-3 control-label">Enter Password</label>
-                    <div class="col-sm-9">
-                        <input type="password" class="form-control" id="33" name="pass">
-                    </div>
-                </div>
-        
-        </div>
-        <br>
-        <button class="button" data-remodal-action="cancel">Cancel</button>
-        <button class="button" type="submit" name="codesbmt">Initiate Transfer</button>
-    </div>
-</form>
+ 
 
 
-<div class="remodal create-slot" data-remodal-id="use_code">
-    <button data-remodal-action="close" class="remodal-close"></button>
-    <div class="header">
-        <img src="/resources/assets/frontend/img/icon-use.png">
-        Use Code
-    </div>
-    <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
-    <div class="col-md-10 col-md-offset-1 para">
-        <form class="form-horizontal">
-            <div class="form-group para">
-                <label for="111" class="col-sm-3 control-label">Points Recipient</label>
-                <div class="col-sm-9">
-                    <select class="form-control" id="111">
-                        <option>Slot #8</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group para">
-                <label for="222" class="col-sm-3 control-label">Unilevel Points</label>
-                <div class="col-sm-9">
-                    <select class="form-control" id="222">
-                        <option>Slot #8</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group para">
-                <label for="333" class="col-sm-3 control-label">Binary Points</label>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control" id="333">
-                </div>
-            </div>
-    </div>
-    <br>
-    <button class="button" data-remodal-action="cancel">Cancel</button>
-    <button class="button" type="submit">Use Code</button>
-</form>
-</div>
+
 <div class="remodal create-slot" data-remodal-id="claim_code" data-remodal-options="hashTracking: false">
     <button data-remodal-action="close" class="remodal-close"></button>
     <div class="header">
@@ -226,57 +149,6 @@
 </div>
 
 
-<div class="remodal create-slot" data-remodal-id="upgrade_member" data-remodal-options="hashTracking: false">
-    <button data-remodal-action="close" class="remodal-close"></button>
-    <div class="header">
-        <img src="/resources/assets/frontend/img/icon-membership.png">
-        Claim Code
-    </div>
-    <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
-    <div class="col-md-10 col-md-offset-1 para">
-        <form class="form-horizontal" method="POST">
-            <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
-            <input type="hidden" class="token" name="tols" id="tols" value="">
-            <div class="alerted alert alert-danger">
-                You don't have enough balance in your wallet for upgrade.
-            </div>
-            <div class="form-group para">
-                <label for="wan" class="col-sm-3 control-label">Choose Membership</label>
-                <div class="col-sm-9">
-                    <select class="form-control" id="wan" name="membership">
-                        @if($membership)
-                            @foreach($membership as $m)
-                              <option value="{{$m->membership_id}}" amount="{{$m->membership_price}}">{{$m->membership_name}}</option>
-                            @endforeach
-                        @endif    
-                    </select>
-                </div>
-            </div>
-            <div class="form-group para">
-                <label for="tu" class="col-sm-3 control-label">Your Wallet</label>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control" id="tu" disabled>
-                </div>
-            </div>
-            <div class="form-group para">
-                <label for="tri" class="col-sm-3 control-label">Upgrade Amount</label>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control" id="tri" disabled>
-                </div>
-            </div>
-            <div class="form-group para">
-                <label for="por" class="col-sm-3 control-label">Enter Your Password</label>
-                <div class="col-sm-9">
-                    <input type="password" class="form-control" id="por" name="pass">
-                </div>
-            </div>
-            <br>
-            <button class="button" data-remodal-action="cancel">Cancel</button>
-            <button class="button" type="submit" id="subup" name="subup" value="1">Submit Upgrade</button>
-        </form>
-    </div>
-
-</div>
 
 <!--<div class="remodal create-slot" data-remodal-id="voucher">
     <button data-remodal-action="close" class="remodal-close"></button>
@@ -618,6 +490,30 @@
     </form>
 </div>
 
+
+<div class="remodal create-slot" data-remodal-id="required_pass2" data-remodal-options="hashTracking: false">
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <div class="header">
+        <img src="/resources/assets/frontend/img/icon-use.png">
+        Unlock Code
+    </div>
+    <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
+    <div class="col-md-10 col-md-offset-1 para">
+    <form class="form-horizontal" method="POST">
+            <input type="hidden" id="yuan2" value="" name="yuan2"> 
+            <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
+            <div class="form-group para">
+                <label for="001" class="col-sm-3 control-label">Enter Password</label>
+                <div class="col-sm-9">
+                    <input type="password" class="form-control" id="001" name="pass">
+                </div>
+            </div>
+    </div>
+    <br>
+    <button class="button" data-remodal-action="cancel">Cancel</button>
+    <button class="button" name="unlockpass2">Unlock</button>
+    </form>
+</div>
 
 <script type="text/javascript">
     $.ajaxSetup({
