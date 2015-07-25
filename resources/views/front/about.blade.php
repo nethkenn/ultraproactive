@@ -20,12 +20,7 @@
                                     <h1 style="font-size:30px; color:#3a3a3a">WE ARE INTRODUCING YOU TO PROLIFE</h1></div>
                                 <div class="wpb_text_column wpb_content_element ">
                                     <div class="wpb_wrapper">
-                                        <p style="word-break: keep-all !important;">PROLIFE NWT is a company formed by Filipino professionals based in the United Arab Emirates. Bound together by a common goal, each with their own expertise, they have decided it’s about time that expatriates in the UAE will be given a free choice and be catered with all their needs. 
-
-    By providing convenient e-services, the main aim is to help and alleviate the lives of expatriates around the globe. PROLIFE NWT envisions prosperity for all.
-
-    PROLIFE NWT also promotes real estate investments, free entrepreneurships, encourages self development and offers a wide array of natural  skincare and healthcare products.
-</p>
+                                        <p style="word-break: keep-all !important;">{{ $about->about_description }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -43,7 +38,7 @@
                                         <div class=" services_small_icon yes" style=""><i class="fa fa-flag"></i></div>
                                         <div class="services_small_title">
                                             <h4><a href="#">Mission</a></h4>
-                                            <p style="word-break: keep-all !important;">To provide globally, the convenience of affordable on-line products and services, with the aim of encouraging free entrepreneurship for a better future of our members</p>
+                                            <p style="word-break: keep-all !important;">{{ $mission->about_description }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -56,7 +51,7 @@
                                         <div class=" services_small_icon yes" style=""><i class="fa fa-eye"></i> </div>
                                         <div class="services_small_title">
                                             <h4><a href="#">Vision</a></h4>
-                                            <p style="word-break: keep-all !important;">Through high quality products, service excellence, continuous improvement and team work, we will be the leading e-commerce business worldwide</p>
+                                            <p style="word-break: keep-all !important;">{{ $vision->about_description }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -69,11 +64,7 @@
                                         <div class=" services_small_icon yes" style=""><i class="fa fa-book"></i></div>
                                         <div class="services_small_title">
                                             <h4><a href="#">Philosophy</a></h4>
-                                            <p style="word-break: keep-all !important;">We do not only aim to expand our business in a global perspective but we will work collectively as a team to contribute to our society”
-“It is our intention to prosper hand in hand with our members, encouraging and motivating them to bring out their full potential and to drive them towards boundless opportunities.”
-</br>
-“We are the PROLIFE Family!
-</p>
+                                            <p style="word-break: keep-all !important;">{!! $philosophy->about_description !!}</p>
                                         </div>
                                     </div>
                                 </div>

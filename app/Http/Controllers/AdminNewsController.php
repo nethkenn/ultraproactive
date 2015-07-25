@@ -11,7 +11,7 @@ class AdminNewsController extends AdminController
 		$data["_news"] = DB::table("tbl_news")->where("archived", 0)->get();
 		foreach ($data["_news"] as $key => $value) {
 			$get = $value->news_image;
-			$imagee = Image::view($get);
+			$imagee = Image::view($get, "500x500");
 			$data["_news"][$key]->image = $imagee;
 		}
 

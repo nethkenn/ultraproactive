@@ -20,7 +20,6 @@
           <div class="max col-xs-6 slider-info text-right" val="{{$slotnow->slot_wallet}}">{{$slotnow->slot_wallet}}</div>
           <input type="text" id="amount" value="1" name="val" onkeydown="return ( event.ctrlKey || event.altKey || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) || (95<event.keyCode && event.keyCode<106) || (event.keyCode==8) || (event.keyCode==9) || (event.keyCode>34 && event.keyCode<40) || (event.keyCode==46) )">
           <select id="typeencashment">
-            <option value"Bank Deposit">Bank Deposit</option>
             <option value="Cheque">Cheque</option>
           </select>
 
@@ -93,8 +92,8 @@
 <div class="remodal create-slot" data-remodal-id="encashment_history">
     <button data-remodal-action="close" class="remodal-close"></button>
     <div class="header">
-        Encashment History
         <img src="/resources/assets/frontend/img/icon-encashment.png">
+        Encashment History
     </div>
     <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
     <div class="col-md-12 para">

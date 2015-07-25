@@ -14,10 +14,18 @@
     <!--<base href="{{$_SERVER['SERVER_NAME']}}">-->
     <base href="{{URL::to('/')}}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
+      ga('create', 'UA-65579552-1', 'auto');
+      ga('send', 'pageview');
 
-
+    </script>
 </head>
+<body>
 <div class="bg">
 	<div class="wrapper">
 		<div class="header-nav">
@@ -115,7 +123,49 @@
 <script type="text/javascript" src="/resources/assets/stickyfloat/stickyfloat.js"></script>
 @yield('script')
 
- 
+</body>
+    <div class="remodal create-slot" data-remodal-id="transfer_code" data-remodal-options="hashTracking: false">
+        <button data-remodal-action="close" class="remodal-close"></button>
+        <div class="header">
+            <img src="/resources/assets/frontend/img/icon-transfer.png">
+            Transfer Code
+        </div>
+        <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
+        <div class="col-md-10 col-md-offset-1 para">
+            <form class="form-horizontal" method="POST">
+                <div class="form-group para">
+                    <label for="11" class="col-sm-3 control-label">Code</label>
+                    <div class="col-sm-9">
+                        <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" class="form-control" id="11s" name="code">
+                        <input type="text" class="form-control" id="11" disabled>
+                    </div>
+                </div>
+                <div class="form-group para">
+                    <label for="22" class="col-sm-3 control-label">Recipient</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" id="22" name="account">
+                            @if($accountlist)
+                                @foreach($accountlist  as $a)
+                                     <option value="{{$a->account_id}}">{{$a->account_email}}({{$a->account_name}})</option>
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group para">
+                    <label for="33" class="col-sm-3 control-label">Enter Password</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" id="33" name="pass">
+                    </div>
+                </div>
+        
+        </div>
+        <br>
+        <button class="button" data-remodal-action="cancel">Cancel</button>
+        <button class="button" type="submit" name="codesbmt">Initiate Transfer</button>
+    </div>
+</form>
 
 
 

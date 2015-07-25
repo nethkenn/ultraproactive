@@ -33,8 +33,18 @@
 		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		  ga('create', 'UA-65579552-1', 'auto');
+		  ga('send', 'pageview');
+
+		</script>
 	</head>
-	<body>
+	<body style="overflow: scroll">
 		<div class="container">
 			<nav class="navbar navbar-default">
 				<div class="container-fluid">
@@ -90,6 +100,10 @@
 									<li><a href="admin/utilities/setting">Company Settings</a></li>
 									<li class="divider" role="separator"></li>
 									<li><a href="admin/utilities/binary">Binary Computation</a></li>
+									<li><a href="admin/utilities/matching">Matching Bonus Computation</a></li>
+									<li><a href="admin/utilities/direct">Direct Sponsorship Bonus</a></li>
+									<li><a href="admin/utilities/indirect">Indirect Sponsorship Bonus</a></li>
+									<li><a href="admin/utilities/unilevel">Unilevel Computation</a></li>
 								</ul>
 							</li>
 							<!-- REPORTS -->
@@ -110,6 +124,8 @@
 									<li><a href="admin/content/team">Team</a></li>
 									<li><a href="admin/content/testimony">Testimonial</a></li>
 									<li><a href="admin/content/partner">Partners</a></li>
+									<li><a href="admin/content/service">Services</a></li>
+									<li><a href="admin/content/about">Others</a></li>
 								</ul>
 							</li>
 						</ul>

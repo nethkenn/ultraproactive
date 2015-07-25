@@ -3,6 +3,7 @@
 
 /* MEMBER */
 Route::any('/member', 'MemberDashboardController@index');
+Route::any('/member/notification', 'MemberDashboardController@notification');
 Route::any('/member/slot', 'MemberSlotController@index');
 Route::any('/member/code_vault', 'MemberCodeController@index');
 Route::any('/member/code_vault/check', 'MemberCodeController@add_form_submit');
@@ -71,6 +72,18 @@ Route::post('admin/maintenance/accounts/restore', 'AdminAccountController@restor
 
 Route::any('admin/maintenance/accounts/field', 'AdminAccountController@field');
 Route::get('admin/maintenance/accounts/field/delete', 'AdminAccountController@field_delete');
+
+/* SERVICES MANAGEMENT */
+Route::get('admin/content/service', 'AdminServiceController@index');
+Route::get('admin/content/service/add', 'AdminServiceController@add');
+Route::any('admin/content/service/add_submit', 'AdminServiceController@add_submit');
+Route::get('admin/content/service/edit', 'AdminServiceController@edit');
+Route::any('admin/content/service/edit_submit', 'AdminServiceController@edit_submit');
+Route::any('admin/content/service/delete', 'AdminServiceController@delete');
+
+/* ABOUT MANAGEMENT */
+Route::get('admin/content/about/', 'AdminAboutController@index');
+Route::any('admin/content/about/submit', 'AdminAboutController@submit');
 
 /* PARTNER MANAGEMENT */
 Route::get('admin/content/partner', 'AdminPartnerController@index');
@@ -214,13 +227,24 @@ Route::post('admin/utilities/position/delete', 'AdminPositionController@delete')
 Route::get('admin/utilities/setting', 'AdminSettingsController@index');
 Route::get('admin/utilities/complan', 'AdminComplanController@index');
 
-/* ADMIN / UTITLITIES / COMPTATION*/
+/* ADMIN / UTITLITIES / COMPTATION */
 Route::get('admin/utilities/binary', 'AdminComplanController@binary');
 Route::any('admin/utilities/binary/edit', 'AdminComplanController@binary_edit');
 Route::any('admin/utilities/binary/add', 'AdminComplanController@binary_add');
 Route::any('admin/utilities/binary/delete', 'AdminComplanController@binary_delete');
 Route::any('admin/utilities/binary/membership/edit', 'AdminComplanController@binary_membership_edit');
 Route::any('admin/utilities/binary/product/edit', 'AdminComplanController@binary_product_edit');
+
+Route::any('admin/utilities/matching', 'AdminComplanController@matching');
+Route::any('admin/utilities/matching/edit', 'AdminComplanController@matching_edit');
+
+Route::any('admin/utilities/direct', 'AdminComplanController@direct');
+Route::any('admin/utilities/direct/edit', 'AdminComplanController@direct_edit');
+
+Route::any('admin/utilities/indirect', 'AdminComplanController@indirect');
+Route::any('admin/utilities/indirect/edit', 'AdminComplanController@indirect_edit');
+
+Route::any('admin/utilities/unilevel', 'AdminComplanController@unilevel');
 
 /* ADMIN / REPORTS */
 Route::any('admin/reports/product_sales', 'AdminReportController@product_sales');

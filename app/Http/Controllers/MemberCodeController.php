@@ -206,9 +206,9 @@ class MemberCodeController extends MemberController
         }
 
 
-		$data['prodcode'] = DB::table('tbl_product_code')->join('tbl_voucher_has_product','tbl_voucher_has_product.voucher_item_id','=','tbl_product_code.voucher_item_id')
-														 ->join('tbl_voucher','tbl_voucher.voucher_id','=','tbl_voucher_has_product.voucher_id')
-														 ->join('tbl_product','tbl_product.product_id','=','tbl_voucher_has_product.product_id')
+		$data['prodcode'] = DB::table('tbl_product_code')->leftjoin('tbl_voucher_has_product','tbl_voucher_has_product.voucher_item_id','=','tbl_product_code.voucher_item_id')
+														 ->leftjoin('tbl_voucher','tbl_voucher.voucher_id','=','tbl_voucher_has_product.voucher_id')
+														 ->leftjoin('tbl_product','tbl_product.product_id','=','tbl_voucher_has_product.product_id')
 														 ->get();
 														 
 		$data['count']= DB::table('tbl_membership_code')->where('archived',0)->where('account_id','=',$id)->where('tbl_membership_code.blocked',0)->count();		

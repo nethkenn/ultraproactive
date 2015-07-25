@@ -187,12 +187,13 @@
     @endif
 </div>
 <div class="col-md-5 right">
+    <!-- NOTIFICATIONS -->
+    @if($_notification)
     <div class="holder">
         <div class="header">
             <img src="/resources/assets/frontend/img/icon-notification.png">
             Latest Notification
         </div>
-        @if($_notification)
         @foreach($_notification as $log)
         <div class="holders para">
             <div class="linyanglinya"></div>
@@ -203,10 +204,12 @@
         </div>
         @endforeach
         <a href="javascript:">
-            <button type="button">View More Notifications</button>
+            <button onclick="location.href='/member/notification'" type="button">View All Notification(s)</button>
         </a>
-        @endif
     </div>
+    @endif
+
+    <!-- TOP EARNERS OF THE MONTH -->
     <div class="holder">
         <div class="header">
             <img src="/resources/assets/frontend/img/icon-earner.png">
