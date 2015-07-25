@@ -23,7 +23,11 @@
 	                <td>{{$voucher_product->sub_total}}</td>
 	            </tr>
 	        @endforeach
-	        <tr><td class="text-right" colspan="7"><strong>Total : {{$voucher->total_amount}}</strong></td></tr>
+
+	        
+	        <tr><td class="text-right" colspan="7"><strong>Item total Price : {{$product_total}}</strong></td></tr>
+	         <tr><td class="text-right" colspan="7"><strong>Discount : {{$voucher->discount}} ({{$discount_pts}})</strong></td></tr>
+	        <tr><td class="text-right" colspan="7"><strong>Grand Total : {{$voucher->total_amount}}</strong></td></tr>
 	    @endif
 	</tbody>
 </table>

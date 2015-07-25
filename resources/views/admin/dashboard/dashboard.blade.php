@@ -32,8 +32,8 @@
 		</div>
 	</div>
 	<div class="graph">
-		<section id="auth-button"></section>
-		<section id="timeline"></section>
+		<div id="chart-1-container"></div>
+		<div id="chart-2-container"></div>
 	</div>
 </div>
 @endsection

@@ -53,75 +53,102 @@ class MemberCheckoutController extends Controller
             /**
              * VALIDATOR REQUEST PRODUCT CART
              */
-            foreach( (array)$cart as $key => $val)
-            {
+            // foreach( (array)$cart as $key => $val)
+            // {
 
-                $request['product_'.$key] = $key;
-
-
-            }
+            //     $request['product_'.$key] = $key;
 
 
-             /**
-             * VALIDATOR RULES PRODUCT CART
-             */
-            foreach( (array)$cart as $key => $val)
-            {
+            // }
 
-                $product = Tbl_product::where('product_id', $key)->first();
-                $rules['product_'.$key] = 'integer|has_stock:'.$product->stock_qty .','. $val['qty'];
 
-            }
+            //  /**
+            //  * VALIDATOR RULES PRODUCT CART
+            //  */
+            // foreach( (array)$cart as $key => $val)
+            // {
+
+            //     $product = Tbl_product::where('product_id', $key)->first();
+            //     $rules['product_'.$key] = 'integer|has_stock:'.$product->stock_qty .','. $val['qty'];
+
+            // }
 
             $request['slot_id'] = Request::input('slot_id');
             $rules['slot_id'] = 'required|exists:tbl_slot,slot_id,slot_owner,'.$customer->account_id;
 
-            $request['slot_wallet'] = $validate_slot_wallet;
-            $rules['slot_wallet'] = 'accepted';
+            $request['slot_wallet'] = $slot->slot_wallet;
+            $rules['slot_wallet'] = 'check_wallet:'.$data['final_total'];
 
             $request['cart'] = $cart_count;
-            $rules['cart'] = 'accepted';
+            $rules['cart'] = 'Integer|min:1';
 
             $message = [
                             'slot_wallet.accepted' => 'Not enough :attribute',
                             'cart.accepted' => 'The :attribute is empty.'
                         ];
 
+
+            $message['slot_wallet.check_wallet'] = "Slot wallet balance is not enough.";
+            Validator::extend('check_wallet', function($attribute, $value, $parameters)
+            {
+             $slot_wallet = $value;
+             $voucher_total = $parameters[0];
+             $deducted = $slot_wallet - $voucher_total;
+
+             if($slot_wallet < $voucher_total || $deducted < 0)
+             {
+                 return false;
+             }
+             else
+             {
+                 return true;
+             }
+
+            });
+
             /**
              * VALIDATOR MESSAGE PRODUCT CART
              */
-            foreach((array)$cart as $key => $val)
-            {
+            // foreach((array)$cart as $key => $val)
+            // {
                     
-                $message['product_'.$key.'.has_stock'] = 'The :attribute has unsufficient stock.';
+            //     $message['product_'.$key.'.has_stock'] = 'Invalid product cart quantity.';
 
-            }  
+            // }  
 
 
 
-            Validator::extend('has_stock', function($attribute, $value, $parameters)
-            {
+            // Validator::extend('has_stock', function($attribute, $value, $parameters)
+            // {
         
-                $stock_qty = $parameters[0];
-                $cart_qty = $parameters[1];
-                $stock_minus_cart_qty = $stock_qty-$cart_qty;
+            //     $stock_qty = $parameters[0];
+            //     $cart_qty = $parameters[1];
+            //     if($cart_qty <= 0 )
+            //     {
+            //         return false;
+            //     }
+            //     else
+            //     {
+            //         return true;
+            //     }
+                // $stock_minus_cart_qty = $stock_qty-$cart_qty;
 
-                if($stock_qty < $cart_qty || $stock_minus_cart_qty < 0)
-                {
+                // if($stock_qty < $cart_qty || $stock_minus_cart_qty < 0)
+                // {
                     
                    
-                    $cart = Session::get('cart');
-                    unset($cart[$value]);
-                    Session::forget('cart');
-                    Session::put('cart',$cart );
-                    return false;
+                //     $cart = Session::get('cart');
+                //     unset($cart[$value]);
+                //     Session::forget('cart');
+                //     Session::put('cart',$cart );
+                //     return false;
 
-                }
-                else
-                {
-                    return $value;
-                }
-            });
+                // }
+                // else
+                // {
+                //     return $value;
+                // }
+            // });
 
 
             
