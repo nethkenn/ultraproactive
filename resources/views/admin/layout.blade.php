@@ -44,7 +44,7 @@
 
 		</script>
 	</head>
-	<body style="overflow: scroll">
+	<body style="overflow-y: scroll">
 		<div class="container">
 			<nav class="navbar navbar-default">
 				<div class="container-fluid">
