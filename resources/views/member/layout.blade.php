@@ -13,7 +13,7 @@
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300' rel='stylesheet' type='text/css'>
     <!--<base href="{{$_SERVER['SERVER_NAME']}}">-->
     <base href="{{URL::to('/')}}">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}"> }}">
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -33,8 +33,8 @@
 				<div class="col-md-6 ubod">
                     <img src="/resources/assets/frontend/img/member-logo.png">
                 </div>
-                <div class="col-md-6 grabe">
-                    <div class="header-text">Account Setting</div>
+                <div class="col-md-6 grabe">    
+                    <div class="header-text"><a href="/member/settings">Account Setting</a></div>
                     <div class="header-text"><a href="/member/logout">{{$member->account_name}} ( Logout )</a></div>
                 </div>
 			</div>
@@ -567,10 +567,9 @@
 
 <script type="text/javascript">
     $.ajaxSetup({
-        cache: false,
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
     });
 </script>
 <script type="text/javascript">

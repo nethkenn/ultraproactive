@@ -1,5 +1,5 @@
 <form id="checkout-form" class="form-horizontal">
-  {{--  <div class="form-group">
+  <!--  <div class="form-group">
      <h2>Checkout</h2>
    </div>
        @if($_error)
@@ -59,7 +59,7 @@
       <button id="cancel-checkout" class="btn btn-default">Cancel</button>
       <button type="submit" class="btn btn-default" id="submit-checkout">Checkout</button>
     </div>
-  </div> --}}
+  </div> -->
 
     <button data-remodal-action="close" class="remodal-close"></button>
     <div class="header">

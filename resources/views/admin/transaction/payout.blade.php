@@ -1,5 +1,14 @@
 @extends('admin.layout')
 @section('content')
+
+        @if(Session::has('success'))
+            <div class="alert alert-success">
+                <ul>
+                        <li>{{ $success }}</li>
+                </ul>
+            </div>
+        @endif
+
 	<div class="row">
 		<div class="header">
 			<input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -44,8 +53,13 @@
                         <td>{{$d['deduction']}}</td>
                         <td>{{$d['total']}}</td>
                         <td>{{$d['date']}}</td>
+                       @if(Request::input('processed') == 1)
+                        <td></td>
+                        <td></td>
+                       @else
                         <td><a class="showmodal-b" json="{{$d['json']}}" style="cursor:pointer;">Breakdown</a></td>
-                        <td><a class="showmodal-p" style="cursor:pointer;">Proccess</a></td>
+                        <td><a class="showmodal-p" style="cursor:pointer;" accid="{{$d['account_id']}}"  accnm="{{$d['account_name']}}" total="{{$d['total']}}" deduction="{{$d['deduction']}}" sum="{{$d['sum']}}" type="{{$d['type']}}">Proccess</a></td>
+                       @endif
                     </tr>
                   @endforeach 
                 </tbody>
@@ -64,12 +78,23 @@
     <form class="form-horizontal" method="POST">
 
             <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
+            <input type="hidden" class="secretid" name="idtoprocess">
+
+
             <div class="form-group para">
                 <label for="1" class="col-sm-3 control-label">Request From</label>
                 <div class="col-sm-9">
                     <input class="form-control" id="1" name="request" value="">
                 </div>
             </div>
+
+            <div class="form-group para">
+                <label for="5" class="col-sm-3 control-label">Type</label>
+                <div class="col-sm-9">
+                    <input class="form-control" id="5" name="type" value="">
+                </div>
+            </div>   
+          
 
             <div class="form-group para">
                 <label for="2" class="col-sm-3 control-label">Amount</label>
@@ -79,32 +104,20 @@
             </div>
 
             <div class="form-group para">
-                <label for="3" class="col-sm-3 control-label">Payment Type</label>
+                <label for="3" class="col-sm-3 control-label">Deduction</label>
                 <div class="col-sm-9">
-                    <input class="form-control" id="3" name="payment" value="">
+                    <input class="form-control" id="3" name="deduction" value="">
                 </div>
             </div>
 
             <div class="form-group para">
-                <label for="4" class="col-sm-3 control-label">Bank Name</label>
+                <label for="4" class="col-sm-3 control-label">Total Amount</label>
                 <div class="col-sm-9">
-                    <input class="form-control" id="4" name="bankname" value="">
+                    <input class="form-control" id="4" name="total" value="">
                 </div>
             </div>
 
-            <div class="form-group para">
-                <label for="5" class="col-sm-3 control-label">Bank Account Name</label>
-                <div class="col-sm-9">
-                    <input class="form-control" id="5" name="bankaccount" value="">
-                </div>
-            </div>
-
-            <div class="form-group para">
-                <label for="6" class="col-sm-3 control-label">Bank Account Number</label>
-                <div class="col-sm-9">
-                    <input class="form-control" id="6" name="banknumber" value="">
-                </div>
-            </div>         
+  
 
     </div>
     <br>

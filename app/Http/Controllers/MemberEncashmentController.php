@@ -60,6 +60,7 @@ class MemberEncashmentController extends MemberController
 			}
 			$insert['deduction'] = $t;
 			Tbl_account_encashment_history::insert($insert);
+			Log::slot(Session::get('currentslot'),'Encash a wallet',$total); 
 		}
 		else
 		{

@@ -38,7 +38,7 @@
 }
 
 
-function message_popup($popup_title,$successMessage,$classes=[])
+function message_popup($popup_title,$successMessage,$classes)
 {
     setTimeout(function(){
 

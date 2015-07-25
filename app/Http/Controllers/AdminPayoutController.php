@@ -2,47 +2,247 @@
 use DB;
 use Request;
 use Redirect;
-use Carbon;
+use Carbon\Carbon;
 use Datatables;
 use Crypt;
 use App\Tbl_account_encashment_history;
 use App\Classes\Admin;
 use Config;
 use App\Tbl_slot;
+use App\Tbl_country;
+use Session;
+use App\Classes\Log;
+
 class AdminPayoutController extends AdminController
 {
 	public function index()
 	{
 		$data["page"] = "Process Payout"; 
-
-
+        $data['success'] = Session::get('success');
 
         if(isset($_POST['processall']))
         {
-            
+            $this->processall();
+            $success = "Proccessed all payout successfully.";
+
+
+            if(Request::input('processed') == 1)
+            {
+                 return Redirect::to('admin/transaction/payout/?processed=1')->with('success',$success);
+            }
+            else
+            {
+               return Redirect::to('admin/transaction/payout')->with('success',$success);
+            }
         }
-        if(isset($_POST['encashall']))
-        {
-            
-        }
+
 
         if(Request::input('processed') == 1)
         {
             $request = 'Processed';
+            $account = $this->processed();
         }
         else
         {
             $request = 'Pending';
+            $account = $this->pending();
         }
 
-        $account = Tbl_account_encashment_history::selectRaw('tbl_account_encashment_history.account_id, sum(amount) as sum')
+        if(isset($_POST['encashall']))
+        {
+            $this->encashallwallet();
+            $success = "Auto Encashment Success (Processed Request)";
+
+
+            if(Request::input('processed') == 1)
+            {
+                 return Redirect::to('admin/transaction/payout/?processed=1')->with('success',$success);
+            }
+            else
+            {
+               return Redirect::to('admin/transaction/payout')->with('success',$success);
+            }
+
+        }
+
+        if(isset($_POST['proccess']))
+        {
+            $this->singleprocess(Request::input('idtoprocess'));
+            $success = "Single Process complete (Processed Request)";
+
+
+            if(Request::input('processed') == 1)
+            {
+                 return Redirect::to('admin/transaction/payout/?processed=1')->with('success',$success);
+            }
+            else
+            {
+               return Redirect::to('admin/transaction/payout')->with('success',$success);
+            }
+
+        }
+
+
+
+
+
+        $data['data'] = $account;   
+        return view('admin.transaction.payout',$data);
+	}
+    public function processall()
+    {
+            $e = Tbl_account_encashment_history::where('status','Processed')->orderBy('processed_no','DESC')->first(); 
+            if(!isset($e))
+            {
+                $e = 1;
+            }
+            else
+            {
+                $e = $e->processed_no + 1;
+            }
+
+            $enc = Tbl_account_encashment_history::where('status','Pending')->orderBy('account_id','DESC')->get(); 
+            
+            foreach($enc as $data)
+            {
+
+                    if(!isset($forprocess))
+                    {
+                        $forprocess = $data->account_id;
+                    }
+                    else
+                    {
+                        if($forprocess == $data->account_id)
+                        {
+                            $e = $e;
+                        }
+                        else
+                        {
+                            $forprocess = $data->account_id;
+                            $e = $e + 1;
+                        }
+                    }
+
+
+                    $update['processed_no'] = $e; 
+                    $update['status'] = 'Processed'; 
+                    Tbl_account_encashment_history::where('request_id',$data->request_id)->update($update);                  
+            }     
+    }
+    public function encashallwallet()
+    {
+            $e = Tbl_account_encashment_history::where('status','Processed')->orderBy('processed_no','DESC')->first(); 
+            $slot = Tbl_slot::orderBy('slot_owner','ASC')->get();
+            $e = $e->processed_no + 1;
+            foreach($slot as $data)
+            {
+                if($data->slot_wallet != 0)
+                {
+                    if(!isset($forprocess))
+                    {
+                        $forprocess = $data->slot_owner;
+                    }
+                    else
+                    {
+                        if($forprocess == $data->slot_owner)
+                        {
+                            $e = $e;
+                        }
+                        else
+                        {
+                            $forprocess = $data->slot_owner;
+                            $e = $e + 1;
+                        }
+                    }
+
+                    $totald = 0;
+                    $deduction = Tbl_country::where('tbl_country.country_id',2)->deduct2()->deductioncountry2()->get();
+                    foreach($deduction as $d)
+                    {
+                        if($d->percent == 1)
+                        {
+                            $totald = ($totald) + ($data->slot_wallet * ($d->deduction_amount/100));
+                        }
+                        else
+                        {
+                            $totald = ($totald) + ($d->deduction_amount);
+                        }
+                    }
+
+                    $insert['slot_id'] = $data->slot_id;
+                    $insert['account_id'] = $data->slot_owner;
+                    $insert['amount'] = $data->slot_wallet;
+                    $insert['encashment_date'] = Carbon::now();
+                    $insert['deduction'] = $totald;
+                    $insert['type'] = 'Cheque';
+                    $insert['status'] = 'Processed';
+                    $insert['processed_no'] = $e; 
+
+                    $update['slot_wallet'] = $data->slot_wallet - $data->slot_wallet;
+                    Tbl_slot::where('slot_id',$data->slot_id)->update($update);
+                    Tbl_account_encashment_history::insert($insert);  
+                    Log::slot($data->slot_id,'Encashed all remaining wallet(by Admin)',$update['slot_wallet']);                
+                }
+            }
+    }
+
+    public static function currency_format($price)
+    {
+        $currency = Config::get('app.currency');
+        return number_format($price, 2);
+    }
+
+    public function singleprocess($id)
+    {
+            $e = Tbl_account_encashment_history::where('status','Processed')->orderBy('processed_no','DESC')->first(); 
+            if(!isset($e))
+            {
+                $e = 1;
+            }
+            else
+            {
+                $e = $e->processed_no + 1;
+            }
+
+            $enc = Tbl_account_encashment_history::where('status','Pending')->where('account_id',$id)->orderBy('account_id','DESC')->get(); 
+            
+            foreach($enc as $data)
+            {
+
+                    if(!isset($forprocess))
+                    {
+                        $forprocess = $data->account_id;
+                    }
+                    else
+                    {
+                        if($forprocess == $data->account_id)
+                        {
+                            $e = $e;
+                        }
+                        else
+                        {
+                            $forprocess = $data->account_id;
+                            $e = $e + 1;
+                        }
+                    }
+
+
+                    $update['processed_no'] = $e; 
+                    $update['status'] = 'Processed'; 
+                    Tbl_account_encashment_history::where('request_id',$data->request_id)->update($update);                  
+            } 
+    }
+
+    public function pending()
+    {
+            $account = Tbl_account_encashment_history::selectRaw('tbl_account_encashment_history.account_id, sum(amount) as sum')
                                                 ->account()
                                                 ->selectRaw('tbl_account.account_name, tbl_account.account_name')
                                                 ->selectRaw('tbl_account_encashment_history.account_id, sum(deduction) as deduction')
                                                 ->selectRaw('count(*) as count, slot_id')
                                                 ->selectRaw('tbl_account_encashment_history.account_id, tbl_account_encashment_history.account_id')
                                                 ->selectRaw('type, type')
-                                                ->where('status',$request)
+                                                ->where('status','Pending')
                                                 ->groupBy('account_id')
                                                 ->groupBy('type')
                                                 ->get();  
@@ -63,19 +263,41 @@ class AdminPayoutController extends AdminController
                  $d  = Tbl_account_encashment_history::where('account_id',$a->account_id)->orderBy('encashment_date','DESC')->where('status','Pending')->where('type',$a->type)->first();
                  $account[$key]->date = $d->encashment_date;   
             }
-        $data['data'] = $account;   
 
-        return view('admin.transaction.payout',$data);
-	}
-
-    public function encashallwallet()
-    {
-
+            return $account;
     }
 
-    public static function currency_format($price)
+    public function processed()
     {
-        $currency = Config::get('app.currency');
-        return number_format($price, 2);
+            $account = Tbl_account_encashment_history::selectRaw('tbl_account_encashment_history.account_id, sum(amount) as sum')
+                                                ->account()
+                                                ->selectRaw('tbl_account.account_name, tbl_account.account_name')
+                                                ->selectRaw('tbl_account_encashment_history.account_id, sum(deduction) as deduction')
+                                                ->selectRaw('count(*) as count, slot_id')
+                                                ->selectRaw('tbl_account_encashment_history.account_id, tbl_account_encashment_history.account_id')
+                                                ->selectRaw('type, type')
+                                                ->where('status','Processed')
+                                                ->groupBy('processed_no')
+                                                ->groupBy('type')
+                                                ->get();  
+
+            foreach($account as $key => $a)
+            {
+                if(!isset($account[$key]->total))
+                {
+                    $account[$key]->total = $this->currency_format(($a->sum - $a->deduction)); 
+                }
+                else
+                {
+                    $account[$key]->total =  $this->currency_format(($account[$key]->total + $a->sum) - $a->deduction); 
+                }
+                $account[$key]->sum =  $this->currency_format($a->sum);
+                $account[$key]->deduction = $this->currency_format($a->deduction);
+                $account[$key]->json = json_encode(Tbl_account_encashment_history::where('account_id',$a->account_id)->where('status','Processed')->where('type',$a->type)->get());
+                $d  = Tbl_account_encashment_history::where('account_id',$a->account_id)->orderBy('encashment_date','DESC')->where('status','Processed')->where('type',$a->type)->first();
+                $account[$key]->date = $d->encashment_date;   
+            }
+
+            return $account; 
     }
 }

@@ -4,7 +4,7 @@ use Crypt;
 use Session;
 use App\Classes\Image;
 use App\Classes\Globals;
-
+use Redirect;
 class Customer
 {
 	public static $table = 'tbl_account';
@@ -84,7 +84,19 @@ class Customer
             $user_id  = Crypt::decrypt(Session::get(Customer::$primary));
             $pass     = Crypt::decrypt(Session::get(Customer::$secondary));
             $userpass = DB::table('tbl_account')->where('account_id',$user_id)->first();
+
+            if($userpass == null)
+            {
+                Session::forget(Customer::$primary);
+                Session::forget(Customer::$secondary);
+                Session::forget('currentslot');  
+                return Redirect::to('member/login');          
+            }
+
+
             $userpass = Crypt::decrypt($userpass->account_password);
+
+  
 
             if($userpass == $pass)
             {             

@@ -15,8 +15,8 @@ class CreateTblMemberCodeHistory extends Migration
         Schema::create('tbl_member_code_history', function (Blueprint $table) {
 
             $table->integer('code_pin')->unsigned();
-            $table->integer('by_account_id')->unsigned();
-            $table->integer('to_account_id')->unsigned();
+            $table->integer('by_account_id')->unsigned()->nullable();
+            $table->integer('to_account_id')->unsigned()->nullable();
             $table->dateTime('updated_at');
             $table->text('description');
             

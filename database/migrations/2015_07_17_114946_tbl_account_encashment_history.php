@@ -24,6 +24,7 @@ class TblAccountEncashmentHistory extends Migration
             $table->string('status');
             $table->foreign('slot_id')->references('slot_id')->on('tbl_slot')->onDelete('cascade');
             $table->foreign('account_id')->references('account_id')->on('tbl_account')->onDelete('cascade');
+            $table->integer('processed_no')->default(0);
         });
     }
 

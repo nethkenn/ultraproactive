@@ -16,6 +16,8 @@ Route::any('/member/genealogy', 'MemberGenealogyController@index');
 Route::any('/member/voucher', 'MemberVoucherController@index');
 Route::get('/member/voucher/product', 'MemberVoucherController@showVoucherProduct');
 
+Route::any('/member/settings', 'MemberAccountSettingsController@index');
+Route::any('/member/settings/upload', 'MemberAccountSettingsController@upload');
 
 Route::any('/member/leads', 'MemberLeadController@index');
 Route::any('/member/leads/{slug}', 'MemberLeadController@link');
@@ -41,7 +43,15 @@ Route::post('/admin','AdminController@postLogin');
 
 /* ADMIN / TRANSACTION */
 Route::get('admin/transaction/sales', 'AdminSalesController@index');
-Route::get('admin/transaction/sales/process', 'AdminSalesController@process');
+Route::get('admin/transaction/sales/data', 'AdminSalesController@get_sales');
+Route::get('admin/transaction/sales/process', 'AdminSalesController@process_sale');
+Route::post('admin/transaction/sales/add_to_cart', 'AdminSalesController@add_to_cart');
+Route::get('admin/transaction/sales/get_cart', 'AdminSalesController@get_cart');
+Route::post('admin/transaction/sales/remove_to_cart', 'AdminSalesController@remove_to_cart');
+Route::post('admin/transaction/sales/edit_cart', 'AdminSalesController@edit_cart');
+Route::post('admin/transaction/sales/process/member', 'AdminSalesController@process_member');
+Route::post('admin/transaction/sales/process/non-member', 'AdminSalesController@process_nonMember');
+Route::get('admin/transaction/sales/process/get_slots', 'AdminSalesController@get_slot');
 /**
  * ADMIN TRANSACTION CLAIMS
  */
@@ -261,6 +271,8 @@ Route::any('admin/utilities/unilevel', 'AdminComplanController@unilevel');
 Route::any('admin/reports/product_sales', 'AdminReportController@product_sales');
 Route::any('admin/reports/membership_sales', 'AdminReportMembershipController@index');
 
+Route::any('admin/account/settings/profile', 'AdminAccountSettingsController@settings');
+Route::any('admin/account/settings/change_pass', 'AdminAccountSettingsController@changepass');
 
 Route::any('admin/login', 'AdminLoginController@index');
 Route::any('admin/account/logout', 'AdminProfileController@logout');

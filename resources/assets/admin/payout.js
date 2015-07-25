@@ -18,6 +18,13 @@ function payout()
        $('.processor').on('click', '.showmodal-p', function()
        {
 			var inst = $('[data-remodal-id=process]').remodal();
+			$('.secretid').val($(this).attr('accid'));
+			$('#1').val($(this).attr('accnm'));
+			$('#2').val($(this).attr('sum'));
+			$('#3').val($(this).attr('deduction'));
+			$('#4').val($(this).attr('total'));
+			$('#5').val($(this).attr('type'));
+
           	inst.open(); 
        });
 

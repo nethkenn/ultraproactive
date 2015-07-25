@@ -687,7 +687,6 @@ class Globals
                 $stop = true;
             }
         }
-
         return $code;
     } 
 }

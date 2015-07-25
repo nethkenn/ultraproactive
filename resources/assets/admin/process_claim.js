@@ -16,24 +16,24 @@ function process_claim()
 	}
 
 
-
 	function process_claim_init()
 	{
 		$('.submit-claim').on('click', function(event)
 		{
-
 			$('#ajax-message').empty();
 			event.preventDefault();
 			var $voucher_id = $(this).attr('voucher-id');
 			var $account_password = $('input[name="account_password"]').val();
+			var $_token = $('meta[name="_token"]').attr('content');
 			// console.log($account_password);
 			// console.log($voucher_id);
 			$.ajax({
 				url: 'admin/transaction/claims/claim',
-				type: 'post',
+				type: 'POST',
 				dataType: 'json',
 				data: {voucher_id: $voucher_id,
-						account_password:$account_password
+						account_password:$account_password,
+						_token : $_token
 						},
 			})
 			.done(function($data) {
@@ -83,13 +83,15 @@ function process_claim()
 			event.preventDefault();
 			var $voucher_id = $(this).attr('voucher-id');
 			var $account_password = $('input[name="account_password"]').val();
+			var $_token = $('meta[name="_token"]').attr('content');
 
 			$.ajax({
 				url: 'admin/transaction/claims/void',
 				type: 'post',
 				dataType: 'json',
 				data: {voucher_id: $voucher_id,
-						account_password:$account_password
+						account_password:$account_password,
+						_token : $_token
 						},
 			})
 			.done(function($data) {
