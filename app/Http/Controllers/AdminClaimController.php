@@ -35,7 +35,7 @@ class AdminClaimController extends AdminController
 			switch ($filter)
 			{
 				case 'today':
-					$query->where('updated_at', $today);
+					$query->where(DB::raw('DATE(updated_at)'),'=' , $today);
 					break;
 				
 				default:
