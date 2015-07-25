@@ -81,7 +81,10 @@ class FrontController extends Controller
 			$litrato = Image::view($kuha, "415x415");
 			$data["_team"][$susi]->image = $litrato;
 		}
-
+		$data["about"] = DB::table("tbl_about")->where("archived", 0)->where("about_name", "About")->first();
+		$data["vision"] = DB::table("tbl_about")->where("archived", 0)->where("about_name", "Vision")->first();
+		$data["mission"] = DB::table("tbl_about")->where("archived", 0)->where("about_name", "Mission")->first();
+		$data["philosophy"] = DB::table("tbl_about")->where("archived", 0)->where("about_name", "Philosophy")->first();
         return view('front.about', $data);
 	}
 	public function partner()
@@ -95,6 +98,7 @@ class FrontController extends Controller
 		}
 
 		$data["_testimony"] = DB::table("tbl_testimony")->where("archived", 0)->get();
+		$data["partner"] = DB::table("tbl_about")->where("archived", 0)->where("about_name", "Partners")->first();
         return view('front.partner', $data);
 	}
 	public function earn()
@@ -102,12 +106,20 @@ class FrontController extends Controller
         return view('front.earn', $data);
 	}
 	public function service()
-	{
-        return view('front.service');
+	{	
+		$data["_service"] = DB::table("tbl_service")->where("archived", 0)->get();
+		foreach ($data["_service"] as $key => $value) 
+		{
+			$get = $value->service_image;
+			$imagee = Image::view($get, "723x530");
+			$data["_service"][$key]->image = $imagee;
+		}
+
+        return view('front.service', $data);
 	}
 	public function product()
 	{
-		$data["_product"] = DB::table("tbl_product")->where("image_file", "!=", "default.jpg")->where("archived", 0)->get();
+		$data["_product"] = DB::table("tbl_product")->where("image_file", "!=", "default.jpg")->where("image_file", "!=", "")->where("archived", 0)->get();
 		foreach ($data["_product"] as $key => $value) 
 		{
 			$get = $value->image_file;
@@ -184,7 +196,9 @@ class FrontController extends Controller
 	}
 	public function contact()
 	{
-        return view('front.contact');
+		$data["contact"] = DB::table("tbl_about")->where("archived", 0)->where("about_name", "Contact")->first();
+
+        return view('front.contact', $data);
 	}
 	public function contact_submit()
 	{

@@ -1,13 +1,15 @@
 <?php
-Route::any('/neil', 'NeilController@index');
+// Route::any('/neil', 'NeilController@index');
 
 /* MEMBER */
 Route::any('/member', 'MemberDashboardController@index');
+Route::any('/member/notification', 'MemberDashboardController@notification');
 Route::any('/member/slot', 'MemberSlotController@index');
 Route::any('/member/code_vault', 'MemberCodeController@index');
 Route::any('/member/code_vault/check', 'MemberCodeController@add_form_submit');
 Route::any('/member/code_vault/get', 'MemberCodeController@get');
 Route::post('/member/code_vault/lock', 'MemberCodeController@set_active');
+Route::post('/member/code_vault/lock2', 'MemberCodeController@set_active2');
 Route::any('/member/encashment', 'MemberEncashmentController@index');
 Route::any('/member/genealogy', 'MemberGenealogyController@index');
 
@@ -58,12 +60,12 @@ Route::post('admin/transaction/claims/claim', 'AdminClaimController@claim');
 Route::post('admin/transaction/claims/void', 'AdminClaimController@void');
 Route::get('admin/transaction/claims/show_product', 'AdminClaimController@show_product');
 
-Route::get('admin/transaction/payout', 'AdminPayoutController@index');
-Route::get('admin/transaction/payout/data', 'AdminPayoutController@data');
-Route::get('admin/transaction/payout/edit', 'AdminPayoutController@edit');
-Route::get('admin/transaction/payout/add', 'AdminPayoutController@add');
-Route::get('admin/transaction/payout/archive', 'AdminPayoutController@archive');
-Route::get('admin/transaction/payout/restore', 'AdminPayoutController@restore');
+Route::any('admin/transaction/payout', 'AdminPayoutController@index');
+Route::any('admin/transaction/payout/data', 'AdminPayoutController@data');
+Route::any('admin/transaction/payout/edit', 'AdminPayoutController@edit');
+Route::any('admin/transaction/payout/add', 'AdminPayoutController@add');
+Route::any('admin/transaction/payout/archive', 'AdminPayoutController@archive');
+Route::any('admin/transaction/payout/restore', 'AdminPayoutController@restore');
 
 Route::get('admin/transaction/unilevel', 'AdminUnilevelController@index');
 
@@ -78,6 +80,26 @@ Route::post('admin/maintenance/accounts/restore', 'AdminAccountController@restor
 
 Route::any('admin/maintenance/accounts/field', 'AdminAccountController@field');
 Route::get('admin/maintenance/accounts/field/delete', 'AdminAccountController@field_delete');
+
+/* PRODUCT CATEGORY */
+Route::get('admin/maintenance/product_category', 'AdminProductCategoryController@index');
+Route::get('admin/maintenance/product_category/add', 'AdminProductCategoryController@add');
+Route::any('admin/maintenance/product_category/add_submit', 'AdminProductCategoryController@add_submit');
+Route::get('admin/maintenance/product_category/edit', 'AdminProductCategoryController@edit');
+Route::any('admin/maintenance/product_category/edit_submit', 'AdminProductCategoryController@edit_submit');
+Route::any('admin/maintenance/product_category/delete', 'AdminProductCategoryController@delete');
+
+/* SERVICES MANAGEMENT */
+Route::get('admin/content/service', 'AdminServiceController@index');
+Route::get('admin/content/service/add', 'AdminServiceController@add');
+Route::any('admin/content/service/add_submit', 'AdminServiceController@add_submit');
+Route::get('admin/content/service/edit', 'AdminServiceController@edit');
+Route::any('admin/content/service/edit_submit', 'AdminServiceController@edit_submit');
+Route::any('admin/content/service/delete', 'AdminServiceController@delete');
+
+/* ABOUT MANAGEMENT */
+Route::get('admin/content/about/', 'AdminAboutController@index');
+Route::any('admin/content/about/submit', 'AdminAboutController@submit');
 
 /* PARTNER MANAGEMENT */
 Route::get('admin/content/partner', 'AdminPartnerController@index');
@@ -218,10 +240,13 @@ Route::any('admin/utilities/position/edit', 'AdminPositionController@edit');
 Route::post('admin/utilities/position/edit', 'AdminPositionController@update');
 Route::post('admin/utilities/position/delete', 'AdminPositionController@delete');
 
+/* ADMIN / SETTINGS */
 Route::get('admin/utilities/setting', 'AdminSettingsController@index');
+Route::any('admin/utilities/setting/submit', 'AdminSettingsController@submit');
+
 Route::get('admin/utilities/complan', 'AdminComplanController@index');
 
-/* ADMIN / UTITLITIES / COMPTATION*/
+/* ADMIN / UTITLITIES / COMPTATION */
 Route::get('admin/utilities/binary', 'AdminComplanController@binary');
 Route::any('admin/utilities/binary/edit', 'AdminComplanController@binary_edit');
 Route::any('admin/utilities/binary/add', 'AdminComplanController@binary_add');
@@ -229,9 +254,20 @@ Route::any('admin/utilities/binary/delete', 'AdminComplanController@binary_delet
 Route::any('admin/utilities/binary/membership/edit', 'AdminComplanController@binary_membership_edit');
 Route::any('admin/utilities/binary/product/edit', 'AdminComplanController@binary_product_edit');
 
+Route::any('admin/utilities/matching', 'AdminComplanController@matching');
+Route::any('admin/utilities/matching/edit', 'AdminComplanController@matching_edit');
+
+Route::any('admin/utilities/direct', 'AdminComplanController@direct');
+Route::any('admin/utilities/direct/edit', 'AdminComplanController@direct_edit');
+
+Route::any('admin/utilities/indirect', 'AdminComplanController@indirect');
+Route::any('admin/utilities/indirect/edit', 'AdminComplanController@indirect_edit');
+
+Route::any('admin/utilities/unilevel', 'AdminComplanController@unilevel');
+
 /* ADMIN / REPORTS */
-Route::get('admin/reports/product_sales', 'AdminReportController@product_sales');
-Route::get('admin/reports/membership_sales', 'AdminReportController@membership_sales');
+Route::any('admin/reports/product_sales', 'AdminReportController@product_sales');
+Route::any('admin/reports/membership_sales', 'AdminReportMembershipController@index');
 
 
 Route::any('admin/login', 'AdminLoginController@index');

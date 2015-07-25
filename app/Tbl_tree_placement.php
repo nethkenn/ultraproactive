@@ -16,4 +16,12 @@ class Tbl_tree_placement extends Model
     {
         return $query->join("tbl_slot", "tbl_slot.slot_id", "=", "tbl_tree_placement.placement_tree_parent_id");
     }
+    public function scopeLevel($query)
+    {
+        return $query->orderby("placement_tree_level", "desc");
+    }
+    public function scopeDistinct_level($query)
+    {
+        return $query->groupBy("placement_tree_level");
+    }
 }

@@ -195,7 +195,8 @@ body {
         .wrapper .header-nav .navbar .shadow {
           display: none; } }
   .wrapper .content {
-    margin-top: 40px; }
+    margin-top: 40px;
+    padding-bottom: 40px; }
 
 .create-slot {
   border-top: 5px #f47265 solid;
@@ -217,9 +218,7 @@ body {
   .create-slot .form-group {
     font-size: 12.5px; }
     .create-slot .form-group label {
-      color: #77818e !important;
-      font-family: "Arial", sans-serif !important;
-      font-style: italic; }
+      color: #77818e !important; }
     .create-slot .form-group input[type="text"],
     .create-slot .form-group input[type="password"],
     .create-slot .form-group select,
@@ -231,12 +230,12 @@ body {
       color: #9ea7b3; }
   .create-slot .button {
     border: 0;
-    background-color: #eeeeee;
-    color: #bbc4d0;
+    background-color: #DDDBDB;
+    color: #778192;
     padding: 10px 35px;
-    font-style: italic;
-    font-family: "Arial", sans-serif !important;
-    margin: 10px 0; }
+    margin: 10px 0;
+    font-weight: 600;
+    border-radius: 5px; }
   .create-slot .orange-btn {
     background-color: #f47265;
     color: white;

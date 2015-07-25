@@ -11,7 +11,7 @@ class AdminSlideController extends AdminController
 		$data["_slide"] = DB::table("tbl_slide")->where("archived", 0)->get();
 		foreach ($data["_slide"] as $key => $value) {
 			$get = $value->slide_image;
-			$imagee = Image::view($get);
+			$imagee = Image::view($get, "500x500");
 			$data["_slide"][$key]->image = $imagee;
 		}
 

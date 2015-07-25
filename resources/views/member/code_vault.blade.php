@@ -120,10 +120,11 @@
     <div class="table-head para">
         <div class="col-md-6 aw">
             <img src="/resources/assets/frontend/img/icon-product.png">
-            Product Codes ( 0 )
+            Product Codes ( {{$count2}} )
         </div>
     </div>
-   <!-- <table class="footable">
+   @if($prodcode) 
+   <table class="footable">
         <thead>
             <tr>
                 <th>Pin</th>
@@ -139,63 +140,76 @@
                 <th data-hide="phone,phonie,tablet"></th>
             </tr>
         </thead>
-        <tbody>
-            <tr class="tibolru">
-                <td>516</td>
-                <td>K65N4</td>
-                <td>Guillermo Tabligan (Admin)</td>
-                <td><div class="check"><input type="checkbox"><div class="bgs"></div></div></td>
-                <td>Candy</td>
-                <td>1,200.00</td>
-                <td>30.00</td>
-                <td>40.00</td>
-                <td>Available</td>
-                <td><a href="member/code_vault#use_code">Use Code</a></td>
-                <td><a href="member/code_vault#transfer_code">Transfer Code</a></td>
-            </tr>
-            <tr class="tibolru">
-                <td>516</td>
-                <td>K65N4</td>
-                <td>Guillermo Tabligan (Admin)</td>
-                <td><div class="check"><input type="checkbox"><div class="bgs"></div></div></td>
-                <td>Candy</td>
-                <td>1,200.00</td>
-                <td>30.00</td>
-                <td>40.00</td>
-                <td>Available</td>
-                <td><a href="member/code_vault#use_code">Use Code</a></td>
-                <td><a href="member/code_vault#transfer_code">Transfer Code</a></td>
-            </tr>
-            <tr class="tibolru">
-                <td>516</td>
-                <td>K65N4</td>
-                <td>Guillermo Tabligan (Admin)</td>
-                <td><div class="check"><input type="checkbox"><div class="bgs"></div></div></td>
-                <td>Candy</td>
-                <td>1,200.00</td>
-                <td>30.00</td>
-                <td>40.00</td>
-                <td>Available</td>
-                <td><a href="member/code_vault#use_code">Use Code</a></td>
-                <td><a href="member/code_vault#transfer_code">Transfer Code</a></td>
-            </tr>
-            <tr class="tibolru">
-                <td>516</td>
-                <td>K65N4</td>
-                <td>Guillermo Tabligan (Admin)</td>
-                <td><div class="check"><input type="checkbox"><div class="bgs"></div></div></td>
-                <td>Candy</td>
-                <td>1,200.00</td>
-                <td>30.00</td>
-                <td>40.00</td>
-                <td>Available</td>
-                <td><a href="member/code_vault#use_code">Use Code</a></td>
-                <td><a href="member/code_vault#transfer_code">Transfer Code</a></td>
-            </tr>
+        <tbody>   
+                   @foreach($prodcode as $prod)
+                        <tr class="tibolru" loading="{{$prod->product_pin}}">
+                        <td>{{$prod->product_pin}}</td>
+                        <td>{{$prod->code_activation}}</td>
+                        <td>Guillermo Tabligan (Admin)</td>
+                        <td>
+                            <div class="check"> 
+                                 <input type="checkbox" class="checklock2" {{$prod->lock == 1 ? "checked" : ""}}>
+                                 <div class="bgs">
+                                </div>
+                             </div>
+                        </td>
+                        <td>{{$prod->product_name}}</td>
+                        <td>{{$prod->price}}</td>
+                        <td>{{$prod->unilevel_pts}}</td>
+                        <td>{{$prod->binary_pts}}</td>
+                        <td>{{$prod->used == 0 ? "Available" : "Used"}}</td>
+                        <td><a style="cursor: pointer;" class="use-p">Use Code</a></td>
+                        <td><a style="cursor: pointer;" class="transferer-p" vals="{{$prod->voucher_id}}" value="{{$prod->product_pin}} @ {{$prod->code_activation}}" val="{{$prod->product_pin}}">Transfer Code</a></td>
+                        </tr>
+                    @endforeach
         </tbody>
-    </table> -->
+    </table>
+    @endif
     </div>
 </div>
+
+
+<div class="remodal create-slot" data-remodal-id="use_code" data-remodal-options="hashTracking: false">
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <div class="header">
+        <img src="/resources/assets/frontend/img/icon-use.png">
+        Use Code
+    </div>
+    <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
+    <div class="col-md-10 col-md-offset-1 para">
+        <form class="form-horizontal">
+            <div class="form-group para">
+                <label for="111" class="col-sm-3 control-label">Points Recipient</label>
+                <div class="col-sm-9">
+                    <select class="form-control" id="111" name="slot">
+                        @if($getallslot)
+                            @foreach($getallslot as $get)
+                                <option value="{{$get->slot_id}}"> Slot #{{$get->slot_id}}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
+            </div>
+            <div class="form-group para">
+                <label for="222" class="col-sm-3 control-label">Unilevel Points</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="222" disabled>
+                </div>
+            </div>
+            <div class="form-group para">
+                <label for="333" class="col-sm-3 control-label">Binary Points</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="333" disabled>
+                </div>
+            </div>
+    </div>
+    <br>
+    <button class="button" type="button" data-remodal-action="cancel">Cancel</button>
+    <button class="button" type="submit" name="usingcode">Use Code</button>
+</form>
+</div>
+
+
 
 
 <div class="remodal create-slot" data-remodal-id="create_slot" data-remodal-options="hashTracking: false">
@@ -263,9 +277,9 @@
                 </div>
             </div>
             <div class="form-group para">
-                <label for="11111" class="col-sm-3 control-label">Product Package</label>
+                <label for="3123" class="col-sm-3 control-label">Product Package</label>
                 <div class="col-sm-9">
-                    <select id="packageincluded" class="form-control"  name="package">
+                    <select id="packageincluded" class="form-control" id="3123" name="package">
                         @if($availprod)
                             @foreach($availprod as $a)    
                                 <option value="{{$a->product_package_id}}" included="{{$a->membership_id}}" json="{{$a->productlist}}">{{$a->product_package_name}}</option>
@@ -316,11 +330,99 @@
             </div>
     </div>
             <br>
-                <button class="button" data-remodal-action="cancel">Cancel</button>
+                <button class="button" type="button" data-remodal-action="cancel">Cancel</button>
                 <button class="ifbuttoncode button" type="submit" id="ifbuttoncode" name="sbmitbuy" value="Buy Code" disabled>Buy Code</button>
         </form>    
 </div>
 
+
+
+
+   <div class="remodal create-slot" data-remodal-id="transfer_product" data-remodal-options="hashTracking: false">
+        <button data-remodal-action="close" class="remodal-close"></button>
+        <div class="header">
+            <img src="/resources/assets/frontend/img/icon-transfer.png">
+            Transfer Code
+        </div>
+        <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
+        <div class="col-md-10 col-md-offset-1 para">
+            <form class="form-horizontal" method="POST">
+                <div class="form-group para">
+                    <label for="11z" class="col-sm-3 control-label">Code</label>
+                    <div class="col-sm-9">
+                        <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" class="form-control" id="11sz" name="code">
+                        <input type="hidden" class="form-control" id="11szz" name="voucher">
+                        <input type="text" class="form-control" id="11z" disabled>
+                    </div>
+                </div>
+                <div class="form-group para">
+                    <label for="22" class="col-sm-3 control-label">Recipient</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" id="22" name="account">
+                            @if($accountlist)
+                                @foreach($accountlist  as $a)
+                                     <option value="{{$a->account_id}}">{{$a->account_email}}({{$a->account_name}})</option>
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group para">
+                    <label for="33" class="col-sm-3 control-label">Enter Password</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" id="33" name="pass">
+                    </div>
+                </div>
+        </div>
+        <br>
+        <button class="button" type="button" data-remodal-action="cancel">Cancel</button>
+        <button class="button" type="submit" name="prodsbmt">Initiate Transfer</button>
+    </div>
+</form>
+
+
+<div class="remodal create-slot" data-remodal-id="transfer_code" data-remodal-options="hashTracking: false">
+        <button data-remodal-action="close" class="remodal-close"></button>
+        <div class="header">
+            <img src="/resources/assets/frontend/img/icon-transfer.png">
+            Transfer Code
+        </div>
+        <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
+        <div class="col-md-10 col-md-offset-1 para">
+            <form class="form-horizontal" method="POST">
+                <div class="form-group para">
+                    <label for="11z" class="col-sm-3 control-label">Code</label>
+                    <div class="col-sm-9">
+                        <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" class="form-control" id="11s" name="code">
+                        <input type="text" class="form-control" id="11" disabled>
+                    </div>
+                </div>
+                <div class="form-group para">
+                    <label for="22" class="col-sm-3 control-label">Recipient</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" id="22" name="account">
+                            @if($accountlist)
+                                @foreach($accountlist  as $a)
+                                     <option value="{{$a->account_id}}">{{$a->account_email}}({{$a->account_name}})</option>
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group para">
+                    <label for="33" class="col-sm-3 control-label">Enter Password</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" id="33" name="pass">
+                    </div>
+                </div>
+        </div>
+        <br>
+        <button class="button" type="button" data-remodal-action="cancel">Cancel</button>
+        <button class="button" type="submit" name="codesbmt">Initiate Transfer</button>
+    </div>
+</form>
 @endsection
 @section('script')
 <script type="text/javascript" src="/resources/assets/frontend/js/code_vault.js"></script>

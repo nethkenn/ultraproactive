@@ -19,7 +19,10 @@ use Validator;
 use App\Tbl_tree_placement;
 use App\Classes\Compute;
 use App\Classes\Log;
-
+use App\Tbl_voucher_has_product;
+use App\Tbl_product_code;
+use App\Rel_membership_product;
+use App\Rel_membership_code;
 class MemberCodeController extends MemberController
 {
 	public function index()
@@ -29,6 +32,7 @@ class MemberCodeController extends MemberController
 		$data['_error'] = Session::get('message');
 		$data['success']  = Session::get('success');
 		$data['availprod'] = Tbl_product_package::where('archived',0)->get();
+
 
 		if($data['availprod'])
 		{
@@ -41,6 +45,7 @@ class MemberCodeController extends MemberController
 
 
 		$s = Tbl_account::where('tbl_account.account_id',$id)->belongstothis()->get();
+		$j = Tbl_voucher_has_product::product()->voucher()->productcode()->where('account_id',Customer::id())->get();
 
 		if(isset($_POST['sbmtclaim']))
 		{
@@ -52,11 +57,22 @@ class MemberCodeController extends MemberController
 			$data['error'] = $this->unlock(Request::input('yuan'),Request::input('pass'),$id);
 			return Redirect::to('member/code_vault')->with('message',$data['error']);
 		}
+		if(isset($_POST['unlockpass2']))
+		{	;
+			$data['error'] = $this->unlock2(Request::input('yuan2'),Request::input('pass'),$id);
+			return Redirect::to('member/code_vault')->with('message',$data['error']);
+		}
 		if(isset($_POST['codesbmt']))
 		{
 			$data['error'] = $this->transfer(Request::input('code'),Request::input('account'),Request::input('pass'),$id,$s);
 			return Redirect::to('member/code_vault')->with('message',$data['error']);
 		}
+		if(isset($_POST['prodsbmt']))
+		{
+			$data['error'] = $this->transfer_code(Request::input('code'),Request::input('account'),Request::input('pass'),$id,$j,Request::input('voucher'));
+			return Redirect::to('member/code_vault')->with('message',$data['error']);
+		}
+
 		if(isset($_POST['slot_position']))
 		{	
 			$info = $this->addslot(Request::input());
@@ -154,9 +170,12 @@ class MemberCodeController extends MemberController
 				Compute::tree($slot_id);
 				Compute::binary($slot_id);
 				$return["placement"] = Request::input("placement");
-
 				Tbl_membership_code::where('code_pin',$data['code_number'])->update(['used'=>1]);
 				$message['success'] = "Slot Created.";
+				$get = Rel_membership_code::where('code_pin',$data['code_number'])->first();
+				$insert2['slot_id'] = $slot_id;
+				$insert2['product_package_id'] = $get->product_package_id;
+				Rel_membership_product::insert($insert2);
 				return $message;
 			}
 		}
@@ -165,6 +184,7 @@ class MemberCodeController extends MemberController
 	public function getslotbyid($id)
 	{
 		$data['code'] = DB::table('tbl_membership_code')  ->where('tbl_membership_code.archived',0)
+														  ->where('tbl_membership_code.blocked',0)
 														  ->join('tbl_account','tbl_account.account_id','=','tbl_membership_code.account_id')
 														  ->join('tbl_code_type','tbl_code_type.code_type_id','=','tbl_membership_code.code_type_id')
 														  ->join('tbl_membership','tbl_membership.membership_id','=','tbl_membership_code.membership_id')
@@ -172,6 +192,9 @@ class MemberCodeController extends MemberController
 														  ->where('tbl_membership_code.account_id','=',$id)
 														  ->orderBy('tbl_membership_code.account_id','ASC')
 														  ->get();
+
+		$data['getallslot'] = Tbl_slot::where('slot_owner',Customer::id())->get();
+
         foreach($data['code'] as $key => $d)
         {
         	$get =	 DB::table('tbl_member_code_history')->where('code_pin',$d->code_pin)
@@ -181,8 +204,20 @@ class MemberCodeController extends MemberController
         	$data['code'][$key]->transferer = $get->account_name;	
         	$data['code'][$key]->encrypt    = Crypt::encrypt($d->code_pin);									     
         }
-		$data['count']= DB::table('tbl_membership_code')->where('archived',0)->where('account_id','=',$id)->count();		
 
+
+		$data['prodcode'] = DB::table('tbl_product_code')->leftjoin('tbl_voucher_has_product','tbl_voucher_has_product.voucher_item_id','=','tbl_product_code.voucher_item_id')
+														 ->leftjoin('tbl_voucher','tbl_voucher.voucher_id','=','tbl_voucher_has_product.voucher_id')
+														 ->leftjoin('tbl_product','tbl_product.product_id','=','tbl_voucher_has_product.product_id')
+														 ->get();
+														 
+		$data['count']= DB::table('tbl_membership_code')->where('archived',0)->where('account_id','=',$id)->where('tbl_membership_code.blocked',0)->count();		
+		$data['count2'] = Tbl_voucher_has_product::product()->groupBy('tbl_product_code.product_pin')->where('account_id',Customer::id())->voucher()->productcode()->count();
+		
+		if($data['count2'] == 0)
+		{
+			$data['prodcode'] = null;
+		}
 
 		return $data;
 	}
@@ -205,6 +240,7 @@ class MemberCodeController extends MemberController
 
 			else if($pin->code_activation == $data['activation'])
 			{
+
 				$getId = DB::table('tbl_membership_code')->where('code_pin','=',$data['pin'])->first();
 				DB::table('tbl_membership_code')->where('code_pin','=',$data['pin'])->update(['account_id'=>$id]);
 				$getName = DB::table('tbl_account')->where('account_id',$id)->first();
@@ -216,7 +252,8 @@ class MemberCodeController extends MemberController
 				$pint = $data['pin'];
 				$fromname = DB::table('tbl_account')->where('account_id',$getId->account_id)->first();
 				DB::table("tbl_member_code_history")->insert($insert);
-				Log::account(Customer::id(),"You claimed membership code from $fromname->account_name  (Pin #$pint))");
+				Log::account(Customer::id(),"You claimed a membership code from $fromname->account_name  (Pin #$pint))");
+				Log::account($fromname->account_id,"$getName->account_name claimed your membership code (Pin #$pint))");
 			}
 			else
 			{
@@ -244,6 +281,8 @@ class MemberCodeController extends MemberController
 		$rpass = Tbl_account::where('account_id',$id)->first();
 		$rpass = Crypt::decrypt($rpass->account_password);
 		$info = null;
+		$checking2 = Tbl_membership_code::where('code_pin',$code)->where('used',1)->first();
+
 		foreach($s as $key => $data)
 		{
 			if($data->code_pin == $code)
@@ -251,11 +290,76 @@ class MemberCodeController extends MemberController
 				$checking = true;
 			}
 		}
-		if($checking == true)
+		if($checking2)
+		{
+			$info = "This code is already used";
+		}
+		else if($checking == true)
 		{
 				if($rpass == $pass)
 				{
+					$t = Tbl_account::where('account_id',$account)->first();
 					Tbl_membership_code::where('code_pin',$code)->update(['account_id'=>$account]);
+					Log::account(Customer::id(),"You transferred a membership code to $t->account_name (Pin #$code)");
+					Log::account($account,Customer::info()->account_name." transferred a membership code to you. (Pin #$code)");
+					$insert['code_pin'] = $code;
+					$insert['by_account_id'] = Customer::id();
+					$insert['to_account_id'] = $t->account_id;
+					$insert['updated_at'] = Carbon::now();
+					$insert['description'] = "Transferred a membership code. (Pin #$code)";
+					DB::table("tbl_member_code_history")->insert($insert);
+				}
+				else
+				{
+					$info = "Wrong Password";	
+				}
+		}
+		else
+		{
+			$info = "Transfer failed";
+		}
+
+		return $info;
+	}
+
+    public function transfer_code($code,$account,$pass,$id,$j,$voucherid)
+	{
+		$checking = false;
+		$checking3 = false;
+		$rpass = Tbl_account::where('account_id',$id)->first();
+		$rpass = Crypt::decrypt($rpass->account_password);
+		$info = null;
+		$checking2 = Tbl_product_code::where('product_pin',$code)->where('used',1)->first();
+
+		foreach($j as $key => $data)
+		{
+			if($data->product_pin == $code)
+			{
+				$checking = true;
+			}
+		}
+
+		foreach($j as $key => $data)
+		{
+			if($data->voucher_id == $voucherid)
+			{
+				$checking3 = true;
+			}
+		}
+
+
+		if($checking2)
+		{
+			$info = "This code is already used";
+		}
+		else if($checking == true && $checking3 == true)
+		{
+				if($rpass == $pass)
+				{
+					$t = Tbl_account::where('account_id',$account)->first();
+					DB::table('tbl_voucher')->where('voucher_id',$voucherid)->update(['account_id'=>$account]);
+					Log::account(Customer::id(),"You transferred a product code to $t->account_name (Pin #$code)");
+					Log::account($account,Customer::info()->account_name." transferred a product code to you. (Pin #$code)");
 				}
 				else
 				{
@@ -396,7 +500,12 @@ class MemberCodeController extends MemberController
 									DB::table("tbl_member_code_history")->insert($insert);
 									Tbl_slot::where('slot_id',Session::get('currentslot'))->update(['slot_wallet'=>$total]);
 									$message['success'] = "Successfully bought.";
-									Log::account(Customer::id(),"Bought a membership code (Pin #$membership_code->code_pin)");
+									Log::account(Customer::id(),"You bought a membership code (Pin #$membership_code->code_pin)");
+									$c = Tbl_membership_code::where('code_pin',$membership_code->code_pin)->getmembership()->first();
+									DB::table('tbl_membership_sales')->insert(['code_pin'=>$c->code_pin,'payment'=>($c->membership_price)+($c->membership_price * $c->discount),'created_at'=>Carbon::now()]);
+									$insert2['code_pin'] = $membership_code->code_pin;
+									$insert2['product_package_id'] = $x['package'];
+									Rel_membership_code::insert($insert2);
 									return $message;
 								}
 							}
@@ -455,6 +564,36 @@ class MemberCodeController extends MemberController
 			$r = "x";
 		}
 		echo json_encode($r);
+	}
+
+	public function set_active2()
+	{
+	  $pin = Request::input('pin');
+
+	  DB::table('tbl_product_code')->where('product_pin',$pin)->update(['lock'=>Request::input('value')]);
+	}
+
+	public function unlock2($pin,$pass,$login)
+	{
+	  $info = null;
+	  $checkpass = DB::table('tbl_product_code')   ->where('product_pin',$pin)
+	  											   ->first();
+
+	  $login = DB::table('tbl_account')->where('account_id','=',$login)->first();
+
+
+	  $login = Crypt::decrypt($login->account_password);
+
+ 	  if($login == $pass)
+ 	  {
+ 	  	DB::table('tbl_product_code')->where('product_pin',$pin)->update(['lock'=>0]);
+ 	  }
+ 	  else
+ 	  {
+ 	  	$info = "Incorrect Password";
+ 	  }
+
+	  return $info;
 	}
 
 }

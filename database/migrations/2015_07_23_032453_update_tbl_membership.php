@@ -16,11 +16,13 @@ class UpdateTblMembership extends Migration
         {
             /* NEW COLUMN FOR COMPUTATITION */
             $table->double('membership_binary_points')->default(0);
+            $table->double('membership_matching_bonus')->default(0);
+            $table->double('membership_direct_sponsorship_bonus')->default(0);
+            $table->integer('membership_indirect_level')->default(0);
+            $table->integer('membership_repurchase_level')->default(0);
             $table->tinyInteger('membership_entry')->default(1);
             $table->tinyInteger('membership_upgrade')->default(1);
         });
-
-
     }
 
     /**

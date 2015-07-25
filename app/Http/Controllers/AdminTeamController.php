@@ -11,7 +11,7 @@ class AdminTeamController extends AdminController
 		$data["_team"] = DB::table("tbl_team")->where("archived", 0)->get();
 		foreach ($data["_team"] as $key => $value) {
 			$get = $value->team_image;
-			$imagee = Image::view($get);
+			$imagee = Image::view($get, "500x500");
 			$data["_team"][$key]->image = $imagee;
 		}
 

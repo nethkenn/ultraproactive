@@ -14,7 +14,7 @@ class Customer
 	/* CHECK IF ACCOUNT EXIST */
     public static function authenticate($user, $password)
     {
-		$user = DB::table(Customer::$table)->where("account_username", $user)->first();
+		$user = DB::table(Customer::$table)->where("account_username", $user)->where('archived',0)->first();
 
 		if($user)
 		{ 

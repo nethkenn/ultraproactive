@@ -38,7 +38,7 @@
             </div>  
             <div class="form-group col-md-6">
                 <label for="account_password">Password</label>
-                <input name="account_password" value="{{ Crypt::decrypt($account->account_password) }}" required="required" class="form-control" id="" placeholder="" type="text">
+                <input name="account_password" value="{{ Crypt::decrypt($account->account_password) }}" required="required" class="form-control" id="" placeholder="" type="password">
             </div>  
             @foreach($_account_field as $field)
             <div class="form-group col-md-6">

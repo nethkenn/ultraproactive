@@ -17,7 +17,7 @@
                 <input disabled="disabled" value="{{ $data->membership_name }}" class="form-control" id="" placeholder="" type="text">
             </div>  
             <div class="form-group col-md-12">
-                <label for="account_contact">Income</label>
+                <label for="account_contact">Binary Points</label>
                 <input name="membership_binary_points" value="{{ $data->membership_binary_points }}" required="required" class="form-control" id="" placeholder="" type="text">
             </div>  
         </form>

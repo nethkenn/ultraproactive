@@ -8,6 +8,7 @@ use Redirect;
 use Session;
 use App\Tbl_admin_position_has_module;
 use App\Tbl_module;
+use gapi;
 
 class AdminController extends Controller
 {
@@ -79,10 +80,21 @@ class AdminController extends Controller
 
     public function index()
     {
+        include('/gapi.class.php');
 
+        $ga = new gapi('529499913489-tqo50906hcr6do6elgi18d54inr7rvac@developer.gserviceaccount.com','client_secrets.p12');
 
+        $ga->requestReportData(105785789,array('date'),array('pageviews','visits'));
+
+        // foreach($ga->getResults() as $result)
+        // {
+        //   echo '<strong>'.$result.'</strong><br />';
+        //   echo 'Pageviews: ' . $result->getPageviews() . ' ';
+        //   echo 'Visits: ' . $result->getVisits() . '<br />';
+        // }
+
+        // echo '<p>Total pageviews: ' . $ga->getPageviews() . ' total visits: ' . $ga->getVisits() . '</p>';
+        
         return view('admin.dashboard.dashboard');
     }
-
-
 }

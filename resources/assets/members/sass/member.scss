@@ -282,7 +282,7 @@ body
 	.content
 	{
 		margin-top: 40px;
-
+		padding-bottom: 40px;
 		.voucher
 		{
 
@@ -319,11 +319,10 @@ body
 	.form-group
 	{
 		font-size: 12.5px;
+
 		label
 		{
 			color: $font-color !important;
-			font-family: "Arial", sans-serif !important;
-			font-style: italic;
 		}
 		input[type="text"],
 		input[type="password"],
@@ -336,16 +335,17 @@ body
 			font-size: 14.58px;
 			color: #9ea7b3;
 		}
+		
 	}
 	.button
 	{
 		border: 0;
-		background-color: #eeeeee;
-		color: #bbc4d0;
+		background-color: #DDDBDB;
+		color: #778192;
 		padding: 10px 35px;
-		font-style: italic;
-		font-family: "Arial", sans-serif !important;
 		margin: 10px 0;
+		font-weight: 600;
+		border-radius: 5px;
 	}
 	.orange-btn
 	{

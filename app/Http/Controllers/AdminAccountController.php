@@ -21,12 +21,13 @@ class AdminAccountController extends AdminController
     {
 
 
-		    	$admin_rank = Admin::info()->admin_position_rank;
-    	$account = Tbl_account::select('tbl_account.*','tbl_admin_position.admin_position_rank','tbl_country.country_name')->where('tbl_account.archived', 0)
+		$admin_rank = Admin::info()->admin_position_rank;
+    	$account = Tbl_account::select('tbl_account.*','tbl_admin_position.admin_position_rank','tbl_country.country_name')->where('tbl_account.archived', Request::input('archived'))
     										->where('tbl_admin_position.admin_position_rank', '>=',$admin_rank)
     										->OrWhereNull('tbl_admin_position.admin_position_rank')
     										->position()
     										->country()
+    										->where('tbl_account.archived',Request::input('archived'))
     										->get();
 
         // $account = Tbl_account::select('*')->where('tbl_account.archived', Request::input('archived'))->leftJoin("tbl_country","tbl_account.account_country_id", "=", "tbl_country.country_id");

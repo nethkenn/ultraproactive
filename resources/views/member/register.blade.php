@@ -38,8 +38,8 @@
 				<div class="form-group">
 					<div class="labelz">Gender*</div>
 					<div class="inputz">
-						<input type="radio"><span>Male</span>
-						<input type="radio"><span>Female</span>
+						<input name="gender" type="radio"><span>Male</span>
+						<input name="gender" type="radio"><span>Female</span>
 					</div>
 				</div>
 				<div class="form-group">

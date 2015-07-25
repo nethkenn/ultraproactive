@@ -26,6 +26,7 @@ class AdminSlotController extends AdminController
         								->addColumn('info','<a href="admin/maintenance/slots/view?id={{$slot_id}}">INFO</a>')
         								->addColumn('wallet','{{number_format($slot_wallet, 2)}}')
         								->make(true);
+
 	}
 	public function add()
 	{
@@ -112,7 +113,7 @@ class AdminSlotController extends AdminController
 			$slot_id = Tbl_slot::insertGetId($insert);
 
 			Compute::tree($slot_id);
-			Compute::binary($slot_id);
+			Compute::entry($slot_id);
 
 			$return["placement"] = Request::input("placement");
 		}
