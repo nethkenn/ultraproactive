@@ -3,7 +3,11 @@
 <div class="col-md-7 left">
     <div class="profile para">
         <div class="profile-pic">
+            @if($member->image != "")
+            <img src="{{$member->image}}">
+            @else
             <img src="/resources/assets/frontend/img/pix.png">
+            @endif
             <div class="borders"></div>
         </div>
         <div class="profile-info">
@@ -27,7 +31,7 @@
         <a href="/member/leads">
             <div class="box col-md-4 leads">
                 <div class="img"><img src="/resources/assets/frontend/img/icon-lead.png"></div>
-                <div class="text"><span>5</span>Leads</div>
+                <div class="text"><span>{{$leadc}}</span>Leads</div>
             </div>
         </a>
     </div>

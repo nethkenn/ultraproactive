@@ -16,6 +16,8 @@ Route::any('/member/genealogy', 'MemberGenealogyController@index');
 Route::any('/member/voucher', 'MemberVoucherController@index');
 Route::get('/member/voucher/product', 'MemberVoucherController@showVoucherProduct');
 
+Route::any('/member/settings', 'MemberAccountSettingsController@index');
+Route::any('/member/settings/upload', 'MemberAccountSettingsController@upload');
 
 Route::any('/member/leads', 'MemberLeadController@index');
 Route::any('/member/leads/{slug}', 'MemberLeadController@link');
@@ -250,6 +252,8 @@ Route::any('admin/utilities/unilevel', 'AdminComplanController@unilevel');
 Route::any('admin/reports/product_sales', 'AdminReportController@product_sales');
 Route::any('admin/reports/membership_sales', 'AdminReportMembershipController@index');
 
+Route::any('admin/account/settings/profile', 'AdminAccountSettingsController@settings');
+Route::any('admin/account/settings/change_pass', 'AdminAccountSettingsController@changepass');
 
 Route::any('admin/login', 'AdminLoginController@index');
 Route::any('admin/account/logout', 'AdminProfileController@logout');

@@ -33,8 +33,8 @@
 				<div class="col-md-6 ubod">
                     <img src="/resources/assets/frontend/img/member-logo.png">
                 </div>
-                <div class="col-md-6 grabe">
-                    <div class="header-text">Account Setting</div>
+                <div class="col-md-6 grabe">    
+                    <div class="header-text"><a href="/member/settings">Account Setting</a></div>
                     <div class="header-text"><a href="/member/logout">{{$member->account_name}} ( Logout )</a></div>
                 </div>
 			</div>
