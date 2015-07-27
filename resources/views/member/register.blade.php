@@ -25,7 +25,7 @@
 			<div class="teybol">
 				<div class="form-group">
 					<div class="labelz">First Name*</div>
-					<div class="inputz"><input type="text" name="fname"></div>
+					<div class="inputz"><input type="text" name="fname" value="{{Request::input('fname')}}"></div>
 				</div>
 				<div class="form-group">
 					<div class="labelz">Middle Name*</div>

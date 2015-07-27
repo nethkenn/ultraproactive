@@ -163,6 +163,8 @@ class MemberAccountSettingsController extends MemberController
 		$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 		$uploadOk = 1;
 		$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+		$target_file = $target_dir . basename((date('Y-m-d-H-i-s-u')).'.'.$imageFileType);
+
 		// Check if image file is a actual image or fake image
 		if(isset($_POST["submit"])) {
 			if ($_FILES["fileToUpload"]["tmp_name"] == null) {
@@ -179,12 +181,20 @@ class MemberAccountSettingsController extends MemberController
 		        return Redirect::to('member/settings')->with('message',$data);
 		    }
 		}
-		// Check if file already exists
-		if (file_exists($target_file)) {
-		    $data = "Sorry, please change the file name.";
-		    $uploadOk = 0;
-	        return Redirect::to('member/settings')->with('message',$data);
+		$ctr = 0;
+		for($ulet=false;$ulet!=true;$ctr++)
+		{
+			if (file_exists($target_file)) {
+				$target_file = $target_dir . basename((date('Y-m-d-H-i-s-u')).'-'.$ctr.'.'.$imageFileType);
+			}	
+			else
+			{
+				
+				$ulet = true;
+			}		
 		}
+		// Check if file already exists
+
 		// Check file size
 		if ($_FILES["fileToUpload"]["size"] > 500000) {
 		    $data = "Sorry, your file is too large.";
@@ -204,10 +214,27 @@ class MemberAccountSettingsController extends MemberController
 		// if everything is ok, try to upload file
 		} else {
 		    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-		    	WideImage::load($target_file)
-		    				->resize(300, 300, 'outside')
-							->crop('center', 'center', 300, 300)->saveToFile($target_file);
-		    	DB::table('tbl_account')->where('account_id',Customer::id())->update(['image'=>$target_file]);
+
+		    	$getcurrentimage = DB::table('tbl_account')->where('account_id',Customer::id())->first();
+
+		    	if($getcurrentimage->image == "")
+		    	{
+    				WideImage::load($target_file)
+    				->resize(300, 300, 'outside')
+					->crop('center', 'center', 300, 300)->saveToFile($target_file);
+			    	DB::table('tbl_account')->where('account_id',Customer::id())->update(['image'=>$target_file]);	    		
+		    	}
+		    	else
+		    	{
+		    		unlink($getcurrentimage->image);
+    				WideImage::load($target_file)
+    				->resize(300, 300, 'outside')
+					->crop('center', 'center', 300, 300)->saveToFile($target_file);
+			    	DB::table('tbl_account')->where('account_id',Customer::id())->update(['image'=>$target_file]);			    		
+		    	}
+
+
+
 		    	$data = "Successfuly changed";
 		        return Redirect::to('member/settings')->with('success',$data);
 		    } else {
