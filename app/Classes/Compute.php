@@ -175,7 +175,7 @@ class Compute
                             /* INSERT LOG */
                             $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($pairing_bonus, 2) . " wallet</b> from <b>PAIRING BONUS</b> due to pairing combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining binary points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right.";
                             Log::account($slot_recipient->slot_owner, $log);
-                            Log::slot($slot_recipient->slot_id, $log, $pairing_bonus);
+                            Log::slot($slot_recipient->slot_id, $log, $pairing_bonus, "BINARY PAIRING");
 
                             /* MATCHING SALE BONUS */
                             Compute::matching($new_slot_id, $method, $slot_recipient, $pairing_bonus);
@@ -221,7 +221,7 @@ class Compute
                 /* INSERT LOG */
                 $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($matching_income, 2) . " wallet</b> from <b>MATCHING BONUS</b>  due to pairing bonus earned by SLOT #" . $slot_recipient_for_binary->slot_id . ". You current membership is " . $slot_recipient->membership_name . " MEMBERSHIP which has " . number_format($slot_recipient->membership_matching_bonus, 2) . "% bonus for every income of your direct sponsor.";
                 Log::account($slot_recipient->slot_owner, $log);
-                Log::slot($slot_recipient->slot_id, $log, $matching_income);
+                Log::slot($slot_recipient->slot_id, $log, $matching_income, "MATCHING BONUS");
 
                 /* UPDATE SLOT CHANGES TO DATABASE */
                 Tbl_slot::id($slot_recipient->slot_id)->update($update_recipient);
@@ -256,7 +256,7 @@ class Compute
                 /* INSERT LOG */
                 $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($direct_income, 2) . " wallet</b> through <b>DIRECT SPONSORSHIP BONUS</b> because you've invited SLOT #" . $new_slot_info->slot_id . " to join. Your current membership is " . $slot_recipient->membership_name . " MEMBERSHIP.";
                 Log::account($slot_recipient->slot_owner, $log);
-                Log::slot($slot_recipient->slot_id, $log, $direct_income);
+                Log::slot($slot_recipient->slot_id, $log, $direct_income, "DIRECT SPONSORSHIP BONUS (DSB)");
 
                 /* UPDATE SLOT CHANGES TO DATABASE */
                 Tbl_slot::id($slot_recipient->slot_id)->update($update_recipient);
@@ -306,7 +306,7 @@ class Compute
                     /* INSERT LOG */
                     $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($indirect_bonus, 2) . " wallet</b> from <b>INDIRECT LEVEL BONUS</b>. You earned it when slot #" . $new_slot_id . " creates a new slot on the Level " . $tree->sponsor_tree_level . " of your sponsor genealogy. Your current membership is " . $slot_recipient->membership_name . " MEMBERSHIP.";
                     Log::account($slot_recipient->slot_owner, $log);
-                    Log::slot($slot_recipient->slot_id, $log, $indirect_bonus);
+                    Log::slot($slot_recipient->slot_id, $log, $indirect_bonus, "INDIRECT LEVEL BONUS");
 
                     /* UPDATE SLOT CHANGES TO DATABASE */
                     Tbl_slot::id($slot_recipient->slot_id)->update($update_recipient);
