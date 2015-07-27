@@ -22,7 +22,9 @@ function code_vault()
 		checkifavailable();
 		init_showdownline();
 		showdownline();
+		add_event_use_product_code();
 	}
+
 	// function getdata()
 	// {
 	// 	$('.upbtn').bind('click',function(){
@@ -33,6 +35,18 @@ function code_vault()
 
 	// 	});
 	// }
+	function add_event_use_product_code()
+	{
+		$(".use-p").click(function(e)
+		{
+			$code_id = $(e.currentTarget).attr("code_id");
+			$unilevel_pts = $(e.currentTarget).attr("unilevel_pts");
+			$binary_pts = $(e.currentTarget).attr("binary_pts");
+			$(".product-code-id-reference").val($code_id);
+			$(".unilevel_pts_container").val($unilevel_pts);
+			$(".binary_pts_container").val($binary_pts);
+		});
+	}
 	function onmembershipchange()
 	{
 		$("#11111").bind('change',function()

@@ -113,7 +113,10 @@ class Customer
     	}
     }
 
-
+    public static function slot_id()
+    {
+        return Session::get("currentslot");
+    }
     // public static function customer_viewed_product($prod_id, $cust_id)
     // {
 

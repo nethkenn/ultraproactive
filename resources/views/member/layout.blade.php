@@ -27,7 +27,7 @@
 
     </script>
 </head>
-<body>
+<body style="overflow-x: scroll">
 <div class="bg">
 	<div class="wrapper">
 		<div class="header-nav">

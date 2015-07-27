@@ -4,6 +4,7 @@ use App\Tbl_tree_placement;
 use App\Tbl_tree_sponsor;
 use App\Tbl_binary_pairing;
 use App\Tbl_indirect_setting;
+use App\Tbl_unilevel_setting;
 use App\Classes\Log;
 
 class Compute
@@ -19,6 +20,75 @@ class Compute
         Compute::binary($new_slot_id, $method);
         Compute::direct($new_slot_id, $method);
         Compute::indirect($new_slot_id, $method);
+    }
+    public static function repurchase($buyer_slot_id, $binary_pts, $unilevel_pts, $method = "REPURCHASE")
+    {
+        Compute::unilevel_repurchase($buyer_slot_id, $unilevel_pts, $method);
+        Compute::binary_repurchase($buyer_slot_id, $binary_pts, $method);
+    }
+    public static function unilevel_repurchase($buyer_slot_id, $unilevel_pts, $method)
+    {
+        $buyer_slot_info = Tbl_slot::id($buyer_slot_id)->account()->membership()->first();
+
+        /* ----- COMPUTATION OF PERSONAL PV */
+        $update_recipient["slot_personal_points"] = $buyer_slot_info->slot_personal_points + $unilevel_pts;
+
+        /* INSERT LOG */
+        $log = "Your slot #" . $buyer_slot_info->slot_id . " earned <b>" . number_format($unilevel_pts, 2) . " personal pv</b>.";
+        Log::account($buyer_slot_info->slot_owner, $log);
+
+        /* UPDATE SLOT CHANGES TO DATABASE */
+        Tbl_slot::id($buyer_slot_info->slot_id)->update($update_recipient);
+        $update_recipient = null;
+
+        /* ----- COMPUTATION OF GROUP PV ----- */
+        $_unilevel_setting = Tbl_unilevel_setting::get();
+        $_tree = Tbl_tree_sponsor::child($buyer_slot_id)->level()->distinct_level()->get();
+
+        /* RECORD ALL INTO A SINGLE VARIABLE */
+        $unilevel_level = null;
+        foreach($_unilevel_setting as $key => $level)
+        {
+            $unilevel_level[$level->membership_id][$level->level] =  $level->value;
+        }
+
+        /* CHECK IF LEVEL EXISTS */
+        if($unilevel_level)
+        {
+            foreach($_tree as $key => $tree)
+            {
+                /* GET SLOT INFO FROM DATABASE */
+                $slot_recipient = Tbl_slot::id($tree->sponsor_tree_parent_id)->membership()->first();
+                $update_recipient["slot_group_points"] = $slot_recipient->slot_group_points;
+
+                /* COMPUTE FOR BONUS */
+                if(isset($unilevel_level[$slot_recipient->membership_id][$tree->sponsor_tree_level]))
+                {
+                    $unilevel_bonus = ($unilevel_level[$slot_recipient->membership_id][$tree->sponsor_tree_level]/100) * $unilevel_pts;    
+                }
+                else
+                {
+                    $unilevel_bonus = 0;
+                }
+                
+                /* CHECK IF BONUS IS ZERO */
+                if($unilevel_bonus != 0)
+                {
+                    /* UPDATE WALLET */
+                    $update_recipient["slot_group_points"] = $update_recipient["slot_group_points"] + $unilevel_bonus;
+
+                    /* INSERT LOG */
+                    $log = "Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($unilevel_bonus, 2) . " group pv</b>. You earned it when slot #" . $buyer_slot_id . " uses a code worth " . number_format($unilevel_pts, 2) . " PV. That slot is located on the Level " . $tree->sponsor_tree_level . " of your sponsor genealogy. Your current membership is " . $slot_recipient->membership_name . " MEMBERSHIP.";
+                    Log::account($slot_recipient->slot_owner, $log);
+
+                    /* UPDATE SLOT CHANGES TO DATABASE */
+                    Tbl_slot::id($slot_recipient->slot_id)->update($update_recipient);
+                }
+            }
+        }
+    }
+    public static function binary_repurchase($buyer_slot_id, $binary_pts, $method)
+    {
     }
     public static function insert_tree_placement($slot_info, $new_slot_id, $level)
     {
@@ -82,7 +152,6 @@ class Compute
                 
                 /* INSERT LOG FOR EARNED POINTS IN ACCOUNT */
                 $log = "Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($earned_points, 2) . " binary points</b> on " . $tree->placement_tree_position . " when " . $new_slot_info->account_name . " with " . $new_slot_info->membership_name . " MEMBERSHIP created a new slot (#" . $new_slot_info->slot_id . ").";
-                
                 Log::account($slot_recipient->slot_owner, $log);
 
                 /* CHECK PAIRING */
@@ -239,8 +308,8 @@ class Compute
                     Log::account($slot_recipient->slot_owner, $log);
                     Log::slot($slot_recipient->slot_id, $log, $indirect_bonus);
 
-                    /* MATCHING SALE BONUS */
-                    Compute::matching($new_slot_id, $method, $slot_recipient, $indirect_bonus);
+                    /* UPDATE SLOT CHANGES TO DATABASE */
+                    Tbl_slot::id($slot_recipient->slot_id)->update($update_recipient);
                 }
             }
         }

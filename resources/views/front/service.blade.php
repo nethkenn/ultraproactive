@@ -168,7 +168,7 @@
                                             <div class="wpb_wrapper">
                                                 <p style="white-space: pre-wrap; word-break: keep-all !important;">{{ $service->service_description }}
 
-<a href="#" class="btn-system normal second_btn" style="color:#000000 background:#f6f6f6;">Enroll Now!</a>
+<a href="/member/register" class="btn-system normal second_btn" style="color:#000000 background:#f6f6f6;">Enroll Now!</a>
 </p>
                                             </div>
                                         </div>

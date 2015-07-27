@@ -6,12 +6,15 @@ Route::any('/member', 'MemberDashboardController@index');
 Route::any('/member/notification', 'MemberDashboardController@notification');
 Route::any('/member/slot', 'MemberSlotController@index');
 Route::any('/member/code_vault', 'MemberCodeController@index');
+Route::any('/member/code_vault/use_product_code', 'MemberCodeController@use_product_code');
 Route::any('/member/code_vault/check', 'MemberCodeController@add_form_submit');
 Route::any('/member/code_vault/get', 'MemberCodeController@get');
 Route::post('/member/code_vault/lock', 'MemberCodeController@set_active');
 Route::post('/member/code_vault/lock2', 'MemberCodeController@set_active2');
 Route::any('/member/encashment', 'MemberEncashmentController@index');
 Route::any('/member/genealogy', 'MemberGenealogyController@index');
+Route::any('/member/genealogy/tree', 'MemberGenealogyController@tree');
+Route::any('/member/genealogy/downline', 'MemberGenealogyController@downline');
 
 Route::any('/member/voucher', 'MemberVoucherController@index');
 Route::get('/member/voucher/product', 'MemberVoucherController@showVoucherProduct');
@@ -267,6 +270,7 @@ Route::any('admin/utilities/indirect', 'AdminComplanController@indirect');
 Route::any('admin/utilities/indirect/edit', 'AdminComplanController@indirect_edit');
 
 Route::any('admin/utilities/unilevel', 'AdminComplanController@unilevel');
+Route::any('admin/utilities/unilevel/edit', 'AdminComplanController@unilevel_edit');
 
 /* ADMIN / REPORTS */
 Route::any('admin/reports/product_sales', 'AdminReportController@product_sales');
