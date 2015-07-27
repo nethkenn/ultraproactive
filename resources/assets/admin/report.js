@@ -4,8 +4,6 @@
 	});
 
 
-
-
 	var _analytics = $.parseJSON(analytics);
 
 	_x = new Array();
@@ -44,6 +42,6 @@
 	            verticalAlign: 'middle',
 	            borderWidth: 0
 	        },
-	        series: [{ name: 'Views', data: _y }]
+	        series: [{ name: 'Sales', data: _y }]
 	    });
 	});
