@@ -19,6 +19,7 @@ function order()
       show_modal_on_click();
       single_show_modal_on_click();
       selectall();
+      onclick();
    }
    function show_modal_on_click()
    {  
@@ -76,7 +77,34 @@ function order()
       });
    }
 
+   function onclick()
+   {
+    $(".checker").bind("click", function(e)
+    {
+      if(jQuery(this).closest('tr').find('[type=checkbox]').is(':checked')) 
+      {
+         jQuery(this).closest('tr').find('[type=checkbox]').prop('checked', false);
+      }
+      else
+      {
+        jQuery(this).closest('tr').find('[type=checkbox]').prop('checked', true);
+      }
+    });
 
+    $('#allcheck2').click(function(event) {  //on click 
+        if(jQuery(this).closest('tr').find('[type=checkbox]').is(':checked')) { // check select status
+            $("#allcheck").prop('checked', false);
+            $('.checkbox1').each(function() { //loop through each checkbox
+                this.checked = false;  //select all checkboxes with class "checkbox1"               
+            });
+        }else{
+            $("#allcheck").prop('checked', true);
+            $('.checkbox1').each(function() { //loop through each checkbox
+                this.checked = true; //deselect all checkboxes with class "checkbox1"                       
+            });         
+        }
+    });
+   }
 
 
    function selectall()

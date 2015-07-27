@@ -23,6 +23,9 @@ use App\Tbl_voucher_has_product;
 use App\Tbl_product_code;
 use App\Rel_membership_product;
 use App\Rel_membership_code;
+use App\Tbl_voucher;
+use App\Classes\Globals;
+use App\Tbl_product;
 
 class MemberCodeController extends MemberController
 {
@@ -59,7 +62,7 @@ class MemberCodeController extends MemberController
 			return Redirect::to('member/code_vault')->with('message',$data['error']);
 		}
 		if(isset($_POST['unlockpass2']))
-		{	;
+		{	
 			$data['error'] = $this->unlock2(Request::input('yuan2'),Request::input('pass'),$id);
 			return Redirect::to('member/code_vault')->with('message',$data['error']);
 		}
@@ -88,6 +91,7 @@ class MemberCodeController extends MemberController
 			if( Request::input('memid') && Request::input('package'))
 			{
 				$info = $this->add_code(Request::input());	
+
 				if(isset($info['success']))
 				{
 					$message = $info['success'];
@@ -223,6 +227,8 @@ class MemberCodeController extends MemberController
 						$insert2['slot_id'] = $slot_id;
 						$insert2['product_package_id'] = $get->product_package_id;
 						Rel_membership_product::insert($insert2);
+
+
 						return $message;
 					}
 				}			
@@ -559,28 +565,69 @@ class MemberCodeController extends MemberController
 									$insert2['product_package_id'] = $x['package'];
 									Rel_membership_code::insert($insert2);
 									Log::slot(Session::get('currentslot'),'Bought a membership code',$total);  
+									$this->additional($x['package'],Session::get('currentslot'));
 									return $message;
 								}
 							}
-							else
-							{
-								$error =  $validator->errors();
-								$data['_error']['code_type_id'] = $error->get('code_type_id');
-								$data['_error']['membership_id'] = $error->get('membership_id');
-								$data['_error']['product_package_id'] = $error->get('product_package_id');
-								$data['_error']['inventory_update_type_id'] = $error->get('inventory_update_type_id');
-								$data['_error']['account_id'] = $error->get('account_id');
-								$data['_error']['code_multiplier'] = $error->get('code_multiplier');
-				     		    return $data;
-							}				
 						}
 						else
 						{
-							$data['_error']['not'] = "Not enough balance.";
+							$data['_error'] = "Not enough balance.";
 							return $data;
 						}				
 				}				
 			}		
+	}
+
+	public function additional($pid,$slotid)
+	{
+						$total = 0;
+						$datapackage = DB::table('tbl_product_package_has')->where('product_package_id',$pid)->get();
+						
+						foreach($datapackage as $d)
+						{	
+							$dtotal = DB::table('tbl_product')->where('product_id',$d->product_id)->first();
+							$total = $total + ($dtotal->price * $d->quantity);
+						}
+
+						$customer = Customer::info();
+				        $slot = Tbl_slot::select('tbl_slot.*', 'tbl_membership.discount')->leftJoin('tbl_membership', 'tbl_membership.membership_id','=','tbl_slot.slot_membership')
+				                                                                        ->where('slot_id', $slotid)
+				                                                                        ->where('slot_owner', $customer->account_id)
+				                                                                        ->first();
+				       			$data['slot'] = $slot;
+				                $insert['slot_id'] = $slotid;
+				                $query = Tbl_voucher::where('voucher_code', Globals::code_generator())->first();
+				                $insert['voucher_code'] = Globals::check_code($query);
+				                $insert['discount'] = $slot->discount;
+				                $insert['total_amount'] =$total + (($slot->discount*100)*$total);
+				                $insert['account_id'] = $customer->account_id;
+				                $voucher = new Tbl_voucher($insert);
+				                $voucher->save();
+				                // $log = "Upgrade member include product worth ".Product::return_format_num($insert['total_amount']). " with Voucher Num: ".$voucher->voucher_id." , Voucher Code: ".$voucher->voucher_code.".";
+				                // Log::account($customer->account_id, $log);
+
+				                foreach($datapackage as $dt)
+								{
+									$prod_pts = Tbl_product::find($dt->product_id);
+				                    $insert_prod =  array(
+				                        'product_id' =>  $dt->product_id,
+				                        'voucher_id'=> $voucher->voucher_id,
+				                        'price' => $prod_pts->price,
+				                        'qty'=> $dt->quantity,
+				                        'sub_total' => $prod_pts->price * $dt->quantity,
+				                        'binary_pts' => $prod_pts->binary_pts,
+				                        'unilevel_pts' => $prod_pts->unilevel_pts
+				                    );
+				                    $voucher_has_product = new Tbl_voucher_has_product($insert_prod);
+				                    $voucher_has_product->save();
+				                    $query = Tbl_product_code::where('code_activation', Globals::code_generator())->first();
+				                    $insert_prod_code['code_activation'] = Globals::check_code($query);
+				                    $insert_prod_code['voucher_item_id'] = $voucher_has_product->voucher_item_id;
+				                    $insert_prod_code['used'] = 1;
+				                    $product_code = new Tbl_product_code($insert_prod_code);
+				                    $product_code->save();
+								}           
 	}
 	
 	public function add_form_submit()
