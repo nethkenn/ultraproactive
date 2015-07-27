@@ -204,8 +204,14 @@ class MemberCheckoutController extends Controller
 
                     // dd($voucher_has_product->voucher_item_id);
                     $query = Tbl_product_code::where('code_activation', Globals::code_generator())->first();
-                    $insert_prod_code['code_activation'] = Globals::check_code($query);
-                    $insert_prod_code['voucher_item_id'] = $voucher_has_product->voucher_item_id;
+                    // $insert_prod_code['code_activation'] = Globals::check_code($query);
+                    // $insert_prod_code['voucher_item_id'] = $voucher_has_product->voucher_item_id;
+                    
+                    for ($i=$value['qty']-1; $i < ; $i++)
+                    { 
+                        $insert_prod_code['code_activation'] = Globals::check_code($query);
+                        $insert_prod_code['voucher_item_id'] = $voucher_has_product->voucher_item_id;
+                    }
                     
                     $product_code = new Tbl_product_code($insert_prod_code);
                     $product_code->save();
