@@ -75,7 +75,12 @@
 			        <li class="{{ Request::segment(2) == '' ? 'active' : '' }}"><a href="/member">Dashboard</a></li>
 			        <li class="{{ Request::segment(2) == 'slot' ? 'active' : '' }}"><a href="/member/slot">My Slots</a></li>
 			        <li class="{{ Request::segment(2) == 'code_vault' ? 'active' : '' }}"><a href="/member/code_vault">Code Vault</a></li>
-			        <li class="{{ Request::segment(2) == 'genealogy' ? 'active' : '' }}"><a href="/member/genealogy">Genealogy</a></li>
+			        <li class="{{ Request::segment(2) == 'genealogy' ? 'active' : '' }} dropdown">
+                        <a href="/member/genealogy">Genealogy</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="javascript:">Sub Menu</a></li>
+                        </ul>
+                    </li>
 			        <li class="{{ Request::segment(2) == 'encashment' ? 'active' : '' }}"><a href="/member/encashment">Encashment</a></li>
 			        <li class="{{ Request::segment(2) == 'product' ? 'active' : '' }}"><a href="/member/product">Product</a></li>
 			        <li class="{{ Request::segment(2) == 'voucher' ? 'active' : '' }}"><a href="/member/voucher">Voucher</a></li>
