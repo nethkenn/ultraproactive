@@ -12,6 +12,7 @@ use App\Classes\Product;
 use App\Classes\Log;
 use Crypt;
 use Carbon\Carbon;
+use DB;
 class AdminClaimController extends AdminController
 {
 	public function index()
