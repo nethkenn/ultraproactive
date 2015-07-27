@@ -1,15 +1,8 @@
 @extends('member.layout')
 @section('content')
 <div class="encashment genealogy">
-	<div class="header">
-		<span class="labels">Choose Tree you'd like to see</span>
-		<select class="form-control input-sm">
-			<option>Binary Genealogy</option>
-		</select>
-		<span class="pull-right">Number of Downlines: 3</span>
-	</div>
 	<div class="body para">
-		 <iframe src="/member/genealogy/tree" style="width: 100%; height: 395px; border: 0;"></iframe> 
+		 <iframe src="/member/genealogy/tree" style="width: 100%; height: 500px; border: 0;"></iframe> 
 	</div>
 </div>
 @endsection

@@ -14,6 +14,7 @@
 			<tr>
 				<th class="option-col">ID</th>
 				<th>MEMBERSHIP</th>
+				<th>REQUIRED PV</th>
 				<th>NUMBER OF LEVELS</th>
 				<th class="option-col"></th>
 			</tr>
@@ -23,6 +24,7 @@
 			<tr>
 				<td>{{ $membership->membership_id }}</td>
 				<td>{{ $membership->membership_name }}</td>
+				<td>{{ number_format($membership->membership_required_pv) }} PERSONAL PV</td>
 				<td>{{ number_format($membership->membership_repurchase_level) }}</td>
 				<td><a href="admin/utilities/unilevel/edit?id={{ $membership->membership_id }}">EDIT</a></td>
 			</tr>
