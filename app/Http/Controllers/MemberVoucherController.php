@@ -12,8 +12,8 @@ class MemberVoucherController extends MemberController
 	{
 
 
-		$data['_voucher'] = Tbl_voucher::where('status','unclaimed')->orWhere('status','processed')
-																	->where('account_id',Customer::info()->account_id)
+		$data['_voucher'] = Tbl_voucher::where('account_id',Customer::info()->account_id)->where('status','unclaimed')->orWhere('status','processed')
+																	
 																	->get();
 																	
 
