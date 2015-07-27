@@ -104,13 +104,13 @@
                 <div class="form-group">
                     <label for="11" class="col-sm-6 control-label">Group PV</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="11" readonly value="1,200.00">
+                        <input type="text" class="form-control" id="11" readonly value="{{ number_format($slotnow->slot_group_points, 2) }}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="22" class="col-sm-6 control-label">Personal PV</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="22" readonly value="500.00">
+                        <input type="text" class="form-control" id="22" readonly value="{{ number_format($slotnow->slot_personal_points, 2) }}">
                     </div>
                 </div>
                 <div class="form-group">

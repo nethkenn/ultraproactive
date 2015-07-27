@@ -2,7 +2,7 @@
 @section('content')
     <div class="row header">
         <div class="title col-md-8">
-            <h2><i class="fa fa-users"></i>  Matching Sale Percentage / Update</h2>
+            <h2><i class="fa fa-star-half-o"></i>  Matching Sale Percentage / Update</h2>
         </div>
         <div class="buttons col-md-4 text-right">
             <button onclick="location.href='admin/utilities/matching'" type="button" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back</button>

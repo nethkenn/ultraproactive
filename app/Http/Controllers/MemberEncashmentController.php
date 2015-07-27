@@ -9,6 +9,7 @@ use App\Tbl_slot;
 use App\Tbl_account_encashment_history;
 use Carbon\Carbon;
 use Redirect;
+use App\Classes\Log;
 
 class MemberEncashmentController extends MemberController
 {

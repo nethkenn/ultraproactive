@@ -225,16 +225,16 @@ right connector from last child*/
 }
 .loading
 {
-    bottom: -60px;
+    bottom: -80px;
     position: absolute;
     text-align: center;
 }
 .loading img
 {
     border: none !important;;
-    height: 40px !important;
+    height: 50px !important;
     padding: 0px !important;
-    width: 40px !important;  
+    width: 50px !important;  
     background-color: transparent !important; 
 }
 
