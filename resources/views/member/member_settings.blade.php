@@ -25,20 +25,13 @@
             <div class="col-md-6 aw">
                 Account Settings
             </div>
-
-
-
-
             <div class="col-md-6 ew">
                  <a style="cursor: pointer;" class="genlead">
                     <div class="button">Change Pass</div>
                 </a>
             </div>
         </div>
-        <table class="footable">
-            <thead>
-            </thead>
-            <tbody>
+        
 
 
 
@@ -50,7 +43,7 @@
                 </form>
 
 
-                    <form method="POST">
+                <form method="POST">
                             <div class="container">
                             <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
                             <div class="vc_col-md-6 columnz">
@@ -143,9 +136,8 @@
                             <div class="vc_col-md-12">
                                 <input type="submit" name="submit" value="Register Now" class="register-button">
                             </div>
-                            </div>
-                        </form>
-
+                        </div>
+                  </form>
             </tbody>
         </table>
     </div>
