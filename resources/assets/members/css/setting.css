@@ -35,4 +35,7 @@
 .lefty {
   text-align: center; }
 
+textarea {
+  resize: none; }
+
 /*# sourceMappingURL=setting.css.map */
