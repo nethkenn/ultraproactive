@@ -28,8 +28,8 @@ class CreateTblMembershipCodeSale extends Migration
               ->onDelete('cascade');
 
 
-            $table->foreign('sold_to')
-              ->references('admin_id')->on('tbl_admin')
+            $table->foreign('generated_by')
+              ->references('account_id')->on('tbl_account')
               ->onDelete('cascade');
         });
     }

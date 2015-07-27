@@ -177,6 +177,7 @@ class MemberCheckoutController extends Controller
 
                 $voucher = new Tbl_voucher($insert);
                 $voucher->save();
+                
                 $log = "Purchase Product worth ".Product::return_format_num($insert['total_amount']). " with Voucher Num: ".$voucher->voucher_id." , Voucher Code: ".$voucher->voucher_code.".";
                 Log::slot(Request::input('slot_id'), $log, $data['remaining_bal']);
                 Log::account($customer->account_id, $log);
