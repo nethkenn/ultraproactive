@@ -21,7 +21,18 @@ class MemberAccountSettingsController extends MemberController
 		$data["customer_birthday"] = explode('-', $customer_birthday, 3);
 
 		if(isset($_POST['forsubmit']))
-		{
+		{	
+
+			$sample = Request::input();
+			foreach($sample as $s)
+			{
+				if($s == "")
+				{   
+					$data = "Please fill all the blanks";
+					return Redirect::to('member/settings')->with('message',$data);
+				}
+			}
+
 			$data = $this->checkifvalidate(Request::input());
 			return Redirect::to('member/settings')->with('message',$data);
 		}
@@ -136,7 +147,7 @@ class MemberAccountSettingsController extends MemberController
 	}
 	public function upload()
 	{
-		$target_dir = "resources/assets/uploads_profile_pic/";
+		$target_dir = "../../../resources/assets/uploads_profile_pic/";
 		if(!isset($_FILES["fileToUpload"]["name"]))
 		{
 		        $data = "Sorry, there was an error uploading your file.";

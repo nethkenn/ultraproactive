@@ -96,9 +96,9 @@ class AdminClaimController extends AdminController
 			{
 				$voucher_id = Request::input('voucher_id');
 				$data['voucher'] = 	Tbl_voucher::find($voucher_id);
-				$data['_voucher_product']  = Tbl_voucher_has_product::select('Tbl_voucher_has_product.*','tbl_product.stock_qty','tbl_product.product_name')
-																	->leftjoin('tbl_product','tbl_product.product_id','=', 'Tbl_voucher_has_product.product_id')
-																	->where('Tbl_voucher_has_product.voucher_id', $voucher_id)
+				$data['_voucher_product']  = Tbl_voucher_has_product::select('tbl_voucher_has_product.*','tbl_product.stock_qty','tbl_product.product_name')
+																	->leftjoin('tbl_product','tbl_product.product_id','=', 'tbl_voucher_has_product.product_id')
+																	->where('tbl_voucher_has_product.voucher_id', $voucher_id)
 																    ->get();
 
 
@@ -142,9 +142,9 @@ class AdminClaimController extends AdminController
 		$request['voucher_id'] = $voucher_id;
 		$rules['voucher_id'] = 'required|exists:tbl_voucher,voucher_id,status,unclaimed';
 
-		$_voucher_product = Tbl_voucher_has_product::select('Tbl_voucher_has_product.*','tbl_product.stock_qty','tbl_product.product_name')
+		$_voucher_product = Tbl_voucher_has_product::select('tbl_voucher_has_product.*','tbl_product.stock_qty','tbl_product.product_name')
 																	->leftjoin('tbl_product','tbl_product.product_id','=', 'Tbl_voucher_has_product.product_id')
-																	->where('Tbl_voucher_has_product.voucher_id', $voucher_id)
+																	->where('tbl_voucher_has_product.voucher_id', $voucher_id)
 																    ->get();
 
 		$request['product_count'] = count($_voucher_product);
