@@ -652,3 +652,110 @@ label
     margin-top: 15px;
     font-weight: 400;
 }
+
+.dashboard .graph
+{
+    margin: 20px 0;
+}
+
+.dashboard .logs
+{
+    min-height: 200px;
+    background-color: white;
+}
+
+.dashboard .logs .log-header
+{
+    background-color: #666666;
+    color: white;
+    text-align: left;
+    font-size: 18px;
+    vertical-align: middle;
+    padding: 10px 20px;
+    overflow: auto;
+}
+
+.dashboard .logs .log-header button
+{
+    background-color: #3498DB;
+    color: white;
+    border: 0;
+    vertical-align: middle;
+    float: right;
+    padding: 5px 20px;
+}
+
+.dashboard .logs .log-header .fa
+{
+    vertical-align: middle;
+    margin-right: 10px;
+    font-size: 22px;
+    display: inline;
+}
+
+.dashboard .logs .log-header span
+{
+    vertical-align: middle;
+    display: inline-block;
+    margin: 5px 0;
+}
+
+.dashboard .logs .log-content
+{
+    padding: 0 20px;
+}
+
+.dashboard .logs .log-content .holder
+{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.dashboard .logs .log-content .holder .pic
+{
+    width: 150px;
+    display: table-cell;
+    vertical-align: top;
+    background-color: #bdc3c7;
+}
+
+.dashboard .logs .log-content .holder .text
+{
+    text-align: left;
+    display: table-cell;
+    vertical-align: top;
+    padding: 0 20px;
+}
+
+.dashboard .logs .log-content .holder .text .name
+{
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.dashboard .logs .log-content .holder .text .email
+{
+    font-size: 14px;
+    color: #898989;
+}
+.dashboard .logs .log-content .holder .text .do
+{
+    font-size: 14px;
+    color: #4F4E4E;
+    font-weight: 600;
+}
+.dashboard .logs .log-content .holder .text .date
+{
+    text-align: right;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #2c3e50;
+    font-weight: 700;
+}
+.dashboard .logs .log-content .holder .text .time
+{
+    text-align: right;
+    font-size: 14px;
+    color: #34495e;
+    font-weight: 700;
+}
