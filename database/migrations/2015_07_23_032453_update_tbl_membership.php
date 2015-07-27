@@ -35,6 +35,10 @@ class UpdateTblMembership extends Migration
         Schema::table('tbl_membership', function($table)
         {
             $table->dropColumn('membership_binary_points');
+            $table->dropColumn('membership_matching_bonus');
+            $table->dropColumn('membership_direct_sponsorship_bonus');
+            $table->dropColumn('membership_indirect_level');
+            $table->dropColumn('membership_repurchase_level');
             $table->dropColumn('membership_entry');
             $table->dropColumn('membership_upgrade');
         });

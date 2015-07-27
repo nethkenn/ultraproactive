@@ -1,8 +1,10 @@
 <?php namespace App\Http\Controllers;
 use App\Tbl_account_log;
 use App\Tbl_slot;
+use App\Tbl_slot_log;
 use App\Tbl_lead;
 use App\Classes\Customer;
+use DB;
 
 class MemberDashboardController extends MemberController
 {
@@ -12,6 +14,12 @@ class MemberDashboardController extends MemberController
 		$data["total_wallet"] = Tbl_slot::where("slot_owner", Customer::id())->sum('slot_wallet');
 		$data["total_count"] = Tbl_slot::where("slot_owner", Customer::id())->count();
 		$data['leadc'] = Tbl_lead::where('lead_account_id',Customer::id())->count();
+		
+		$data["_slot_log"] = Tbl_slot_log::		select('tbl_slot_log.*', DB::raw('sum(slot_log_wallet_update) as total'))
+							                 	->where("slot_id", Customer::slot_id())
+							                 	->groupBy('slot_log_key')
+							                 	->get();
+
         return view('member.dashboard', $data);
 	}
 	public function notification()
