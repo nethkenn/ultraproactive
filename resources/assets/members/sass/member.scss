@@ -7,6 +7,24 @@ $gray: #aaafb6;
 $gray2: #9ea7b3;
 $font-color: #77818e;
 
+ul.nav li.dropdown:hover ul.dropdown-menu {
+    display: block;
+}
+
+
+.dropdown-menu
+{
+	a
+	{
+		color: #77818E !important;
+		&:hover
+		{
+			background: #40C0C0 !important;
+			color: white !important;
+		}
+	}
+}
+
 //FOOTABLE
 .footable-row-detail-row
 {
@@ -247,13 +265,12 @@ body
 				li
 				{
 					font-size: 13px;
-					&:hover
-					{
-						background-color: #40c0c0;
-					}
 					a
 					{
-
+						&:hover
+						{
+							background-color: #40c0c0;
+						}
 					}
 				}
 			}

@@ -116,13 +116,13 @@
                 <div class="form-group">
                     <label for="33" class="col-sm-6 control-label">Required Personal PV</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="33" readonly value="800.00">
+                        <input type="text" class="form-control" id="33" readonly value="{{ number_format($slotnow->membership_required_pv, 2) }}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="44" class="col-sm-6 control-label">Status</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="44" readonly value="Not Yet Qualified">
+                        <input type="text" class="form-control" id="44" readonly value="{{ $slotnow->slot_personal_points >= $slotnow->membership_required_pv ? 'Qualified for Unilevel' : 'Not Yet Qualified' }}">
                     </div>
                 </div>
             </div>
@@ -131,60 +131,26 @@
                 <div class="form-group">
                     <label for="111" class="col-sm-6 control-label">Points on Left</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="111" readonly value="1,200.00">
+                        <input type="text" class="form-control" id="111" readonly value="{{ number_format($slotnow->slot_binary_left, 2) }}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="222" class="col-sm-6 control-label">Points on Right</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="222" readonly value="0.00">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="333" class="col-sm-6 control-label">Total Left</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="333" readonly value="1,200.00">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="444" class="col-sm-6 control-label">Total Right</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="444" readonly value="1,200.00">
+                        <input type="text" class="form-control" id="222" readonly value="{{ number_format($slotnow->slot_binary_right, 2) }}">
                     </div>
                 </div>
             </div>
             <div class="title sblue">Total Bonuses</div>
             <div class="input form-horizontal para">
+                @foreach($_slot_log as $slot_log)
                 <div class="form-group">
-                    <label for="1111" class="col-sm-6 control-label">Binary Pairing</label>
+                    <label for="1111" class="col-sm-6 control-label">{{ strtoupper($slot_log->slot_log_key) }}</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="1111" readonly value="2,500.00">
+                        <input type="text" class="form-control highlight" id="1111" readonly value="{{ number_format($slot_log->total, 2) }}">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="2222" class="col-sm-6 control-label">Unilevel Purchase</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="2222" readonly value="8,500.00">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="3333" class="col-sm-6 control-label">Direct Sponsorship Bonus</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="3333" readonly value="5,500.00">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="4444" class="col-sm-6 control-label">Indirect Bonus</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="4444" readonly value="8,500.00">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="5555" class="col-sm-6 control-label">Matching Bonus</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="5555" readonly value="8,500.00">
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>

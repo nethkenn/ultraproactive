@@ -29,4 +29,13 @@
     vertical-align: middle;
     display: inline-block; }
 
+.btn {
+  background-image: none !important; }
+
+.lefty {
+  text-align: center; }
+
+textarea {
+  resize: none; }
+
 /*# sourceMappingURL=setting.css.map */

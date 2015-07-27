@@ -163,7 +163,6 @@ Select image to upload:
 </div>
 @endif
 
-
 <div class="setting-header"><i class="fa fa-cog"></i> <span>Account Settings</span></div>
 <div class="setting">
     <form method="POST" id="settings">
@@ -252,22 +251,24 @@ Select image to upload:
                 </div>
             </div>
         </form>
-            <div class="col-md-6">
+            <div class="col-md-6 lefty">
                 <div class="form-group">
                     <label for="file">Upload Picture</label>
                     <div class="profile-pic">
                         @if($member->image != "")
-                        <img src="{{$member->image}}">
+                        <img src="{{$member->image}}" style="max-width: 100%;">
                         @else
-                        <img src="/resources/assets/img/default-image.jpg">
+                        <img src="/resources/assets/img/default-image.jpg" style="max-width: 100%;">
                         @endif
                         <div class="borders"></div>
                     </div>
                     <div>
                         <form action="/member/settings/upload" method="post" enctype="multipart/form-data">
                         <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
-                        <input type="file" name="fileToUpload" id="fileToUpload">
-                        <input type="submit" value="Change Image" name="submit" required>
+                        <div style="margin: 20px 0;">
+                            <input type="file" name="fileToUpload" id="fileToUpload">
+                        </div>
+                        <input type="submit" class="btn btn-warning" value="Change Image" name="submit" required>
                         </form>
                     </div>
                 </div>

@@ -2,7 +2,7 @@
 use DB;
 use Request;
 use App\Tbl_deduction;
-use App\tbl_country;
+use App\Tbl_country;
 use App\Rel_deduction_country;
 use Redirect;
 class AdminDeductionController extends AdminController

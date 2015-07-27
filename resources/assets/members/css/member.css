@@ -1,3 +1,12 @@
+ul.nav li.dropdown:hover ul.dropdown-menu {
+  display: block; }
+
+.dropdown-menu a {
+  color: #77818E !important; }
+  .dropdown-menu a:hover {
+    background: #40C0C0 !important;
+    color: white !important; }
+
 @media screen and (max-width: 991px) {
   .footable-row-detail-row {
     text-align: left; } }
@@ -180,7 +189,7 @@ body {
       text-transform: uppercase; }
       .wrapper .header-nav .navbar .nav li {
         font-size: 13px; }
-        .wrapper .header-nav .navbar .nav li:hover {
+        .wrapper .header-nav .navbar .nav li a:hover {
           background-color: #40c0c0; }
     .wrapper .header-nav .navbar .hidden-bury select {
       margin: 8px 20px; }

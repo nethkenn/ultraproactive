@@ -16,7 +16,7 @@
                             <span class="downline parent parent-reference PS" x="{{ $slot->slot_id }}">   
                                 <div id="info">
                                    	<div id="photo">
-                                        <img src="/resources/assets/img/default-image.JPG" alt="" />
+                                        <img src="/resources/assets/img/default-image.jpg" alt="" />
                                     </div>
                                     <div id="cont">
                                         <div>{{ strtoupper($slot->account_name) }}</div>
@@ -26,7 +26,9 @@
                                 </div>
                                 <div class="id">{{ $slot->slot_id }}</div>
                             </span> 
-                            <i class="downline-container"></i>                  
+                            <i class="downline-container">
+                                {!! $downline !!}
+                            </i>                  
 							<!--
 							<ul>
 								
@@ -70,7 +72,7 @@
     
     
 <script type="text/javascript">
-    var mode = "false";
+    var mode = "{{ Request::input('mode') }}";
     var g_width = 0;
     var half;
     
