@@ -172,7 +172,7 @@ Select image to upload:
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" name="fname" value="{{$acc->account_name}}" class="form-control">
+                    <input type="text" name="fname" value="{{$acc->account_name}}" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="gender">Gender</label>
@@ -258,7 +258,7 @@ Select image to upload:
                         @if($member->image != "")
                         <img src="{{$member->image}}">
                         @else
-                        <img src="/resources/assets/frontend/img/pix.png">
+                        <img src="/resources/assets/img/default-image.jpg">
                         @endif
                         <div class="borders"></div>
                     </div>
