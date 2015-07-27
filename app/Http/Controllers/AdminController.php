@@ -80,7 +80,7 @@ class AdminController extends Controller
 
     public function index()
     {
-        include('/gapi.class.php');
+        include('resources/views/sikreto/gapi.class.php');
 
         $profile_id = "105785789";
         $report_id = "xxxxxxxx";

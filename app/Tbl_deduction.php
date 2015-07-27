@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tbl_deduction extends Model
 {
-	protected $table = 'Tbl_deduction';
+	protected $table = 'tbl_deduction';
 	protected $primaryKey = 'deduction_id';
     public $timestamps = false;
 	

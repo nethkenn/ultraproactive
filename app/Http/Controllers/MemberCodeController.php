@@ -23,6 +23,7 @@ use App\Tbl_voucher_has_product;
 use App\Tbl_product_code;
 use App\Rel_membership_product;
 use App\Rel_membership_code;
+
 class MemberCodeController extends MemberController
 {
 	public function index()
@@ -104,6 +105,51 @@ class MemberCodeController extends MemberController
         return view('member.code_vault',$data);
 	}
 
+	public function use_product_code()
+	{
+		$customer_id = Customer::id();
+
+		$product_pin = Request::input("product_pin");
+		$slot_id = Request::input("slot");
+
+		/* CHECK IF SLOT AND CODE PIN BELONGS TO THE ACCOUNT */
+		$code_info = Tbl_product_code::where("product_pin", $product_pin)->voucher()->product()->first();
+		$slot_info = Tbl_slot::id($slot_id)->first();
+
+		if($customer_id != $code_info->account_id)
+		{
+			die("This code doesn't belong to this account.");
+		}
+
+		if($customer_id != $slot_info->slot_owner)
+		{
+			die("The slot you're trying to use doesn't belong to this account.");
+		}
+
+		if($code_info)
+		{
+			if($code_info->used == 1)
+			{
+				die("You're trying to code that was already used.");
+			}
+			else
+			{
+				$unilevel_pts = $code_info->unilevel_pts; 
+				$binary_pts = $code_info->binary_pts;
+				Compute::repurchase($slot_id, $unilevel_pts, $binary_pts);
+				$update["used"] = 1;
+				$code_info = Tbl_product_code::where("product_pin", $product_pin)->update($update);
+
+                /* INSERT LOG FOR THAT A CODE WAS USED */
+                $log = "You spent one of your Product Code (#" . $product_pin . ") for your slot #" . $slot_info->slot_id . " which contains <b>" . number_format($unilevel_pts, 2) . " unilevel points</b> and <b>" . number_format($binary_pts, 2) . " binary points</b>.";
+                Log::account($slot_info->slot_owner, $log);
+			}
+
+		}
+
+
+		return Redirect::to("/member/code_vault");
+	}
 	public function addslot($data)
 	{
 
@@ -209,18 +255,15 @@ class MemberCodeController extends MemberController
         												 ->join('tbl_account','tbl_account.account_id','=','tbl_member_code_history.by_account_id')
         											     ->orderBy('updated_at','DESC')
         											     ->first();
+
         	$data['code'][$key]->transferer = $get->account_name;	
         	$data['code'][$key]->encrypt    = Crypt::encrypt($d->code_pin);									     
         }
 
 
-		$data['prodcode'] = DB::table('tbl_product_code')->leftjoin('tbl_voucher_has_product','tbl_voucher_has_product.voucher_item_id','=','tbl_product_code.voucher_item_id')
-														 ->leftjoin('tbl_voucher','tbl_voucher.voucher_id','=','tbl_voucher_has_product.voucher_id')
-														 ->leftjoin('tbl_product','tbl_product.product_id','=','tbl_voucher_has_product.product_id')
-														 ->get();
-														 
+		$data['prodcode'] = Tbl_product_code::where("account_id", Customer::id())->voucher()->product()->orderBy("product_pin", "desc")->unused()->get();										 
 		$data['count']= DB::table('tbl_membership_code')->where('archived',0)->where('account_id','=',$id)->where('tbl_membership_code.blocked',0)->count();		
-		$data['count2'] = Tbl_voucher_has_product::product()->groupBy('tbl_product_code.product_pin')->where('account_id',Customer::id())->voucher()->productcode()->count();
+		$data['count2'] = Tbl_product_code::where("account_id", Customer::id())->voucher()->product()->orderBy("product_pin", "desc")->unused()->count();										 
 		
 		if($data['count2'] == 0)
 		{

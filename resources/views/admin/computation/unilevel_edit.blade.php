@@ -2,10 +2,10 @@
 @section('content')
     <div class="row header">
         <div class="title col-md-8">
-            <h2><i class="fa fa-star-half-o"></i>  Indirect Level Bonus / Update</h2>
+            <h2><i class="fa fa-star-half-o"></i> UNILEVEL BONUS PERCENTAGE / Update</h2>
         </div>
         <div class="buttons col-md-4 text-right">
-            <button onclick="location.href='admin/utilities/indirect'" type="button" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back</button>
+            <button onclick="location.href='admin/utilities/unilevel'" type="button" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back</button>
             <button onclick="$('#country-add-form').submit();" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Update</button>
         </div>
     </div>
@@ -18,13 +18,13 @@
             </div>  
             <div class="form-group col-md-12">
                 <label for="account_contact">Number of Levels</label>
-                <input name="membership_indirect_level" value="{{ $data->membership_indirect_level }}" required="required" class="form-control level-input" id="" placeholder="" type="text">
+                <input name="membership_repurchase_level" value="{{ $data->membership_repurchase_level }}" required="required" class="form-control level-input" id="" placeholder="" type="text">
             </div>
 
             <div class="level-container">
                 @foreach($_level as $key => $level)
                 <div class="form-group col-md-12">
-                    <label for="account_contact">Level {{ $level->level }}</label>
+                    <label for="account_contact">Level {{ $level->level }} (0-100%)</label>
                     <input name="level[{{ $level->level }}]" value="{{ $level->value}}" required="required" class="form-control" id="" placeholder="" type="text">
                 </div>
                 @endforeach
@@ -37,7 +37,6 @@
 <script type="text/javascript">
     $(document).ready(function()
     {
-
         $(".level-input").keyup(function(e)
         {
             $val = $(e.currentTarget).val();
@@ -46,7 +45,7 @@
             {
                 $level = $ctr + 1;
                 $(".level-container").append(   '<div class="form-group col-md-12">' +
-                                                    '<label for="account_contact">Level ' + $level + '</label>' +
+                                                    '<label for="account_contact">Level ' + $level + ' (0-100%)</label>' +
                                                     '<input name="level[' + $level + ']" value="0" required="required" class="form-control" id="" placeholder="" type="text">' +
                                                 '</div>');
             }

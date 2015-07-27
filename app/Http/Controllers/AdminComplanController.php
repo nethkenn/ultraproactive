@@ -5,6 +5,7 @@ use App\Tbl_membership;
 use App\Tbl_binary_pairing;
 use App\Tbl_product;
 use App\Tbl_indirect_setting;
+use App\Tbl_unilevel_setting;
 
 class AdminComplanController extends AdminController
 {
@@ -87,8 +88,6 @@ class AdminComplanController extends AdminController
 	public function direct()
 	{
 		$data["_membership"] = Tbl_membership::active()->entry()->get();
-		$data["_pairing"] = Tbl_binary_pairing::get();
-		$data["_product"] = Tbl_product::active()->get();
 		return view('admin.computation.direct', $data);
 	}
 	public function direct_edit()
@@ -108,8 +107,6 @@ class AdminComplanController extends AdminController
 	public function indirect()
 	{
 		$data["_membership"] = Tbl_membership::active()->entry()->get();
-		$data["_pairing"] = Tbl_binary_pairing::get();
-		$data["_product"] = Tbl_product::active()->get();
 		return view('admin.computation.indirect', $data);
 	}
 	public function indirect_edit()
@@ -142,8 +139,6 @@ class AdminComplanController extends AdminController
 	public function matching()
 	{
 		$data["_membership"] = Tbl_membership::active()->entry()->get();
-		$data["_pairing"] = Tbl_binary_pairing::get();
-		$data["_product"] = Tbl_product::active()->get();
 		return view('admin.computation.matching', $data);
 	}
 	public function matching_edit()
@@ -163,8 +158,35 @@ class AdminComplanController extends AdminController
 	public function unilevel()
 	{
 		$data["_membership"] = Tbl_membership::active()->entry()->get();
-		$data["_pairing"] = Tbl_binary_pairing::get();
-		$data["_product"] = Tbl_product::active()->get();
 		return view('admin.computation.unilevel', $data);
+	}
+	public function unilevel_edit()
+	{
+		if(Request::isMethod("post"))
+		{
+			$update["membership_repurchase_level"] = Request::input("membership_repurchase_level");
+			Tbl_membership::where("membership_id", Request::input("id"))->update($update);
+
+			$ctr = 0;
+			Tbl_unilevel_setting::where("membership_id", Request::input("id"))->delete();
+
+			foreach(Request::input("level") as $level => $value)
+			{
+				$insert[$ctr]["level"] = $level;
+				$insert[$ctr]["value"] = $value;
+				$insert[$ctr]["membership_id"] = Request::input("id");
+				$ctr++;
+			}
+
+			Tbl_unilevel_setting::insert($insert);
+
+			return Redirect::to('/admin/utilities/unilevel');
+		}
+		else
+		{
+			$data["data"] = Tbl_membership::where("membership_id", Request::input("id"))->first();
+			$data["_level"] = Tbl_unilevel_setting::where("membership_id", Request::input("id"))->get();
+			return view('admin.computation.unilevel_edit', $data);	
+		}
 	}
 }
