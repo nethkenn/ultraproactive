@@ -15,10 +15,7 @@ class CreateTblMembershipCodeSaleHasCode extends Migration
         Schema::create('tbl_membership_code_sale_has_code', function (Blueprint $table) {
             
             $table->integer('membershipcode_or_num')->unsigned();
-            $table->integer('code_pin')->unsigned();
-            
-
-            $table->timestamps();
+            $table->integer('code_pin')->unsigned(); 
 
             $table->foreign('code_pin')
               ->references('code_pin')->on('tbl_membership_code')
