@@ -165,6 +165,7 @@ class AdminComplanController extends AdminController
 		if(Request::isMethod("post"))
 		{
 			$update["membership_repurchase_level"] = Request::input("membership_repurchase_level");
+			$update["membership_required_pv"] = Request::input("membership_required_pv");
 			Tbl_membership::where("membership_id", Request::input("id"))->update($update);
 
 			$ctr = 0;

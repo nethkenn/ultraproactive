@@ -13,12 +13,13 @@ class Log
 		Tbl_account_log::insert($insert);
 	}
 	
-	public static function slot($slot_id, $log, $wallet_update)
+	public static function slot($slot_id, $log, $wallet_update, $log_key = "OTHERS")
 	{
 		$insert["slot_id"] = $slot_id;
 		$insert["slot_log_details"] = $log;
 		$insert["slot_log_wallet_update"] = $wallet_update;
 		$insert["slot_log_date"] = Carbon\Carbon::now();
+		$insert["slot_log_key"] = $log_key;
 		Tbl_slot_log::insert($insert);
 	}
 }

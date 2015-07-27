@@ -197,6 +197,9 @@ class AdminCodeController extends AdminController {
 			
 			if (!$validator->fails())
 			{
+
+
+				
 				for ($i=0; $i < Request::input('code_multiplier'); $i++)
 				{ 
 					$name =DB::table('tbl_account')->where('account_username',Session::get('admin')['username'])->first();
@@ -213,10 +216,18 @@ class AdminCodeController extends AdminController {
 					$insert['to_account_id'] = $membership_code->account_id;
 					$insert['updated_at'] = $membership_code->created_at;
 					$insert['description'] = "Created by ".$name->account_name;
+
+
+
+
+
 					DB::table("tbl_member_code_history")->insert($insert);
 					$insert2['code_pin'] = $membership_code->code_pin;
 					$insert2['product_package_id'] = Request::input('product_package_id');
 					Rel_membership_code::insert($insert2);
+
+
+
 				}
 
 

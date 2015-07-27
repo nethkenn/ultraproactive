@@ -20,6 +20,8 @@ class MemberAccountSettingsController extends MemberController
 		$customer_birthday = $data['acc']->birthday;
 		$data["customer_birthday"] = explode('-', $customer_birthday, 3);
 
+
+
 		if(isset($_POST['forsubmit']))
 		{	
 
@@ -75,6 +77,7 @@ class MemberAccountSettingsController extends MemberController
 					}
 
 		}
+
         return view('member.member_settings',$data);
 	}
 	public function checkifvalidate($data)
@@ -147,7 +150,8 @@ class MemberAccountSettingsController extends MemberController
 	}
 	public function upload()
 	{
-		$target_dir = "../../../resources/assets/uploads_profile_pic/";
+		$target_dir = "resources/assets/uploads_profile_pic/";
+
 		if(!isset($_FILES["fileToUpload"]["name"]))
 		{
 		        $data = "Sorry, there was an error uploading your file.";

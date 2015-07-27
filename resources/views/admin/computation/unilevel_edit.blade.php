@@ -16,6 +16,12 @@
                 <label for="account_name">Membership Name</label>
                 <input disabled="disabled" value="{{ $data->membership_name }}" class="form-control" id="" placeholder="" type="text">
             </div>  
+
+            <div class="form-group col-md-12">
+                <label for="account_name">Required PV</label>
+                <input name="membership_required_pv" value="{{ $data->membership_required_pv }}" class="form-control" id="" placeholder="" type="text">
+            </div>  
+            
             <div class="form-group col-md-12">
                 <label for="account_contact">Number of Levels</label>
                 <input name="membership_repurchase_level" value="{{ $data->membership_repurchase_level }}" required="required" class="form-control level-input" id="" placeholder="" type="text">

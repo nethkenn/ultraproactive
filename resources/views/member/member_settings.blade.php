@@ -163,7 +163,6 @@ Select image to upload:
 </div>
 @endif
 
-
 <div class="setting-header"><i class="fa fa-cog"></i> <span>Account Settings</span></div>
 <div class="setting">
     <form method="POST" id="settings">
