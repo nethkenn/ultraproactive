@@ -150,13 +150,9 @@ class MemberAccountSettingsController extends MemberController
 	}
 	public function upload()
 	{
-<<<<<<< HEAD
 		$eydiwow = getcwd();
 		$target_dir = "$eydiwow/resources/assets/uploads_profile_pic/";
 
-=======
-		$target_dir = "../../../resources/assets/uploads_profile_pic/";
->>>>>>> 5ba15a33cf60591e773d4dc0ffc1b1869e071075
 		if(!isset($_FILES["fileToUpload"]["name"]))
 		{
 		        $data = "Sorry, there was an error uploading your file.";
