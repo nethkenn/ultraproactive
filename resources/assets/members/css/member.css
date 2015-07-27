@@ -157,6 +157,9 @@ body {
     @media screen and (max-width: 991px) {
       .wrapper .header-nav .header .header-text {
         padding: 5px 10px; } }
+    @media screen and (max-width: 341px) {
+      .wrapper .header-nav .header .header-text {
+        border-right: 0; } }
   .wrapper .header-nav .header .header-text:last-child {
     border-right: 0px solid #c2c2c2; }
   .wrapper .header-nav .navbar-right {
