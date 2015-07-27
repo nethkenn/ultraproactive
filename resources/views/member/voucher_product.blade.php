@@ -1,4 +1,4 @@
-<div class="create-slot">
+<div class="create-slot" style="border: 0;">
     <div class="header">
         <img src="/resources/assets/frontend/img/icon-vouchers.png">
         Vouchers

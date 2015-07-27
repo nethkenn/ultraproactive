@@ -6,32 +6,53 @@ class MemberGenealogyController extends MemberController
 {
 	public function index()
 	{
+
         return view('member.genealogy');
 	}
 	public function tree()
 	{
 		$data["slot"] = Tbl_slot::rank()->membership()->account()->id(Customer::slot_id())->first();
+		$data["downline"] = $this->downline(Customer::slot_id());
 		return view('member.genealogy_tree', $data);
 	}
-	public function downline()
+	public function downline($x = 0)
 	{
 		$format = Request::input("mode");
-		$slot_id = Request::input("x");
+
+		if($x == 0)
+		{
+			$slot_id = Request::input("x");
+		}
+		else
+		{
+			$slot_id = $x;
+		}
 
 		$return = "<ul>";
 
-		if($format == false)
+		if($format == "binary")
 		{
 			$return .= $this->binary_downline($slot_id);
 		}
 		else
 		{
-			$return .= $this->binary_downline($slot_id);
+			$return .= $this->unilevel_downline($slot_id);
 		}
+
+
+
 
 		$return .= "</ul>";
 
-		return json_encode($return);
+		if($x == 0)
+		{
+			return json_encode($return);
+		}
+		else
+		{
+			return $return;
+		}
+		
 	}
 	public function binary_downline($slot_id)
 	{
@@ -42,6 +63,34 @@ class MemberGenealogyController extends MemberController
 		$tree_string .= $this->downline_format($left_info);
 		$tree_string .= $this->downline_format($right_info);
 
+		return $tree_string;
+
+
+	}
+	public function unilevel_downline($slot_id)
+	{
+		$_info = Tbl_slot::where("slot_sponsor", $slot_id)->membership()->account()->get();
+		$count = Tbl_slot::where("slot_sponsor", $slot_id)->membership()->account()->count();
+
+		$tree_string = "";
+
+		if($count != 0)
+		{
+			foreach($_info as $info)
+			{
+				$tree_string .= $this->downline_format($info);	
+			}
+		}
+		else
+		{
+			$tree_string .= '<li class="width-reference">
+								<span class="parent parent-reference VC">
+									<div class="id">+</div>
+								</span>
+							</li>';
+		}
+
+		
 		return $tree_string;
 
 
