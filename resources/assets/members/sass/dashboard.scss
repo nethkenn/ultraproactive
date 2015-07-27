@@ -186,7 +186,11 @@ $font-color: #77818e;
 				background-color: #39BABA;
 				display: inline-block;
 				border-radius: 3px;
-				min-width: 400px;
+				width: 400px;
+				@media screen and (max-width: 400px)
+				{
+					max-width: 100%;
+				}
 			}
 			.input
 			{
