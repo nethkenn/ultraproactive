@@ -163,6 +163,8 @@ class MemberAccountSettingsController extends MemberController
 		$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 		$uploadOk = 1;
 		$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+		$target_file = $target_dir . basename((date('Y-m-d-H-i-s-u')).'.'.$imageFileType);
+
 		// Check if image file is a actual image or fake image
 		if(isset($_POST["submit"])) {
 			if ($_FILES["fileToUpload"]["tmp_name"] == null) {
@@ -179,12 +181,20 @@ class MemberAccountSettingsController extends MemberController
 		        return Redirect::to('member/settings')->with('message',$data);
 		    }
 		}
-		// Check if file already exists
-		if (file_exists($target_file)) {
-		    $data = "Sorry, please change the file name.";
-		    $uploadOk = 0;
-	        return Redirect::to('member/settings')->with('message',$data);
+		$ctr = 0;
+		for($ulet=false;$ulet!=true;$ctr++)
+		{
+			if (file_exists($target_file)) {
+				$target_file = $target_dir . basename((date('Y-m-d-H-i-s-u')).'-'.$ctr.'.'.$imageFileType);
+			}	
+			else
+			{
+				
+				$ulet = true;
+			}		
 		}
+		// Check if file already exists
+
 		// Check file size
 		if ($_FILES["fileToUpload"]["size"] > 500000) {
 		    $data = "Sorry, your file is too large.";
