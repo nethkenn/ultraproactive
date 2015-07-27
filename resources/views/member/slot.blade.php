@@ -63,7 +63,7 @@
                         </div>
                     </div>
                 </div>
-                <img src="/resources/assets/frontend/img/linyangmalupet.png">
+                <img src="/resources/assets/frontend/img/linyangmalupet.png" style="max-width: 100%;">
             @endforeach   
         @endif   
     </div>

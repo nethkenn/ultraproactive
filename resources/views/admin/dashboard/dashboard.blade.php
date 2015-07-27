@@ -142,7 +142,6 @@ $(function () {
 	            borderWidth: 0
 	        },
 	        series: [{ name: 'Views', data: _y }]
-	   		
     });
 });
 
