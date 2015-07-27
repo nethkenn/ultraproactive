@@ -105,7 +105,7 @@ class MemberSlotController extends MemberController
 				$check = true;
 			}
 		}
-		return $pid;
+
 		if($check == true)
 		{
 			$this->additional($pid,$id);

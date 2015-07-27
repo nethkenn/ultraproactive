@@ -126,7 +126,8 @@
 @yield('script')
 
 </body>
-    <div class="remodal create-slot" data-remodal-id="transfer_code" data-remodal-options="hashTracking: false">
+
+ <!--   <div class="remodal create-slot" data-remodal-id="transfer_code" data-remodal-options="hashTracking: false">
         <button data-remodal-action="close" class="remodal-close"></button>
         <div class="header">
             <img src="/resources/assets/frontend/img/icon-transfer.png">
@@ -167,7 +168,7 @@
         <button class="button" data-remodal-action="cancel">Cancel</button>
         <button class="button" type="submit" name="codesbmt">Initiate Transfer</button>
     </div>
-</form>
+</form> -->
 
 
 
