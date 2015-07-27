@@ -183,7 +183,7 @@ class MemberCheckoutController extends Controller
 
                 foreach ((array)$cart as $key => $value)
                 {
-   
+                    // dd();
                     $prod_pts = Tbl_product::find($key);
                     $insert_prod =  array(
                         'product_id' =>  $key,
@@ -201,20 +201,20 @@ class MemberCheckoutController extends Controller
 
                     $voucher_has_product = new Tbl_voucher_has_product($insert_prod);
                     $voucher_has_product->save();
-
-                    // dd($voucher_has_product->voucher_item_id);
-                    $query = Tbl_product_code::where('code_activation', Globals::code_generator())->first();
-                    // $insert_prod_code['code_activation'] = Globals::check_code($query);
-                    // $insert_prod_code['voucher_item_id'] = $voucher_has_product->voucher_item_id;
                     
-                    for ($i=$value['qty']-1; $i < ; $i++)
-                    { 
+                    /**
+                     * FOREACH ITEM QUANTITY CREATE PRODUCT CODE
+                     */
+                    for ($x = 0 ; $x < $value['qty']; $x++)
+                    {
+                        $query = Tbl_product_code::where('code_activation', Globals::code_generator())->first();
                         $insert_prod_code['code_activation'] = Globals::check_code($query);
                         $insert_prod_code['voucher_item_id'] = $voucher_has_product->voucher_item_id;
-                    }
-                    
-                    $product_code = new Tbl_product_code($insert_prod_code);
-                    $product_code->save();
+
+                        $product_code = new Tbl_product_code($insert_prod_code);
+                        $product_code->save();
+                    } 
+
 
                 }
 
