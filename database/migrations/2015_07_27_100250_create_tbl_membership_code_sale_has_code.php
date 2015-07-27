@@ -16,7 +16,8 @@ class CreateTblMembershipCodeSaleHasCode extends Migration
             
             $table->integer('membershipcode_or_num')->unsigned();
             $table->integer('code_pin')->unsigned(); 
-
+            $table->double('sold_price');
+            
             $table->foreign('code_pin')
               ->references('code_pin')->on('tbl_membership_code')
               ->onDelete('cascade');

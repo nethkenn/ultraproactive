@@ -165,6 +165,8 @@ Route::get('admin/maintenance/codes/get', 'AdminCodeController@ajax_get_membersh
 Route::post('admin/maintenance/codes/block', 'AdminCodeController@block');
 Route::post('admin/maintenance/codes/transfer_code', 'AdminCodeController@transfer_code');
 Route::get('admin/maintenance/codes/verify_code', 'AdminCodeController@verify_code');
+Route::get('admin/maintenance/codes/or', 'AdminCodeController@show_sale_or');
+
 
 Route::get('admin/maintenance/product', 'AdminProductController@index');
 Route::any('admin/maintenance/product/add', 'AdminProductController@add_product');
