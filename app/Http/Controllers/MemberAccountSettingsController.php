@@ -150,8 +150,7 @@ class MemberAccountSettingsController extends MemberController
 	}
 	public function upload()
 	{
-		$eydiwow = getcwd();
-		$target_dir = "$eydiwow/resources/assets/uploads_profile_pic/";
+		$target_dir = "resources/assets/uploads_profile_pic/";
 
 		if(!isset($_FILES["fileToUpload"]["name"]))
 		{
