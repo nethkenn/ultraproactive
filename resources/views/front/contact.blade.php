@@ -80,7 +80,7 @@
                                 <div class="wpb_content_element">
                                     <div class="row-fluid row-google-map " style="position:relative; height:250px;">
                                         <div class="overlay" onClick=" style.pointerEvents= &apos; none &apos; "></div>
-                                        <iframe class="googlemap " style="height:250px;" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3154.055389998706!2d-122.16522420000003!3d37.7652993999999!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808f8f50366a04d5%3A0x797bb69851540a55!2sNey+Ave%2C+Oakland%2C+CA+94605!5e0!3m2!1ssq!2s!4v1414082013945"></iframe>
+                                        <iframe class="googlemap " style="height:250px;" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.0565175589063!2d55.304113699999995!3d25.26868415!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f434864ed5b6b%3A0x590f68566d8fb710!2sBldg+-+Dubai+-+United+Arab+Emirates!5e0!3m2!1sen!2sph!4v1437989317689"></iframe>
                                         <div class="desc"></div>
                                     </div>
                                 </div>
@@ -93,10 +93,11 @@
                                     <div class="header">
                                         <h2>Contact Info</h2></div>
                                     <div class="content">
-                                        <p>PO Box 16134 Victoria Street West
-                                            <br /> Victoria 513 New Yourk, Us
-                                            <br /> Email : no-replay@envato.com
-                                            <br /> Telephone:+35 3 2635 2863</p>
+                                        <p style="word-break: keep-all !important;">{{ $company->company_address }}
+                                            <br /> {{ $company->company_email }}
+                                            <br /> Telephone:{{ $company->company_telephone }}
+                                            <br /> Phone: {{ $company->company_mobile }}
+                                        </p>
                                         <div class="social">
                                             <ul>
                                                 <li><a href="#"><i class="icon-google_plus"></i></a></li>
