@@ -173,7 +173,7 @@ Select image to upload:
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" name="fname" value="{{$acc->account_name}}" class="form-control">
+                    <input type="text" name="fname" value="{{$acc->account_name}}" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="gender">Gender</label>

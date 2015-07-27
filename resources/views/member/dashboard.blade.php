@@ -6,7 +6,7 @@
             @if($member->image != "")
             <img src="{{$member->image}}">
             @else
-            <img src="/resources/assets/frontend/img/pix.png">
+            <img src="/resources/assets/img/default-image.jpg">
             @endif
             <div class="borders"></div>
         </div>
