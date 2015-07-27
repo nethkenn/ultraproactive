@@ -1,6 +1,6 @@
 @extends('member.layout')
 @section('content')
-<div class="encashment voucher code-vault">
+<!-- <div class="encashment voucher code-vault">
             @if(Session::has('message'))
             <div class="alert alert-danger">
                 <ul>
@@ -149,7 +149,7 @@
             </tbody>
         </table>
     </div>
-</div>
+</div> -->
                        <!--     <div class="vc_col-md-6 columnz">
                                 <div class="column-title">
                                     <span>Account Details</span>
@@ -170,6 +170,79 @@
                                     </div>
                                 </div>
                             </div> -->
+<div class="setting-header"><i class="fa fa-cog"></i> <span>Account Settings</span></div>
+<div class="setting">
+    <form>
+        <div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name">
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <div class="radio">
+                        <label class="radio-inline">
+                          <input type="radio" name="gender" id="male"> Male
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" name="gender" id="female"> Female
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="text" class="form-control" id="phone">
+                </div>
+                <div class="form-group">
+                    <label for="telephone">Telephone Number</label>
+                    <input type="text" class="form-control" id="telephone">
+                </div>
+                <div class="form-group">
+                    <label>Birthday</label>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <select class="form-control"></select>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-control"></select>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-control"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea type="text" class="form-control" id="address" style="resize: none;"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <select class="form-control" id="country">
+                        <option>United Arab Emirates</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="file">Upload Picture</label>
+                    <div>
+                        <input type="file" id="file">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 righty">
+                <button type="submit" class="btn btn-success text-right">Update</button>
+            </div>
+        </div>
+    </form>
+</div>
 
 <div class="remodal create-slot" data-remodal-id="cpass" data-remodal-options="hashTracking: false">
     <button data-remodal-action="close" class="remodal-close"></button>
@@ -213,5 +286,5 @@
 <script type="text/javascript" src="/resources/assets/members/js/account.js"></script>
 @endsection
 @section('css')
-
+<link rel="stylesheet" type="text/css" href="/resources/assets/members/css/setting.css">
 @endsection
