@@ -14,6 +14,7 @@ function encashment()
 	function document_ready()
 	{	
 		initialize();
+		check_value();
 		country = jQuery.parseJSON($(".forhidden").val());
 	}
 
@@ -37,6 +38,7 @@ function encashment()
 			compute_country();
 			var inst = $('[data-remodal-id=encashment]').remodal();
           	inst.open(); 
+          	check_value();
 		});
 
 		$(".forhistory").click(function(){
@@ -64,6 +66,17 @@ function encashment()
 
         $("#six").val(parseInt($("#two").val())-deduction);
 	}
+	function check_value()
+	{
+        if(parseInt($("#six").val()) >= 0 && parseInt($("#three").val()) >= 0)
+        {
+        	$('#checkconfirmation').prop("disabled", false);
+        }
+       	else
+        {
+        	$('#checkconfirmation').prop("disabled", true);
+        }
 
+	}
 }
 

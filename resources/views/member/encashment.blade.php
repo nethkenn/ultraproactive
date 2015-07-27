@@ -84,7 +84,7 @@
             <input type="hidden" name="typeofencashment" id="enc" value="">
     </div>
              <br>
-             <button  type="submit" name="confirmencash" class="orange-btn button">Confirm Encashment</button>
+             <button  type="submit" name="confirmencash" class="orange-btn button" id="checkconfirmation">Confirm Encashment</button>
         </form>
 </div>
 
