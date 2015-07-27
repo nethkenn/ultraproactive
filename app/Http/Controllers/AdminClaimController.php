@@ -144,7 +144,7 @@ class AdminClaimController extends AdminController
 
 		$_voucher_product = Tbl_voucher_has_product::select('tbl_voucher_has_product.*','tbl_product.stock_qty','tbl_product.product_name')
 																	->leftjoin('tbl_product','tbl_product.product_id','=', 'Tbl_voucher_has_product.product_id')
-																	->where('tbl_voucher_has_product.voucher_id', $voucher_id)
+																	->where('voucher_id', $voucher_id)
 																    ->get();
 
 		$request['product_count'] = count($_voucher_product);

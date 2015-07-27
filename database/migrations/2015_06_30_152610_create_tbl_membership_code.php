@@ -19,8 +19,8 @@ class CreateTblMembershipCode extends Migration
 
             $table->integer('code_type_id')->unsigned();
             $table->integer('membership_id')->unsigned();
-            $table->integer('product_package_id')->unsigned();
-            $table->integer('admin_id')->unsigned()->nullable();
+            $table->integer('product_package_id')->unsigned()->nullable();
+            $table->integer('generated_by')->unsigned()->nullable();
             $table->integer('inventory_update_type_id')->unsigned();
             $table->integer('account_id')->unsigned()->nullable();
 
@@ -32,6 +32,7 @@ class CreateTblMembershipCode extends Migration
             $table->timestamps();
 
             $table->foreign('account_id')->references('account_id')->on('tbl_account');
+            $table->foreign('generated_by')->references('account_id')->on('tbl_account');
             $table->foreign('code_type_id')->references('code_type_id')->on('tbl_code_type');
             $table->foreign('membership_id')->references('membership_id')->on('tbl_membership');
             $table->foreign('product_package_id')->references('product_package_id')->on('tbl_product_package');
