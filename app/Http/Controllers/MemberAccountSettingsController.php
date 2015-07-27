@@ -214,10 +214,27 @@ class MemberAccountSettingsController extends MemberController
 		// if everything is ok, try to upload file
 		} else {
 		    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-		    	WideImage::load($target_file)
-		    				->resize(300, 300, 'outside')
-							->crop('center', 'center', 300, 300)->saveToFile($target_file);
-		    	DB::table('tbl_account')->where('account_id',Customer::id())->update(['image'=>$target_file]);
+
+		    	$getcurrentimage = DB::table('tbl_account')->where('account_id',Customer::id())->first();
+
+		    	if($getcurrentimage->image == "")
+		    	{
+    				WideImage::load($target_file)
+    				->resize(300, 300, 'outside')
+					->crop('center', 'center', 300, 300)->saveToFile($target_file);
+			    	DB::table('tbl_account')->where('account_id',Customer::id())->update(['image'=>$target_file]);	    		
+		    	}
+		    	else
+		    	{
+		    		unlink($getcurrentimage->image);
+    				WideImage::load($target_file)
+    				->resize(300, 300, 'outside')
+					->crop('center', 'center', 300, 300)->saveToFile($target_file);
+			    	DB::table('tbl_account')->where('account_id',Customer::id())->update(['image'=>$target_file]);			    		
+		    	}
+
+
+
 		    	$data = "Successfuly changed";
 		        return Redirect::to('member/settings')->with('success',$data);
 		    } else {
