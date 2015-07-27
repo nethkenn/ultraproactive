@@ -226,7 +226,8 @@ Route::any('admin/maintenance/ranking/delete', 'AdminRankingController@delete_ra
 Route::any('admin/maintenance/ranking/add', 'AdminRankingController@add_ranking');
 
 /* MAINTENANCE / INVENTORY */
-Route::get('admin/maintenance/inventory', 'AdminInventoryController@index');
+Route::any('admin/maintenance/inventory', 'AdminInventoryController@index');
+Route::any('admin/maintenance/inventory/get_inventory', 'AdminInventoryController@ajax_get_product');
 
 
 /* ADMIN / UTILITIES */
