@@ -20,7 +20,7 @@ class MemberAccountSettingsController extends MemberController
 		$customer_birthday = $data['acc']->birthday;
 		$data["customer_birthday"] = explode('-', $customer_birthday, 3);
 
-		if(isset($_POST['submit']))
+		if(isset($_POST['forsubmit']))
 		{
 			$data = $this->checkifvalidate(Request::input());
 			return Redirect::to('member/settings')->with('message',$data);

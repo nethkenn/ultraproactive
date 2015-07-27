@@ -339,11 +339,6 @@ class AdminSalesController extends AdminController
 	        }
 	    }
 
-
-
-
-
-
 		/**
 		 * INCLUDE CUSTOM VALIDATION FUNCTION
 		 */
@@ -449,17 +444,26 @@ class AdminSalesController extends AdminController
 
 		    if($member_type == 0)
 		    {
-		    	/**
-		    	 * IF MEMBER CREATE A PRODUCT CODE
-		    	 */
-			    $p_code_query = Tbl_product_code::where('code_activation', Globals::code_generator())->first();  
-		        $insert_product_code['code_activation'] = Globals::check_code($p_code_query);
-		        // $insert['log_id']
-		        $insert_product_code['voucher_item_id'] = $new_voucher_product->voucher_item_id;
 
 
-		        $product_code = new Tbl_product_code($insert_product_code);
-	        	$product_code->save();
+
+	    	     /**
+                 * FOREACH ITEM QUANTITY CREATE PRODUCT CODE
+                 */
+	    	    for ($x = 0 ; $x < $value['qty']; $x++)
+	            {
+		            /**
+			    	 * IF MEMBER CREATE A PRODUCT CODE
+			    	 */
+				    $p_code_query = Tbl_product_code::where('code_activation', Globals::code_generator())->first();  
+			        $insert_product_code['code_activation'] = Globals::check_code($p_code_query);
+			        // $insert['log_id']
+			        $insert_product_code['voucher_item_id'] = $new_voucher_product->voucher_item_id;
+
+
+			        $product_code = new Tbl_product_code($insert_product_code);
+		        	$product_code->save();
+	            } 
 
 	        }
 
