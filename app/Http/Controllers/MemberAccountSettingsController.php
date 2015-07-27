@@ -147,7 +147,7 @@ class MemberAccountSettingsController extends MemberController
 	}
 	public function upload()
 	{
-		$target_dir = "/resources/assets/uploads_profile_pic/";
+		$target_dir = "../../../resources/assets/uploads_profile_pic/";
 		if(!isset($_FILES["fileToUpload"]["name"]))
 		{
 		        $data = "Sorry, there was an error uploading your file.";
