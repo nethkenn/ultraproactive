@@ -239,6 +239,7 @@ class MemberCodeController extends MemberController
 	{
 		$data['code'] = DB::table('tbl_membership_code')  ->where('tbl_membership_code.archived',0)
 														  ->where('tbl_membership_code.blocked',0)
+														  ->where('tbl_membership_code.used',0)
 														  ->join('tbl_account','tbl_account.account_id','=','tbl_membership_code.account_id')
 														  ->join('tbl_code_type','tbl_code_type.code_type_id','=','tbl_membership_code.code_type_id')
 														  ->join('tbl_membership','tbl_membership.membership_id','=','tbl_membership_code.membership_id')
@@ -261,7 +262,7 @@ class MemberCodeController extends MemberController
         }
 
 
-		$data['prodcode'] = Tbl_product_code::where("account_id", Customer::id())->voucher()->product()->orderBy("product_pin", "desc")->unused()->get();										 
+		$data['prodcode'] = Tbl_product_code::where("account_id", Customer::id())->where('tbl_product_code.used',0)->voucher()->product()->orderBy("product_pin", "desc")->unused()->get();										 
 		$data['count']= DB::table('tbl_membership_code')->where('archived',0)->where('account_id','=',$id)->where('tbl_membership_code.blocked',0)->count();		
 		$data['count2'] = Tbl_product_code::where("account_id", Customer::id())->voucher()->product()->orderBy("product_pin", "desc")->unused()->count();										 
 		
