@@ -3,6 +3,7 @@ use App\Tbl_account_log;
 use App\Tbl_slot;
 use App\Tbl_slot_log;
 use App\Tbl_lead;
+use App\Tbl_membership;
 use App\Classes\Customer;
 use DB;
 
@@ -19,6 +20,8 @@ class MemberDashboardController extends MemberController
 							                 	->where("slot_id", Customer::slot_id())
 							                 	->groupBy('slot_log_key')
 							                 	->get();
+
+		$data["next_membership"] = Tbl_membership::where("membership_required_upgrade", ">",  100)->orderBy("membership_required_upgrade", "asc")->first();
 
         return view('member.dashboard', $data);
 	}
