@@ -15022,9 +15022,9 @@ h4 {
 .register .columnz .form-group .inputz input[type="radio"]
 {
     vertical-align: middle;
-    margin: 0;
-    width: 32px;
+    margin: 0 10px;
     height: 32px;
+    padding-right: 10px;
 }
 .register .columnz .form-group .inputz span
 {
