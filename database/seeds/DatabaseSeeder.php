@@ -33,12 +33,24 @@ class DatabaseSeeder extends Seeder
         $this->call('tbl_partner');
         $this->call('tbl_about');
         $this->call('tbl_service');
-        $this->call('tbl_company');
+        $this->call('tbl_settings');
     }
 }
 
 
 
+
+
+
+class tbl_settings extends Seeder
+{
+    public function run()
+    {
+        DB::table('tbl_settings')->delete();
+        DB::statement("INSERT INTO `tbl_settings` (`logs_id`, `key`, `value`) VALUES
+(1, 'company_email',    'admin@prolife.global');");
+    } 
+}
 
 
 class tbl_account extends Seeder
@@ -173,7 +185,8 @@ class tbl_module extends Seeder
         (32,    'Utilities / Unilevel Computation', 'unilevel', 0),
         (33,    'Content / Others', 'about',    0),
         (34,    'Content / Services',   'service',  0),
-        (35,    'Maintenance / Product Category',   'product_category', 0);
+        (35,    'Maintenance / Product Category',   'product_category', 0),
+        (36,    'Utilities / Rank Requirements',   'rank', 0);
         ");
     } 
 }
@@ -266,7 +279,8 @@ class tbl_admin_position_has_module extends Seeder
         (54,    1,  32),
         (55,    1,  33),
         (56,    1,  34),
-        (57,    1,  35);
+        (57,    1,  35),
+        (58,    1,  36);
         ");
     } 
 }

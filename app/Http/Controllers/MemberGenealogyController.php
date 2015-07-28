@@ -39,9 +39,6 @@ class MemberGenealogyController extends MemberController
 			$return .= $this->unilevel_downline($slot_id);
 		}
 
-
-
-
 		$return .= "</ul>";
 
 		if($x == 0)
