@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFieldToSlot extends Migration
+class MembershipUpgradeColumnEnable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,9 @@ class AddFieldToSlot extends Migration
      */
     public function up()
     {
-        Schema::table('tbl_slot', function (Blueprint $table)
+        Schema::table('tbl_membership', function (Blueprint $table)
         {
-            $table->string('slot_log_key')->default("OTHERS");
+            $table->tinyInteger('upgrade_via_points')->default(1);
         });
     }
 
@@ -25,9 +25,9 @@ class AddFieldToSlot extends Migration
      */
     public function down()
     {
-        Schema::table('tbl_slot', function (Blueprint $table)
+        Schema::table('tbl_membership', function (Blueprint $table)
         {
-            $table->dropColumn('slot_log_key');
+            $table->dropColumn('membership_upgrade');
         });
     }
 }

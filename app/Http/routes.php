@@ -277,6 +277,10 @@ Route::any('admin/utilities/indirect/edit', 'AdminComplanController@indirect_edi
 Route::any('admin/utilities/unilevel', 'AdminComplanController@unilevel');
 Route::any('admin/utilities/unilevel/edit', 'AdminComplanController@unilevel_edit');
 
+
+Route::any('admin/utilities/rank', 'AdminComplanController@rank');
+Route::any('admin/utilities/rank/edit', 'AdminComplanController@rank_edit');
+
 /* ADMIN / REPORTS */
 Route::any('admin/reports/product_sales', 'AdminReportController@product_sales');
 Route::any('admin/reports/membership_sales', 'AdminReportMembershipController@index');
