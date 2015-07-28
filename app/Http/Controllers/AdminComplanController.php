@@ -190,4 +190,9 @@ class AdminComplanController extends AdminController
 			return view('admin.computation.unilevel_edit', $data);	
 		}
 	}
+	public function rank()
+	{
+		$data["_membership"] = Tbl_membership::active()->entry()->get();
+		return view('admin.computation.rank', $data);
+	}
 }

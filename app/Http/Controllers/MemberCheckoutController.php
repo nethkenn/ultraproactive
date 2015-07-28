@@ -192,8 +192,8 @@ class MemberCheckoutController extends Controller
                         'price' => $value['price'],
                         'qty'=> $value['qty'],
                         'sub_total' => $value['total'],
-                        'binary_pts' => $prod_pts->binary_pts,
-                        'unilevel_pts' => $prod_pts->unilevel_pts
+                        'binary_pts' => $prod_pts->binary_pts * $value['qty'],
+                        'unilevel_pts' => $prod_pts->unilevel_pts * $value['qty']
                     );
 
                     // $product = Tbl_product::find($key);
