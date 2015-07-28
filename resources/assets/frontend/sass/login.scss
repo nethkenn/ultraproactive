@@ -115,5 +115,10 @@ input[type="text"], input[type="password"]
 		background-color: #00bfff;
 		color: white;
 		font-size: 18px;
+		&:hover
+		{
+			color: white; 
+			background-color: #00bfff;
+		}
 	}
 }

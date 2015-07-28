@@ -90,5 +90,8 @@ input[type="text"], input[type="password"] {
     background-color: #00bfff;
     color: white;
     font-size: 18px; }
+    .button-bottom button:hover {
+      color: white;
+      background-color: #00bfff; }
 
 /*# sourceMappingURL=login.css.map */
