@@ -11,8 +11,8 @@
     </div>
 
     <div class="col-md-12 form-group-container">
-        
-        <table class="table table-hover table-bordered">
+        <div id="section-to-print" class="col-md-12">
+        <table  class="table table-hover table-bordered">
                             <caption>
                     Date :{{$membership_code_sale->created_at}} <br>
                     Membership Sale OR # {{$membership_code_sale->membershipcode_or_num}} <br>
@@ -52,22 +52,88 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($_product as $product)
-                        <tr>
-                            <td>{{$product->product_id}}</td>
-                             <td>{{$product->product_name}}</td>
-                              <td>{{$product->qty}}</td>
-                        </tr>
-                    @endforeach
-
+                    @if($_product)
+                        @foreach ($_product as $product)
+                            <tr>
+                                <td>{{$product->product_id}}</td>
+                                 <td>{{$product->product_name}}</td>
+                                  <td>{{$product->qty}}</td>
+                            </tr>
+                        @endforeach
+                    @endif
                 </tbody>
             </table>
 
             
 
         </table>
+      
     </div>
+      <button class="btn btn-primary print-or">Print</button>
+      
+        <button class="btn btn-primary post-to-email-btn" or-id="{{$membership_code_sale->membershipcode_or_num}}">
+            Send Email
+        </button>
+      
+    </div>
+<!--     <form class="post-to-email">
+         <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <input name="membershipcode_or_num" type="hidden">
+    </form> -->
+
+
+    <style type="text/css">
+        @media print{
+
+            .post-to-email {
+                display:  none;
+            }
+
+              body * {
+                visibility: hidden;
+              }
+              #section-to-print, #section-to-print * {
+                visibility: visible;
+              }
+              #section-to-print {
+/*               position: absolute;
+                left: 0;
+                top: 0;*/
+              }
+        }
+    </style>
 @endsection
 @section('script')
+    <script type="text/javascript">
+        $('.print-or').on('click', function(event)
+        {
+            event.preventDefault();
+            window.print();
+        });
 
+
+        $('.post-to-email-btn').on('click', function(event)
+        {
+
+            var or = $(this).attr('or-id');
+            event.preventDefault();
+            $.ajax({
+                url: 'admin/maintenance/codes/or',
+                type: 'post',
+                dataType: 'json',
+                data: {membershipcode_or_num: or},
+            })
+            .done(function() {
+                console.log("success");
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
+            
+
+        });
+    </script>
 @endsection

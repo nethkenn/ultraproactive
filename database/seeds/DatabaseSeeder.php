@@ -33,12 +33,25 @@ class DatabaseSeeder extends Seeder
         $this->call('tbl_partner');
         $this->call('tbl_about');
         $this->call('tbl_service');
-        $this->call('tbl_company');
+        $this->call('tbl_settings');
     }
 }
 
 
 
+
+
+
+class tbl_settings extends Seeder
+{
+    public function run()
+    {
+        DB::table('tbl_settings')->delete();
+        DB::statement("INSERT INTO `tbl_settings` (`logs_id`, `key`, `value`) VALUES
+        (1, 'company_email',    'admin@prolife.global'),
+        (2, 'company_name', 'Prolife');");
+    } 
+}
 
 
 class tbl_account extends Seeder

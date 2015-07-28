@@ -20,12 +20,14 @@ use App\Rel_membership_code;
 use App\Tbl_membership_code_sale;
 use App\Tbl_membership_code_sale_has_code;
 use App\Classes\Admin;
+use App\Classes\Settings;
 use App\Tbl_product_package_has;
 use App\Tbl_product;
 use App\Tbl_voucher;
 use App\Tbl_voucher_has_product;
 use App\Classes\Log;
 use Carbon\Carbon;
+use Mail;
 
 
 class AdminCodeController extends AdminController {
@@ -325,7 +327,7 @@ class AdminCodeController extends AdminController {
 				
 
 
-				return Redirect('admin/maintenance/codes');
+				return Redirect('admin/maintenance/codes/or?membershipcode_or_num='.$tbl_membership_code_sale->membershipcode_or_num);
 
 			}
 			else
@@ -460,8 +462,9 @@ class AdminCodeController extends AdminController {
 
 		$or_num = Request::input('membershipcode_or_num');
 
-		$membership_code_sale = Tbl_membership_code_sale::find($or_num);
 
+
+		$membership_code_sale = Tbl_membership_code_sale::find($or_num);
 		$generated_by = Tbl_account::find($membership_code_sale->generated_by);
 		$membership_code_sale->generated_by = $generated_by->account_name . " (".  $generated_by->account_username.")";
 		$sold_to = Tbl_account::find($membership_code_sale->sold_to);
@@ -483,9 +486,32 @@ class AdminCodeController extends AdminController {
 													->where('tbl_voucher_has_product.voucher_id', $membership_code_sale->voucher_id)
 													->get();
 
+        
+
+		if(Request::isMethod('post'))
+		{
+
+			$company_email = Settings::get('company_email');
+			$company_name = Settings::get('company_name');
+
+			// dd($company_email);
+
+			$message_info['from']['email'] = $company_email;
+			$message_info['from']['name'] = Admin::info()->account_name . ' ('.Admin::info()->admin_position_name.')';
+			// $message_info['to']['email'] = $sold_to->account_email;
+			$message_info['to']['email'] = "markponce07@gmail.com";
+			$message_info['to']['name'] = $sold_to->account_name;
+			$message_info['subject'] = $company_name." - Membership OR";
+			Mail::send('emails.membership_or_email', $data, function ($message) use($message_info)
+			{
+			    $message->from($message_info['from']['email'], $message_info['from']['name']);
+			    $message->to($message_info['to']['email'],$message_info['to']['name']);
+			    $message->subject($message_info['subject']);
+			});
 
 
-
+			return json_encode(true);
+		}
 	
 		// dd($data['_product']);
 
