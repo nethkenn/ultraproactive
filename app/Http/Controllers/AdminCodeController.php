@@ -327,7 +327,7 @@ class AdminCodeController extends AdminController {
 				
 
 
-				return Redirect('admin/maintenance/codes');
+				return Redirect('admin/maintenance/codes/or?membershipcode_or_num='.$tbl_membership_code_sale->membershipcode_or_num);
 
 			}
 			else
