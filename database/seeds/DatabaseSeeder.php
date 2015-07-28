@@ -48,7 +48,8 @@ class tbl_settings extends Seeder
     {
         DB::table('tbl_settings')->delete();
         DB::statement("INSERT INTO `tbl_settings` (`logs_id`, `key`, `value`) VALUES
-(1, 'company_email',    'admin@prolife.global');");
+        (1, 'company_email',    'admin@prolife.global'),
+        (2, 'company_name', 'Prolife');");
     } 
 }
 
