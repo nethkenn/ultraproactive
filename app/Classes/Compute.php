@@ -244,8 +244,8 @@ class Compute
             /* GET INFO OF REGISTREE */
             $new_slot_info = Tbl_slot::id($new_slot_id)->account()->membership()->first();
 
-            /* COMPUTE FOR THE MATCHING INCOME */
-            $direct_income = ($slot_recipient->membership_matching_bonus/100) * $new_slot_info->membership_price;
+            /* COMPUTE FOR THE DIRECT INCOME */
+            $direct_income = ($slot_recipient->membership_direct_sponsorship_bonus/100) * $new_slot_info->membership_price;
 
             if($direct_income != 0)
             {
