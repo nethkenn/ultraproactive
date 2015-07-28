@@ -2,7 +2,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Carbon\Carbon;
 class Tbl_membership_code_sale extends Model
 {
 	protected $table = 'tbl_membership_code_sale';
@@ -14,7 +14,16 @@ class Tbl_membership_code_sale extends Model
 							'generated_by_name',
 							'payment',
 							'total_amount',
+							'voucher_id',
 	 						];
+
+
+	public function getCreatedAtAttribute($value)
+	{	
+
+		return Carbon::createFromFormat('Y-m-d H:i:s', $value)->toDayDateTimeString();
+		
+	}
 
 
 

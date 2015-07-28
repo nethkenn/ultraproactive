@@ -87,7 +87,7 @@
                 <div class="span6" id="ewan">
                     <div class="pull-left">
                         <div id="widget_topinfo-2" class="widget widget_topinfo">
-                            <div class="topinfo"><span class="phone"><i class="moon-phone"></i>+1 00 222 654</span><span class="email"><i class="icon-envelope"></i>admin@prolife.global</span></div>
+                            <div class="topinfo"><span class="phone"><i class="moon-phone"></i>{{ $_setting->company_telephone }}</span><span class="email"><i class="icon-envelope"></i>{{ $_setting->company_email }}</span></div>
                         </div>
                     </div>
                 </div>
@@ -154,7 +154,7 @@
                         </div>
                         <!-- #navigation -->
                         <!-- End custom menu here -->
-                        <a href="#" class="mobile_small_menu open"></a>
+                        <a class="mobile_small_menu open"></a>
                     </div>
                 </div>
             </div>

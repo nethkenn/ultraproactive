@@ -165,6 +165,10 @@ Route::get('admin/maintenance/codes/get', 'AdminCodeController@ajax_get_membersh
 Route::post('admin/maintenance/codes/block', 'AdminCodeController@block');
 Route::post('admin/maintenance/codes/transfer_code', 'AdminCodeController@transfer_code');
 Route::get('admin/maintenance/codes/verify_code', 'AdminCodeController@verify_code');
+Route::any('admin/maintenance/codes/or', 'AdminCodeController@show_sale_or');
+
+
+
 
 Route::get('admin/maintenance/product', 'AdminProductController@index');
 Route::any('admin/maintenance/product/add', 'AdminProductController@add_product');
@@ -272,6 +276,10 @@ Route::any('admin/utilities/indirect/edit', 'AdminComplanController@indirect_edi
 
 Route::any('admin/utilities/unilevel', 'AdminComplanController@unilevel');
 Route::any('admin/utilities/unilevel/edit', 'AdminComplanController@unilevel_edit');
+
+
+Route::any('admin/utilities/rank', 'AdminComplanController@rank');
+Route::any('admin/utilities/rank/edit', 'AdminComplanController@rank_edit');
 
 /* ADMIN / REPORTS */
 Route::any('admin/reports/product_sales', 'AdminReportController@product_sales');

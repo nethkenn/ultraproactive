@@ -9,6 +9,7 @@ class Tbl_membership_code_sale_has_code extends Model
 	protected $fillable = [
 							'membershipcode_or_num',
 							'code_pin',
+							'sold_price',
 	 						];
 
 

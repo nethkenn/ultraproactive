@@ -15,7 +15,7 @@ class CreateTblVoucher extends Migration
         Schema::create('tbl_voucher', function (Blueprint $table) {
             $table->integer('slot_id')->unsigned()->nullable();
             $table->integer('account_id')->unsigned()->nullable();
-            $table->integer('or_number')->unsigned()->nullable();
+            $table->string('or_number')->nullable();
             $table->increments('voucher_id');
             $table->string('voucher_code');
             $table->tinyInteger('claimed')->default(0);

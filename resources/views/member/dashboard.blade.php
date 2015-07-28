@@ -126,6 +126,24 @@
                     </div>
                 </div>
             </div>
+
+            @if($next_membership)
+            <div class="title sblue">Next Rank ({{ $next_membership->membership_name }})</div>
+            <div class="input form-horizontal para">
+                <div class="form-group">
+                    <label for="11" class="col-sm-6 control-label">Upgrade Point(s)</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="11" readonly value="{{ number_format($slotnow->slot_upgrade_points, 2) }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="11" class="col-sm-6 control-label">Required Upgrade Points</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="11" readonly value="{{ number_format($next_membership->membership_required_upgrade, 2) }}">
+                    </div>
+                </div>
+            </div>
+            @endif
             <div class="title blue tinde">Binary</div>
             <div class="input form-horizontal para">
                 <div class="form-group">
@@ -141,6 +159,8 @@
                     </div>
                 </div>
             </div>
+
+            @if(empty($_slot_log))
             <div class="title sblue">Total Bonuses</div>
             <div class="input form-horizontal para">
                 @foreach($_slot_log as $slot_log)
@@ -152,6 +172,7 @@
                 </div>
                 @endforeach
             </div>
+            @endif
         </div>
     </div>
     @endif
