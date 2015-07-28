@@ -116,15 +116,12 @@ $(function() {
 
    var modal = $('[data-remodal-id="view_prod_modal"]').remodal();
 
-
    $('#table').on('click', '.view-voucher', function(event) {
    		event.preventDefault();
    		var v_id = $(this).attr('voucher-id');
-
    		$('.email-voucher').attr('voucher-id', v_id);
    		$('#voucher-prod-container').load('admin/transaction/sales/process/sale_or?voucher_id='+v_id);
    		modal.open();
-   	/* Act on the event */
    });
 
 

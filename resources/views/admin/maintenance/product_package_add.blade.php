@@ -11,22 +11,22 @@
     </div>
     <div class="col-md-12 form-group-container">
         <form id="product-package-add-form" method="post">
-                <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
-                <div class="form-group col-md-12">
-                    <label for="product-package_name">Product Package Name</label>
-                    @if($_error['product_package_name'])
+
+        	        @if($errors->all())
                         <div class="col-md-12 alert alert-danger form-errors">
                             <ul>
-                                @foreach($_error['product_package_name'] as $error)
+                                @foreach($errors->all() as $error)
                                     <li>{{$error}}</li>
                                 @endforeach
                             </ul>
                         </div>
                     @endif
+                <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
+                <div class="form-group col-md-12">
+                    <label for="product-package_name">Product Package Name</label>
             		<input name="product_package_name" value="{{Request::input('product_package_name')}}" required="required" class="form-control" id="" placeholder="" type="text">
-            		
             		<label for="mem">Membership</label>
-            		<select name="membership" id="mem" class="form-control">
+            		<select name="membership_id" id="mem" class="form-control">
             			@if($membership)
 		            		@foreach($membership as $m)
 		            			<option value="{{$m->membership_id}}">{{$m->membership_name}}</option>
@@ -54,15 +54,6 @@
 				</div>
 
             	<div class="form-group col-md-12">
-<!--             		@if($_error['product'])
-                        <div class="col-md-12 alert alert-danger form-errors">
-                            <ul>
-                                @foreach($_error['product'] as $error)
-                                    <li>{{$error}}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif !-->
             		<table id="added-product-table" class="table table-bordered table-hover">
 						<thead>
 							<tr>
@@ -81,10 +72,6 @@
 						</tbody>
 					</table>
             	</div>
-
-
-
-
         </form>
     </div>
 <div class="remodal" data-remodal-id="add_prod_modal" id="">

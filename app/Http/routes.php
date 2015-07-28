@@ -73,7 +73,7 @@ Route::any('admin/transaction/payout/add', 'AdminPayoutController@add');
 Route::any('admin/transaction/payout/archive', 'AdminPayoutController@archive');
 Route::any('admin/transaction/payout/restore', 'AdminPayoutController@restore');
 
-Route::get('admin/transaction/unilevel', 'AdminUnilevelController@index');
+Route::get('admin/transaction/unilevel-distribution', 'AdminUnilevelController@index');
 
 /* ADMIN / MAINTENANCE */
 Route::get('admin/maintenance/accounts', 'AdminAccountController@index');
@@ -159,6 +159,7 @@ Route::any('admin/content/team/delete', 'AdminTeamController@delete');
 /**
  * MEMBERSHIP CODE GENERATOR
  */
+Route::get('admin/maintenance/codes/load-product-package', 'AdminCodeController@load_product_package');
 Route::get('admin/maintenance/codes', 'AdminCodeController@index');
 Route::any('admin/maintenance/codes/add', 'AdminCodeController@add_code');
 Route::any('admin/maintenance/codes/edit', 'AdminCodeController@edit_code');
@@ -185,12 +186,13 @@ Route::post('admin/maintenance/product/restore', 'AdminProductController@restore
  */
 Route::get('admin/maintenance/product_package', 'AdminProductPackageController@index');
 Route::get('admin/maintenance/product_package/get', 'AdminProductPackageController@ajax_get_product_package');
-Route::any('admin/maintenance/product_package/add', 'AdminProductPackageController@add_product_package');
-Route::any('admin/maintenance/product_package/edit', 'AdminProductPackageController@edit_product_package');
+Route::get ('admin/maintenance/product_package/add', 'AdminProductPackageController@add_product_package');
+Route::post ('admin/maintenance/product_package/add', 'AdminProductPackageController@create_product_package');
+Route::get('admin/maintenance/product_package/edit', 'AdminProductPackageController@edit_product_package');
+Route::post('admin/maintenance/product_package/edit', 'AdminProductPackageController@update_product_package');
 Route::any('admin/maintenance/product_package/get_product', 'AdminProductPackageController@ajax_get_product');
 Route::post('admin/maintenance/product_package/archive', 'AdminProductPackageController@archive_product_package');
 Route::post('admin/maintenance/product_package/restore', 'AdminProductPackageController@restore_product_package');
-
 
 /* SLOTS MAINTENANCE */
 Route::get('admin/maintenance/slots', 'AdminSlotController@index');
@@ -236,6 +238,7 @@ Route::any('admin/maintenance/inventory/get_inventory', 'AdminInventoryControlle
 
 
 /* ADMIN / UTILITIES */
+
 Route::get('admin/utilities/admin_maintenance', 'AdminAdminController@index');
 Route::get('admin/utilities/admin_maintenance/data','AdminAdminController@data');
 Route::get('admin/utilities/admin_maintenance/add','AdminAdminController@admin_add');

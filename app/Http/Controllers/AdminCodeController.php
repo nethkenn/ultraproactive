@@ -122,7 +122,7 @@ class AdminCodeController extends AdminController {
 
 			$rules['code_type_id'] = 'required|exists:tbl_code_type,code_type_id';
 			$rules['membership_id'] = 'required|exists:tbl_membership,membership_id';
-			$rules['product_package_id'] = 'required|exists:tbl_product_package,product_package_id|foo:'.Request::input('inventory_update_type_id');
+			$rules['product_package_id'] = 'required|exists:tbl_product_package,product_package_id,membership_id,'.Request::input('membership_id').'|foo:'.Request::input('inventory_update_type_id');
 			$rules['inventory_update_type_id'] = 'required|exists:tbl_inventory_update_type,inventory_update_type_id';
 			$rules['account_id'] = 'required|exists:tbl_account,account_id';
 			$rules['code_multiplier'] = 'min:1|integer';
@@ -455,6 +455,8 @@ class AdminCodeController extends AdminController {
 	}
 
 
+
+
 	public function show_sale_or()
 	{
 
@@ -519,6 +521,18 @@ class AdminCodeController extends AdminController {
 
 
 		return view('admin/maintenance/code_or', $data);
+	}
+
+
+	public function load_product_package()
+	{
+
+
+		$prodpack = Tbl_product_package::where('membership_id', Request::input('membership_id'))->get();
+
+		return $prodpack;
+
+
 	}
 
 
