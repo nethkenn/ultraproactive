@@ -52,14 +52,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($_product as $product)
-                        <tr>
-                            <td>{{$product->product_id}}</td>
-                             <td>{{$product->product_name}}</td>
-                              <td>{{$product->qty}}</td>
-                        </tr>
-                    @endforeach
-
+                    @if($_product)
+                        @foreach ($_product as $product)
+                            <tr>
+                                <td>{{$product->product_id}}</td>
+                                 <td>{{$product->product_name}}</td>
+                                  <td>{{$product->qty}}</td>
+                            </tr>
+                        @endforeach
+                    @endif
                 </tbody>
             </table>
 
