@@ -12,7 +12,7 @@
 <div class="col-md-12 form-group-container">
     <div id="section-to-print" class="col-md-12">
         <table  class="table table-hover table-bordered" style="width: 100% !important; text-align: center;">
-            <caption style="text-align: left;">
+            <caption style="text-align: left; margin-bottom: 10px;">
                 <span style="width: 150px; display: inline-block; font-weight: bold;">Date :</span>{{$membership_code_sale->created_at}} <br>
                 <span style="width: 150px; display: inline-block; font-weight: bold;">Membership</span> Sale OR # {{$membership_code_sale->membershipcode_or_num}} <br>
                 <span style="width: 150px; display: inline-block; font-weight: bold;">OR - CODE :</span> {{$membership_code_sale->membershipcode_or_code}} <br>
@@ -22,7 +22,7 @@
                 <span style="width: 150px; display: inline-block; font-weight: bold;">Payment :</span> {{$membership_code_sale->payment == 0 ? 'Wallet' : 'Cash' }} <br>
                 <span style="width: 150px; display: inline-block; font-weight: bold;">Total Amount :</span> {{number_format ( $membership_code_sale->total_amount, 2 , "." ,  "," )}} <br>
             </caption>
-            <thead>
+            <thead style="background-color: #3498DB; color: white;">
                 <tr>
                     <th>Code pin</th>
                     <th>Code</th>
@@ -42,11 +42,11 @@
             </tbody>
             <table class="table table-hover table-bordered">
                 <caption>Included Products</caption>
-                <thead>
+                <thead style="background-color: #3498DB; color: white;">
                     <tr>
-                        <td>Product ID</td>
-                        <td>Product Name</td>
-                        <td>Product Qty</td>
+                        <th>Product ID</th>
+                        <th>Product Name</th>
+                        <th>Product Qty</th>
                     </tr>
                 </thead>
                 <tbody>
