@@ -74,14 +74,13 @@
         <button class="btn btn-primary post-to-email-btn" or-id="{{$membership_code_sale->membershipcode_or_num}}">
             Send Email
         </button>
+        <img class="loading" style="display:none;" src="/resources/assets/img/small-loading.gif" alt=""><span style="display:none;" id="email-result"></span>
       
     </div>
 <!--     <form class="post-to-email">
          <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <input name="membershipcode_or_num" type="hidden">
     </form> -->
-
-
     <style type="text/css">
         @media print{
 
@@ -102,6 +101,7 @@
               }
         }
     </style>
+
 @endsection
 @section('script')
     <script type="text/javascript">
@@ -117,14 +117,37 @@
 
             var or = $(this).attr('or-id');
             event.preventDefault();
+            $('#email-result').fadeOut();
+            $('.loading').fadeIn();
             $.ajax({
                 url: 'admin/maintenance/codes/or',
                 type: 'post',
                 dataType: 'json',
                 data: {membershipcode_or_num: or},
             })
-            .done(function() {
-                console.log("success");
+            .done(function(data){
+                setTimeout(function()
+                {   
+
+                    $('#email-result').empty();
+                    $('#email-result').removeAttr('class');
+                    $('.loading').fadeOut();
+                    if(data)
+                    {   
+
+                        $('#email-result').html("Email was successfully sent to " + data + ".");
+                        $('#email-result').addClass('alert alert-success');
+                        $('#email-result').fadeIn();
+                    }
+                    else
+                    {
+                        $('#email-result').html("Email sending failed.");
+                        $('#email-result').addClass('alert alert-danger');
+                        $('#email-result').fadeIn();
+                    }
+
+                }, 1000);
+                
             })
             .fail(function() {
                 console.log("error");
@@ -132,8 +155,6 @@
             .always(function() {
                 console.log("complete");
             });
-            
-
         });
     </script>
 @endsection

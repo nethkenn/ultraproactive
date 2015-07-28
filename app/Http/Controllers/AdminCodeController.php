@@ -498,8 +498,8 @@ class AdminCodeController extends AdminController {
 
 			$message_info['from']['email'] = $company_email;
 			$message_info['from']['name'] = Admin::info()->account_name . ' ('.Admin::info()->admin_position_name.')';
-			// $message_info['to']['email'] = $sold_to->account_email;
-			$message_info['to']['email'] = "markponce07@gmail.com";
+			$message_info['to']['email'] = $sold_to->account_email;
+			// $message_info['to']['email'] = "markponce07@gmail.com";
 			$message_info['to']['name'] = $sold_to->account_name;
 			$message_info['subject'] = $company_name." - Membership OR";
 			Mail::send('emails.membership_or_email', $data, function ($message) use($message_info)
@@ -510,7 +510,7 @@ class AdminCodeController extends AdminController {
 			});
 
 
-			return json_encode(true);
+			return json_encode($sold_to->account_email);
 		}
 	
 		// dd($data['_product']);
