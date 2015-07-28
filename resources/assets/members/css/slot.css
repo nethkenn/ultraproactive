@@ -6,6 +6,9 @@
   background-size: cover; }
   .slot .body {
     padding: 50px; }
+    @media screen and (max-width: 400px) {
+      .slot .body {
+        padding: 50px 10px; } }
     .slot .body .holder {
       margin: 30px 0; }
       .slot .body .holder .top-container {

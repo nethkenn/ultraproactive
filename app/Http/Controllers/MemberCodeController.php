@@ -23,7 +23,10 @@ use App\Tbl_voucher_has_product;
 use App\Tbl_product_code;
 use App\Rel_membership_product;
 use App\Rel_membership_code;
-
+use App\Tbl_voucher;
+use App\Classes\Globals;
+use App\Tbl_product;
+use App\tbl_membership_code_sale;
 class MemberCodeController extends MemberController
 {
 	public function index()
@@ -59,7 +62,7 @@ class MemberCodeController extends MemberController
 			return Redirect::to('member/code_vault')->with('message',$data['error']);
 		}
 		if(isset($_POST['unlockpass2']))
-		{	;
+		{	
 			$data['error'] = $this->unlock2(Request::input('yuan2'),Request::input('pass'),$id);
 			return Redirect::to('member/code_vault')->with('message',$data['error']);
 		}
@@ -88,6 +91,7 @@ class MemberCodeController extends MemberController
 			if( Request::input('memid') && Request::input('package'))
 			{
 				$info = $this->add_code(Request::input());	
+
 				if(isset($info['success']))
 				{
 					$message = $info['success'];
@@ -196,35 +200,71 @@ class MemberCodeController extends MemberController
 				}
 				else
 				{
-					if($checking == true && $checking2 == true)
+					if($getslot->code_type_id == 3)
 					{
-						$insert["slot_membership"] =  $getslot->membership_id;
-						$insert["slot_type"] =  "PS";
-						$insert["slot_rank"] =  1;
-						$insert["slot_wallet"] =  0;
-						$insert["slot_sponsor"] =  $data['sponsor'];
-						$insert["slot_placement"] =  $data['placement'];
-						$insert["slot_position"] =  strtolower($data['slot_position']);
-						$insert["slot_binary_left"] =  0;
-						$insert["slot_binary_right"] =  0;
-						$insert["slot_personal_points"] =  0;
-						$insert["slot_group_points"] =  0;
-						$insert["slot_upgrade_points"] = 0;
-						$insert["slot_total_withrawal"] =  0;
-						$insert["slot_total_earning"] =  0;
-						$insert["slot_owner"] =  Customer::id();
-						$slot_id = Tbl_slot::insertGetId($insert);
-						Compute::tree($slot_id);
-						Compute::binary($slot_id);
-						$return["placement"] = Request::input("placement");
-						Tbl_membership_code::where('code_pin',$data['code_number'])->update(['used'=>1]);
-						$message['success'] = "Slot Created.";
-						$get = Rel_membership_code::where('code_pin',$data['code_number'])->first();
-						$insert2['slot_id'] = $slot_id;
-						$insert2['product_package_id'] = $get->product_package_id;
-						Rel_membership_product::insert($insert2);
-						return $message;
+						if($checking == true && $checking2 == true)
+						{
+							$insert["slot_membership"] =  $getslot->membership_id;
+							$insert["slot_type"] =  "PS";
+							$insert["slot_rank"] =  1;
+							$insert["slot_wallet"] =  0 - $getslot->membership_price;
+							$insert["slot_sponsor"] =  $data['sponsor'];
+							$insert["slot_placement"] =  $data['placement'];
+							$insert["slot_position"] =  strtolower($data['slot_position']);
+							$insert["slot_binary_left"] =  0;
+							$insert["slot_binary_right"] =  0;
+							$insert["slot_personal_points"] =  0;
+							$insert["slot_group_points"] =  0;
+							$insert["slot_upgrade_points"] = 0;
+							$insert["slot_total_withrawal"] =  0;
+							$insert["slot_total_earning"] =  0;
+							$insert["slot_owner"] =  Customer::id();
+							$slot_id = Tbl_slot::insertGetId($insert);
+							Compute::tree($slot_id);
+							Compute::binary($slot_id);
+							$return["placement"] = Request::input("placement");
+							Tbl_membership_code::where('code_pin',$data['code_number'])->update(['used'=>1]);
+							$message['success'] = "Slot Created.";
+							$get = Rel_membership_code::where('code_pin',$data['code_number'])->first();
+							$insert2['slot_id'] = $slot_id;
+							$insert2['product_package_id'] = $get->product_package_id;
+							Rel_membership_product::insert($insert2);
+							return $message;
+						}
 					}
+					else
+					{
+						if($checking == true && $checking2 == true)
+						{
+							$insert["slot_membership"] =  $getslot->membership_id;
+							$insert["slot_type"] =  "PS";
+							$insert["slot_rank"] =  1;
+							$insert["slot_wallet"] =  0;
+							$insert["slot_sponsor"] =  $data['sponsor'];
+							$insert["slot_placement"] =  $data['placement'];
+							$insert["slot_position"] =  strtolower($data['slot_position']);
+							$insert["slot_binary_left"] =  0;
+							$insert["slot_binary_right"] =  0;
+							$insert["slot_personal_points"] =  0;
+							$insert["slot_group_points"] =  0;
+							$insert["slot_upgrade_points"] = 0;
+							$insert["slot_total_withrawal"] =  0;
+							$insert["slot_total_earning"] =  0;
+							$insert["slot_owner"] =  Customer::id();
+							$slot_id = Tbl_slot::insertGetId($insert);
+							Compute::tree($slot_id);
+							Compute::binary($slot_id);
+							$return["placement"] = Request::input("placement");
+							Tbl_membership_code::where('code_pin',$data['code_number'])->update(['used'=>1]);
+							$message['success'] = "Slot Created.";
+							$get = Rel_membership_code::where('code_pin',$data['code_number'])->first();
+							$insert2['slot_id'] = $slot_id;
+							$insert2['product_package_id'] = $get->product_package_id;
+							Rel_membership_product::insert($insert2);
+							return $message;
+						}
+					}
+					
 				}			
 		}
 		else
@@ -245,7 +285,7 @@ class MemberCodeController extends MemberController
 														  ->join('tbl_membership','tbl_membership.membership_id','=','tbl_membership_code.membership_id')
 														  ->join('tbl_product_package','tbl_product_package.product_package_id','=','tbl_membership_code.product_package_id')
 														  ->where('tbl_membership_code.account_id','=',$id)
-														  ->orderBy('tbl_membership_code.account_id','ASC')
+														  ->orderBy('tbl_membership_code.code_pin','ASC')
 														  ->get();
 
 		$data['getallslot'] = Tbl_slot::where('slot_owner',Customer::id())->get();
@@ -554,38 +594,79 @@ class MemberCodeController extends MemberController
 									$message['success'] = "Successfully bought.";
 									Log::account(Customer::id(),"You bought a membership code (Pin #$membership_code->code_pin)");
 									$c = Tbl_membership_code::where('code_pin',$membership_code->code_pin)->getmembership()->first();
-									DB::table('tbl_membership_sales')->insert(['code_pin'=>$c->code_pin,'payment'=>($c->membership_price)+($c->membership_price * $c->discount),'created_at'=>Carbon::now()]);
+									$or_code = DB::table('tbl_membership_code_sale')->insertGetId(['membershipcode_or_code'=>$c->code_pin,'total_amount'=>($c->membership_price)+($c->membership_price * $c->discount),'created_at'=>Carbon::now(),'sold_to'=>Customer::id()]);
+									DB::table('tbl_membership_code_sale_has_code')->insert(['code_pin'=>$c->code_pin,'membershipcode_or_num'=>$or_code]);
 									$insert2['code_pin'] = $membership_code->code_pin;
-									$insert2['product_package_id'] = $x['package'];
+									$insert2['product_package_id'] =  $x['package'];
 									Rel_membership_code::insert($insert2);
 									Log::slot(Session::get('currentslot'),'Bought a membership code',$total);  
+									$this->additional($x['package'],Session::get('currentslot'));
 									return $message;
 								}
 							}
-							else
-							{
-								$error =  $validator->errors();
-								$data['_error']['code_type_id'] = $error->get('code_type_id');
-								$data['_error']['membership_id'] = $error->get('membership_id');
-								$data['_error']['product_package_id'] = $error->get('product_package_id');
-								$data['_error']['inventory_update_type_id'] = $error->get('inventory_update_type_id');
-								$data['_error']['account_id'] = $error->get('account_id');
-								$data['_error']['code_multiplier'] = $error->get('code_multiplier');
-				     		    return $data;
-							}				
 						}
 						else
 						{
-							$data['_error']['not'] = "Not enough balance.";
-							return $data;
+							$message['_error'] = "Not enough balance";
+							return $message;
 						}				
 				}				
 			}		
 	}
+
+	public function additional($pid,$slotid)
+	{
+						$total = 0;
+						$datapackage = DB::table('tbl_product_package_has')->where('product_package_id',$pid)->get();
+						
+						foreach($datapackage as $d)
+						{	
+							$dtotal = DB::table('tbl_product')->where('product_id',$d->product_id)->first();
+							$total = $total + ($dtotal->price * $d->quantity);
+						}
+
+						$customer = Customer::info();
+				        $slot = Tbl_slot::select('tbl_slot.*', 'tbl_membership.discount')->leftJoin('tbl_membership', 'tbl_membership.membership_id','=','tbl_slot.slot_membership')
+				                                                                        ->where('slot_id', $slotid)
+				                                                                        ->where('slot_owner', $customer->account_id)
+				                                                                        ->first();
+				       			$data['slot'] = $slot;
+				                $insert['slot_id'] = $slotid;
+				                $query = Tbl_voucher::where('voucher_code', Globals::code_generator())->first();
+				                $insert['voucher_code'] = Globals::check_code($query);
+				                $insert['discount'] = $slot->discount;
+				                $insert['total_amount'] =$total + (($slot->discount*100)*$total); //
+				                $insert['account_id'] = $customer->account_id;
+				                $voucher = new Tbl_voucher($insert);
+				                $voucher->save();
+				                // $log = "Upgrade member include product worth ".Product::return_format_num($insert['total_amount']). " with Voucher Num: ".$voucher->voucher_id." , Voucher Code: ".$voucher->voucher_code.".";
+				                // Log::account($customer->account_id, $log);
+
+				                foreach($datapackage as $dt)
+								{
+									$prod_pts = Tbl_product::find($dt->product_id);
+				                    $insert_prod =  array(
+				                        'product_id' =>  $dt->product_id,
+				                        'voucher_id'=> $voucher->voucher_id,
+				                        'price' => $prod_pts->price,
+				                        'qty'=> $dt->quantity,
+				                        'sub_total' => $prod_pts->price * $dt->quantity,
+				                        'binary_pts' => $prod_pts->binary_pts,
+				                        'unilevel_pts' => $prod_pts->unilevel_pts
+				                    );
+				                    $voucher_has_product = new Tbl_voucher_has_product($insert_prod);
+				                    $voucher_has_product->save();
+				                    $query = Tbl_product_code::where('code_activation', Globals::code_generator())->first();
+				                    $insert_prod_code['code_activation'] = Globals::check_code($query);
+				                    $insert_prod_code['voucher_item_id'] = $voucher_has_product->voucher_item_id;
+				                    $insert_prod_code['used'] = 1;
+				                    $product_code = new Tbl_product_code($insert_prod_code);
+				                    $product_code->save();
+								}           
+	}
 	
 	public function add_form_submit()
 	{
-
 		$return["message"] = "";
 		$data["message"] = "";
 		$check_placement = Tbl_slot::checkposition(Request::input("placement"), strtolower(Request::input("slot_position")))->first();

@@ -197,7 +197,7 @@ class FrontController extends Controller
 	public function contact()
 	{
 		$data["contact"] = DB::table("tbl_about")->where("archived", 0)->where("about_name", "Contact")->first();
-
+		$data["company"] = DB::table("tbl_company")->first();
         return view('front.contact', $data);
 	}
 	public function contact_submit()

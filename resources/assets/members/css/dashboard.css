@@ -122,7 +122,10 @@
       background-color: #39BABA;
       display: inline-block;
       border-radius: 3px;
-      min-width: 400px; }
+      width: 400px; }
+      @media screen and (max-width: 400px) {
+        .left .detail .holder .title {
+          max-width: 100%; } }
     .left .detail .holder .input {
       margin-bottom: 10px; }
     .left .detail .holder .form-group {

@@ -20,7 +20,7 @@
     <table id="data-table" class="table table-bordered data-table">
         <thead>
             <tr>
-                <th class="text-center"><input type="checkbox" id="allcheck"></input></th>
+                <th class="text-center" id="allcheck2"><input type="checkbox" id="allcheck"></input></th>
                 <th class="text-center">Product Name</th>
                 <th class="text-center">Stocks</th>
                 <th class="text-center">Adjust</th>
@@ -29,7 +29,7 @@
         <tbody>
             @foreach($_inventory as $inventory)
             <tr class="bulked">
-                <td id="test" style="text-align:center;"><input class="checkbox1" type="checkbox" ids="{{$inventory->product_id}}" amount="{{$inventory->stock_qty}}" ingname="{{$inventory->product_name}}"></td>
+                <td id="test" class="checker" style="text-align:center;"><input class="checkbox1" type="checkbox" ids="{{$inventory->product_id}}" amount="{{$inventory->stock_qty}}" ingname="{{$inventory->product_name}}"></td>
                 <td class="text-center">{{ $inventory->product_name }}</td>
                 <td class="text-center">{{ $inventory->stock_qty }}</td>
                 <td class="text-center"><a href="javascript:" class="adjustlink" ids="{{$inventory->product_id}}" amount="{{$inventory->stock_qty}}">Adjust</a></td>
