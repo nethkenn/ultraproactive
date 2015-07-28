@@ -126,6 +126,8 @@
                     </div>
                 </div>
             </div>
+
+            @if($next_membership)
             <div class="title sblue">Next Rank ({{ $next_membership->membership_name }})</div>
             <div class="input form-horizontal para">
                 <div class="form-group">
@@ -141,6 +143,7 @@
                     </div>
                 </div>
             </div>
+            @endif
             <div class="title blue tinde">Binary</div>
             <div class="input form-horizontal para">
                 <div class="form-group">
@@ -156,6 +159,8 @@
                     </div>
                 </div>
             </div>
+
+            @if(empty($_slot_log))
             <div class="title sblue">Total Bonuses</div>
             <div class="input form-horizontal para">
                 @foreach($_slot_log as $slot_log)
@@ -167,6 +172,7 @@
                 </div>
                 @endforeach
             </div>
+            @endif
         </div>
     </div>
     @endif

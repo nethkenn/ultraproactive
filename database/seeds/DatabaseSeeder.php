@@ -173,7 +173,8 @@ class tbl_module extends Seeder
         (32,    'Utilities / Unilevel Computation', 'unilevel', 0),
         (33,    'Content / Others', 'about',    0),
         (34,    'Content / Services',   'service',  0),
-        (35,    'Maintenance / Product Category',   'product_category', 0);
+        (35,    'Maintenance / Product Category',   'product_category', 0),
+        (36,    'Utilities / Rank Requirements',   'rank', 0);
         ");
     } 
 }
@@ -266,7 +267,8 @@ class tbl_admin_position_has_module extends Seeder
         (54,    1,  32),
         (55,    1,  33),
         (56,    1,  34),
-        (57,    1,  35);
+        (57,    1,  35),
+        (58,    1,  36);
         ");
     } 
 }
