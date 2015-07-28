@@ -10,12 +10,14 @@ use App\Tbl_slot;
 use App\Tbl_voucher;
 use App\Classes\Globals;
 use App\Classes\Admin;
+use App\Classes\Settings;
 use App\Classes\Log;
 use Validator;
 use Crypt;
 use Datatables;
 use Carbon\Carbon;
 use DB;
+use Mail;
 
 
 
@@ -626,6 +628,66 @@ class AdminSalesController extends AdminController
 										->editColumn('account_name', '{{$account_name ? $account_name . " (". $account_username. ")" : "-"}}')
 										->addColumn('test','<a style="cursor: pointer;" class="view-voucher" voucher-id="{{$voucher_id}}">View Voucher</a>')
 			                            ->make(true);
+	}
+
+
+
+	public function sale_or()
+	{
+
+
+		$voucher_id = Request::input('voucher_id');
+		$voucher = Tbl_voucher::leftJoin('tbl_account', 'tbl_account.account_id'  ,'=',  'tbl_voucher.account_id')->where('voucher_id', $voucher_id)->first();
+		$voucher->formatted_date_created = $voucher->created_at->toFormattedDateString();
+
+
+
+		
+
+		$data['voucher'] = 	$voucher;
+		$data['_voucher_product']  = Tbl_voucher_has_product::where('voucher_id', $voucher_id)->product()->get();
+		
+		if($data['_voucher_product'])
+		{
+			foreach ($data['_voucher_product'] as $key => $value)
+			{
+				$total_product[] =  $value->sub_total;
+			}
+		}else
+		{
+			$total_product = [];
+		}
+
+		$data['product_total'] = array_sum($total_product);
+		$data['discount_pts'] = ($data['voucher']->discount / 100) * $data['product_total'] ;
+
+
+
+		if(Request::isMethod('post'))
+		{
+
+			$company_email = Settings::get('company_email');
+			$company_name = Settings::get('company_name');
+			$sold_to = Tbl_account::find($data['voucher']->account_id);
+
+			$message_info['from']['email'] = $company_email;
+			$message_info['from']['name'] = Admin::info()->account_name . ' ('.Admin::info()->admin_position_name.')';
+			$message_info['to']['email'] = $sold_to->account_email;
+			// $message_info['to']['email'] = "markponce07@gmail.com";
+			$message_info['to']['name'] = $sold_to->account_name;
+			$message_info['subject'] = $company_name." - Sale OR";
+			Mail::send('emails.sale_or_email', $data, function ($message) use($message_info)
+			{
+			    $message->from($message_info['from']['email'], $message_info['from']['name']);
+			    $message->to($message_info['to']['email'],$message_info['to']['name']);
+			    $message->subject($message_info['subject']);
+			});
+
+
+			return json_encode($sold_to->account_email);
+		}
+
+		return view('admin.transaction.sale_or', $data);
 	}
 
 

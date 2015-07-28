@@ -55,6 +55,7 @@ Route::post('admin/transaction/sales/edit_cart', 'AdminSalesController@edit_cart
 Route::post('admin/transaction/sales/process/member', 'AdminSalesController@process_member');
 Route::post('admin/transaction/sales/process/non-member', 'AdminSalesController@process_nonMember');
 Route::get('admin/transaction/sales/process/get_slots', 'AdminSalesController@get_slot');
+Route::any('admin/transaction/sales/process/sale_or', 'AdminSalesController@sale_or' );
 /**
  * ADMIN TRANSACTION CLAIMS
  */
