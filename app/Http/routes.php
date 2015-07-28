@@ -199,6 +199,7 @@ Route::post('admin/maintenance/slots/add_form_submit', 'AdminSlotController@add_
 Route::post('admin/maintenance/slots/edit_form_submit', 'AdminSlotController@edit_form_submit');
 Route::get('admin/maintenance/slots/downline', 'AdminSlotController@downline');
 Route::get('admin/maintenance/slots/delete', 'AdminSlotController@delete');
+Route::any('admin/maintenance/slots/view', 'AdminSlotController@info');
 
 Route::get('admin/maintenance/country', 'AdminCountryController@index');
 Route::any('admin/maintenance/country/add', 'AdminCountryController@add_country');
