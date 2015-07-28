@@ -20,6 +20,7 @@ use App\Rel_membership_code;
 use App\Tbl_membership_code_sale;
 use App\Tbl_membership_code_sale_has_code;
 use App\Classes\Admin;
+use App\Classes\Settings;
 use App\Tbl_product_package_has;
 use App\Tbl_product;
 use App\Tbl_voucher;
@@ -460,8 +461,9 @@ class AdminCodeController extends AdminController {
 
 		$or_num = Request::input('membershipcode_or_num');
 
-		$membership_code_sale = Tbl_membership_code_sale::find($or_num);
 
+
+		$membership_code_sale = Tbl_membership_code_sale::find($or_num);
 		$generated_by = Tbl_account::find($membership_code_sale->generated_by);
 		$membership_code_sale->generated_by = $generated_by->account_name . " (".  $generated_by->account_username.")";
 		$sold_to = Tbl_account::find($membership_code_sale->sold_to);
@@ -485,7 +487,21 @@ class AdminCodeController extends AdminController {
 
 
 
+		if(Request::isMethod('post'))
+		{
 
+			$company_email = Settings::get('company_email');
+			
+
+			dd($company_email);
+			
+			Mail::send('emails.welcome', $data, function ($message)
+			{
+			    $message->from('us@example.com', 'Laravel');
+
+			    $message->to('foo@example.com')->cc('bar@example.com');
+			});
+		}
 	
 		// dd($data['_product']);
 
