@@ -122,7 +122,7 @@ class AdminCodeController extends AdminController {
 
 			$rules['code_type_id'] = 'required|exists:tbl_code_type,code_type_id';
 			$rules['membership_id'] = 'required|exists:tbl_membership,membership_id';
-			$rules['product_package_id'] = 'required|exists:tbl_product_package,product_package_id|foo:'.Request::input('inventory_update_type_id');
+			$rules['product_package_id'] = 'required|exists:tbl_product_package,product_package_id,membership_id,'.Request::input('membership_id').'|foo:'.Request::input('inventory_update_type_id');
 			$rules['inventory_update_type_id'] = 'required|exists:tbl_inventory_update_type,inventory_update_type_id';
 			$rules['account_id'] = 'required|exists:tbl_account,account_id';
 			$rules['code_multiplier'] = 'min:1|integer';
@@ -223,7 +223,7 @@ class AdminCodeController extends AdminController {
 					$sale[] = $membership_code->code_pin;
 
 				}
-
+				
 
 
 
@@ -256,7 +256,8 @@ class AdminCodeController extends AdminController {
 					$insert_voucher_membership = Tbl_membership::find(Request::input('membership_id'));
 					$insert_voucher['total_amount']= $insert_voucher_membership->membership_price  * (Integer)Request::input('code_multiplier');
 					$insert_voucher['payment_mode'] = 1;
-
+					$insert_voucher['processed_by_name'] = Admin::info()->account_name .' ('.Admin::info()->admin_position_name.')';
+					$insert_voucher['admin_id'] = Admin::info()->admin_id;
 
 					$new_voucher = new Tbl_voucher($insert_voucher);
 					$new_voucher->save();
@@ -454,6 +455,8 @@ class AdminCodeController extends AdminController {
 	}
 
 
+
+
 	public function show_sale_or()
 	{
 
@@ -498,8 +501,9 @@ class AdminCodeController extends AdminController {
 
 			$message_info['from']['email'] = $company_email;
 			$message_info['from']['name'] = Admin::info()->account_name . ' ('.Admin::info()->admin_position_name.')';
+
 			// $message_info['to']['email'] = $sold_to->account_email;
-			$message_info['to']['email'] = "markponce07@gmail.com";
+			$message_info['to']['email'] = "edwardguevarra2003@gmail.com";
 			$message_info['to']['name'] = $sold_to->account_name;
 			$message_info['subject'] = $company_name." - Membership OR";
 			Mail::send('emails.membership_or_email', $data, function ($message) use($message_info)
@@ -510,13 +514,25 @@ class AdminCodeController extends AdminController {
 			});
 
 
-			return json_encode(true);
+			return json_encode($sold_to->account_email);
 		}
 	
 		// dd($data['_product']);
 
 
 		return view('admin/maintenance/code_or', $data);
+	}
+
+
+	public function load_product_package()
+	{
+
+
+		$prodpack = Tbl_product_package::where('membership_id', Request::input('membership_id'))->get();
+
+		return $prodpack;
+
+
 	}
 
 

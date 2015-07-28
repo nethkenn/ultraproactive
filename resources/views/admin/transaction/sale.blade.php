@@ -44,16 +44,42 @@
 					</tr>
 				</thead>
 			</table>
-	</div>
+	</div><div class="col-md-12">
+	<button class="btn btn-primary " >Print</button>
+	<button class="btn btn-primary email-voccher">Email</button>
+</div>
 <div class="remodal" data-remodal-id="view_prod_modal"
   data-remodal-options="hashTracking: false, closeOnOutsideClick: true">
   <button data-remodal-action="close" class="remodal-close"></button>
   <div id="voucher-prod-container">
 
   </div>
-  <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
-  <button data-remodal-action="confirm" class="remodal-confirm">OK</button>
+  <div style="display:none;" id="email-message"></div>
+  <button  data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
+  <button  class="print-voucher remodal-confirm">Print</button>
+  <button  class="email-voucher remodal-confirm">Email</button>
+  <img class="loading" style="display: none;" src="/resources/assets/img/small-loading.GIF" alt="">
 </div>
+<style type="text/css">
+	
+	@media print {
+		body * {
+			visibility: hidden;
+		}
+		#voucher-prod-containert, #voucher-prod-container * {
+			visibility: visible;
+		}
+		#voucher-prod-containert{
+
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			top: 0;
+			overflow: hidden;
+	}
+}
+	</style>
 @endsection
 
 @section('script')
@@ -90,14 +116,71 @@ $(function() {
 
    var modal = $('[data-remodal-id="view_prod_modal"]').remodal();
 
-
    $('#table').on('click', '.view-voucher', function(event) {
    		event.preventDefault();
    		var v_id = $(this).attr('voucher-id');
-   		$('#voucher-prod-container').load('http://test.ultraproactive.net/admin/transaction/claims/show_product?voucher_id='+v_id);
+   		$('.email-voucher').attr('voucher-id', v_id);
+   		$('#voucher-prod-container').load('admin/transaction/sales/process/sale_or?voucher_id='+v_id);
    		modal.open();
-   	/* Act on the event */
    });
+
+
+   $('.print-voucher').on('click', function(event)
+   {	
+   		event.preventDefault();
+   		window.print();
+
+   });
+
+
+   $('.email-voucher').on('click', function(event)
+   {
+
+   		event.preventDefault();
+   		var voucher_id = $(this).attr('voucher-id');
+
+   		$('.loading').fadeIn();
+   		$('#email-message').fadeOut();
+   		$.ajax({
+   			url: 'admin/transaction/sales/process/sale_or',
+   			type: 'post',
+   			dataType: 'json',
+   			data: {voucher_id: voucher_id},
+   		})
+   		.done(function(data) {
+   			
+   			$('#email-message').empty();
+   			$('#email-message').removeAttr('class');
+
+   			var func = function(){
+   				$('.loading').fadeOut();
+   				if(data)
+   				{	
+   					$('#email-message').addClass('alert alert-success');
+   					$('#email-message').html('Email successfully sent to ' + data + '.');
+   					$('#email-message').fadeIn();
+   				}
+   				else
+   				{
+   					$('#email-message').addClass('alert alert-danger');
+   					$('#email-message').html('Email sending failed.');
+   					$('#email-message').fadeIn();
+   				}
+   			}
+
+   			setTimeout(func, 1000);
+   			
+   		})
+   		.fail(function() {
+
+   			alert('Error on sendning email.');
+   			// console.log("error");s
+   		})
+   		.always(function() {
+   			// console.log("complete");
+   		});
+   		
+   })
 
 
 

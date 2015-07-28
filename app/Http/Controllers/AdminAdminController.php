@@ -9,7 +9,9 @@ use App\Classes\Admin;
 use App\Http\Requests\AdminAddRequest;
 use App\Http\Requests\AdminEditRequest;
 
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
+use Request;
+use Validator;
 
 class AdminAdminController extends AdminController
 {
@@ -51,33 +53,75 @@ class AdminAdminController extends AdminController
 
 
 
-    public function create_admin(AdminAddRequest $request)
+    public function create_admin()
     {
-     
-            var_dump($request->all());
-            $admin = new Tbl_admin($request->all());
+                
+        $rules['account_id'] = 'exists:tbl_account,account_id|check_if_position';
+        $rules['admin_position_id'] = 'exists:tbl_admin_position,admin_position_id|check_rank';
+        $messages['admin_position_id.check_rank'] = 'You are unauthorized to assign this position.';
+        $messages['account_id.check_if_position'] = 'The selected account already has a position.';
+        
+
+        Validator::extend('check_rank', function($attribute, $value, $parameters)
+        {
+            
+            $selected_position = Tbl_position::find($value);
+            if($selected_position)
+            {
+                return Admin::info()->admin_position_rank < $selected_position->admin_position_rank;
+            }
+            else
+            {
+                return true;
+            }
+           // die(var_dump( Admin::info()->admin_position_rank, $selected_position->admin_position_rank,Admin::info()->admin_position_rank < $selected_position->admin_position_rank));
+        });
+
+        Validator::extend('check_if_position', function($attribute, $value, $parameters)
+        {
+            $admin = Tbl_admin::where('account_id', $value)->first();
+            
+            if($admin)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+        });
+
+
+        $validator = Validator::make(Request::input(), $rules, $messages);
+
+        if ($validator->fails())
+        {
+            return redirect('admin/utilities/admin_maintenance/add')
+                        ->withErrors($validator)
+                        ->withInput(Request::input());
+        }
+
+            $admin = new Tbl_admin(Request::input());
             $admin->save();
             return redirect('admin/utilities/admin_maintenance');
 
-
-        // return "testasfasfg";
     }
 
 
 
 
 
-    public function admin_edit(Request $request)
+    public function admin_edit()
     {
         
-
 
         $data['_account'] = Tbl_account::all();
         $admin_rank = Admin::info()->admin_position_rank;
         
         $data['_position']= Tbl_position::where('admin_position_rank', '>',  $admin_rank)->get();
 
-        $seleted_admin = $data['_admin'] = Tbl_admin::position()->findOrFail($request->input('admin_id'));
+        $seleted_admin = $data['_admin'] = Tbl_admin::position()->findOrFail(Request::input('admin_id'));
 
         // dd($seleted_admin->admin_position_rank, $admin_rank );
 
@@ -93,19 +137,54 @@ class AdminAdminController extends AdminController
     }
 
 
-    public function update_admin(AdminEditRequest $request)
+    public function update_admin()
     {
-         $admin = Tbl_admin::findOrFail($request->input('admin_id'));
-         $admin->admin_position_id =   $request->input('admin_position_id');
-         $admin->save();
-         return redirect('admin/utilities/admin_maintenance');
+        // $rules['account_id'] = 'exists:tbl_account,account_id|check_if_position';
+        $rules['admin_position_id'] = 'exists:tbl_admin_position,admin_position_id|check_rank';
+        $messages['admin_position_id.check_rank'] = 'You are unauthorized to assign this position.';
+        // $messages['account_id.check_if_position'] = 'The selected account already has a position.';
+        
+
+        Validator::extend('check_rank', function($attribute, $value, $parameters)
+        {
+            
+            $selected_position = Tbl_position::find($value);
+            if($selected_position)
+            {
+                return Admin::info()->admin_position_rank < $selected_position->admin_position_rank;
+            }
+            else
+            {
+                return true;
+            }
+           // die(var_dump( Admin::info()->admin_position_rank, $selected_position->admin_position_rank,Admin::info()->admin_position_rank < $selected_position->admin_position_rank));
+        });
+
+
+
+        $validator = Validator::make(Request::input(), $rules, $messages);
+
+        if ($validator->fails())
+        {
+            return redirect('admin/utilities/admin_maintenance/add')
+                        ->withErrors($validator)
+                        ->withInput(Request::input());
+        }
+
+
+
+
+        $admin = Tbl_admin::findOrFail(Request::input('admin_id'));
+        $admin->admin_position_id = Request::input('admin_position_id');
+        $admin->save();
+        return redirect('admin/utilities/admin_maintenance');
     }
 
 
     public function delete_admin(Request $request)
     {   
         $admin_rank = Admin::info()->admin_position_rank;
-        $seleted_admin = Tbl_admin::position()->findOrFail($request->input('admin_id'));
+        $seleted_admin = Tbl_admin::position()->findOrFail(Request::input('admin_id'));
         if($seleted_admin->admin_position_rank <= $admin_rank)
         {
             die('Forbidden');

@@ -22,9 +22,6 @@ class AdminProductPackageController extends AdminController
 	public function index()
 	{
 
-
-		// dd(Tbl_product_package::all());
-
 		$data["page"] = "Product Package Maintenance";
 
 
@@ -60,44 +57,35 @@ class AdminProductPackageController extends AdminController
 		$data['_error'] = null;
 		$data['membership'] = Tbl_membership::where('archived',0)->get();
 
-		if(isset($_POST['product_package_name']))
-		{
+		// if(isset($_POST['product_package_name']))
+		// {
 			
 
 
 
-			$rules['product_package_name'] = 'required|unique:tbl_product_package,product_package_name|regex:/^[A-Za-z0-9\s-_]+$/';
-			// $rules['product'] = 'numeric|min:1'; 
-			
-
-						$message = [
-				'product_package_name.regex' => 'The :attribute must only have letters , numbers, spaces, hypens ( - ) and underscores ( _ )',
+			// $rules['product_package_name'] = 'required|unique:tbl_product_package,product_package_name|regex:/^[A-Za-z0-9\s-_]+$/';
+			// $rules['product'] = 'required';
+			// $message['product_package_name.regex'] = 'The :attribute must only have letters , numbers, spaces, hypens ( - ) and underscores ( _ )';
 				
-			];
+	
 
-			$validator = Validator::make(Request::input(),$rules,$message);
+			// $validator = Validator::make(Request::input(),$rules,$message);
 			
-			if (!$validator->fails())
-			{
+			// if (!$validator->fails())
+			// {
 
 
-				$product_package =  new Tbl_product_package;
-				$product_package->product_package_name = Request::input('product_package_name');
-				$product_package->membership_id = Request::input('membership');
-				$product_package->save();
-				$id = $product_package->product_package_id;
-				$this->save_product_package($id, Request::input('product'));
-				return Redirect('admin/maintenance/product_package');
 
-			}
-			else
-			{
-				$errors =  $validator->errors();
-				$data['_error']['product_package_name'] = $errors->get('product_package_name');
-				// $data['_error']['product'] = $errors->get('product');
-			}
-			return Redirect('admin/maintenance/product_package');
-		}
+
+		// 	}
+		// 	else
+		// 	{
+		// 		$errors =  $validator->errors();
+		// 		$data['_error']['product_package_name'] = $errors->get('product_package_name');
+		// 		// $data['_error']['product'] = $errors->get('product');
+		// 	}
+		// 	return Redirect('admin/maintenance/product_package');
+		// }
 
 		
 
@@ -111,6 +99,58 @@ class AdminProductPackageController extends AdminController
 	}
 
 
+	public function create_product_package()
+	{
+
+		// dd(Request::input());
+		$request['product_package_name'] = Request::input('product_package_name');
+		$request['membership_id'] = Request::input('membership_id');
+		$request['product'] = Request::input('product');
+		$rules['product_package_name'] = 'required|unique:tbl_product_package,product_package_name|regex:/^[A-Za-z0-9\s-_]+$/';
+		$rules['membership_id'] = "required|exists:tbl_membership,membership_id";
+		$rules['product'] = "required";
+		$messages['product.required'] = "Package must have aleast 1 product.";
+		if($request['product'] )
+		{
+			foreach ( $request['product'] as $key => $value)
+			{
+				$request['product_'.$key] = $key;
+				$rules['product_'.$key] = 'integer|min:1|exists:tbl_product,product_id|prod_qty:'.$value['quantity'];
+				$messages['product_'.$key.'.prod_qty'] = "The :attribute must have aleast 1 quanity.";
+			}
+		}
+
+
+		Validator::extend('prod_qty', function($attribute, $value, $parameters) {
+            return $parameters[0] > 0;
+        });
+
+
+		$validator = Validator::make($request, $rules, $messages);
+        if ($validator->fails())
+        {
+            return redirect('admin/maintenance/product_package/add')
+                        ->withErrors($validator)
+                        ->withInput(Request::input());
+        }
+
+
+
+		$product_package =  new Tbl_product_package;
+		$product_package->product_package_name = Request::input('product_package_name');
+		$product_package->membership_id = Request::input('membership_id');
+		$product_package->save();
+		$id = $product_package->product_package_id;
+		$this->save_product_package($id, Request::input('product'));
+		return Redirect('admin/maintenance/product_package');
+
+	}
+
+
+
+
+
+
 	public function edit_product_package()
 	{
 
@@ -122,42 +162,37 @@ class AdminProductPackageController extends AdminController
 		$data['_error'] = null;
 		$data['_product'] = Tbl_product_package_has::Product()->where('product_package_id',$prod_package_id)->get();
 		$data['membership'] = Tbl_membership::where('archived',0)->get();
-		if(isset($_POST['product_package_name']))
-		{
+		// if(isset($_POST['product_package_name']))
+		// {
 			
 
 
 
-			$rules['product_package_name'] = 'required|unique:tbl_product_package,product_package_name,'.$prod_package_id.',product_package_id|regex:/^[A-Za-z0-9\s-_]+$/';
-			// $rules['product'] = 'numeric|min:1'; 
+		// 	$rules['product_package_name'] = 'required|unique:tbl_product_package,product_package_name,'.$prod_package_id.',product_package_id|regex:/^[A-Za-z0-9\s-_]+$/';
+		// 	// $rules['product'] = 'numeric|min:1'; 
 
-						$message = [
-				'product_package_name.regex' => 'The :attribute must only have letters , numbers, spaces, hypens ( - ) and underscores ( _ )',
+		// 				$message = [
+		// 		'product_package_name.regex' => 'The :attribute must only have letters , numbers, spaces, hypens ( - ) and underscores ( _ )',
 				
-			];
+		// 	];
 
-			$validator = Validator::make(Request::input(),$rules,$message);
+		// 	$validator = Validator::make(Request::input(),$rules,$message);
 			
-			if (!$validator->fails())
-			{
-
-				$product_package = Tbl_product_package::find($prod_package_id);
-				$product_package->product_package_name = Request::input('product_package_name');
-				$product_package->membership_id = Request::input('membership');
-				$product_package->save();
-				$this->save_product_package($prod_package_id, Request::input('product'));
-				return Redirect('admin/maintenance/product_package');
+		// 	if (!$validator->fails())
+		// 	{
 
 
-			}
-			else
-			{
-				$errors =  $validator->errors();
-				$data['_error']['product_package_name'] = $errors->get('product_package_name');
-				// $data['_error']['product'] = $errors->get('product');
-			}
 
-		}
+
+			// }
+			// else
+			// {
+			// 	$errors =  $validator->errors();
+			// 	$data['_error']['product_package_name'] = $errors->get('product_package_name');
+			// 	// $data['_error']['product'] = $errors->get('product');
+			// }
+
+		// }
 
 		
 
@@ -168,6 +203,54 @@ class AdminProductPackageController extends AdminController
 
 		
         return view('admin.maintenance.product_package_edit',$data);
+	}
+
+
+	public function update_product_package()
+	{	$request['product_package_id'] =  Request::input('product_package_id');
+		$request['product_package_name'] = Request::input('product_package_name');
+		$request['membership_id'] = Request::input('membership_id');
+		$request['product'] = Request::input('product');
+
+		$rules['product_package_id'] = 'exists:tbl_product_package,product_package_id';
+		$rules['product_package_name'] = 'required|unique:tbl_product_package,product_package_name,'.$request['product_package_id'] .',product_package_id|regex:/^[A-Za-z0-9\s-_]+$/';
+		$rules['membership_id'] = "required|exists:tbl_membership,membership_id";
+		$rules['product'] = "required";
+		$messages['product.required'] = "Package must have aleast 1 product.";
+
+		if($request['product'] )
+		{
+			foreach ( $request['product'] as $key => $value)
+			{
+				$request['product_'.$key] = $key;
+				$rules['product_'.$key] = 'integer|min:1|exists:tbl_product,product_id|prod_qty:'.$value['quantity'];
+				$messages['product_'.$key.'.prod_qty'] = "The :attribute must have aleast 1 quanity.";
+			}
+		}
+
+
+		Validator::extend('prod_qty', function($attribute, $value, $parameters) {
+            return $parameters[0] > 0;
+        });
+
+
+		$validator = Validator::make($request, $rules, $messages);
+        if ($validator->fails())
+        {
+            return redirect('admin/maintenance/product_package/edit?id='.Request::input('product_package_id'))
+                        ->withErrors($validator)
+                        ->withInput(Request::input());
+        }
+
+
+
+
+		$product_package = Tbl_product_package::find(Request::input('product_package_id'));
+		$product_package->product_package_name = Request::input('product_package_name');
+		$product_package->membership_id = Request::input('membership_id');
+		$product_package->save();
+		$this->save_product_package(Request::input('product_package_id'), Request::input('product'));
+		return Redirect('admin/maintenance/product_package');
 	}
 
 
