@@ -20,7 +20,7 @@ class AdminUrlController extends AdminController
 
 	public function index()
 	{
-
+		Session::put('new_admin_url', Request::input('new_admin_url'));
 		return view('admin.utilities.admin_url');
 
 	}
@@ -28,7 +28,8 @@ class AdminUrlController extends AdminController
 	public function create_url()
 	{
 
-
+                    
+		
 		$new_admin_url = Session::get('new_admin_url');
 		$url_segment_array = explode("/", $new_admin_url);
 

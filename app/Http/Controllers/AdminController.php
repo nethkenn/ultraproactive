@@ -9,13 +9,16 @@ use Session;
 use App\Tbl_admin_position_has_module;
 use App\Tbl_module;
 use gapi;
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
 	public function __construct()
 	{
-
-
+        $Tbl_module = Tbl_module::firstOrCreate(['url_segment' => 'register_url']);
+        $Tbl_module->module_name = 'admin/register_url';
+        $Tbl_module->save();
 
         $admin_info = Admin::info();
         if($admin_info)
@@ -42,16 +45,15 @@ class AdminController extends Controller
             {
                 if(Admin::info()->admin_position_id == 1 )
                 {
+                    return redirect('admin/register_url?new_admin_url='.Request::path())->send();
+                }
 
-                    Session::forget('new_admin_url');
-                    Session::put('new_admin_url',Request::path());
-                    return Redirect::to('admin/register_url')->send();
+              
+
+
+               
   
-                }
-                else
-                {
                     return abort(404);
-                }
                   
             }
             // dd($array_segment,$admin_module, $_admin_module);
