@@ -205,13 +205,15 @@ class AdminPositionController extends AdminController
 		$position->save();
 
 		Tbl_admin_position_has_module::where('admin_position_id',Request::input('admin_position_id'))->delete();
-		foreach (Request::input('module') as $key => $value)
+		foreach ((array)Request::input('module') as $key => $value)
 		{
 			$insert['admin_position_id'] = Request::input('admin_position_id');
 			$insert['module_id'] = $value;
 			$position_has_module = new Tbl_admin_position_has_module($insert);
 			$position_has_module->save();
 		}
+
+
 
 		return redirect('/admin/utilities/position');
 	}

@@ -196,4 +196,19 @@ class AdminComplanController extends AdminController
 		$data["_membership"] = Tbl_membership::active()->entry()->get();
 		return view('admin.computation.rank', $data);
 	}
+	public function rank_edit()
+	{
+		if(Request::isMethod("post"))
+		{
+			$update["membership_required_upgrade"] = Request::input("membership_required_upgrade");
+			$update["upgrade_via_points"] = Request::input("upgrade_via_points");
+			Tbl_membership::where("membership_id", Request::input("id"))->update($update);
+			return Redirect::to('/admin/utilities/rank');
+		}
+		else
+		{
+			$data["data"] = Tbl_membership::where("membership_id", Request::input("id"))->first();
+			return view('admin.computation.rank_edit', $data);	
+		}
+	}
 }

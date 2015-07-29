@@ -25,8 +25,6 @@ class Admin
                             ->leftJoin('tbl_admin_position','tbl_admin_position.admin_position_id','=','tbl_admin.admin_position_id')
                             ->where('tbl_account.account_username', $username)
                             ->first();
-
-      
         if($admin)
         {
             $decrypted_pass =  Crypt::decrypt($admin->account_password);

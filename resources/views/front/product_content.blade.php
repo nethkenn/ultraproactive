@@ -32,7 +32,7 @@
                         <div class="row-fluid" style="margin-top:0px;">
                             
                             <div class="span8 slider_full with_thumbnails_container">
-                                <div class="slideshow_container flexslider with_thumbnails slide_layout_" id="flex">
+                                <div class="slideshow_container slide_layout_" >
                                     <ul class="slides slide_flexslider_thumb">
                                         <li data-thumb='{{ $product->image }}' class=' slide_element slide3 frame3'><img src='{{ $product->image }}' title='shutterstock_185759639' alt='' /> </li>
                                     </ul>

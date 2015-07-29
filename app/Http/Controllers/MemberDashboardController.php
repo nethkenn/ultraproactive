@@ -21,8 +21,14 @@ class MemberDashboardController extends MemberController
 							                 	->groupBy('slot_log_key')
 							                 	->get();
 
-		$data["next_membership"] = Tbl_membership::where("membership_required_upgrade", ">",  100)->orderBy("membership_required_upgrade", "asc")->first();
 
+		$slot_info = Tbl_slot::membership()->id(Customer::slot_id())->first();
+		if($slot_info)
+		{
+			$data["next_membership"] = Tbl_membership::where("membership_required_upgrade", ">",  $slot_info->membership_required_upgrade)->orderBy("membership_required_upgrade", "asc")->first();			
+		}
+		
+        
         return view('member.dashboard', $data);
 	}
 	public function notification()
@@ -39,7 +45,7 @@ class MemberDashboardController extends MemberController
 		{
 			$_notification->take(6);
 		}
-		$_notification = $_notification->where('account_id',Customer::id());
+		$_notification = $_notification->where('account_id', Customer::id());
 		$_notification = $_notification->get();
 
 

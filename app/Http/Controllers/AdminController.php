@@ -19,10 +19,11 @@ class AdminController extends Controller
 
 
         $admin_info = Admin::info();
+        // var_dump($admin_info);
         if($admin_info)
         {
 
-            $admin_module = Tbl_admin_position_has_module::module()->get();
+            $admin_module = Tbl_admin_position_has_module::module()->where('admin_position_id',$admin_info->admin_position_id )->get();
             $array_segment = $this->get_url_segment(Request::path());
 
             $_admin_module = null;
@@ -39,22 +40,14 @@ class AdminController extends Controller
 
             $_admin_module[] = "admin";  
             $_admin_module[] = "account";
-
-
-
             $intersected_array = array_intersect($array_segment, $_admin_module);
             if(Request::path() != "admin" && count($intersected_array) <= 1)
             {
                 return abort(404);
                   
             }
-
-
             // dd($array_segment,$admin_module, $_admin_module);
             // var_dump( $intersected_array);
-
-
-
 
             View()->share("admin", $admin_info);
 

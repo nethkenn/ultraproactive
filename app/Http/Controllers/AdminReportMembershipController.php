@@ -9,6 +9,7 @@ class AdminReportMembershipController extends AdminController
 {
 	public function index()
 	{
+
 		if(Request::isMethod("post"))
 		{
 			$data["to"] = date("m/d/o", strtotime(Request::input("to")));
@@ -25,11 +26,16 @@ class AdminReportMembershipController extends AdminController
 		switch(Request::input("report-source"))
 		{
 			// case "orders": $data = $this->order_report($data); break;
-			default: $data = $this->sales_report($data); break;
+			default: $data = $this->sales_report($data);  break;
 			// case "registree": $data = $this->order_report($data); break;
 			// case "sales-location": $data = $this->order_report($data); break;
 			// default: $data = $this->order_report($data); break;
+		
 		}
+
+		// var_dump(Request::input());
+
+
 
 
 		return view('admin.report.membership_sales', $data);	
@@ -42,7 +48,7 @@ class AdminReportMembershipController extends AdminController
     }
 
 
-		public function sales_report($data)
+	public function sales_report($data)
 	{
 		$to = $data["to"];
 		$from = $data["from"];
@@ -73,10 +79,12 @@ class AdminReportMembershipController extends AdminController
 			$time_string = "Y";
 		}
 
+
 		$_order = DB::table("tbl_membership_code_sale")	->select(DB::raw($select))
 											->groupBy(DB::raw($groupBy))
 											
-											->get();
+		// $_order = DB::table("tbl_membership_sales")->select(DB::raw($select))
+		// 									->groupBy(DB::raw($groupBy))	
 
 		foreach($_order as $key => $order)
 		{

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+lte<!DOCTYPE html>
 <html lang="en-US" class="css3transitions">
 <head>
     <meta charset="UTF-8" />
@@ -87,7 +87,7 @@
                 <div class="span6" id="ewan">
                     <div class="pull-left">
                         <div id="widget_topinfo-2" class="widget widget_topinfo">
-                            <div class="topinfo"><span class="phone"><i class="moon-phone"></i>+1 00 222 654</span><span class="email"><i class="icon-envelope"></i>admin@prolife.global</span></div>
+                            <div class="topinfo"><span class="phone"><i class="moon-phone"></i>@if(isset($_setting->company_telephone)){{ $_setting->company_telephone }}@endif</span><span class="email"><i class="icon-envelope"></i>>@if(isset($_setting->company_email)){{ $_setting->company_email }}@endif</span></div>
                         </div>
                     </div>
                 </div>
@@ -154,7 +154,7 @@
                         </div>
                         <!-- #navigation -->
                         <!-- End custom menu here -->
-                        <a href="#" class="mobile_small_menu open"></a>
+                        <a class="mobile_small_menu open"></a>
                     </div>
                 </div>
             </div>
@@ -236,13 +236,13 @@
                                 <h4 class="widget-title">Contact Info</h4>
                                 <ul>
                                     <li class="address"><i class="moon-location"></i><span>Address:</span>
-                                        <br /><span>{{ $_setting->company_address }}</span></li>
+                                        <br /><span>@if(isset($_setting->company_address)){{ $_setting->company_address }}@endif</span></li>
                                     <li class="email"><i class="moon-envelop"></i><span>Email:</span>
-                                        <br /><span>{{ $_setting->company_email }}</span></li>
+                                        <br /><span>@if(isset($_setting->company_email)){{ $_setting->company_email }}@endif</span></li>
                                     <li class="phone"><i class="moon-phone"></i><span>Telephone:</span>
-                                        <br /><span>{{ $_setting->company_telephone }}</span></li>
+                                        <br /><span>@if(isset($_setting->company_telephone)){{ $_setting->company_telephone }}@endif</span></li>
                                     <li class="phone"><i class="moon-mobile"></i><span>Phone:</span>
-                                        <br /><span>{{ $_setting->company_mobile }}</span></li>
+                                        <br /><span>@if(isset($_setting->company_address)){{ $_setting->company_mobile }}@endif</span></li>
                                 </ul>
                             </div>
                         </div>

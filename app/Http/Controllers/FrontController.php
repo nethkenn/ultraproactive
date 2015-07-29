@@ -197,7 +197,17 @@ class FrontController extends Controller
 	public function contact()
 	{
 		$data["contact"] = DB::table("tbl_about")->where("archived", 0)->where("about_name", "Contact")->first();
-		$data["company"] = DB::table("tbl_company")->first();
+		$_settings = DB::table("tbl_settings")->get();
+			
+		$set = new \stdClass();
+		foreach($_settings as $setting)
+		{
+			$key = $setting->key;
+			$value = $setting->value;
+			
+			$set->$key = $value;
+		}
+		$data["company"] = $set;
         return view('front.contact', $data);
 	}
 	public function contact_submit()

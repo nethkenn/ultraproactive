@@ -14,9 +14,11 @@
 			</div>
 		</div>
 		<div class="filters ">
+			@if($last_update)
 			 <div class="col-md-8">
 			 				Last Update: {{$last_update->created_at}}
  			</div>
+ 			@endif
 		</div>
 	</div>
 @if($slot)	

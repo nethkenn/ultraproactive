@@ -7,6 +7,7 @@ use App\Rel_distribution_history;
 use App\Tbl_tree_sponsor;
 use Carbon\Carbon;
 use Request;
+use App\Classes\Log;
 class AdminUnilevelController extends AdminController
 {
 	public function index()
@@ -19,7 +20,7 @@ class AdminUnilevelController extends AdminController
 		if(isset($_POST['sbmt']))
 		{
 			$data = $this->distribute();
-			return Redirect::to('admin/transaction/unilevel');
+			return Redirect::to('admin/transaction/unilevel-distribution');
 		}
 
         return view('admin.transaction.unilevel',$data);
@@ -35,7 +36,7 @@ class AdminUnilevelController extends AdminController
 		if(isset($_POST['sbmt']))
 		{
 			$data = $this->dynamic();
-			return Redirect::to('admin/transaction/unilevel/dynamic');
+			return Redirect::to('admin/transaction/unilevel-distribution/dynamic');
 		}
 
         return view('admin.transaction.unilevel_dynamic',$data);
@@ -49,7 +50,7 @@ class AdminUnilevelController extends AdminController
 		->where('slot_personal_points', '>=', DB::raw('membership_required_pv'))
 		->where('slot_id', '!=', 1)
 		->get();
-	
+		
 		foreach($data['slot'] as $d)
 		{	
 			$z = Tbl_slot::account()->membership()->where('slot_id',$d->slot_id)->first();
@@ -74,6 +75,7 @@ class AdminUnilevelController extends AdminController
 					$total = $f->slot_wallet + (($d->slot_group_points * $d->multiplier)*$y);
 					Tbl_slot::where('slot_id',$f->slot_id)->update(['slot_wallet'=>$total]);	
 					$getsponsor = Tbl_tree_sponsor::where('sponsor_tree_child_id',$check->slot_id)->where('sponsor_tree_level',1)->first();
+					Log::slot($d->slot_id,'Distribute Group Points',$total);
 					if(!$getsponsor)
 					{
 						break;
@@ -100,6 +102,7 @@ class AdminUnilevelController extends AdminController
 			{
 				$convert = $check->slot_wallet + ($check->slot_group_points * $check->multiplier);
 				Tbl_slot::where('slot_id',$check->slot_id)->update(['slot_wallet'=>$convert]);
+				Log::slot($check->slot_id,'Distribute Group Points',$total);
 			}
 			// DB::table('tbl_slot')->update(['slot_group_points'=>0,'slot_personal_points'=>0]);
 	}
@@ -120,6 +123,7 @@ class AdminUnilevelController extends AdminController
 			$insert['distribution_id'] = $id;
 			$insert['convert_amount'] = $d->slot_group_points * $d->multiplier;
  			Tbl_slot::where('slot_id',$d->slot_id)->update($update);
+ 			Log::slot($d->slot_id,'Distribute Group Points',$update['slot_wallet']);
 			Rel_distribution_history::insert($insert);
 		}
 
@@ -127,29 +131,4 @@ class AdminUnilevelController extends AdminController
 		$update2['slot_group_points'] = 0;
 		DB::table('Tbl_slot')->update($update2);
 	}
-
-	// public function setting()
-	// {
-	// 	if(Request::isMethod("post"))
-	// 	{
-	// 		$ctr = 0;
-	// 		DB::table('Tbl_dynamic_compression_setting')->delete();
-	// 		foreach(Request::input("level") as $level => $value)
-	// 		{
-	// 			$insert[$ctr]["count_level"] = $level;
-	// 			$insert[$ctr]["percentage"] = $value;
-	// 			$ctr++;
-	// 		}
-	// 		Tbl_dynamic_compression_setting::insert($insert);
-
-	// 		return Redirect::to('admin/transaction/unilevel/dynamic');
-	// 	}
-	// 	else
-	// 	{
-	// 		$data['countall'] = Tbl_dynamic_compression_setting::count();
-	// 		$data["data"] = Tbl_dynamic_compression_setting::get();
-	// 	    return view('admin.transaction.unilevel_dynamic_setting',$data);
-	// 	}
-
-	// }
 }
