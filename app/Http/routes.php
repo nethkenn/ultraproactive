@@ -73,7 +73,11 @@ Route::any('admin/transaction/payout/add', 'AdminPayoutController@add');
 Route::any('admin/transaction/payout/archive', 'AdminPayoutController@archive');
 Route::any('admin/transaction/payout/restore', 'AdminPayoutController@restore');
 
-Route::get('admin/transaction/unilevel-distribution', 'AdminUnilevelController@index');
+
+Route::any('admin/transaction/unilevel-distribution/dynamic', 'AdminUnilevelController@indexs');
+// Route::any('admin/transaction/unilevel-distribution/dynamic/setting', 'AdminUnilevelController@setting');
+Route::any('admin/transaction/unilevel-distribution', 'AdminUnilevelController@index');
+
 
 /* ADMIN / MAINTENANCE */
 Route::get('admin/maintenance/accounts', 'AdminAccountController@index');
@@ -206,6 +210,7 @@ Route::post('admin/maintenance/slots/add_form_submit', 'AdminSlotController@add_
 Route::post('admin/maintenance/slots/edit_form_submit', 'AdminSlotController@edit_form_submit');
 Route::get('admin/maintenance/slots/downline', 'AdminSlotController@downline');
 Route::get('admin/maintenance/slots/delete', 'AdminSlotController@delete');
+Route::any('admin/maintenance/slots/view', 'AdminSlotController@info');
 
 Route::get('admin/maintenance/country', 'AdminCountryController@index');
 Route::any('admin/maintenance/country/add', 'AdminCountryController@add_country');

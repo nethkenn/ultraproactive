@@ -166,6 +166,7 @@ class AdminComplanController extends AdminController
 		{
 			$update["membership_repurchase_level"] = Request::input("membership_repurchase_level");
 			$update["membership_required_pv"] = Request::input("membership_required_pv");
+			$update["multiplier"] = Request::input("multiplier");
 			Tbl_membership::where("membership_id", Request::input("id"))->update($update);
 
 			$ctr = 0;

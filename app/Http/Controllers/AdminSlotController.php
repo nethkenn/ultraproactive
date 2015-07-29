@@ -17,15 +17,26 @@ class AdminSlotController extends AdminController
 {
 	public function index()
 	{
-        return view('admin.maintenance.slot');
+		$data['membership'] = Tbl_membership::where('archived',0)->get();
+        return view('admin.maintenance.slot',$data);
 	}
 	public function data()
 	{
-        $_account = Tbl_slot::rank()->membership()->account()->get();
-        return Datatables::of($_account)->addColumn('gen','<a href="admin/maintenance/slots/add?id={{$slot_id}}">GENEALOGY</a>')
-        								->addColumn('info','<a href="admin/maintenance/slots/view?id={{$slot_id}}">INFO</a>')
-        								->addColumn('wallet','{{number_format($slot_wallet, 2)}}')
-        								->make(true);
+		$membership = Request::input('memid');
+
+		if($membership == "")
+		{
+	        $_account = Tbl_slot::rank()->membership()->account()->get();
+		}
+		else
+		{
+	        $_account = Tbl_slot::rank()->membership()->account()->where('slot_membership',$membership)->get();
+		}
+
+	        return Datatables::of($_account)->addColumn('gen','<a href="admin/maintenance/slots/add?id={{$slot_id}}">GENEALOGY</a>')
+	        								->addColumn('info','<a href="admin/maintenance/slots/view?id={{$slot_id}}">INFO</a>')
+	        								->addColumn('wallet','{{number_format($slot_wallet, 2)}}')
+	        								->make(true);
 
 	}
 	public function add()
@@ -233,5 +244,20 @@ class AdminSlotController extends AdminController
  		}
 
 		echo json_encode($return);
+	}
+
+	public function info()
+	{
+		$data["page"] = "Slot";
+		$data["slot"] = Tbl_slot::rank()->membership()->account()->id(Request::input("id"))->first();
+		// $data["position"] = Request::input("position");
+		// $data["placement"] = Request::input("placement");
+		// $data["_account"] = Tbl_account::get();
+		// $data["_membership"] = Tbl_membership::get();
+		// $data["_rank"] = Tbl_rank::get();
+		// $data["_country"] = Tbl_country::get();
+		// $data["slot_number"] = Tbl_slot::max("slot_id") + 1;
+
+		return view('admin.maintenance.slot_info',$data);
 	}
 }
