@@ -59,7 +59,7 @@
                         </div>
                         <div class="info">
                             <h3><a href="/product_content?id={{ $product->product_id }}">{{ $product->product_name }}</a></h3>
-                            <span class="categories">₱ {{ $product->price }}</span>
+                            <span class="categories">{{ $product->price }}</span>
                         </div>
                     </div>
                     @endforeach
