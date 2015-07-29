@@ -26,7 +26,7 @@
 				<td>{{ $membership->membership_name }}</td>
 				<td>{{ number_format($membership->membership_required_upgrade, 2) }}</td>
 				<td><input disabled="disabled" type="checkbox" {{ $membership->upgrade_via_points == 1 ? 'checked' : '' }}></td>
-				<td><a href="admin/utilities/direct/edit?id={{ $membership->membership_id }}">EDIT</a></td>
+				<td><a href="admin/utilities/rank/edit?id={{ $membership->membership_id }}">EDIT</a></td>
 			</tr>
 			@endforeach
 		</tbody>

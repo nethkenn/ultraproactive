@@ -128,10 +128,22 @@
             </div>
 
             @if($next_membership)
-            <div class="title sblue">Next Rank ({{ $next_membership->membership_name }})</div>
+            <div class="title sblue">Promotion Information</div>
             <div class="input form-horizontal para">
                 <div class="form-group">
-                    <label for="11" class="col-sm-6 control-label">Upgrade Point(s)</label>
+                    <label for="11" class="col-sm-6 control-label">Current Membership</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="11" readonly value="{{ $slotnow->membership_name }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="11" class="col-sm-6 control-label">Next Membership</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="11" readonly value="{{ $next_membership->membership_name }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="11" class="col-sm-6 control-label">Promotion Point(s)</label>
                     <div class="col-sm-6">
                         <input type="text" class="form-control" id="11" readonly value="{{ number_format($slotnow->slot_upgrade_points, 2) }}">
                     </div>
