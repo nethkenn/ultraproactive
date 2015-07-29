@@ -42,5 +42,11 @@ class AdminAboutController extends AdminController
 		DB::table("tbl_about")->where("about_name", $contact)->update(['about_description' => $contacts, 'created_at' => $date, 'updated_at' => $date]);
 
         return Redirect::to("/admin/content/about");
+	}
+
+
+	public function super_test()
+	{
+		return "super_test";
 	}	
 }

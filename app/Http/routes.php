@@ -308,3 +308,5 @@ Route::post('cart/checkout', 'MemberCheckoutController@checkout');
 
 Route::get('admin/register_url', 'AdminUrlController@index');
 Route::post('admin/register_url', 'AdminUrlController@create_url');
+
+
