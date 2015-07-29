@@ -3,12 +3,12 @@
 	<div class="row">
 		<div class="header">
 			<div class="title col-md-8">
-				<h2><i class="fa fa-share-alt"></i> Unilevel Distribution</h2>
+				<h2><i class="fa fa-share-alt"></i> Dynamic Compression</h2>
 			</div>
 			<div class="buttons col-md-4 text-right">
 				<form method="POST">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
-					<button type="submit" class="btn btn-primary" name="sbmt">Distribute</button>
+					<button type="submit" class="btn btn-primary" name="sbmt">Distribute Dynamically</button>
 					<button type="button" class="btn btn-primary" id="histoir">History</button>
 				</form>
 			</div>
@@ -79,5 +79,22 @@
 
 @endsection
 @section('script')
-<script type="text/javascript" src="/resources/assets/admin/unilevel.js"></script>
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        $(".level-input").keyup(function(e)
+        {
+            $val = $(e.currentTarget).val();
+            $(".level-container").html('');
+            for($ctr = 0; $ctr < $val; $ctr++)
+            {
+                $level = $ctr + 1;
+                $(".level-container").append(   '<div class="form-group col-md-12">' +
+                                                    '<label for="account_contact">Level ' + $level + ' (0-100%)</label>' +
+                                                    '<input name="level[' + $level + ']" value="0" required="required" class="form-control" id="" placeholder="" type="text">' +
+                                                '</div>');
+            }
+        });
+    });
+</script>
 @endsection

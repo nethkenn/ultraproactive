@@ -68,6 +68,7 @@
 									<li><a href="admin/transaction/claims">Process Claims</a></li>
 									<li><a href="admin/transaction/payout">Process Payout</a></li>
 									<li><a href="admin/transaction/unilevel">Unilevel Distribution</a></li>
+									<li><a href="admin/transaction/unilevel/dynamic">Dynamic Compression</a></li>
 								</ul>
 							</li>
 							<!-- MAINTENANCE -->

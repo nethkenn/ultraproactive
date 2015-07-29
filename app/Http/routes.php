@@ -72,7 +72,9 @@ Route::any('admin/transaction/payout/add', 'AdminPayoutController@add');
 Route::any('admin/transaction/payout/archive', 'AdminPayoutController@archive');
 Route::any('admin/transaction/payout/restore', 'AdminPayoutController@restore');
 
-Route::get('admin/transaction/unilevel', 'AdminUnilevelController@index');
+Route::any('admin/transaction/unilevel', 'AdminUnilevelController@index');
+Route::any('admin/transaction/unilevel/dynamic', 'AdminUnilevelController@indexs');
+Route::any('admin/transaction/unilevel/dynamic/setting', 'AdminUnilevelController@setting');
 
 /* ADMIN / MAINTENANCE */
 Route::get('admin/maintenance/accounts', 'AdminAccountController@index');
