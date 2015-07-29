@@ -87,7 +87,7 @@
                 <div class="span6" id="ewan">
                     <div class="pull-left">
                         <div id="widget_topinfo-2" class="widget widget_topinfo">
-                            <div class="topinfo"><span class="phone"><i class="moon-phone"></i>@if(isset($_setting->company_telephone)){{ $_setting->company_telephone }}@endif</span><span class="email"><i class="icon-envelope"></i>>@if(isset($_setting->company_email)){{ $_setting->company_email }}@endif</span></div>
+                            <div class="topinfo"><span class="phone"><i class="moon-phone"></i> @if(isset($_setting->company_telephone)){{ $_setting->company_telephone }}@endif</span><span class="email"><i class="icon-envelope"></i>@if(isset($_setting->company_email)){{ $_setting->company_email }}@endif</span></div>
                         </div>
                     </div>
                 </div>

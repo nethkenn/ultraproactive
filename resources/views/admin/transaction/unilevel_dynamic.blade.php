@@ -9,7 +9,7 @@
 				<form method="POST">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					<button type="submit" class="btn btn-primary" name="sbmt">Distribute Dynamically</button>
-					<button type="button" class="btn btn-primary" id="histoir">History</button>
+				<!--	<button type="button" class="btn btn-primary" id="histoir">History</button> -->
 				</form>
 			</div>
 		</div>
