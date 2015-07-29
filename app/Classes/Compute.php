@@ -5,6 +5,7 @@ use App\Tbl_tree_sponsor;
 use App\Tbl_binary_pairing;
 use App\Tbl_indirect_setting;
 use App\Tbl_unilevel_setting;
+use App\Tbl_membership;
 use App\Classes\Log;
 
 class Compute
@@ -60,6 +61,7 @@ class Compute
                 /* GET SLOT INFO FROM DATABASE */
                 $slot_recipient = Tbl_slot::id($tree->sponsor_tree_parent_id)->membership()->first();
                 $update_recipient["slot_group_points"] = $slot_recipient->slot_group_points;
+                $update_recipient["slot_upgrade_points"] = $slot_recipient->slot_upgrade_points;
 
                 /* COMPUTE FOR BONUS */
                 if(isset($unilevel_level[$slot_recipient->membership_id][$tree->sponsor_tree_level]))
@@ -76,19 +78,45 @@ class Compute
                 {
                     /* UPDATE WALLET */
                     $update_recipient["slot_group_points"] = $update_recipient["slot_group_points"] + $unilevel_bonus;
-
+                    $update_recipient["slot_upgrade_points"] = $update_recipient["slot_upgrade_points"] + $unilevel_bonus;
                     /* INSERT LOG */
-                    $log = "Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($unilevel_bonus, 2) . " group pv</b>. You earned it when slot #" . $buyer_slot_id . " uses a code worth " . number_format($unilevel_pts, 2) . " PV. That slot is located on the Level " . $tree->sponsor_tree_level . " of your sponsor genealogy. Your current membership is " . $slot_recipient->membership_name . " MEMBERSHIP.";
+                    $log = "Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($unilevel_bonus, 2) . " group pv and promotion points</b>. You earned it when slot #" . $buyer_slot_id . " uses a code worth " . number_format($unilevel_pts, 2) . " PV. That slot is located on the Level " . $tree->sponsor_tree_level . " of your sponsor genealogy. Your current membership is " . $slot_recipient->membership_name . " MEMBERSHIP.";
                     Log::account($slot_recipient->slot_owner, $log);
 
                     /* UPDATE SLOT CHANGES TO DATABASE */
                     Tbl_slot::id($slot_recipient->slot_id)->update($update_recipient);
+
+                    /* CHECK IF QUALIFIED FOR PROMOTION */
+                    Compute::check_promotion_qualification($slot_recipient->slot_id);
                 }
             }
         }
     }
     public static function binary_repurchase($buyer_slot_id, $binary_pts, $method)
     {
+
+    }
+    public static function check_promotion_qualification($slot_id)
+    {
+        $slot_info = Tbl_slot::membership()->id($slot_id)->first();
+
+        if($slot_info->upgrade_via_points == 1)
+        {
+            $data["next_membership"] = Tbl_membership::where("membership_required_upgrade", ">",  $slot_info->membership_required_upgrade)->orderBy("membership_required_upgrade", "asc")->first();
+
+            if($data["next_membership"])
+            {
+                /* CHECK IF QUALIFIED FOR UPGRADE */
+                if($slot_info->slot_upgrade_points >= $data["next_membership"]->membership_required_upgrade)
+                {
+                    $update_slot["slot_upgrade_points"] = 0;
+                    $update_slot["slot_membership"] = $data["next_membership"]->membership_id;
+                    $log = "Congratulation! Slot #" . $slot_id . " has been promoted from " . $slot_info->membership_name . " to " . $data["next_membership"]->membership_name . " when " . number_format($data["next_membership"]->membership_required_upgrade, 2) . " Promotion Points has been reached.";
+                    Tbl_slot::id($slot_id)->update($update_slot);
+                    Log::account($slot_info->slot_owner, $log);
+                }
+            }
+        }
     }
     public static function insert_tree_placement($slot_info, $new_slot_id, $level)
     {
@@ -240,26 +268,31 @@ class Compute
         {
             $update_recipient["slot_wallet"] = $slot_recipient->slot_wallet;
             $update_recipient["slot_total_earning"] = $slot_recipient->slot_total_earning;
+            $update_recipient["slot_upgrade_points"] = $slot_recipient->slot_wallet;
 
             /* GET INFO OF REGISTREE */
             $new_slot_info = Tbl_slot::id($new_slot_id)->account()->membership()->first();
 
-            /* COMPUTE FOR THE MATCHING INCOME */
-            $direct_income = ($slot_recipient->membership_matching_bonus/100) * $new_slot_info->membership_price;
+            /* COMPUTE FOR THE DIRECT INCOME */
+            $direct_income = ($slot_recipient->membership_direct_sponsorship_bonus/100) * $new_slot_info->membership_price;
 
             if($direct_income != 0)
             {
-                 /* UPDATE WALLET */
+                /* UPDATE WALLET */
                 $update_recipient["slot_wallet"] = $update_recipient["slot_wallet"] + $direct_income;
                 $update_recipient["slot_total_earning"] = $update_recipient["slot_total_earning"] + $direct_income;
+                $update_recipient["slot_upgrade_points"] = $slot_recipient->slot_upgrade_points + $slot_recipient->membership_binary_points;
 
                 /* INSERT LOG */
-                $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($direct_income, 2) . " wallet</b> through <b>DIRECT SPONSORSHIP BONUS</b> because you've invited SLOT #" . $new_slot_info->slot_id . " to join. Your current membership is " . $slot_recipient->membership_name . " MEMBERSHIP.";
+                $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($direct_income, 2) . " wallet</b> through <b>DIRECT SPONSORSHIP BONUS</b> because you've invited SLOT #" . $new_slot_info->slot_id . " to join. Your current membership is " . $slot_recipient->membership_name . " MEMBERSHIP. Your slot #" . $slot_recipient->slot_id . " also earned <b>" . number_format($slot_recipient->membership_binary_points, 2) . " Promotion Points</b>.";
                 Log::account($slot_recipient->slot_owner, $log);
                 Log::slot($slot_recipient->slot_id, $log, $direct_income, "DIRECT SPONSORSHIP BONUS (DSB)");
 
                 /* UPDATE SLOT CHANGES TO DATABASE */
                 Tbl_slot::id($slot_recipient->slot_id)->update($update_recipient);
+
+                /* CHECK IF QUALIFIED FOR PROMOTION */
+                Compute::check_promotion_qualification($slot_recipient->slot_id);
             }
         }
     }
