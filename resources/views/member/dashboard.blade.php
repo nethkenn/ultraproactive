@@ -86,12 +86,14 @@
                         <input type="text" class="form-control" id="2" readonly value="{{$slotnow->membership_name}}">
                     </div>
                 </div>
+                <!--
                 <div class="form-group">
                     <label for="3" class="col-sm-6 control-label">Ranking</label>
                     <div class="col-sm-6">
                         <input type="text" class="form-control" id="3" readonly value="{{$slotnow->rank_name}}">
                     </div>
                 </div>
+                -->
                 <div class="form-group">
                     <label for="4" class="col-sm-6 control-label">Total Income</label>
                     <div class="col-sm-6">

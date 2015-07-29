@@ -105,7 +105,7 @@
 									<li><a href="admin/utilities/indirect">Indirect Sponsorship Bonus</a></li>
 									<li><a href="admin/utilities/unilevel">Unilevel Computation</a></li>
 									<li class="divider" role="separator"></li>
-									<li><a href="admin/utilities/rank">Ranking Settings</a></li>
+									<li><a href="admin/utilities/rank">Promotion Settings</a></li>
 								</ul>
 							</li>
 							<!-- REPORTS -->
