@@ -75,7 +75,7 @@ class AdminUnilevelController extends AdminController
 					$total = $f->slot_wallet + (($d->slot_group_points * $d->multiplier)*$y);
 					Tbl_slot::where('slot_id',$f->slot_id)->update(['slot_wallet'=>$total]);	
 					$getsponsor = Tbl_tree_sponsor::where('sponsor_tree_child_id',$check->slot_id)->where('sponsor_tree_level',1)->first();
-					Log::slot($d->slot_id,'Distribute Group Points',$total);
+					Log::slot($f->slot_id,'Distribute Group Points',$total);
 					if(!$getsponsor)
 					{
 						break;
