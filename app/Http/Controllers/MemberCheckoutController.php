@@ -91,21 +91,20 @@ class MemberCheckoutController extends Controller
             $message['slot_wallet.check_wallet'] = "Slot wallet balance is not enough.";
             Validator::extend('check_wallet', function($attribute, $value, $parameters)
             {
-             $slot_wallet = $value;
-             $voucher_total = $parameters[0];
-             $deducted = $slot_wallet - $voucher_total;
+                 $slot_wallet = $value;
+                 $voucher_total = $parameters[0];
+                 $deducted = $slot_wallet - $voucher_total;
 
-             if($slot_wallet < $voucher_total || $deducted < 0)
-             {
-                 return false;
-             }
-             else
-             {
-                 return true;
-             }
+                 if($slot_wallet < $voucher_total || $deducted < 0)
+                 {
+                     return false;
+                 }
+                 else
+                 {
+                     return true;
+                 }
 
             });
-
             /**
              * VALIDATOR MESSAGE PRODUCT CART
              */
@@ -149,10 +148,6 @@ class MemberCheckoutController extends Controller
                 //     return $value;
                 // }
             // });
-
-
-            
-
             $validator = Validator::make($request, $rules, $message);
             if($validator->fails())
             {
@@ -263,10 +258,12 @@ class MemberCheckoutController extends Controller
                 $binary_pts =  Tbl_product::select('binary_pts')->where('product_id', $key)->first()->binary_pts;
 
 
-                $pts['unilevel'] = $pts['unilevel'] + $unilevel_pts;
-                $pts['binary'] = $pts['binary'] + $binary_pts;
+                $pts['unilevel'] = $pts['unilevel'] + $unilevel_pts * $value['qty'] ;
+                $pts['binary'] = $pts['binary'] + $binary_pts * $value['qty'];
 
-            }          
+            }
+
+   
         }
 
    

@@ -9,7 +9,7 @@
             <button onclick="$('#admin-add-form').submit();" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
         </div>
     </div>
-    <div class="col-md-12 form-group-container" style="overflow: hidden;">
+    <div class="col-md-12 form-group-container">
         <form id="admin-add-form" class="form-horizontal" method="post">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
               <div class="form-group col-md-12" >

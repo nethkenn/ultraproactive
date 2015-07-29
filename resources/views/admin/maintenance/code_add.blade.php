@@ -62,12 +62,13 @@
                             </ul>
                         </div>
                     @endif
-                    <select name="product_package_id" class="form-control">
-                         @if($_prod_package)
+                    <select name="product_package_id" class="form-control select-product_package" request-product-package-id = {{Request::old('product_package_id')}}>
+                        <option value="">Select Product Package</option>
+<!--                          @if($_prod_package)
                         @foreach($_prod_package as $prod_package)
                             <option value="{{$prod_package->product_package_id}}">{{$prod_package->product_package_name}}</option>
                         @endforeach
-                        @endif
+                        @endif -->
                     </select>
                 </div>
 
@@ -125,7 +126,6 @@
                         @endif
                     </select>
                 </div>      
-
         </form>
     </div>
 @endsection
@@ -133,6 +133,63 @@
     <script type="text/javascript" src="resources/assets/chosen_v1.4.2/chosen.jquery.min.js"></script>
     <link rel="stylesheet" href="resources/assets/chosen_v1.4.2/chosen.css">
     <script type="text/javascript">
-        $(".chosen-select").chosen();
+        
+
+        $(document).ready(function()
+        {
+
+            
+            $('[name="membership_id"]').on('change', function(event)
+            {
+
+
+                var membership_id = $(this).val();
+                var request_product_package_id = $('[name="product_package_id"]').attr('request-product-package-id');
+
+                $.ajax({
+                    url: 'admin/maintenance/codes/load-product-package',
+                    type: 'get',
+                    dataType: 'json',
+                    data: {membership_id: membership_id},
+                })
+                .done(function(data) {
+       
+                    $('[name="product_package_id"] option:not([value=""])').remove();
+
+
+
+                    if(data.length != 0)
+                    {
+                        $.each(data, function(index, val)
+                        {
+                            var check = request_product_package_id == val['product_package_id'] ? 'selected' : '';
+
+                            $('[name="product_package_id"]').append('<option value="'+val['product_package_id']+'" '+check+'>'+val['product_package_name']+'</option>')
+                            
+                        });
+                    }
+                    else
+                    {
+                         $('[name="product_package_id"]').append("<option>No product package</option>");
+                    }
+                   
+                })
+                .fail(function() {
+                    // console.log("error");
+                    alert('Something went wrong on loading product package/s.');
+                })
+                .always(function() {
+                    // console.log("complete");
+                });
+            });
+
+             $('[name="membership_id"]').trigger('change');
+
+
+                
+
+
+
+        });
     </script>
 @endsection

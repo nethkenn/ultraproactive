@@ -4,7 +4,7 @@
 <input class="token" type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 <div class="header row">
     <div class="title col-md-8">
-        <h2><i class="fa fa-table"></i> Generate Reports</h2>
+        <h2><i class="fa fa-table"></i> Membership Generate Reports</h2>
     </div>
 </div>
 <div class="form-container">
@@ -70,6 +70,7 @@
 <script src="resources/assets/external/highchart.js"></script>
 <script src="resources/assets/external/modules/exporting.js"></script>
 <script type="text/javascript">
+
 	var analytics = '{!! json_encode($_report) !!}';
 
 

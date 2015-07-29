@@ -4,7 +4,7 @@
 	<div class="header">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<div class="title col-md-8">
-			<h2><i class="fa fa-star-half-o"></i> RANKING SETTINGS</h2>
+			<h2><i class="fa fa-star-half-o"></i> PROMOTION SETTINGS</h2>
 		</div>
 	</div>
 </div>
@@ -14,8 +14,8 @@
 			<tr>
 				<th class="option-col">ID</th>
 				<th>MEMBERSHIP</th>
-				<th>RANKING REQUIREMENTS</th>
-				<th>ENABLE RANKING</th>
+				<th>PROMOTION REQUIREMENTS</th>
+				<th>ENABLE PROMOTION</th>
 				<th class="option-col"></th>
 			</tr>
 		</thead>
@@ -26,7 +26,7 @@
 				<td>{{ $membership->membership_name }}</td>
 				<td>{{ number_format($membership->membership_required_upgrade, 2) }}</td>
 				<td><input disabled="disabled" type="checkbox" {{ $membership->upgrade_via_points == 1 ? 'checked' : '' }}></td>
-				<td><a href="admin/utilities/direct/edit?id={{ $membership->membership_id }}">EDIT</a></td>
+				<td><a href="admin/utilities/rank/edit?id={{ $membership->membership_id }}">EDIT</a></td>
 			</tr>
 			@endforeach
 		</tbody>
