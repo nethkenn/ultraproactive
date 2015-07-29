@@ -15,7 +15,7 @@ class AdminComplanController extends AdminController
 	}
 	public function binary()
 	{
-		$data["_membership"] = Tbl_membership::active()->entry()->get();
+		$data["_membership"] = Tbl_membership::active()->get();
 		$data["_pairing"] = Tbl_binary_pairing::get();
 		$data["_product"] = Tbl_product::active()->get();
 		return view('admin.computation.binary', $data);
@@ -87,7 +87,7 @@ class AdminComplanController extends AdminController
 
 	public function direct()
 	{
-		$data["_membership"] = Tbl_membership::active()->entry()->get();
+		$data["_membership"] = Tbl_membership::active()->get();
 		return view('admin.computation.direct', $data);
 	}
 	public function direct_edit()
@@ -106,7 +106,7 @@ class AdminComplanController extends AdminController
 	}
 	public function indirect()
 	{
-		$data["_membership"] = Tbl_membership::active()->entry()->get();
+		$data["_membership"] = Tbl_membership::active()->get();
 		return view('admin.computation.indirect', $data);
 	}
 	public function indirect_edit()
@@ -138,7 +138,7 @@ class AdminComplanController extends AdminController
 	}
 	public function matching()
 	{
-		$data["_membership"] = Tbl_membership::active()->entry()->get();
+		$data["_membership"] = Tbl_membership::active()->get();
 		return view('admin.computation.matching', $data);
 	}
 	public function matching_edit()
