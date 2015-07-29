@@ -55,7 +55,7 @@ class AdminReportMembershipController extends AdminController
 		$group = $data["group"];
 
 		$column_date = 'created_at';
-		$column_value = 'SUM(`payment`)';
+		$column_value = 'SUM(`total_amount`)';
 		
 		if($group == "daily")
 		{
@@ -79,9 +79,12 @@ class AdminReportMembershipController extends AdminController
 			$time_string = "Y";
 		}
 
-		$_order = DB::table("tbl_membership_sales")->select(DB::raw($select))
-											->groupBy(DB::raw($groupBy))	
-											->get();
+
+		$_order = DB::table("tbl_membership_code_sale")	->select(DB::raw($select))
+											->groupBy(DB::raw($groupBy))
+											
+		// $_order = DB::table("tbl_membership_sales")->select(DB::raw($select))
+		// 									->groupBy(DB::raw($groupBy))	
 
 		foreach($_order as $key => $order)
 		{

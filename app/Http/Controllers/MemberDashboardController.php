@@ -23,7 +23,12 @@ class MemberDashboardController extends MemberController
 
 
 		$slot_info = Tbl_slot::membership()->id(Customer::slot_id())->first();
-		$data["next_membership"] = Tbl_membership::where("membership_required_upgrade", ">",  $slot_info->membership_required_upgrade)->orderBy("membership_required_upgrade", "asc")->first();
+		if($slot_info)
+		{
+			$data["next_membership"] = Tbl_membership::where("membership_required_upgrade", ">",  $slot_info->membership_required_upgrade)->orderBy("membership_required_upgrade", "asc")->first();			
+		}
+		
+        
         return view('member.dashboard', $data);
 	}
 	public function notification()

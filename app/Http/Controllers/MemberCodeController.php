@@ -219,6 +219,7 @@ class MemberCodeController extends MemberController
 							$insert["slot_total_withrawal"] =  0;
 							$insert["slot_total_earning"] =  0;
 							$insert["slot_owner"] =  Customer::id();
+							$insert["membership_entry_id"] =  $getslot->membership_id;
 							$slot_id = Tbl_slot::insertGetId($insert);
 							Compute::tree($slot_id);
 							Compute::binary($slot_id);
@@ -251,6 +252,7 @@ class MemberCodeController extends MemberController
 							$insert["slot_total_withrawal"] =  0;
 							$insert["slot_total_earning"] =  0;
 							$insert["slot_owner"] =  Customer::id();
+							$insert["membership_entry_id"] =  $getslot->membership_id;
 							$slot_id = Tbl_slot::insertGetId($insert);
 							Compute::tree($slot_id);
 							Compute::binary($slot_id);
@@ -303,8 +305,8 @@ class MemberCodeController extends MemberController
 
 
 		$data['prodcode'] = Tbl_product_code::where("account_id", Customer::id())->where('tbl_product_code.used',0)->voucher()->product()->orderBy("product_pin", "desc")->unused()->get();										 
-		$data['count']= DB::table('tbl_membership_code')->where('archived',0)->where('account_id','=',$id)->where('tbl_membership_code.blocked',0)->count();		
-		$data['count2'] = Tbl_product_code::where("account_id", Customer::id())->voucher()->product()->orderBy("product_pin", "desc")->unused()->count();										 
+		$data['count']= DB::table('tbl_membership_code')->where('archived',0)->where('tbl_membership_code.used',0)->where('account_id','=',$id)->where('tbl_membership_code.blocked',0)->count();		
+		$data['count2'] = Tbl_product_code::where("account_id", Customer::id())->where('tbl_product_code.used',0)->voucher()->product()->orderBy("product_pin", "desc")->unused()->count();										 
 		
 		if($data['count2'] == 0)
 		{

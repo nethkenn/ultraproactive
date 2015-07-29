@@ -156,7 +156,7 @@ class tbl_module extends Seeder
         (1, 'Transaction / Process Sale',   'sales',    0),
         (2, 'Transaction / Process Payout', 'payout',   0),
         (3, 'Transaction / Process Claims', 'claims',   0),
-        (4, 'Transaction / Unilevel Distribution',  'unilevel', 0),
+        (4, 'Transaction / Unilevel Distribution',  'unilevel-distribution', 0),
         (5, 'Maintenance / Accounts',   'accounts', 0),
         (6, 'Maintenance / Membership Codes',   'codes',    0),
         (7, 'Maintenance / Package',    'product_package',  0),
