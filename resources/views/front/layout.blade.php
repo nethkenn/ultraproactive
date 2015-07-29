@@ -1,4 +1,4 @@
-lte<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en-US" class="css3transitions">
 <head>
     <meta charset="UTF-8" />

@@ -102,9 +102,9 @@ class AdminUnilevelController extends AdminController
 			{
 				$convert = $check->slot_wallet + ($check->slot_group_points * $check->multiplier);
 				Tbl_slot::where('slot_id',$check->slot_id)->update(['slot_wallet'=>$convert]);
-				Log::slot($check->slot_id,'Distribute Group Points',$total);
+				Log::slot($check->slot_id,'Distribute Group Points',$convert);
 			}
-			// DB::table('tbl_slot')->update(['slot_group_points'=>0,'slot_personal_points'=>0]);
+			DB::table('tbl_slot')->update(['slot_group_points'=>0,'slot_personal_points'=>0]);
 	}
 
 
