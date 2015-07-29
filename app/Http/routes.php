@@ -305,3 +305,6 @@ Route::post('cart/add', 'CartController@add_to_cart');
 Route::post('cart/remove', 'CartController@remove_to_cart');
 Route::get('cart/checkout', 'MemberCheckoutController@checkout');
 Route::post('cart/checkout', 'MemberCheckoutController@checkout');
+
+Route::get('admin/register_url', 'AdminUrlController@index');
+Route::post('admin/register_url', 'AdminUrlController@create_url');

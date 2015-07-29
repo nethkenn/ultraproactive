@@ -17,9 +17,7 @@ class AdminController extends Controller
 
 
 
-
         $admin_info = Admin::info();
-        // var_dump($admin_info);
         if($admin_info)
         {
 
@@ -34,7 +32,6 @@ class AdminController extends Controller
                 {
                     $_admin_module[] = $value->url_segment;
                     
-                    # code...
                 }
             }
 
@@ -43,7 +40,18 @@ class AdminController extends Controller
             $intersected_array = array_intersect($array_segment, $_admin_module);
             if(Request::path() != "admin" && count($intersected_array) <= 1)
             {
-                return abort(404);
+                if(Admin::info()->admin_position_id == 1 )
+                {
+
+                    Session::forget('new_admin_url');
+                    Session::put('new_admin_url',Request::path());
+                    return Redirect::to('admin/register_url')->send();
+  
+                }
+                else
+                {
+                    return abort(404);
+                }
                   
             }
             // dd($array_segment,$admin_module, $_admin_module);
@@ -107,7 +115,6 @@ class AdminController extends Controller
         $data['json'] = json_encode($data['json']);
  
         // echo '<p>Total pageviews: ' . $ga->getPageviews() . ' total visits: ' . $ga->getVisits() . '</p>';
-        
         return view('admin.dashboard.dashboard',$data);
     }
 }
