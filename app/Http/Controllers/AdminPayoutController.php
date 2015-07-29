@@ -133,7 +133,15 @@ class AdminPayoutController extends AdminController
     {
             $e = Tbl_account_encashment_history::where('status','Processed')->orderBy('processed_no','DESC')->first(); 
             $slot = Tbl_slot::orderBy('slot_owner','ASC')->get();
-            $e = $e->processed_no + 1;
+            if(!isset($e->processed_no))
+            {
+              $e = 1;
+            }
+            else
+            {
+                $e->processed_no + 1;
+            }
+
             foreach($slot as $data)
             {
                 if($data->slot_wallet != 0)

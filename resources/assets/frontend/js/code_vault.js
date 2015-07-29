@@ -131,7 +131,10 @@ function code_vault()
 		    $(".productinclude").empty();
 			showlist();
 	      }
-
+		$("#ifbuttoncode").click(function()
+		{
+			$('#ifbuttoncode').hide();
+		});
 
 	}
 	function checkvalue()

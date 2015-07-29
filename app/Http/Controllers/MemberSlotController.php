@@ -27,7 +27,10 @@ class MemberSlotController extends MemberController
 		$data['success']  = Session::get('success');
 		$data['currentslot'] = Session::get('currentslot');
 		$data['getlead'] = Tbl_lead::where('lead_account_id',Customer::id())->getaccount()->get();
-
+		$data['membership2'] = 	    					 DB::table('tbl_membership')->where('archived',0)
+	    												 ->orderBy('membership_price','ASC')
+	    												 ->where('membership_upgrade',1)
+	    												 ->get();
 		if(Request::input('subup'))
 		{
 			$pass = DB::table('tbl_account')->where("account_id",$id)->first();
@@ -96,32 +99,54 @@ class MemberSlotController extends MemberController
 									  ->get();
 
 		$remaining = $slot->slot_wallet - $membership->membership_price;
-		
-		$check = false;
-		foreach($datas as $d)
+
+		$datumn		 = 	    		 DB::table('tbl_membership')->where('archived',0)
+												 ->orderBy('membership_price','ASC')
+												 ->where('membership_upgrade',1)
+												 ->get();
+
+		$check2 = false;
+
+		foreach($datumn as $d)
 		{
-			if($d->product_id == $pid)
+			if($d->membership_id == $memid)
 			{
-				$check = true;
+				$check2 = true;
 			}
 		}
 
-		if($check == true)
+		if($check2 == true)
 		{
-			$this->additional($pid,$id);
+				$check = false;
+
+				foreach($datas as $d)
+				{
+					if($d->product_id == $pid)
+					{
+						$check = true;
+					}
+				}
+
+				if($check == true)
+				{
+					$this->additional($pid,$id);
+				}
+
+				if($remaining >= 0)
+				{
+					DB::table('tbl_slot')->where('slot_id','=',$id)->update(['slot_wallet'=>$remaining,'slot_membership'=>$membership->membership_id]);
+					$data = "Success";
+				}
+				else
+				{
+					$data = "You don't have enough balance in your wallet for upgrade";
+				}
+
+				return $data;			
 		}
 
-		if($remaining >= 0)
-		{
-			DB::table('tbl_slot')->where('slot_id','=',$id)->update(['slot_wallet'=>$remaining,'slot_membership'=>$membership->membership_id]);
-			$data = "Success";
-		}
-		else
-		{
-			$data = "You don't have enough balance in your wallet for upgrade";
-		}
 
-		return $data;
+
 	}
 	public function transfer_slot($data)
 	{

@@ -1,5 +1,3 @@
-
-
         @if($_cart)
             @foreach ($_cart as $key => $product)
                 <tr>
@@ -18,4 +16,3 @@
         @else
             <tr ><td colspan="6" class="text-center" >Cart Empty</td></tr>
         @endif
-{{-- <div class="total">Total&nbsp;&nbsp;:&nbsp;&nbsp;<span>{{$final_total}}</span></div> --}}

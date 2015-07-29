@@ -93,10 +93,10 @@
                                     <div class="header">
                                         <h2>Contact Info</h2></div>
                                     <div class="content">
-                                        <p style="word-break: keep-all !important;">{{ $company->company_address }}
-                                            <br /> {{ $company->company_email }}
-                                            <br /> Telephone:{{ $company->company_telephone }}
-                                            <br /> Phone: {{ $company->company_mobile }}
+                                        <p style="word-break: keep-all !important;">@if(isset($_setting->company_address)){{ $company->company_address }}@endif
+                                            <br /> @if(isset($_setting->company_email)){{ $company->company_email }}@endif
+                                            <br /> Telephone:@if(isset($_setting->company_telephone)){{ $company->company_telephone }}@endif
+                                            <br /> Phone:  @if(isset($_setting->company_telephone)){{ $company->company_mobile }@endif
                                         </p>
                                         <div class="social">
                                             <ul>

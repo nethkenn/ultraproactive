@@ -36,8 +36,10 @@ class MemberCodeController extends MemberController
 		$data['_error'] = Session::get('message');
 		$data['success']  = Session::get('success');
 		$data['availprod'] = Tbl_product_package::where('archived',0)->get();
-
-
+		$data['membership2'] = 	    					 DB::table('tbl_membership')->where('archived',0)
+	    												 ->orderBy('membership_price','ASC')
+	    												 ->where('membership_entry',1)
+	    												 ->get();
 		if($data['availprod'])
 		{
 			foreach($data['availprod'] as $key => $d)
@@ -219,6 +221,7 @@ class MemberCodeController extends MemberController
 							$insert["slot_total_withrawal"] =  0;
 							$insert["slot_total_earning"] =  0;
 							$insert["slot_owner"] =  Customer::id();
+							$insert["membership_entry_id"] =  $getslot->membership_id;
 							$slot_id = Tbl_slot::insertGetId($insert);
 							Compute::tree($slot_id);
 							Compute::binary($slot_id);
@@ -251,6 +254,7 @@ class MemberCodeController extends MemberController
 							$insert["slot_total_withrawal"] =  0;
 							$insert["slot_total_earning"] =  0;
 							$insert["slot_owner"] =  Customer::id();
+							$insert["membership_entry_id"] =  $getslot->membership_id;
 							$slot_id = Tbl_slot::insertGetId($insert);
 							Compute::tree($slot_id);
 							Compute::binary($slot_id);
@@ -303,8 +307,8 @@ class MemberCodeController extends MemberController
 
 
 		$data['prodcode'] = Tbl_product_code::where("account_id", Customer::id())->where('tbl_product_code.used',0)->voucher()->product()->orderBy("product_pin", "desc")->unused()->get();										 
-		$data['count']= DB::table('tbl_membership_code')->where('archived',0)->where('account_id','=',$id)->where('tbl_membership_code.blocked',0)->count();		
-		$data['count2'] = Tbl_product_code::where("account_id", Customer::id())->voucher()->product()->orderBy("product_pin", "desc")->unused()->count();										 
+		$data['count']= DB::table('tbl_membership_code')->where('archived',0)->where('tbl_membership_code.used',0)->where('account_id','=',$id)->where('tbl_membership_code.blocked',0)->count();		
+		$data['count2'] = Tbl_product_code::where("account_id", Customer::id())->where('tbl_product_code.used',0)->voucher()->product()->orderBy("product_pin", "desc")->unused()->count();										 
 		
 		if($data['count2'] == 0)
 		{
@@ -556,8 +560,19 @@ class MemberCodeController extends MemberController
 
 
 			$checkifexist = Tbl_product_package::where('membership_id',$x['memid'])->get();
-
+			$datumn = 	    					 DB::table('tbl_membership')->where('archived',0)
+												 ->orderBy('membership_price','ASC')
+												 ->where('membership_entry',1)
+												 ->get();
 			$checking = false;
+			$checking5 = false;
+			foreach($datumn as $s)
+			{
+				if($s->membership_id == $x['memid'])
+				{
+					$checking5 = true;
+				}
+			}
 			foreach($checkifexist as $s)
 			{
 				if($s->product_package_id == $x['package'])
@@ -567,7 +582,7 @@ class MemberCodeController extends MemberController
 			}
 
 
-			if($checking == true)
+			if($checking == true && $checking5 == true)
 			{
 				if($rcheck && $check)
 				{
