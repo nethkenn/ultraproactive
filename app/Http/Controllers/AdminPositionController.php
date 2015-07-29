@@ -27,19 +27,19 @@ class AdminPositionController extends AdminController
 		/**
 		 * UPDATE THE SUPER ADMIN MODULES.
 		 */
-		// $_module = Tbl_module::all();
-		// Tbl_admin_position_has_module::where('admin_position_id',1 )->delete();
-		// if($_module)
-		// {
-		// 	foreach ($_module as $key => $value)
-		// 	{
-		// 		$insert['admin_position_id'] = 1;
-		// 		$insert['module_id'] = $value->module_id;
-		// 		$position_has_module = new Tbl_admin_position_has_module($insert);
-		// 		$position_has_module->save();
+		$_module = Tbl_module::all();
+		Tbl_admin_position_has_module::where('admin_position_id',1 )->delete();
+		if($_module)
+		{
+			foreach ($_module as $key => $value)
+			{
+				$insert['admin_position_id'] = 1;
+				$insert['module_id'] = $value->module_id;
+				$position_has_module = new Tbl_admin_position_has_module($insert);
+				$position_has_module->save();
 			
-		// 	}
-		// }
+			}
+		}
 
         return view('admin.utilities.position');
 	}
