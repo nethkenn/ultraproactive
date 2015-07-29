@@ -157,7 +157,7 @@ class AdminComplanController extends AdminController
 	}
 	public function unilevel()
 	{
-		$data["_membership"] = Tbl_membership::active()->entry()->get();
+		$data["_membership"] = Tbl_membership::active()->get();
 		return view('admin.computation.unilevel', $data);
 	}
 	public function unilevel_edit()
@@ -192,7 +192,7 @@ class AdminComplanController extends AdminController
 	}
 	public function rank()
 	{
-		$data["_membership"] = Tbl_membership::active()->entry()->get();
+		$data["_membership"] = Tbl_membership::active()->get();
 		return view('admin.computation.rank', $data);
 	}
 	public function rank_edit()
