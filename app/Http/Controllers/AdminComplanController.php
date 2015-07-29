@@ -15,7 +15,7 @@ class AdminComplanController extends AdminController
 	}
 	public function binary()
 	{
-		$data["_membership"] = Tbl_membership::active()->get();
+		$data["_membership"] = Tbl_membership::active()->entry()->get();
 		$data["_pairing"] = Tbl_binary_pairing::get();
 		$data["_product"] = Tbl_product::active()->get();
 		return view('admin.computation.binary', $data);
