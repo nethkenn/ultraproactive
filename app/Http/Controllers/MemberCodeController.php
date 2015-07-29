@@ -36,8 +36,10 @@ class MemberCodeController extends MemberController
 		$data['_error'] = Session::get('message');
 		$data['success']  = Session::get('success');
 		$data['availprod'] = Tbl_product_package::where('archived',0)->get();
-
-
+		$data['membership2'] = 	    					 DB::table('tbl_membership')->where('archived',0)
+	    												 ->orderBy('membership_price','ASC')
+	    												 ->where('membership_entry',1)
+	    												 ->get();
 		if($data['availprod'])
 		{
 			foreach($data['availprod'] as $key => $d)
@@ -558,8 +560,19 @@ class MemberCodeController extends MemberController
 
 
 			$checkifexist = Tbl_product_package::where('membership_id',$x['memid'])->get();
-
+			$datumn = 	    					 DB::table('tbl_membership')->where('archived',0)
+												 ->orderBy('membership_price','ASC')
+												 ->where('membership_entry',1)
+												 ->get();
 			$checking = false;
+			$checking5 = false;
+			foreach($datumn as $s)
+			{
+				if($s->membership_id == $x['memid'])
+				{
+					$checking5 = true;
+				}
+			}
 			foreach($checkifexist as $s)
 			{
 				if($s->product_package_id == $x['package'])
@@ -569,7 +582,7 @@ class MemberCodeController extends MemberController
 			}
 
 
-			if($checking == true)
+			if($checking == true && $checking5 == true)
 			{
 				if($rcheck && $check)
 				{

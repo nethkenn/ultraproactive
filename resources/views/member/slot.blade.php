@@ -169,8 +169,8 @@
                 <label for="wan" class="col-sm-3 control-label">Choose Membership</label>
                 <div class="col-sm-9">
                     <select class="form-control" id="wan" name="membership">
-                        @if($membership)
-                            @foreach($membership as $m)
+                        @if($membership2)
+                            @foreach($membership2 as $m)
                               <option value="{{$m->membership_id}}" amount="{{$m->membership_price}}">{{$m->membership_name}}</option>
                             @endforeach
                         @endif    
