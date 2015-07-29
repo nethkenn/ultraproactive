@@ -94,7 +94,77 @@ class Compute
     }
     public static function binary_repurchase($buyer_slot_id, $binary_pts, $method)
     {
+        $new_slot_info = Tbl_slot::id($buyer_slot_id)->account()->membership()->first();
+        $_pairing = Tbl_binary_pairing::orderBy("pairing_point_l", "desc")->get();
 
+        /* GET SETTINGS */
+        $required_pairing_points = 100;
+
+        /* GET THE TREE */
+        $_tree = Tbl_tree_placement::child($buyer_slot_id)->level()->distinct_level()->get();
+
+        /* UPDATE BINARY POINTS */
+        foreach($_tree as $tree)
+        {
+            /* GET SLOT INFO FROM DATABASE */
+            $slot_recipient = Tbl_slot::id($tree->placement_tree_parent_id)->first();
+            $update_recipient["slot_wallet"] = $slot_recipient->slot_wallet;
+            $update_recipient["slot_total_earning"] = $slot_recipient->slot_total_earning;
+
+            /* RETRIEVE LEFT & RIGHT POINTS */
+            $binary["left"] = $slot_recipient->slot_binary_left;
+            $binary["right"] = $slot_recipient->slot_binary_right; 
+
+            /* ADD NECESARRY POINTS */
+            $earned_points = $binary_pts;
+
+            /* CHECK POINTS EARNED */
+            if($earned_points != 0)
+            {
+                $binary[$tree->placement_tree_position] = $binary[$tree->placement_tree_position] + $earned_points; 
+                
+                /* INSERT LOG FOR EARNED POINTS IN ACCOUNT */
+                $log = "Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($earned_points, 2) . " binary points</b> on " . $tree->placement_tree_position . " when " . $new_slot_info->account_name . " used one if his/her product code.";
+                Log::account($slot_recipient->slot_owner, $log);
+
+                /* CHECK PAIRING */
+                foreach($_pairing as $pairing)
+                {
+                    while($binary["left"] >= $pairing->pairing_point_l && $binary["right"] >= $pairing->pairing_point_r)
+                    {
+                        $binary["left"] = $binary["left"] - $pairing->pairing_point_l;
+                        $binary["right"] = $binary["right"] - $pairing->pairing_point_r;
+
+                        /* GET PAIRING BONUS */
+                        $pairing_bonus = $pairing->pairing_income;
+
+                        /* CHECK IF PAIRING BONUS IS ZERO */
+                        if($pairing_bonus != 0)
+                        {
+                            /* UPDATE WALLET */
+                            $update_recipient["slot_wallet"] = $update_recipient["slot_wallet"] + $pairing_bonus;
+                            $update_recipient["slot_total_earning"] = $update_recipient["slot_total_earning"] + $pairing_bonus;
+
+                            /* INSERT LOG */
+                            $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($pairing_bonus, 2) . " wallet</b> from <b>PAIRING BONUS</b> due to pairing combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining binary points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right. This combination was caused by a repurchase of one of your downlines.";
+                            Log::account($slot_recipient->slot_owner, $log);
+                            Log::slot($slot_recipient->slot_id, $log, $pairing_bonus, "BINARY PAIRING");
+
+                            /* MATCHING SALE BONUS */
+                            Compute::matching($buyer_slot_id, "REPURCHASE", $slot_recipient, $pairing_bonus);
+                        }
+                    }
+                } 
+
+                /* UPDATE POINTS */
+                $update_recipient["slot_binary_left"] = $binary["left"];
+                $update_recipient["slot_binary_right"] = $binary["right"];
+
+                /* UPDATE SLOT CHANGES TO DATABASE */
+                Tbl_slot::id($tree->placement_tree_parent_id)->update($update_recipient);
+                $update_recipient = null;
+            }
+        }
     }
     public static function check_promotion_qualification($slot_id)
     {
