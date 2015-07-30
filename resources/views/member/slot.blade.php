@@ -132,7 +132,7 @@
                                 <option value="{{$g->account_id}}">{{$g->account_email}} ({{$g->account_name}})</option>
                             @endforeach
                         @else
-                            <option value="">You don't have any lead please add first.</value>
+                            <option value="">You don't have any lead please add first.</option>
                         @endif
                     </select>
                     <input type="hidden" value="" class="form-control" id="hiddenisa" name="slot">
