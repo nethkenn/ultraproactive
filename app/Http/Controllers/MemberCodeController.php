@@ -375,11 +375,25 @@ class MemberCodeController extends MemberController
 
 	public function transfer($code,$account,$pass,$id,$s)
 	{
+		$checking4 = false;
 		$checking = false;
 		$rpass = Tbl_account::where('account_id',$id)->first();
+		$lead = Tbl_lead::where('lead_account_id',Customer::id())->getaccount()->get();
+	    if($rpass != null)
+		{	
+			foreach($lead as $l)
+			{
+				if($l->account_id == $account)
+				{
+					$checking4 = true;
+				}
+			}
+		}
 		$rpass = Crypt::decrypt($rpass->account_password);
 		$info = null;
 		$checking2 = Tbl_membership_code::where('code_pin',$code)->where('used',1)->first();
+
+
 
 		foreach($s as $key => $data)
 		{
@@ -388,13 +402,18 @@ class MemberCodeController extends MemberController
 				$checking = true;
 			}
 		}
+
 		if($checking2)
 		{
 			$info = "This code is already used";
 		}
 		else if($checking == true)
 		{
-				if($rpass == $pass)
+				if($checking4 == false)
+				{
+					$info = "Transfer failed";
+				}
+				else if($rpass == $pass)
 				{
 					$t = Tbl_account::where('account_id',$account)->first();
 					Tbl_membership_code::where('code_pin',$code)->update(['account_id'=>$account]);

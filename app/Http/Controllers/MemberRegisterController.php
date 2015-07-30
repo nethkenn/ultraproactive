@@ -179,8 +179,8 @@ class MemberRegisterController extends Controller
 					$info = DB::table('tbl_account')->insertGetId($insert);
 					Customer::login($info,$insert['account_password']);
 					$data2 = true;
-					$x['lead_account_id'] = $info;
-					$x['account_id'] = $email->account_id;
+					$x['lead_account_id'] = $email->account_id;
+					$x['account_id'] = $info;
 					$x['join_date'] = Carbon::now();
 					Tbl_lead::insert($x);
 					Log::account($email->account_id,$insert['account_name'].' successfully added as your lead through link');

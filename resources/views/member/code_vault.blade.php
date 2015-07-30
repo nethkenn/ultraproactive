@@ -399,7 +399,11 @@
         </div>
         <br>
         <button class="button" type="button" data-remodal-action="cancel">Cancel</button>
-        <button class="button" type="submit" name="codesbmt">Initiate Transfer</button>
+         @if($getlead->count() != 0)
+         <button class="button" type="submit" name="codesbmt">Initiate Transfer</button>
+         @else
+         <button class="button" type="submit" name="codesbmt" disabled>Initiate Transfer</button>
+         @endif
     </div>
 </form>
 @endsection
