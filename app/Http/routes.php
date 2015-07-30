@@ -23,7 +23,7 @@ Route::any('/member/settings', 'MemberAccountSettingsController@index');
 Route::any('/member/settings/upload', 'MemberAccountSettingsController@upload');
 
 Route::any('/member/leads', 'MemberLeadController@index');
-Route::any('/member/leads/{slug}', 'MemberLeadController@link');
+// Route::any('/member/leads/', 'MemberLeadController@link');
 Route::any('/member/product', 'MemberProductController@index');
 Route::any('/member/login', 'MemberLoginController@index');
 Route::any('/member/logout', 'MemberLoginController@logout');
@@ -308,3 +308,6 @@ Route::post('cart/checkout', 'MemberCheckoutController@checkout');
 
 Route::get('admin/register_url', 'AdminUrlController@index');
 Route::post('admin/register_url', 'AdminUrlController@create_url');
+
+
+Route::any('lead/{slug}','MemberRegisterController@lead');

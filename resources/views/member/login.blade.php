@@ -9,6 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="/resources/assets/jquery-ui/jquery-ui.css">
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300' rel='stylesheet' type='text/css'>
 </head>
+
 <form method="POST">
     <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
     <div class="bg">
@@ -17,6 +18,13 @@
                 <div class="logo">
                     <img src="/resources/assets/frontend/img/big-logo.png">
                 </div>
+                @if(Session::has('errored'))
+                    <div class="alert alert-danger">
+                        <ul>
+                                {{ $error }}
+                        </ul>
+                    </div>
+                 @endif
                 <div class="input">
                     <input type="text" name="user">
                 </div>
