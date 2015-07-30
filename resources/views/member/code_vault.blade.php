@@ -380,10 +380,12 @@
                 <label for="22" class="col-sm-3 control-label">Recipient</label>
                 <div class="col-sm-9">
                     <select class="form-control" id="22" name="account">
-                        @if($accountlist)
-                        @foreach($accountlist  as $a)
-                        <option value="{{$a->account_id}}">{{$a->account_email}}({{$a->account_name}})</option>
-                        @endforeach
+                        @if($getlead->count() != 0)
+                            @foreach($getlead as $g)
+                                <option value="{{$g->account_id}}">{{$g->account_email}} ({{$g->account_name}})</option>
+                            @endforeach
+                        @else
+                            <option value="">You don't have any lead please add first.</value>
                         @endif
                     </select>
                 </div>

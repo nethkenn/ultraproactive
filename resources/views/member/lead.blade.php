@@ -25,10 +25,10 @@
                 <a style="cursor: pointer;" class="genlead">
                     <div class="button">How to Generate Leads?</div>
                 </a>
-                <a style="cursor: pointer;" class="a_lead">
+              <!--  <a style="cursor: pointer;" class="a_lead">
 
                     <div class="button">Add Leads ( Manually )</div>
-                </a>
+                </a> -->
             </div>
         </div>
         <table class="footable">
@@ -57,7 +57,7 @@
 </div>
 
 
-<div class="remodal create-slot" data-remodal-id="add_lead" data-remodal-options="hashTracking: false">
+<!--<div class="remodal create-slot" data-remodal-id="add_lead" data-remodal-options="hashTracking: false">
     <button data-remodal-action="close" class="remodal-close"></button>
     <div class="header">
         <img src="/resources/assets/frontend/img/icon-plis.png">
@@ -73,18 +73,18 @@
                     <input type="text" class="form-control" id="una" name="name">
                 </div>
             </div>
-           <!-- <div class="form-group para">
+            <div class="form-group para">
                 <label for="pangalawa" class="col-sm-3 control-label">Email</label>
                 <div class="col-sm-9">
                     <input type="email" class="form-control" id="pangalawa" name="email">
                 </div>
-            </div> -->
+            </div> 
     </div>
     <br>
     <button class="button" type="button" data-remodal-action="cancel">Cancel</button>
     <button class="button" type="submit" name="addlead">Add Lead</button>
     </form>
-</div>
+</div> -->
 
 
 <div class="remodal create-slot" data-remodal-id="generate_lead" data-remodal-options="hashTracking: false">

@@ -27,6 +27,7 @@ use App\Tbl_voucher;
 use App\Classes\Globals;
 use App\Tbl_product;
 use App\tbl_membership_code_sale;
+use App\Tbl_Lead;
 class MemberCodeController extends MemberController
 {
 	public function index()
@@ -40,6 +41,7 @@ class MemberCodeController extends MemberController
 	    												 ->orderBy('membership_price','ASC')
 	    												 ->where('membership_entry',1)
 	    												 ->get();
+	    $data['getlead'] = Tbl_lead::where('lead_account_id',Customer::id())->getaccount()->get();
 		if($data['availprod'])
 		{
 			foreach($data['availprod'] as $key => $d)

@@ -35,39 +35,39 @@ class MemberLeadController extends MemberController
 		}
         return view('member.lead',$data);
 	}
-	public function addlead($d)
-	{
-		$data = Tbl_account::where('account_username',$d['name'])->first();
-		if($data)
-		{
-				$ld =	Tbl_lead::where('account_id',$data->account_id)->where('lead_account_id',Customer::id())->first();
-				if($ld)
-				{
-					$message['error'] = "Already your lead.";
-					return $message;
-				}
-				else if($data->account_id == Customer::id())
-				{
-					$message['error'] = "Cannot lead yourself.";
-					return $message;	
-				}
-				else
-				{
-					$insert['lead_account_id'] = Customer::id();
-					$insert['account_id'] = $data->account_id;
-					$insert['join_date'] = Carbon::now();
-					Tbl_lead::insert($insert);
-					Log::account(Customer::id()," Added a lead ($data->account_name)");
-					$message['success'] = " Successfully added $data->account_name";
-					return $message;
-				}
-		}
-		else
-		{
-			$message['error'] = "Username not found";
-			return $message;
-		}
-	}
+	// public function addlead($d)
+	// {
+	// 	$data = Tbl_account::where('account_username',$d['name'])->first();
+	// 	if($data)
+	// 	{
+	// 			$ld =	Tbl_lead::where('account_id',$data->account_id)->where('lead_account_id',Customer::id())->first();
+	// 			if($ld)
+	// 			{
+	// 				$message['error'] = "Already your lead.";
+	// 				return $message;
+	// 			}
+	// 			else if($data->account_id == Customer::id())
+	// 			{
+	// 				$message['error'] = "Cannot lead yourself.";
+	// 				return $message;	
+	// 			}
+	// 			else
+	// 			{
+	// 				$insert['lead_account_id'] = Customer::id();
+	// 				$insert['account_id'] = $data->account_id;
+	// 				$insert['join_date'] = Carbon::now();
+	// 				Tbl_lead::insert($insert);
+	// 				Log::account(Customer::id()," Added a lead ($data->account_name)");
+	// 				$message['success'] = " Successfully added $data->account_name";
+	// 				return $message;
+	// 			}
+	// 	}
+	// 	else
+	// 	{
+	// 		$message['error'] = "Username not found";
+	// 		return $message;
+	// 	}
+	// }
 	// public function link($slug)
 	// {
 	// 	$data = Tbl_account::where('account_id',Customer::id())->first();
