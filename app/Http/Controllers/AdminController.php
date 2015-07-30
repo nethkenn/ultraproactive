@@ -9,13 +9,16 @@ use Session;
 use App\Tbl_admin_position_has_module;
 use App\Tbl_module;
 use gapi;
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
 	public function __construct()
 	{
-
-
+        $Tbl_module = Tbl_module::firstOrCreate(['url_segment' => 'register_url']);
+        $Tbl_module->module_name = 'admin/register_url';
+        $Tbl_module->save();
 
         $admin_info = Admin::info();
         if($admin_info)
@@ -38,26 +41,28 @@ class AdminController extends Controller
             $_admin_module[] = "admin";  
             $_admin_module[] = "account";
             $intersected_array = array_intersect($array_segment, $_admin_module);
+            View()->share("admin", $admin_info);
             if(Request::path() != "admin" && count($intersected_array) <= 1)
             {
                 if(Admin::info()->admin_position_id == 1 )
                 {
+                    return redirect('admin/register_url?new_admin_url='.Request::path())->send();
+                }
 
-                    Session::forget('new_admin_url');
-                    Session::put('new_admin_url',Request::path());
-                    return Redirect::to('admin/register_url')->send();
-  
-                }
-                else
-                {
-                    return abort(404);
-                }
-                  
+              
+
+
+               
+                
+                // return abort(404);
+                   return redirect('admin')->with('not_allow','You are no allowed to access '. Request::path())->send();
+                // return view('admin.not_allow');
+
+
+
             }
             // dd($array_segment,$admin_module, $_admin_module);
             // var_dump( $intersected_array);
-
-            View()->share("admin", $admin_info);
 
 
 

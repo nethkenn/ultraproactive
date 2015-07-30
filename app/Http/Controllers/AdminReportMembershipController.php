@@ -81,7 +81,9 @@ class AdminReportMembershipController extends AdminController
 
 
 		$_order = DB::table("tbl_membership_code_sale")	->select(DB::raw($select))
-											->groupBy(DB::raw($groupBy))
+											->groupBy(DB::raw($groupBy))->get();
+
+									
 											
 		// $_order = DB::table("tbl_membership_sales")->select(DB::raw($select))
 		// 									->groupBy(DB::raw($groupBy))	

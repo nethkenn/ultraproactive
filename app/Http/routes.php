@@ -310,4 +310,6 @@ Route::get('admin/register_url', 'AdminUrlController@index');
 Route::post('admin/register_url', 'AdminUrlController@create_url');
 
 
+
 Route::any('lead/{slug}','MemberRegisterController@lead');
+
