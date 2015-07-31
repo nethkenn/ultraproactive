@@ -203,7 +203,7 @@
             </div>
         </div>
     </div>
-    {{-- <div class="detail para">
+    <!-- <div class="detail para">
         <div class="header">Account Summary</div>
         <div class="holder para">
             <div class="input form-horizontal para">
@@ -233,9 +233,9 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div> -->
 
-   {{--  @if($slotnow)
+   <!--  @if($slotnow)
     <div class="detail para">
         <div class="header">Details For Slot #{{$slotnow->slot_id}}</div>
         <div class="holder para">
@@ -253,14 +253,14 @@
                         <input type="text" class="form-control" id="2" readonly value="{{$slotnow->membership_name}}">
                     </div>
                 </div>
-                <!--
+    
                 <div class="form-group">
                     <label for="3" class="col-sm-6 control-label">Ranking</label>
                     <div class="col-sm-6">
                         <input type="text" class="form-control" id="3" readonly value="{{$slotnow->rank_name}}">
                     </div>
                 </div>
-                -->
+
                 <div class="form-group">
                     <label for="4" class="col-sm-6 control-label">Total Income</label>
                     <div class="col-sm-6">
@@ -356,7 +356,7 @@
             @endif
         </div>
     </div>
-    @endif --}}
+    @endif -->
 </div>
 <div class="col-md-3 right">
     <!-- NOTIFICATIONS -->
