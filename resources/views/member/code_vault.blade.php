@@ -250,8 +250,8 @@
                 <label for="11111" class="col-sm-3 control-label">Membership</label>
                 <div class="col-sm-9">
                     <select class="form-control" id="11111" name="memid">
-                        @if($membership)
-                        @foreach($membership as $m)
+                        @if($membership2)
+                        @foreach($membership2 as $m)
                         <option value="{{$m->membership_id}}" amount="{{$m->membership_price}}" included="{{$m->membership_id}}">{{$m->membership_name}}</option>
                         @endforeach
                         @endif
@@ -380,10 +380,12 @@
                 <label for="22" class="col-sm-3 control-label">Recipient</label>
                 <div class="col-sm-9">
                     <select class="form-control" id="22" name="account">
-                        @if($accountlist)
-                        @foreach($accountlist  as $a)
-                        <option value="{{$a->account_id}}">{{$a->account_email}}({{$a->account_name}})</option>
-                        @endforeach
+                        @if($getlead->count() != 0)
+                            @foreach($getlead as $g)
+                                <option value="{{$g->account_id}}">{{$g->account_email}} ({{$g->account_name}})</option>
+                            @endforeach
+                        @else
+                            <option value="">You don't have any lead please add first.</value>
                         @endif
                     </select>
                 </div>
@@ -397,7 +399,11 @@
         </div>
         <br>
         <button class="button" type="button" data-remodal-action="cancel">Cancel</button>
-        <button class="button" type="submit" name="codesbmt">Initiate Transfer</button>
+         @if($getlead->count() != 0)
+         <button class="button" type="submit" name="codesbmt">Initiate Transfer</button>
+         @else
+         <button class="button" type="submit" name="codesbmt" disabled>Initiate Transfer</button>
+         @endif
     </div>
 </form>
 @endsection

@@ -101,11 +101,31 @@
 		</div>
 	</div>
 </div>
+<div class="remodal" data-remodal-id="modal"
+  data-remodal-options="hashTracking: false, closeOnOutsideClick: false">
+
+  <button data-remodal-action="close" class="remodal-close"></button>
+  <h1><i class="glyphicon glyphicon-warning-sign"> </i>WARNING</h1>
+  @if(Session::get('not_allow'))
+	  <p class="col-m-12 alert alert-warning not-allow">
+	  	{{Session::get('not_allow')}}
+	  </p>
+  @endif
+  <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
+  <button data-remodal-action="confirm" class="remodal-confirm">OK</button>
+</div>
 @endsection
 @section('script')
 <script src="resources/assets/external/highchart.js"></script>
 <script type="text/javascript">
 $(function () {
+
+	var inst = $('[data-remodal-id=modal]').remodal();
+
+	if($('.not-allow').length > 0 )
+	{
+		inst.open();
+	}
 
 	var json = jQuery.parseJSON($("#jsoncontainer").val());
 	_x = new Array();

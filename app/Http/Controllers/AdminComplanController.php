@@ -87,7 +87,7 @@ class AdminComplanController extends AdminController
 
 	public function direct()
 	{
-		$data["_membership"] = Tbl_membership::active()->entry()->get();
+		$data["_membership"] = Tbl_membership::active()->get();
 		return view('admin.computation.direct', $data);
 	}
 	public function direct_edit()
@@ -106,7 +106,7 @@ class AdminComplanController extends AdminController
 	}
 	public function indirect()
 	{
-		$data["_membership"] = Tbl_membership::active()->entry()->get();
+		$data["_membership"] = Tbl_membership::active()->get();
 		return view('admin.computation.indirect', $data);
 	}
 	public function indirect_edit()
@@ -138,7 +138,7 @@ class AdminComplanController extends AdminController
 	}
 	public function matching()
 	{
-		$data["_membership"] = Tbl_membership::active()->entry()->get();
+		$data["_membership"] = Tbl_membership::active()->get();
 		return view('admin.computation.matching', $data);
 	}
 	public function matching_edit()
@@ -157,7 +157,7 @@ class AdminComplanController extends AdminController
 	}
 	public function unilevel()
 	{
-		$data["_membership"] = Tbl_membership::active()->entry()->get();
+		$data["_membership"] = Tbl_membership::active()->get();
 		return view('admin.computation.unilevel', $data);
 	}
 	public function unilevel_edit()
@@ -193,7 +193,7 @@ class AdminComplanController extends AdminController
 	}
 	public function rank()
 	{
-		$data["_membership"] = Tbl_membership::active()->entry()->get();
+		$data["_membership"] = Tbl_membership::active()->get();
 		return view('admin.computation.rank', $data);
 	}
 	public function rank_edit()

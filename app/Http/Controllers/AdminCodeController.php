@@ -39,24 +39,8 @@ class AdminCodeController extends AdminController {
 	 */
 	public function index()
 	{
-
-		// $membership_code = Tbl_membership_code::getCodeType()->getMembership()->getPackage()->getInventoryType()->get();
-
-		// dd($membership_code);
-
-
-		// $membership_code = Tbl_membership_code::getUsedBy()->get();
-		// dd($membership_code);
-
-
-		// foreach ($membership_code as $key => $value) {
-		// 	echo $value->account_name;
-		// }
-
-		// dd($membership_code);
 		$data['_account'] = Tbl_account::all();
-
-		 return view('admin.maintenance.code', $data);
+		return view('admin.maintenance.code', $data);
 	}
 
 
@@ -109,9 +93,8 @@ class AdminCodeController extends AdminController {
 	 */
 	public function add_code()
 	{
-
 		$data['_error'] = null;
-		$data['_membership'] = Tbl_membership::all();
+		$data['_membership'] = Tbl_membership::where('membership_entry', 1)->get();
 		$data['_code_type'] = Tbl_code_type::all();
 		$data['_prod_package'] = Tbl_product_package::all();
 		$data['_account'] = Tbl_account::all();
@@ -121,15 +104,30 @@ class AdminCodeController extends AdminController {
 		{
 
 			$rules['code_type_id'] = 'required|exists:tbl_code_type,code_type_id';
-			$rules['membership_id'] = 'required|exists:tbl_membership,membership_id';
 			$rules['product_package_id'] = 'required|exists:tbl_product_package,product_package_id,membership_id,'.Request::input('membership_id').'|foo:'.Request::input('inventory_update_type_id');
 			$rules['inventory_update_type_id'] = 'required|exists:tbl_inventory_update_type,inventory_update_type_id';
 			$rules['account_id'] = 'required|exists:tbl_account,account_id';
 			$rules['code_multiplier'] = 'min:1|integer';
+			$rules['membership_id'] = 'required|exists:tbl_membership,membership_id|check_member';
 
 			$message['product_package_id.foo'] = "One or more included product might be out of stock".
+			$message['product_package_id.check_member'] = "This membership is not for Member entry".
 
 
+			Validator::extend('check_member', function($attribute, $value, $parameters)
+			{
+	
+				$membership = Tbl_membership::find($value);
+				if($membership)
+				{
+					return true;
+				}
+				else
+				{
+					return $membership->membership_entry == 1;
+				}
+
+			});
 
 			/**
 			 * CHECK PRODUCT INVENTORY
@@ -156,13 +154,8 @@ class AdminCodeController extends AdminController {
 						else
 						{
 							return false;
-						}
-	
-
-
-
-
-           			}
+						}	
+	       			}
            		}
            		else
            		{
