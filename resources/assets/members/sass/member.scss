@@ -187,6 +187,7 @@ a
 body
 {
 	font-family: $font-family;
+	background-color: $background-color !important;
 }
 .para
 {
@@ -195,13 +196,13 @@ body
 }
 .bg
 {
-	background-color: $background-color;
+	
 }
 .wrapper
 {
 	text-align: center;
+	margin-top: 70px;
 	//HOME
-
 	.header-nav
 	{
 
@@ -299,6 +300,10 @@ body
 			position: relative;
 			padding: 0 40px;
 			border: 0;
+			position: fixed;
+			top: 0;
+			z-index: 50;
+			width: 100%;
 			.select-label
 			{
 				font-size: 14.48px;

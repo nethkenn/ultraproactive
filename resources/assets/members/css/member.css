@@ -148,17 +148,16 @@ a {
     text-decoration: none !important; }
 
 body {
-  font-family: "Open Sans", sans-serif !important; }
+  font-family: "Open Sans", sans-serif !important;
+  background-color: #efefef !important; }
 
 .para {
   overflow: auto;
   clear: both; }
 
-.bg {
-  background-color: #efefef; }
-
 .wrapper {
-  text-align: center; }
+  text-align: center;
+  margin-top: 70px; }
   .wrapper .header-nav .header .ubod {
     text-align: left; }
     @media screen and (max-width: 991px) {
@@ -212,7 +211,11 @@ body {
     clear: both;
     position: relative;
     padding: 0 40px;
-    border: 0; }
+    border: 0;
+    position: fixed;
+    top: 0;
+    z-index: 50;
+    width: 100%; }
     .wrapper .header-nav .navbar .select-label {
       font-size: 14.48px; }
     .wrapper .header-nav .navbar .nav {
