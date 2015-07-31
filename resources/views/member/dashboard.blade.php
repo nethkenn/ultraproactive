@@ -139,6 +139,7 @@
                 </div>
             </div>
         </div>
+        @if($next_membership)
         <div class="holder">
             <div class="title">
                 <span>PROMOTION</span></br> QUALIFICATION
@@ -150,7 +151,7 @@
                 </div>
                 <div class="holders">
                     <div class="leybel">NEXT MEMBERSHIP</div>
-                    <div class="balyu"></div>
+                    <div class="balyu">{{ $next_membership->membership_name }}</div>
                 </div>
                 <div class="holders">
                     <div class="leybel">PROMOTION POINTS</div>
@@ -158,10 +159,11 @@
                 </div>
                 <div class="holders">
                     <div class="leybel">REQUIRED PROMOTION POINTS</div>
-                    <div class="balyu"> PP</div>
+                    <div class="balyu">{{ number_format($next_membership->membership_required_upgrade, 2) }} PP</div>
                 </div>
             </div>
         </div>
+        @endif
         <div class="holder">
             <div class="title">
                 <span>BINARY</span></br> INFORMATION
