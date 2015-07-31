@@ -104,7 +104,7 @@
                         @else
                         <div class="select-label">You have no slots</div>   
                         @endif -->
-                        <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SLOT #{{$slotnow->slot_id}} <span>{{ number_format($slotnow->slot_wallet, 2)}}</span></a>
+                        <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SLOT #{{$slotnow->slot_id}} <span>{{ number_format($slotnow->slot_wallet, 2)}}</span> <b class="caret"></b></a>
                         <ul class="dropdown-menu" style="text-transform: normal">
                             @if($slot)                                                    
                                 @foreach($slot as $slots)
