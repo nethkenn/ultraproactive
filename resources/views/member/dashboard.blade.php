@@ -13,7 +13,7 @@
                         <div>WALLET</div>
                     </div>
                 </div>
-                <div class="valuez para">490,774.80</div>
+                <div class="valuez para">{{ number_format($total_wallet, 2) }}</div>
             </div>
         </div>
     </a>
@@ -29,7 +29,7 @@
                         <div>SLOT(S)</div>
                     </div>
                 </div>
-                <div class="valuez para">5 SLOTS</div>
+                <div class="valuez para">{{$total_count}} SLOT(S)</div>
             </div>
         </div>
     </a>
@@ -45,7 +45,7 @@
                         <div>INCOME</div>
                     </div>
                 </div>
-                <div class="valuez para">1,500.00</div>
+                <div class="valuez para">{{$slotnow->slot_total_earning}}</div>
             </div>
         </div>
     </a>
@@ -61,7 +61,7 @@
                         <div>SPENT</div>
                     </div>
                 </div>
-                <div class="valuez para">12,500.00</div>
+                <div class="valuez para">0</div>
             </div>
         </div>
     </a>
@@ -97,7 +97,7 @@
             <button type="button" onClick="location.href='/member/settings'">EDIT PROFILE</button>
             <button type="button" onClick="location.href='/member/settings'">CHANGE PASSWORD</button>
             <button type="button">MESSAGES (5)</button>
-            <button type="button" onClick="location.href='/member/leads'">LEADS (10)</button>
+            <button type="button" onClick="location.href='/member/leads'">LEADS ({{$leadc}})</button>
         </div>
     </div>
     <div class="detail para">
@@ -108,11 +108,11 @@
             <div class="info">
                 <div class="holders">
                     <div class="leybel">MEMBERSHIP</div>
-                    <div class="balyu">PARTNER</div>
+                    <div class="balyu">{{$slotnow->membership_name}}</div>
                 </div>
                 <div class="holders">
                     <div class="leybel">TOTAL INCOME</div>
-                    <div class="balyu">1,438.8</div>
+                    <div class="balyu">{{$slotnow->slot_total_earning}}</div>
                 </div>
             </div>
         </div>
@@ -123,19 +123,19 @@
             <div class="info">
                 <div class="holders">
                     <div class="leybel">GROUP PV</div>
-                    <div class="balyu">100.00 PV</div>
+                    <div class="balyu">{{ number_format($slotnow->slot_group_points, 2) }} PV</div>
                 </div>
                 <div class="holders">
                     <div class="leybel">PERSONAL PV</div>
-                    <div class="balyu">0.00 PV</div>
+                    <div class="balyu">{{ number_format($slotnow->slot_personal_points, 2) }} PV</div>
                 </div>
                 <div class="holders">
                     <div class="leybel">REQUIRED PV</div>
-                    <div class="balyu">800.00 PV</div>
+                    <div class="balyu">{{ number_format($slotnow->membership_required_pv, 2) }} PV</div>
                 </div>
                 <div class="holders">
                     <div class="leybel">UNILEVEL STATUS</div>
-                    <div class="balyu">NOT QUALIFIED</div>
+                    <div class="balyu">{{ $slotnow->slot_personal_points >= $slotnow->membership_required_pv ? 'Qualified for Unilevel' : 'Not Yet Qualified' }}</div>
                 </div>
             </div>
         </div>
@@ -146,19 +146,19 @@
             <div class="info">
                 <div class="holders">
                     <div class="leybel">CURRENT MEMBERSHIP</div>
-                    <div class="balyu">ASSOCIATE</div>
+                    <div class="balyu">{{ $slotnow->membership_name }}</div>
                 </div>
                 <div class="holders">
                     <div class="leybel">NEXT MEMBERSHIP</div>
-                    <div class="balyu">PARTNER</div>
+                    <div class="balyu"></div>
                 </div>
                 <div class="holders">
                     <div class="leybel">PROMOTION POINTS</div>
-                    <div class="balyu">800.00 PP</div>
+                    <div class="balyu">{{ number_format($slotnow->slot_upgrade_points, 2) }} PP</div>
                 </div>
                 <div class="holders">
                     <div class="leybel">REQUIRED PROMOTION POINTS</div>
-                    <div class="balyu">900.00 PP</div>
+                    <div class="balyu"> PP</div>
                 </div>
             </div>
         </div>
@@ -169,11 +169,11 @@
             <div class="info">
                 <div class="holders">
                     <div class="leybel">POINTS ON LEFT</div>
-                    <div class="balyu">0.00 PV</div>
+                    <div class="balyu">{{ number_format($slotnow->slot_binary_left, 2) }} PV</div>
                 </div>
                 <div class="holders">
                     <div class="leybel">POINTS ON RIGHT</div>
-                    <div class="balyu">0.00 PV</div>
+                    <div class="balyu">{{ number_format($slotnow->slot_binary_right, 2) }} PV</div>
                 </div>
             </div>
         </div>
@@ -358,7 +358,7 @@
 </div>
 <div class="col-md-3 right">
     <!-- NOTIFICATIONS -->
-    @if($_notification)
+  <!--   @if($_notification)
     <div class="holder">
         <div class="header">
             <img src="/resources/assets/frontend/img/icon-notification.png">
@@ -377,30 +377,22 @@
             <button onclick="location.href='/member/notification'" type="button">View All Notification(s)</button>
         </a>
     </div>
-    @endif
+    @endif -->
 
     <!-- REAL NOTIFICATION :: NOTIFICATION IN TOP IS FAKE I PROMISE-->
+    @if($_notification)
     <div class="holder">
         <div class="header notif">LATEST NOTIFICATION</div>
         <div class="holders">
-            <div class="text">You spent one of your Product Code (#16) for your slot #2 which contains <span>200.00 unilevel points</span> and <span>200.00 binary points.</span></div>
-            <div class="date">July 29, 2015</div>
-            <div class="time">9:36 AM</div>
-        </div>
-        <div class="holders">
-            <div class="text">You spent one of your Product Code (#16) for your slot #2 which contains <span>200.00 unilevel points</span> and <span>200.00 binary points.</span></div>
-            <div class="date">July 29, 2015</div>
-            <div class="time">9:36 AM</div>
-        </div>
-        <div class="holders">
-            <div class="text">You spent one of your Product Code (#16) for your slot #2 which contains <span>200.00 unilevel points</span> and <span>200.00 binary points.</span></div>
-            <div class="date">July 29, 2015</div>
-            <div class="time">9:36 AM</div>
+            <div class="text">{!! $log->account_log_details !!}</div>
+            <div class="date">{{ date("F j, Y", strtotime("F j, Y")) }}</div>
+            <div class="time">{{ date("g:i a", strtotime("F j, Y")) }}</div>
         </div>
         <div class="link-holder">
-            <a href="javascript:" class="link">VIEW ALL NOTIFICATIONS</a>
+            <a href="/member/notification" class="link">VIEW ALL NOTIFICATIONS</a>
         </div>
     </div>
+    @endif
     <!-- REAL TOP EARNERS :: THIS IS REAL THIS REAL -->
     <div class="holder" style="padding-bottom: 0;">
         <div class="header earn">TOP EARNERS OF THE MONTH</div>
