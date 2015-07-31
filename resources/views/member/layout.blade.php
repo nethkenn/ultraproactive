@@ -106,9 +106,9 @@
                         @endif -->
                         <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SLOT #10 <span>12,500.00</span></a>
                         <ul class="dropdown-menu" style="text-transform: normal">
-                            <li><a href="/member/genealogy?mode=binary">Account Settings</a></li>
-                            <li><a href="/member/genealogy?mode=sponsor">Change Password</a></li>
-                            <li><a href="/member/genealogy?mode=sponsor">Sign out</a></li>
+                            <li><a href="/member/settings">Account Settings</a></li>
+                            <li><a href="/member/settings">Change Password</a></li>
+                            <li><a href="/member/logoutr">Sign out</a></li>
                         </ul>
                      </li>
 			      </ul>

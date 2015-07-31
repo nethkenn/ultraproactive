@@ -94,10 +94,10 @@
             </div>
         </div>
         <div class="profile-button">
-            <button>EDIT PROFILE</button>
-            <button>CHANGE PASSWORD</button>
-            <button>MESSAGES (5)</button>
-            <button>LEADS (10)</button>
+            <button type="button" onClick="location.href='/member/settings'">EDIT PROFILE</button>
+            <button type="button" onClick="location.href='/member/settings'">CHANGE PASSWORD</button>
+            <button type="button">MESSAGES (5)</button>
+            <button type="button" onClick="location.href='/member/leads'">LEADS (10)</button>
         </div>
     </div>
     <div class="detail para">
