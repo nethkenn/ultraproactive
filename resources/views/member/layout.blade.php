@@ -113,7 +113,7 @@
                             @endif    
                             <li><a href="/member/settings">Account Settings</a></li>
                             <li><a href="/member/settings#cpass">Change Password</a></li>
-                            <li><a href="/member/logoutr">Sign out</a></li>
+                            <li><a href="/member/logout">Sign out</a></li>
                         </ul>
                      </li>
 			      </ul>

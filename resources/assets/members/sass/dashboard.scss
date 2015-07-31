@@ -193,10 +193,10 @@ $font-color: #77818e;
 			display: table-cell;
 			vertical-align: middle;
 			padding: 20px 10px;
-			@media screen and (max-width: 600px)
+			@media screen and (max-width: 1200px)
 			{
 				display: block;
-				text-align: center;
+				width: 100%;
 			}
 			.name
 			{
@@ -243,6 +243,12 @@ $font-color: #77818e;
 			display: table-cell;
 			vertical-align: middle;
 			width: 230px;
+			@media screen and (max-width: 1200px)
+			{
+				display: block;
+				width: 100%;
+				padding-bottom: 25px;
+			}
 			button
 			{
 				width: 200px;
@@ -296,6 +302,12 @@ $font-color: #77818e;
 				vertical-align: middle;
 				padding: 30px 0;
 				width: 280px;
+				@media screen and (max-width: 650px)
+				{
+					display: block;
+					margin: auto;
+					width: 100%;
+				}
 				span
 				{
 					font-family: "twbold";
@@ -306,6 +318,12 @@ $font-color: #77818e;
 				display: table-cell;
 				vertical-align: middle;
 				padding: 30px 0 !important;
+				@media screen and (max-width: 650px)
+				{
+					display: block;
+					margin: auto;
+					width: 100%;
+				}
 				.holders
 				{
 					width: 100%;
@@ -418,6 +436,10 @@ $font-color: #77818e;
 				display: table-cell;
 				vertical-align: top;
 				padding: 0 15px;
+				@media screen and (max-width: 400px)
+				{
+					display: block;
+				}
 				img
 				{
 					width: 70px;
@@ -428,6 +450,12 @@ $font-color: #77818e;
 				display: table-cell;
 				vertical-align: top;
 				text-align: left;
+				@media screen and (max-width: 400px)
+				{
+					display: block;
+					text-align: center;
+					margin-top: 10px;
+				}
 				.name
 				{
 					font-size: 14px;
@@ -489,6 +517,9 @@ $font-color: #77818e;
 		{
 			padding: 10px 0;
 			border-bottom: 0;
+			display: table;
+			width: 100%;
+			margin: auto;
 		}
 		.link-holder
 		{

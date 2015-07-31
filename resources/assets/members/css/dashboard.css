@@ -143,10 +143,10 @@
       display: table-cell;
       vertical-align: middle;
       padding: 20px 10px; }
-      @media screen and (max-width: 600px) {
+      @media screen and (max-width: 1200px) {
         .left .profile .profile-info {
           display: block;
-          text-align: center; } }
+          width: 100%; } }
       .left .profile .profile-info .name {
         color: #ffea76;
         font-weight: 700;
@@ -180,6 +180,11 @@
       display: table-cell;
       vertical-align: middle;
       width: 230px; }
+      @media screen and (max-width: 1200px) {
+        .left .profile .profile-button {
+          display: block;
+          width: 100%;
+          padding-bottom: 25px; } }
       .left .profile .profile-button button {
         width: 200px;
         background-color: transparent;
@@ -224,12 +229,22 @@
         vertical-align: middle;
         padding: 30px 0;
         width: 280px; }
+        @media screen and (max-width: 650px) {
+          .left .detail .holder .title {
+            display: block;
+            margin: auto;
+            width: 100%; } }
         .left .detail .holder .title span {
           font-family: "twbold"; }
       .left .detail .holder .info {
         display: table-cell;
         vertical-align: middle;
         padding: 30px 0 !important; }
+        @media screen and (max-width: 650px) {
+          .left .detail .holder .info {
+            display: block;
+            margin: auto;
+            width: 100%; } }
         .left .detail .holder .info .holders {
           width: 100%;
           display: table; }
@@ -307,12 +322,20 @@
         display: table-cell;
         vertical-align: top;
         padding: 0 15px; }
+        @media screen and (max-width: 400px) {
+          .right .holder .holders .img {
+            display: block; } }
         .right .holder .holders .img img {
           width: 70px; }
       .right .holder .holders .info {
         display: table-cell;
         vertical-align: top;
         text-align: left; }
+        @media screen and (max-width: 400px) {
+          .right .holder .holders .info {
+            display: block;
+            text-align: center;
+            margin-top: 10px; } }
         .right .holder .holders .info .name {
           font-size: 14px;
           color: #41a5e0;
@@ -353,7 +376,10 @@
       background-color: #fff; }
     .right .holder .holders-no {
       padding: 10px 0;
-      border-bottom: 0; }
+      border-bottom: 0;
+      display: table;
+      width: 100%;
+      margin: auto; }
     .right .holder .link-holder {
       border-top: 1px solid #f1f1f1;
       margin-left: -15px;
