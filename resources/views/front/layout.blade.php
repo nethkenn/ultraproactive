@@ -154,7 +154,7 @@
                         </div>
                         <!-- #navigation -->
                         <!-- End custom menu here -->
-                        <a class="mobile_small_menu open"></a>
+                        <a href="javascript:" class="mobile_small_menu open"></a>
                     </div>
                 </div>
             </div>
