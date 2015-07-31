@@ -112,7 +112,7 @@
                                 @endforeach
                             @endif    
                             <li><a href="/member/settings">Account Settings</a></li>
-                            <li><a href="/member/settings">Change Password</a></li>
+                            <li><a href="/member/settings#cpass">Change Password</a></li>
                             <li><a href="/member/logoutr">Sign out</a></li>
                         </ul>
                      </li>

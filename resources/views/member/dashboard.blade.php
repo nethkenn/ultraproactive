@@ -95,7 +95,7 @@
         </div>
         <div class="profile-button">
             <button type="button" onClick="location.href='/member/settings'">EDIT PROFILE</button>
-            <button type="button" onClick="location.href='/member/settings'">CHANGE PASSWORD</button>
+            <button type="button" onClick="location.href='/member/settings#cpass'">CHANGE PASSWORD</button>
             <button type="button">MESSAGES (5)</button>
             <button type="button" onClick="location.href='/member/leads'">LEADS ({{$leadc}})</button>
         </div>
