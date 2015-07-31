@@ -3,11 +3,13 @@ use Request;
 use App\Classes\Customer;
 use Redirect;
 use Crypt;
-
+use Session;
 class MemberLoginController extends Controller
 {
 	public function index()
-	{
+	{	
+		$data['error'] = Session::get('errored');
+
 		$member_id = Customer::id();
 		if(Request::isMethod("post"))
 		{
@@ -30,7 +32,7 @@ class MemberLoginController extends Controller
         {
           return Redirect::to('member');
 	    }
-        return view('member.login');
+        return view('member.login',$data);
 	}
 	public function logout()
 	{

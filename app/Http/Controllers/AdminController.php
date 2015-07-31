@@ -41,6 +41,7 @@ class AdminController extends Controller
             $_admin_module[] = "admin";  
             $_admin_module[] = "account";
             $intersected_array = array_intersect($array_segment, $_admin_module);
+            View()->share("admin", $admin_info);
             if(Request::path() != "admin" && count($intersected_array) <= 1)
             {
                 if(Admin::info()->admin_position_id == 1 )
@@ -52,14 +53,16 @@ class AdminController extends Controller
 
 
                
-  
-                    return abort(404);
-                  
+                
+                // return abort(404);
+                   return redirect('admin')->with('not_allow','You are no allowed to access '. Request::path())->send();
+                // return view('admin.not_allow');
+
+
+
             }
             // dd($array_segment,$admin_module, $_admin_module);
             // var_dump( $intersected_array);
-
-            View()->share("admin", $admin_info);
 
 
 
