@@ -31,7 +31,7 @@
 <div class="bg">
 	<div class="wrapper">
 		<div class="header-nav">
-			<div class="header">
+			<!-- <div class="header">
 				<div class="col-md-6 ubod">
                     <img src="/resources/assets/frontend/img/member-logo.png">
                 </div>
@@ -39,7 +39,7 @@
                     <div class="header-text"><a href="/member/settings">Account Setting</a></div>
                     <div class="header-text"><a href="/member/logout">{{$member->account_name}} ( Logout )</a></div>
                 </div>
-			</div>
+			</div> -->
 			<nav class="navbar navbar-default">
 			  <div>
 			    <!-- Brand and toggle get grouped for better mobile display -->
@@ -88,9 +88,8 @@
 			        <li class="{{ Request::segment(2) == 'leads' ? 'active' : '' }}"><a href="/member/leads">Leads</a></li>
 			      </ul>
 			      <ul class="nav navbar-nav navbar-right" style="margin-right: 0;">
-
 			         <li>
-                        @if($slotnow)
+                       <!--  @if($slotnow)
                             <form method="post" name="myform">
                                 <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
                                 <select class="form-control slot-number-container" onchange="this.form.submit()" name="slotnow"> 
@@ -104,12 +103,21 @@
                             </form>
                         @else
                         <div class="select-label">You have no slots</div>   
-                        @endif
+                        @endif -->
+                        <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SLOT #{{$slotnow->slot_id}} <span>{{ number_format($slotnow->slot_wallet, 2)}}</span> <b class="caret"></b></a>
+                        <ul class="dropdown-menu" style="text-transform: normal">
+                            @if($slot)                                                    
+                                @foreach($slot as $slots)
+                                <li><a href="javascript:">SLOT #{{$slots->slot_id}} <span>{{ number_format($slots->slot_wallet, 2)}}</span></a></li>
+                                @endforeach
+                            @endif    
+                            <li><a href="/member/settings">Account Settings</a></li>
+                            <li><a href="/member/settings#cpass">Change Password</a></li>
+                            <li><a href="/member/logout">Sign out</a></li>
+                        </ul>
                      </li>
 			      </ul>
 			    </div>
-
-			    <div class="shadow"></div>
 			  </div><!-- /.container-fluid -->
 			</nav>
 		</div>

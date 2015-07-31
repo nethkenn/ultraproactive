@@ -1,6 +1,72 @@
 @extends('member.layout')
 @section('content')
-<div class="col-md-7 left">
+<div class="info para col-md-12">
+    <a href="javascript:">
+        <div class="col-md-3" style="padding-left: 0 !important;">
+            <div class="box wallet para">
+                <div class="img col-md-6">
+                    <img src="/resources/assets/frontend/img/wallet.png">
+                </div>
+                <div class="text col-md-6">
+                    <div class="middle">
+                        <div class="total">TOTAL</div>
+                        <div>WALLET</div>
+                    </div>
+                </div>
+                <div class="valuez para">{{ number_format($total_wallet, 2) }}</div>
+            </div>
+        </div>
+    </a>
+    <a href="javascript:">
+        <div class="col-md-3">
+            <div class="box slot para">
+                <div class="img col-md-6">
+                    <img src="/resources/assets/frontend/img/slot.png">
+                </div>
+                <div class="text col-md-6">
+                    <div class="middle">
+                        <div class="total">TOTAL</div>
+                        <div>SLOT(S)</div>
+                    </div>
+                </div>
+                <div class="valuez para">{{$total_count}} SLOT(S)</div>
+            </div>
+        </div>
+    </a>
+    <a href="javascript:">
+        <div class="col-md-3">
+            <div class="box income para">
+                <div class="img col-md-6">
+                    <img src="/resources/assets/frontend/img/income.png">
+                </div>
+                <div class="text col-md-6">
+                    <div class="middle">
+                        <div class="total">TOTAL</div>
+                        <div>INCOME</div>
+                    </div>
+                </div>
+                <div class="valuez para">{{$slotnow->slot_total_earning}}</div>
+            </div>
+        </div>
+    </a>
+    <a href="javascript:">
+        <div class="col-md-3" style="padding-right: 0 !important;">
+            <div class="box money para">
+                <div class="img col-md-6">
+                    <img src="/resources/assets/frontend/img/money.png">
+                </div>
+                <div class="text col-md-6">
+                    <div class="middle">
+                        <div class="total">TOTAL</div>
+                        <div>SPENT</div>
+                    </div>
+                </div>
+                <div class="valuez para">0</div>
+            </div>
+        </div>
+    </a>
+</div>
+<div class="col-md-9 left">
     <div class="profile para">
         <div class="profile-pic">
             @if($member->image != "")
@@ -8,35 +74,136 @@
             @else
             <img src="/resources/assets/img/default-image.jpg">
             @endif
-            <div class="borders"></div>
         </div>
         <div class="profile-info">
             <div class="name">{{$member->account_name}}</div>
             <div class="email">{{$member->account_email}}</div>
+            <div style="margin: 15px 0; display: table; width: 100%;">
+                <div class="p">
+                    <div class="p-label">MEMBER SINCE</div>
+                    <div class="p-value">June 28, 2015</div>
+                </div>
+                <div class="p">
+                    <div class="p-label">NOTIFICATIONS</div>
+                    <div class="p-value">1,400 Notifications</div>
+                </div>
+                <div class="p">
+                    <div class="p-label">AVAILABLE CODE</div>
+                    <div class="p-value">5 Membership</br>2 Product</div>
+                </div>
+            </div>
+        </div>
+        <div class="profile-button">
+            <button type="button" onClick="location.href='/member/settings'">EDIT PROFILE</button>
+            <button type="button" onClick="location.href='/member/settings#cpass'">CHANGE PASSWORD</button>
+            <button type="button">MESSAGES (5)</button>
+            <button type="button" onClick="location.href='/member/leads'">LEADS ({{$leadc}})</button>
         </div>
     </div>
-    <div class="info para">
-        <a href="/member#message">
-            <div class="box col-md-4 inbox">
-                <div class="img"><img src="/resources/assets/frontend/img/icon-inbox.png"></div>
-                <div class="text"><span>5</span>Inbox</div>
-            </div>
-        </a>
-        <a href="/member#referral">
-            <div class="box col-md-4 referral">
-                <div class="img"><img src="/resources/assets/frontend/img/icon-referral.png"></div>
-                <div class="text"><span>5</span>Referrals</div>
-            </div>
-        </a>
-        <a href="/member/leads">
-            <div class="box col-md-4 leads">
-                <div class="img"><img src="/resources/assets/frontend/img/icon-lead.png"></div>
-                <div class="text"><span>{{$leadc}}</span>Leads</div>
-            </div>
-        </a>
-    </div>
-
     <div class="detail para">
+        <div class="holder">
+            <div class="title">
+                <span>SLOT</span></br> OVERVIEW
+            </div>
+            <div class="info">
+                <div class="holders">
+                    <div class="leybel">MEMBERSHIP</div>
+                    <div class="balyu">{{$slotnow->membership_name}}</div>
+                </div>
+                <div class="holders">
+                    <div class="leybel">TOTAL INCOME</div>
+                    <div class="balyu">{{$slotnow->slot_total_earning}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="holder">
+            <div class="title">
+                <span>UNILEVEL</span></br> INFORMATION
+            </div>
+            <div class="info">
+                <div class="holders">
+                    <div class="leybel">GROUP PV</div>
+                    <div class="balyu">{{ number_format($slotnow->slot_group_points, 2) }} PV</div>
+                </div>
+                <div class="holders">
+                    <div class="leybel">PERSONAL PV</div>
+                    <div class="balyu">{{ number_format($slotnow->slot_personal_points, 2) }} PV</div>
+                </div>
+                <div class="holders">
+                    <div class="leybel">REQUIRED PV</div>
+                    <div class="balyu">{{ number_format($slotnow->membership_required_pv, 2) }} PV</div>
+                </div>
+                <div class="holders">
+                    <div class="leybel">UNILEVEL STATUS</div>
+                    <div class="balyu">{{ $slotnow->slot_personal_points >= $slotnow->membership_required_pv ? 'Qualified for Unilevel' : 'Not Yet Qualified' }}</div>
+                </div>
+            </div>
+        </div>
+        @if($next_membership)
+        <div class="holder">
+            <div class="title">
+                <span>PROMOTION</span></br> QUALIFICATION
+            </div>
+            <div class="info">
+                <div class="holders">
+                    <div class="leybel">CURRENT MEMBERSHIP</div>
+                    <div class="balyu">{{ $slotnow->membership_name }}</div>
+                </div>
+                <div class="holders">
+                    <div class="leybel">NEXT MEMBERSHIP</div>
+                    <div class="balyu">{{ $next_membership->membership_name }}</div>
+                </div>
+                <div class="holders">
+                    <div class="leybel">PROMOTION POINTS</div>
+                    <div class="balyu">{{ number_format($slotnow->slot_upgrade_points, 2) }} PP</div>
+                </div>
+                <div class="holders">
+                    <div class="leybel">REQUIRED PROMOTION POINTS</div>
+                    <div class="balyu">{{ number_format($next_membership->membership_required_upgrade, 2) }} PP</div>
+                </div>
+            </div>
+        </div>
+        @endif
+        <div class="holder">
+            <div class="title">
+                <span>BINARY</span></br> INFORMATION
+            </div>
+            <div class="info">
+                <div class="holders">
+                    <div class="leybel">POINTS ON LEFT</div>
+                    <div class="balyu">{{ number_format($slotnow->slot_binary_left, 2) }} PV</div>
+                </div>
+                <div class="holders">
+                    <div class="leybel">POINTS ON RIGHT</div>
+                    <div class="balyu">{{ number_format($slotnow->slot_binary_right, 2) }} PV</div>
+                </div>
+            </div>
+        </div>
+        <div class="holder">
+            <div class="title">
+                <span>INCOME</span></br> SUMMARY
+            </div>
+            <div class="info">
+                <div class="holders">
+                    <div class="leybel">BINARY PAIRING BONUS</div>
+                    <div class="balyu">1,500.00</div>
+                </div>
+                <div class="holders">
+                    <div class="leybel">MATCHING SALE BONUS</div>
+                    <div class="balyu">800.00</div>
+                </div>
+                <div class="holders">
+                    <div class="leybel">DIRECT SPONSORSHIP BONUS</div>
+                    <div class="balyu">800.00</div>
+                </div>
+                <div class="holders">
+                    <div class="leybel">INDIRECT LEVEL BONUS</div>
+                    <div class="balyu">900.00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="detail para">
         <div class="header">Account Summary</div>
         <div class="holder para">
             <div class="input form-horizontal para">
@@ -66,9 +233,9 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
-    @if($slotnow)
+   <!--  @if($slotnow)
     <div class="detail para">
         <div class="header">Details For Slot #{{$slotnow->slot_id}}</div>
         <div class="holder para">
@@ -86,14 +253,14 @@
                         <input type="text" class="form-control" id="2" readonly value="{{$slotnow->membership_name}}">
                     </div>
                 </div>
-                <!--
+    
                 <div class="form-group">
                     <label for="3" class="col-sm-6 control-label">Ranking</label>
                     <div class="col-sm-6">
                         <input type="text" class="form-control" id="3" readonly value="{{$slotnow->rank_name}}">
                     </div>
                 </div>
-                -->
+
                 <div class="form-group">
                     <label for="4" class="col-sm-6 control-label">Total Income</label>
                     <div class="col-sm-6">
@@ -189,11 +356,11 @@
             @endif
         </div>
     </div>
-    @endif
+    @endif -->
 </div>
-<div class="col-md-5 right">
+<div class="col-md-3 right">
     <!-- NOTIFICATIONS -->
-    @if($_notification)
+  <!--   @if($_notification)
     <div class="holder">
         <div class="header">
             <img src="/resources/assets/frontend/img/icon-notification.png">
@@ -212,63 +379,78 @@
             <button onclick="location.href='/member/notification'" type="button">View All Notification(s)</button>
         </a>
     </div>
-    @endif
+    @endif -->
 
-    <!-- TOP EARNERS OF THE MONTH -->
+    <!-- REAL NOTIFICATION :: NOTIFICATION IN TOP IS FAKE I PROMISE-->
+    @if($_notification)
     <div class="holder">
-        <div class="header">
-            <img src="/resources/assets/frontend/img/icon-earner.png">
-            Top Earner's of the Month
+        <div class="header notif">LATEST NOTIFICATION</div>
+        <div class="holders">
+            <div class="text">{!! $log->account_log_details !!}</div>
+            <div class="date">{{ date("F j, Y", strtotime("F j, Y")) }}</div>
+            <div class="time">{{ date("g:i a", strtotime("F j, Y")) }}</div>
         </div>
-        <div class="holders para">
-            <div class="liness para">
-                <div class="pix">
-                    <img src="/resources/assets/frontend/img/pix.png">
+        <div class="link-holder">
+            <a href="/member/notification" class="link">VIEW ALL NOTIFICATIONS</a>
+        </div>
+    </div>
+    @endif
+    <!-- REAL TOP EARNERS :: THIS IS REAL THIS REAL -->
+    <div class="holder" style="padding-bottom: 0;">
+        <div class="header earn">TOP EARNERS OF THE MONTH</div>
+        <div class="holders holders-no">
+            <div class="img">
+                <img src="/resources/assets/frontend/img/man.jpg">
+            </div>
+            <div class="info">
+                <div class="name">Edward Guevarra</div>
+                <div class="email">primiaph@gmail.com</div>
+                <div class="button">
+                    <button>Profile</button>
+                    <button>Message</button>
                 </div>
-                <div class="text">
-                    <div class="name">John Doe</div>
-                    <div class="email">sample@gmail.com</div>
-                </div>
-                <a href="/member#message" class="para pindutan">
-                    <div class="message">
-                        <img src="/resources/assets/frontend/img/icon-message.png">
-                        <span>send message</span>
-                    </div>
-                </a>
             </div>
         </div>
-        <div class="holders para">
-            <div class="liness para">
-                <div class="pix">
-                    <img src="/resources/assets/frontend/img/pix.png">
+        <div class="linya"></div>
+        <div class="holders holders-no">
+            <div class="img">
+                <img src="/resources/assets/frontend/img/man.jpg">
+            </div>
+            <div class="info">
+                <div class="name">Edward Guevarra</div>
+                <div class="email">primiaph@gmail.com</div>
+                <div class="button">
+                    <button>Profile</button>
+                    <button>Message</button>
                 </div>
-                <div class="text">
-                    <div class="name">John Doe</div>
-                    <div class="email">sample@gmail.com</div>
-                </div>
-                <a href="/member#message" class="para pindutan">
-                    <div class="message">
-                        <img src="/resources/assets/frontend/img/icon-message.png">
-                        <span>send message</span>
-                    </div>
-                </a>
             </div>
         </div>
-        <div class="holders para">
-            <div class="liness para">
-                <div class="pix">
-                    <img src="/resources/assets/frontend/img/pix.png">
+        <div class="linya"></div>
+        <div class="holders holders-no">
+            <div class="img">
+                <img src="/resources/assets/frontend/img/man.jpg">
+            </div>
+            <div class="info">
+                <div class="name">Edward Guevarra</div>
+                <div class="email">primiaph@gmail.com</div>
+                <div class="button">
+                    <button>Profile</button>
+                    <button>Message</button>
                 </div>
-                <div class="text">
-                    <div class="name">John Doe</div>
-                    <div class="email">sample@gmail.com</div>
+            </div>
+        </div>
+        <div class="linya"></div>
+        <div class="holders holders-no">
+            <div class="img">
+                <img src="/resources/assets/frontend/img/man.jpg">
+            </div>
+            <div class="info">
+                <div class="name">Edward Guevarra</div>
+                <div class="email">primiaph@gmail.com</div>
+                <div class="button">
+                    <button>Profile</button>
+                    <button>Message</button>
                 </div>
-                <a href="/member#message" class="para pindutan">
-                    <div class="message">
-                        <img src="/resources/assets/frontend/img/icon-message.png">
-                        <span>send message</span>
-                    </div>
-                </a>
             </div>
         </div>
     </div>

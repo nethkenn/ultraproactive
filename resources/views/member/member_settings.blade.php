@@ -286,7 +286,7 @@ Select image to upload:
 
 
 
-<div class="remodal create-slot" data-remodal-id="cpass" data-remodal-options="hashTracking: false">
+<div class="remodal create-slot" data-remodal-id="cpass">
     <button data-remodal-action="close" class="remodal-close"></button>
     <div class="header">
         Change Pass
