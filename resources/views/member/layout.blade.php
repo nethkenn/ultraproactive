@@ -108,7 +108,7 @@
                         <ul class="dropdown-menu" style="text-transform: normal">
                             @if($slot)                                                    
                                 @foreach($slot as $slots)
-                                <li>SLOT #{{$slots->slot_id}} <span>{{ number_format($slots->slot_wallet, 2)}}</span></li>
+                                <li><a href="javascript:">SLOT #{{$slots->slot_id}} <span>{{ number_format($slots->slot_wallet, 2)}}</span></a></li>
                                 @endforeach
                             @endif    
                             <li><a href="/member/settings">Account Settings</a></li>
