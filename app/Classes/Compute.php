@@ -7,7 +7,7 @@ use App\Tbl_indirect_setting;
 use App\Tbl_unilevel_setting;
 use App\Tbl_membership;
 use App\Classes\Log;
-
+use Carbon\Carbon;
 class Compute
 {
     public static function tree($new_slot_id)
@@ -80,7 +80,7 @@ class Compute
                     $update_recipient["slot_group_points"] = $update_recipient["slot_group_points"] + $unilevel_bonus;
                     $update_recipient["slot_upgrade_points"] = $update_recipient["slot_upgrade_points"] + $unilevel_bonus;
                     /* INSERT LOG */
-                    $log = "Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($unilevel_bonus, 2) . " group pv and promotion points</b>. You earned it when slot #" . $buyer_slot_id . " uses a code worth " . number_format($unilevel_pts, 2) . " PV. That slot is located on the Level " . $tree->sponsor_tree_level . " of your sponsor genealogy. Your current membership is " . $slot_recipient->membership_name . " MEMBERSHIP.";
+                    $log = "Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($unilevel_bonus, 2) . " group pv and promotion points</b>. You earned it when slot #" . $buyer_slot_id . " uses a code worth " . number_format($unilevel_pts, 2) . " PV. That slot is located on the Level " . $tree->sponsor_tree_level . " of your sponsor genealogy. Your current membership is " . $slot_recipient->membership_name . " MEMBERSHIP.";
                     Log::account($slot_recipient->slot_owner, $log);
 
                     /* UPDATE SLOT CHANGES TO DATABASE */
@@ -108,8 +108,8 @@ class Compute
         {
             /* GET SLOT INFO FROM DATABASE */
             $slot_recipient = Tbl_slot::id($tree->placement_tree_parent_id)->first();
-            $update_recipient["slot_wallet"] = $slot_recipient->slot_wallet;
-            $update_recipient["slot_total_earning"] = $slot_recipient->slot_total_earning;
+            // $update_recipient["slot_wallet"] = $slot_recipient->slot_wallet;
+            // $update_recipient["slot_total_earning"] = $slot_recipient->slot_total_earning;
 
             /* RETRIEVE LEFT & RIGHT POINTS */
             $binary["left"] = $slot_recipient->slot_binary_left;
@@ -124,7 +124,7 @@ class Compute
                 $binary[$tree->placement_tree_position] = $binary[$tree->placement_tree_position] + $earned_points; 
                 
                 /* INSERT LOG FOR EARNED POINTS IN ACCOUNT */
-                $log = "Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($earned_points, 2) . " binary points</b> on " . $tree->placement_tree_position . " when " . $new_slot_info->account_name . " used one if his/her product code.";
+                $log = "Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($earned_points, 2) . " binary points</b> on " . $tree->placement_tree_position . " when " . $new_slot_info->account_name . " used one if his/her product code.";
                 Log::account($slot_recipient->slot_owner, $log);
 
                 /* CHECK PAIRING */
@@ -142,13 +142,13 @@ class Compute
                         if($pairing_bonus != 0)
                         {
                             /* UPDATE WALLET */
-                            $update_recipient["slot_wallet"] = $update_recipient["slot_wallet"] + $pairing_bonus;
-                            $update_recipient["slot_total_earning"] = $update_recipient["slot_total_earning"] + $pairing_bonus;
-
+                            // $update_recipient["slot_wallet"] = $update_recipient["slot_wallet"] + $pairing_bonus;
+                            // $update_recipient["slot_total_earning"] = $update_recipient["slot_total_earning"] + $pairing_bonus;
+                            $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($pairing_bonus, 2) . " wallet</b> from <b>PAIRING BONUS</b> due to pairing combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining binary points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right. This combination was caused by a repurchase of one of your downlines."; 
+                            Compute::income_per_day($slot_recipient->slot_id,$matching_income,'binary_repurchase',$slot_recipient->slot_owner,$log);
                             /* INSERT LOG */
-                            $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($pairing_bonus, 2) . " wallet</b> from <b>PAIRING BONUS</b> due to pairing combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining binary points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right. This combination was caused by a repurchase of one of your downlines.";
-                            Log::account($slot_recipient->slot_owner, $log);
-                            Log::slot($slot_recipient->slot_id, $log, $pairing_bonus, "BINARY PAIRING");
+                            // Log::account($slot_recipient->slot_owner, $log);
+                            // Log::slot($slot_recipient->slot_id, $log, $pairing_bonus, "BINARY PAIRING");
 
                             /* MATCHING SALE BONUS */
                             Compute::matching($buyer_slot_id, "REPURCHASE", $slot_recipient, $pairing_bonus);
@@ -233,8 +233,8 @@ class Compute
     	{
     		/* GET SLOT INFO FROM DATABASE */
     		$slot_recipient = Tbl_slot::id($tree->placement_tree_parent_id)->first();
-    		$update_recipient["slot_wallet"] = $slot_recipient->slot_wallet;
-    		$update_recipient["slot_total_earning"] = $slot_recipient->slot_total_earning;
+    		// $update_recipient["slot_wallet"] = $slot_recipient->slot_wallet;
+    		// $update_recipient["slot_total_earning"] = $slot_recipient->slot_total_earning;
 
     		/* RETRIEVE LEFT & RIGHT POINTS */
     		$binary["left"] = $slot_recipient->slot_binary_left;
@@ -249,7 +249,7 @@ class Compute
                 $binary[$tree->placement_tree_position] = $binary[$tree->placement_tree_position] + $earned_points; 
                 
                 /* INSERT LOG FOR EARNED POINTS IN ACCOUNT */
-                $log = "Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($earned_points, 2) . " binary points</b> on " . $tree->placement_tree_position . " when " . $new_slot_info->account_name . " with " . $new_slot_info->membership_name . " MEMBERSHIP created a new slot (#" . $new_slot_info->slot_id . ").";
+                $log = "Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($earned_points, 2) . " binary points</b> on " . $tree->placement_tree_position . " when " . $new_slot_info->account_name . " with " . $new_slot_info->membership_name . " MEMBERSHIP created a new slot (#" . $new_slot_info->slot_id . ").";
                 Log::account($slot_recipient->slot_owner, $log);
 
                 /* CHECK PAIRING */
@@ -267,14 +267,14 @@ class Compute
                         if($pairing_bonus != 0)
                         {
                             /* UPDATE WALLET */
-                            $update_recipient["slot_wallet"] = $update_recipient["slot_wallet"] + $pairing_bonus;
-                            $update_recipient["slot_total_earning"] = $update_recipient["slot_total_earning"] + $pairing_bonus;
+                            // $update_recipient["slot_wallet"] = $update_recipient["slot_wallet"] + $pairing_bonus;
+                            // $update_recipient["slot_total_earning"] = $update_recipient["slot_total_earning"] + $pairing_bonus;
 
                             /* INSERT LOG */
-                            $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($pairing_bonus, 2) . " wallet</b> from <b>PAIRING BONUS</b> due to pairing combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining binary points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right.";
-                            Log::account($slot_recipient->slot_owner, $log);
-                            Log::slot($slot_recipient->slot_id, $log, $pairing_bonus, "BINARY PAIRING");
-
+                            $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($pairing_bonus, 2) . " wallet</b> from <b>PAIRING BONUS</b> due to pairing combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining binary points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right.";
+                            // Log::account($slot_recipient->slot_owner, $log);
+                            // Log::slot($slot_recipient->slot_id, $log, $pairing_bonus, "BINARY PAIRING");
+                            Compute::income_per_day($slot_recipient->slot_id,$pairing_bonus,'binary',$slot_recipient->slot_owner,$log);
                             /* MATCHING SALE BONUS */
                             Compute::matching($new_slot_id, $method, $slot_recipient, $pairing_bonus);
                         }
@@ -301,8 +301,8 @@ class Compute
         /* CHECK IF SLOT RECIPIENT EXIST */
         if($slot_recipient)
         {
-            $update_recipient["slot_wallet"] = $slot_recipient->slot_wallet;
-            $update_recipient["slot_total_earning"] = $slot_recipient->slot_total_earning;
+            // $update_recipient["slot_wallet"] = $slot_recipient->slot_wallet;
+            // $update_recipient["slot_total_earning"] = $slot_recipient->slot_total_earning;
 
             /* GET INFO OF REGISTREE */
             $new_slot_info = Tbl_slot::id($new_slot_id)->account()->membership()->first();
@@ -313,16 +313,16 @@ class Compute
             if($matching_income != 0)
             {
                 /* UPDATE WALLET */
-                $update_recipient["slot_wallet"] = $update_recipient["slot_wallet"] + $matching_income;
-                $update_recipient["slot_total_earning"] = $update_recipient["slot_total_earning"] + $matching_income;
-
+                // $update_recipient["slot_wallet"] = $update_recipient["slot_wallet"] + $matching_income;
+                // $update_recipient["slot_total_earning"] = $update_recipient["slot_total_earning"] + $matching_income;
+                $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($matching_income, 2) . " wallet</b> from <b>MATCHING BONUS</b>  due to pairing bonus earned by SLOT #" . $slot_recipient_for_binary->slot_id . ". You current membership is " . $slot_recipient->membership_name . " MEMBERSHIP which has " . number_format($slot_recipient->membership_matching_bonus, 2) . "% bonus for every income of your direct sponsor.";
+                Compute::income_per_day($slot_recipient->slot_id,$matching_income,'matching',$slot_recipient->slot_owner,$log);
                 /* INSERT LOG */
-                $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($matching_income, 2) . " wallet</b> from <b>MATCHING BONUS</b>  due to pairing bonus earned by SLOT #" . $slot_recipient_for_binary->slot_id . ". You current membership is " . $slot_recipient->membership_name . " MEMBERSHIP which has " . number_format($slot_recipient->membership_matching_bonus, 2) . "% bonus for every income of your direct sponsor.";
-                Log::account($slot_recipient->slot_owner, $log);
-                Log::slot($slot_recipient->slot_id, $log, $matching_income, "MATCHING BONUS");
+                // Log::account($slot_recipient->slot_owner, $log);
+                // Log::slot($slot_recipient->slot_id, $log, $matching_income, "MATCHING BONUS");
 
                 /* UPDATE SLOT CHANGES TO DATABASE */
-                Tbl_slot::id($slot_recipient->slot_id)->update($update_recipient);
+                // Tbl_slot::id($slot_recipient->slot_id)->update($update_recipient);
             }
         }
     }
@@ -336,8 +336,8 @@ class Compute
         /* CHECK IF SLOT RECIPIENT EXIST */
         if($slot_recipient)
         {
-            $update_recipient["slot_wallet"] = $slot_recipient->slot_wallet;
-            $update_recipient["slot_total_earning"] = $slot_recipient->slot_total_earning;
+            // $update_recipient["slot_wallet"] = $slot_recipient->slot_wallet;
+            // $update_recipient["slot_total_earning"] = $slot_recipient->slot_total_earning;
             $update_recipient["slot_upgrade_points"] = $slot_recipient->slot_wallet;
 
             /* GET INFO OF REGISTREE */
@@ -349,14 +349,15 @@ class Compute
             if($direct_income != 0)
             {
                 /* UPDATE WALLET */
-                $update_recipient["slot_wallet"] = $update_recipient["slot_wallet"] + $direct_income;
-                $update_recipient["slot_total_earning"] = $update_recipient["slot_total_earning"] + $direct_income;
+                // $update_recipient["slot_wallet"] = $update_recipient["slot_wallet"] + $direct_income;
+                // $update_recipient["slot_total_earning"] = $update_recipient["slot_total_earning"] + $direct_income;
                 $update_recipient["slot_upgrade_points"] = $slot_recipient->slot_upgrade_points + $slot_recipient->membership_binary_points;
 
                 /* INSERT LOG */
                 $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($direct_income, 2) . " wallet</b> through <b>DIRECT SPONSORSHIP BONUS</b> because you've invited SLOT #" . $new_slot_info->slot_id . " to join. Your current membership is " . $slot_recipient->membership_name . " MEMBERSHIP. Your slot #" . $slot_recipient->slot_id . " also earned <b>" . number_format($slot_recipient->membership_binary_points, 2) . " Promotion Points</b>.";
-                Log::account($slot_recipient->slot_owner, $log);
-                Log::slot($slot_recipient->slot_id, $log, $direct_income, "DIRECT SPONSORSHIP BONUS (DSB)");
+                Compute::income_per_day($slot_recipient->slot_id,$indirect_bonus,'direct',$slot_recipient->slot_owner,$log);
+                // Log::account($slot_recipient->slot_owner, $log);
+                // Log::slot($slot_recipient->slot_id, $log, $direct_income, "DIRECT SPONSORSHIP BONUS (DSB)");
 
                 /* UPDATE SLOT CHANGES TO DATABASE */
                 Tbl_slot::id($slot_recipient->slot_id)->update($update_recipient);
@@ -386,8 +387,8 @@ class Compute
             {
                 /* GET SLOT INFO FROM DATABASE */
                 $slot_recipient = Tbl_slot::id($tree->sponsor_tree_parent_id)->membership()->first();
-                $update_recipient["slot_wallet"] = $slot_recipient->slot_wallet;
-                $update_recipient["slot_total_earning"] = $slot_recipient->slot_total_earning;
+                // $update_recipient["slot_wallet"] = $slot_recipient->slot_wallet;
+                // $update_recipient["slot_total_earning"] = $slot_recipient->slot_total_earning;
 
                 /* COMPUTE FOR BONUS */
                 if(isset($indirect_level[$slot_recipient->membership_id][$tree->sponsor_tree_level]))
@@ -403,18 +404,88 @@ class Compute
                 if($indirect_bonus != 0)
                 {
                     /* UPDATE WALLET */
-                    $update_recipient["slot_wallet"] = $update_recipient["slot_wallet"] + $indirect_bonus;
-                    $update_recipient["slot_total_earning"] = $update_recipient["slot_total_earning"] + $indirect_bonus;
-
-                    /* INSERT LOG */
+                    // $update_recipient["slot_wallet"] = $update_recipient["slot_wallet"] + $indirect_bonus;
+                    // $update_recipient["slot_total_earning"] = $update_recipient["slot_total_earning"] + $indirect_bonus;
                     $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($indirect_bonus, 2) . " wallet</b> from <b>INDIRECT LEVEL BONUS</b>. You earned it when slot #" . $new_slot_id . " creates a new slot on the Level " . $tree->sponsor_tree_level . " of your sponsor genealogy. Your current membership is " . $slot_recipient->membership_name . " MEMBERSHIP.";
-                    Log::account($slot_recipient->slot_owner, $log);
-                    Log::slot($slot_recipient->slot_id, $log, $indirect_bonus, "INDIRECT LEVEL BONUS");
+                    $check = Compute::income_per_day($slot_recipient->slot_id,$indirect_bonus,'indirect',$slot_recipient->slot_owner,$log);
+                    /* INSERT LOG */
+
+
+
 
                     /* UPDATE SLOT CHANGES TO DATABASE */
-                    Tbl_slot::id($slot_recipient->slot_id)->update($update_recipient);
+                    // Tbl_slot::id($slot_recipient->slot_id)->update($update_recipient);
                 }
             }
         }
+    }
+
+    public static function income_per_day($slot_id,$income,$method,$owner,$log)
+    {
+                $date = Carbon::now()->toDateString(); 
+                $getslot = Tbl_slot::where('slot_id',$slot_id)->membership()->first();
+                $ifnegative = $getslot->slot_wallet + $income;
+
+                        if($getslot->slot_today_date == $date)
+                        {
+                           $total = ($getslot->slot_today_income + $income);
+
+                           if($getslot->max_income < $total && $getslot->max_income <= $getslot->slot_today_income)
+                           {
+                             $update['slot_today_income']  =  $getslot->slot_today_income;
+                             $update['slot_flushout']      =  $getslot->slot_flushout + $income;
+                             $update['slot_total_earning'] =  $getslot->slot_total_earning;
+                             $update['slot_wallet'] =  $getslot->slot_wallet;
+                             Compute::method_with_flush($method,$slot_id,$income_per_day,$owner,$log);
+                             Tbl_slot::where('slot_id',$slot_id)->update($update);
+                           }
+                           else if($getslot->max_income < $total)
+                           {
+                              $total  = $total + (($getslot->max_income - $total)- $getslot->slot_today_income);
+                              $total2 = $income - $total;
+                              $update['slot_today_income']  = $getslot->slot_today_income + $total;
+                              $update['slot_total_earning'] = $getslot->slot_total_earning + $total;
+                              $update['slot_flushout']      =  $getslot->slot_flushout + $total2;
+                              $update['slot_wallet'] =  $getslot->slot_wallet + $total;
+                              Compute::method_reduced_flush($method,$slot_id,$total,$owner,$log,$total2);
+                              Tbl_slot::where('slot_id',$slot_id)->update($update);
+                           }
+                           else
+                           {
+                             $update['slot_today_income'] = $total; 
+                             $update['slot_total_earning'] = $getslot->slot_total_earning + $income;
+                             $update['slot_wallet'] =  $getslot->slot_wallet + $income;
+                             Compute::method_no_flush($method,$slot_id,$income,$owner,$log);
+                             Tbl_slot::where('slot_id',$slot_id)->update($update);
+                           }
+                        }
+                        else
+                        {
+                           $update['slot_today_date'] = $date;
+                           $update['slot_today_income'] = $income;
+                           $update['slot_total_earning'] = $getslot->slot_total_earning + $income;
+                           $update['slot_wallet'] =  $getslot->slot_wallet + $income;
+                           Compute::method_no_flush($method,$slot_id,$income,$owner,$log); 
+                        }                        
+                     
+                Tbl_slot::where('slot_id',$slot_id)->update($update);
+
+    }
+    public static function method_no_flush($method,$slot_id,$income,$owner,$log)
+    {
+                    Log::slot($slot_id, $log, $income, $method);
+                    Log::account($owner, $log);            
+    }
+    public static function method_with_flush($method,$slot_id,$income,$owner,$log)
+    {
+                    $log = "Im sorry! You have already reach the max income for today, Your slot #" . $slot_id.' flushed out '.number_format($income, 2) . " wallet.";
+                    Log::account($owner, $log);
+                    Log::slot($slot_id, $log, 0, $method);            
+    }
+    public static function method_reduced_flush($method,$slot_id,$income,$owner,$log,$flush)
+    {
+                    $log = $log." Max income is reached, wallet earned reduced to <b>".$income."</b> and flushed out <b>".$flush.'</b>.';
+                    Log::account($owner, $log);
+                    Log::slot($slot_id, $log, 0, $method);            
     }
 }
