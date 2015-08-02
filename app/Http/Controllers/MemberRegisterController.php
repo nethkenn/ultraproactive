@@ -14,6 +14,7 @@ class MemberRegisterController extends Controller
 {
 	public function index()
 	{
+
 		$data = Session::get('message');
 
 

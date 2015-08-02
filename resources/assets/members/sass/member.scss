@@ -7,19 +7,48 @@ $gray: #aaafb6;
 $gray2: #9ea7b3;
 $font-color: #77818e;
 
+@font-face {
+font-family: 'Tw Cen MT';
+font-style: normal;
+font-weight: normal;
+src: local('Tw Cen MT'), url('/resources/assets/fonts/Tw Cen MT.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'twnormal';
+  src: url('/resources/assets/fonts/TwCenMT-CondensedMedium.eot?#iefix') format('embedded-opentype'),  url('/resources/assets/fonts/TwCenMT-CondensedMedium.woff') format('woff'), url('/resources/assets/fonts/TwCenMT-CondensedMedium.ttf')  format('truetype'), url('/resources/assets/fonts/TwCenMT-CondensedMedium.svg#TwCenMT-CondensedMedium') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'twbold';
+  src: url('/resources/assets/fonts/TwCenMT-CondensedBold.eot?#iefix') format('embedded-opentype'),  url('/resources/assets/fonts/TwCenMT-CondensedBold.woff') format('woff'), url('/resources/assets/fonts/TwCenMT-CondensedBold.ttf')  format('truetype'), url('/resources/assets/fonts/TwCenMT-CondensedBold.svg#TwCenMT-CondensedBold') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
 ul.nav li.dropdown:hover ul.dropdown-menu {
     display: block;
 }
 
-
 .dropdown-menu
 {
+	padding: 0 !important;
+	border-radius: 0px !important;
+	border: 1px solid #e3e3e3 !important;
 	a
 	{
-		color: #77818E !important;
+		color: #acacac !important;
+		padding: 5px 20px !important;
+		font-size: 14px !important;
+		font-weight: 700 !important;
+		z-index: 5;
 		&:hover
 		{
-			background: #40C0C0 !important;
+			background: #41a5e0 !important;
 			color: white !important;
 		}
 	}
@@ -157,6 +186,7 @@ a
 body
 {
 	font-family: $font-family;
+	background-color: $background-color !important;
 }
 .para
 {
@@ -165,13 +195,13 @@ body
 }
 .bg
 {
-	background-color: $background-color;
+	
 }
 .wrapper
 {
 	text-align: center;
+	margin-top: 70px;
 	//HOME
-
 	.header-nav
 	{
 
@@ -220,7 +250,13 @@ body
 		}
 		.navbar-right
 		{
-			padding: 8px 10px;
+			.dropdown-toggle
+			{
+				span
+				{
+					color: #41a5e0;
+				}
+			}
 			select
 			{
 				color: $font-color;
@@ -247,6 +283,8 @@ body
 				text-transform: uppercase;
 				width: 200px;
 				text-align: left;
+				border: 0;
+				box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.075) inset, 0px 0px 0px rgba(102, 175, 233, 0.6);
 				option
 				{
 
@@ -259,6 +297,12 @@ body
 		{
 			clear: both;
 			position: relative;
+			padding: 0 40px;
+			border: 0;
+			position: fixed;
+			top: 0;
+			z-index: 50;
+			width: 100%;
 			.select-label
 			{
 				font-size: 14.48px;
@@ -268,12 +312,13 @@ body
 				text-transform: uppercase;
 				li
 				{
-					font-size: 13px;
+					font-size: 14px;
+					font-weight: 700;
 					a
 					{
 						&:hover
 						{
-							background-color: #40c0c0;
+							background-color: #41a5e0;
 						}
 					}
 				}
@@ -302,7 +347,6 @@ body
 	}
 	.content
 	{
-		margin-top: 40px;
 		padding-bottom: 40px;
 		.voucher
 		{

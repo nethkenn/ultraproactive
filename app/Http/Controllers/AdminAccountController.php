@@ -6,7 +6,9 @@ use Carbon;
 use Datatables;
 use Crypt;
 use App\Tbl_account;
+use App\Tbl_account_field;
 use App\Classes\Admin;
+use Validator;
 
 class AdminAccountController extends AdminController
 {
@@ -45,6 +47,52 @@ class AdminAccountController extends AdminController
 	{
 		if(Request::isMethod("post"))
 		{
+
+			$request['account_name'] = Request::input('account_name');
+			$request['account_meail'] =Request::input('account_meail');
+			$request['account_contact'] =Request::input('account_contact');
+			$request['country'] =Request::input('country');
+			$request['account_username'] =Request::input('account_username');
+			$request['account_password'] =Request::input('account_password');
+
+			$rules['account_name'] = 'required';
+			$rules['account_meail'] = 'required|unique:tbl_account,account_email|email';
+			$rules['account_contact'] = 'required|numeric|min:5';
+			$rules['country'] = 'required|exists:tbl_country,country_id';
+			$rules['account_username'] = 'required|unique:tbl_account,account_username';
+			$rules['account_password'] = 'required|min:6';
+			/**
+			 * VALIDATE CUSTOM FIELD
+			 */
+			if(Request::input('custom_field'))
+			{
+				foreach (Request::input('custom_field') as $key => $value)
+				{
+					$custom_field = Tbl_account_field::where('account_field_label', $key)->first();
+					if($custom_field)
+					{
+						if($custom_field->account_field_required == 1 )
+						{	
+							$request['custom_field['.$key.']'] = $value;
+							$rules['custom_field['.$key.']'] = 'required';
+						}
+						
+					}
+					
+				}
+			}
+			// Request::input('custom_field')
+			// dd(Request::input(),$rules, Request::input('custom_field')['test_field_1']);
+
+			$validator = Validator::make($request, $rules);
+
+	        if ($validator->fails())
+	        {
+	            return redirect('admin/maintenance/accounts/add')
+	                        ->withErrors($validator)
+	                        ->withInput(Request::input());
+	        }
+
 			$insert["account_name"] = Request::input('account_name');
 			$insert["account_email"] = Request::input('account_meail');
 			$insert["account_contact_number"] = Request::input('account_contact');
@@ -67,6 +115,56 @@ class AdminAccountController extends AdminController
 	{
 		if(Request::isMethod("post"))
 		{
+
+			// 
+			Tbl_account::findOrFail(Request::input('id'));
+
+			$request['account_name'] = Request::input('account_name');
+			$request['account_meail'] =Request::input('account_meail');
+			$request['account_contact'] =Request::input('account_contact');
+			$request['country'] =Request::input('country');
+			$request['account_username'] =Request::input('account_username');
+			$request['account_password'] =Request::input('account_password');
+
+			$rules['account_name'] = 'required';
+			$rules['account_meail'] = 'required|email|unique:tbl_account,account_email,'.Request::input('id').',account_id';
+			$rules['account_contact'] = 'required|numeric|min:5';
+			$rules['country'] = 'required|exists:tbl_country,country_id';
+			$rules['account_username'] = 'required|unique:tbl_account,account_username,'.Request::input('id').',account_id';
+			$rules['account_password'] = 'required|min:6';
+
+
+			/**
+			 * VALIDATE CUSTOM FIELD
+			 */
+			if(Request::input('custom_field'))
+			{
+				foreach (Request::input('custom_field') as $key => $value)
+				{
+					$custom_field = Tbl_account_field::where('account_field_label', $key)->first();
+					if($custom_field)
+					{
+						if($custom_field->account_field_required == 1 )
+						{	
+							$request['custom_field['.$key.']'] = $value;
+							$rules['custom_field['.$key.']'] = 'required';
+						}
+						
+					}
+					
+				}
+			}
+
+			
+
+			$validator = Validator::make($request, $rules);
+
+	        if ($validator->fails())
+	        {
+	            return redirect('admin/maintenance/accounts/edit?id='.Request::input('id'))
+	                        ->withErrors($validator)
+	                        ->withInput(Request::input());
+	        }
 			$update["account_name"] = Request::input('account_name');
 			$update["account_email"] = Request::input('account_meail');
 			$update["account_username"] = Request::input('account_username');
@@ -84,6 +182,7 @@ class AdminAccountController extends AdminController
 			$data["_country"] = DB::table("tbl_country")->where("archived", 0)->get();
 			$data["account"] = DB::table("tbl_account")->where("account_id", Request::input("id"))->first();
 			$data["_account_custom"] = unserialize($data["account"]->custom_field_value);
+			// dd($data["_account_custom"]);
 			return view('admin.maintenance.account_edit', $data);
 		}
 	}

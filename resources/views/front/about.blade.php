@@ -114,7 +114,7 @@
                     </div>
                 </div>
             </div>
-            <div id="fws_556866fa6eded" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="background-color: #f6f6f6; padding-top: 0px !important; padding-bottom: 90px !important; ">
+            <div id="fws_556866fa6eded" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="padding-top: 0px !important; padding-bottom: 90px !important; ">
                 <div class="container  dark">
                     <div class="section_clear">
                         @foreach($_team as $team)
