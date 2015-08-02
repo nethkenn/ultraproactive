@@ -33,6 +33,7 @@
             </div>
         </div>
     </a>
+    @if($slotnow)
     <a href="javascript:">
         <div class="col-md-3">
             <div class="box income para">
@@ -49,6 +50,7 @@
             </div>
         </div>
     </a>
+    @endif
     <a href="javascript:">
         <div class="col-md-3" style="padding-right: 0 !important;">
             <div class="box money para">
@@ -101,6 +103,7 @@
         </div>
     </div>
     <div class="detail para">
+        @if($slotnow)
         <div class="holder">
             <div class="title">
                 <span>SLOT</span></br> OVERVIEW
@@ -139,7 +142,8 @@
                 </div>
             </div>
         </div>
-        @if($next_membership)
+        @endif
+        @if(isset($next_membership))
         <div class="holder">
             <div class="title">
                 <span>PROMOTION</span></br> QUALIFICATION
@@ -164,6 +168,7 @@
             </div>
         </div>
         @endif
+        @if($slotnow)
         <div class="holder">
             <div class="title">
                 <span>BINARY</span></br> INFORMATION
@@ -179,6 +184,7 @@
                 </div>
             </div>
         </div>
+        @endif
         <div class="holder">
             <div class="title">
                 <span>INCOME</span></br> SUMMARY

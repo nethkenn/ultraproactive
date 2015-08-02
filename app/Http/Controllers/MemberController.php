@@ -98,8 +98,24 @@ class MemberController extends Controller
 
 	            if(Request::input('slotnow'))
 				{
-					Session::put('currentslot',Request::input('slotnow'));
-					return Redirect::to(Request::url())->send();				
+					$condition = false;
+		    		$checkslot = DB::table('tbl_slot')->where('slot_owner',$id)					  					  
+								 					  ->get();
+								 				
+					foreach($checkslot as $check)
+					{
+						if($check->slot_id == Request::input('slotnow'))
+						{
+							$condition = true;
+						}
+					}		
+
+					if($condition == true)
+					{
+						Session::put('currentslot',Request::input('slotnow'));						
+					}					  
+
+					return Redirect::to(Request::input('url'))->send();				
 				}        
 	        }
 	        else
