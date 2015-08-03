@@ -45,6 +45,12 @@ class MemberHackController extends Controller
         echo "<tr style='font-weight: bold'>";
         echo "<td>USERNAME</td>";
         echo "<td>FULL NAME</td>";
+        echo "<td>ADDRESS</td>";
+        echo "<td>BIRTHDAY</td>";
+        echo "<td>CIVIL</td>";
+        echo "<td>GENDER</td>";
+        echo "<td>EMAIL</td>";
+        echo "<td>RANKING</td>";
         echo "<td>CODE</td>";
         echo "<td>PROMOTION POINTS</td>";
         echo "<td>LEFT & RIGHT</td>";
@@ -55,9 +61,6 @@ class MemberHackController extends Controller
         echo "<td>PVP BINARY</td>";
         echo "<td>PVP UNILEVEL</td>";
         echo "<td>PVP REMITTANCE</td>";
-        echo "<td>TOPUP BALANCE</td>";
-        echo "<td>CURRENT EARNINGS</td>";
-        echo "<td>TOTAL EARNINGS</td>";
         echo "</tr>";
 
         foreach($_data as $data)
