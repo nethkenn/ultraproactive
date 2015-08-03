@@ -629,4 +629,12 @@ function myTimeoutFunction()
 }
 
 </script>
+<script type="text/javascript">
+;(function($){
+    $('img').error(function(e){
+        var src = this.src;
+        this.src = $(this).attr('src');
+    });
+})(jQuery);
+</script>
 </html>
