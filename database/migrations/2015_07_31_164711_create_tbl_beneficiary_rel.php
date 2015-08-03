@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateTblMembershipMaxIncome extends Migration
+class CreateTblBeneficiaryRel extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,10 @@ class UpdateTblMembershipMaxIncome extends Migration
      */
     public function up()
     {
-        Schema::table('tbl_membership', function (Blueprint $table)
-        {
-            $table->double('max_income');
+        Schema::create('tbl_beneficiary_rel', function (Blueprint $table) {
+            $table->increments('beneficiary_rel_id');
+            $table->string('relation');
+            
         });
     }
 
@@ -25,6 +26,6 @@ class UpdateTblMembershipMaxIncome extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('tbl_beneficiary_rel');
     }
 }
