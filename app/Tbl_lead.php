@@ -12,4 +12,8 @@ class Tbl_lead extends Model
     {
         return $query->leftJoin('tbl_account','tbl_account.account_id','=','tbl_lead.account_id');
     }
+    public function scopeGetSlot($query)
+    {
+        return $query->leftJoin('tbl_slot','tbl_slot.slot_owner','=','tbl_lead.lead_account_id');
+    }
 }

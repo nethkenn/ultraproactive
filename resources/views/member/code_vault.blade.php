@@ -207,7 +207,15 @@
             <div class="form-group para">
                 <label for="1" class="col-sm-3 control-label">Sponsor</label>
                 <div class="col-sm-9">
-                    <input class="sponse form-control" id="1" name="sponsor" value="">
+                    @if($exist_lead)
+                    <select class="sponser form-control" id="1" name="sponsor">
+                        @foreach($exist_lead as $exist)
+                        <option value="{{$exist->slot_id}}">slot #{{$exist->slot_id}}</option>
+                        @endforeach
+                    </select>
+                    @else
+                        <input class="sponse form-control" id="1" name="sponsor" value="">
+                    @endif
                 </div>
             </div>
             <div class="form-group para">
