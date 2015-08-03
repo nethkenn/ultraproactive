@@ -8,6 +8,7 @@ use App\Tbl_unilevel_setting;
 use App\Tbl_membership;
 use App\Classes\Log;
 use Carbon\Carbon;
+
 class Compute
 {
     public static function tree($new_slot_id)

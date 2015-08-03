@@ -23,7 +23,6 @@
 						<th>Membership</th>
 						<th>Type</th>
 						<th>Wallet</th>
-						<th>Rank</th>
 						<th></th>
 						<th></th>
 					</tr>
@@ -50,7 +49,6 @@ $(function() {
             {data: 'membership_name', name: 'membership_name'},
             {data: 'slot_type', name: 'slot_type'},
             {data: 'wallet', name: 'slot_wallet'},
-            {data: 'rank_name', name: 'rank_name'},
             {data: 'gen', name: 'slot_id'},
             {data: 'info', name: 'slot_id'},
         ],
