@@ -10,6 +10,9 @@ use App\Tbl_account;
 use App\Tbl_lead;
 use Carbon\Carbon;
 use App\Classes\Log;
+use App\Tbl_beneficiary_rel;
+use App\Tbl_beneficiary;
+
 class MemberRegisterController extends Controller
 {
 	public function index()
@@ -21,7 +24,8 @@ class MemberRegisterController extends Controller
 		if(Request::input('submit'))
 		{	
 			$data =	$this->checkifvalidate(Request::input());
-			return Redirect::to('member/register')->with('message',$data);
+			return Redirect::to('member/register')->with('message',$data)
+                        ->withInput(Request::input());
 		}
 
 		//Auto Redirect if login already... or after registration success
@@ -31,7 +35,7 @@ class MemberRegisterController extends Controller
           	return Redirect::to('member');
 	    }
 
-
+	    $data['_beneficiary_rel'] = Tbl_beneficiary_rel::all();
 		$data['country'] = DB::table('tbl_country')->where('archived',0)->get();
 		return view('member.register',$data);
 	}
@@ -87,6 +91,11 @@ class MemberRegisterController extends Controller
 					'telephone' => $data['tp'],
 					'address' => $data['address'],
 					'gender' => $data['gender'],
+					'l_name' => $data['l_name'],
+					'f_name' => $data['f_name'],
+					'm_name' => $data['m_name'],
+					'beneficiary_gender' => $data['beneficiary_gender'],
+					'beneficiary_rel' =>$data['beneficiary_rel']
 				],
 				[
 					'account_name' => 'required|min:5|regex:/^[a-zA-Z\s]*$/',
@@ -97,16 +106,41 @@ class MemberRegisterController extends Controller
 					'gender' => 'required',
 					'telephone' => 'required',
 					'address' => 'required|min:6',
+					'l_name' => 'required',
+					'm_name' => 'required',
+					'f_name' => 'required',
+					'beneficiary_gender' => 'required',
+					'beneficiary_rel' => 'required',
 					// 'customer_province' => "required|exists:tbl_location,location_id",
 					// 'customer_municipality' => "required|exists:tbl_location,location_id",
 					// 'customer_barangay' => "required|exists:tbl_location,location_id",
 					'account_password'=> 'required|min:6|same:account_rpassword'
+				],
+
+				[
+					'l_name.required' => 'The beneficiary last name is required.',
+					'f_name.required' => 'The beneficiary first name is required.',
+					'm_name.required' => 'The beneficiary middle name is required.',
 				]
 				);
 
 
 			if(!$validator->fails())
-			{	
+			{		
+
+					$b_rel = Tbl_beneficiary_rel::firstOrCreate(['relation'=>$data['beneficiary_rel']]);
+
+					$insert_beneficiary['l_name'] = $data['l_name'];
+					$insert_beneficiary['m_name'] = $data['m_name'];
+					$insert_beneficiary['f_name'] = $data['f_name'];
+					$insert_beneficiary['beneficiary_gender']  =  $data['beneficiary_gender'];
+					$insert_beneficiary['beneficiary_rel_id']  =  $b_rel->beneficiary_rel_id;
+
+					$Tbl_beneficiary = new Tbl_beneficiary($insert_beneficiary);
+					$Tbl_beneficiary->save();
+
+
+					$insert['beneficiary_id'] = $Tbl_beneficiary->beneficiary_id;
 					$insert['account_username'] 	  = $data['user'];
 					$insert['account_email']		  = $data['email'];
 					$insert['account_contact_number'] = $data['cp'];
@@ -118,7 +152,11 @@ class MemberRegisterController extends Controller
 					$insert['gender']   =  $data['gender'];
 					$insert['telephone']   = $data['tp'];
 					$insert['address']   = $data['address'];
+					
+
+					
 					$info = DB::table('tbl_account')->insertGetId($insert);
+
 					Customer::login($info,$insert['account_password']);
 					$data2 = true;
 			}
