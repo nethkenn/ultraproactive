@@ -133,6 +133,7 @@ class MemberRegisterController extends Controller
 					$insert_beneficiary['l_name'] = $data['l_name'];
 					$insert_beneficiary['m_name'] = $data['m_name'];
 					$insert_beneficiary['f_name'] = $data['f_name'];
+					$insert_beneficiary['whole_name'] = $data['f_name']. " " .$data['m_name']. " " .$data['l_name'];
 					$insert_beneficiary['beneficiary_gender']  =  $data['beneficiary_gender'];
 					$insert_beneficiary['beneficiary_rel_id']  =  $b_rel->beneficiary_rel_id;
 

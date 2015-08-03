@@ -11,6 +11,7 @@ class Tbl_beneficiary extends Model
 							'f_name',
 							'l_name',
 							'm_name',
+							'whole_name',
 							'gender',
 							'beneficiary_rel_id',
 	 						];
