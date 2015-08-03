@@ -104,11 +104,19 @@
                         @else
                         <div class="select-label">You have no slots</div>   
                         @endif -->
+                        @if($slotnow)
                         <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SLOT #{{$slotnow->slot_id}} <span>{{ number_format($slotnow->slot_wallet, 2)}}</span> <b class="caret"></b></a>
+                        @else
+                        <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">NO SLOTS<b class="caret"></b></a>
+                        @endif
                         <ul class="dropdown-menu" style="text-transform: normal">
                             @if($slot)                                                    
                                 @foreach($slot as $slots)
-                                <li><a href="javascript:">SLOT #{{$slots->slot_id}} <span>{{ number_format($slots->slot_wallet, 2)}}</span></a></li>
+                                    @if(Request::input('mode'))
+                                       <li><a href="/member?slotnow={{$slots->slot_id}}&url={{Request::url()}}?mode={{Request::input('mode')}}">SLOT #{{$slots->slot_id}} <span>{{ number_format($slots->slot_wallet, 2)}}</span></a></li>
+                                    @else
+                                       <li><a href="/member?slotnow={{$slots->slot_id}}&url={{Request::url()}}">SLOT #{{$slots->slot_id}} <span>{{ number_format($slots->slot_wallet, 2)}}</span></a></li> 
+                                    @endif
                                 @endforeach
                             @endif    
                             <li><a href="/member/settings">Account Settings</a></li>

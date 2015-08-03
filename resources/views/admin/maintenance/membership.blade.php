@@ -27,6 +27,7 @@
 						<th>Membership Name</th>
 						<th>Membership Price</th>
 						<th>Discount(%)</th>
+						<th>Max income per day</th>
 						<th class="option-col">Entry</th>
 						<th class="option-col">Upgrade</th>
 						<th class="option-col"></th>
@@ -54,6 +55,7 @@ $(function() {
             {data: 'membership_name', name: 'membership_name'},
             {data: 'membership_price', name: 'membership_price'},
             {data: 'discount', name: 'discount'},
+            {data: 'max_income', name: 'max_income'},            
             {data: 'entry', name: 'membership_id'},
             {data: 'upgrade', name: 'membership_id'},
             {data: 'edit', name: 'membership_id'},
