@@ -107,6 +107,8 @@
 									<li><a href="admin/utilities/unilevel">Unilevel Computation</a></li>
 									<li class="divider" role="separator"></li>
 									<li><a href="admin/utilities/rank">Promotion Settings</a></li>
+									<li class="divider" role="separator"></li>
+									<li><a href="admin/utilities/recompute">Recomputation</a></li>
 								</ul>
 							</li>
 							<!-- REPORTS -->

@@ -6,6 +6,10 @@ use App\Tbl_binary_pairing;
 use App\Tbl_product;
 use App\Tbl_indirect_setting;
 use App\Tbl_unilevel_setting;
+use App\Tbl_slot;
+use App\Classes\Compute;
+use DB;
+
 
 class AdminComplanController extends AdminController
 {
@@ -209,6 +213,33 @@ class AdminComplanController extends AdminController
 		{
 			$data["data"] = Tbl_membership::where("membership_id", Request::input("id"))->first();
 			return view('admin.computation.rank_edit', $data);	
+		}
+	}
+	public function recompute()
+	{
+
+		echo base64_decode("/wEdAAZrrO8aGTCCus/TZdechI3DVas/k2InBMdmWIvDoWXbxc2tOHisUnaEBsHG08XGrcn2ey+ClwVUuCLirNvBH1XQhrLGxMrn4FQpOnM3xdjwVvU8JWd5KFnnFaHYbyhbG4W4+gXph+J+x6Zg4UgKHR3RRuxouoDxWuvWuu+k84Jgxg==");
+
+
+		if(Request::input("action") == "")
+		{
+			$data["_account"] = Tbl_slot::orderBy("slot_id", "asc")	->rank()
+																	->membership()
+																	->account()
+																	->where("membership_id", 5)
+																	->get();
+			return view("admin.computation.recomputation", $data);
+		}
+		elseif(Request::input("action") == "initialize")
+		{
+			DB::table('tbl_tree_placement')->delete();
+			DB::table('tbl_tree_sponsor')->delete();
+			echo json_encode("success");
+		}
+		elseif(Request::input("action") == "compute")
+		{
+			Compute::tree(Request::input("slot_id"));
+			echo json_encode("success");
 		}
 	}
 }

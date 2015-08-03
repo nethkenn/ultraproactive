@@ -27,7 +27,7 @@
                     <select name="membership_id" class="form-control">
                         @if($_membership)
                             @foreach($_membership as $membership)
-                                <option value="{{$membership->membership_id}}">{{$membership->membership_name}}</option>
+                                <option value="{{$membership->membership_id}}" {{Request::input('membership_id') == $membership->membership_id ? 'selected' : ''}}>{{$membership->membership_name}}</option>
                             @endforeach
                         @endif
                     </select>
@@ -46,7 +46,7 @@
                     <select name="code_type_id" class="form-control">
                         @if($_code_type)
                         @foreach($_code_type as $code_type)
-                            <option value="{{$code_type->code_type_id}}">{{$code_type->code_type_name}}</option>
+                            <option value="{{$code_type->code_type_id}}" {{Request::input('code_type_id') == $code_type->code_type_id ? 'selected' : ''}}>{{$code_type->code_type_name}}</option>
                         @endforeach
                         @endif
                     </select>
@@ -62,7 +62,7 @@
                             </ul>
                         </div>
                     @endif
-                    <select name="product_package_id" class="form-control select-product_package" request-product-package-id = {{Request::old('product_package_id')}}>
+                    <select name="product_package_id" class="form-control select-product_package" request-product-package-id = {{Request::input('product_package_id')}}>
                         <option value="">Select Product Package</option>
 <!--                          @if($_prod_package)
                         @foreach($_prod_package as $prod_package)
@@ -87,7 +87,7 @@
                         <option value=""></option>
                         @if($_account)
                         @foreach($_account as $account)
-                            <option value="{{$account->account_id}}">{{$account->account_name}}</option>
+                            <option value="{{$account->account_id}}" {{Request::input('account_id') == $account->account_id ? 'selected' : ''}}>{{$account->account_name}}</option>
                         @endforeach
                         @endif()
                     </select>
@@ -105,7 +105,7 @@
                             </ul>
                         </div>
                     @endif
-                    <input class="form-control" type="number" value="1" name="code_multiplier"/>
+                    <input class="form-control" type="number" value="{{Request::input('code_multiplier')  ? Request::input('code_multiplier') : '1'}}" name="code_multiplier"/>
                 </div>  
                                 <div class="form-group col-md-6">
                     <label for="Inventory Update">Inventory Update</label>
@@ -121,7 +121,7 @@
                     <select name="inventory_update_type_id" class="form-control">
                         @if($_inventory_update_type)
                         @foreach($_inventory_update_type as $inventory_update_type)
-                            <option value="{{$inventory_update_type->inventory_update_type_id}}">{{$inventory_update_type->inventory_update_type_name}}</option>
+                            <option value="{{$inventory_update_type->inventory_update_type_id}}" {{Request::input('inventory_update_type_id') == $inventory_update_type->inventory_update_type_id ? 'selected' : '' }}>{{$inventory_update_type->inventory_update_type_name}}</option>
                         @endforeach
                         @endif
                     </select>
