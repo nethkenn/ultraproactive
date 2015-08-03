@@ -192,13 +192,5 @@
 		<script type="text/javascript" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
 		<script type="text/javascript" src="//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 		@yield('script')
-		<script type="text/javascript">
-	    ;(function($){
-	        $('img').error(function(e){
-	            var src = this.src;
-	            this.src = $(this).attr('src');
-	        });
-	    })(jQuery);
-	    </script>
 	</body>
 </html>
