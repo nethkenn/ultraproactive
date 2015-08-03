@@ -48,6 +48,7 @@ class AdminMembershipController extends AdminController
 			$rules['discount'] = 'numeric|min:0|max:100';
 			$rules['membership_entry'] = 'numeric|numeric|min:0|max:1';
 			$rules['membership_upgrade'] = 'numeric|min:0|max:1';
+			$rules['max_income'] = 'numeric|min:1';
 			$message = [
 				'product_name.regex' => 'The :attribute must only have letters , numbers, spaces, hypens ( - ) and underscores ( _ )',
 					];
@@ -61,6 +62,7 @@ class AdminMembershipController extends AdminController
 				$insert['membership_price'] = Request::input('membership_price');
 				$insert['membership_entry'] = Request::input('membership_entry');
 				$insert['membership_upgrade'] = Request::input('membership_upgrade');
+				$insert['max_income'] = Request::input('max_income');
 				$insert['discount'] = Request::input('discount');
 				$membership = Tbl_membership::where('membership_id',$id)->update($insert);
 				return Redirect('admin/maintenance/membership');
@@ -72,6 +74,7 @@ class AdminMembershipController extends AdminController
 				$data['_error']['membership_price'] = $errors->get('membership_price');
 				$data['_error']['membership_entry'] = $errors->get('membership_entry');
 				$data['_error']['membership_upgrade'] = $errors->get('membership_upgrade');
+				$data['_error']['max_income'] = $errors->get('max_income');
 				$data['_error']['discount'] = $errors->get('discount');
 			}
 
@@ -94,6 +97,7 @@ class AdminMembershipController extends AdminController
 			$rules['membership_name'] = 'required|unique:tbl_membership,membership_name|regex:/^[A-Za-z0-9\s-_]+$/';
 			$rules['membership_price'] = 'required|unique:tbl_membership,membership_price|numeric|min:0';
 			$rules['discount'] = 'numeric|min:0|max:100';
+			$rules['max_income'] = 'numeric|min:1';
 
 
 			$message = [
@@ -110,9 +114,10 @@ class AdminMembershipController extends AdminController
 				$insert['membership_entry'] = Request::input('membership_entry');
 				$insert['membership_upgrade'] = Request::input('membership_upgrade');
 				$insert['discount'] = Request::input('discount');
-
+				$insert['max_income'] = Request::input('max_income');
 				// dd($insert);
 				$membership = new Tbl_membership($insert);
+			
 				$membership->save();
 
 				return Redirect('admin/maintenance/membership');
@@ -127,6 +132,7 @@ class AdminMembershipController extends AdminController
 				$data['_error']['discount'] = $errors->get('discount');
 				$data['_error']['membership_entry'] = $errors->get('membership_entry');
 				$data['_error']['membership_upgrade'] = $errors->get('membership_upgrade');
+				$data['_error']['max_income'] = $errors->get('max_income');
 
 			}
 

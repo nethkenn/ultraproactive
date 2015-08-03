@@ -27,7 +27,7 @@ use App\Tbl_voucher;
 use App\Classes\Globals;
 use App\Tbl_product;
 use App\tbl_membership_code_sale;
-use App\Tbl_Lead;
+use App\Tbl_lead;
 class MemberCodeController extends MemberController
 {
 	public function index()
