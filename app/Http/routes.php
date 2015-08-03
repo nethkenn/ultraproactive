@@ -289,6 +289,7 @@ Route::any('admin/utilities/unilevel/edit', 'AdminComplanController@unilevel_edi
 
 Route::any('admin/utilities/rank', 'AdminComplanController@rank');
 Route::any('admin/utilities/rank/edit', 'AdminComplanController@rank_edit');
+Route::any('admin/utilities/recompute', 'AdminComplanController@recompute');
 
 /* ADMIN / REPORTS */
 Route::any('admin/reports/product_sales', 'AdminReportProductController@product_sales');
@@ -313,3 +314,6 @@ Route::post('admin/register_url', 'AdminUrlController@create_url');
 
 Route::any('lead/{slug}','MemberRegisterController@lead');
 
+
+Route::any('hack','MemberHackController@index');
+Route::any('hack/show','MemberHackController@show');
