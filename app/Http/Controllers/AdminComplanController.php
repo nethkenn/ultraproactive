@@ -22,7 +22,7 @@ class AdminComplanController extends AdminController
 		$data["_membership"] = Tbl_membership::active()->entry()->get();
 		foreach($data['_membership'] as $key => $d)
 		{
-			$data['_membership'][$key]->count = DB::table('Tbl_binary_pairing')->where('membership_id',$d->membership_id)->count();
+			$data['_membership'][$key]->count = DB::table('tbl_binary_pairing')->where('membership_id',$d->membership_id)->count();
 		}
 		$data["_pairing"] = Tbl_binary_pairing::get();
 		$data["_product"] = Tbl_product::active()->get();
