@@ -50,15 +50,17 @@
 					<th class="option-col">ID</th>
 					<th>MEMBERSHIP</th>
 					<th>PAIRING COMBINATIONS COUNT</th>
+					<th>MAX PAIRS PER DAY</th>
 					<th class="option-col"></th>
 				</tr>
 			</thead>
 			<tbody>
-				@foreach($_membership as $membership)
+				@foreach($_membership_pairs as $membership)
 				<tr>
 					<td>{{ $membership->membership_id }}</td>
 					<td>{{ $membership->membership_name }}</td>
 					<td>{{ $membership->count }}</td>
+					<td>{{ $membership->max_pairs_per_day }}</td>
 					<td><a href="admin/utilities/binary/membership/binary/edit?id={{ $membership->membership_id }}">EDIT</a></td>
 				</tr>
 				@endforeach
@@ -81,7 +83,6 @@
 					<th class="option-col">ID</th>
 					<th>MEMBERSHIP</th>
 					<th>BINARY POINTS</th>
-					<th>MAX PAIRS PER DAY</th>
 					<th class="option-col"></th>
 				</tr>
 			</thead>
@@ -91,7 +92,6 @@
 					<td>{{ $membership->membership_id }}</td>
 					<td>{{ $membership->membership_name }}</td>
 					<td>{{ number_format($membership->membership_binary_points, 2) }}</td>
-					<td>{{ $membership->max_pairs_per_day }}</td>
 					<td><a href="admin/utilities/binary/membership/edit?id={{ $membership->membership_id }}">EDIT</a></td>
 				</tr>
 				@endforeach

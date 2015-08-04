@@ -1,14 +1,22 @@
 @extends('admin.layout')
 @section('content')
 <div class="row header">
-    <div class="title col-md-8">
+    <div class="title col-md-6">
                 <h2><i class="fa fa-bullseye"></i> PAIRING COMBINATIONS</h2>
             </div>
-            <div class="buttons col-md-4 text-right">
+            <div class="buttons col-md-6 text-right">
                 <button onclick="location.href='admin/utilities/binary'" type="button" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back</button>
                 <button onclick="location.href='admin/utilities/binary/add?membership={{Request::input('id')}}'" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> ADD PAIRING COMBINATIONS</button>
+                <button onclick="$('#country-add-form').submit();" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Update Max Pairs</button>
             </div>      </div>
     </div>
+    <form id="country-add-form" method="post">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <div class="form-group col-md-6">
+                <label for="account_contact">Max entry per day</label>
+                <input name="max" value="{{ $data->max_pairs_per_day }}" required="required" class="form-control" id="" placeholder="" type="text">
+            </div>
+    </form>
     <div class="col-md-12">
         <table id="product-table" class="table table-bordered">
             <thead>

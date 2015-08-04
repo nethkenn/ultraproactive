@@ -20,10 +20,13 @@ class AdminComplanController extends AdminController
 	public function binary()
 	{
 		$data["_membership"] = Tbl_membership::active()->entry()->get();
-		foreach($data['_membership'] as $key => $d)
+		$data["_membership_pairs"] = Tbl_membership::active()->get();
+
+		foreach($data['_membership_pairs'] as $key => $d)
 		{
-			$data['_membership'][$key]->count = DB::table('tbl_binary_pairing')->where('membership_id',$d->membership_id)->count();
+			$data['_membership_pairs'][$key]->count = DB::table('tbl_binary_pairing')->where('membership_id',$d->membership_id)->count();
 		}
+
 		$data["_pairing"] = Tbl_binary_pairing::get();
 		$data["_product"] = Tbl_product::active()->get();
 		return view('admin.computation.binary', $data);
@@ -70,7 +73,6 @@ class AdminComplanController extends AdminController
 		if(Request::isMethod("post"))
 		{
 			$update["membership_binary_points"] = Request::input("membership_binary_points");
-			$update["max_pairs_per_day"] = Request::input("max");
 			Tbl_membership::where("membership_id", Request::input("id"))->update($update);
 			return Redirect::to('/admin/utilities/binary');
 		}
@@ -251,6 +253,14 @@ class AdminComplanController extends AdminController
 	public function binary_entry()
 	{
 		$data["_pairing"] = Tbl_binary_pairing::where('membership_id',Request::input("id"))->get();
+		$data["data"] = Tbl_membership::where("membership_id", Request::input("id"))->first();
+		if(Request::isMethod("post"))
+		{
+			$update["max_pairs_per_day"] = Request::input("max");
+			Tbl_membership::where("membership_id", Request::input("id"))->update($update);
+			return Redirect::to('/admin/utilities/binary');
+		}
+		
 		return view('admin.computation.binary_entry', $data);	
 	}
 }
