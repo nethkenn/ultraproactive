@@ -20,6 +20,10 @@
                 <label for="account_contact">Binary Points</label>
                 <input name="membership_binary_points" value="{{ $data->membership_binary_points }}" required="required" class="form-control" id="" placeholder="" type="text">
             </div>  
+            <div class="form-group col-md-12">
+                <label for="account_contact">Max entry per day</label>
+                <input name="max" value="{{ $data->max_pairs_per_day }}" required="required" class="form-control" id="" placeholder="" type="text">
+            </div> 
         </form>
     </div>
 @endsection

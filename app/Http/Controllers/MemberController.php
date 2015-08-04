@@ -5,10 +5,13 @@ use DB;
 use App\Classes\Product;
 use Session;
 use Request;
+use Carbon\Carbon;
+use App\Tbl_slot;
 class MemberController extends Controller
 {
 	function __construct()
 	{
+		$date = Carbon::now()->toDateString(); 
 		$customer_info = Customer::info();
         if($customer_info)
         {
@@ -29,6 +32,20 @@ class MemberController extends Controller
 												  ->join('tbl_membership','tbl_membership.membership_id','=','tbl_slot.slot_membership')
 												  ->join('tbl_rank','tbl_rank.rank_id','=','tbl_slot.slot_rank')
 												  ->first();
+
+					if($data3->slot_today_date != $date)
+					{
+					 $update['slot_today_income'] = 0; 
+					 $update['slot_today_date'] = $date;
+                     Tbl_slot::where('slot_id',$id)->update($update);
+					}
+
+					if($data3->pairs_per_day_date != $date)
+					{
+					 $update['pairs_per_day_date'] = $date;
+					 $update['pairs_today'] = 0;
+                     Tbl_slot::where('slot_id',$id)->update($update);
+					}
 				}	
 				else
 				{
@@ -51,13 +68,26 @@ class MemberController extends Controller
 														  ->join('tbl_membership','tbl_membership.membership_id','=','tbl_slot.slot_membership')
 														  ->join('tbl_rank','tbl_rank.rank_id','=','tbl_slot.slot_rank')
 														  ->first();
+
+							if($data3->slot_today_date != $date)
+							{
+							 $update['slot_today_income'] = 0; 
+							 $update['slot_today_date'] = $date;
+                             Tbl_slot::where('slot_id',$id)->update($update);
+							}
+
+							if($data3->pairs_per_day_date != $date)
+							{
+							 $update['pairs_per_day_date'] = $date;
+							 $update['pairs_today'] = 0;
+                             Tbl_slot::where('slot_id',$id)->update($update);
+							}
 						}	
 				    }
 				    else
 				    {
 		  	    	 	$data2 = null;	
-				    }
-						 					  
+				    }		 					  
 				}			 
 				
 

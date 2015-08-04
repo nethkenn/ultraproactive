@@ -20,6 +20,13 @@ class AdminComplanController extends AdminController
 	public function binary()
 	{
 		$data["_membership"] = Tbl_membership::active()->entry()->get();
+		$data["_entry"] = Tbl_membership::active()->join('tbl_binary_pairing','tbl_binary_pairing.membership_id','=','tbl_membership.membership_id')
+												  ->groupBy('tbl_binary_pairing.membership_id')
+												  ->selectRaw('tbl_membership.membership_id, tbl_membership.membership_id')
+												  ->selectRaw('count(*) as count, tbl_binary_pairing.membership_id')
+												  ->selectRaw('tbl_membership.membership_name, tbl_membership.membership_name')
+												  ->entry()
+												  ->get();
 		$data["_pairing"] = Tbl_binary_pairing::get();
 		$data["_product"] = Tbl_product::active()->get();
 		return view('admin.computation.binary', $data);
@@ -31,8 +38,9 @@ class AdminComplanController extends AdminController
 			$insert["pairing_point_l"] = Request::input("pairing_points_l");
 			$insert["pairing_point_r"] = Request::input("pairing_points_r");
 			$insert["pairing_income"] = Request::input("pairing_income");
+			$insert["membership_id"] = Request::input("membership");
 			Tbl_binary_pairing::insert($insert);
-			return Redirect::to('/admin/utilities/binary');
+			return Redirect::to('/admin/utilities/binary/membership/binary/edit?id='.Request::input('membership'));
 		}
 		else
 		{
@@ -47,7 +55,7 @@ class AdminComplanController extends AdminController
 			$update["pairing_point_r"] = Request::input("pairing_points_r");
 			$update["pairing_income"] = Request::input("pairing_income");
 			Tbl_binary_pairing::where("pairing_id", Request::input("id"))->update($update);
-			return Redirect::to('/admin/utilities/binary');
+			return Redirect::to('/admin/utilities/binary/membership/binary/edit?id='.Request::input('membership'));
 		}
 		else
 		{
@@ -58,13 +66,14 @@ class AdminComplanController extends AdminController
 	public function binary_delete()
 	{
 		Tbl_binary_pairing::where("pairing_id", Request::input("id"))->delete();
-		return Redirect::to('/admin/utilities/binary');
+		return Redirect::to('/admin/utilities/binary/membership/binary/edit?id='.Request::input('membership'));
 	}
 	public function binary_membership_edit()
 	{
 		if(Request::isMethod("post"))
 		{
 			$update["membership_binary_points"] = Request::input("membership_binary_points");
+			$update["max_pairs_per_day"] = Request::input("max");
 			Tbl_membership::where("membership_id", Request::input("id"))->update($update);
 			return Redirect::to('/admin/utilities/binary');
 		}
@@ -241,5 +250,10 @@ class AdminComplanController extends AdminController
 			Compute::tree(Request::input("slot_id"));
 			echo json_encode("success");
 		}
+	}
+	public function binary_entry()
+	{
+		$data["_pairing"] = Tbl_binary_pairing::where('membership_id',Request::input("id"))->get();
+		return view('admin.computation.binary_entry', $data);	
 	}
 }

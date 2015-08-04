@@ -322,13 +322,60 @@ function code_vault()
     }
     function showdownline()
     {
-		$(".sponse").keyup(function()
-		{
+    	if($("#checkclass").val() == 0)
+    	{
+			$(".sponse").keyup(function()
+			{
+			            $.ajax(
+			            {
+			                url:"member/code_vault/get",
+			                dataType:"json",
+			                data: {'slot':$(".sponse").val()},
+			                type:"post",
+			                success: function(data)
+			                {
+			                	if(data != "x")
+			                	{
+			                	  $(".treecon").show();		                		
+			    				  $(".tree").empty(); 
+			    				  $x = jQuery.parseJSON(data);
+			    				  var str ="<option value='"+$(".sponse").val()+"'>Slot #"+$(".sponse").val()+"</option>";
+					              $.each($x, function( key, value ) 
+					              {
+					              		str = str + '<option value="'+value+'">Slot #'+value+'</option>';  
+					              }); 	
+					              $(".tree").append(str); 
+					              $('.c_slot').prop("disabled", false);		                		
+			                	}
+			                	else
+			                	{
+			                		if($('.sponse').val() == "")
+			                		{
+				                		$('.c_slot').prop("disabled", true);
+				                		$(".tree").empty();
+				                		$(".tree").append('<option value="">Input a slot sponsor</option>');
+			                		} 
+			                		else
+			                		{
+				                		$('.c_slot').prop("disabled", true);
+				                		$(".tree").empty();
+				                		$(".tree").append('<option value="">Sponsor slot number does not exist.</option>');
+			                		}
+	 
+			                	}
+			                }
+			            }); 
+			});    		
+    	}
+    	else
+    	{
+			$(".sponser").bind("change", function(e)
+	        {
 		            $.ajax(
 		            {
 		                url:"member/code_vault/get",
 		                dataType:"json",
-		                data: {'slot':$(".sponse").val()},
+		                data: {'slot':$(".sponser").val()},
 		                type:"post",
 		                success: function(data)
 		                {
@@ -337,7 +384,7 @@ function code_vault()
 		                	  $(".treecon").show();		                		
 		    				  $(".tree").empty(); 
 		    				  $x = jQuery.parseJSON(data);
-		    				  var str ="<option value='"+$(".sponse").val()+"'>Slot #"+$(".sponse").val()+"</option>";
+		    				  var str ="<option value='"+$(".sponser").val()+"'>Slot #"+$(".sponser").val()+"</option>";
 				              $.each($x, function( key, value ) 
 				              {
 				              		str = str + '<option value="'+value+'">Slot #'+value+'</option>';  
@@ -347,7 +394,7 @@ function code_vault()
 		                	}
 		                	else
 		                	{
-		                		if($('.sponse').val() == "")
+		                		if($('.sponser').val() == "")
 		                		{
 			                		$('.c_slot').prop("disabled", true);
 			                		$(".tree").empty();
@@ -359,14 +406,17 @@ function code_vault()
 			                		$(".tree").empty();
 			                		$(".tree").append('<option value="">Sponsor slot number does not exist.</option>');
 		                		}
- 
+
 		                	}
 		                }
 		            }); 
-		});
+			});
+		}
     }
     function init_showdownline()
     {
+    	    if($("#checkclass").val() == 0)
+    		{
 		            $.ajax(
 		            {
 		                url:"member/code_vault/get",
@@ -407,6 +457,50 @@ function code_vault()
  
 		                }
 		            }); 
+			}
+	 		else
+	 		{
+		            $.ajax(
+		            {
+		                url:"member/code_vault/get",
+		                dataType:"json",
+		                data: {'slot':$(".sponser").val()},
+		                type:"post",
+		                success: function(data)
+		                {
+		                	if(data != "x")
+		                	{
+		                	  $(".treecon").show();
+		    				  $(".tree").empty(); 
+		    				  $x = jQuery.parseJSON(data);
+		    				  var str ="<option value='"+$(".sponser").val()+"'>Slot #"+$(".sponser").val()+"</option>";
+				              $.each($x, function( key, value ) 
+				              {
+				              		str = str + '<option value="'+value+'">Slot #'+value+'</option>';  
+				              }); 	
+				              $(".tree").append(str); 
+				              $('.c_slot').prop("disabled", false);		                		
+		                	}
+		                	else
+		                	{
+		                		if($('.sponser').val() == "")
+		                		{
+			                		$('.c_slot').prop("disabled", true);
+			                		$(".tree").empty();
+			                		$(".tree").append('<option value="">Input a slot sponsor</option>');
+		                		} 
+		                		else
+		                		{
+			                		$('.c_slot').prop("disabled", true);
+			                		$(".tree").empty();
+			                		$(".tree").append('<option value="">Sponsor slot number does not exist.</option>');
+		                		}
+ 
+		                	}
+ 
+		                }
+		            }); 	 			
+	 		}
     }
 
 

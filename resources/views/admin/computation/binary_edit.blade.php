@@ -5,7 +5,7 @@
             <h2><i class="fa fa-users"></i>  Binary / Modify Pairing Combination</h2>
         </div>
         <div class="buttons col-md-4 text-right">
-            <button onclick="location.href='admin/utilities/binary'" type="button" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back</button>
+            <button onclick="location.href='admin/utilities/binary/membership/binary/edit?id={{Request::input('membership')}}'" type="button" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back</button>
             <button onclick="$('#country-add-form').submit();" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Update</button>
         </div>
     </div>
@@ -23,7 +23,7 @@
             <div class="form-group col-md-12">
                 <label for="account_contact">Income</label>
                 <input name="pairing_income" value="{{ $data->pairing_income }}" required="required" class="form-control" id="" placeholder="" type="text">
-            </div>  
+            </div> 
         </form>
     </div>
 @endsection
