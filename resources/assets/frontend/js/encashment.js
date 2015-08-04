@@ -32,19 +32,20 @@ function encashment()
 		 // alert(test);
 			deduction = 0;
 
-			var one = (parseFloat($("#amount").val())).formatMoney(2); 
+			var one = $("#amount").val(); 
 			var two = $(".max").attr('val');
 			var four = 0;
 			var five = 0;
 			$("#enc").val($("#typeencashment").val());
 			$("#two").val(one);
 			$("#one").val(two);
-			$("#three").val((two-one).formatMoney(2));
+			$("#three").val(two-one);
 			$("#four").val(four);
 			$("#five").val(five);
 			
-			var recievable = compute_recievable(one)
-			$("#six").val((recievable).formatMoney(2));
+			var recievable = compute_recievable(one);
+
+			$("#six").val(recievable);
 			// console.log(recievable);
 			var inst = $('[data-remodal-id=encashment]').remodal();
           	inst.open(); 
@@ -74,7 +75,7 @@ function encashment()
         		total2 = value.deduction_amount;
         	}
 
-        	$("#"+value.deduction_id).val((parseFloat(total2)).formatMoney(2));
+        	$("#"+value.deduction_id).val(total2);
 
         	f_total = parseFloat(total2) + parseFloat(f_total);
         });
