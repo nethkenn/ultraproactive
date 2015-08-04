@@ -28,8 +28,6 @@ class UpdateTblAccount extends Migration
      */
     public function down()
     {
-        Schema::table('tbl_account', function (Blueprint $table) {
-            //
-        });
+        Schema::drop('benificiary_id');
     }
 }
