@@ -13,7 +13,7 @@ class UpdateTblAccount extends Migration
     public function up()
     {
         Schema::table('tbl_account', function (Blueprint $table) {
-            $table->integer('beneficiary_id')->unsigned();
+            $table->integer('beneficiary_id')->unsigned()->nullable();
 
             $table->foreign('beneficiary_id')
               ->references('beneficiary_id')->on('tbl_beneficiary')

@@ -14,7 +14,7 @@ class UpdateTblSlotMembershipEntry extends Migration
     {
         Schema::table('tbl_slot', function (Blueprint $table)
         {
-            $table->integer('membership_entry_id');
+            $table->integer('membership_entry_id')->nullable();
         });
     }
 
