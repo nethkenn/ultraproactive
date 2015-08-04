@@ -133,6 +133,10 @@
         display: none;
         -ms-interpolation-mode:bicubic;
     }
+    .asdasd
+    {
+        margin-top: 50px;
+    }
 </style>
 @endsection
 @section('css')
@@ -144,8 +148,18 @@
         {
             duration: 400
         });
+</script>
+<script type="text/javascript" language="javascript">
+     $(function () {
+         var $win = $(window);
 
-
+         $win.scroll(function () {
+             if ($win.scrollTop() == 0)
+                 $(".cart").removeClass("asdasd");
+             else if ($win.scrollTop() != 0)
+                 $(".cart").addClass("asdasd");
+         });
+     });
 </script>
 <script type="text/javascript" src="/resources/assets/members/js/members_product.js"></script>
 @endsection

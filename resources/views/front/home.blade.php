@@ -57,7 +57,7 @@
 				</div>
 			</div>
 		</div>
-		<div id="fws_5559b27a6ecce" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="padding-top: 0px !important; padding-bottom: 60px !important; ">
+		<div id="fws_5559b27a6ecce" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="padding-top: 0px !important; padding-bottom: 0px !important; ">
 			<div class="container  dark">
 				<div class="section_clear">
 					<div class="vc_col-sm-4 wpb_column column_container" style="" data-animation="" data-delay="0">
@@ -106,7 +106,7 @@
 							</div>
 						</div>
 					</div>
-					<div id="fws_5559b27a70671" class="wpb_row animate_onoffset  vc_row-fluid   row-dynamic-el section-style parallax_section   " style="background-repeat: no-repeat; padding-top: 90px !important; padding-bottom: 90px !important; ">
+					<!-- <div id="fws_5559b27a70671" class="wpb_row animate_onoffset  vc_row-fluid   row-dynamic-el section-style parallax_section   " style="background-repeat: no-repeat; padding-top: 90px !important; padding-bottom: 90px !important; ">
 						<div class="parallax_bg" style="background-image: url(/resources/assets/ausart/assets/uploads/2015/01/4-1-copy.jpg); background-position: 50% 0px; background-attachment:fixed !important"></div>
 						<div class="container animate_onoffset light">
 							<div class="section_clear" style="opacity: 0;">
@@ -160,8 +160,8 @@
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="container  dark">
+					</div> -->
+					<div class="container  dark" style="padding-bottom: 100px;">
 						<div class="section_clear">
 							<div class="vc_col-sm-4 wpb_column column_container" style="" data-animation="" data-delay="0">
 								<div class="wpb_wrapper">
@@ -243,7 +243,7 @@
 													</div>
 												</div>
 											</div>
-											<div id="fws_5559b27a72219" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el full-width-content section-style    " style="background-color: #f6f6f6; padding-top: 0px !important; padding-bottom: 0px !important; ">
+											<div id="fws_5559b27a72219" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el full-width-content section-style    " style="background-color: #f6f6f6; padding-top: 0px !important; padding-bottom: 90px !important; ">
 												<div class="col span_12  dark">
 													<div class="vc_col-sm-12 wpb_column column_container" style="" data-animation="" data-delay="0">
 														<div class="wpb_wrapper">
@@ -254,8 +254,8 @@
 																		<!-- item -->
 																		@foreach($_product as $product)
 																		<div class="portfolio-item html java  v2 vc_col-md-4" data-id="3537">
-																			<div class="he-wrap tpl2" style="background-color: black;">
-																				<img src="{{ $product->image }}" alt="" style="opacity: 0.9;">
+																			<div class="he-wrap tpl2">
+																				<img src="{{ $product->image }}" alt="">
 																				<div class="overlay he-view">
 																					<div class="bg a0" data-animate="fadeIn">
 																						<div class="center-bar v1">

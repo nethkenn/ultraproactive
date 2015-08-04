@@ -11,7 +11,7 @@ abstract class Controller extends BaseController
 	use DispatchesCommands, ValidatesRequests;
 	public function __construct()
 	{
-		$_newsfooter = DB::table("tbl_news")->where("archived", 0)->orderBy('news_date', 'asc')->take(4)->get();
+		$_newsfooter = DB::table("tbl_news")->where("archived", 0)->orderBy('news_date', 'desc')->take(4)->get();
 		foreach ($_newsfooter as $key => $value) 
 		{
 			$date = strtotime($value->news_date);

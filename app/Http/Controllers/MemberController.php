@@ -13,6 +13,8 @@ class MemberController extends Controller
 	{
 		$date = Carbon::now()->toDateString(); 
 		$customer_info = Customer::info();
+
+		// dd($customer_info);
         if($customer_info)
         {
 	            $id = Customer::id();

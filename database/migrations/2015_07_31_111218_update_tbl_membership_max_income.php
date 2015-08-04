@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateTblMembership extends Migration
+class UpdateTblMembershipMaxIncome extends Migration
 {
     /**
      * Run the migrations.

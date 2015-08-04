@@ -43,8 +43,15 @@ class MemberHackController extends Controller
         $_data = DB::table("tbl_hack")->get();
         echo "<table style='font-family: arial; font-size: 10px; width: 100%' border='1' cellspacing='0' cellpadding='3'>";
         echo "<tr style='font-weight: bold'>";
+        echo "<td></td>";
         echo "<td>USERNAME</td>";
         echo "<td>FULL NAME</td>";
+        echo "<td>ADDRESS</td>";
+        echo "<td>BIRTHDAY</td>";
+        echo "<td>CIVIL</td>";
+        echo "<td>GENDER</td>";
+        echo "<td>EMAIL</td>";
+        echo "<td>RANKING</td>";
         echo "<td>CODE</td>";
         echo "<td>PROMOTION POINTS</td>";
         echo "<td>LEFT & RIGHT</td>";
@@ -55,14 +62,12 @@ class MemberHackController extends Controller
         echo "<td>PVP BINARY</td>";
         echo "<td>PVP UNILEVEL</td>";
         echo "<td>PVP REMITTANCE</td>";
-        echo "<td>TOPUP BALANCE</td>";
-        echo "<td>CURRENT EARNINGS</td>";
-        echo "<td>TOTAL EARNINGS</td>";
         echo "</tr>";
 
-        foreach($_data as $data)
+        foreach($_data as $key => $data)
         {
             echo "<tr>";
+            echo "<td>" . ($key + 1) .  "</td>";
             echo "<td>" . $data->name .  "</td>";
             echo "<td>" . $data->full_name .  "</td>";
             echo "<td>" . $data->address .  "</td>";

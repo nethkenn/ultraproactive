@@ -12,7 +12,7 @@ class FrontController extends Controller
 
 	public function index()
 	{
-		$data["_news"] = DB::table("tbl_news")->where("archived", 0)->take(3)->get();
+		$data["_news"] = DB::table("tbl_news")->where("archived", 0)->orderBy('news_date', 'desc')->take(3)->get();
 		foreach ($data["_news"] as $key => $value) 
 		{
 			$get = $value->news_image;
@@ -30,7 +30,7 @@ class FrontController extends Controller
 			$data["_news"][$keys]->day = $day;
 		}
 
-		$data["_product"] = DB::table("tbl_product")->where("image_file", "!=", "default.jpg")->where("image_file", "!=", "")->where("archived", 0)->take(6)->get();
+		$data["_product"] = DB::table("tbl_product")->where("image_file", "!=", "default.jpg")->where("image_file", "!=", "")->orderBy('created_at', 'desc')->where("archived", 0)->take(6)->get();
 		foreach ($data["_product"] as $keyss => $valuess) 
 		{
 			$gets = $valuess->image_file;

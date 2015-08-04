@@ -236,7 +236,7 @@ class AdminCodeController extends AdminController {
 
 
 
-
+				$new_voucher = null;
 				//IF "CLAIMABLE" CREATE PRODUCT VOUCHER 
 				if(Request::input('inventory_update_type_id') != 3 &&  Request::input('code_type_id') != 2 )
 				{
