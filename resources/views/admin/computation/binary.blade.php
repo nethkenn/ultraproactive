@@ -54,7 +54,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				@foreach($_entry as $membership)
+				@foreach($_membership as $membership)
 				<tr>
 					<td>{{ $membership->membership_id }}</td>
 					<td>{{ $membership->membership_name }}</td>

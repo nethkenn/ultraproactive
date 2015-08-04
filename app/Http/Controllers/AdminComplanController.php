@@ -20,13 +20,10 @@ class AdminComplanController extends AdminController
 	public function binary()
 	{
 		$data["_membership"] = Tbl_membership::active()->entry()->get();
-		$data["_entry"] = Tbl_membership::active()->join('tbl_binary_pairing','tbl_binary_pairing.membership_id','=','tbl_membership.membership_id')
-												  ->groupBy('tbl_binary_pairing.membership_id')
-												  ->selectRaw('tbl_membership.membership_id, tbl_membership.membership_id')
-												  ->selectRaw('count(*) as count, tbl_binary_pairing.membership_id')
-												  ->selectRaw('tbl_membership.membership_name, tbl_membership.membership_name')
-												  ->entry()
-												  ->get();
+		foreach($data['_membership'] as $key => $d)
+		{
+			$data['_membership'][$key]->count = DB::table('Tbl_binary_pairing')->where('membership_id',$d->membership_id)->count();
+		}
 		$data["_pairing"] = Tbl_binary_pairing::get();
 		$data["_product"] = Tbl_product::active()->get();
 		return view('admin.computation.binary', $data);
