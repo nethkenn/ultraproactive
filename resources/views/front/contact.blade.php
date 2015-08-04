@@ -96,7 +96,7 @@
                                         <p style="word-break: keep-all !important;">@if(isset($_setting->company_address)){{ $company->company_address }}@endif
                                             <br /> @if(isset($_setting->company_email)){{ $company->company_email }}@endif
                                             <br /> Telephone:@if(isset($_setting->company_telephone)){{ $company->company_telephone }}@endif
-                                            <br /> Phone:  @if(isset($_setting->company_telephone)){{ $company->company_mobile }@endif
+                                            <br /> Phone:  @if(isset($_setting->company_telephone)){{ $company->company_mobile }}@endif
                                         </p>
                                         <div class="social">
                                             <ul>
