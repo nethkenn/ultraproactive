@@ -25,6 +25,6 @@ class UpdateTblMembershipMaxIncome extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('max_income');
     }
 }
