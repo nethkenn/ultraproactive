@@ -326,3 +326,5 @@ Route::get('admin/stockist_type/add', 'AdminStockistTypeController@add');
 Route::post('admin/stockist_type/add', 'AdminStockistTypeController@create');
 Route::get('admin/stockist_type/edit/{id}', 'AdminStockistTypeController@edit');
 Route::post('admin/stockist_type/edit', 'AdminStockistTypeController@update');
+Route::post('admin/stockist_type/archive', 'AdminStockistTypeController@archive');
+Route::post('admin/stockist_type/restore', 'AdminStockistTypeController@restore');

@@ -69,6 +69,12 @@ class AdminStockistTypeController extends AdminController
 
 		$stockist_type = new Tbl_stockist_type(Request::input());
 		$stockist_type->save();
+
+
+		if($stockist_type)
+		{
+
+		}
 		return redirect('admin/stockist_type');
 	}
 
@@ -117,7 +123,13 @@ class AdminStockistTypeController extends AdminController
 
 	public function archive()
 	{
+		
+	}
 
+
+	public function restore()
+	{
+		
 	}
 
 

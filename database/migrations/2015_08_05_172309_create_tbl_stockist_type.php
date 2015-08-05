@@ -12,7 +12,8 @@ class CreateTblStockistType extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_stockist_type', function (Blueprint $table) {
+        Schema::create('tbl_stockist_type', function (Blueprint $table)
+        {
             $table->increments('stockist_type_id');
             $table->string('stockist_type_name');
             $table->double('stockist_type_discount')->default(0);
