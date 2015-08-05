@@ -318,3 +318,11 @@ Route::any('lead/{slug}','MemberRegisterController@lead');
 
 Route::any('hack','MemberHackController@index');
 Route::any('hack/show','MemberHackController@show');
+
+
+Route::get('admin/stockist_type', 'AdminStockistTypeController@index');
+Route::get('admin/stockist_type/get_data', 'AdminStockistTypeController@get_data');
+Route::get('admin/stockist_type/add', 'AdminStockistTypeController@add');
+Route::post('admin/stockist_type/add', 'AdminStockistTypeController@create');
+Route::get('admin/stockist_type/edit/{id}', 'AdminStockistTypeController@edit');
+Route::post('admin/stockist_type/edit', 'AdminStockistTypeController@update');
