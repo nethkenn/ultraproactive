@@ -89,6 +89,8 @@
 									<li><a href="admin/maintenance/country">Country</a></li>
 									<li><a href="admin/maintenance/deduction">Deductions</a></li>
 									<li><a href="admin/maintenance/ranking">Ranking</a></li>
+									<li class="divider" role="separator"></li>
+									<li><a href="admin/stockist_type">Stockist Type</a></li>
 
 								</ul>
 							</li>
