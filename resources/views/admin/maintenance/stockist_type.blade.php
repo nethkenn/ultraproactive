@@ -18,7 +18,7 @@
 		</div>
 	</div>
 	<div class="col-md-12">
-		<table id="test-table" class="table table-bordered">
+		<table id="datatable" class="table table-bordered">
 			<thead>
 				<tr>
 					<th class="option-col">ID</th>
@@ -36,7 +36,7 @@
 
 	<script type="text/javascript">
 
-		var $Table = $('#test-table').DataTable({
+		var $Table = $('#datatable').DataTable({
 	        processing: true,
 	        serverSide: true,
 	        ajax:{
@@ -67,5 +67,5 @@
 
 
 	</script>
-	<script type="text/javascript"> </script>
+	<script type="text/javascript" src="resources/assets/admin/stockist_type.js"></script>
 @endsection

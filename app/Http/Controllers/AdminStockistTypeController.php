@@ -123,13 +123,22 @@ class AdminStockistTypeController extends AdminController
 
 	public function archive()
 	{
-		
+
+		$stockist_type_id = Request::input('stockist_type_id');
+		$update_stockist_type = Tbl_stockist_type::findOrFail($stockist_type_id);
+		$update_stockist_type->archive = 1;
+		$update_stockist_type->save();
+		return $update_stockist_type;
 	}
 
 
 	public function restore()
 	{
-		
+		$stockist_type_id = Request::input('stockist_type_id');
+		$update_stockist_type = Tbl_stockist_type::findOrFail($stockist_type_id);
+		$update_stockist_type->archive = 0;
+		$update_stockist_type->save();
+		return $update_stockist_type;
 	}
 
 
