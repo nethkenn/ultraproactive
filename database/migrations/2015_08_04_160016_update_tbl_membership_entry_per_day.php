@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateTblMembershipMaxIncome extends Migration
+class UpdateTblMembershipEntryPerDay extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class UpdateTblMembershipMaxIncome extends Migration
     {
         Schema::table('tbl_membership', function (Blueprint $table)
         {
-            $table->double('max_income');
+            $table->integer('max_pairs_per_day')->default(0);
         });
     }
 

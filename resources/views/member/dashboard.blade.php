@@ -117,6 +117,14 @@
                     <div class="leybel">TOTAL INCOME</div>
                     <div class="balyu">{{$slotnow->slot_total_earning}}</div>
                 </div>
+                <div class="holders">
+                    <div class="leybel">MAX INCOME PER DAY</div>
+                    <div class="balyu">{{$slotnow->slot_today_income}}/{{$slotnow->max_income}}</div>
+                </div>
+                <div class="holders">
+                    <div class="leybel">MAX PAIRS PER DAY</div>
+                    <div class="balyu">{{$slotnow->pairs_today}}/{{$slotnow->max_pairs_per_day}}</div>
+                </div>
             </div>
         </div>
         <div class="holder">

@@ -272,6 +272,7 @@ Route::any('admin/utilities/binary/edit', 'AdminComplanController@binary_edit');
 Route::any('admin/utilities/binary/add', 'AdminComplanController@binary_add');
 Route::any('admin/utilities/binary/delete', 'AdminComplanController@binary_delete');
 Route::any('admin/utilities/binary/membership/edit', 'AdminComplanController@binary_membership_edit');
+Route::any('admin/utilities/binary/membership/binary/edit', 'AdminComplanController@binary_entry');
 Route::any('admin/utilities/binary/product/edit', 'AdminComplanController@binary_product_edit');
 
 Route::any('admin/utilities/matching', 'AdminComplanController@matching');

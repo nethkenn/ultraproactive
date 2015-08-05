@@ -41,6 +41,18 @@ class MemberCodeController extends MemberController
 	    												 ->orderBy('membership_price','ASC')
 	    												 ->where('membership_entry',1)
 	    												 ->get();
+					
+  		$data['exist_lead'] = null;
+	 	$check_date = Tbl_lead::where('account_id',$id)->where('tbl_lead.used',0)->first();
+
+	 	if(isset($check_date))
+	 	{	
+		    	 	if(strtotime($check_date->join_date)  > strtotime(Carbon::now()->subDays(30)) && $check_date->used == 0)
+				 	{
+		    			$data['exist_lead'] = Tbl_lead::where('tbl_lead.account_id',$id)->getslot()->get();
+				 	}
+	 	}
+											 
 	    $data['getlead'] = Tbl_lead::where('lead_account_id',Customer::id())->getaccount()->get();
 		if($data['availprod'])
 		{
@@ -209,7 +221,7 @@ class MemberCodeController extends MemberController
 						if($checking == true && $checking2 == true)
 						{
 							$insert["slot_membership"] =  $getslot->membership_id;
-							$insert["slot_type"] =  "PS";
+							$insert["slot_type"] =  "CD";
 							$insert["slot_rank"] =  1;
 							$insert["slot_wallet"] =  0 - $getslot->membership_price;
 							$insert["slot_sponsor"] =  $data['sponsor'];
@@ -222,6 +234,41 @@ class MemberCodeController extends MemberController
 							$insert["slot_upgrade_points"] = 0;
 							$insert["slot_total_withrawal"] =  0;
 							$insert["slot_total_earning"] =  0;
+							$insert["created_at"] =  Carbon::now();
+							$insert["slot_owner"] =  Customer::id();
+							$insert["membership_entry_id"] =  $getslot->membership_id;
+							$slot_id = Tbl_slot::insertGetId($insert);
+							Compute::tree($slot_id);
+							Compute::binary($slot_id);
+							$return["placement"] = Request::input("placement");
+							Tbl_membership_code::where('code_pin',$data['code_number'])->update(['used'=>1]);
+							$message['success'] = "Slot Created.";
+							$get = Rel_membership_code::where('code_pin',$data['code_number'])->first();
+							$insert2['slot_id'] = $slot_id;
+							$insert2['product_package_id'] = $get->product_package_id;
+							Rel_membership_product::insert($insert2);
+							return $message;
+						}
+					}
+					else if($getslot->code_type_id == 1)
+					{
+						if($checking == true && $checking2 == true)
+						{
+							$insert["slot_membership"] =  $getslot->membership_id;
+							$insert["slot_type"] =  "PS";
+							$insert["slot_rank"] =  1;
+							$insert["slot_wallet"] =  0;
+							$insert["slot_sponsor"] =  $data['sponsor'];
+							$insert["slot_placement"] =  $data['placement'];
+							$insert["slot_position"] =  strtolower($data['slot_position']);
+							$insert["slot_binary_left"] =  0;
+							$insert["slot_binary_right"] =  0;
+							$insert["slot_personal_points"] =  0;
+							$insert["slot_group_points"] =  0;
+							$insert["slot_upgrade_points"] = 0;
+							$insert["slot_total_withrawal"] =  0;
+							$insert["slot_total_earning"] =  0;
+							$insert["created_at"] =  Carbon::now();
 							$insert["slot_owner"] =  Customer::id();
 							$insert["membership_entry_id"] =  $getslot->membership_id;
 							$slot_id = Tbl_slot::insertGetId($insert);
@@ -242,7 +289,7 @@ class MemberCodeController extends MemberController
 						if($checking == true && $checking2 == true)
 						{
 							$insert["slot_membership"] =  $getslot->membership_id;
-							$insert["slot_type"] =  "PS";
+							$insert["slot_type"] =  "FS";
 							$insert["slot_rank"] =  1;
 							$insert["slot_wallet"] =  0;
 							$insert["slot_sponsor"] =  $data['sponsor'];
@@ -255,6 +302,7 @@ class MemberCodeController extends MemberController
 							$insert["slot_upgrade_points"] = 0;
 							$insert["slot_total_withrawal"] =  0;
 							$insert["slot_total_earning"] =  0;
+							$insert["created_at"] =  Carbon::now();
 							$insert["slot_owner"] =  Customer::id();
 							$insert["membership_entry_id"] =  $getslot->membership_id;
 							$slot_id = Tbl_slot::insertGetId($insert);
@@ -268,7 +316,7 @@ class MemberCodeController extends MemberController
 							$insert2['product_package_id'] = $get->product_package_id;
 							Rel_membership_product::insert($insert2);
 							return $message;
-						}
+						}						
 					}
 					
 				}			
@@ -289,7 +337,7 @@ class MemberCodeController extends MemberController
 														  ->join('tbl_account','tbl_account.account_id','=','tbl_membership_code.account_id')
 														  ->join('tbl_code_type','tbl_code_type.code_type_id','=','tbl_membership_code.code_type_id')
 														  ->join('tbl_membership','tbl_membership.membership_id','=','tbl_membership_code.membership_id')
-														  ->join('tbl_product_package','tbl_product_package.product_package_id','=','tbl_membership_code.product_package_id')
+														  ->leftjoin('tbl_product_package','tbl_product_package.product_package_id','=','tbl_membership_code.product_package_id')
 														  ->where('tbl_membership_code.account_id','=',$id)
 														  ->orderBy('tbl_membership_code.code_pin','ASC')
 														  ->get();
