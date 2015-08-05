@@ -12,8 +12,8 @@
     </div>
     <form id="country-add-form" method="post">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <div class="form-group col-md-6">
-                <label for="account_contact">Max entry per day</label>
+            <div class="form-group col-md-12">
+                <label for="account_contact">Max pairs per day</label>
                 <input name="max" value="{{ $data->max_pairs_per_day }}" required="required" class="form-control" id="" placeholder="" type="text">
             </div>
     </form>

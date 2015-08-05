@@ -482,7 +482,7 @@ class Compute
                     /* UPDATE WALLET */
                     // $update_recipient["slot_wallet"] = $update_recipient["slot_wallet"] + $direct_income;
                     // $update_recipient["slot_total_earning"] = $update_recipient["slot_total_earning"] + $direct_income;
-                    $update_recipient["slot_upgrade_points"] = $slot_recipient->slot_upgrade_points + $slot_recipient->membership_binary_points;
+                    $update_recipient["slot_upgrade_points"] = $slot_recipient->slot_upgrade_points + $slot_recipient->member_upgrade_pts;
 
                     /* INSERT LOG */
                     $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($direct_income, 2) . " wallet</b> through <b>DIRECT SPONSORSHIP BONUS</b> because you've invited SLOT #" . $new_slot_info->slot_id . " to join. Your current membership is " . $slot_recipient->membership_name . " MEMBERSHIP. Your slot #" . $slot_recipient->slot_id . " also earned <b>" . number_format($slot_recipient->membership_binary_points, 2) . " Promotion Points</b>.";
