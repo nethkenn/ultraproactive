@@ -28,7 +28,12 @@ src: local('Tw Cen MT'), url('/resources/assets/fonts/Tw Cen MT.woff') format('w
   font-style: normal;
 }
 
-
+.scrollable-menu 
+{
+    height: auto;
+    max-height: 400px;
+    overflow-x: hidden;
+}
 
 ul.nav li.dropdown:hover ul.dropdown-menu {
     display: block;
