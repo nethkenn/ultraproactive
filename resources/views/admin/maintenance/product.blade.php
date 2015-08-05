@@ -26,6 +26,7 @@
 					<th>Name</th>
 					<th>Category</th>
 					<th>Price</th>
+					<th>Upgrade Points</th>
 					<th class="option-col"></th>
 					<th class="option-col"></th>
 				</tr>
@@ -55,6 +56,7 @@
 	            {data: 'product_name', name: 'product_name'},
 	            {data: 'product_category_name', name: 'product_category_name'},
 	            {data: 'price' ,name: 'price'},
+	            {data: 'upgrade_pts' ,name: 'upgrade_pts'},
 	           	{data: 'edit' ,name: 'product_id'},
 	            {data: 'archive' ,name: 'product_id'},
 	            

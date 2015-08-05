@@ -29,7 +29,7 @@ class AdminTeamController extends AdminController
 		$date = date('Y-m-d H:i:s');
 		$image = Request::input("image_file");
 
-		DB::table("tbl_team")->insert(['team_title' => $title, 'team_description' => $description, 'created_at' => $date, 'team_image' => $image]);
+		DB::table("tbl_team")->insert(['team_title' => $title, 'team_description' => $description, 'team_role' => $role, 'created_at' => $date, 'team_image' => $image]);
 
         return Redirect::to("/admin/content/team");
 	}	
@@ -48,10 +48,11 @@ class AdminTeamController extends AdminController
 		$id = Request::input("id");
 		$title = Request::input("title");
 		$description = Request::input("description");
+		$role = Request::input("role");
 		$date = date('Y-m-d H:i:s');
 		$image = Request::input("image_file");
 
-		DB::table("tbl_team")->where("team_id", $id)->update(['team_title' => $title, 'team_description' => $description, 'updated_at' => $date, 'team_image' => $image]);
+		DB::table("tbl_team")->where("team_id", $id)->update(['team_title' => $title, 'team_role' => $role, 'team_description' => $description, 'updated_at' => $date, 'team_image' => $image]);
 
         return Redirect::to("/admin/content/team");
 	}	

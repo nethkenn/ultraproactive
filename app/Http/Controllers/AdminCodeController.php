@@ -275,7 +275,7 @@ class AdminCodeController extends AdminController {
 				/**
 				 *UPDATE THE VOUCHER ID IF ANY 
 				 */
-				if($new_voucher)
+				if(isset($new_voucher))
 				{
 					$tbl_membership_code_sale_2 = Tbl_membership_code_sale::find($tbl_membership_code_sale->membershipcode_or_num);
 					$tbl_membership_code_sale_2->voucher_id = $new_voucher->voucher_id;

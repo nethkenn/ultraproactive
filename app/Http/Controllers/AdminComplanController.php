@@ -20,6 +20,13 @@ class AdminComplanController extends AdminController
 	public function binary()
 	{
 		$data["_membership"] = Tbl_membership::active()->entry()->get();
+		$data["_membership_pairs"] = Tbl_membership::active()->get();
+
+		foreach($data['_membership_pairs'] as $key => $d)
+		{
+			$data['_membership_pairs'][$key]->count = DB::table('tbl_binary_pairing')->where('membership_id',$d->membership_id)->count();
+		}
+
 		$data["_pairing"] = Tbl_binary_pairing::get();
 		$data["_product"] = Tbl_product::active()->get();
 		return view('admin.computation.binary', $data);
@@ -31,8 +38,9 @@ class AdminComplanController extends AdminController
 			$insert["pairing_point_l"] = Request::input("pairing_points_l");
 			$insert["pairing_point_r"] = Request::input("pairing_points_r");
 			$insert["pairing_income"] = Request::input("pairing_income");
+			$insert["membership_id"] = Request::input("membership");
 			Tbl_binary_pairing::insert($insert);
-			return Redirect::to('/admin/utilities/binary');
+			return Redirect::to('/admin/utilities/binary/membership/binary/edit?id='.Request::input('membership'));
 		}
 		else
 		{
@@ -47,7 +55,7 @@ class AdminComplanController extends AdminController
 			$update["pairing_point_r"] = Request::input("pairing_points_r");
 			$update["pairing_income"] = Request::input("pairing_income");
 			Tbl_binary_pairing::where("pairing_id", Request::input("id"))->update($update);
-			return Redirect::to('/admin/utilities/binary');
+			return Redirect::to('/admin/utilities/binary/membership/binary/edit?id='.Request::input('membership'));
 		}
 		else
 		{
@@ -58,7 +66,7 @@ class AdminComplanController extends AdminController
 	public function binary_delete()
 	{
 		Tbl_binary_pairing::where("pairing_id", Request::input("id"))->delete();
-		return Redirect::to('/admin/utilities/binary');
+		return Redirect::to('/admin/utilities/binary/membership/binary/edit?id='.Request::input('membership'));
 	}
 	public function binary_membership_edit()
 	{
@@ -241,5 +249,18 @@ class AdminComplanController extends AdminController
 			Compute::tree(Request::input("slot_id"));
 			echo json_encode("success");
 		}
+	}
+	public function binary_entry()
+	{
+		$data["_pairing"] = Tbl_binary_pairing::where('membership_id',Request::input("id"))->get();
+		$data["data"] = Tbl_membership::where("membership_id", Request::input("id"))->first();
+		if(Request::isMethod("post"))
+		{
+			$update["max_pairs_per_day"] = Request::input("max");
+			Tbl_membership::where("membership_id", Request::input("id"))->update($update);
+			return Redirect::to('/admin/utilities/binary');
+		}
+		
+		return view('admin.computation.binary_entry', $data);	
 	}
 }

@@ -167,9 +167,9 @@
                 <div class="col-sm-9">
                     <select class="form-control" id="111" name="slot">
                         @if($getallslot)
-                        @foreach($getallslot as $get)
-                        <option {{ $slotnow->slot_id == $get->slot_id ? 'selected' : '' }}  value="{{$get->slot_id}}"> Slot #{{$get->slot_id}}</option>
-                        @endforeach
+                            @foreach($getallslot as $get)
+                                <option {{ $slotnow->slot_id == $get->slot_id ? 'selected' : '' }}  value="{{$get->slot_id}}"> Slot #{{$get->slot_id}}</option>
+                            @endforeach
                         @endif
                     </select>
                 </div>
@@ -207,7 +207,17 @@
             <div class="form-group para">
                 <label for="1" class="col-sm-3 control-label">Sponsor</label>
                 <div class="col-sm-9">
-                    <input class="sponse form-control" id="1" name="sponsor" value="">
+                    @if($exist_lead)
+                    <input type="hidden" value="1" id="checkclass">
+                    <select class="sponser form-control" id="1" name="sponsor">
+                        @foreach($exist_lead as $exist)
+                        <option value="{{$exist->slot_id}}">Slot #{{$exist->slot_id}}</option>
+                        @endforeach
+                    </select>
+                    @else
+                        <input type="hidden" value="0" id="checkclass">
+                        <input class="sponse form-control" id="1" name="sponsor" value="">
+                    @endif
                 </div>
             </div>
             <div class="form-group para">

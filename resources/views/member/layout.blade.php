@@ -109,7 +109,7 @@
                         @else
                         <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">NO SLOTS<b class="caret"></b></a>
                         @endif
-                        <ul class="dropdown-menu" style="text-transform: normal">
+                        <ul class="dropdown-menu scrollable-menu" style="text-transform: normal">
                             @if($slot)                                                    
                                 @foreach($slot as $slots)
                                     @if(Request::input('mode'))
@@ -144,7 +144,7 @@
 <script type="text/javascript" src="/resources/assets/remodal/src/jquery.remodal.js"></script>
 <script type="text/javascript" src="/resources/assets/footable/js/footable.js"></script>
 <script type="text/javascript" src="/resources/assets/jquery-ui/jquery-ui.js"></script>
-<script type="text/javascript" src="/resources/assets/stickyfloat/stickyfloat.js"></script>
+<script type="text/javascript" src="/resources/assets/stickyfloat/stickyfloat.js"></script>\
 @yield('script')
 
 </body>

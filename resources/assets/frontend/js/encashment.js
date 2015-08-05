@@ -24,18 +24,22 @@ function encashment()
 		$("#clickencash").click(function()
 		{	
 			deduction = 0;
-			var one = $("#amount").val();
+
+			var one = $("#amount").val(); 
 			var two = $(".max").attr('val');
 			var four = 0;
 			var five = 0;
 			$("#enc").val($("#typeencashment").val());
 			$("#two").val(one);
 			$("#one").val(two);
-			$("#three").val(parseInt(two)-parseInt(one));
+			$("#three").val(two-one);
 			$("#four").val(four);
 			$("#five").val(five);
-			$("#six").val(parseInt($("#three").val())-(parseInt(four)+parseInt(five)))
-			compute_country();
+			
+			var recievable = compute_recievable(one);
+
+			$("#six").val(recievable);
+			// console.log(recievable);
 			var inst = $('[data-remodal-id=encashment]').remodal();
           	inst.open(); 
           	check_value();
@@ -61,7 +65,11 @@ function encashment()
         		deduction = deduction + value.deduction_amount;
         		total2 = value.deduction_amount;
         	}
+
+
         	$("#"+value.deduction_id).val(total2);
+
+        	f_total = parseFloat(total2) + parseFloat(f_total);
         });
 
         $("#six").val(parseInt($("#two").val())-deduction);

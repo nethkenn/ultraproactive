@@ -13,6 +13,11 @@
   src: url("/resources/assets/fonts/TwCenMT-CondensedBold.eot?#iefix") format("embedded-opentype"), url("/resources/assets/fonts/TwCenMT-CondensedBold.woff") format("woff"), url("/resources/assets/fonts/TwCenMT-CondensedBold.ttf") format("truetype"), url("/resources/assets/fonts/TwCenMT-CondensedBold.svg#TwCenMT-CondensedBold") format("svg");
   font-weight: normal;
   font-style: normal; }
+.scrollable-menu {
+  height: auto;
+  max-height: 400px;
+  overflow-x: hidden; }
+
 ul.nav li.dropdown:hover ul.dropdown-menu {
   display: block; }
 

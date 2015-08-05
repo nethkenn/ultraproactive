@@ -182,10 +182,10 @@
 	</form>
 </div>
 
-{{-- <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<!-- <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="/resources/assets/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/resources/assets/remodal/src/jquery.remodal.js"></script>
-<script type="text/javascript" src="/resources/assets/jquery-ui/jquery-ui.js"></script> --}}
+<script type="text/javascript" src="/resources/assets/jquery-ui/jquery-ui.js"></script> -->
 <script type="text/javascript">
 	;(function($)
 	{
