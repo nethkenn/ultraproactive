@@ -57,7 +57,8 @@ class MemberRegisterController extends Controller
 					$customer_info = Customer::info();
 			        if($customer_info)
 			        {
-						return Redirect::to('member');
+					  	$message = 'Please logout first.';
+			 		  	return Redirect::to('member/leads')->with('message',$message);
 				    }    
 					$data['country'] = DB::table('tbl_country')->where('archived',0)->get();
 					return view('member.register',$data);

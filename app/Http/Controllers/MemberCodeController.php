@@ -65,7 +65,11 @@ class MemberCodeController extends MemberController
 
 
 		$s = Tbl_account::where('tbl_account.account_id',$id)->belongstothis()->get();
-		$j = Tbl_voucher_has_product::product()->voucher()->productcode()->where('account_id',Customer::id())->get();
+		// $j = Tbl_voucher_has_product::product()->voucher()->productcode()->where('account_id',Customer::id())->where('tbl_product_code.used',0)->get();
+		// $j = DB::table('tbl_voucher')->join('tbl_voucher_has_product','tbl_voucher_has_product.voucher_id','=','tbl_voucher.voucher_id')
+		// 							 ->join('tbl_product_code','tbl_product_code.voucher_item_id','=','tbl_voucher_has_product.voucher_item_id')
+		// 							 ->where('account_id',Customer::id())
+		// 							 ->get();
 
 		if(isset($_POST['sbmtclaim']))
 		{

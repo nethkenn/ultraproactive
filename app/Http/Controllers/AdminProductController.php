@@ -40,6 +40,7 @@ class AdminProductController extends AdminController
 			$rules['product_category'] = 'required|regex:/^[A-Za-z0-9\s-_]+$/';
 			$rules['unilevel_pts'] = 'numeric|min:0';
 			$rules['binary_pts'] = 'numeric|min:0';
+			$rules['upgrade_pts'] = 'numeric|min:0';
 			$rules['price'] = 'numeric|min:0';
 			
 
@@ -57,6 +58,7 @@ class AdminProductController extends AdminController
 				$product = new Tbl_product(Request::input());
 				$product->product_category_id = $this->get_prod_cat(Request::input('product_category'));
 				$product->sku = Request::input('sku');
+				$product->upgrade_pts = Request::input('upgrade_pts');
 				$product->save();
 				return redirect('admin/maintenance/product');
 			}
@@ -161,6 +163,7 @@ class AdminProductController extends AdminController
 			$rules['product_category'] = 'required|regex:/^[A-Za-z0-9\s-_]+$/';
 			$rules['unilevel_pts'] = 'numeric|min:0';
 			$rules['binary_pts'] = 'numeric|min:0';
+			$rules['upgrade_pts'] = 'numeric|min:0';
 			$rules['price'] = 'numeric|min:0';
 			
 
@@ -184,6 +187,7 @@ class AdminProductController extends AdminController
 				$product->product_name = Request::input('product_name');
 				$product->unilevel_pts = Request::input('unilevel_pts');
 				$product->binary_pts = Request::input('binary_pts');
+				$product->upgrade_pts = Request::input('upgrade_pts');
 				$product->image_file = Request::input('image_file');
 				$product->sku = Request::input('sku');
 				$product->save();
