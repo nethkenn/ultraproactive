@@ -120,7 +120,7 @@ class Compute
                     /* RETRIEVE LEFT & RIGHT POINTS */
                     $binary["left"] = $slot_recipient->slot_binary_left;
                     $binary["right"] = $slot_recipient->slot_binary_right; 
-
+                    $flushpoints = $slot_recipient->pair_flush_out_wallet;
                     /* ADD NECESARRY POINTS */
                     $earned_points = $binary_pts;
 
@@ -132,7 +132,7 @@ class Compute
                         /* INSERT LOG FOR EARNED POINTS IN ACCOUNT */
                         $log = "Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($earned_points, 2) . " binary points</b> on " . $tree->placement_tree_position . " when " . $new_slot_info->account_name . " used one if his/her product code.";
                         Log::account($slot_recipient->slot_owner, $log);
-                        
+
                         /* CHECK PAIRING */
                         foreach($_pairing as $pairing)
                         {
@@ -150,10 +150,10 @@ class Compute
                                     if($pairing_bonus != 0)
                                     {
 
-                                         /* Check if entry per day is exceeded already */
-
+                                                /* Check if entry per day is exceeded already */
+                                                $count =  Tbl_slot::id($slot_recipient->slot_id)->first();
                                                 $member = Tbl_membership::where('membership_id',$slot_recipient->slot_membership)->first();
-                                                $count = $slot_recipient->pairs_today;
+                                                $count = $count->pairs_today;
                                                 $date = Carbon::now()->toDateString(); 
                                                 $condition = null;
 
@@ -163,8 +163,6 @@ class Compute
                                                     if($member->max_pairs_per_day == $count)
                                                     {
                                                         /* Already exceeded */
-                                                        $log = "Entry limit's per day already exceed ";
-                                                        Log::account($slot_recipient->slot_owner, $log);
                                                         $update['pairs_today'] = $count;
                                                         $condition = false;
                                                     }
@@ -197,7 +195,7 @@ class Compute
                                                         /* CHECK IF NOT FREE SLOT */
                                                         if($new_slot_info->slot_type != "FS" && $new_slot_info->slot_wallet >= 0)
                                                         {
-                                                            Compute::income_per_day($slot_recipient->slot_id,$pairing_bonus,'binary_repurchase',$slot_recipient->slot_owner,$log);
+                                                            Compute::income_per_day($slot_recipient->slot_id,pairing_bonus,'binary_repurchase',$slot_recipient->slot_owner,$log);
                                                         }
 
                                                         /* INSERT LOG */
@@ -207,6 +205,12 @@ class Compute
                                                         /* MATCHING SALE BONUS */
                                                         Compute::matching($buyer_slot_id, "REPURCHASE", $slot_recipient, $pairing_bonus);
                                                 }
+                                                else
+                                                {   
+                                                        $log = "Im sorry! Max pairing per day already exceed your slot #" . $slot_recipient->slot_id . " flushed out <b>" . number_format($pairing_bonus, 2) . " wallet</b> from <b>PAIRING BONUS</b> due to pairing combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining binary points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right. This combination was caused by a repurchase of one of your downlines.";          
+                                                        Log::account($slot_recipient->slot_owner, $log);
+                                                        $flushpoints =  $flushpoints+$pairing_bonus;
+                                                }
                                     }
                                 }
                             }
@@ -215,7 +219,7 @@ class Compute
                         /* UPDATE POINTS */
                         $update_recipient["slot_binary_left"] = $binary["left"];
                         $update_recipient["slot_binary_right"] = $binary["right"];
-
+                        $update_recipient["pair_flush_out_wallet"] = $flushpoints;
                         /* CHECK IF NOT FREE SLOT */
                         if($new_slot_info->slot_type != "FS" && $new_slot_info->slot_wallet >= 0)
                         {
@@ -300,7 +304,7 @@ class Compute
                 /* RETRIEVE LEFT & RIGHT POINTS */
                 $binary["left"] = $slot_recipient->slot_binary_left;
                 $binary["right"] = $slot_recipient->slot_binary_right; 
-
+                $flushpoints = $slot_recipient->pair_flush_out_wallet;
                 /* ADD NECESARRY POINTS */
                 $earned_points = $new_slot_info->membership_binary_points;
 
@@ -335,9 +339,9 @@ class Compute
                                             {
 
                                                 /* Check if entry per day is exceeded already */
-
+                                                $count =  Tbl_slot::id($tree->placement_tree_parent_id)->first();
                                                 $member = Tbl_membership::where('membership_id',$slot_recipient->slot_membership)->first();
-                                                $count = $slot_recipient->pairs_today;
+                                                $count = $count->pairs_today;
                                                 $date = Carbon::now()->toDateString(); 
                                                 $condition = null;
 
@@ -347,8 +351,6 @@ class Compute
                                                     if($member->max_pairs_per_day == $count)
                                                     {
                                                         /* Already exceeded */
-                                                        $log = "Entry limit's per day already exceed ";
-                                                        Log::account($slot_recipient->slot_owner, $log);
                                                         $update['pairs_today'] = $count;
                                                         $condition = false;
                                                     }
@@ -390,6 +392,13 @@ class Compute
                                                     /* MATCHING SALE BONUS */
                                                     Compute::matching($new_slot_id, $method, $slot_recipient, $pairing_bonus);                                                 
                                                 }
+                                                else
+                                                {   
+                                                        $log = "Im sorry! Max pairing per day already exceed your slot #" . $slot_recipient->slot_id . " flushed out <b>" . number_format($pairing_bonus, 2) . " wallet</b> from <b>PAIRING BONUS</b> due to pairing combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining binary points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right. This combination was caused by a repurchase of one of your downlines.";          
+                                                        Log::account($slot_recipient->slot_owner, $log);
+                                                        $flushpoints =  $flushpoints+$pairing_bonus;
+                                                }
+
                                             }                                                      
                                 }                                
               
@@ -399,7 +408,7 @@ class Compute
                     /* UPDATE POINTS */
                     $update_recipient["slot_binary_left"] = $binary["left"];
                     $update_recipient["slot_binary_right"] = $binary["right"];
-
+                    $update_recipient["pair_flush_out_wallet"] = $flushpoints;
                     /* UPDATE SLOT CHANGES TO DATABASE */
                     if($new_slot_info->slot_type != "FS" && $new_slot_info->slot_wallet >= 0)
                     {
@@ -466,7 +475,7 @@ class Compute
                 $new_slot_info = Tbl_slot::id($new_slot_id)->account()->membership()->first();
 
                 /* COMPUTE FOR THE DIRECT INCOME */
-                $direct_income = ($slot_recipient->membership_direct_sponsorship_bonus/100) * $new_slot_info->membership_price;
+                $direct_income = ($slot_recipient->membership_direct_sponsorship_bonus/100) * $new_slot_info->member_upgrade_pts;
 
                 if($direct_income != 0)
                 {

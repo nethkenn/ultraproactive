@@ -8,7 +8,7 @@ class Tbl_membership extends Model
 	protected $table = 'tbl_membership';
 	protected $primaryKey = 'membership_id';
 	public $timestamps = false;
-	protected $fillable = ['membership_name', 'membership_price','archived', 'discount','max_income','membership_entry','membership_upgrade'];
+	protected $fillable = ['membership_name', 'membership_price','archived', 'discount','max_income','membership_entry','membership_upgrade','member_upgrade_pts'];
 	protected $guarded = ['membership_id'];
 
 

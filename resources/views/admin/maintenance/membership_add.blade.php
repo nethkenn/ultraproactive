@@ -63,8 +63,20 @@
                         </div>
                     @endif
                     <input name="discount" value="{{Request::input('discount')}}" required="required" class="form-control" id="" placeholder="" type="number">
-                </div>   
-
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="member_upgrade_pts">Upgrade PTS</label>
+                    @if($_error['member_upgrade_pts'])
+                        <div class="col-md-12 alert alert-danger form-errors">
+                            <ul>
+                                @foreach($_error['member_upgrade_pts'] as $error)
+                                    <li>{{$error}}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <input name="member_upgrade_pts" value="{{Request::input('member_upgrade_pts')}}" required="required" class="form-control" id="" placeholder="" type="number">
+                </div> 
                 <div class="form-group col-md-6">
                     <label for="discount">Enable Entry</label>
                     @if($_error['membership_entry'])

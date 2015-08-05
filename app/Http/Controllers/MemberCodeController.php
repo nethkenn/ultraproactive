@@ -244,7 +244,7 @@ class MemberCodeController extends MemberController
 							$insert["membership_entry_id"] =  $getslot->membership_id;
 							$slot_id = Tbl_slot::insertGetId($insert);
 							Compute::tree($slot_id);
-							Compute::binary($slot_id);
+							Compute::entry($slot_id);
 							$return["placement"] = Request::input("placement");
 							Tbl_membership_code::where('code_pin',$data['code_number'])->update(['used'=>1]);
 							$message['success'] = "Slot Created.";
@@ -278,7 +278,7 @@ class MemberCodeController extends MemberController
 							$insert["membership_entry_id"] =  $getslot->membership_id;
 							$slot_id = Tbl_slot::insertGetId($insert);
 							Compute::tree($slot_id);
-							Compute::binary($slot_id);
+							Compute::entry($slot_id);
 							$return["placement"] = Request::input("placement");
 							Tbl_membership_code::where('code_pin',$data['code_number'])->update(['used'=>1]);
 							$message['success'] = "Slot Created.";
@@ -312,7 +312,7 @@ class MemberCodeController extends MemberController
 							$insert["membership_entry_id"] =  $getslot->membership_id;
 							$slot_id = Tbl_slot::insertGetId($insert);
 							Compute::tree($slot_id);
-							Compute::binary($slot_id);
+							Compute::entry($slot_id);
 							$return["placement"] = Request::input("placement");
 							Tbl_membership_code::where('code_pin',$data['code_number'])->update(['used'=>1]);
 							$message['success'] = "Slot Created.";
