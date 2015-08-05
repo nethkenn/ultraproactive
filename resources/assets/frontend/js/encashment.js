@@ -9,6 +9,17 @@ function encashment()
 		$(document).ready(function()
 		{
 			document_ready();
+
+			$('#checkconfirmation').on('click', function(event)
+			{
+				var _this = $(this);
+				$('[data-remodal-id="encashment"] form').submit(function(event) {
+					_this.hide();
+				});
+			});
+
+
+
 		});
 	}
 	function document_ready()
@@ -16,13 +27,21 @@ function encashment()
 		initialize();
 		check_value();
 		country = jQuery.parseJSON($(".forhidden").val());
+
 	}
 
 
 	function initialize()
-	{
+	{	
+
+
 		$("#clickencash").click(function()
 		{	
+			$('#checkconfirmation').on('click', function()
+			{
+				$(this).show();
+			});
+
 			deduction = 0;
 
 			var one = $("#amount").val(); 
@@ -50,10 +69,12 @@ function encashment()
           	inst.open(); 
 		});
 	}
-	function compute_country()
+	function compute_recievable(encashment)
 	{
+
+		var f_total = 0;
 		$.each( country.forjson, function( key, value ) 
-        {
+        {	
         	var total2 = 0;
         	if(value.percent == 1)
         	{
@@ -66,14 +87,19 @@ function encashment()
         		total2 = value.deduction_amount;
         	}
 
-
         	$("#"+value.deduction_id).val(total2);
 
         	f_total = parseFloat(total2) + parseFloat(f_total);
         });
 
-        $("#six").val(parseInt($("#two").val())-deduction);
+
+        // alert(f_total);
+        return parseFloat(encashment) - parseFloat(f_total);
+        
+
+        // $("#six").val(parseInt($("#two").val()) - parseInt(deduction));
 	}
+
 	function check_value()
 	{
         if(parseInt($("#six").val()) >= 0 && parseInt($("#three").val()) >= 0)
@@ -86,5 +112,5 @@ function encashment()
         }
 
 	}
-}
 
+}
