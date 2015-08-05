@@ -195,7 +195,7 @@ class Compute
                                                         /* CHECK IF NOT FREE SLOT */
                                                         if($new_slot_info->slot_type != "FS" && $new_slot_info->slot_wallet >= 0)
                                                         {
-                                                            Compute::income_per_day($slot_recipient->slot_id,pairing_bonus,'binary_repurchase',$slot_recipient->slot_owner,$log);
+                                                            Compute::income_per_day($slot_recipient->slot_id,$pairing_bonus,'binary_repurchase',$slot_recipient->slot_owner,$log);
                                                         }
 
                                                         /* INSERT LOG */
