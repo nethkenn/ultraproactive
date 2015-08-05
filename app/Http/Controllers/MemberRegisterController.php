@@ -42,11 +42,14 @@ class MemberRegisterController extends Controller
 
 	public function lead($slug)
 	{
-		$data = Tbl_account::where('account_id',Customer::id())->first();
+
 		$email = Tbl_account::where('account_username',$slug)->first();
+
 		if($email)
 		{
+
 					$data = Session::get('message');
+
 					if(Request::input('submit'))
 					{	
 						$data =	$this->checkifvalidate2(Request::input(),$email);
@@ -57,10 +60,14 @@ class MemberRegisterController extends Controller
 					$customer_info = Customer::info();
 			        if($customer_info)
 			        {
+
 					  	$message = 'Please logout first.';
 			 		  	return Redirect::to('member/leads')->with('message',$message);
 				    }    
+
+				    $data['_beneficiary_rel'] = Tbl_beneficiary_rel::all();
 					$data['country'] = DB::table('tbl_country')->where('archived',0)->get();
+
 					return view('member.register',$data);
 
 		}
@@ -71,10 +78,6 @@ class MemberRegisterController extends Controller
 		}
 
 	}
-	// public function insertdata($data)
-	// {
-
-	// }
 	public function checkifvalidate($data)
 	{
 		$data2 = null;

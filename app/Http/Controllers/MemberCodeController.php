@@ -159,8 +159,9 @@ class MemberCodeController extends MemberController
 			else
 			{
 				$unilevel_pts = $code_info->unilevel_pts; 
+				$upgrade_pts = $code_info->upgrade_pts; 
 				$binary_pts = $code_info->binary_pts;
-				Compute::repurchase($slot_id, $binary_pts, $unilevel_pts);
+				Compute::repurchase($slot_id, $binary_pts, $unilevel_pts, $upgrade_pts);
 				$update["used"] = 1;
 				$code_info = Tbl_product_code::where("product_pin", $product_pin)->update($update);
 
