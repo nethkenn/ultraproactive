@@ -16,36 +16,26 @@ function encashment()
 		initialize();
 		check_value();
 		country = jQuery.parseJSON($(".forhidden").val());
-
 	}
 
 
 	function initialize()
-	{	
-
-
+	{
 		$("#clickencash").click(function()
 		{	
-
-
-			// 		 var test = ;
-		 // alert(test);
 			deduction = 0;
-
-			var one = (parseFloat($("#amount").val())).formatMoney(2); 
+			var one = $("#amount").val();
 			var two = $(".max").attr('val');
 			var four = 0;
 			var five = 0;
 			$("#enc").val($("#typeencashment").val());
 			$("#two").val(one);
 			$("#one").val(two);
-			$("#three").val((two-one).formatMoney(2));
+			$("#three").val(parseInt(two)-parseInt(one));
 			$("#four").val(four);
 			$("#five").val(five);
-			
-			var recievable = compute_recievable(one)
-			$("#six").val((recievable).formatMoney(2));
-			// console.log(recievable);
+			$("#six").val(parseInt($("#three").val())-(parseInt(four)+parseInt(five)))
+			compute_country();
 			var inst = $('[data-remodal-id=encashment]').remodal();
           	inst.open(); 
           	check_value();
@@ -56,12 +46,10 @@ function encashment()
           	inst.open(); 
 		});
 	}
-	function compute_recievable(encashment)
+	function compute_country()
 	{
-
-		var f_total = 0;
 		$.each( country.forjson, function( key, value ) 
-        {	
+        {
         	var total2 = 0;
         	if(value.percent == 1)
         	{
@@ -73,20 +61,11 @@ function encashment()
         		deduction = deduction + value.deduction_amount;
         		total2 = value.deduction_amount;
         	}
-
-        	$("#"+value.deduction_id).val((parseFloat(total2)).formatMoney(2));
-
-        	f_total = parseFloat(total2) + parseFloat(f_total);
+        	$("#"+value.deduction_id).val(total2);
         });
 
-
-        // alert(f_total);
-        return parseFloat(encashment) - parseFloat(f_total);
-        
-
-        // $("#six").val(parseInt($("#two").val()) - parseInt(deduction));
+        $("#six").val(parseInt($("#two").val())-deduction);
 	}
-
 	function check_value()
 	{
         if(parseInt($("#six").val()) >= 0 && parseInt($("#three").val()) >= 0)
@@ -99,5 +78,5 @@ function encashment()
         }
 
 	}
-
 }
+
