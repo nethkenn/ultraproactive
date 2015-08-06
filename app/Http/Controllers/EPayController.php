@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Classes\Ventaja
+use App\Classes\Ventaja;
 
-class test extends Controller
+
+class EPayController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +18,8 @@ class test extends Controller
      */
     public function index()
     {
-        return "test ventaja";
+
     }
-
-
 
     public function callApi($postUrl, $params, $key)
     {
@@ -45,5 +44,39 @@ class test extends Controller
         return json_decode($response, true);
     }
 
+    public function signIn()
+    {
+
+        
+        $signature = "";
+        try
+        { 
+            $certFile = "resources/assets/payment/demo.pem";       
+            $baseUrl = "http://121.58.224.179/VentajaAPI/api/";
+            $method = "Process";
+
+            $params = new Ventaja();       
+            $params->id = "130081500001";
+            $params->uid = "teller";
+            $params->pwd = "p@ssw0rD";
+            $params->code = 101;
+
+
+
+            // note: you can create a class like RequestParam for each or generate it as a string and use json_decode
+            $params->data = json_decode('{"lastName":"NATIVIDAD","firstName":"HENRY","middleName":"VILLANUEVA","birthDate":"05/06/1960"}');
+           
+            $res = $this->callApi($baseUrl . $method, $params, $certFile);
+
+            echo json_encode($res);
+        }
+        catch (Exception $e)
+        { 
+            die($e->getMessage());
+        }
+    }
 
 }
+
+
+

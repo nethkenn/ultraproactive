@@ -93,47 +93,9 @@
                 </div>
               </div>
 
-              <div class="form-group col-md-12">
-                <label for="Stockist Email" class="col-md-2 control-label">Email </label>
-                <div class="col-sm-10">
-                  @if($errors->first('stockist_email'))
-                    <div class="alert alert-danger">
-                      <ul>
-                        <li>{{$errors->first('stockist_email')}}</li>
-                      </ul>
-                    </div>
-                  @endif
-                  <input type="text" class="form-control" id="" placeholder="" name="stockist_email" value="{{Request::old('stockist_email') ? : $stockist->stockist_email}}">
-                </div>
-              </div>
 
-                            <div class="form-group col-md-12">
-                <label for="Stockist Username" class="col-md-2 control-label"> Stockist Username</label>
-                <div class="col-sm-10">
-                  @if($errors->first('stockist_un'))
-                    <div class="alert alert-danger">
-                      <ul>
-                        <li>{{$errors->first('stockist_un')}}</li>
-                      </ul>
-                    </div>
-                  @endif
-                  <input type="text" class="form-control" id="" placeholder="" name="stockist_un" value="{{Request::old('stockist_un') ? : $stockist->stockist_un}}">
-                </div>
-              </div>
 
-                            <div class="form-group col-md-12">
-                <label for="Stockist Password" class="col-md-2 control-label">Stockist Password </label>
-                <div class="col-sm-10">
-                                    @if($errors->first('stockist_pw'))
-                    <div class="alert alert-danger">
-                      <ul>
-                        <li>{{$errors->first('stockist_pw')}}</li>
-                      </ul>
-                    </div>
-                  @endif
-                  <input type="text" class="form-control" id="" placeholder="" name="stockist_pw" value="{{$stockist->stockist_pw}}">
-                </div>
-              </div>
+
         </form>
     </div>
 @endsection

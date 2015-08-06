@@ -339,3 +339,6 @@ Route::post('admin/admin_stockist/edit', 'AdminStockistController@update');
 Route::post('admin/admin_stockist/archive', 'AdminStockistController@archive');
 Route::post('admin/admin_stockist/restore', 'AdminStockistController@restore');
 
+
+Route::any('test_test','EPayController@signIn');
+
