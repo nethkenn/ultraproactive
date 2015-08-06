@@ -402,8 +402,8 @@
         @foreach($_notification as $log)
             <div class="holders">
                 <div class="text">{!! $log->account_log_details !!}</div>
-                <div class="date">{{ date("F j, Y", strtotime("F j, Y")) }}</div>
-                <div class="time">{{ date("g:i a", strtotime("F j, Y")) }}</div>
+                <div class="date">{{ $log->date }}</div>
+                <!-- <div class="time">{{ date("g:i a", strtotime("$log->date")) }}</div> -->
             </div>
         @endforeach
         <div class="link-holder">
