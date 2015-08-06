@@ -71,10 +71,7 @@ class AdminStockistTypeController extends AdminController
 		$stockist_type->save();
 
 
-		if($stockist_type)
-		{
 
-		}
 		return redirect('admin/stockist_type');
 	}
 

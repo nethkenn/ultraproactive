@@ -1,8 +1,5 @@
 @extends('admin.layout')
 @section('content')
-  <pre>
-    {{var_dump($stockist_type->stockist_type_name)}}
-  </pre>
 	<div class="header col-md-12" >
 	    <div class="title col-md-8">
 	        <h2><i class="fa fa-tag"></i> EDIT STOCKIST TYPE</h2>

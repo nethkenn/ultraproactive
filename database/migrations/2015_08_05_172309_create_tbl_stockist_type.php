@@ -19,7 +19,7 @@ class CreateTblStockistType extends Migration
             $table->double('stockist_type_discount')->default(0);
             $table->double('stockist_type_package_discount')->default(0);
             $table->integer('stockist_type_minimum_order')->default(0);
-            $table->tinyInteger('stockist_type_minimum_order')->default(0);
+            $table->tinyInteger('archive')->default(0);
         });
     }
 

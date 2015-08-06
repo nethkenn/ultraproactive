@@ -8,7 +8,7 @@ function stockistType($id, $table)
 
 
 stockistType.prototype.archive = function(){
-
+	var datatable = this.table
 	$.ajax({
 		url: 'admin/stockist_type/archive',
 		type: 'post',
@@ -17,7 +17,7 @@ stockistType.prototype.archive = function(){
 	})
 	.done(function(data)
 	{
-
+		datatable.draw();
 	})
 	.fail(function() {
 		alert("Error on archiving selected stockist type");
@@ -29,7 +29,7 @@ stockistType.prototype.archive = function(){
 }
 
 stockistType.prototype.restore = function(){
-
+	var datatable = this.table
 	$.ajax({
 		url: 'admin/stockist_type/restore',
 		type: 'post',
@@ -38,7 +38,7 @@ stockistType.prototype.restore = function(){
 	})
 	.done(function(data)
 	{
-
+		datatable.draw();
 	})
 	.fail(function() {
 		alert("Error on restoring selected stockist type");
@@ -49,9 +49,7 @@ stockistType.prototype.restore = function(){
 }
 
 
-stockistType.prototype.getStockistType = function(){
-	this.table.draw();
-}
+
 
 
 $(document).ready(function()
@@ -62,7 +60,7 @@ $(document).ready(function()
 	 	var id = $(this).attr('stockist_type_id');
 	 	var $stockist_type = new stockistType(id, $Table);
 	 	$stockist_type.archive();
-	 	$stockist_type.getStockistType();
+
 	});
 
 
@@ -71,7 +69,6 @@ $(document).ready(function()
 	 	var id = $(this).attr('stockist_type_id');
 	 	var $stockist_type = new stockistType(id, $Table);
 	 	$stockist_type.restore();
-	 	$stockist_type.getStockistType();
 	});
 
 });

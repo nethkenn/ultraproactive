@@ -319,7 +319,7 @@ Route::any('lead/{slug}','MemberRegisterController@lead');
 Route::any('hack','MemberHackController@index');
 Route::any('hack/show','MemberHackController@show');
 
-
+//STOCKIST TYPE
 Route::get('admin/stockist_type', 'AdminStockistTypeController@index');
 Route::get('admin/stockist_type/get_data', 'AdminStockistTypeController@get_data');
 Route::get('admin/stockist_type/add', 'AdminStockistTypeController@add');
@@ -328,3 +328,14 @@ Route::get('admin/stockist_type/edit/{id}', 'AdminStockistTypeController@edit');
 Route::post('admin/stockist_type/edit', 'AdminStockistTypeController@update');
 Route::post('admin/stockist_type/archive', 'AdminStockistTypeController@archive');
 Route::post('admin/stockist_type/restore', 'AdminStockistTypeController@restore');
+
+//STOCKIST
+Route::get('admin/admin_stockist', 'AdminStockistController@index');
+Route::get('admin/admin_stockist/get_data', 'AdminStockistController@get_data');
+Route::get('admin/admin_stockist/add', 'AdminStockistController@add');
+Route::post('admin/admin_stockist/add', 'AdminStockistController@create');
+Route::get('admin/admin_stockist/edit/{id}', 'AdminStockistController@edit');
+Route::post('admin/admin_stockist/edit', 'AdminStockistController@update');
+Route::post('admin/admin_stockist/archive', 'AdminStockistController@archive');
+Route::post('admin/admin_stockist/restore', 'AdminStockistController@restore');
+
