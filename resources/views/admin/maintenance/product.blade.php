@@ -26,7 +26,7 @@
 					<th>Name</th>
 					<th>Category</th>
 					<th>Price</th>
-					<th>Upgrade Points</th>
+					<th>Promotion PTS</th>
 					<th class="option-col"></th>
 					<th class="option-col"></th>
 				</tr>

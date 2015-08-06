@@ -145,7 +145,6 @@ function genealogy_loader()
             }
         });    
     }
-    
     function adjust_tree()
     {
             $curr_margin_left = parseFloat($(".tree-container").css("padding-left"));   
