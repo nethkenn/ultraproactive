@@ -29,11 +29,12 @@ class MemberCheckoutController extends Controller
         $data['_error'] = null;
         $customer = Customer::info();
         $slot = Tbl_slot::select('tbl_slot.*', 'tbl_membership.discount')->leftJoin('tbl_membership', 'tbl_membership.membership_id','=','tbl_slot.slot_membership')
-                                                                        ->where('slot_id', Session::get('currentslot'))
+                                                                        ->where('slot_id', Request::input('slot_id'))
                                                                         ->where('slot_owner', $customer->account_id)
                                                                         ->first();
         $data['slot'] = $slot;
         $cart = Session::get('cart');
+
         $sum_cart = $this->get_final_total($cart);
         $data['final_total'] = $sum_cart - (($slot->discount/100) * $sum_cart);
         $data['remaining_bal'] = $slot->slot_wallet - $data['final_total'];
