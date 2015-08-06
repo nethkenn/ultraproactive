@@ -19,9 +19,9 @@ class CreateTblStockist extends Migration
             $table->string('stockist_location');
             $table->string('stockist_address');
             $table->string('stockist_contact_no');
-            $table->string('stockist_email');
-            $table->string('stockist_un');
-            $table->string('stockist_pw');
+            // $table->string('stockist_email');
+            // $table->string('stockist_un');
+            // $table->string('stockist_pw');
             $table->tinyInteger('archive')->default(0);
             $table->timestamps();
             

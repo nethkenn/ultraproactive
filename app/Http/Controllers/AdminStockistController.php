@@ -7,6 +7,7 @@ use Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Tbl_stockist;
+use App\Tbl_stockist_user;
 use Datatables;
 use App\Tbl_stockist_type;
 use Crypt;
@@ -61,11 +62,16 @@ class AdminStockistController extends AdminController
         $rules['stockist_location'] = "required|unique:tbl_stockist,stockist_location";
         $rules['stockist_address'] = "required|unique:tbl_stockist,stockist_address";
         $rules['stockist_contact_no'] = "required";
-        $rules['stockist_email'] = "required|email|unique:tbl_stockist,stockist_email";
-        $rules['stockist_un'] = "required|unique:tbl_stockist,stockist_un";
+
+        $rules['stockist_email'] = "required|email|unique:tbl_stockist_user,stockist_email";
+        $rules['stockist_un'] = "required|unique:tbl_stockist_user,stockist_un";
         $rules['stockist_pw'] = "required|min:6";
+
+
+
+
         
-        $validator = Validator::make(Request::input(), $rules, $msg);
+        $validator = Validator::make(Request::input(), $rules);
 
         if ($validator->fails())
         {
@@ -75,8 +81,14 @@ class AdminStockistController extends AdminController
         }
 
         $stockist = new Tbl_stockist(Request::input());
-        $stockist->stockist_pw = Crypt::encrypt(Request::input('stockist_pw'));
         $stockist->save();
+        $insert_stockist_user['stockist_id'] = $stockist->stockist_id;
+        $insert_stockist_user['stockist_email'] = Request::input('stockist_email');
+        $insert_stockist_user['stockist_un'] = Request::input('stockist_un');
+        $insert_stockist_user['stockist_pw'] = Crypt::encrypt(Request::input('stockist_pw'));
+
+        $stockist_user = new Tbl_stockist_user($insert_stockist_user);
+        $stockist_user->save();
         return redirect('admin/admin_stockist');
     }
 
@@ -86,8 +98,6 @@ class AdminStockistController extends AdminController
 
 
         $data['stockist'] = Tbl_stockist::findOrFail($id);
-
-        $data['stockist']->stockist_pw = Crypt::decrypt($data['stockist']->stockist_pw);
         $data['stockist_type'] = Tbl_stockist_type::all();
         return view('admin.maintenance.stockist_edit', $data);
     }
@@ -105,9 +115,10 @@ class AdminStockistController extends AdminController
         $rules['stockist_location'] = "required|unique:tbl_stockist,stockist_location,".$stockist_id.",stockist_id";
         $rules['stockist_address'] = "required|unique:tbl_stockist,stockist_address,".$stockist_id.",stockist_id";
         $rules['stockist_contact_no'] = "required";
-        $rules['stockist_email'] = "required|email|unique:tbl_stockist,stockist_email,".$stockist_id.",stockist_id";
-        $rules['stockist_un'] = "required|unique:tbl_stockist,stockist_un,".$stockist_id.",stockist_id";
-        $rules['stockist_pw'] = "required|min:6";
+
+        // $rules['stockist_email'] = "required|email|unique:tbl_stockist,stockist_email,".$stockist_id.",stockist_id";
+        // $rules['stockist_un'] = "required|unique:tbl_stockist,stockist_un,".$stockist_id.",stockist_id";
+        // $rules['stockist_pw'] = "required|min:6";
         
         $validator = Validator::make(Request::input(), $rules, $msg);
 
@@ -122,9 +133,9 @@ class AdminStockistController extends AdminController
         $stockist->stockist_type = Request::input('stockist_type');
         $stockist->stockist_location = Request::input('stockist_location');
         $stockist->stockist_contact_no = Request::input('stockist_contact_no');
-        $stockist->stockist_email = Request::input('stockist_email');
-        $stockist->stockist_un = Request::input('stockist_un');
-        $stockist->stockist_pw =  Crypt::encrypt(Request::input('stockist_pw'));
+        // $stockist->stockist_email = Request::input('stockist_email');
+        // $stockist->stockist_un = Request::input('stockist_un');
+        // $stockist->stockist_pw =  Crypt::encrypt(Request::input('stockist_pw'));
         $stockist->save();
         return redirect('admin/admin_stockist');
 
