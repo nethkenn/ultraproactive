@@ -32,6 +32,7 @@
         </a>
     </div>
 </div>
+<input type="hidden" class="tokens" value="{{Session::get('currentslot')}}">
 <div class="encashment product col-md-7">
     <div class="header">
         <img src="/resources/assets/frontend/img/icon-products.png">

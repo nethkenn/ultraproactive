@@ -38,7 +38,7 @@ $(document).ready(function()
     	{
 
 
-    		var $current_slot = $('select[name="slotnow"]').val();
+    		var $current_slot = $(".tokens").val();
     		console.log('current_slot : ' + $current_slot);
     		$('.checkout_preloader').fadeIn();
     		$('#checkout-form-container').empty("");
@@ -73,7 +73,7 @@ $(document).ready(function()
     		{
 				event.preventDefault();
 
-				var $current_slot = $('select[name="slotnow"]').val();
+				var $current_slot = $(".tokens").val();
 
 	    		console.log('current_slot : ' + $current_slot);
 	    		$('.checkout_preloader').fadeIn();
