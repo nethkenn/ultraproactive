@@ -65,7 +65,11 @@ class MemberCodeController extends MemberController
 
 
 		$s = Tbl_account::where('tbl_account.account_id',$id)->belongstothis()->get();
-		$j = Tbl_voucher_has_product::product()->voucher()->productcode()->where('account_id',Customer::id())->get();
+		// $j = Tbl_voucher_has_product::product()->voucher()->productcode()->where('account_id',Customer::id())->where('tbl_product_code.used',0)->get();
+		// $j = DB::table('tbl_voucher')->join('tbl_voucher_has_product','tbl_voucher_has_product.voucher_id','=','tbl_voucher.voucher_id')
+		// 							 ->join('tbl_product_code','tbl_product_code.voucher_item_id','=','tbl_voucher_has_product.voucher_item_id')
+		// 							 ->where('account_id',Customer::id())
+		// 							 ->get();
 
 		if(isset($_POST['sbmtclaim']))
 		{
@@ -155,8 +159,9 @@ class MemberCodeController extends MemberController
 			else
 			{
 				$unilevel_pts = $code_info->unilevel_pts; 
+				$upgrade_pts = $code_info->upgrade_pts; 
 				$binary_pts = $code_info->binary_pts;
-				Compute::repurchase($slot_id, $binary_pts, $unilevel_pts);
+				Compute::repurchase($slot_id, $binary_pts, $unilevel_pts, $upgrade_pts);
 				$update["used"] = 1;
 				$code_info = Tbl_product_code::where("product_pin", $product_pin)->update($update);
 
@@ -239,7 +244,7 @@ class MemberCodeController extends MemberController
 							$insert["membership_entry_id"] =  $getslot->membership_id;
 							$slot_id = Tbl_slot::insertGetId($insert);
 							Compute::tree($slot_id);
-							Compute::binary($slot_id);
+							Compute::entry($slot_id);
 							$return["placement"] = Request::input("placement");
 							Tbl_membership_code::where('code_pin',$data['code_number'])->update(['used'=>1]);
 							$message['success'] = "Slot Created.";
@@ -273,7 +278,7 @@ class MemberCodeController extends MemberController
 							$insert["membership_entry_id"] =  $getslot->membership_id;
 							$slot_id = Tbl_slot::insertGetId($insert);
 							Compute::tree($slot_id);
-							Compute::binary($slot_id);
+							Compute::entry($slot_id);
 							$return["placement"] = Request::input("placement");
 							Tbl_membership_code::where('code_pin',$data['code_number'])->update(['used'=>1]);
 							$message['success'] = "Slot Created.";
@@ -307,7 +312,7 @@ class MemberCodeController extends MemberController
 							$insert["membership_entry_id"] =  $getslot->membership_id;
 							$slot_id = Tbl_slot::insertGetId($insert);
 							Compute::tree($slot_id);
-							Compute::binary($slot_id);
+							Compute::entry($slot_id);
 							$return["placement"] = Request::input("placement");
 							Tbl_membership_code::where('code_pin',$data['code_number'])->update(['used'=>1]);
 							$message['success'] = "Slot Created.";

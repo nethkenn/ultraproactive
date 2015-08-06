@@ -23,12 +23,12 @@ class Compute
         Compute::direct($new_slot_id, $method);
         Compute::indirect($new_slot_id, $method);
     }
-    public static function repurchase($buyer_slot_id, $binary_pts, $unilevel_pts, $method = "REPURCHASE")
+    public static function repurchase($buyer_slot_id, $binary_pts, $unilevel_pts,$upgrade_pts ,$method = "REPURCHASE")
     {
-        Compute::unilevel_repurchase($buyer_slot_id, $unilevel_pts, $method);
+        Compute::unilevel_repurchase($buyer_slot_id, $unilevel_pts, $method, $upgrade_pts);
         Compute::binary_repurchase($buyer_slot_id, $binary_pts, $method);
     }
-    public static function unilevel_repurchase($buyer_slot_id, $unilevel_pts, $method)
+    public static function unilevel_repurchase($buyer_slot_id, $unilevel_pts, $method, $upgrade_pts)
     {
         $buyer_slot_info = Tbl_slot::id($buyer_slot_id)->account()->membership()->first();
 
@@ -69,7 +69,8 @@ class Compute
                     /* COMPUTE FOR BONUS */
                     if(isset($unilevel_level[$slot_recipient->membership_id][$tree->sponsor_tree_level]))
                     {
-                        $unilevel_bonus = ($unilevel_level[$slot_recipient->membership_id][$tree->sponsor_tree_level]/100) * $unilevel_pts;    
+                        $unilevel_bonus = ($unilevel_level[$slot_recipient->membership_id][$tree->sponsor_tree_level]/100) * $unilevel_pts;  
+                        $upgrade_bonus = ($unilevel_level[$slot_recipient->membership_id][$tree->sponsor_tree_level]/100) * $upgrade_pts;     
                     }
                     else
                     {
@@ -81,9 +82,9 @@ class Compute
                     {
                         /* UPDATE WALLET */
                         $update_recipient["slot_group_points"] = $update_recipient["slot_group_points"] + $unilevel_bonus;
-                        $update_recipient["slot_upgrade_points"] = $update_recipient["slot_upgrade_points"] + $unilevel_bonus;
+                        $update_recipient["slot_upgrade_points"] = $update_recipient["slot_upgrade_points"] + $upgrade_bonus;
                         /* INSERT LOG */
-                        $log = "Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($unilevel_bonus, 2) . " group pv and promotion points</b>. You earned it when slot #" . $buyer_slot_id . " uses a code worth " . number_format($unilevel_pts, 2) . " PV. That slot is located on the Level " . $tree->sponsor_tree_level . " of your sponsor genealogy. Your current membership is " . $slot_recipient->membership_name . " MEMBERSHIP.";
+                        $log = "Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($unilevel_bonus, 2) . " group pv and ". number_format($upgrade_bonus, 2) ." promotion points</b>. You earned it when slot #" . $buyer_slot_id . " uses a code worth " . number_format($unilevel_pts, 2) . " PV. That slot is located on the Level " . $tree->sponsor_tree_level . " of your sponsor genealogy. Your current membership is " . $slot_recipient->membership_name . " MEMBERSHIP.";
                         Log::account($slot_recipient->slot_owner, $log);
 
                         /* UPDATE SLOT CHANGES TO DATABASE */
@@ -119,7 +120,7 @@ class Compute
                     /* RETRIEVE LEFT & RIGHT POINTS */
                     $binary["left"] = $slot_recipient->slot_binary_left;
                     $binary["right"] = $slot_recipient->slot_binary_right; 
-
+                    $flushpoints = $slot_recipient->pair_flush_out_wallet;
                     /* ADD NECESARRY POINTS */
                     $earned_points = $binary_pts;
 
@@ -148,22 +149,68 @@ class Compute
                                     /* CHECK IF PAIRING BONUS IS ZERO */
                                     if($pairing_bonus != 0)
                                     {
-                                        /* UPDATE WALLET */
-                                        // $update_recipient["slot_wallet"] = $update_recipient["slot_wallet"] + $pairing_bonus;
-                                        // $update_recipient["slot_total_earning"] = $update_recipient["slot_total_earning"] + $pairing_bonus;
-                                        $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($pairing_bonus, 2) . " wallet</b> from <b>PAIRING BONUS</b> due to pairing combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining binary points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right. This combination was caused by a repurchase of one of your downlines."; 
-                                        /* CHECK IF NOT FREE SLOT */
-                                        if($new_slot_info->slot_type != "FS" && $new_slot_info->slot_wallet >= 0)
-                                        {
-                                            Compute::income_per_day($slot_recipient->slot_id,$matching_income,'binary_repurchase',$slot_recipient->slot_owner,$log);
-                                        }
 
-                                        /* INSERT LOG */
-                                        // Log::account($slot_recipient->slot_owner, $log);
-                                        // Log::slot($slot_recipient->slot_id, $log, $pairing_bonus, "BINARY PAIRING");
+                                                /* Check if entry per day is exceeded already */
+                                                $count =  Tbl_slot::id($slot_recipient->slot_id)->first();
+                                                $member = Tbl_membership::where('membership_id',$slot_recipient->slot_membership)->first();
+                                                $count = $count->pairs_today;
+                                                $date = Carbon::now()->toDateString(); 
+                                                $condition = null;
 
-                                        /* MATCHING SALE BONUS */
-                                        Compute::matching($buyer_slot_id, "REPURCHASE", $slot_recipient, $pairing_bonus);
+                                                /* Check if date is equal today's date*/
+                                                if($slot_recipient->pairs_per_day_date == $date)
+                                                {
+                                                    if($member->max_pairs_per_day == $count)
+                                                    {
+                                                        /* Already exceeded */
+                                                        $update['pairs_today'] = $count;
+                                                        $condition = false;
+                                                    }
+                                                    else
+                                                    {
+                                                        /* Go Ahead */
+                                                        $count = $count + 1;
+                                                        $update['pairs_today'] = $count;
+                                                        $condition = true;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    /* Do this when date is new */
+                                                    $update['pairs_per_day_date'] = $date;
+                                                    $count = 1;
+                                                    $update['pairs_today'] = $count;
+                                                    $condition = true;
+                                                }
+                                                /* Insert Count */
+                                                Tbl_slot::where('slot_id',$slot_recipient->slot_id)->update($update);
+
+                                                /* Proceed when entry is okay */
+                                                if($condition == true)
+                                                {
+                                                        /* UPDATE WALLET */
+                                                        // $update_recipient["slot_wallet"] = $update_recipient["slot_wallet"] + $pairing_bonus;
+                                                        // $update_recipient["slot_total_earning"] = $update_recipient["slot_total_earning"] + $pairing_bonus;
+                                                        $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($pairing_bonus, 2) . " wallet</b> from <b>PAIRING BONUS</b> due to pairing combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining binary points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right. This combination was caused by a repurchase of one of your downlines."; 
+                                                        /* CHECK IF NOT FREE SLOT */
+                                                        if($new_slot_info->slot_type != "FS" && $new_slot_info->slot_wallet >= 0)
+                                                        {
+                                                            Compute::income_per_day($slot_recipient->slot_id,$pairing_bonus,'binary_repurchase',$slot_recipient->slot_owner,$log);
+                                                        }
+
+                                                        /* INSERT LOG */
+                                                        // Log::account($slot_recipient->slot_owner, $log);
+                                                        // Log::slot($slot_recipient->slot_id, $log, $pairing_bonus, "BINARY PAIRING");
+
+                                                        /* MATCHING SALE BONUS */
+                                                        Compute::matching($buyer_slot_id, "REPURCHASE", $slot_recipient, $pairing_bonus);
+                                                }
+                                                else
+                                                {   
+                                                        $log = "Im sorry! Max pairing per day already exceed your slot #" . $slot_recipient->slot_id . " flushed out <b>" . number_format($pairing_bonus, 2) . " wallet</b> from <b>PAIRING BONUS</b> due to pairing combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining binary points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right. This combination was caused by a repurchase of one of your downlines.";          
+                                                        Log::account($slot_recipient->slot_owner, $log);
+                                                        $flushpoints =  $flushpoints+$pairing_bonus;
+                                                }
                                     }
                                 }
                             }
@@ -172,7 +219,7 @@ class Compute
                         /* UPDATE POINTS */
                         $update_recipient["slot_binary_left"] = $binary["left"];
                         $update_recipient["slot_binary_right"] = $binary["right"];
-
+                        $update_recipient["pair_flush_out_wallet"] = $flushpoints;
                         /* CHECK IF NOT FREE SLOT */
                         if($new_slot_info->slot_type != "FS" && $new_slot_info->slot_wallet >= 0)
                         {
@@ -257,7 +304,7 @@ class Compute
                 /* RETRIEVE LEFT & RIGHT POINTS */
                 $binary["left"] = $slot_recipient->slot_binary_left;
                 $binary["right"] = $slot_recipient->slot_binary_right; 
-
+                $flushpoints = $slot_recipient->pair_flush_out_wallet;
                 /* ADD NECESARRY POINTS */
                 $earned_points = $new_slot_info->membership_binary_points;
 
@@ -292,9 +339,9 @@ class Compute
                                             {
 
                                                 /* Check if entry per day is exceeded already */
-
+                                                $count =  Tbl_slot::id($tree->placement_tree_parent_id)->first();
                                                 $member = Tbl_membership::where('membership_id',$slot_recipient->slot_membership)->first();
-                                                $count = $slot_recipient->pairs_today;
+                                                $count = $count->pairs_today;
                                                 $date = Carbon::now()->toDateString(); 
                                                 $condition = null;
 
@@ -304,8 +351,6 @@ class Compute
                                                     if($member->max_pairs_per_day == $count)
                                                     {
                                                         /* Already exceeded */
-                                                        $log = "Entry limit's per day already exceed ";
-                                                        Log::account($slot_recipient->slot_owner, $log);
                                                         $update['pairs_today'] = $count;
                                                         $condition = false;
                                                     }
@@ -347,6 +392,13 @@ class Compute
                                                     /* MATCHING SALE BONUS */
                                                     Compute::matching($new_slot_id, $method, $slot_recipient, $pairing_bonus);                                                 
                                                 }
+                                                else
+                                                {   
+                                                        $log = "Im sorry! Max pairing per day already exceed your slot #" . $slot_recipient->slot_id . " flushed out <b>" . number_format($pairing_bonus, 2) . " wallet</b> from <b>PAIRING BONUS</b> due to pairing combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining binary points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right. This combination was caused by a repurchase of one of your downlines.";          
+                                                        Log::account($slot_recipient->slot_owner, $log);
+                                                        $flushpoints =  $flushpoints+$pairing_bonus;
+                                                }
+
                                             }                                                      
                                 }                                
               
@@ -356,7 +408,7 @@ class Compute
                     /* UPDATE POINTS */
                     $update_recipient["slot_binary_left"] = $binary["left"];
                     $update_recipient["slot_binary_right"] = $binary["right"];
-
+                    $update_recipient["pair_flush_out_wallet"] = $flushpoints;
                     /* UPDATE SLOT CHANGES TO DATABASE */
                     if($new_slot_info->slot_type != "FS" && $new_slot_info->slot_wallet >= 0)
                     {
@@ -423,14 +475,14 @@ class Compute
                 $new_slot_info = Tbl_slot::id($new_slot_id)->account()->membership()->first();
 
                 /* COMPUTE FOR THE DIRECT INCOME */
-                $direct_income = ($slot_recipient->membership_direct_sponsorship_bonus/100) * $new_slot_info->membership_price;
+                $direct_income = ($slot_recipient->membership_direct_sponsorship_bonus/100) * $new_slot_info->member_upgrade_pts;
 
                 if($direct_income != 0)
                 {
                     /* UPDATE WALLET */
                     // $update_recipient["slot_wallet"] = $update_recipient["slot_wallet"] + $direct_income;
                     // $update_recipient["slot_total_earning"] = $update_recipient["slot_total_earning"] + $direct_income;
-                    $update_recipient["slot_upgrade_points"] = $slot_recipient->slot_upgrade_points + $slot_recipient->membership_binary_points;
+                    $update_recipient["slot_upgrade_points"] = $slot_recipient->slot_upgrade_points + $slot_recipient->member_upgrade_pts;
 
                     /* INSERT LOG */
                     $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($direct_income, 2) . " wallet</b> through <b>DIRECT SPONSORSHIP BONUS</b> because you've invited SLOT #" . $new_slot_info->slot_id . " to join. Your current membership is " . $slot_recipient->membership_name . " MEMBERSHIP. Your slot #" . $slot_recipient->slot_id . " also earned <b>" . number_format($slot_recipient->membership_binary_points, 2) . " Promotion Points</b>.";

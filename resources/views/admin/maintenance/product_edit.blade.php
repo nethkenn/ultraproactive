@@ -63,6 +63,10 @@
             		<input name="binary_pts" value="{{Request::input('binary_pts') ? Request::input('binary_pts') : $product->binary_pts}}" required="required" class="form-control" id="" placeholder="" type="number">
             	</div>   
                 <div class="form-group col-md-12">
+                    <label for="upgrade_pts">Upgrade PTS</label>
+                    <input name="upgrade_pts" value="{{Request::input('upgrade_pts') ? Request::input('upgrade_pts') : $product->upgrade_pts}}" required="required" class="form-control" id="" placeholder="" type="number">
+                </div>   
+                <div class="form-group col-md-12">
                     <label for="price">Price</label>
                     <input name="price" value="{{Request::input('price') ? Request::input('price') : $product->price}}" required="required" class="form-control" id="" placeholder="" type="number">
                 </div>

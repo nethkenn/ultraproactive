@@ -9,6 +9,17 @@ function encashment()
 		$(document).ready(function()
 		{
 			document_ready();
+
+			$('#checkconfirmation').on('click', function(event)
+			{
+				var _this = $(this);
+				$('[data-remodal-id="encashment"] form').submit(function(event) {
+					_this.hide();
+				});
+			});
+
+
+
 		});
 	}
 	function document_ready()
@@ -26,10 +37,11 @@ function encashment()
 
 		$("#clickencash").click(function()
 		{	
+			$('#checkconfirmation').on('click', function()
+			{
+				$(this).show();
+			});
 
-
-			// 		 var test = ;
-		 // alert(test);
 			deduction = 0;
 
 			var one = $("#amount").val(); 
