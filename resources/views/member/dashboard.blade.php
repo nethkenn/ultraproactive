@@ -399,11 +399,13 @@
     @if($_notification)
     <div class="holder">
         <div class="header notif">LATEST NOTIFICATION</div>
-        <div class="holders">
-            <div class="text">{!! $log->account_log_details !!}</div>
-            <div class="date">{{ date("F j, Y", strtotime("F j, Y")) }}</div>
-            <div class="time">{{ date("g:i a", strtotime("F j, Y")) }}</div>
-        </div>
+        @foreach($_notification as $log)
+            <div class="holders">
+                <div class="text">{!! $log->account_log_details !!}</div>
+                <div class="date">{{ date("F j, Y", strtotime("F j, Y")) }}</div>
+                <div class="time">{{ date("g:i a", strtotime("F j, Y")) }}</div>
+            </div>
+        @endforeach
         <div class="link-holder">
             <a href="/member/notification" class="link">VIEW ALL NOTIFICATIONS</a>
         </div>
