@@ -45,21 +45,25 @@
 			    <!-- Brand and toggle get grouped for better mobile display -->
 			    <div class="navbar-header">
                 <span class="hidden-bury visible-xs visible-sm hidden-lg hidden-md pull-left">
-                @if($slotnow)
-                    <form method="post" name="myform">
-                        <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
-                        <select class="form-control" name="slotnow" onchange="this.form.submit()">    
-                                <option value="{{$slotnow->slot_id}}">Slot #{{$slotnow->slot_id}} ({{$slotnow->slot_wallet}})</option>
-                                @if($slot)                                             
-                                    @foreach($slot as $slots)
-                                    <option value="{{$slots->slot_id}}">Slot #{{$slots->slot_id}} ({{$slots->slot_wallet}})</option>
-                                    @endforeach
-                                @endif    
-                         </select>
-                    </form>
-                @else
-                <div class="select-label">You have no slots</div>   
-                @endif
+                    @if($slotnow)
+                    <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 14px; font-weight: 700; color: #9BA0A7; display: block; padding: 15px 0;">SLOT #{{$slotnow->slot_id}} <span>{{ number_format($slotnow->slot_wallet, 2)}}</span> <b class="caret"></b></a>
+                    @else
+                    <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 14px; font-weight: 700; color: #9BA0A7; display: block; padding: 15px 0;">NO SLOTS<b class="caret"></b></a>
+                    @endif
+                    <ul class="dropdown-menu scrollable-menu" style="text-transform: normal; font-size: 14px; font-weight: 700; color: #9BA0A7;">
+                        @if($slot)                                                    
+                            @foreach($slot as $slots)
+                                @if(Request::input('mode'))
+                                   <li><a href="/member?slotnow={{$slots->slot_id}}&url={{Request::url()}}?mode={{Request::input('mode')}}">SLOT #{{$slots->slot_id}} <span>{{ number_format($slots->slot_wallet, 2)}}</span></a></li>
+                                @else
+                                   <li><a href="/member?slotnow={{$slots->slot_id}}&url={{Request::url()}}">SLOT #{{$slots->slot_id}} <span>{{ number_format($slots->slot_wallet, 2)}}</span></a></li> 
+                                @endif
+                            @endforeach
+                        @endif    
+                        <li><a href="/member/settings">Account Settings</a></li>
+                        <li><a href="/member/settings#cpass">Change Password</a></li>
+                        <li><a href="/member/logout">Sign out</a></li>
+                    </ul>
                 </span>
 			      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
 			        <span class="sr-only">Toggle navigation</span>
@@ -105,11 +109,11 @@
                         <div class="select-label">You have no slots</div>   
                         @endif -->
                         @if($slotnow)
-                        <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SLOT #{{$slotnow->slot_id}} <span>{{ number_format($slotnow->slot_wallet, 2)}}</span> <b class="caret"></b></a>
+                        <a href="javascript:" class="dropdown-toggle hidden-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SLOT #{{$slotnow->slot_id}} <span>{{ number_format($slotnow->slot_wallet, 2)}}</span> <b class="caret"></b></a>
                         @else
-                        <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">NO SLOTS<b class="caret"></b></a>
+                        <a href="javascript:" class="dropdown-toggle hidden-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">NO SLOTS<b class="caret"></b></a>
                         @endif
-                        <ul class="dropdown-menu scrollable-menu" style="text-transform: normal">
+                        <ul class="dropdown-menu scrollable-menu hidden-sm" style="text-transform: normal">
                             @if($slot)                                                    
                                 @foreach($slot as $slots)
                                     @if(Request::input('mode'))
