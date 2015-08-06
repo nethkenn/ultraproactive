@@ -13,8 +13,12 @@ Route::post('/member/code_vault/lock', 'MemberCodeController@set_active');
 Route::post('/member/code_vault/lock2', 'MemberCodeController@set_active2');
 Route::any('/member/encashment', 'MemberEncashmentController@index');
 Route::any('/member/genealogy', 'MemberGenealogyController@index');
+Route::any('/member/genealogy/add_form', 'MemberGenealogyController@add_form');
 Route::any('/member/genealogy/tree', 'MemberGenealogyController@tree');
+Route::any('/member/genealogy/get', 'MemberGenealogyController@get');
+// Route::any('/member/genealogy/getsponsor', 'MemberGenealogyController@getsponsor');
 Route::any('/member/genealogy/downline', 'MemberGenealogyController@downline');
+
 
 Route::any('/member/voucher', 'MemberVoucherController@index');
 Route::get('/member/voucher/product', 'MemberVoucherController@showVoucherProduct');
