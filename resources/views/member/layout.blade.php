@@ -140,8 +140,8 @@
 <script type="text/javascript" src="/resources/assets/remodal/src/jquery.remodal.js"></script>
 <script type="text/javascript" src="/resources/assets/footable/js/footable.js"></script>
 <script type="text/javascript" src="/resources/assets/jquery-ui/jquery-ui.js"></script>
-<script type="text/javascript" src="/resources/assets/stickyfloat/stickyfloat.js"></script>\
-<script type="text/javascript" src="/resources/assets/members/js/layout.js"></script>\
+<script type="text/javascript" src="/resources/assets/stickyfloat/stickyfloat.js"></script>
+<script type="text/javascript" src="/resources/assets/members/js/layout.js"></script>
 @yield('script')
 
 </body>

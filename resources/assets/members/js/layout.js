@@ -7,10 +7,12 @@ function layout()
 	$(document).ready(function()
 	{
 		initialize();
+
 	});
 
 	function initialize()
 	{
+	   var mode = getUrlParameter('mode');
        $('.forslotchanging').click(function()
        {
        		    $.ajax(
@@ -21,11 +23,35 @@ function layout()
                             type:"post",
                             success: function(data)
                             {
-	                            	window.location.href = window.location.pathname;
+                            	if(mode != null)
+                            	{
+                            		window.location.href = window.location.pathname+"?mode="+mode;
+                            	}
+	                            else
+	                            {
+	                            	window.location.href = window.location.pathname;	
+	                            }	
                             }
                 });      
        });
 	}
+
+		var getUrlParameter = function getUrlParameter(sParam)
+		{
+	    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+	        sURLVariables = sPageURL.split('&'),
+	        sParameterName,
+	        i;
+
+	    for (i = 0; i < sURLVariables.length; i++) {
+	        sParameterName = sURLVariables[i].split('=');
+
+	        if (sParameterName[0] === sParam) {
+	            return sParameterName[1] === undefined ? true : sParameterName[1];
+	        }
+	    }
+		};
+
 
 
 
