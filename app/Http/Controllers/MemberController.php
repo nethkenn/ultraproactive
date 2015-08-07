@@ -139,7 +139,7 @@ class MemberController extends Controller
 	            if(Request::input('slotnow'))
 				{
 					$condition = false;
-		    		$checkslot = DB::table('tbl_slot')->where('slot_owner',$id)	
+		    		$checkslot = 	Tbl_slot::where('slot_owner',Customer::id())	
 		    										  ->where('slot_id',Request::input('slotnow'))				  					  
 								 					  ->first();
 								 				
@@ -158,6 +158,11 @@ class MemberController extends Controller
 						Session::put('currentslot',Request::input('slotnow'));						
 					}					  
 
+					if(Request::input('dd'))
+					{
+						dd(Request::input('slotnow'),Customer::id(),$checkslot,$condition);	
+					}
+					
 					return Redirect::to(Request::input('url'))->send();				
 				}        
 	        }
