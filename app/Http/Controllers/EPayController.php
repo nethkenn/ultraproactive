@@ -57,7 +57,14 @@ class EPayController extends Controller
             $pem_path = str_replace('\\',"/",storage_path());
             $certFile = 'file:///'.$pem_path . "/demo.pem";  
             $baseUrl = "http://121.58.224.179/VentajaAPI/api/";
-            $method = "Process";
+
+            $method = "GetFields";
+            // $method = "Validate";
+            // $method = "Process";
+            // $method = "Inquiry";
+            // $method = "Cancel";
+            
+
 
 
             $params = new Ventaja();       
@@ -66,7 +73,9 @@ class EPayController extends Controller
             $params->pwd = "p@ssw0rD";
             $params->code = 101;
 
-            // str_replace(search, replace, subject)
+
+            
+
 
 
         
@@ -75,10 +84,20 @@ class EPayController extends Controller
 
             // note: you can create a class like RequestParam for each or generate it as a string and use json_decode
             $params->data = json_decode('{"lastName":"NATIVIDAD","firstName":"HENRY","middleName":"VILLANUEVA","birthDate":"05/06/1960"}');
-           
+            // $params->data = json_decode('{"lastName":"PONCE","firstName":"MARK ANTHONY","middleName":"ALDAY","birthDate":"31/03/1990"}');
             $res = $this->callApi($baseUrl . $method, $params, $certFile);
 
-            echo json_encode($res);
+
+            dd($res);
+
+            if($res['responseCode'] == 100)
+            {
+                foreach ((array)$res['data'] as $key => $value)
+                {
+                    
+                }
+            }
+            // echo json_encode($res);
         }
         catch (Exception $e)
         { 
