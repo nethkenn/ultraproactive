@@ -154,6 +154,7 @@ class MemberRegisterController extends Controller
 					$insert['account_name']	 		  = $data['fname']." ".$data['mname']." ".$data['lname'];
 					$insert['account_date_created']   = date('Y-m-d H:i:s');
 					$insert['account_created_from']   = "Front Register";
+					$insert['birthday'] = $birthday;
 					$insert['gender']   =  $data['gender'];
 					$insert['telephone']   = $data['tp'];
 					$insert['address']   = $data['address'];
@@ -217,6 +218,7 @@ class MemberRegisterController extends Controller
 					$insert['account_name']	 		  = $data['fname']." ".$data['mname']." ".$data['lname'];
 					$insert['account_date_created']   = date('Y-m-d H:i:s');
 					$insert['account_created_from']   = "Front Register";
+					$insert['birthday'] 				  = $birthday;
 					$insert['gender']   =  $data['gender'];
 					$insert['telephone']   = $data['tp'];
 					$insert['address']   = $data['address'];

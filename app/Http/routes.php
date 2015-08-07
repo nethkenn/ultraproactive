@@ -5,6 +5,7 @@
 Route::any('/member', 'MemberDashboardController@index');
 Route::any('/member/notification', 'MemberDashboardController@notification');
 Route::any('/member/slot', 'MemberSlotController@index');
+Route::any('/member/slot/changeslot', 'MemberSlotController@changeslot');
 Route::any('/member/code_vault', 'MemberCodeController@index');
 Route::any('/member/code_vault/use_product_code', 'MemberCodeController@use_product_code');
 Route::any('/member/code_vault/check', 'MemberCodeController@add_form_submit');
@@ -344,5 +345,5 @@ Route::post('admin/admin_stockist/archive', 'AdminStockistController@archive');
 Route::post('admin/admin_stockist/restore', 'AdminStockistController@restore');
 
 
-Route::any('test_test','EPayController@signIn');
+Route::any('member/e-pament/','EPayController@index');
 
