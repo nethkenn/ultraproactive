@@ -2,7 +2,7 @@
 
 namespace App\Classes;
 
-use App\Classes\VentajaReqeustParam;
+use \VentajaReqeustParam;
 class EPayment
 {
 	public function callApi($postUrl, $params, $key)
@@ -47,7 +47,7 @@ class EPayment
             // $method = "Process";
             // $method = "Inquiry";
             // $method = "Cancel";
-            $params = new VentajaReqeustParam();       
+            $params = new VentajaRequestParam();       
             $params->id = "130031400022";
             $params->uid = "teller";
             $params->pwd = "p@ssw0rD";
@@ -70,7 +70,7 @@ class EPayment
 
     public function get_field($code)
     {
-        $res = $this->signIn('GetFields', $code);
+        $res = $this->signIn('GetFields', $code, null);
         $data_field = null;
         
         if($res['responseCode'] == 100 && $res['data'])
