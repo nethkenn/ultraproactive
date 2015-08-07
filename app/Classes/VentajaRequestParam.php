@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Classes;
-class Ventaja {
+class VentajaRequestParam
+{
     var $id = "";
     var $uid = "";
     var $pwd = "";
