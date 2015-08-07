@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Classes\Ventaja;
+// use App\Classes\Ventaja;
+use App\Classes\EPayment;
 use Request;
 
 
@@ -65,7 +66,7 @@ class EPayController extends MemberController
             $params->code = $code;
 
             // note: you can create a class like RequestParam for each or generate it as a string and use json_decode
-            // $params->data = json_decode('{"lastName":"NATIVIDAD","firstName":"HENRY","middleName":"VILLANUEVA","birthDate":"05/06/1960"}');
+            $params->data = json_decode('{"lastName":"NATIVIDAD","firstName":"HENRY","middleName":"VILLANUEVA","birthDate":"05/06/1960"}');
             // $params->data = json_decode('{"lastName":"PONCE","firstName":"MARK ANTHONY","middleName":"ALDAY","birthDate":"31/03/1990"}');
             $res = $this->callApi($baseUrl . $method, $params, $certFile);
 
@@ -146,17 +147,22 @@ class EPayController extends MemberController
 
     public function index()
     {
-        $data = [];
-         $data['_input_field'] = null;
-        if(Request::isMethod('get') && Request::input('transaction_code'))
-        {
-
-            $data['_input_field'] = $this->get_field(Request::input('transaction_code'));
 
 
-        }
+        $epayment = new EPayment();
 
-        return view('member.epayment', $data);
+        dd($epayment->signIn('GetFields','102',null));
+        // $data = [];
+        //  $data['_input_field'] = null;
+        // if(Request::isMethod('get') && Request::input('transaction_code'))
+        // {
+
+        //     $data['_input_field'] = $this->get_field(Request::input('transaction_code'));
+
+
+        // }
+
+        // return view('member.epayment', $data);
     }
 
     
