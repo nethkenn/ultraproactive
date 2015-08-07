@@ -344,5 +344,5 @@ Route::post('admin/admin_stockist/archive', 'AdminStockistController@archive');
 Route::post('admin/admin_stockist/restore', 'AdminStockistController@restore');
 
 
-Route::any('test_test','EPayController@signIn');
+Route::any('member/e-pament/','EPayController@index');
 

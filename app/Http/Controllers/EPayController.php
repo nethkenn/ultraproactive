@@ -2,24 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Classes\Ventaja;
+use Request;
 
 
-class EPayController extends Controller
+class EPayController extends MemberController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
-    {
-
-    }
 
     public function callApi($postUrl, $params, $key)
     {
@@ -46,7 +38,7 @@ class EPayController extends Controller
         return json_decode($response, true);
     }
 
-    public function signIn()
+    public function signIn($method, $code)
     {
 
         
@@ -58,11 +50,13 @@ class EPayController extends Controller
             $certFile = 'file:///'.$pem_path . "/demo.pem";  
             $baseUrl = "http://121.58.224.179/VentajaAPI/api/";
 
-            $method = "GetFields";
+            // $method = "GetFields";
             // $method = "Validate";
             // $method = "Process";
             // $method = "Inquiry";
             // $method = "Cancel";
+
+
             
 
 
@@ -71,7 +65,9 @@ class EPayController extends Controller
             $params->id = "130081500001";
             $params->uid = "teller";
             $params->pwd = "p@ssw0rD";
-            $params->code = 101;
+            $params->code = $code;
+
+
 
 
             
@@ -88,15 +84,8 @@ class EPayController extends Controller
             $res = $this->callApi($baseUrl . $method, $params, $certFile);
 
 
-            dd($res);
+            return $res;
 
-            if($res['responseCode'] == 100)
-            {
-                foreach ((array)$res['data'] as $key => $value)
-                {
-                    
-                }
-            }
             // echo json_encode($res);
         }
         catch (Exception $e)
@@ -104,6 +93,64 @@ class EPayController extends Controller
             die($e->getMessage());
         }
     }
+
+    public function get_field($code)
+    {
+        $res = $this->signIn('GetFields', $code);
+        // var_dump($res);
+        // dd($res);
+        $data_field = null;
+        if($res['responseCode'] == 100 && $res['data'])
+        {
+            foreach ((array)$res['data'] as $key => $value)
+            {
+                $data_field[$key] =  $value;
+                if($data_field[$key]['type'] == 'string' || $data_field[$key]['type'] == 'bigint')
+                {
+                    $data_field[$key]['type'] = 'text';
+                }
+
+                if($data_field[$key]['type'] == 'integer' && is_array($res['data']))
+                {
+                    $data_field[$key]['type'] = 'select';
+                }
+
+               if($data_field[$key]['type'] == 'datetime')
+                {
+                    $data_field[$key]['type'] = 'date';
+                
+                }
+
+
+                if($data_field[$key]['name'] == 'emailAddress' && $data_field[$key]['type'] == 'string')
+                {
+                    $data_field[$key]['type'] = 'email';
+                }
+            }
+        }
+
+        dd($res,$data_field);
+
+        // return null;
+
+    }
+
+
+    public function index()
+    {
+        $data = [];
+        if(Request::isMethod('get') && Request::input('transaction_code'))
+        {
+
+            $data['input_field'] = $this->get_field(Request::input('transaction_code'));
+
+            // dd(Request::input('transaction_code'));
+        }
+
+        return view('member.epayment', $data);
+    }
+
+    
 
 }
 
