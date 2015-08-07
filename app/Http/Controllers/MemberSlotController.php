@@ -48,7 +48,17 @@ class MemberSlotController extends MemberController
 
 		if(Request::input('changeslot'))
 		{
-			Session::put('currentslot',Request::input('changeslot'));
+		    $checkslot = 				Tbl_slot::where('slot_owner',Customer::id())	
+    										  ->where('slot_id',Request::input('changeslot'))				  					  
+						 					  ->first();
+						 				
+			if($checkslot)
+			{
+				if($checkslot->slot_id == Request::input('changeslot'))
+				{
+					Session::put('currentslot',Request::input('changeslot'));	
+				}						
+			}
 			return redirect()->back();
 		}
 		if(isset($_POST['initsbmt']))
@@ -247,5 +257,24 @@ class MemberSlotController extends MemberController
                     $product_code->save();
 
                 
+	}
+
+	public function changeslot()
+	{
+		if(Request::input('changeslot'))
+		{
+		    $checkslot = 				Tbl_slot::where('slot_owner',Customer::id())	
+    										  ->where('slot_id',Request::input('changeslot'))				  					  
+						 					  ->first();
+						 				
+			if($checkslot)
+			{
+				if($checkslot->slot_id == Request::input('changeslot'))
+				{
+					Session::put('currentslot',Request::input('changeslot'));	
+				}						
+			}
+			return json_encode('success');
+		}
 	}
 }

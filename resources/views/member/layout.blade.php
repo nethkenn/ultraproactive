@@ -53,11 +53,7 @@
                     <ul class="dropdown-menu scrollable-menu" style="text-transform: normal; font-size: 14px; font-weight: 700; color: #9BA0A7;">
                         @if($slot)                                                    
                             @foreach($slot as $slots)
-                                @if(Request::input('mode'))
-                                   <li><a href="/member?slotnow={{$slots->slot_id}}&url={{Request::url()}}?mode={{Request::input('mode')}}">SLOT #{{$slots->slot_id}} <span>{{ number_format($slots->slot_wallet, 2)}}</span></a></li>
-                                @else
-                                   <li><a href="/member?slotnow={{$slots->slot_id}}&url={{Request::url()}}">SLOT #{{$slots->slot_id}} <span>{{ number_format($slots->slot_wallet, 2)}}</span></a></li> 
-                                @endif
+                                   <li><a class="forslotchanging" slotid='{{$slots->slot_id}}' href="javascript:">SLOT #{{$slots->slot_id}} <span>{{ number_format($slots->slot_wallet, 2)}}</span></a></li> 
                             @endforeach
                         @endif    
                         <li><a href="/member/settings">Account Settings</a></li>
@@ -116,13 +112,9 @@
                         <ul class="dropdown-menu scrollable-menu hidden-sm" style="text-transform: normal">
                             @if($slot)                                                    
                                 @foreach($slot as $slots)
-                                    @if(Request::input('mode'))
-                                       <li><a href="/member?slotnow={{$slots->slot_id}}&url={{Request::url()}}?mode={{Request::input('mode')}}">SLOT #{{$slots->slot_id}} <span>{{ number_format($slots->slot_wallet, 2)}}</span></a></li>
-                                    @else
-                                       <li><a href="/member?slotnow={{$slots->slot_id}}&url={{Request::url()}}">SLOT #{{$slots->slot_id}} <span>{{ number_format($slots->slot_wallet, 2)}}</span></a></li> 
-                                    @endif
+                                       <li><a class="forslotchanging" slotid='{{$slots->slot_id}}' href="javascript:">SLOT #{{$slots->slot_id}} <span>{{ number_format($slots->slot_wallet, 2)}}</span></a></li> 
                                 @endforeach
-                            @endif    
+                            @endif      
                             <li><a href="/member/settings">Account Settings</a></li>
                             <li><a href="/member/settings#cpass">Change Password</a></li>
                             <li><a href="/member/logout">Sign out</a></li>
@@ -149,6 +141,7 @@
 <script type="text/javascript" src="/resources/assets/footable/js/footable.js"></script>
 <script type="text/javascript" src="/resources/assets/jquery-ui/jquery-ui.js"></script>
 <script type="text/javascript" src="/resources/assets/stickyfloat/stickyfloat.js"></script>\
+<script type="text/javascript" src="/resources/assets/members/js/layout.js"></script>\
 @yield('script')
 
 </body>

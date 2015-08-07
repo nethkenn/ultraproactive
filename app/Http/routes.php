@@ -5,6 +5,7 @@
 Route::any('/member', 'MemberDashboardController@index');
 Route::any('/member/notification', 'MemberDashboardController@notification');
 Route::any('/member/slot', 'MemberSlotController@index');
+Route::any('/member/slot/changeslot', 'MemberSlotController@changeslot');
 Route::any('/member/code_vault', 'MemberCodeController@index');
 Route::any('/member/code_vault/use_product_code', 'MemberCodeController@use_product_code');
 Route::any('/member/code_vault/check', 'MemberCodeController@add_form_submit');
