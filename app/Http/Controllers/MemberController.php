@@ -34,7 +34,8 @@ class MemberController extends Controller
 												  ->join('tbl_membership','tbl_membership.membership_id','=','tbl_slot.slot_membership')
 												  ->join('tbl_rank','tbl_rank.rank_id','=','tbl_slot.slot_rank')
 												  ->first();
-
+				if($data3)
+				{
 					if($data3->slot_today_date != $date)
 					{
 					 $update['slot_today_income'] = 0; 
@@ -47,7 +48,14 @@ class MemberController extends Controller
 					 $update['pairs_per_day_date'] = $date;
 					 $update['pairs_today'] = 0;
                      Tbl_slot::where('slot_id',$id)->update($update);
-					}
+					}					
+				}
+				else
+				{
+					Session::forget("currentslot");	
+					return Redirect::to(Request::input('url'))->send();	
+				}
+
 				}	
 				else
 				{
@@ -131,16 +139,19 @@ class MemberController extends Controller
 	            if(Request::input('slotnow'))
 				{
 					$condition = false;
-		    		$checkslot = DB::table('tbl_slot')->where('slot_owner',$id)					  					  
-								 					  ->get();
+		    		$checkslot = DB::table('tbl_slot')->where('slot_owner',$id)	
+		    										  ->where('slot_id',Request::input('slotnow'))				  					  
+								 					  ->first();
 								 				
-					foreach($checkslot as $check)
+					if($checkslot)
 					{
-						if($check->slot_id == Request::input('slotnow'))
+						if($checkslot->slot_id == Request::input('slotnow'))
 						{
 							$condition = true;
-						}
-					}		
+						}						
+					}
+
+		
 
 					if($condition == true)
 					{

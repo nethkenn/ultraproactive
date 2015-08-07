@@ -75,8 +75,9 @@ class Compute
                     else
                     {
                         $unilevel_bonus = 0;
+                        $upgrade_bonus = 0;
                     }
-                   
+                    
                     /* CHECK IF BONUS IS ZERO */
                     if($unilevel_bonus != 0)
                     {
@@ -84,7 +85,7 @@ class Compute
                         $update_recipient["slot_group_points"] = $update_recipient["slot_group_points"] + $unilevel_bonus;
                         $update_recipient["slot_upgrade_points"] = $update_recipient["slot_upgrade_points"] + $upgrade_bonus;
                         /* INSERT LOG */
-                        $log = "Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($unilevel_bonus, 2) . " group pv and ". number_format($upgrade_bonus, 2) ." promotion points</b>. You earned it when slot #" . $buyer_slot_id . " uses a code worth " . number_format($unilevel_pts, 2) . " PV. That slot is located on the Level " . $tree->sponsor_tree_level . " of your sponsor genealogy. Your current membership is " . $slot_recipient->membership_name . " MEMBERSHIP.";
+                        $log = "Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($unilevel_bonus, 2) . " group pv and ". $upgrade_bonus ." promotion points</b>. You earned it when slot #" . $buyer_slot_id . " uses a code worth " . number_format($unilevel_pts, 2) . " PV. That slot is located on the Level " . $tree->sponsor_tree_level . " of your sponsor genealogy. Your current membership is " . $slot_recipient->membership_name . " MEMBERSHIP.";
                         Log::account($slot_recipient->slot_owner, $log);
 
                         /* UPDATE SLOT CHANGES TO DATABASE */
@@ -485,7 +486,7 @@ class Compute
                     $update_recipient["slot_upgrade_points"] = $slot_recipient->slot_upgrade_points + $slot_recipient->member_upgrade_pts;
 
                     /* INSERT LOG */
-                    $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($direct_income, 2) . " wallet</b> through <b>DIRECT SPONSORSHIP BONUS</b> because you've invited SLOT #" . $new_slot_info->slot_id . " to join. Your current membership is " . $slot_recipient->membership_name . " MEMBERSHIP. Your slot #" . $slot_recipient->slot_id . " also earned <b>" . number_format($slot_recipient->membership_binary_points, 2) . " Promotion Points</b>.";
+                    $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($direct_income, 2) . " wallet</b> through <b>DIRECT SPONSORSHIP BONUS</b> because you've invited SLOT #" . $new_slot_info->slot_id . " to join. Your current membership is " . $slot_recipient->membership_name . " MEMBERSHIP. Your slot #" . $slot_recipient->slot_id . " also earned <b>" . $slot_recipient->member_upgrade_pts . " Promotion Points</b>.";
                     Compute::income_per_day($slot_recipient->slot_id,$direct_income,'direct',$slot_recipient->slot_owner,$log);
                     // Log::account($slot_recipient->slot_owner, $log);
                     // Log::slot($slot_recipient->slot_id, $log, $direct_income, "DIRECT SPONSORSHIP BONUS (DSB)");

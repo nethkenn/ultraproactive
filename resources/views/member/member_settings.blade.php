@@ -229,7 +229,7 @@ Select image to upload:
                             <select id = "ybirthday" name = "ryear" class="form-control">
                                 <option value = '' disabled selected style = 'display:none;'>Year</option>      
                                     @for($birthday=(date("Y")-120);$birthday<=date("Y");$birthday++)
-                                        <option value="{{$birthday}}" {{ (date("Y")-18) == $birthday ? 'selected' : '' }}>
+                                        <option value="{{$birthday}}" {{ $customer_birthday[0] == $birthday ? 'selected' : '' }}>
                                             {{ $birthday }}
                                         </option>
                                     @endfor

@@ -8,11 +8,12 @@
 		"laravel/framework": "5.1.*",
 		"maatwebsite/excel": "~2.0.0",
 		"guzzlehttp/guzzle": "~4.0",
-		"cviebrock/eloquent-sluggable": ">=3.0.0-alpha",
+		"cviebrock/eloquent-sluggable": "^3.0",
 		"spatie/laravel-analytics": "^1.1",
 		"illuminate/html": "^5.0",
 		"skovmand/mailchimp-laravel": "1.*",
-		"yajra/laravel-datatables-oracle": "~5.0"
+		"yajra/laravel-datatables-oracle": "~5.0",
+		"doctrine/dbal": "^2.5"
 		
 			},
 

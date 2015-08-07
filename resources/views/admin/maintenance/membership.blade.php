@@ -28,7 +28,7 @@
 						<th>Membership Price</th>
 						<th>Discount(%)</th>
 						<th>Max income per day</th>
-						<th>Upgrade PTS</th>
+						<th>Promotion PTS</th>
 						<th class="option-col">Entry</th>
 						<th class="option-col">Upgrade</th>
 						<th class="option-col"></th>

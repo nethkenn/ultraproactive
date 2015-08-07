@@ -1,9 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+@if($slot)
 <html>
     <head>
         <base href="<?php echo "http://" . $_SERVER["SERVER_NAME"] ?>">
         <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="resources/assets/genealogy/drag.js"></script>
+        <link rel="stylesheet" type="text/css" href="/resources/assets/remodal/src/jquery.remodal.css">
+        <link rel="stylesheet" type="text/css" href="/resources/assets/remodal/src/remodal-default-theme.css">
         <link rel="stylesheet" type="text/css" href="resources/assets/member/css/genealogy.css" />
         <title>Genealogy</title>
     </head>
@@ -70,7 +73,8 @@
         </div>   
     </body>
     
-    
+
+
 <script type="text/javascript">
     var mode = "{{ Request::input('mode') }}";
     var g_width = 0;
@@ -171,8 +175,7 @@
                     
                 }
             });    
-        }
-        
+        }     
         function adjust_tree()
         {
                 $curr_margin_left = parseFloat($(".tree-container").css("padding-left"));   
@@ -183,4 +186,5 @@
     }
 </script>
 </html>
+@endif
 
