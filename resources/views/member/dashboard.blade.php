@@ -83,15 +83,15 @@
             <div style="margin: 15px 0; display: table; width: 100%;">
                 <div class="p">
                     <div class="p-label">MEMBER SINCE</div>
-                    <div class="p-value">June 28, 2015</div>
+                    <div class="p-value">{{$joined_date}}</div>
                 </div>
                 <div class="p">
                     <div class="p-label">NOTIFICATIONS</div>
-                    <div class="p-value">1,400 Notifications</div>
+                    <div class="p-value">{{$count_log}} Notifications</div>
                 </div>
                 <div class="p">
                     <div class="p-label">AVAILABLE CODE</div>
-                    <div class="p-value">5 Membership</br>2 Product</div>
+                    <div class="p-value">{{$code}} Membership</br>{{$prod}} Product</div>
                 </div>
             </div>
         </div>

@@ -139,16 +139,19 @@ class MemberController extends Controller
 	            if(Request::input('slotnow'))
 				{
 					$condition = false;
-		    		$checkslot = DB::table('tbl_slot')->where('slot_owner',$id)					  					  
-								 					  ->get();
+		    		$checkslot = DB::table('tbl_slot')->where('slot_owner',$id)	
+		    										  ->where('slot_id',Request::input('slotnow'))				  					  
+								 					  ->first();
 								 				
-					foreach($checkslot as $check)
+					if($checkslot)
 					{
-						if($check->slot_id == Request::input('slotnow'))
+						if($checkslot->slot_id == Request::input('slotnow'))
 						{
 							$condition = true;
-						}
-					}		
+						}						
+					}
+
+		
 
 					if($condition == true)
 					{
