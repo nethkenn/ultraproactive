@@ -115,6 +115,7 @@ function slot()
 		if(!$('#wan').has('option').length > 0 )
         {
         	$(".alerted").hide();
+        	$('#wan').append('<option value="" class="shouldremove">No available upgrade higher than this.</option>');
         }
 	}
 }

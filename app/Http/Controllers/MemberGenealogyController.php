@@ -212,6 +212,15 @@ class MemberGenealogyController extends MemberController
 			$data["message"] = "Please put a sponsor's slot #";
 		}
 
+		if(strtolower(Request::input("position")) == 'left' || strtolower(Request::input("position")) == 'right')
+		{
+
+		}
+		else
+		{
+			$data["message"] = 'Some error occurred please try to refresh.';
+		}
+
 		$check_placement = Tbl_slot::checkposition(Request::input("placement"), strtolower(Request::input("position")))->first();
 		$check_id = Tbl_slot::id(Request::input("slot_number"))->first();
 		if($check_placement)
