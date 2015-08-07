@@ -127,7 +127,7 @@
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Content <span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="admin/content/news">News</a></li>
-									<li><a href="admin/content/earn">Earn</a></li>
+									<!-- <li><a href="admin/content/earn">Earn</a></li> -->
 									<li><a href="admin/content/slide">Slide</a></li>
 									<li><a href="admin/content/team">Team</a></li>
 									<li><a href="admin/content/testimony">Testimonial</a></li>
