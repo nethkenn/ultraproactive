@@ -75,8 +75,9 @@ class Compute
                     else
                     {
                         $unilevel_bonus = 0;
+                        $upgrade_bonus = 0;
                     }
-                   
+                    
                     /* CHECK IF BONUS IS ZERO */
                     if($unilevel_bonus != 0)
                     {
