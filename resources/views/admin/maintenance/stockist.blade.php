@@ -26,9 +26,6 @@
 					<th>Type</th>
 					<th>Location</th>
 					<th>Contact Num </th>
-					<th>Email</th>
-					<th>Username</th>
-					<th>Password</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -55,9 +52,6 @@
 	            {data: 'stockist_type', name: 'stockist_type'},
 	            {data: 'stockist_location', name: 'stockist_location'},
 	            {data: 'stockist_contact_no' ,name: 'stockist_contact_no'},
-	            {data: 'stockist_email' ,name: 'stockist_email'},
-	            {data: 'stockist_un' ,name: 'stockist_un'},
-	            {data: 'show_pass' ,name: 'stockist_id'},
 	           	{data: 'edit_archive' ,name: 'stockist_type_id'},
 	            
 	           	
