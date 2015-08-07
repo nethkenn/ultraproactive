@@ -64,16 +64,8 @@ class EPayController extends MemberController
             $params->pwd = "p@ssw0rD";
             $params->code = $code;
 
-            
-
-
-
-        
-
-
-
             // note: you can create a class like RequestParam for each or generate it as a string and use json_decode
-            $params->data = json_decode('{"lastName":"NATIVIDAD","firstName":"HENRY","middleName":"VILLANUEVA","birthDate":"05/06/1960"}');
+            // $params->data = json_decode('{"lastName":"NATIVIDAD","firstName":"HENRY","middleName":"VILLANUEVA","birthDate":"05/06/1960"}');
             // $params->data = json_decode('{"lastName":"PONCE","firstName":"MARK ANTHONY","middleName":"ALDAY","birthDate":"31/03/1990"}');
             $res = $this->callApi($baseUrl . $method, $params, $certFile);
 
