@@ -16,7 +16,9 @@
     background-color: #fff;
     color: #777;
     z-index: 1;
-    border-radius: 5px;
+    -webkit-border-radius: 5px;
+       -moz-border-radius: 5px;
+            border-radius: 5px;
     text-align: left;
     padding: 10px;
     display: none;
@@ -24,13 +26,17 @@
 #info #photo
 {
     float: left;
-    border-radius: 100%;
+    -webkit-border-radius: 100%;
+       -moz-border-radius: 100%;
+            border-radius: 100%;
     border: 1px solid rgba(0,0,0,0.2);
     margin-right: 10px;
 }
 #info #photo img
 {
-    border-radius: 100%;
+    -webkit-border-radius: 100%;
+       -moz-border-radius: 100%;
+            border-radius: 100%;
 }
 #info #cont
 {
@@ -56,7 +62,9 @@
     margin: 5px;
     font-size: 12px;
     padding: 10px;
-    border-radius: 2px;
+    -webkit-border-radius: 2px;
+       -moz-border-radius: 2px;
+            border-radius: 2px;
     width: 300px;
     
 }
@@ -101,7 +109,9 @@
 {
     height: 50px;
     width: 50px;
-    border-radius: 100%;
+    -webkit-border-radius: 100%;
+       -moz-border-radius: 100%;
+            border-radius: 100%;
 }
 .tree li span
 {
@@ -141,7 +151,9 @@
     top: -10px;
     right: -10px;
     padding: 7px 8px;
-    border-radius: 100%;
+    -webkit-border-radius: 100%;
+       -moz-border-radius: 100%;
+            border-radius: 100%;
     color: #fff;
     font-weight: bold;
 }
@@ -240,4 +252,4 @@ right connector from last child*/
 
 
 
-/*Thats all. I 
+/*Thats all. I */
