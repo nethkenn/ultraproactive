@@ -9093,6 +9093,7 @@ ul.default_list.light li span {
 }
 
 .contact_form input[type="text"],
+.contact_form input[type="email"],
 .contact_form select {
     width: 48.5% !important;
     height: 50px;
