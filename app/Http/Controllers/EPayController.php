@@ -23,7 +23,9 @@ class EPayController extends Controller
 
     public function callApi($postUrl, $params, $key)
     {
-    // you can also use http://phpseclib.sourceforge.net/ as alternative to signing
+      // you can also use http://phpseclib.sourceforge.net/ as alternative to signing
+
+    
         $pkeyid = openssl_pkey_get_private($key);
         openssl_sign(json_encode($params), $signature, $pkeyid);
         openssl_free_key($pkeyid);
@@ -51,15 +53,23 @@ class EPayController extends Controller
         $signature = "";
         try
         { 
-            $certFile = "resources/assets/payment/demo.pem";       
+
+            $pem_path = str_replace('\\',"/",storage_path());
+            $certFile = 'file:///'.$pem_path . "/demo.pem";  
             $baseUrl = "http://121.58.224.179/VentajaAPI/api/";
             $method = "Process";
+
 
             $params = new Ventaja();       
             $params->id = "130081500001";
             $params->uid = "teller";
             $params->pwd = "p@ssw0rD";
             $params->code = 101;
+
+            // str_replace(search, replace, subject)
+
+
+        
 
 
 
