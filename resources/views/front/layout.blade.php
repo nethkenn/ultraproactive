@@ -298,13 +298,5 @@
     <script type='text/javascript' src='/resources/assets/ausart/assets/includes/js/jquery/ui/core.min.js'></script>
     <script type='text/javascript' src='/resources/assets/ausart/assets/includes/js/jquery/ui/widget.min.js'></script>
     <script type='text/javascript' src='/resources/assets/ausart/assets/includes/js/jquery/ui/accordion.min.js'></script>
-    <script type="text/javascript">
-    ;(function($){
-        $('img').error(function(){
-            var src = this.src;
-            this.src = $(this).attr('src');
-        });
-    })(jQuery);
-    </script>
 </body>
 </html>
