@@ -54,9 +54,9 @@
                                                 <form name="contactForm" class="standard-form row-fluid" action="/contact/submit" method="post">
                                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                     <input class="span6" name="name" placeholder="Name" type="text" id="themeple_name" value="" required/>
-                                                    <input class="span6" name="email" placeholder="E-Mail" type="text" id="themeple_email" value="" required/>
+                                                    <input class="span6" name="email" placeholder="E-Mail" type="email" id="themeple_email" value="" required style="font-size: 13px !important; height: 50px !important; margin-bottom: 23px !important;"/>
                                                     <input class="span6" name="subject" placeholder="Subject" type="text" id="themeple_subject" value="" required/>
-                                                    <textarea class="span12" placeholder="Message" name="message" cols="40" rows="7" id="themeple_message"></textarea>
+                                                    <textarea class="span12" placeholder="Message" name="message" cols="40" rows="7" id="themeple_message" required></textarea>
                                                     <p class="perspective">
                                                         <input type="submit" value="Submit Form" class="btn-system normal default" />
                                                     </p>
