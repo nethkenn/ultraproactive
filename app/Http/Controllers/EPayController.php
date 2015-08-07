@@ -1,9 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
-// use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Classes\Ventaja;
@@ -47,7 +44,7 @@ class EPayController extends MemberController
         { 
 
             $pem_path = str_replace('\\',"/",storage_path());
-            $certFile = 'file:///'.$pem_path . "/demo.pem";  
+            $certFile = 'file:///'.$pem_path . "/client.private.pem";  
             $baseUrl = "http://121.58.224.179/VentajaAPI/api/";
 
             // $method = "GetFields";
@@ -62,13 +59,10 @@ class EPayController extends MemberController
 
 
             $params = new Ventaja();       
-            $params->id = "130081500001";
+            $params->id = "130031400022";
             $params->uid = "teller";
             $params->pwd = "p@ssw0rD";
             $params->code = $code;
-
-
-
 
             
 
@@ -97,54 +91,77 @@ class EPayController extends MemberController
     public function get_field($code)
     {
         $res = $this->signIn('GetFields', $code);
-        // var_dump($res);
-        // dd($res);
         $data_field = null;
+        
         if($res['responseCode'] == 100 && $res['data'])
         {
             foreach ((array)$res['data'] as $key => $value)
             {
                 $data_field[$key] =  $value;
-                if($data_field[$key]['type'] == 'string' || $data_field[$key]['type'] == 'bigint')
+                $data_field[$key]['placeholder'] = "";
+                $data_field[$key]['true_type'] = $value['type'];
+
+                if($value['type'] == 'string' || $value['type'] == 'bigint' || $value['type']=='integer')
                 {
                     $data_field[$key]['type'] = 'text';
                 }
 
-                if($data_field[$key]['type'] == 'integer' && is_array($res['data']))
+                if($value['type'] == 'integer' && is_array($value['data']))
                 {
                     $data_field[$key]['type'] = 'select';
                 }
 
-               if($data_field[$key]['type'] == 'datetime')
+               if($value['type'] == 'datetime')
                 {
                     $data_field[$key]['type'] = 'date';
+                    $data_field[$key]['placeholder'] = 'mm/dd/yyyy';
                 
                 }
 
-
-                if($data_field[$key]['name'] == 'emailAddress' && $data_field[$key]['type'] == 'string')
+                if($value['name'] == 'emailAddress' && $value['type'] == 'string')
                 {
                     $data_field[$key]['type'] = 'email';
                 }
+
+                if($value['type'] == 'money')
+                {
+                    $data_field[$key]['type'] = 'number';
+                }
+
+
+                if($value['type'] == 'integer' && ($value['name'] == 'endMonth' || $value['name'] == 'endYear' || $value['name'] == 'startMonth' || $value['name'] == 'startYear'))
+                {
+                    $data_field[$key]['type'] = 'number';
+                    switch ($value['name'])
+                    {
+                        case 'endMonth':
+                        case 'startMonth':
+                            $data_field[$key]['placeholder'] = '(1-12)';
+                            break;
+                        default:
+                            # code...
+                            break;
+                    }
+
+                }
+
             }
         }
 
-        dd($res,$data_field);
-
-        // return null;
-
+        return $data_field;
     }
 
 
     public function index()
     {
         $data = [];
+         $data['_input_field'] = null;
         if(Request::isMethod('get') && Request::input('transaction_code'))
         {
 
-            $data['input_field'] = $this->get_field(Request::input('transaction_code'));
+            $data['_input_field'] = $this->get_field(Request::input('transaction_code'));
 
-            // dd(Request::input('transaction_code'));
+
         }
 
         return view('member.epayment', $data);
