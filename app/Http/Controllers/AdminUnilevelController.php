@@ -4,6 +4,7 @@ use DB;
 use Redirect;
 use App\Tbl_distribution_history;
 use App\Rel_distribution_history;
+use App\Tbl_tree_placement;
 use App\Tbl_tree_sponsor;
 use Carbon\Carbon;
 use Request;
@@ -45,6 +46,46 @@ class AdminUnilevelController extends AdminController
 
 	public function dynamic()
 	{	
+		// $slots = Tbl_slot::account()->membership()
+		// ->orderBy('slot_id','ASC')
+		// ->where('slot_personal_points', '>=', DB::raw('membership_required_pv'))
+		// ->get();
+
+		// $unilevel_setting = DB::table('tbl_unilevel_setting')->get();
+		// $unilevel = null;
+
+		// foreach($unilevel_setting as $key => $uni)
+		// {
+		// 	$unilevel[$uni->membership_id][$uni->level] = $uni->value;
+		// }
+
+		// foreach($slots as $key => $slot)
+		// {
+		// 	$oneslot = Tbl_slot::account()->membership()->where('slot_id',$slot->slot_id)->first();
+		// 	$sponsor_tree = Tbl_tree_placement::child($slot->slot_id)->level()->distinct_level()->get();
+		// 	$gpv = $oneslot->slot_group_points * $oneslot->multiplier;
+		// 	$update['slot_wallet'] = $oneslot->slot_wallet + $gpv;
+		// 	// $update['group_pv'] = 0;
+		// 	// $update['slot_wallet'] = 0;
+		// 	Tbl_slot::where('slot_id',$oneslot->slot_id)->update($update);
+		// 	foreach($sponsor_tree as $key => $tree)
+		// 	{
+		// 		$slot_recipient = Tbl_slot::account()->membership()->where('slot_id',$tree->placement_tree_parent_id)->first();
+		// 		if(isset($unilevel[$slot_recipient->membership_id][$tree->placement_tree_level]))
+		// 		{
+		// 			$update_recipient['slot_wallet'] = $slot_recipient->slot_wallet+(($unilevel[$slot_recipient->membership_id][$tree->sponsor_tree_level]/100)*$gpv);
+		// 			echo($update_recipient['slot_wallet']);
+		// 			Tbl_slot::account()->membership()->where('slot_id',$slot_recipient->slot_id)->update($update_recipient);	
+		// 		}
+
+		// 	}
+
+		// }
+
+
+
+	
+
 		$data['slot'] = Tbl_slot::account()->membership()
 		->orderBy('slot_id','ASC')
 		->where('slot_personal_points', '>=', DB::raw('membership_required_pv'))
@@ -104,7 +145,7 @@ class AdminUnilevelController extends AdminController
 				Tbl_slot::where('slot_id',$check->slot_id)->update(['slot_wallet'=>$convert]);
 				Log::slot($check->slot_id,'Distribute Group Points',$convert);
 			}
-			DB::table('tbl_slot')->update(['slot_group_points'=>0,'slot_personal_points'=>0]);
+		DB::table('tbl_slot')->update(['slot_group_points'=>0,'slot_personal_points'=>0]);
 	}
 
 
