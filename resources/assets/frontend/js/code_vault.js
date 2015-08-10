@@ -143,16 +143,8 @@ function code_vault()
 		$upamount = parseInt($("#33333").val());
 		$total = $wallet - $upamount;
 		$("#44444").val($total);
-		if($total >= 0)
-		{
-			$('#ifbuttoncode').prop("disabled", false);
-		}
-		else
-		{
-			$('#ifbuttoncode').prop("disabled", true);
-		}
 
-		if($('#packageincluded').val() == 0)
+		if($('#packageincluded').val() == 0 || $total < 0)
 		{
 			$('#ifbuttoncode').prop("disabled", true);	
 		}
