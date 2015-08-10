@@ -4,9 +4,17 @@
 	max-width: 500px;
 	margin: auto;
 	font-family: "Open Sans", sans-serif !important;
+	position: absolute;
+	left: 0;
+	right: 0;
+	-webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+      -o-transform: translateY(-50%);
+         transform: translateY(-50%);
+    top: 50%;
 	.content
 	{
-		margin-top: 30px;
 		.logo
 		{
 			margin-bottom: 50px;
