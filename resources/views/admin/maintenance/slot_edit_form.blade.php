@@ -90,6 +90,10 @@
             <div class="label">TOTAL WITHRAWAL</div>
             <div class="field"><input name="total_withrawal" type="text" value="{{ $slot->slot_total_withrawal }}"></div>
         </div>
+        <div class="fieldset">
+            <div class="label">HACK SHEET REFERENCE ID</div>
+            <div class="field"><input name="hack_reference" type="text" value="{{ $slot->hack_reference }}"></div>
+        </div>
         <button onclick="return false;" class="delete-slot" slot_id="{{ Request::input('slot_id') }}" style="background-color: gray">DELETE SLOT</button>
         <button>UPDATE SLOT</button>
     </form>
