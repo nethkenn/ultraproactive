@@ -1,17 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-// use App\Classes\Ventaja;
-use App\Classes\EPayment;
-use Request;
+namespace App\Classes;
 
-
-class EPayController extends MemberController
+use \VentajaReqeustParam;
+class EPayment
 {
-
-    public function callApi($postUrl, $params, $key)
+	public function callApi($postUrl, $params, $key)
     {
       // you can also use http://phpseclib.sourceforge.net/ as alternative to signing
 
@@ -36,14 +30,14 @@ class EPayController extends MemberController
         return json_decode($response, true);
     }
 
-    public function signIn($method, $code)
-    {
 
-        
+
+
+    public function signIn($method, $code, $data)
+    {
         $signature = "";
         try
         { 
-
             $pem_path = str_replace('\\',"/",storage_path());
             $certFile = 'file:///'.$pem_path . "/client.private.pem";  
             $baseUrl = "http://121.58.224.179/VentajaAPI/api/";
@@ -53,24 +47,16 @@ class EPayController extends MemberController
             // $method = "Process";
             // $method = "Inquiry";
             // $method = "Cancel";
-
-
-            
-
-
-
-            $params = new Ventaja();       
+            $params = new VentajaRequestParam();       
             $params->id = "130031400022";
             $params->uid = "teller";
             $params->pwd = "p@ssw0rD";
             $params->code = $code;
-
+            $params->data = $data;
             // note: you can create a class like RequestParam for each or generate it as a string and use json_decode
-            $params->data = json_decode('{"lastName":"NATIVIDAD","firstName":"HENRY","middleName":"VILLANUEVA","birthDate":"05/06/1960"}');
+            // $params->data = json_decode('{"lastName":"NATIVIDAD","firstName":"HENRY","middleName":"VILLANUEVA","birthDate":"05/06/1960"}');
             // $params->data = json_decode('{"lastName":"PONCE","firstName":"MARK ANTHONY","middleName":"ALDAY","birthDate":"31/03/1990"}');
             $res = $this->callApi($baseUrl . $method, $params, $certFile);
-
-
             return $res;
 
             // echo json_encode($res);
@@ -81,9 +67,10 @@ class EPayController extends MemberController
         }
     }
 
+
     public function get_field($code)
     {
-        $res = $this->signIn('GetFields', $code);
+        $res = $this->signIn('GetFields', $code, null);
         $data_field = null;
         
         if($res['responseCode'] == 100 && $res['data'])
@@ -145,29 +132,4 @@ class EPayController extends MemberController
     }
 
 
-    public function index()
-    {
-
-
-        $epayment = new EPayment();
-
-        dd($epayment->signIn('GetFields','102',null));
-        // $data = [];
-        //  $data['_input_field'] = null;
-        // if(Request::isMethod('get') && Request::input('transaction_code'))
-        // {
-
-        //     $data['_input_field'] = $this->get_field(Request::input('transaction_code'));
-
-
-        // }
-
-        // return view('member.epayment', $data);
-    }
-
-    
-
 }
-
-
-
