@@ -65,8 +65,6 @@ class AdminUnilevelController extends AdminController
 			$placement = Tbl_tree_placement::child($slot->slot_id)->level()->distinct_level()->get();
 			$gpv = $oneslot->slot_group_points * $oneslot->multiplier;
 			$update['slot_wallet'] = $oneslot->slot_wallet + $gpv;
-			// $update['group_pv'] = 0;
-			// $update['slot_wallet'] = 0;
 			Tbl_slot::where('slot_id',$oneslot->slot_id)->update($update);
 			foreach($placement as $key => $tree)
 			{
@@ -80,6 +78,10 @@ class AdminUnilevelController extends AdminController
 			}
 
 		}
+
+		$updateall['slot_group_points'] = 0;
+		$updateall['slot_personal_points'] = 0;
+		Tbl_slot::account()->membership()->update($updateall);
 	}
 
 

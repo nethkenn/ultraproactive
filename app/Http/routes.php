@@ -345,5 +345,11 @@ Route::post('admin/admin_stockist/archive', 'AdminStockistController@archive');
 Route::post('admin/admin_stockist/restore', 'AdminStockistController@restore');
 
 
+//STOCKIST PAGE
+Route::any('stockist', 'StockistDashboardController@index');
+Route::any('stockist/issue_stocks', 'StockistIssueController@index');
+Route::any('stockist/login', 'StockistLoginController@index');
+Route::any('stockist/logout', 'StockistLoginController@logout');
+
 Route::any('member/e-pament/','EPayController@index');
 

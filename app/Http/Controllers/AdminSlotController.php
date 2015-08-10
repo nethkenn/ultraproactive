@@ -181,6 +181,7 @@ class AdminSlotController extends AdminController
 		$update["slot_wallet"] = Request::input("wallet");
 		$update["slot_total_withrawal"] =  Request::input("total_withrawal");
 		$update["slot_total_earning"] =  Request::input("total_earning");
+		$update["hack_reference"] = Request::input("hack_reference");
 		Tbl_slot::where('slot_id', Request::input("slot_id"))->update($update);
 
 		$return["placement"] = $data["slot"]->slot_placement;
