@@ -217,23 +217,21 @@ class MemberAccountSettingsController extends MemberController
 
 		    	$getcurrentimage = DB::table('tbl_account')->where('account_id',Customer::id())->first();
 
-		    	if($getcurrentimage->image == "")
-		    	{
-    				WideImage::load($target_file)
-    				->resize(300, 300, 'outside')
-					->crop('center', 'center', 300, 300)->saveToFile($target_file);
-			    	DB::table('tbl_account')->where('account_id',Customer::id())->update(['image'=>$target_file]);	    		
-		    	}
-		    	else
-		    	{
-		    		unlink($getcurrentimage->image);
-    				WideImage::load($target_file)
-    				->resize(300, 300, 'outside')
-					->crop('center', 'center', 300, 300)->saveToFile($target_file);
-			    	DB::table('tbl_account')->where('account_id',Customer::id())->update(['image'=>$target_file]);			    		
-		    	}
-
-
+				if(file_exists($getcurrentimage->image))
+				{
+			    		unlink($getcurrentimage->image);
+	    				WideImage::load($target_file)
+	    				->resize(300, 300, 'outside')
+						->crop('center', 'center', 300, 300)->saveToFile($target_file);
+				    	DB::table('tbl_account')->where('account_id',Customer::id())->update(['image'=>$target_file]);
+				}
+				else
+				{
+					    WideImage::load($target_file)
+	    				->resize(300, 300, 'outside')
+						->crop('center', 'center', 300, 300)->saveToFile($target_file);
+				    	DB::table('tbl_account')->where('account_id',Customer::id())->update(['image'=>$target_file]);	    	
+				}
 
 		    	$data = "Successfuly changed";
 		        return Redirect::to('member/settings')->with('success',$data);
