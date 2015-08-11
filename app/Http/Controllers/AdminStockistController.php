@@ -7,7 +7,11 @@ use Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Tbl_stockist;
+use App\Tbl_product;
+use App\Tbl_product_package;
 use App\Tbl_stockist_user;
+use App\Tbl_stockist_inventory;
+use App\Tbl_stockist_package_inventory;
 use Datatables;
 use App\Tbl_stockist_type;
 use Crypt;
@@ -16,6 +20,8 @@ class AdminStockistController extends AdminController
 {
     public function index()
     {
+
+
         return view('admin.maintenance.stockist');
     }
 
@@ -80,6 +86,9 @@ class AdminStockistController extends AdminController
                         ->withInput();
         }
 
+        /**
+         * CREATE STOKIST.
+         */
         $stockist = new Tbl_stockist(Request::input());
         $stockist->save();
         $insert_stockist_user['stockist_id'] = $stockist->stockist_id;
@@ -87,8 +96,45 @@ class AdminStockistController extends AdminController
         $insert_stockist_user['stockist_un'] = Request::input('stockist_un');
         $insert_stockist_user['stockist_pw'] = Crypt::encrypt(Request::input('stockist_pw'));
 
+        /**
+         * CREATE STOKIST USER.
+         */
         $stockist_user = new Tbl_stockist_user($insert_stockist_user);
         $stockist_user->save();
+
+
+        /**
+         * CREATE STOKIST PRODUCT INVENTORY.
+         */
+        $_product = Tbl_product::all();
+        if($_product)
+        {
+            foreach ($_product as $key => $product)
+            {
+                $insert_stockist_inventory['stockist_id'] = $stockist->stockist_id;
+                $insert_stockist_inventory['product_id'] = $product->product_id;
+
+                $stockist_inventory = new Tbl_stockist_inventory($insert_stockist_inventory);
+                $stockist_inventory->save();
+            }
+        }
+
+        /**
+         * CREATE STOKIST PRODUCT PACKAGE INVENTORY.
+         */
+        $_prod_package = Tbl_product_package::all();
+        if($_prod_package)
+        {
+            foreach ($_prod_package as $key => $prod_package)
+            {
+                $insert_stockist_package_inventory['stockist_id'] = $stockist->stockist_id;
+                $insert_stockist_package_inventory['product_package_id'] = $prod_package->product_package_id;
+
+                $stockist_package_inventory = new Tbl_stockist_package_inventory($insert_stockist_package_inventory);
+                $stockist_package_inventory->save();
+            }
+        }
+
         return redirect('admin/admin_stockist');
     }
 

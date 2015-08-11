@@ -367,6 +367,7 @@ Route::any('stockist/logout', 'StockistLoginController@logout');
 
 //STOCKIST MEMBERSHIP CODE
 Route::get('stockist/membership_code', 'StockistCodeController@index');
+Route::get('stockist/membership_code/get_data', 'StockistCodeController@ajax_get_membership_code');
 
 
 Route::any('member/e-pament/','EPayController@index');
