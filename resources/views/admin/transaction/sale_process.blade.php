@@ -59,12 +59,31 @@
             <div class="form-group col-md-12 or-num">
                 <label for="or number">OR number</label>
                 <input type="text" name="or_number" class="form-control" value="{{Request::old('or_number')}}">
-            </div>    
+            </div>   
+
+            <div class="form-group col-md-12 payment">
+                <label for="payment-option">Payment Options</label>
+                <select id="payment-option" name="payment_option" class="form-control">
+                  <option value="0" {{Request::old('0') == '0' ? 'selected' : '' }}>Cash</option>
+                  <option value="1" {{Request::old('1') == '1' ? 'selected' : '' }}>Credit Card (Additional 3% Other Charges)</option>
+                </select>
+            </div> 
+
             <div class="form-group col-md-12">
                 <label for="account password">Password</label>
                                 @if($errors->get('account_password'))<span style="color:red;" class="glyphicon glyphicon-remove" aria-hidden="true"></span>@endif
                 <input class="form-control" type="password" name="account_password" value="">
-            </div>      
+            </div> 
+
+            <div class="form-group col-md-12 charge">
+                <label for="charge">Other Charge</label>
+                <input type="checkbox" id="charge">
+            </div> 
+
+            <div class="form-group col-md-12 charged">
+
+            </div> 
+            
         </form>
     	<div class="form-group col-md-12">
     		<label for=""><strong>Product List</strong></label>

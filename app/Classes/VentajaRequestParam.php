@@ -2,9 +2,9 @@
 
 namespace App\Classes;
 
-class VentajaRequestParam
-{
 
+
+class VentajaRequestParam {
     var $id = "";
     var $uid = "";
     var $pwd = "";

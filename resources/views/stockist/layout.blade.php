@@ -58,85 +58,9 @@
 					</div>
 					<div id="navbar" class="navbar-collapse collapse">
 						<ul class="nav navbar-nav">
-							<!-- DASHBOARD -->
-							<li class="{{ Request::segment(2) == '' ? 'active' : 'inactive' }}"><a href="admin/">Dashboard</a></li>
-							<!-- TRANSACTION -->
-							<li class="dropdown {{ Request::segment(2) == 'transaction' ? 'active' : 'inactive' }}">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Transaction <span class="caret"></span></a>
-								<ul class="dropdown-menu" role="menu">
-									<li><a href="admin/transaction/sales">Process Sales</a></li>
-									<li><a href="admin/transaction/claims">Process Claims</a></li>
-									<li><a href="admin/transaction/payout">Process Payout</a></li>
-									<li><a href="admin/transaction/unilevel-distribution">Unilevel Distribution</a></li>
-									<li><a href="admin/transaction/unilevel-distribution/dynamic">Dynamic Compression</a></li>
-								</ul>
-							</li>
-							<!-- MAINTENANCE -->
-							<li class="dropdown {{ Request::segment(2) == 'maintenance' ? 'active' : 'inactive' }}">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Maintenance <span class="caret"></span></a>
-								<ul class="dropdown-menu" role="menu">
-									<li><a href="admin/maintenance/accounts">Account</a></li>
-									<li><a href="admin/maintenance/slots">Account Slots</a></li>
-									<li class="divider" role="separator"></li>
-									<li><a href="admin/maintenance/product">Product</a></li>
-									<li><a href="admin/maintenance/product_package">Product Package</a></li>
-									<li><a href="admin/maintenance/product_category">Product Categories</a></li>
-									<li><a href="admin/maintenance/inventory">Product Inventory</a></li>
-									<li class="divider" role="separator"></li>
-									<li><a href="admin/maintenance/membership">Membership</a></li>
-									<li><a href="admin/maintenance/codes">Membership Codes</a></li>
-									<li class="divider" role="separator"></li>
-									<li><a href="admin/maintenance/country">Country</a></li>
-									<li><a href="admin/maintenance/deduction">Deductions</a></li>
-									<li><a href="admin/maintenance/ranking">Ranking</a></li>
-									<li class="divider" role="separator"></li>
-									<li><a href="admin/admin_stockist">Stockist</a></li>
-									<li><a href="admin/admin_stockist_user">Stockist Users</a></li>
-									<li><a href="admin/stockist_type">Stockist Type</a></li>
-									<li><a href="admin/stockist_inventory">Stockist Inventory</a></li>
-								</ul>
-							</li>
-							<!-- UTILITIES -->
-							<li class="dropdown {{ Request::segment(2) == 'utilities' ? 'active' : 'inactive' }}">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Utilities <span class="caret"></span></a>
-								<ul class="dropdown-menu" role="menu">
-									<li><a href="admin/utilities/admin_maintenance">Admin</a></li>
-									<li><a href="admin/utilities/position">Admin Positions</a></li>
-									<li><a href="admin/utilities/setting">Company Settings</a></li>
-									<li class="divider" role="separator"></li>
-									<li><a href="admin/utilities/binary">Binary Computation</a></li>
-									<li><a href="admin/utilities/matching">Matching Bonus Computation</a></li>
-									<li><a href="admin/utilities/direct">Direct Sponsorship Bonus</a></li>
-									<li><a href="admin/utilities/indirect">Indirect Sponsorship Bonus</a></li>
-									<li><a href="admin/utilities/unilevel">Unilevel Computation</a></li>
-									<li class="divider" role="separator"></li>
-									<li><a href="admin/utilities/rank">Promotion Settings</a></li>
-									<li class="divider" role="separator"></li>
-									<li><a href="admin/utilities/recompute">Recomputation</a></li>
-								</ul>
-							</li>
-							<!-- REPORTS -->
-							<li class="dropdown {{ Request::segment(2) == 'reports' ? 'active' : 'inactive' }}">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Reports <span class="caret"></span></a>
-								<ul class="dropdown-menu" role="menu">
-									<li><a href="admin/reports/product_sales">Product Sales Report</a></li>
-									<li><a href="admin/reports/membership_sales">Membership Sales Report</a></li>
-								</ul>
-							</li>
-							<!-- CONTENT -->
-							<li class="dropdown {{ Request::segment(2) == 'content' ? 'active' : 'inactive' }}">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Content <span class="caret"></span></a>
-								<ul class="dropdown-menu" role="menu">
-									<li><a href="admin/content/news">News</a></li>
-									<!-- <li><a href="admin/content/earn">Earn</a></li> -->
-									<li><a href="admin/content/slide">Slide</a></li>
-									<li><a href="admin/content/team">Team</a></li>
-									<li><a href="admin/content/testimony">Testimonial</a></li>
-									<li><a href="admin/content/partner">Partners</a></li>
-									<li><a href="admin/content/service">Services</a></li>
-									<li><a href="admin/content/about">Others</a></li>
-								</ul>
-							</li>
+							<li class="{{ Request::segment(2) == '' ? 'active' : 'inactive' }}"><a href="stockist/">Dashboard</a></li>
+							<li class="{{ Request::segment(2) == 'issue_stocks' ? 'active' : 'inactive' }}"><a href="stockist/issue_stocks">Issue Stocks</a></li>
+							<li class="{{ Request::segment(2) == 'membership_code' ? 'active' : 'inactive' }}"><a href="/stockist/membership_code">Code</a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							<li class="dropdown {{ Request::segment(2) == 'account' ? 'active' : 'inactive' }}">
@@ -146,7 +70,7 @@
 									<li><a href="admin/account/settings/change_pass">Change Password</a></li>
 								</ul>
 							</li>
-							<li><a href="admin/account/logout"> {{$admin->account_username}} (Logout)</a></li>
+							<li><a href="stockist/logout"> {{$user->stockist_un}} (Logout)</a></li>
 						</ul>
 					</div>
 				</div>

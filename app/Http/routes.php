@@ -330,6 +330,11 @@ Route::get('admin/stockist_type/edit/{id}', 'AdminStockistTypeController@edit');
 Route::post('admin/stockist_type/edit', 'AdminStockistTypeController@update');
 Route::post('admin/stockist_type/archive', 'AdminStockistTypeController@archive');
 Route::post('admin/stockist_type/restore', 'AdminStockistTypeController@restore');
+Route::any('admin/stockist_inventory', 'AdminStockistInventoryController@index');
+Route::any('admin/stockist_inventory/refill', 'AdminStockistInventoryController@refill');
+Route::any('admin/stockist_inventory/refill/package', 'AdminStockistInventoryController@package');
+Route::get('admin/stockist_inventory/get_product/product', 'AdminStockistInventoryController@ajax_get_product');
+Route::get('admin/stockist_inventory/get_product/product/package', 'AdminStockistInventoryController@ajax_get_product_package');
 
 //STOCKIST
 Route::get('admin/admin_stockist', 'AdminStockistController@index');
@@ -340,6 +345,26 @@ Route::get('admin/admin_stockist/edit/{id}', 'AdminStockistController@edit');
 Route::post('admin/admin_stockist/edit', 'AdminStockistController@update');
 Route::post('admin/admin_stockist/archive', 'AdminStockistController@archive');
 Route::post('admin/admin_stockist/restore', 'AdminStockistController@restore');
+//STOKIST USE MAINTENANCE
+Route::get('admin/admin_stockist_user', 'AdminStockistUserController@index');
+Route::get('admin/admin_stockist_user/get_data', 'AdminStockistUserController@get_data');
+Route::get('admin/admin_stockist_user/add', 'AdminStockistUserController@add');
+Route::post('admin/admin_stockist_user/add', 'AdminStockistUserController@create');
+Route::get('admin/admin_stockist_user/edit/{id}', 'AdminStockistUserController@edit');
+Route::post('admin/admin_stockist_user/edit/{id}', 'AdminStockistUserController@update');
+Route::post('admin/admin_stockist_user/archive', 'AdminStockistUserController@archive');
+Route::post('admin/admin_stockist_user/restore', 'AdminStockistUserController@restore');
+
+//STOCKIST PAGE
+Route::any('stockist', 'StockistDashboardController@index');
+Route::any('stockist/issue_stocks', 'StockistIssueController@index');
+Route::any('stockist/login', 'StockistLoginController@index');
+Route::any('stockist/logout', 'StockistLoginController@logout');
+
+
+//STOCKIST MEMBERSHIP CODE
+Route::get('stockist/membership_code', 'StockistCodeController@index');
+Route::get('stockist/membership_code/get_data', 'StockistCodeController@ajax_get_membership_code');
 
 
 Route::get('member/e-payment/','EPayController@index');

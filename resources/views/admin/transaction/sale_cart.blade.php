@@ -17,6 +17,9 @@
 			<td class="text-right" colspan="6">Discount : {{$discount}}% ( {{$discount_pts}} )</td>
 		</tr>
 		<tr>
+			<td class="text-right" colspan="6">Other Charges : {{$other}}% ( {{$other_pts}} )</td>
+		</tr>
+		<tr>
 			<td class="text-right" colspan="6">Final Total :  {{$final_total}}</td>
 		</tr>
 @endif

@@ -49,7 +49,7 @@ class AdminCodeController extends AdminController {
     {
 
     	$stat = Request::input('status');
-        $membership_code = Tbl_membership_code::getMembership()->getCodeType()->getPackage()->getInventoryType()->getUsedBy()->where(function ($query) use ($stat) {
+        $membership_code = Tbl_membership_code::byAdmin()->getMembership()->getCodeType()->getPackage()->getInventoryType()->getUsedBy()->where(function ($query) use ($stat) {
     
 
         	switch ($stat)
@@ -83,7 +83,6 @@ class AdminCodeController extends AdminController {
         								->editColumn('inventory_update_type_id','<input type="checkbox" {{$inventory_update_type_id == 1 ? \'checked="checked"\' : \'\'}} name="" value="" readonly disabled>')
         								->editColumn('account_name','{{$account_name or "No owner"}}')
         								->make(true);
-
     }
 
 	/**
@@ -182,10 +181,10 @@ class AdminCodeController extends AdminController {
 					*/
 					$name =DB::table('tbl_account')->where('account_username',Session::get('admin')['username'])->first();
 					$membership_code = new Tbl_membership_code(Request::input());
-					$query = Tbl_membership_code::where('code_activation', Globals::code_generator())->first();
-					$membership_code->code_activation = Globals::check_code($query);
+					$membership_code->code_activation = Globals::create_membership_code();
 					//IF code_type_id IS FREE SLOT / 2 SET PRODUCT PACKAGE TO NULL
-					if(Request::input('code_type_id')==2 || Request::input('inventory_update_type_id') == 3)
+					// if(Request::input('code_type_id')==2 || Request::input('inventory_update_type_id') == 3)
+					if(Request::input('code_type_id')==2)
 					{
 						$membership_code->product_package_id = null;
 					}
@@ -195,7 +194,7 @@ class AdminCodeController extends AdminController {
 					$membership_code->save();
 
 					/**
-					* INSERT TO Rel_membership_code
+					* INSERT TO Rel_membership_code history
 					*/
 					$insert['code_pin'] = $membership_code->code_pin;
 					$insert['by_account_id'] = $name->account_id;
@@ -215,6 +214,8 @@ class AdminCodeController extends AdminController {
 					$membership_total_amount = $membership_total_amount + $selected_membership->membership_price; 
 					$sale[] = $membership_code->code_pin;
 
+
+
 				}
 				
 
@@ -224,26 +225,28 @@ class AdminCodeController extends AdminController {
 
 				/**
 				 * INSERT TO MEMBERSHIP SALE
+				 * 
 				 */
-				$or_code_query = Tbl_membership_code_sale::where('membershipcode_or_code', Globals::code_generator())->first();
-				$insert_membership_code_sale['membershipcode_or_code'] = Globals::check_code($or_code_query);
-				$insert_membership_code_sale['sold_to'] = Request::input('account_id');
-				$insert_membership_code_sale['generated_by'] = Admin::info()->account_id;
-				$insert_membership_code_sale['total_amount'] = $membership_total_amount;
-				$insert_membership_code_sale['payment'] = 1;
-				$tbl_membership_code_sale = new Tbl_membership_code_sale($insert_membership_code_sale);
-				$tbl_membership_code_sale->save($insert_membership_code_sale);
+				if(Request::input('code_type_id') == 1 )
+				{
+					$insert_membership_code_sale['membershipcode_or_code'] = Globals::create_membership_code_sale();
 
+					$insert_membership_code_sale['sold_to'] = Request::input('account_id');
+					$insert_membership_code_sale['generated_by'] = Admin::info()->account_id;
+					$insert_membership_code_sale['total_amount'] = $membership_total_amount;
+					$insert_membership_code_sale['payment'] = 1;
+					$tbl_membership_code_sale = new Tbl_membership_code_sale($insert_membership_code_sale);
+					$tbl_membership_code_sale->save($insert_membership_code_sale);
+				}
 
 
 				$new_voucher = null;
 				//IF "CLAIMABLE" CREATE PRODUCT VOUCHER 
-				if(Request::input('inventory_update_type_id') != 3 &&  Request::input('code_type_id') != 2 )
+				if(Request::input('inventory_update_type_id') == 1 &&  Request::input('code_type_id') != 2 )
 				{
 					$insert_voucher['account_id'] = Request::input('account_id');
 					$insert_voucher['or_number'] = "(MEMBERSHIPCODE PURCHASE) #".$tbl_membership_code_sale->membershipcode_or_num. ' CODE : '.$tbl_membership_code_sale->membershipcode_or_code;
-					$v_query = Tbl_voucher::where('voucher_code', Globals::code_generator())->first();
-					$insert_voucher['voucher_code'] = Globals::check_code($v_query);
+					$insert_voucher['voucher_code'] = Globals::create_voucher_code();
 					$insert_voucher['status'] = 'unclaimed';
 					$insert_voucher['discount'] = 0;
 					$insert_voucher_membership = Tbl_membership::find(Request::input('membership_id'));
@@ -301,14 +304,18 @@ class AdminCodeController extends AdminController {
 
 				/**
 				 * INSERT TO MEMBERSHIP SALE PRODUCT
+				 * IF CODE TYPE IS NOT FREE SLOT
 				 */
-				foreach ( (array)$sale as $key => $value)
+				if(Request::input('code_type_id') == 1 )
 				{
-					$insert_membership_code_sale_has_code['code_pin'] = $value;
-					$insert_membership_code_sale_has_code['sold_price'] = Tbl_membership::find(Request::input('membership_id'))->membership_price;
-					$insert_membership_code_sale_has_code['membershipcode_or_num'] = $tbl_membership_code_sale->membershipcode_or_num;
-					$tbl_membership_code_sale_has_code = new Tbl_membership_code_sale_has_code($insert_membership_code_sale_has_code);
-					$tbl_membership_code_sale_has_code->save();
+					foreach ( (array)$sale as $key => $value)
+					{
+						$insert_membership_code_sale_has_code['code_pin'] = $value;
+						$insert_membership_code_sale_has_code['sold_price'] = Tbl_membership::find(Request::input('membership_id'))->membership_price;
+						$insert_membership_code_sale_has_code['membershipcode_or_num'] = $tbl_membership_code_sale->membershipcode_or_num;
+						$tbl_membership_code_sale_has_code = new Tbl_membership_code_sale_has_code($insert_membership_code_sale_has_code);
+						$tbl_membership_code_sale_has_code->save();
+					}
 				}
 
 
@@ -343,38 +350,20 @@ class AdminCodeController extends AdminController {
 		return view('admin.maintenance.code_add',$data);
 	}
 
-	// public static function code_generator()
- //    {
+	public static function code_generator()
+    {
         
- //        $chars="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
- //        $res = "";
- //        for ($i = 0; $i < 8; $i++) {
- //            $res .= $chars[mt_rand(0, strlen($chars)-1)];
- //        }
+        $chars="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $res = "";
+        for ($i = 0; $i < 8; $i++) {
+            $res .= $chars[mt_rand(0, strlen($chars)-1)];
+        }
 
- //        return $res;
+        return $res;
 
- //    }
-
-
- //    public static function check_code($query)
- //    {
+    }
 
 
-
- //        $stop=false;
- //        while($stop==false)
- //        {
- //            $code = Globals::code_generator();
-
- //            $check = $query;
- //            if($check==null)
- //            {
- //                $stop = true;
- //            }
- //        }
- //        return $code;
- //    }
 
 	public function block()
 	{	

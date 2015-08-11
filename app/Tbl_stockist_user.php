@@ -18,4 +18,11 @@ class Tbl_stockist_user extends Model
 	 						];
 	public $timestamps = false;
 
+
+	public function scopeStockist($query)
+    {
+        return $query->leftJoin('tbl_stockist', 'tbl_stockist.stockist_id', '=', 'tbl_stockist_user.stockist_id');
+    }
+
+
 }

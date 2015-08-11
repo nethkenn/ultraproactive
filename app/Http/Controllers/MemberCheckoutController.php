@@ -158,8 +158,7 @@ class MemberCheckoutController extends Controller
 
                 $insert['slot_id'] = Request::input('slot_id');
 
-                $query = Tbl_voucher::where('voucher_code', Globals::code_generator())->first();
-                $insert['voucher_code'] = Globals::check_code($query);
+                $insert['voucher_code'] = Globals::create_voucher_code();
 
                 $insert ['discount'] = $slot->discount;
                 $insert['total_amount'] = $data['final_total'];
@@ -203,8 +202,8 @@ class MemberCheckoutController extends Controller
                      */
                     for ($x = 0 ; $x < $value['qty']; $x++)
                     {
-                        $query = Tbl_product_code::where('code_activation', Globals::code_generator())->first();
-                        $insert_prod_code['code_activation'] = Globals::check_code($query);
+
+                        $insert_prod_code['code_activation'] = Globals::create_product_code();
                         $insert_prod_code['voucher_item_id'] = $voucher_has_product->voucher_item_id;
 
                         $product_code = new Tbl_product_code($insert_prod_code);
