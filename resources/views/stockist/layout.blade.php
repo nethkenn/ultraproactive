@@ -60,6 +60,7 @@
 						<ul class="nav navbar-nav">
 							<li class="{{ Request::segment(2) == '' ? 'active' : 'inactive' }}"><a href="stockist/">Dashboard</a></li>
 							<li class="{{ Request::segment(2) == 'issue_stocks' ? 'active' : 'inactive' }}"><a href="stockist/issue_stocks">Issue Stocks</a></li>
+							<li class="{{ Request::segment(2) == 'membership_code' ? 'active' : 'inactive' }}"><a href="/stockist/membership_code">Code</a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							<li class="dropdown {{ Request::segment(2) == 'account' ? 'active' : 'inactive' }}">

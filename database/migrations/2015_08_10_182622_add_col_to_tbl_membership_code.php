@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateTblStockistUserDropPwUn extends Migration
+class AddColToTblMembershipCode extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,8 @@ class UpdateTblStockistUserDropPwUn extends Migration
      */
     public function up()
     {
-        Schema::table('tbl_stockist', function($table)
-        {
-            $table->dropColumn('stockist_un');
-            $table->dropColumn('stockist_email');
-            $table->dropColumn('stockist_pw');
+        Schema::table('tbl_membership_code', function (Blueprint $table) {
+            $table->tinyInteger('origin')->default(0);
         });
     }
 
@@ -27,5 +24,8 @@ class UpdateTblStockistUserDropPwUn extends Migration
      */
     public function down()
     {
+        Schema::table('tbl_membership_code', function (Blueprint $table) {
+            //
+        });
     }
 }

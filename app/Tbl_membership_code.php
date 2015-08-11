@@ -46,6 +46,14 @@ class Tbl_membership_code extends Model
         // ->OrWhereNotNull('tbl_membership_code.account_id');
     }
 
+    public function scopeByAdmin($query)
+    {   
+        return $query->where('origin', 0);
+
+        // ->OrWhereNull('tbl_membership_code.account_id')
+        // ->OrWhereNotNull('tbl_membership_code.account_id');
+    }
+
 
 
     public function codetype()
