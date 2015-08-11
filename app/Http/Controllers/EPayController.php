@@ -41,6 +41,9 @@ class EPayController extends MemberController
         // $input['firstName'] = 'HENRY';
         // $input['middleName'] = 'VILLANUEVA';
         // $input['birthDate'] = '05/06/1960';
+
+
+
         $transaction = EPayment::signIn('Process', $transaction_code, Request::input());
         return $transaction;
 
@@ -50,6 +53,19 @@ class EPayController extends MemberController
         
 
     }
+
+    public function outlet_balance()
+    {
+        // $bal = EPayment::signIn('Process', 100);
+        // return ($bal);
+        // $test = {"data":{"transactionNumber":"PagIbig-13201508-000005","referenceNumber":"14","dateEntry":"2015-08-11T17:12:40.687"};
+        // // dd({"responseCode":100,"remarks":"REQUESTACCEPTED","data":{"transactionNumber":"PagIbig-13201508-000005","referenceNumber":"14","dateEntry":"2015-08-11T17:12:40.687"}});
+
+        // dd($test);
+
+        // {"responseCode":100,"remarks":"REQUESTACCEPTED","data":{"transactionNumber":"PagIbig-13201508-000003","referenceNumber":"12","dateEntry":"2015-08-11T16:33:46.583"}}
+    }
+
 
 
 

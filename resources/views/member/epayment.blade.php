@@ -74,12 +74,11 @@
                   <div class="form-group">
                     <label for="{{$input_field['label']}}" class="col-sm-2 control-label">{{$input_field['label']}}</label>
                     <div class="col-sm-10">
-                        <!--{{$input_field['true_type'] .'=='. $input_field['type']}}-->
                     @if($input_field['type']=='select')
                         <select name="{{$input_field['name']}}" class="form-control">
                             <option>Select {{$input_field['name']}}</option>
                             @foreach($input_field['data'] as $option)
-                                <option value="{{$option['value']}}">{{$option['name']}}</option>
+                                <option value="{{$option['value']}}" {{Request::old($input_field['name']) == $option['value'] ? 'selected' :  ''}}>{{$option['name']}}</option>
                             @endforeach
                         </select>
                     @else

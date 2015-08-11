@@ -369,5 +369,7 @@ Route::get('stockist/membership_code/get_data', 'StockistCodeController@ajax_get
 
 Route::get('member/e-payment/','EPayController@index');
 Route::post('member/e-payment/','EPayController@process');
+Route::get('member/e-payment/test','EPayController@index');
+Route::get('member/e-payment/outlet-balance','EPayController@outlet_balance');
 
 

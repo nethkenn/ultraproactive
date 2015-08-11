@@ -32,7 +32,7 @@ class EPayment
 
 
 
-    public static function signIn($method, $code, $data)
+    public static function signIn($method, $code, $data=null)
     {
         /*REMOVE INPUT FIELDS THE ARE NOT NEEDED*/
         $remove_list = ['_token', 'transaction_code'];
