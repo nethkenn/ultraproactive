@@ -7,6 +7,7 @@ use App\Tbl_tree_placement;
 use App\Classes\Compute;
 use App\Tbl_membership_code;
 use App\Tbl_tree_sponsor;	
+use App\Tbl_lead;
 class MemberGenealogyController extends MemberController
 {
 	public function index()
@@ -21,6 +22,9 @@ class MemberGenealogyController extends MemberController
 														  ->where('tbl_membership_code.account_id','=',Customer::id())
 														  ->orderBy('tbl_membership_code.code_pin','ASC')
 														  ->get();
+	    $data['id'] = Customer::id();
+		$data['getlead'] = Tbl_lead::where('lead_account_id',Customer::id())->getaccount()->get();												  
+
         return view('member.genealogy',$data);
 	}
 
@@ -174,6 +178,30 @@ class MemberGenealogyController extends MemberController
 									  
 		$sponsor = null;
 
+
+
+
+
+		$checklead = Tbl_lead::where('lead_account_id',Customer::id())->where('tbl_lead.account_id',Request::input('acc'))->getaccount()->first();		
+
+		if($checklead)
+		{
+			$owner = Request::input('acc');
+		}
+		elseif(Customer::id() == Request::input('acc'))
+		{
+			$owner =  Request::input('acc');
+		}
+		else
+		{
+			$data["message"] = 'Some error occurred please try to refresh.';
+		}
+
+
+
+
+
+
 		if($code)
 		{
 			if($code->code_type_name == "Free Slot")
@@ -240,7 +268,7 @@ class MemberGenealogyController extends MemberController
 			$insert["slot_sponsor"] =  $sponsor;
 			$insert["slot_placement"] =  Request::input("placement");
 			$insert["slot_position"] =  strtolower(Request::input("position"));
-			$insert["slot_owner"] = Customer::id();
+			$insert["slot_owner"] = $owner;
 			$slot_id = Tbl_slot::insertGetId($insert);
 			Tbl_membership_code::where('code_pin',$code->code_pin)->update(['used'=>1]);
 			Compute::tree($slot_id);

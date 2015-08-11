@@ -128,7 +128,8 @@ class AdminSalesController extends AdminController
        	$cart_total = $data['cart_total'] = $this->get_cart_total($data['cart']);
        	$discount_pts = $data['discount_pts'] = (($discount / 100) * $cart_total );
        	$data['other_pts'] = (($other / 100) * $cart_total );
-       	$final_total = $data['final_total'] = $cart_total - $discount_pts + $other;
+       	$total_charge = $data['other_pts'];
+       	$final_total = $data['final_total'] = $cart_total - $discount_pts + $total_charge;
         
 
 
@@ -241,20 +242,28 @@ class AdminSalesController extends AdminController
         // $_slot = Tbl_slot::select('tbl_slot.*', 'tbl_membership.discount')->leftJoin('tbl_membership', 'tbl_membership.membership_id','=','tbl_slot.slot_membership')
         //                                                 ->where('slot_owner', Request::input('account_id'))
         //                                                 ->first();
+        $additional = 0;
+
+       	$insert_voucher['payment_option'] = Request::input('payment_option');
+        if(Request::input('other_charge'))
+        {
+        	$additional = $additional + Request::input('other_charge');
+        }
+
+        if(Request::input('payment_option') == 1)
+        {
+        	$additional = $additional + 3;
+        }
 
         $_slot_discount = 0;
         $insert_voucher['discount'] = $_slot_discount;
-        $insert_voucher['total_amount'] = $cart_total - (($_slot_discount / 100) * $cart_total);
+        $insert_voucher['total_amount'] = $cart_total - (($_slot_discount / 100) * $cart_total) + (($additional/100) * $cart_total);
         /**
          * PAYMENT MODE IS ALWAYS CASH IN PROCESS SALES
          */
         $insert_voucher['payment_mode'] = 1;
-       	$insert_voucher['payment_option'] = Request::input('payment_option');
-        if(Request::input('other_charge'))
-        {
-        	$insert_voucher['other_charge'] = Request::input('other_charge');
-        } 
-
+ 
+        $insert_voucher['other_charge'] = $additional;
         $insert_voucher['or_number'] = Request::input('or_number');
     	$insert_voucher['processed_by'] = Admin::info()->admin_id; 
     	$insert_voucher['processed_by_name'] = Admin::info()->account_username ." ( " .Admin::info()->admin_position_name. " )";
@@ -293,6 +302,41 @@ class AdminSalesController extends AdminController
 		$_cart_product = Session::get('admin_cart');
 
 		// dd(count($_cart_product));
+
+		if(Request::input('payment_option') == 3 && Request::input('slot_id'))
+        {
+
+        	$extra = 0;
+	        $_cart = Session::get('admin_cart');
+	        $cart_total = $this->get_cart_total($_cart);
+
+	        if(Request::input('other_charge'))
+	        {
+	        	$extra = $extra + Request::input('other_charge');
+	        }
+
+	        if(Request::input('payment_option') == 1)
+	        {
+	        	$extra = $extra + 3;
+	        }
+
+        	$getslot = Tbl_slot::where('slot_id',Request::input('slot_id'))->membership()->first();
+	        $totally = $cart_total - (($getslot->discount / 100) * $cart_total) + (($extra/100) * $cart_total);
+
+        	$ewallet = $getslot->slot_wallet - $totally;
+			$request['ewallet'] = $ewallet;
+
+			if($ewallet < 0)
+			{
+				$data['error'][0] = "Slot wallet's is not enough to buy this.";
+        		return redirect('admin/transaction/sales/process/')
+		                        ->withErrors($data['error'][0])
+		                        ->withInput(Request::input());
+
+
+			}
+        }
+
 
 
 		$request['member_type'] = Request::input('member_type');
@@ -375,7 +419,7 @@ class AdminSalesController extends AdminController
 
         $_cart = Session::get('admin_cart');
         $cart_total = $this->get_cart_total($_cart);
-
+        $additional = 0;
 
         $insert_voucher['slot_id'] = Request::input('slot_id');
         $insert_voucher['account_id'] = Request::input('account_id');
@@ -383,12 +427,22 @@ class AdminSalesController extends AdminController
         $insert_voucher['voucher_code'] = Globals::check_code($v_code_query);
         $insert_voucher['status'] = Request::input('status');
         $insert_voucher['payment_option'] = Request::input('payment_option');
+        if(Request::input('other_charge'))
+        {
+        	$additional = $additional + Request::input('other_charge');
+        }
+
+        if(Request::input('payment_option') == 1)
+        {
+        	$additional = $additional + 3;
+        }
+        $insert_voucher['other_charge'] = $additional;
 
         $_slot = Tbl_slot::select('tbl_slot.*', 'tbl_membership.discount')->leftJoin('tbl_membership', 'tbl_membership.membership_id','=','tbl_slot.slot_membership')
                                                         ->where('slot_owner', Request::input('account_id'))
                                                         ->first();
         $insert_voucher['discount'] = $_slot->discount;
-        $insert_voucher['total_amount'] = $cart_total - (($_slot->discount / 100) * $cart_total);
+        $insert_voucher['total_amount'] = $cart_total - (($_slot->discount / 100) * $cart_total) + (($additional/100) * $cart_total);
         /**
          * PAYMENT MODE IS ALWAYS CASH IN PROCESS SALES
          */
@@ -400,11 +454,12 @@ class AdminSalesController extends AdminController
         	$insert_voucher['processed_by_name'] = Admin::info()->account_username ." ( " .Admin::info()->admin_position_name. " )";
         }
 
-        if(Request::input('other_charge'))
+       	if(Request::input('payment_option') == 3 && Request::input('slot_id'))
         {
-        	$insert_voucher['other_charge'] = Request::input('other_charge');
+        	$updateslot['slot_wallet'] = $ewallet;
+        	Tbl_slot::where('slot_id',Request::input('slot_id'))->update($updateslot);
         }
-        
+
 
         $voucher = new Tbl_voucher($insert_voucher);
         $voucher->save();
@@ -647,7 +702,8 @@ class AdminSalesController extends AdminController
 		return Datatables::of($voucher)	->editColumn('or_number', '{{$or_number ? $or_number : "-"}}')
 										->editColumn('account_id', '{{$account_id ? "Member" : "Non-member"}}')
 										->editColumn('account_name', '{{$account_name ? $account_name . " (". $account_username. ")" : "-"}}')
-										->addColumn('test','<a style="cursor: pointer;" class="view-voucher" voucher-id="{{$voucher_id}}">View Voucher</a>')
+										->addColumn('option','{{$payment_option == 1 ? "Credit" : ""}} {{$payment_option == 0 ? "Cash" : ""}} {{$payment_option == 2 ? "Cheque" : ""}} {{$payment_option == 3 ? "Ewallet" : ""}}')
+			                           	->addColumn('test','<a style="cursor: pointer;" class="view-voucher" voucher-id="{{$voucher_id}}">View Voucher</a>') 
 			                            ->make(true);
 	}
 

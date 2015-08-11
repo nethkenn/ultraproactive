@@ -38,6 +38,20 @@
                 </div>
             </div>
             <div class="form-group para">
+                <label for="acc" class="col-sm-3 control-label">Give slot to</label>
+                <input name="product_pin" class="product-code-id-reference" type="hidden" id="product_code_id" value="">
+                <div class="col-sm-9">
+                    <select class="form-control" id="acc" name="acc">
+                            <option value="{{$id}}">Your account</option> 
+                        @if($getlead)
+                            @foreach($getlead as $get)
+                                <option value="{{$get->account_id}}">{{$get->account_name}}</option> 
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
+            </div>
+            <div class="form-group para">
                 <label for="position" class="col-sm-3 control-label">Position</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control position" id="position" readonly name="position">
