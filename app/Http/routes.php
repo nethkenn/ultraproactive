@@ -315,9 +315,6 @@ Route::post('cart/checkout', 'MemberCheckoutController@checkout');
 
 Route::get('admin/register_url', 'AdminUrlController@index');
 Route::post('admin/register_url', 'AdminUrlController@create_url');
-
-
-
 Route::any('lead/{slug}','MemberRegisterController@lead');
 
 
@@ -345,5 +342,7 @@ Route::post('admin/admin_stockist/archive', 'AdminStockistController@archive');
 Route::post('admin/admin_stockist/restore', 'AdminStockistController@restore');
 
 
-Route::any('member/e-pament/','EPayController@index');
+Route::get('member/e-payment/','EPayController@index');
+Route::post('member/e-payment/','EPayController@process');
+
 
