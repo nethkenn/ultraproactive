@@ -14,10 +14,10 @@
 
 		<div class="filters ">
 			<div class="col-md-8">
-				<a class="{{$active = Request::input('status') == null ? 'active' : ''}}" href="admin/maintenance/codes/">Company Codes</a>
-				<a class="{{$active = Request::input('status') == 'unused' ? 'active' : ''}}" href="admin/maintenance/codes?status=unused">Unused Member Codes</a>
-				<a class="{{$active = Request::input('status') == 'used' ? 'active' : ''}}" href="admin/maintenance/codes?status=used">Used Member Codes</a>
-				<a class="{{$active = Request::input('status') == 'blocked' ? 'active' : ''}}" href="admin/maintenance/codes?status=blocked">Block</a>
+				<a class="{{$active = Request::input('status') == null ? 'active' : ''}}" href="stockist/membership_code">Company Codes</a>
+				<a class="{{$active = Request::input('status') == 'unused' ? 'active' : ''}}" href="stockist/membership_code?status=unused">Unused Member Codes</a>
+				<a class="{{$active = Request::input('status') == 'used' ? 'active' : ''}}" href="stockist/membership_code?status=used">Used Member Codes</a>
+				<a class="{{$active = Request::input('status') == 'blocked' ? 'active' : ''}}" href="stockist/membership_code?status=blocked">Block</a>
 			</div>
 		</div>
 	<div class="col-md-12">
@@ -41,4 +41,38 @@
 </div>
 @endsection
 @section('script')
+	<script type="text/javascript">
+		var $membershipCodeTable = $('#table').DataTable(
+		{
+			processing: true,
+			serverSide: true,
+			 ajax:{
+			    	url:'stockist/membership_code/get_data',
+			    	data:{
+			    	   	status : '{{Request::input("status")}}',
+			    	   }
+				},
+			columns: [
+				 // {data: 'code_pin', name: 'code_pin'},
+			    {data: 'code_pin', name: 'code_pin'},
+			    {data: 'code_activation', name: 'code_activation'},
+			    {data: 'membership_name', name: 'membership_name'},
+			    {data: 'code_type_name', name: 'code_type_name'},
+			    {data: 'product_package_name', name: 'product_package_name'},
+			    {data: 'account_name', name: 'account_name'},
+			    {data: 'inventory_update_type_id', name: 'inventory_update_type_id'},
+			    {data: 'created_at', name: 'created_at'},
+			    {data: 'delete', name: 'code_pin'},
+			    {data: 'transfer', name: 'code_pin'},
+
+			],
+			"lengthMenu": [[8, 10, 25, 50, -1], [10, 25, 50, "All"]],
+			"oLanguage": 
+				{
+					"sSearch": "",
+					"sProcessing": ""
+			 	},
+			stateSave: true,
+		});
+	</script>
 @endsection
