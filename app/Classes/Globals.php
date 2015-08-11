@@ -1,6 +1,10 @@
 <?php namespace App\Classes;
 
 use DB;
+use App\Tbl_voucher;
+use App\Tbl_product_code;
+use App\Tbl_membership_code;
+use App\Tbl_membership_code_sale;
 class Globals
 {
     public static function view($filename, $size="150x150", $mode="crop")
@@ -670,23 +674,79 @@ class Globals
 
     }
 
-
-    public static function check_code($query)
+    public static function create_voucher_code()
     {
-
-
-
         $stop=false;
         while($stop==false)
         {
             $code = Globals::code_generator();
 
-            $check = $query;
+            $check = Tbl_voucher::where('voucher_code', $code)->first();
             if($check==null)
             {
                 $stop = true;
             }
         }
         return $code;
-    } 
+    }
+
+
+    public static function create_product_code()
+    {
+        $stop=false;
+        while($stop==false)
+        {
+            $code = Globals::code_generator();
+
+            $check = Tbl_product_code::where('code_activation', $code)->first();
+            if($check==null)
+            {
+                $stop = true;
+            }
+        }
+        return $code;
+    }
+
+
+    public static function create_membership_code()
+    {
+        $stop=false;
+        while($stop==false)
+        {
+            $code = Globals::code_generator();
+
+            $check = Tbl_membership_code::where('code_activation', $code)->first();
+            if($check==null)
+            {
+                $stop = true;
+            }
+        }
+        return $code;
+    }
+
+
+    public static function create_membership_code_sale()
+    {
+        $stop=false;
+        while($stop==false)
+        {
+            $code = Globals::code_generator();
+
+            $check = Tbl_membership_code_sale::where('membershipcode_or_code', $code)->first();
+            if($check==null)
+            {
+                $stop = true;
+            }
+        }
+        return $code;
+    }
+
+
+
+    
+
+
+
+
+
 }

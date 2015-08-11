@@ -588,25 +588,7 @@ class MemberCodeController extends MemberController
 
 	}
 
-	public function check_code()
-	{
 
-
-
-		$stop=false;
-		while($stop==false)
-		{
-			$code = $this->code_generator();
-
-			$check = Tbl_membership_code::where('code_activation', $code )->first();
-			if($check==null)
-			{
-				$stop = true;
-			}
-		}
-
-		return $code;
-	}
 	/**
 	 * Show the form for creating a new resource.
 	 *
@@ -669,7 +651,7 @@ class MemberCodeController extends MemberController
 								for ($i=0; $i < 1; $i++)
 								{ 
 									$membership_code = new Tbl_membership_code($d);
-									$membership_code->code_activation = $this->check_code();
+									$membership_code->code_activation = Globals::create_membership_code();
 									$membership_code->account_id =  Customer::id() ?: null;
 									$membership_code->created_at = Carbon::now();
 									$membership_code->save();
@@ -721,8 +703,8 @@ class MemberCodeController extends MemberController
 				                                                                        ->first();
 				       			$data['slot'] = $slot;
 				                $insert['slot_id'] = $slotid;
-				                $query = Tbl_voucher::where('voucher_code', Globals::code_generator())->first();
-				                $insert['voucher_code'] = Globals::check_code($query);
+				                // $query = Tbl_voucher::where('voucher_code', Globals::code_generator())->first();
+				                $insert['voucher_code'] = Globals::create_voucher_code();
 				                $insert['discount'] = $slot->discount;
 				                $insert['total_amount'] =$total + (($slot->discount*100)*$total); //
 				                $insert['account_id'] = $customer->account_id;
@@ -746,7 +728,7 @@ class MemberCodeController extends MemberController
 				                    $voucher_has_product = new Tbl_voucher_has_product($insert_prod);
 				                    $voucher_has_product->save();
 				                    $query = Tbl_product_code::where('code_activation', Globals::code_generator())->first();
-				                    $insert_prod_code['code_activation'] = Globals::check_code($query);
+				                    $insert_prod_code['code_activation'] = Globals::create_product_code();
 				                    $insert_prod_code['voucher_item_id'] = $voucher_has_product->voucher_item_id;
 				                    $insert_prod_code['used'] = 1;
 				                    $product_code = new Tbl_product_code($insert_prod_code);

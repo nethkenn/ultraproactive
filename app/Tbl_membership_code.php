@@ -47,7 +47,7 @@ class Tbl_membership_code extends Model
 
     public function scopeByAdmin($query)
     {   
-        return $query->where('origin', 0);
+        return $query->whereNull('origin');
     }
 
     public function scopeByStockist($query, $stockist_id = 0)
@@ -55,24 +55,9 @@ class Tbl_membership_code extends Model
         return $query->where('origin', $stockist_id);
     }
 
-
-
-
-
-
     public function codetype()
     {
         return $this->hasOne('App\Tbl_code_type');
     }
-
-
-    
-
-
-
-
-
-
-
 
 }

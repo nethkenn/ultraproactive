@@ -181,8 +181,7 @@ class AdminCodeController extends AdminController {
 					*/
 					$name =DB::table('tbl_account')->where('account_username',Session::get('admin')['username'])->first();
 					$membership_code = new Tbl_membership_code(Request::input());
-					$query = Tbl_membership_code::where('code_activation', Globals::code_generator())->first();
-					$membership_code->code_activation = Globals::check_code($query);
+					$membership_code->code_activation = Globals::create_membership_code();
 					//IF code_type_id IS FREE SLOT / 2 SET PRODUCT PACKAGE TO NULL
 					// if(Request::input('code_type_id')==2 || Request::input('inventory_update_type_id') == 3)
 					if(Request::input('code_type_id')==2)
@@ -230,8 +229,7 @@ class AdminCodeController extends AdminController {
 				 */
 				if(Request::input('code_type_id') == 1 )
 				{
-					$or_code_query = Tbl_membership_code_sale::where('membershipcode_or_code', Globals::code_generator())->first();
-					$insert_membership_code_sale['membershipcode_or_code'] = Globals::check_code($or_code_query);
+					$insert_membership_code_sale['membershipcode_or_code'] = Globals::create_membership_code_sale();
 
 					$insert_membership_code_sale['sold_to'] = Request::input('account_id');
 					$insert_membership_code_sale['generated_by'] = Admin::info()->account_id;
@@ -248,8 +246,7 @@ class AdminCodeController extends AdminController {
 				{
 					$insert_voucher['account_id'] = Request::input('account_id');
 					$insert_voucher['or_number'] = "(MEMBERSHIPCODE PURCHASE) #".$tbl_membership_code_sale->membershipcode_or_num. ' CODE : '.$tbl_membership_code_sale->membershipcode_or_code;
-					$v_query = Tbl_voucher::where('voucher_code', Globals::code_generator())->first();
-					$insert_voucher['voucher_code'] = Globals::check_code($v_query);
+					$insert_voucher['voucher_code'] = Globals::create_voucher_code();
 					$insert_voucher['status'] = 'unclaimed';
 					$insert_voucher['discount'] = 0;
 					$insert_voucher_membership = Tbl_membership::find(Request::input('membership_id'));
@@ -353,38 +350,20 @@ class AdminCodeController extends AdminController {
 		return view('admin.maintenance.code_add',$data);
 	}
 
-	// public static function code_generator()
- //    {
+	public static function code_generator()
+    {
         
- //        $chars="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
- //        $res = "";
- //        for ($i = 0; $i < 8; $i++) {
- //            $res .= $chars[mt_rand(0, strlen($chars)-1)];
- //        }
+        $chars="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $res = "";
+        for ($i = 0; $i < 8; $i++) {
+            $res .= $chars[mt_rand(0, strlen($chars)-1)];
+        }
 
- //        return $res;
+        return $res;
 
- //    }
-
-
- //    public static function check_code($query)
- //    {
+    }
 
 
-
- //        $stop=false;
- //        while($stop==false)
- //        {
- //            $code = Globals::code_generator();
-
- //            $check = $query;
- //            if($check==null)
- //            {
- //                $stop = true;
- //            }
- //        }
- //        return $code;
- //    }
 
 	public function block()
 	{	
