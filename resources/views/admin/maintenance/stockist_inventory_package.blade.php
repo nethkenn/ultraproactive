@@ -80,10 +80,10 @@
 	    	},
 
 	        columns: [
-	            {data: 'product_id', name: 'product_id'},
-	            {data: 'product_name', name: 'product_name'},
-	            {data: 'stockist_quantity', name: 'stockist_quantity'},
-	            {data: 'stock_qty', name: 'stock_qty'},
+	            {data: 'product_package_id', name: 'product_package_id'},
+	            {data: 'product_package_name', name: 'product_package_name'},
+	            {data: 'package_quantity]', name: 'package_quantity'},
+	            {data: 'estimated', name: 'stock_qty'},
 	           	{data: 'add' ,name: 'product_id'}
 	            
 	           	

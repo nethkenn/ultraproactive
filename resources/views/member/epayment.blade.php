@@ -6,7 +6,8 @@
                     <label for="Transaction Code" class="col-sm-2 control-label">Select Transaction</label>
                     <div class="col-sm-10">
                         <select name="transaction_code" class="form-control">
-                            <option value="100" {{Request::input('transaction_code') == '100' ? 'selected' : ''}}>Outlet balance</option>
+                            <option > Select Transaction</option>
+                            {{-- <option value="100" {{Request::input('transaction_code') == '100' ? 'selected' : ''}}>Outlet balance</option> --}}
                             <option value="101" {{Request::input('transaction_code') == '101' ? 'selected' : ''}}>Search member by details *</option>
                             <option value="102" {{Request::input('transaction_code') == '102' ? 'selected' : ''}}>Search member by ID *</option>
                             <option value="103" {{Request::input('transaction_code') == '103' ? 'selected' : ''}}>Get member details *</option>
@@ -58,58 +59,40 @@
                 </div>
         </form>
         <form method="post" class="form-horizontal">
-            <input type="hidden" name="transaction_code" value="{{Request::input('transaction_code') ? : 100 }}">
+            @if(Session::get('error'))
+                <div class="alert alert-danger col-md-offset-2 col-md-10 ">
+                    <ul>
+                        <li>{{Session::get('error')}}</li>
+                    </ul>
+                </div>
+            @endif
+            <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+            <input type="hidden" name="transaction_code" value="{{Request::input('transaction_code')}}">
+
             @if($_input_field)
                 @foreach($_input_field as $input_field)
                   <div class="form-group">
                     <label for="{{$input_field['label']}}" class="col-sm-2 control-label">{{$input_field['label']}}</label>
                     <div class="col-sm-10">
-                        <!--{{$input_field['true_type'] .'=='. $input_field['type']}}-->
                     @if($input_field['type']=='select')
                         <select name="{{$input_field['name']}}" class="form-control">
                             <option>Select {{$input_field['name']}}</option>
                             @foreach($input_field['data'] as $option)
-                                <option value="{{$option['value']}}">{{$option['name']}}</option>
+                                <option value="{{$option['value']}}" {{Request::old($input_field['name']) == $option['value'] ? 'selected' :  ''}}>{{$option['name']}}</option>
                             @endforeach
                         </select>
                     @else
-                      <input type="{{$input_field['type']}}" name="{{$input_field['name']}}" class="form-control" id="" placeholder="{{$input_field['placeholder']}}">
+                      <input type="{{$input_field['type']}}" name="{{$input_field['name']}}" class="form-control" id="" placeholder="{{$input_field['placeholder']}}" value="{{Request::old($input_field['name'])}}">
                     @endif
                     </div>
                   </div>
                 @endforeach
-            @else
-                  <div class="form-group">
-                    <label for="Last Name" class="col-sm-2 control-label">Last Name</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="" placeholder="" name="lastName">
-                    </div>
-                  </div>
-                                    <div class="form-group">
-                    <label for="First Name" class="col-sm-2 control-label">First Name</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="" placeholder="" name="firstName">
-                    </div>
-                  </div>
-                                    <div class="form-group">
-                    <label for="Middle Name" class="col-sm-2 control-label">Middle Name</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="" placeholder="" name="middleName">
-                    </div>
-                  </div>
-                                    <div class="form-group">
-                    <label for="birthDate" class="col-sm-2 control-label">Birth Date</label>
-                    <div class="col-sm-10">
-                      <input type="date" class="form-control" id="" placeholder="mm/dd/yyyy" name="birthDate">
-                    </div>
-                  </div>
-            @endif
-
                             <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10 text-left">
                       <button type="submit" class="btn btn-default">Submit</button>
                     </div>
-                </div>
+            </div>
+            @endif
         </form>
     </div>
 @endsection

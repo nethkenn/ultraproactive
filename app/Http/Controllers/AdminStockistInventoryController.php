@@ -145,7 +145,10 @@ class AdminStockistInventoryController extends AdminController
 													->join('tbl_product_package','tbl_product_package.product_package_id','=','tbl_stockist_package_inventory.product_package_id')
 													->get();
 
+
+
         return Datatables::of($product)	->addColumn('add','<a class="add-to-package" href="#" product-id="{{$product_package_id}}">ADD</a>')
+        								->addColumn('add','<a class="add-to-package" href="#" product-id="{{$product_package_id}}">ADD</a>')
 								        ->make(true);
 	}
 }
