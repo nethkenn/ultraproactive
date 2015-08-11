@@ -8,7 +8,7 @@
 			</div>
 			<div class="buttons col-md-4 text-right">
 				<!--<button type="button" class="btn btn-default" id="check-code-btn"><i class="fa fa-pencil"></i> CHECK CODE</button>-->
-				<button onclick="location.href='admin/maintenance/codes/add'" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> GENERATE CODES</button>
+				<button onclick="location.href='stockist/membership_code/add'" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> GENERATE CODES</button>
 			</div>
 		</div>
 
