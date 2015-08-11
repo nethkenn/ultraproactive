@@ -28,7 +28,7 @@ class AlterTblMembershipCode3 extends Migration
     public function down()
     {
         Schema::table('tbl_membership_code', function (Blueprint $table) {
-            //
+
         });
     }
 }

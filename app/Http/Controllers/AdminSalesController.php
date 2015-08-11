@@ -169,6 +169,7 @@ class AdminSalesController extends AdminController
 		$_cart_product = Session::get('admin_cart');
 
 
+
 	   
 
 		$request['member_type'] = Request::input('member_type');
@@ -234,8 +235,7 @@ class AdminSalesController extends AdminController
 
         // $insert_voucher['slot_id'] = Request::input('slot_id');
         // $insert_voucher['account_id'] = Request::input('account_id');
-        $v_code_query = Tbl_voucher::where('voucher_code', Globals::code_generator())->first();  
-        $insert_voucher['voucher_code'] = Globals::check_code($v_code_query);
+        $insert_voucher['voucher_code'] = Globals::create_voucher_code();
         $insert_voucher['status'] = Request::input('status');
 
         // $_slot = Tbl_slot::select('tbl_slot.*', 'tbl_membership.discount')->leftJoin('tbl_membership', 'tbl_membership.membership_id','=','tbl_slot.slot_membership')
@@ -379,8 +379,7 @@ class AdminSalesController extends AdminController
 
         $insert_voucher['slot_id'] = Request::input('slot_id');
         $insert_voucher['account_id'] = Request::input('account_id');
-        $v_code_query = Tbl_voucher::where('voucher_code', Globals::code_generator())->first();  
-        $insert_voucher['voucher_code'] = Globals::check_code($v_code_query);
+        $insert_voucher['voucher_code'] = Globals::create_voucher_code();
         $insert_voucher['status'] = Request::input('status');
         $insert_voucher['payment_option'] = Request::input('payment_option');
 
@@ -427,7 +426,6 @@ class AdminSalesController extends AdminController
          * CLEAR CART
          */
         Session::forget('admin_cart');
-        // dd($voucher);
         $success_message = "Voucher # " .$voucher->voucher_id. " was successfully process."; 
         return redirect('admin/transaction/sales/')->with('success_message', $success_message);
 
@@ -477,8 +475,8 @@ class AdminSalesController extends AdminController
 		            /**
 			    	 * IF MEMBER CREATE A PRODUCT CODE
 			    	 */
-				    $p_code_query = Tbl_product_code::where('code_activation', Globals::code_generator())->first();  
-			        $insert_product_code['code_activation'] = Globals::check_code($p_code_query);
+				      
+			        $insert_product_code['code_activation'] = Globals::create_product_code();
 			        // $insert['log_id']
 			        $insert_product_code['voucher_item_id'] = $new_voucher_product->voucher_item_id;
 

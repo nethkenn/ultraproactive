@@ -213,8 +213,8 @@ class MemberSlotController extends MemberController
          	   
                 $insert['slot_id'] = $slotid;
 
-                $query = Tbl_voucher::where('voucher_code', Globals::code_generator())->first();
-                $insert['voucher_code'] = Globals::check_code($query);
+               
+                $insert['voucher_code'] = Globals::create_voucher_code();
 
                 $insert ['discount'] = $slot->discount;
                 $insert['total_amount'] = $data['final_total'];
@@ -248,9 +248,7 @@ class MemberSlotController extends MemberController
                     $voucher_has_product = new Tbl_voucher_has_product($insert_prod);
                     $voucher_has_product->save();
 
-                    // dd($voucher_has_product->voucher_item_id);
-                    $query = Tbl_product_code::where('code_activation', Globals::code_generator())->first();
-                    $insert_prod_code['code_activation'] = Globals::check_code($query);
+                    $insert_prod_code['code_activation'] = Globals::create_product_code();
                     $insert_prod_code['voucher_item_id'] = $voucher_has_product->voucher_item_id;
                     $insert_prod_code['used'] = 1;
                     $product_code = new Tbl_product_code($insert_prod_code);

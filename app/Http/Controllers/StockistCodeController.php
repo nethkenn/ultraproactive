@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Tbl_membership_code;
 use Datatables;
 use App\Classes\Stockist;
+use App\Classes\Globals;
 
 class StockistCodeController extends StockistController
 {
@@ -20,8 +21,7 @@ class StockistCodeController extends StockistController
      */
     public function index()
     {
-
-
+        
         return view('stockist.membership_code.stockist_membership_code');
     }
 
@@ -65,6 +65,7 @@ class StockistCodeController extends StockistController
                                         ->editColumn('account_name','{{$account_name or "No owner"}}')
                                         ->make(true);
     }
+
 
 
 
