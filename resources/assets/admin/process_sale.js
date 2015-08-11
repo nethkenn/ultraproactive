@@ -29,6 +29,7 @@ function process_sale()
 			select_member_type();
 			select_slot();
 			final_process_submit();
+			ifchecked();
 			select_status();
 		});
 	}
@@ -384,6 +385,21 @@ function process_sale()
 		})
 	}	
 
+	function ifchecked()
+	{
+		$("#charge").click(function()
+		{
+			if ( $('input[id="charge"]').is(':checked') ) 
+			{
+				$(".charged").append('Percent(0-100%) <input type="text" name="other_charge" class="form-control">');
+			} 
+			else
+			{
+				$(".charged").empty();
+			}
+		});
+
+	}
 }
 
 

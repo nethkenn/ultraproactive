@@ -92,7 +92,7 @@
 									<li class="divider" role="separator"></li>
 									<li><a href="admin/admin_stockist">Stockist</a></li>
 									<li><a href="admin/stockist_type">Stockist Type</a></li>
-
+									<li><a href="admin/stockist_inventory">Stockist Inventory</a></li>
 								</ul>
 							</li>
 							<!-- UTILITIES -->

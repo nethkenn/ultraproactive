@@ -21,7 +21,7 @@ class Stockist
         // var_dump(Crypt::decrypt('eyJpdiI6IkJpMFE0ejVUNGhacVRoNDMzOWxBTHc9PSIsInZhbHVlIjoiR25YazdybnJzTlYrZWNtYVpxMTVIQ3MwQm50Wkx2bkNLdGJvUExSbENPTT0iLCJtYWMiOiJjMmZlMjNiNDliZWIwNDhiNjZmZDI3NmY5ZWVmMDU4ZTg4ZDcyODQwYThmMGJmZTA1ZTU1NDJmNjFiNTRkNWE0In0='));
         // var_dump(Session::get('admin'));
         
-        $user = Tbl_stockist_user::where('tbl_stockist_user.stockist_un', $username)->first();
+        $user = Tbl_stockist_user::where('tbl_stockist_user.stockist_un', $username)->where('archive',0)->first();
 
         if($user)
         {

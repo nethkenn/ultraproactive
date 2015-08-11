@@ -333,6 +333,11 @@ Route::get('admin/stockist_type/edit/{id}', 'AdminStockistTypeController@edit');
 Route::post('admin/stockist_type/edit', 'AdminStockistTypeController@update');
 Route::post('admin/stockist_type/archive', 'AdminStockistTypeController@archive');
 Route::post('admin/stockist_type/restore', 'AdminStockistTypeController@restore');
+Route::any('admin/stockist_inventory', 'AdminStockistInventoryController@index');
+Route::any('admin/stockist_inventory/refill', 'AdminStockistInventoryController@refill');
+Route::any('admin/stockist_inventory/refill/package', 'AdminStockistInventoryController@package');
+Route::get('admin/stockist_inventory/get_product/product', 'AdminStockistInventoryController@ajax_get_product');
+Route::get('admin/stockist_inventory/get_product/product/package', 'AdminStockistInventoryController@ajax_get_product_package');
 
 //STOCKIST
 Route::get('admin/admin_stockist', 'AdminStockistController@index');

@@ -101,21 +101,34 @@ class AdminSalesController extends AdminController
 
 		$data['cart'] = Session::get('admin_cart');
 		$slot_id = Request::input('slot_id');
+		$other = 0;
+		$credit = 0;
+		if(Request::input('other'))
+		{
+			$other = Request::input('other');
+		}
+		if(Request::input('credit'))
+		{
+			$credit = Request::input('credit');
+		}
         $slot = Tbl_slot::select('tbl_slot.*', 'tbl_membership.discount')->leftJoin('tbl_membership', 'tbl_membership.membership_id','=','tbl_slot.slot_membership')
                                                         ->find($slot_id);
         $discount = 0;
         if($slot)
        	{
        		$discount = $slot->discount;
-       	}                                               
+       	}     
+
+       	$other = $other + $credit;
 
 
 
-
+       	$data['other'] = $other;
         $data['discount'] = $discount;
        	$cart_total = $data['cart_total'] = $this->get_cart_total($data['cart']);
        	$discount_pts = $data['discount_pts'] = (($discount / 100) * $cart_total );
-       	$final_total = $data['final_total'] = $cart_total - $discount_pts;
+       	$data['other_pts'] = (($other / 100) * $cart_total );
+       	$final_total = $data['final_total'] = $cart_total - $discount_pts + $other;
         
 
 
@@ -236,7 +249,11 @@ class AdminSalesController extends AdminController
          * PAYMENT MODE IS ALWAYS CASH IN PROCESS SALES
          */
         $insert_voucher['payment_mode'] = 1;
-        
+       	$insert_voucher['payment_option'] = Request::input('payment_option');
+        if(Request::input('other_charge'))
+        {
+        	$insert_voucher['other_charge'] = Request::input('other_charge');
+        } 
 
         $insert_voucher['or_number'] = Request::input('or_number');
     	$insert_voucher['processed_by'] = Admin::info()->admin_id; 
@@ -277,7 +294,6 @@ class AdminSalesController extends AdminController
 
 		// dd(count($_cart_product));
 
-		
 
 		$request['member_type'] = Request::input('member_type');
 		$rules['member_type'] = 'required|check_member_type';
@@ -366,7 +382,7 @@ class AdminSalesController extends AdminController
         $v_code_query = Tbl_voucher::where('voucher_code', Globals::code_generator())->first();  
         $insert_voucher['voucher_code'] = Globals::check_code($v_code_query);
         $insert_voucher['status'] = Request::input('status');
-
+        $insert_voucher['payment_option'] = Request::input('payment_option');
 
         $_slot = Tbl_slot::select('tbl_slot.*', 'tbl_membership.discount')->leftJoin('tbl_membership', 'tbl_membership.membership_id','=','tbl_slot.slot_membership')
                                                         ->where('slot_owner', Request::input('account_id'))
@@ -382,6 +398,11 @@ class AdminSalesController extends AdminController
         	$insert_voucher['or_number'] = Request::input('or_number');
         	$insert_voucher['processed_by'] = Admin::info()->admin_id; 
         	$insert_voucher['processed_by_name'] = Admin::info()->account_username ." ( " .Admin::info()->admin_position_name. " )";
+        }
+
+        if(Request::input('other_charge'))
+        {
+        	$insert_voucher['other_charge'] = Request::input('other_charge');
         }
         
 

@@ -1,6 +1,7 @@
 <?php namespace App\Classes;
 use App\Tbl_account_log;
 use App\Tbl_slot_log;
+use App\Tbl_inventory_logs; 
 use Carbon;
 
 class Log
@@ -22,4 +23,14 @@ class Log
 		$insert["slot_log_key"] = $log_key;
 		Tbl_slot_log::insert($insert);
 	}
+
+	public static function inventory_log($account_id,$product_id,$quantity,$log)
+	{
+		$insert["account_id"] = $account_id;
+		$insert["log"] = $log;
+		$insert["quantity"] = $quantity;
+		$insert["product_id"] =$product_id;
+		Tbl_inventory_logs::insert($insert);
+	}
+
 }

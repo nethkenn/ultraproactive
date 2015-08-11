@@ -3,7 +3,7 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-
+use App\Tbl_stockist_inventory;
 // use Illuminate\Http\Request;
 use DB;
 use Request;
@@ -214,7 +214,7 @@ class AdminProductController extends AdminController
 
 		$id = Request::input('id');
 		$data['query'] = Tbl_product::where('product_id',$id)->update(['archived'=>'1']);
-
+		Tbl_stockist_inventory::where('product_id',$id)->update(['archived'=>'1']);
 		return json_encode($data);
 	}
 
@@ -223,7 +223,7 @@ class AdminProductController extends AdminController
 
 		$id = Request::input('id');
 		$data['query'] = Tbl_product::where('product_id',$id)->update(['archived'=>'0']);
-
+		Tbl_stockist_inventory::where('product_id',$id)->update(['archived'=>'0']);
 		return json_encode($data);
 	}
 
