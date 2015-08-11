@@ -43,6 +43,7 @@
 					@endforeach
                     <tr><td class="text-right" colspan="5">Total {{ $prod_sum }}</td></tr>
                     <tr><td class="text-right" colspan="5">Discount {{$voucher->discount}} % ({{$discount_decimal}})</td></tr>
+                    <tr><td class="text-right" colspan="5">Other Charges {{$voucher->other_charge}} % ({{(($voucher->other_charge/100)*$prod_sum)}})</td></tr>
                     <tr><td class="text-right" colspan="5">Final Total: {{$voucher->total_amount}}</td></tr>
 				@else
 					<tr><td colspan="5">No products</td></tr>

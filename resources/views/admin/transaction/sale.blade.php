@@ -39,6 +39,7 @@
 						<th>Processed By</th>
 						<th>Date </th>
 						<th>Status </th>
+            <th>Payment Option </th>
 						<th></th>
 						{{-- <th style="width:200px;" class="option-col"></th> --}}
 					</tr>
@@ -102,6 +103,7 @@ $(function() {
             {data: 'processed_by_name', name: 'processed_by_name'},
             {data: 'updated_at', name: 'updated_at'},        
             {data: 'status', name: 'status'},
+            {data: 'option', name: 'payment_option'},
             {data: 'test', name: 'voucher_id'},
 
 		 ],

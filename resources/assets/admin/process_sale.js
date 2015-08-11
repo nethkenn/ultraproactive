@@ -31,6 +31,16 @@ function process_sale()
 			final_process_submit();
 			ifchecked();
 			select_status();
+			ifchange();
+			if ( $('input[id="charge"]').is(':checked') ) 
+			{
+				$(".charged").append('Percent(0-100%) <input type="text" name="other_charge" class="form-control" id="other_charge">');
+			} 
+			else
+			{
+				$(".charged").empty();
+			}
+
 		});
 	}
 
@@ -275,7 +285,9 @@ function process_sale()
 		});
 	}
 	function load_cart()
-	{	var $slot_id = null;
+	{	var $slot_id = "";
+		var $credit = "";
+		var $other = "";
 
 		var $member_type = $('#select-member-type').val();
 		if($member_type == 0 )
@@ -283,9 +295,21 @@ function process_sale()
 			$slot_id = $('#select-slot').val();
 		}
 
+		var $payment_option = $("#payment-option").val();
+		if($payment_option == 1)
+		{
+			$credit = "&credit=3";
+		}
+
+		if($('#other_charge').val())
+		{
+			$other = "&other="+$('#other_charge').val();
+		}
+
+
 		// alert("slot_id = " + $slot_id)
 		
-		$('#cart-container').load('admin/transaction/sales/get_cart?slot_id='+$slot_id);
+		$('#cart-container').load('admin/transaction/sales/get_cart?slot_id='+$slot_id+$other+$credit);
 
 	}
 
@@ -391,7 +415,7 @@ function process_sale()
 		{
 			if ( $('input[id="charge"]').is(':checked') ) 
 			{
-				$(".charged").append('Percent(0-100%) <input type="text" name="other_charge" class="form-control">');
+				$(".charged").append('Percent(0-100%) <input type="text" name="other_charge" class="form-control" id="other_charge">');
 			} 
 			else
 			{
@@ -399,6 +423,32 @@ function process_sale()
 			}
 		});
 
+
+		$('.charged').on('keyup', '#other_charge', function()
+	    {
+	    	load_cart();
+	    });
+
+		$('#payment-option').change(function(){
+			load_cart();
+		});
+	}
+
+	function ifchange()
+	{
+		$("#select-member-type").change(function(){
+			if($("#select-member-type").val() == 0)
+			{                  
+                  
+				$("#payment-option option[value='2']").remove();
+				$("#payment-option").append("<option value='3' {{Request::old('3') == '3' ? 'selected' : '' }}>E-wallet</option>");
+			}
+			else
+			{
+				$("#payment-option option[value='3']").remove();
+				$("#payment-option").append("<option value='2' {{Request::old('2') == '2' ? 'selected' : '' }}>Cheque</option>");
+			}
+		});
 	}
 }
 

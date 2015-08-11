@@ -62,11 +62,10 @@
             </div>   
 
             <div class="form-group col-md-12 payment">
-                <label for="payment">Payment Options</label>
-                <select id="payment-status" name="payment_option" class="form-control">
+                <label for="payment-option">Payment Options</label>
+                <select id="payment-option" name="payment_option" class="form-control">
                   <option value="0" {{Request::old('0') == '0' ? 'selected' : '' }}>Cash</option>
-                  <option value="1" {{Request::old('1') == '1' ? 'selected' : '' }}>Credit Card (Additional 3%)</option>
-                  <option value="2" {{Request::old('2') == '2' ? 'selected' : '' }}>Cheque</option>
+                  <option value="1" {{Request::old('1') == '1' ? 'selected' : '' }}>Credit Card (Additional 3% Other Charges)</option>
                 </select>
             </div> 
 

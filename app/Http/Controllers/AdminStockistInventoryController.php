@@ -146,7 +146,6 @@ class AdminStockistInventoryController extends AdminController
 													->get();
 
         return Datatables::of($product)	->addColumn('add','<a class="add-to-package" href="#" product-id="{{$product_package_id}}">ADD</a>')
-        								->addColumn('estimated_qty',)
 								        ->make(true);
 	}
 }
