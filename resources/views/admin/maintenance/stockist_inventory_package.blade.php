@@ -29,7 +29,7 @@
 								<th>ID</th>
 								<th>Name</th>
 								<th>Stockist Quantity</th>
-								<th>Your Quantity</th>
+								<th>Quantity Owned</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -82,8 +82,8 @@
 	        columns: [
 	            {data: 'product_package_id', name: 'product_package_id'},
 	            {data: 'product_package_name', name: 'product_package_name'},
-	            {data: 'package_quantity]', name: 'package_quantity'},
-	            {data: 'estimated', name: 'stock_qty'},
+	            {data: 'quantity', name: 'package_quantity'},
+	            {data: 'estimated', name: 'estimated'},
 	           	{data: 'add' ,name: 'product_id'}
 	            
 	           	

@@ -18,6 +18,7 @@ class StockistLoginController extends Controller
 
             if($user)
             {
+                Session::forget('admin_cart');
                 Stockist::login($user->stockist_un, Request::input('password'));
                 return Redirect::to("stockist");
             }
