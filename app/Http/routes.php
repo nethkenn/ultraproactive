@@ -374,3 +374,5 @@ Route::get('member/e-payment/test','EPayController@index');
 Route::get('member/e-payment/outlet-balance','EPayController@outlet_balance');
 
 
+Route::get('admin/e-payment-settings', 'AdminEPaymentSettingsController@index');
+Route::post('admin/e-payment-settings', 'AdminEPaymentSettingsController@update');
