@@ -13,6 +13,7 @@ class AlterTblExchangeRate2 extends Migration
     public function up()
     {
         Schema::table('tbl_exchange_rate', function (Blueprint $table) {
+                $table->integer('country_id')->unsigned();
                 $table->foreign('country_id')
                   ->references('country_id')->on('tbl_country')
                   ->onDelete('cascade');
