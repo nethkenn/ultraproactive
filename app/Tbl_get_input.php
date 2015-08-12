@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Tbl_get_input extends Model
 {
     protected $table = 'tbl_get_input'; 
-    protected $primaryKey = 'id'; 
+    // protected $primaryKey = 'id'; 
     public $timestamps = false;
    	protected $fillable = [
    							'transaction_code',

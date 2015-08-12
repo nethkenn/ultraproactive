@@ -85,7 +85,7 @@ class EPayment
 
         $res = EPayment::signIn('GetFields', $code, null);
         $data_field = null;
-        dd($res);
+
         if($res['responseCode'] == 100 && $res['data'])
         {
             foreach ((array)$res['data'] as $key => $value)
