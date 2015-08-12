@@ -5,13 +5,12 @@ namespace App\Classes;
 use \VentajaReqeustParam;
 class EPayment
 {
-	public function callApi($postUrl, $params, $key)
+	public static function callApi($postUrl, $params, $key)
     {
       // you can also use http://phpseclib.sourceforge.net/ as alternative to signing
 
-    
         $pkeyid = openssl_pkey_get_private($key);
-        openssl_sign(json_encode($params), $signature, $pkeyid);
+        openssl_sign(json_encode($params, JSON_UNESCAPED_SLASHES ), $signature, $pkeyid, OPENSSL_ALGO_SHA1);
         openssl_free_key($pkeyid);
 
         $opts = array('http' =>
@@ -33,8 +32,20 @@ class EPayment
 
 
 
-    public function signIn($method, $code, $data)
+    public static function signIn($method, $code, $data=null)
     {
+        /*REMOVE INPUT FIELDS THE ARE NOT NEEDED*/
+        $remove_list = ['_token', 'transaction_code'];
+        foreach ((array)$data as $key => $value)
+        {
+            if( in_array($key, $remove_list))
+            {
+                unset($data[$key]);
+            }
+        }
+
+        // dd($data);
+
         $signature = "";
         try
         { 
@@ -56,7 +67,7 @@ class EPayment
             // note: you can create a class like RequestParam for each or generate it as a string and use json_decode
             // $params->data = json_decode('{"lastName":"NATIVIDAD","firstName":"HENRY","middleName":"VILLANUEVA","birthDate":"05/06/1960"}');
             // $params->data = json_decode('{"lastName":"PONCE","firstName":"MARK ANTHONY","middleName":"ALDAY","birthDate":"31/03/1990"}');
-            $res = $this->callApi($baseUrl . $method, $params, $certFile);
+            $res = EPayment::callApi($baseUrl . $method, $params, $certFile);
             return $res;
 
             // echo json_encode($res);
@@ -68,9 +79,9 @@ class EPayment
     }
 
 
-    public function get_field($code)
+    public static function get_field($code)
     {
-        $res = $this->signIn('GetFields', $code, null);
+        $res = EPayment::signIn('GetFields', $code, null);
         $data_field = null;
         
         if($res['responseCode'] == 100 && $res['data'])
@@ -130,6 +141,22 @@ class EPayment
 
         return $data_field;
     }
+
+    public static function validate_field($data)
+    {
+
+        // dd($data['transaction_code']);
+        $res = EPayment::signIn('Validate', $data['transaction_code'], $data);
+        return $res;
+    }
+
+
+
+
+
+
+
+
 
 
 }

@@ -315,9 +315,6 @@ Route::post('cart/checkout', 'MemberCheckoutController@checkout');
 
 Route::get('admin/register_url', 'AdminUrlController@index');
 Route::post('admin/register_url', 'AdminUrlController@create_url');
-
-
-
 Route::any('lead/{slug}','MemberRegisterController@lead');
 
 
@@ -374,7 +371,14 @@ Route::any('stockist/logout', 'StockistLoginController@logout');
 //STOCKIST MEMBERSHIP CODE
 Route::get('stockist/membership_code', 'StockistCodeController@index');
 Route::get('stockist/membership_code/get_data', 'StockistCodeController@ajax_get_membership_code');
+Route::get('stockist/membership_code/add', 'StockistCodeController@add_code');
+Route::post('stockist/membership_code/add', 'StockistCodeController@create_code');
+
+Route::get('member/e-payment/','EPayController@index');
+Route::post('member/e-payment/','EPayController@process');
+Route::get('member/e-payment/test','EPayController@index');
+Route::get('member/e-payment/outlet-balance','EPayController@outlet_balance');
 
 
-Route::any('member/e-pament/','EPayController@index');
-
+Route::get('admin/e-payment-settings', 'AdminEPaymentSettingsController@index');
+Route::post('admin/e-payment-settings', 'AdminEPaymentSettingsController@update');

@@ -113,6 +113,9 @@
 									<li><a href="admin/utilities/rank">Promotion Settings</a></li>
 									<li class="divider" role="separator"></li>
 									<li><a href="admin/utilities/recompute">Recomputation</a></li>
+									<li class="divider" role="separator"></li>
+									<li><a href="admin/e-payment-settings">E-payment / E-Remit Settings</a></li>
+
 								</ul>
 							</li>
 							<!-- REPORTS -->

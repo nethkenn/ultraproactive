@@ -109,8 +109,8 @@ class AdminCodeController extends AdminController {
 			$rules['code_multiplier'] = 'min:1|integer';
 			$rules['membership_id'] = 'required|exists:tbl_membership,membership_id|check_member';
 
-			$message['product_package_id.foo'] = "One or more included product might be out of stock".
-			$message['product_package_id.check_member'] = "This membership is not for Member entry".
+			$message['product_package_id.foo'] = "One or more included product might be out of stock";
+			$message['product_package_id.check_member'] = "This membership is not for Member entry";
 
 
 			Validator::extend('check_member', function($attribute, $value, $parameters)

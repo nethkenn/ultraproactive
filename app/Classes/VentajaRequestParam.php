@@ -2,6 +2,8 @@
 
 namespace App\Classes;
 
+
+
 class VentajaRequestParam {
     var $id = "";
     var $uid = "";
