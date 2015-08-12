@@ -13,7 +13,6 @@ class CreateTblExchangeRate extends Migration
     public function up()
     {
         Schema::create('tbl_exchange_rate', function (Blueprint $table) {
-            $table->increments('currency_id');
             $table->string('country_name');
             $table->string('currency');
             $table->double('rate');

@@ -13,7 +13,11 @@ class AlterTblAccount extends Migration
     public function up()
     {
         Schema::table('tbl_account', function (Blueprint $table) {
-            $table->double('e_wallet');
+            if(Schema::hasColumn('tbl_exchange_rate', 'e_wallet'))
+            {
+                $table->double('e_wallet');
+            }
+
         });
     }
 
