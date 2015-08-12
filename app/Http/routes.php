@@ -361,6 +361,12 @@ Route::post('admin/admin_stockist_user/restore', 'AdminStockistUserController@re
 //STOCKIST PAGE
 Route::any('stockist', 'StockistDashboardController@index');
 Route::any('stockist/issue_stocks', 'StockistIssueController@index');
+Route::any('stockist/issue_stocks/issue', 'StockistIssueController@issue');
+Route::get('stockist/issue_stocks/issue/product', 'StockistIssueController@ajax_get_product');
+Route::get('stockist/issue_stocks/issue/product/package', 'StockistIssueController@ajax_get_product_package');
+Route::any('stockist/process_sales', 'StockistProcessSales@index');
+Route::any('stockist/process_sales/process', 'StockistProcessSales@process_sale');
+Route::any('stockist/process_sales/data', 'StockistProcessSales@get_sales');
 Route::any('stockist/login', 'StockistLoginController@index');
 Route::any('stockist/logout', 'StockistLoginController@logout');
 

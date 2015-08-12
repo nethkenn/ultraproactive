@@ -1,6 +1,5 @@
 @extends('admin.layout')
 @section('content')
-
 	<div class="header col-md-12" >
 	    <div class="title col-md-8">
 	        <h2><i class="fa fa-tag"></i> ADD STOCKIST USER</h2>
@@ -31,7 +30,7 @@
                     <option >Select Stockist</option>
                     @if($_stockist)
                       @foreach($_stockist as $option)
-                        <option value="{{$option->stockist_id}}" {{$option->stockist_id == Requested::old('stockist_id') ? 'selected' : ''}}>{{$option->stockist_full_name}}</option>
+                        <option value="{{$option->stockist_id}}" {{$option->stockist_id == Request::old('stockist_id') ? 'selected' : ''}}>{{$option->stockist_full_name}}</option>
                       @endforeach
                     @endif
                   </select>

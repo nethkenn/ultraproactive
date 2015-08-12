@@ -439,14 +439,11 @@ function process_sale()
 		$("#select-member-type").change(function(){
 			if($("#select-member-type").val() == 0)
 			{                  
-                  
-				$("#payment-option option[value='2']").remove();
 				$("#payment-option").append("<option value='3' {{Request::old('3') == '3' ? 'selected' : '' }}>E-wallet</option>");
 			}
 			else
 			{
 				$("#payment-option option[value='3']").remove();
-				$("#payment-option").append("<option value='2' {{Request::old('2') == '2' ? 'selected' : '' }}>Cheque</option>");
 			}
 		});
 	}
