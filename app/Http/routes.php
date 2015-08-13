@@ -396,3 +396,10 @@ Route::get('member/e-payment/outlet-balance','EPayController@outlet_balance');
 
 Route::get('admin/e-payment-settings', 'AdminEPaymentSettingsController@index');
 Route::post('admin/e-payment-settings', 'AdminEPaymentSettingsController@update');
+
+
+/*E-PAYMENT TRANSACTION FORM PAYMENT*/
+
+Route::get('admin/e-payment-profile-form-settings', 'AdminProfileFormSettingController@index');
+Route::post('admin/e-payment-profile-form-settings', 'AdminProfileFormSettingController@save');
+

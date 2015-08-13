@@ -29,12 +29,6 @@ class AlterTblExchangeRate3 extends Migration
                     $table->renameColumn('rate', 'peso_rate');
                 }
 
-                // if(Schema::hasColumn('tbl_exchange_rate', 'currency_id'))
-                // {
-
-                //     $table->dropColumn('currency_id');
-                // }
-
                 if(!Schema::hasColumn('tbl_exchange_rate', 'country_id'))
                 {
                     $table->integer('country_id')->unsigned();
