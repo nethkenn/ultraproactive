@@ -8,6 +8,15 @@ use gapi;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Tbl_account;
+use App\Tbl_slot;
+use App\Tbl_product;
+use Datatables;
+use Validator;
+use Crypt;
+use Carbon\Carbon;
+use App\Tbl_voucher;
+use App\Tbl_voucher_has_product;
+
 class StockistProcessSales extends StockistController
 {
     public function index()
@@ -20,6 +29,17 @@ class StockistProcessSales extends StockistController
     {
         $data['_member_account'] = Tbl_account::all();
         return view('stockist.process_sales.process', $data);
+    }
+
+    public function ajax_get_product()
+    {
+        
+
+        $product = Tbl_product::where('tbl_product.archived',0)->leftJoin('tbl_product_category','tbl_product_category.product_category_id','=','tbl_product.product_category_id')->get();
+        return Datatables::of($product) 
+                                        ->addColumn('add','<a class="add-to-package" href="#" product-id="{{$product_id}}">ADD</a>')
+                                        ->make(true);
+        
     }
 
 
@@ -204,7 +224,7 @@ class StockistProcessSales extends StockistController
 
         if ($validator->fails())
         {
-            return redirect('admin/transaction/sales/process/')
+            return redirect('stockist/process_sales/process/')
                         ->withErrors($validator)
                         ->withInput(Request::input());
 
@@ -271,11 +291,12 @@ class StockistProcessSales extends StockistController
 
 
         $success_message = "Voucher # " .$voucher->voucher_id. " was successfully process."; 
-        return redirect('admin/transaction/sales/')->with('success_message', $success_message);
+        return redirect('stockist/process_sales/process/')->with('success_message', $success_message);
 
 
 
     }
+    
 
 
     public function process_member()
@@ -313,7 +334,7 @@ class StockistProcessSales extends StockistController
             if($ewallet < 0)
             {
                 $data['error'][0] = "Slot wallet's is not enough to buy this.";
-                return redirect('admin/transaction/sales/process/')
+                return redirect('stockist/process_sales/process/')
                                 ->withErrors($data['error'][0])
                                 ->withInput(Request::input());
 
@@ -394,7 +415,7 @@ class StockistProcessSales extends StockistController
 
         if ($validator->fails())
         {
-            return redirect('admin/transaction/sales/process/')
+            return redirect('stockist/process_sales/process/')
                         ->withErrors($validator)
                         ->withInput(Request::input());
 
@@ -466,7 +487,7 @@ class StockistProcessSales extends StockistController
          */
         Session::forget('admin_cart');
         $success_message = "Voucher # " .$voucher->voucher_id. " was successfully process."; 
-        return redirect('admin/transaction/sales/')->with('success_message', $success_message);
+        return redirect('stockist/process_sales/process/')->with('success_message', $success_message);
 
        
         
@@ -534,8 +555,6 @@ class StockistProcessSales extends StockistController
 
     public function custom_validate()
     {
-
-
         Validator::extend('check_member_type', function($attribute, $value, $parameters) 
         {
 

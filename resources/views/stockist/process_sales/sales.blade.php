@@ -22,8 +22,8 @@
 				</div>
 			@endif
 			<div class="col-md-8">
-				<a class="{{Request::input('filter') == 'today' ? 'active' : '' }}" href="admin/transaction/sales?filter=today">Today's Sale</a>
-				<a class="{{Request::input('filter') == null ? 'active' : '' }}" href="admin/transaction/sales">All Sale</a>
+				<a class="{{Request::input('filter') == 'today' ? 'active' : '' }}" href="stockist/process_sales?filter=today">Today's Sale</a>
+				<a class="{{Request::input('filter') == null ? 'active' : '' }}" href="stockist/process_sales">All Sale</a>
 			</div>
 		</div>
 	<div class="col-md-12">
@@ -90,7 +90,7 @@ $(function() {
         processing: true,
         serverSide: true,
          ajax:{
-	        	url:'admin/transaction/sales/data',
+	        	url:'stockist/process_sales/sales/data',
 	        	data: {filter: '{{Request::input("filter")}}'}
 
 	    	},
@@ -122,7 +122,7 @@ $(function() {
    		event.preventDefault();
    		var v_id = $(this).attr('voucher-id');
    		$('.email-voucher').attr('voucher-id', v_id);
-   		$('#voucher-prod-container').load('admin/transaction/sales/process/sale_or?voucher_id='+v_id);
+   		$('#voucher-prod-container').load('stockist/process_sales/sales/sale_or?voucher_id='+v_id);
    		modal.open();
    });
 
@@ -144,7 +144,7 @@ $(function() {
    		$('.loading').fadeIn();
    		$('#email-message').fadeOut();
    		$.ajax({
-   			url: 'admin/transaction/sales/process/sale_or',
+   			url: 'stockist/process_sales/sales/sale_or',
    			type: 'post',
    			dataType: 'json',
    			data: {voucher_id: voucher_id},

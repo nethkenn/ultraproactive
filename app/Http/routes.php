@@ -363,7 +363,21 @@ Route::get('stockist/issue_stocks/issue/product', 'StockistIssueController@ajax_
 Route::get('stockist/issue_stocks/issue/product/package', 'StockistIssueController@ajax_get_product_package');
 Route::any('stockist/process_sales', 'StockistProcessSales@index');
 Route::any('stockist/process_sales/process', 'StockistProcessSales@process_sale');
-Route::any('stockist/process_sales/data', 'StockistProcessSales@get_sales');
+Route::any('stockist/process_sales/sales/data', 'StockistProcessSales@get_sales');
+Route::any('stockist/process_sales/sales/get_cart', 'StockistProcessSales@get_cart');
+Route::any('stockist/process_sales/sales/remove_to_cart', 'StockistProcessSales@remove_to_cart');
+Route::any('stockist/process_sales/sales/edit_cart', 'StockistProcessSales@edit_cart');
+Route::post('stockist/process_sales/sales/add_to_cart', 'StockistProcessSales@add_to_cart');
+Route::post('stockist/process_sales/sales/member', 'StockistProcessSales@process_member');
+Route::post('stockist/process_sales/sales/non-member', 'StockistProcessSales@process_nonMember');
+Route::get('stockist/process_sales/sales/get_slots', 'StockistProcessSales@get_slot');
+Route::any('stockist/process_sales/sales/sale_or', 'StockistProcessSales@sale_or' );
+Route::get('stockist/process_sales/sales/get_product', 'StockistProcessSales@ajax_get_product');
+
+
+
+
+
 Route::any('stockist/login', 'StockistLoginController@index');
 Route::any('stockist/logout', 'StockistLoginController@logout');
 

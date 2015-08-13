@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="col-md-12 form-group-container">
-        <form id="process-sale-add-form" method="post" action="admin/transaction/sales/process/member">
+        <form id="process-sale-add-form" method="post" action="stockist/process_sales/process">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                       @if($errors->all())
                   <div class="form-group col-md-12 alert alert-danger">
@@ -173,7 +173,7 @@
           processing: true,
           serverSide: true,
           ajax:{
-            url:'admin/maintenance/product_package/get_product',
+            url:'stockist/process_sales/sales/get_product',
         },
 
           columns: [
@@ -200,5 +200,5 @@
 
   });
   </script>
-  <script type="text/javascript" src="resources/assets/admin/process_sale.js"></script>
+  <script type="text/javascript" src="resources/assets/admin/process_stockist_sale.js"></script>
 @endsection
