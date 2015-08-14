@@ -387,7 +387,6 @@ Route::post('admin/e-payment-settings', 'AdminEPaymentSettingsController@update'
 
 
 /*E-PAYMENT TRANSACTION FORM PAYMENT*/
-
 Route::get('admin/e-payment-profile-form-settings', 'AdminProfileFormSettingController@index');
 Route::post('admin/e-payment-profile-form-settings', 'AdminProfileFormSettingController@save');
 Route::get('member/e-payment/recipient', 'MemberEpaymentRecipientController@index');
@@ -395,6 +394,23 @@ Route::get('member/e-payment/recipient/get_data', 'MemberEpaymentRecipientContro
 Route::get('member/e-payment/recipient/add', 'MemberEpaymentRecipientController@add');
 Route::post('member/e-payment/recipient/add', 'MemberEpaymentRecipientController@save');
 Route::get('member/e-payment/recipient/edit/{id}', 'MemberEpaymentRecipientController@edit');
+
+Route::get('member/e-payment/transaction-log', 'MemberEpaymentLogController@index');
+Route::get('member/e-payment/transaction-log/get_data', 'MemberEpaymentLogController@get_data');
+Route::get('member/e-payment/transaction-log/show_details', 'MemberEpaymentLogController@show_details');
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

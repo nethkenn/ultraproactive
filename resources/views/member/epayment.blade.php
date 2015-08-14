@@ -17,9 +17,9 @@
                         </select>
                 </div>
         </form>
-        <form method="post" class="">
+        <form method="post" class="" id="payment-form">
             @if(Session::get('error'))
-                <div class="alert alert-danger col-md-offset-2 col-md-10 ">
+                <div class="alert alert-danger col-md-12 ">
                     <ul>
                         <li>{{Session::get('error')}}</li>
                     </ul>
@@ -52,18 +52,28 @@
                 @endforeach
                     <div class="form-group">
   
-                    <button type="submit" class="btn btn-default">Submit</button>
+                    
             </div>
             @endif
         </form>
     </div>
-    <div class="col-md-5" id="transaction-b-down">
+    <div class="col-md-5" >
+        <div id="transaction-b-down">
+
+        </div>
+        @if($_input_field)
+        <button id="submit-payment" type="submit" onclick=""class="btn btn-default">Submit</button>
+         @endif
     </div>
 @endsection
 @section('script')
     <script type="text/javascript">
         $(document).ready(function()
         {
+            $('#submit-payment').click(function(event) {
+                $('#payment-form').submit();
+            });
+            
             $('#get-input-form select').on('change', function(event)
             {
                 event.preventDefault();

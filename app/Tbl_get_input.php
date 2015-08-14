@@ -15,4 +15,7 @@ class Tbl_get_input extends Model
    							'behavior',
    							'input_type'
    							];
+
+
+   	
 }
