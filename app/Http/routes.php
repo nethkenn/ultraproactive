@@ -426,6 +426,8 @@ Route::any('stockist/membership_code/or', 'StockistCodeController@show_sale_or')
 Route::any('stockist/settings', 'StockistAccountSettingsController@changepass');
 
 Route::get('member/e-payment/','EPayController@index');
+// Route::post('member/e-payment/save_code','EPayController@save_code');
+Route::get('member/e-payment/break_down','EPayController@break_down');
 Route::post('member/e-payment/','EPayController@process');
 Route::get('member/e-payment/test','EPayController@index');
 Route::get('member/e-payment/outlet-balance','EPayController@outlet_balance');
@@ -439,4 +441,11 @@ Route::post('admin/e-payment-settings', 'AdminEPaymentSettingsController@update'
 
 Route::get('admin/e-payment-profile-form-settings', 'AdminProfileFormSettingController@index');
 Route::post('admin/e-payment-profile-form-settings', 'AdminProfileFormSettingController@save');
+Route::get('member/e-payment/recipient', 'MemberEpaymentRecipientController@index');
+Route::get('member/e-payment/recipient/get_data', 'MemberEpaymentRecipientController@get_data');
+Route::get('member/e-payment/recipient/add', 'MemberEpaymentRecipientController@add');
+Route::post('member/e-payment/recipient/add', 'MemberEpaymentRecipientController@save');
+Route::get('member/e-payment/recipient/edit/{id}', 'MemberEpaymentRecipientController@edit');
+
+
 

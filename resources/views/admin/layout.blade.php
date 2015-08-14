@@ -117,6 +117,9 @@
 									<li><a href="admin/utilities/recompute">Recomputation</a></li>
 									<li class="divider" role="separator"></li>
 									<li><a href="admin/e-payment-settings">E-payment / E-Remit Settings</a></li>
+									<li><a href="admin/e-payment-profile-form-settings">E-payment Form Settings</a></li>
+
+
 
 								</ul>
 							</li>

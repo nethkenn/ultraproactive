@@ -35,15 +35,15 @@ class EPayment
     public static function signIn($method, $code, $data=null)
     {
         /*REMOVE INPUT FIELDS THE ARE NOT NEEDED*/
-        $remove_list = ['_token', 'transaction_code'];
-        foreach ((array)$data as $key => $value)
-        {
-            if( in_array($key, $remove_list))
-            {
-                unset($data[$key]);
-            }
-        }
-
+        // $remove_list = ['_token', 'transaction_code'];
+        // foreach ((array)$data as $key => $value)
+        // {
+        //     if( in_array($key, $remove_list))
+        //     {
+        //         unset($data[$key]);
+        //     }
+        // }
+        // dd($method, $code, $data);
         // dd($data);
 
         $signature = "";
@@ -52,7 +52,6 @@ class EPayment
             $pem_path = str_replace('\\',"/",storage_path());
             $certFile = 'file:///'.$pem_path . "/client.private.pem";  
             $baseUrl = "http://121.58.224.179/VentajaAPI/api/";
-
             // $method = "GetFields";
             // $method = "Validate";
             // $method = "Process";
@@ -116,6 +115,11 @@ class EPayment
                     $data_field[$key]['type'] = 'email';
                 }
 
+                // if($value['name'] == 'agentRefNo')
+                // {
+                //     $data_field[$key]['type'] = 'hidden';
+                // }
+
                 if($value['type'] == 'money')
                 {
                     $data_field[$key]['type'] = 'number';
@@ -144,13 +148,15 @@ class EPayment
         return $data_field;
     }
 
-    public static function validate_field($data)
+    public static function validate_field($transaction_code ,$data)
     {
 
-        // dd($data['transaction_code']);
-        $res = EPayment::signIn('Validate', $data['transaction_code'], $data);
+        $res = EPayment::signIn('Validate', $transaction_code, $data);
         return $res;
     }
+
+
+
 
 
 

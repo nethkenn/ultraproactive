@@ -17,11 +17,23 @@ class AdminProfileFormSettingController extends AdminController
 
 
         $data['_input_field'] = null;
+        $data['form_status'] = null;
         if(Request::isMethod('get') && Request::input('transaction_code'))
         {
 
-            $_input_field= EPayment::get_field(Request::input('transaction_code'));
+            $_input_field = EPayment::get_field(Request::input('transaction_code'));
             $get_input = Tbl_get_input::where('transaction_code', Request::input('transaction_code'))->get();
+
+            if(count($get_input) > 0)
+            {
+                $data['form_status']  = "Form is already added. Click save to update the input fields";
+            }
+            else
+            {
+               
+               $data['form_status'] = "Form has not been added yet. Click save to add.";
+            }
+            
             if($_input_field)
             {
                 foreach ((array)$_input_field as $key => $value)
@@ -35,6 +47,8 @@ class AdminProfileFormSettingController extends AdminController
                     }
                 }
             }
+
+            
 
         }
 

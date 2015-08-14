@@ -40,8 +40,6 @@ class DatabaseSeeder extends Seeder
 
 
 
-
-
 class tbl_settings extends Seeder
 {
     public function run()
