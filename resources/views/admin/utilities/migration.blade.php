@@ -75,7 +75,7 @@
 
     function migrate($hack_id)
     {
-        ctr++;
+        
 
         $.ajax(
         {
@@ -85,6 +85,7 @@
             type:"get",
             success: function(data)
             {
+                ctr++;
                 if(tbl_hack[ctr])
                 {
                     migrate(tbl_hack[ctr].hack_id);    
@@ -95,6 +96,12 @@
                 {
                     $(".status").val("Done!");
                 }
+            },
+            error: function()
+            {
+                migrate(tbl_hack[ctr].hack_id);    
+                $(".status").val("Migration - " + tbl_hack[ctr].full_name);   
+                $(".count-migrate").val(ctr);   
             }
         });
     }
