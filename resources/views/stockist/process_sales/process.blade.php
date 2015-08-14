@@ -96,6 +96,7 @@
             <th>Name</th>
             <th>Unilevel PTS</th>
             <th>Binary PTS</th>
+            <th>Stocks Quantity</th>
             <th>Price</th>
             <th></th>
           </tr>
@@ -182,6 +183,7 @@
               {data: 'product_name', name: 'product_name'},
               {data: 'unilevel_pts', name: 'unilevel_pts'},
               {data: 'binary_pts' ,name: 'binary_pts'},
+              {data: 'stockist_quantity' ,name: 'stockist_quantity'},              
               {data: 'price' ,name: 'price'},
               {data: 'add' ,name: 'product_id'}
               

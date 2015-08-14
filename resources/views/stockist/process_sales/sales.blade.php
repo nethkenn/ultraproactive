@@ -41,13 +41,13 @@
 						<th>Status </th>
             <th>Payment Option </th>
 						<th></th>
-						{{-- <th style="width:200px;" class="option-col"></th> --}}
+						<!-- <th style="width:200px;" class="option-col"></th> -->
 					</tr>
 				</thead>
 			</table>
 	</div><div class="col-md-12">
-	<button class="btn btn-primary " >Print</button>
-	<button class="btn btn-primary email-voccher">Email</button>
+<!--	<button class="btn btn-primary " >Print</button>
+	<button class="btn btn-primary email-voccher">Email</button> -->
 </div>
 <div class="remodal" data-remodal-id="view_prod_modal"
   data-remodal-options="hashTracking: false, closeOnOutsideClick: true">
@@ -58,7 +58,7 @@
   <div style="display:none;" id="email-message"></div>
   <button  data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
   <button  class="print-voucher remodal-confirm">Print</button>
-  <button  class="email-voucher remodal-confirm">Email</button>
+ <!-- <button  class="email-voucher remodal-confirm">Email</button> -->
   <img class="loading" style="display: none;" src="/resources/assets/img/small-loading.GIF" alt="">
 </div>
 <style type="text/css">

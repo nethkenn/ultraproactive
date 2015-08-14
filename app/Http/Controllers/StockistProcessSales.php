@@ -16,7 +16,12 @@ use Crypt;
 use Carbon\Carbon;
 use App\Tbl_voucher;
 use App\Tbl_voucher_has_product;
-
+use App\Tbl_stockist_inventory;
+use App\Classes\Globals;
+use App\Tbl_product_code;
+use App\Classes\Log;
+use App\Classes\Settings;
+use Mail;
 class StockistProcessSales extends StockistController
 {
     public function index()
@@ -35,7 +40,12 @@ class StockistProcessSales extends StockistController
     {
         
 
-        $product = Tbl_product::where('tbl_product.archived',0)->leftJoin('tbl_product_category','tbl_product_category.product_category_id','=','tbl_product.product_category_id')->get();
+        $product = Tbl_stockist_inventory::where('stockist_id',Stockist::info()->stockist_id)
+                                                    ->orderBy('tbl_stockist_inventory.product_id','asc')
+                                                    ->where('tbl_stockist_inventory.archived',0)
+                                                    ->join('tbl_product','tbl_product.product_id','=','tbl_stockist_inventory.product_id')
+                                                    ->get();
+
         return Datatables::of($product) 
                                         ->addColumn('add','<a class="add-to-package" href="#" product-id="{{$product_id}}">ADD</a>')
                                         ->make(true);
@@ -206,14 +216,17 @@ class StockistProcessSales extends StockistController
             foreach($_cart_product as $key => $val)
             {
 
-                $prod = Tbl_product::find($val['product_id']);
-                $rules['product_'.$key] = 'exists:tbl_product,product_id|check_stock_qty:'.$val['qty'].','.$prod->stock_qty.','.Request::input('status');
+                $prod = Tbl_product::join('tbl_stockist_inventory','tbl_stockist_inventory.product_id','=','tbl_product.product_id')
+                                    ->where('stockist_id',Stockist::info()->stockist_id)
+                                    ->find($val['product_id']);
+
+                $rules['product_'.$key] = 'exists:Tbl_stockist_inventory,product_id,stockist_id,'.Stockist::info()->stockist_id.'|check_stockist_quantity:'.$val['qty'].','.$prod->stockist_quantity.','.Request::input('status');
             }
 
             foreach($_cart_product as $key => $val)
             {
 
-                $message['product_'.$key.'.check_stock_qty'] = 'The :attribute has unsufficient stock.';
+                $message['product_'.$key.'.check_stockist_quantity'] = 'The :attribute has unsufficient stock.';
             }
 
         }
@@ -269,8 +282,8 @@ class StockistProcessSales extends StockistController
  
         $insert_voucher['other_charge'] = $additional;
         $insert_voucher['or_number'] = Request::input('or_number');
-        $insert_voucher['processed_by'] = Admin::info()->admin_id; 
-        $insert_voucher['processed_by_name'] = Admin::info()->account_username ." ( " .Admin::info()->admin_position_name. " )";
+        $insert_voucher['origin'] = Stockist::info()->stockist_id; 
+        $insert_voucher['processed_by_name'] = Stockist::info()->stockist_un ." ( Stockist )";
         /**
          * CLEAR CART
          */
@@ -286,12 +299,12 @@ class StockistProcessSales extends StockistController
          */
         $this->add_product_to_voucher_list($voucher->voucher_id,$_cart,Request::input('member_type'), Request::input('status'));
 
-        $admin_log = "Sold Product Voucher # ".$voucher->voucher_id. " to a non-member as ".  Admin::info()->admin_position_name.".";
-        Log::account(Admin::info()->account_id, $admin_log);
+        // $admin_log = "Sold Product Voucher # ".$voucher->voucher_id. " to a non-member as ".  Stockist::info()->admin_position_name.".";
+        // Log::account(Admin::info()->account_id, $admin_log);
 
 
         $success_message = "Voucher # " .$voucher->voucher_id. " was successfully process."; 
-        return redirect('stockist/process_sales/process/')->with('success_message', $success_message);
+        return redirect('stockist/process_sales/')->with('success_message', $success_message);
 
 
 
@@ -395,14 +408,17 @@ class StockistProcessSales extends StockistController
 
 
 
-                $prod = Tbl_product::find($val['product_id']);
-                $rules['product_'.$key] = 'exists:tbl_product,product_id|check_stock_qty:'.$val['qty'].','.$prod->stock_qty.',processed';
+                $prod = Tbl_product::join('tbl_stockist_inventory','tbl_stockist_inventory.product_id','=','tbl_product.product_id')
+                                    ->where('stockist_id',Stockist::info()->stockist_id)
+                                    ->find($val['product_id']);
+
+                $rules['product_'.$key] = 'exists:Tbl_stockist_inventory,product_id,stockist_id,'.Stockist::info()->stockist_id.'|check_stockist_quantity:'.$val['qty'].','.$prod->stockist_quantity.',processed';
             }
 
             foreach($_cart_product as $key => $val)
             {
 
-                $message['product_'.$key.'.check_stock_qty'] = 'The :attribute has unsufficient stock.';
+                $message['product_'.$key.'.check_stockist_quantity'] = 'The :attribute has unsufficient stock.';
             }
         }
 
@@ -454,8 +470,8 @@ class StockistProcessSales extends StockistController
         if(Request::input('status') == 'processed')
         {
             $insert_voucher['or_number'] = Request::input('or_number');
-            $insert_voucher['processed_by'] = Admin::info()->admin_id; 
-            $insert_voucher['processed_by_name'] = Admin::info()->account_username ." ( " .Admin::info()->admin_position_name. " )";
+            $insert_voucher['origin'] = Stockist::info()->stockist_id; 
+            $insert_voucher['processed_by_name'] = Stockist::info()->stockist_un ." ( Stockist )";
         }
 
         if(Request::input('payment_option') == 3 && Request::input('slot_id'))
@@ -474,10 +490,10 @@ class StockistProcessSales extends StockistController
          */
  
             $buyer = Tbl_account::find(Request::input('account_id'));
-            $admin_log = "Sold Product Voucher # ".$voucher->voucher_id. " to account #".$buyer->account_id." ".$buyer->account_name." (".$buyer->account_username.")as ".  Admin::info()->admin_position_name.".";
-            $buyer_log = "Bought Product Voucher # ".$voucher->voucher_id. " from ".Admin::info()->account_name. " ( " .Admin::info()->admin_position_name." ). "; 
+            // $admin_log = "Sold Product Voucher # ".$voucher->voucher_id. " to account #".$buyer->account_id." ".$buyer->account_name." (".$buyer->account_username.")as ".  Admin::info()->admin_position_name.".";
+            $buyer_log = "Bought Product Voucher # ".$voucher->voucher_id. " from ".Stockist::info()->stockist_id. " ( Stockist ). "; 
             Log::account(Request::input('account_id'), $buyer_log);
-            Log::account(Admin::info()->account_id, $admin_log);
+            // Log::account(Admin::info()->account_id, $admin_log);
 
 
 
@@ -487,7 +503,7 @@ class StockistProcessSales extends StockistController
          */
         Session::forget('admin_cart');
         $success_message = "Voucher # " .$voucher->voucher_id. " was successfully process."; 
-        return redirect('stockist/process_sales/process/')->with('success_message', $success_message);
+        return redirect('stockist/process_sales/')->with('success_message', $success_message);
 
        
         
@@ -501,13 +517,15 @@ class StockistProcessSales extends StockistController
     {
         foreach ((array)$cart as $key => $value)
         {
-            $product = Tbl_product::find($key);
+            $product = Tbl_product::join('tbl_stockist_inventory','tbl_stockist_inventory.product_id','=','tbl_product.product_id')
+                                    ->where('stockist_id',Stockist::info()->stockist_id)
+                                    ->find($key);
 
 
             if($status == 'processed' || $member_type == 1)
             {
-                $updated_stock = $product->stock_qty - $value['qty'];
-                Tbl_product::where('product_id',$key)->lockForUpdate()->update(['stock_qty'=> $updated_stock] );
+                $updated_stock = $product->stockist_quantity - $value['qty'];
+                Tbl_stockist_inventory::where('product_id',$key)->where('stockist_id',Stockist::info()->stockist_id)->lockForUpdate()->update(['stockist_quantity'=> $updated_stock] );
                 // dd($status);
             }
 
@@ -564,17 +582,17 @@ class StockistProcessSales extends StockistController
             }    
         });
 
-        Validator::extend('check_stock_qty', function($attribute, $value, $parameters) 
+        Validator::extend('check_stockist_quantity', function($attribute, $value, $parameters) 
         {
             $status = $parameters[2];
 
             if($status == 'processed')
             {
-                $stock_qty = $parameters[1];
+                $stockist_quantity = $parameters[1];
                 $cart_qty = $parameters[0];
 
-                $stock_minus_cart_qty = $stock_qty - $cart_qty;
-                if($stock_qty < $cart_qty || $stock_minus_cart_qty < 0)
+                $stock_minus_cart_qty = $stockist_quantity - $cart_qty;
+                if($stockist_quantity < $cart_qty || $stock_minus_cart_qty < 0)
                 {
 
                     /* REMOVE FROM THE CART IF PRODUCT HAS NO STOCK*/ 
@@ -681,7 +699,7 @@ class StockistProcessSales extends StockistController
 
         $today =  Carbon::now()->toDateString();
         $filter = Request::input('filter');
-        $voucher = Tbl_voucher::leftJoin('tbl_account','tbl_account.account_id','=', 'tbl_voucher.account_id')->where('status', 'processed')
+        $voucher = Tbl_voucher::leftJoin('tbl_account','tbl_account.account_id','=', 'tbl_voucher.account_id')->where('origin',Stockist::info()->stockist_id)->where('status', 'processed')
                                 ->where(function($query) use($today, $filter)
                                 {
                                     switch ($filter)
@@ -749,7 +767,7 @@ class StockistProcessSales extends StockistController
             $sold_to = Tbl_account::find($data['voucher']->account_id);
 
             $message_info['from']['email'] = $company_email;
-            $message_info['from']['name'] = Admin::info()->account_name . ' ('.Admin::info()->admin_position_name.')';
+            $message_info['from']['name'] = Stockist::info()->stockist_un . ' ( Stockist )';
             $message_info['to']['email'] = $sold_to->account_email;
             // $message_info['to']['email'] = "markponce07@gmail.com";
             $message_info['to']['name'] = $sold_to->account_name;

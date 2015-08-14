@@ -12,7 +12,7 @@ class CreateTblTransactionProfileInput extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('tbl_transaction_profile_input'))
+        if (Schema::hasTable('tbl_transaction_profile'))
         {
 
             Schema::create('tbl_transaction_profile_input', function (Blueprint $table)

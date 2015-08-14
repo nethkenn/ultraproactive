@@ -336,6 +336,13 @@ Route::any('admin/stockist_inventory/refill/package', 'AdminStockistInventoryCon
 Route::get('admin/stockist_inventory/get_product/product', 'AdminStockistInventoryController@ajax_get_product');
 Route::get('admin/stockist_inventory/get_product/product/package', 'AdminStockistInventoryController@ajax_get_product_package');
 
+//STOCKIST ORDER REQUEST
+Route::any('admin/stockist_request', 'AdminStockistRequestController@index');
+Route::any('admin/stockist_request/user', 'AdminStockistRequestController@request');
+Route::any('admin/stockist_request/cancel', 'AdminStockistRequestController@cancel');
+Route::any('admin/stockist_request/get', 'AdminStockistRequestController@get');
+
+
 //STOCKIST
 Route::get('admin/admin_stockist', 'AdminStockistController@index');
 Route::get('admin/admin_stockist/get_data', 'AdminStockistController@get_data');
@@ -355,12 +362,19 @@ Route::post('admin/admin_stockist_user/edit/{id}', 'AdminStockistUserController@
 Route::post('admin/admin_stockist_user/archive', 'AdminStockistUserController@archive');
 Route::post('admin/admin_stockist_user/restore', 'AdminStockistUserController@restore');
 
+//STOCKIST WALLET
+Route::any('admin/stockist_wallet', 'AdminStockistWalletController@index');
+
 //STOCKIST PAGE
 Route::any('stockist', 'StockistDashboardController@index');
+
+//STOCKIST PAGE ISSUE
 Route::any('stockist/issue_stocks', 'StockistIssueController@index');
 Route::any('stockist/issue_stocks/issue', 'StockistIssueController@issue');
 Route::get('stockist/issue_stocks/issue/product', 'StockistIssueController@ajax_get_product');
 Route::get('stockist/issue_stocks/issue/product/package', 'StockistIssueController@ajax_get_product_package');
+
+//STOCKIST PAGE PROCESS
 Route::any('stockist/process_sales', 'StockistProcessSales@index');
 Route::any('stockist/process_sales/process', 'StockistProcessSales@process_sale');
 Route::any('stockist/process_sales/sales/data', 'StockistProcessSales@get_sales');
@@ -375,7 +389,25 @@ Route::any('stockist/process_sales/sales/sale_or', 'StockistProcessSales@sale_or
 Route::get('stockist/process_sales/sales/get_product', 'StockistProcessSales@ajax_get_product');
 
 
+//STOCKIST ORDER STOCKS
+Route::any('stockist/order_stocks', 'StockistOrderStocksController@index');
+Route::any('stockist/order_stocks/order', 'StockistOrderStocksController@order');
+Route::any('stockist/order_stocks/get', 'StockistOrderStocksController@ajax_get');
 
+//STOCKIST REPORTS PAGE
+Route::any('stockist/reports/sales', 'StockistReportsController@sales');
+
+//STOCKIST PAGE TRANSFER
+Route::any('stockist/transfer_wallet', 'StockistTransferController@index');
+
+
+//STOCKIST PAGE FOR CLAIMABLE VOUCHER
+Route::get('stockist/voucher', 'StockistClaimController@index');
+Route::get('stockist/voucher/data', 'StockistClaimController@data');
+Route::any('stockist/voucher/check', 'StockistClaimController@check');
+Route::post('stockist/voucher/claim', 'StockistClaimController@claim');
+Route::post('stockist/voucher/void', 'StockistClaimController@void');
+Route::get('stockist/voucher/show_product', 'StockistClaimController@show_product');
 
 
 Route::any('stockist/login', 'StockistLoginController@index');
@@ -387,6 +419,11 @@ Route::get('stockist/membership_code', 'StockistCodeController@index');
 Route::get('stockist/membership_code/get_data', 'StockistCodeController@ajax_get_membership_code');
 Route::get('stockist/membership_code/add', 'StockistCodeController@add_code');
 Route::post('stockist/membership_code/add', 'StockistCodeController@create_code');
+Route::get('stockist/membership_code/load-product-package', 'StockistCodeController@load_product_package');
+Route::any('stockist/membership_code/or', 'StockistCodeController@show_sale_or');
+
+//STOCKIST ACCOUNT SETTINGS
+Route::any('stockist/settings', 'StockistAccountSettingsController@changepass');
 
 Route::get('member/e-payment/','EPayController@index');
 Route::post('member/e-payment/','EPayController@process');

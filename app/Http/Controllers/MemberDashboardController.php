@@ -7,6 +7,7 @@ use App\Tbl_membership;
 use App\Classes\Customer;
 use DB;
 use App\Tbl_product_code;
+use App\Tbl_tree_placement;
 class MemberDashboardController extends MemberController
 {
 	public function index()
@@ -25,6 +26,8 @@ class MemberDashboardController extends MemberController
 														  ->where('tbl_membership_code.account_id','=',Customer::id())
 														  ->orderBy('tbl_membership_code.code_pin','ASC')
 														  ->count();
+		$data['left_side'] = Tbl_tree_placement::where('placement_tree_parent_id',Customer::slot_id())->where('placement_tree_position','left')->count(); 												  
+		$data['right_side'] = Tbl_tree_placement::where('placement_tree_parent_id',Customer::slot_id())->where('placement_tree_position','right')->count();
 		$data['prod'] = Tbl_product_code::where("account_id", Customer::id())->where('tbl_product_code.used',0)->voucher()->product()->orderBy("product_pin", "desc")->unused()->count();													  
 		$data['count_log'] = Tbl_account_log::orderBy('account_log_id', 'desc')->where('account_id',Customer::id())->count();
 		$data["_slot_log"] = Tbl_slot_log::		select('tbl_slot_log.*', DB::raw('sum(slot_log_wallet_update) as total'))

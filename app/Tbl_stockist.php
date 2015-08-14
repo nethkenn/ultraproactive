@@ -19,9 +19,10 @@ class Tbl_stockist extends Model
 							'stockist_location',
 							'stockist_address',
 							'stockist_contact_no',
+							'stockist_wallet',
 							'archive',
 	 						];
-
+	public $timestamps = false;
 
 
 
