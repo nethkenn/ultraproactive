@@ -1,7 +1,8 @@
 <?php namespace App\Classes;
 use App\Tbl_account_log;
 use App\Tbl_slot_log;
-use App\Tbl_inventory_logs; 
+use App\Tbl_inventory_logs;
+use App\Tbl_stockist_log; 
 use Carbon;
 
 class Log
@@ -31,6 +32,14 @@ class Log
 		$insert["quantity"] = $quantity;
 		$insert["product_id"] =$product_id;
 		Tbl_inventory_logs::insert($insert);
+	}
+
+	public static function stockist($id,$userid,$log)
+	{
+		$insert["stockist_id"] = $id;
+		$insert["stockist_user_id"] = $userid;
+		$insert["stockist_log"] =$log;
+		Tbl_stockist_log::insert($insert);
 	}
 
 }

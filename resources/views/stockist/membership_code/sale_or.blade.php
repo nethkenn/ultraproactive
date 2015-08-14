@@ -1,12 +1,12 @@
-@extends('admin.layout')
+@extends('stockist.layout')
 @section('content')
 <div class="header col-md-12" >
     <div class="title col-md-8">
         <h2><i class="fa fa-tag"></i> Generate New Code</h2>
     </div>
     <div class="buttons col-md-4 text-right">
-        <button onclick="location.href='admin/maintenance/codes'" type="button" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back</button>
-        <button onclick="$('#code-add-form').submit();" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Generate</button>
+        <button onclick="location.href='stockist/membership_code/add'" type="button" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back</button>
+       
     </div>
 </div>
 <div class="col-md-12 form-group-container">
