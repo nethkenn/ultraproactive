@@ -5,7 +5,7 @@
 	        <h2><i class="fa fa-tag"></i> Generate New Code</h2>
 	    </div>
 	    <div class="buttons col-md-4 text-right">
-	        <button onclick="location.href='admin/maintenance/codes'" type="button" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back</button>
+	        <button onclick="location.href='stockist/membership_code'" type="button" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back</button>
 	        <button onclick="$('#code-add-form').submit();" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Generate</button>
 	    </div>
     </div>
@@ -62,6 +62,13 @@
                             </ul>
                         </div>
                     @endif
+                    @if(Session::has('message'))
+                        <div class="alert alert-danger">
+                            <ul>
+                                <li>{{ $_error2 }}</li>
+                            </ul>
+                        </div>
+                    @endif
                     <select name="product_package_id" class="form-control select-product_package" request-product-package-id = {{Request::old('product_package_id')}}>
                         <option value="">Select Product Package</option>
 <!--                          @if($_prod_package)
@@ -94,7 +101,7 @@
                 </div>
                 <div class="form-group col-md-12">
                 </div>
-                                <div class="form-group col-md-6">
+                <div class="form-group col-md-6">
                     <label for="Recipient">Code multiplier</label>
                     @if($_error['code_multiplier'])
                         <div class="col-md-12 alert alert-danger form-errors">
@@ -107,7 +114,8 @@
                     @endif
                     <input class="form-control" type="number" value="{{Request::old('code_multiplier')  ? Request::old('code_multiplier') : '1'}}" name="code_multiplier"/>
                 </div>  
-                                <div class="form-group col-md-6">
+
+                    <div class="form-group col-md-6">
                     <label for="Inventory Update">Inventory Update</label>
                     @if($errors->get('inventory_update_type_id'))
                         <div class="col-md-12 alert alert-danger form-errors">
@@ -147,7 +155,7 @@
                 var request_product_package_id = $('[name="product_package_id"]').attr('request-product-package-id');
 
                 $.ajax({
-                    url: 'admin/maintenance/codes/load-product-package',
+                    url: 'stockist/membership_code/load-product-package',
                     type: 'get',
                     dataType: 'json',
                     data: {membership_id: membership_id},

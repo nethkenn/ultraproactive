@@ -91,6 +91,8 @@
                         <a href="member/e-payment/">E-payment</a>
                         <ul class="dropdown-menu">
                             <li><a href="member/e-payment/recipient">E-payment Recipient</a></li>
+                            <li><a href="member/e-payment/transaction-log">E-payment Transaction</a></li>
+
                         </ul>
                     </li>
 			      </ul>

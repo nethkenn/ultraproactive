@@ -85,7 +85,7 @@
 
 @endsection
 @section('script')
-<script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js" type="text/javascript">
+
     <script type="text/javascript">
         $(document).ready(function()
         {
