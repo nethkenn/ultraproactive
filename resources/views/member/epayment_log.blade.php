@@ -51,29 +51,35 @@
   <form class="form-horizontal" method="post" id="reload-form">
   <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
   <div class="form-group">
+  	<div id="point-conversion-table">
   	<table class="table table-bordered table-striped table-hover">
+  		<tr>
+  			<td>Rate</td>
+  			<td>1 pts = 1 AEU</td>
+  		</tr>
   		<tr>
   			<td>Slot wallet</td>
   			<td>10000</td>
   		</tr>
   		  <tr>
   			<td>Amount</td>
-  			<td>10.00 ( 100 AEU )/td>
+  			<td>10.00 ( 100 AEU )</td>
   		</tr>
   		<tr>
   			<td>E-Wallet</td>
   			<td>1000 AEU (+ 100 AEU)</td>
   		</tr>
   	</table>
+  	</div>
   </div>
   <div class="form-group">
-    <label for="" class="col-sm-2 control-label">Enter Points</label>
-    <div class="col-sm-10">
-      <input type="number" class="form-control" id="slot-wallet-amount" placeholder="">
+    <label for="" class="col-sm-3 control-label">Enter Amount</label>
+    <div class="col-sm-9">
+      <input type="number" class="form-control" id="slot-wallet-amount" placeholder="Slot wallet points">
     </div>
   </div>
 </form>
-	<button data-remodal-action="cancel" class="remodal-cancel">OK</button>
+	<button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
     <button data-remodal-action="confirm" class="remodal-confirm" id="submit-reload-form">OK</button>
 </div>
 @endsection
