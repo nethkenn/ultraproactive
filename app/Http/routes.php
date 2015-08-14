@@ -396,5 +396,8 @@ Route::get('member/e-payment/recipient/add', 'MemberEpaymentRecipientController@
 Route::post('member/e-payment/recipient/add', 'MemberEpaymentRecipientController@save');
 Route::get('member/e-payment/recipient/edit/{id}', 'MemberEpaymentRecipientController@edit');
 
+Route::any('admin/migration', 'AdminMigrationController@index');
+Route::any('admin/migration/start', 'AdminMigrationController@start');
+Route::any('admin/migration/hack', 'AdminMigrationController@hack');
 
 
