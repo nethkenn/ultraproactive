@@ -139,7 +139,6 @@ class MemberEpaymentLogController extends MemberController
         $slot->save();
 
 
-        // slot($slot_id, $log, $wallet_update, $log_key = "OTHERS")
         $slog_log = 'Converted '.$amount.' slot wallet  to '. $conversion['converted_amount'] . ' ' . $conversion['currency']. ' by '.Customer::info()->account_name . ' ( ' .Customer::info()->account_username .' ). ';
         Log::slot($slot->slot_id, $slog_log, $slot->slot_wallet);
 
@@ -151,7 +150,7 @@ class MemberEpaymentLogController extends MemberController
         Log::e_wallet($account->account_id, $e_wallet_log, $account->e_wallet);
 
 
-        return redirect()->back()->with('message', "E-wallet updated to ". $account->e_wallet .' '. $conversion['currency']);
+        return redirect()->back()->with('message', "E-wallet updated to ". number_format($account->e_wallet,2,".",",") .' '. $conversion['currency']);
         
     }
 

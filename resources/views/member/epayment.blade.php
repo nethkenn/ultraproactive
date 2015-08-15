@@ -61,18 +61,17 @@
         <div id="transaction-b-down">
 
         </div>
-        @if($_input_field)
-        <button id="submit-payment" type="submit" onclick=""class="btn btn-default">Submit</button>
-         @endif
     </div>
 @endsection
 @section('script')
     <script type="text/javascript">
         $(document).ready(function()
         {
-            $('#submit-payment').click(function(event) {
+
+            $('#transaction-b-down').on('click', '#submit-payment', function(event) {
+                event.preventDefault();
                 $('#payment-form').submit();
-            });
+            });;
             
             $('#get-input-form select').on('change', function(event)
             {
