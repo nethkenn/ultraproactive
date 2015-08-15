@@ -40,4 +40,6 @@ class Tbl_epayment_transaction extends Model
 		return $query->leftJoin('tbl_country','tbl_country.country_id', '=', 'tbl_epayment_transaction.country');
 	}
 
+	
+
 }
