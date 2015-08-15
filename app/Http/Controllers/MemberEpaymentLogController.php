@@ -71,6 +71,11 @@ class MemberEpaymentLogController extends MemberController
 
     }
 
+    public function test()
+    {
+    	
+    }
+
 
 
 
