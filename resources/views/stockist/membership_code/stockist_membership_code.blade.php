@@ -14,8 +14,7 @@
 
 		<div class="filters ">
 			<div class="col-md-8">
-				<a class="{{$active = Request::input('status') == null ? 'active' : ''}}" href="stockist/membership_code">Company Codes</a>
-				<a class="{{$active = Request::input('status') == 'unused' ? 'active' : ''}}" href="stockist/membership_code?status=unused">Unused Member Codes</a>
+				<a class="{{$active = Request::input('status') == null ? 'active' : ''}}" href="stockist/membership_code?status=unused">Unused Member Codes</a>
 				<a class="{{$active = Request::input('status') == 'used' ? 'active' : ''}}" href="stockist/membership_code?status=used">Used Member Codes</a>
 				<a class="{{$active = Request::input('status') == 'blocked' ? 'active' : ''}}" href="stockist/membership_code?status=blocked">Block</a>
 			</div>

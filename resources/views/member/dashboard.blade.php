@@ -118,6 +118,10 @@
                     <div class="balyu">{{$slotnow->slot_total_earning}}</div>
                 </div>
                 <div class="holders">
+                    <div class="leybel">TOTAL WITHDRAWAL</div>
+                    <div class="balyu">{{$slotnow->slot_total_withrawal}}</div>
+                </div>
+                <div class="holders">
                     <div class="leybel">MAX INCOME PER DAY</div>
                     <div class="balyu">{{$slotnow->slot_today_income}}/{{$slotnow->max_income}}</div>
                 </div>
@@ -182,14 +186,27 @@
                 <span>BINARY</span></br> INFORMATION
             </div>
             <div class="info">
+
                 <div class="holders">
                     <div class="leybel">POINTS ON LEFT</div>
-                    <div class="balyu">{{ number_format($slotnow->slot_binary_left, 2) }} PV</div>
+                    <div class="balyu">{{ number_format($slotnow->slot_binary_left, 2) }} POINTS</div>
                 </div>
+
                 <div class="holders">
                     <div class="leybel">POINTS ON RIGHT</div>
-                    <div class="balyu">{{ number_format($slotnow->slot_binary_right, 2) }} PV</div>
+                    <div class="balyu">{{ number_format($slotnow->slot_binary_right, 2) }} POINTS</div>
                 </div>
+
+                <div class="holders">
+                    <div class="leybel">SLOTS ON LEFT</div>
+                    <div class="balyu">{{ number_format($left_side) }} SLOTS</div>
+                </div>
+
+                <div class="holders">
+                    <div class="leybel">SLOTS ON RIGHT</div>
+                    <div class="balyu">{{ number_format($right_side) }} SLOTS</div>
+                </div>
+
             </div>
         </div>
         @endif

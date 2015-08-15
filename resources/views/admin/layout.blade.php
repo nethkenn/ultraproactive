@@ -94,6 +94,8 @@
 									<li><a href="admin/admin_stockist_user">Stockist Users</a></li>
 									<li><a href="admin/stockist_type">Stockist Type</a></li>
 									<li><a href="admin/stockist_inventory">Stockist Inventory</a></li>
+									<li><a href="admin/stockist_wallet">Stockist Refill Wallet</a></li>
+									<li><a href="admin/stockist_request">Stockist Order Request</a></li>
 								</ul>
 							</li>
 							<!-- UTILITIES -->
@@ -115,6 +117,9 @@
 									<li><a href="admin/utilities/recompute">Recomputation</a></li>
 									<li class="divider" role="separator"></li>
 									<li><a href="admin/e-payment-settings">E-payment / E-Remit Settings</a></li>
+									<li><a href="admin/e-payment-profile-form-settings">E-payment Form Settings</a></li>
+
+
 
 								</ul>
 							</li>

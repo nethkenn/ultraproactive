@@ -7,15 +7,18 @@ use Session;
 use gapi;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use App\Tbl_stockist;
 class StockistController extends Controller
 {
 	public function __construct()
 	{
         $user = Stockist::info();
+       
         if($user)
         {
-            View()->share("user", $user);       
+            $wallet = Tbl_stockist::where('stockist_id',$user->stockist_id)->first();
+            View()->share("user", $user);   
+            View()->share("wallet", $wallet->stockist_wallet);       
         }
         else
         {

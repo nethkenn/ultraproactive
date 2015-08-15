@@ -12,33 +12,33 @@ class CreateTblTransactionProfileInput extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('tbl_transaction_profile_input'))
-        {
+        // if (Schema::hasTable('tbl_transaction_profile'))
+        // {
 
-            Schema::create('tbl_transaction_profile_input', function (Blueprint $table)
-            {
-                $table->integer('profile_id')->unsigned();
-                $table->integer('input_id')->unsigned();
-                $table->string('value')->nullable();
-
-
-                $table->foreign('profile_id')
-                  ->references('id')->on('tbl_transaction_profile')
-                  ->onDelete('cascade');
+        //     Schema::create('tbl_transaction_profile_input', function (Blueprint $table)
+        //     {
+        //         $table->integer('profile_id')->unsigned();
+        //         $table->integer('input_id')->unsigned();
+        //         $table->string('value')->nullable();
 
 
-                                  $table->foreign('input_id')
-                  ->references('id')->on('tbl_get_input')
-                  ->onDelete('cascade'); 
+        //         $table->foreign('profile_id')
+        //           ->references('id')->on('tbl_transaction_profile')
+        //           ->onDelete('cascade');
 
 
+        //                           $table->foreign('input_id')
+        //           ->references('id')->on('tbl_get_input')
+        //           ->onDelete('cascade'); 
 
 
 
 
 
-            });
-        }
+
+
+        //     });
+        // }
     }
 
     /**
@@ -48,6 +48,6 @@ class CreateTblTransactionProfileInput extends Migration
      */
     public function down()
     {
-        Schema::drop('tbl_transaction_profile_input');
+        // Schema::drop('tbl_transaction_profile_input');
     }
 }

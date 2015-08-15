@@ -34,17 +34,6 @@ class EPayment
 
     public static function signIn($method, $code, $data=null)
     {
-        /*REMOVE INPUT FIELDS THE ARE NOT NEEDED*/
-        $remove_list = ['_token', 'transaction_code'];
-        foreach ((array)$data as $key => $value)
-        {
-            if( in_array($key, $remove_list))
-            {
-                unset($data[$key]);
-            }
-        }
-
-        // dd($data);
 
         $signature = "";
         try
@@ -52,7 +41,6 @@ class EPayment
             $pem_path = str_replace('\\',"/",storage_path());
             $certFile = 'file:///'.$pem_path . "/client.private.pem";  
             $baseUrl = "http://121.58.224.179/VentajaAPI/api/";
-
             // $method = "GetFields";
             // $method = "Validate";
             // $method = "Process";
@@ -68,9 +56,9 @@ class EPayment
             // $params->data = json_decode('{"lastName":"NATIVIDAD","firstName":"HENRY","middleName":"VILLANUEVA","birthDate":"05/06/1960"}');
             // $params->data = json_decode('{"lastName":"PONCE","firstName":"MARK ANTHONY","middleName":"ALDAY","birthDate":"31/03/1990"}');
             $res = EPayment::callApi($baseUrl . $method, $params, $certFile);
+            
             return $res;
 
-            // echo json_encode($res);
         }
         catch (Exception $e)
         { 
@@ -85,7 +73,6 @@ class EPayment
 
         $res = EPayment::signIn('GetFields', $code, null);
         $data_field = null;
-
         if($res['responseCode'] == 100 && $res['data'])
         {
             foreach ((array)$res['data'] as $key => $value)
@@ -116,6 +103,12 @@ class EPayment
                     $data_field[$key]['type'] = 'email';
                 }
 
+                if($value['name'] == 'agentRefNo')
+                {
+                    // $data_field[$key]['type'] = 'hidden';
+                    unset($data_field[$key]);
+                }
+
                 if($value['type'] == 'money')
                 {
                     $data_field[$key]['type'] = 'number';
@@ -144,13 +137,15 @@ class EPayment
         return $data_field;
     }
 
-    public static function validate_field($data)
+    public static function validate_field($transaction_code ,$data)
     {
 
-        // dd($data['transaction_code']);
-        $res = EPayment::signIn('Validate', $data['transaction_code'], $data);
+        $res = EPayment::signIn('Validate', $transaction_code, $data);
         return $res;
     }
+
+
+
 
 
 

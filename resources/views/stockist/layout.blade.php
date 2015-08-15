@@ -59,19 +59,50 @@
 					<div id="navbar" class="navbar-collapse collapse">
 						<ul class="nav navbar-nav">
 							<li class="{{ Request::segment(2) == '' ? 'active' : 'inactive' }}"><a href="stockist/">Dashboard</a></li>
-							<li class="{{ Request::segment(2) == 'issue_stocks' ? 'active' : 'inactive' }}"><a href="stockist/issue_stocks">Issue Stocks</a></li>
-							<li class="{{ Request::segment(2) == 'process_sales' ? 'active' : 'inactive' }}"><a href="/stockist/process_sales">Process Sales</a></li>
-							<li class="{{ Request::segment(2) == 'membership_code' ? 'active' : 'inactive' }}"><a href="/stockist/membership_code">Code</a></li>
+							<li class="{{ Request::segment(2) == 'membership_code' ? 'active' : 'inactive' }}"><a href="/stockist/membership_code/">Code</a></li>
+							<li class="{{ Request::segment(2) == 'transfer_wallet' ? 'active' : 'inactive' }}"><a href="/stockist/transfer_wallet">Transfer Wallet</a></li>
+						</ul>
+
+
+							
+						<ul class="nav navbar-nav">
+							<li class="dropdown {{ Request::segment(2) == 'process_sales' ||  Request::segment(2) == 'voucher' ? 'active' : 'inactive' }}">
+									<a href="admin/utilities" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Process  <span class="caret"></span></a>
+									<ul class="dropdown-menu" role="menu">
+											<li class=""><a href="/stockist/process_sales">Process Sales</a></li>
+											<li class=""><a href="/stockist/voucher/">Process Claim</a></li>							
+									</ul>
+							</li>
+						</ul>
+
+
+						<ul class="nav navbar-nav">
+							<li class="dropdown {{ Request::segment(2) == 'issue_stocks' ||  Request::segment(2) == 'order_stocks' ? 'active' : 'inactive' }}">
+									<a href="admin/utilities" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Stocks  <span class="caret"></span></a>
+									<ul class="dropdown-menu" role="menu">
+										<li class=""><a href="stockist/issue_stocks">Issue Stocks</a></li>
+										<li class=""><a href="/stockist/order_stocks">Order Stocks</a></li>									
+									</ul>
+							</li>
+						</ul>
+						<ul class="nav navbar-nav">
+							<li class="dropdown {{ Request::segment(2) == 'reports' ? 'active' : 'inactive' }}">
+									<a href="admin/utilities" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Reports  <span class="caret"></span></a>
+									<ul class="dropdown-menu" role="menu">
+										<li><a href="stockist/reports/sales">Sales</a></li>
+									</ul>
+							</li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
+							<li><a href="javascript:">Wallet: {{number_format($wallet,2)}}</a></li>
+
 							<li class="dropdown {{ Request::segment(2) == 'account' ? 'active' : 'inactive' }}">
-								<a href="admin/utilities" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Account Settings <span class="caret"></span></a>
+								<a href="admin/utilities" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> {{$user->stockist_un}}  <span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
-									<li><a href="admin/account/settings/profile">Profile</a></li>
-									<li><a href="admin/account/settings/change_pass">Change Password</a></li>
+									<li><a href="stockist/settings">Change Password</a></li>
+									<li><a href="stockist/logout"> Logout</a></li>
 								</ul>
 							</li>
-							<li><a href="stockist/logout"> {{$user->stockist_un}} (Logout)</a></li>
 						</ul>
 					</div>
 				</div>

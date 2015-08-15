@@ -69,6 +69,7 @@
                         </select>
                     </div>
                   </div>
+                  <p>*{{$form_status}}</p>
         </form>
 
         <form id="save-input" method="post" action="admin/e-payment-profile-form-settings" class="col-md-12">

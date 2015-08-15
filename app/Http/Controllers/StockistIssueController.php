@@ -36,7 +36,8 @@ class StockistIssueController extends StockistController
         $user = Tbl_stockist_user::where('stockist_un',$user)->stockist()->join('tbl_stockist_type','stockist_type','=','stockist_type_id')->first();
         if($user)
         {
-            if($owner->stockist_type_id < $user->stockist_type_id)
+
+            if($owner->stockist_type_discount > $user->stockist_type_discount)
             {
                         $id = $owner->stockist_id;
                         $data['error'] = null;  
