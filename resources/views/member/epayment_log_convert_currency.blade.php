@@ -2,18 +2,18 @@
       <caption>CONVERTION</caption>
   		<tr>
   			<td>Rate</td>
-  			<td>1 pts = 1 AEU</td>
+  			<td>{{$rate_formatted}}</td>
   		</tr>
   		<tr>
   			<td>Slot wallet</td>
-  			<td>10000</td>
+  			<td>{{$slot_wallet_formatted}}</td>
   		</tr>
   		  <tr>
   			<td>Amount</td>
-  			<td>10.00 ( 100 AEU )</td>
+  			<td>{{$amount_formatted}}</td>
   		</tr>
   		<tr>
   			<td>E-Wallet</td>
-  			<td>1000 AEU (+ 100 AEU)</td>
+  			<td>{{$e_wallet_formatted}}</td>
   		</tr>
   	</table>

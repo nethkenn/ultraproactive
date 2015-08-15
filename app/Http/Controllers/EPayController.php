@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Classes\EPayment;
+use App\Classes\Log;
 use Request;
 use App\Tbl_epayment_transation_code_list;
 use App\Classes\Customer;
@@ -92,7 +93,11 @@ class EPayController extends MemberController
 
         if($transaction['responseCode'] != 100)
         {
-            dd('THERE WAS AN ERROR PROCESSING YOU\'RE TRANSACTION (agentRefNo #'. $agentRefNo .')', $transaction );
+
+            // Tbl_agentRefNo::where('agentRefNo', $agentRefNo)->delete();
+            $error = 'Response code #'.$transaction['responseCode']. ' : '.$transaction['remarks'];
+            return redirect()->back()->withInput()->with('error', $error);
+            // dd('THERE WAS AN ERROR PROCESSING YOU\'RE TRANSACTION (agentRefNo #'. $agentRefNo .')', $transaction );
         }
 
 
@@ -129,7 +134,12 @@ class EPayController extends MemberController
             }        
         }
 
-        // dd($transaction_code, $req_param, $transaction, $new_transaction) ;
+        $transaction_log = Tbl_epayment_transation_code_list::where('transaction_code', Request::input('transaction_code'))->first();
+        
+        $e_wallet_log = 'E-payment '.$transaction_log->description. ' transction by '.Customer::info()->account_name . ' ( ' .Customer::info()->account_username .' ). ';
+        Log::e_wallet(Customer::info()->account_id, $e_wallet_log, $e_wallet_update->e_wallet);
+
+        // dd($transaction_code, $req_param, $transaction, $new_transaction);
         $message = 'You\'re transaction has been successfull. View AGENT REF #'.$new_transaction->agentRefNo.' for details.';
         return redirect('member/e-payment/transaction-log')->with('message',$message );
 

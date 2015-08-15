@@ -11,15 +11,22 @@ class CreateTblOrderStocks extends Migration
      * @return void
      */
     public function up()
-    {
-        Schema::create('tbl_order_stocks', function (Blueprint $table) {
-            $table->increments('order_stocks_id')->unsigned();
-            $table->integer('stockist_id')->unsigned();
-            $table->integer('stockist_user_id')->unsigned();
-            $table->integer('confirmed');
-            $table->integer('paid');
-            $table->timestamps();
-        });
+    {   
+
+        if (Schema::hasTable('tbl_order_stocks'))
+        {
+
+            Schema::create('tbl_order_stocks', function (Blueprint $table)
+            {
+
+                $table->increments('order_stocks_id')->unsigned();
+                $table->integer('stockist_id')->unsigned();
+                $table->integer('stockist_user_id')->unsigned();
+                $table->integer('confirmed');
+                $table->integer('paid');
+                $table->timestamps();
+            });
+        }
     }
 
     /**

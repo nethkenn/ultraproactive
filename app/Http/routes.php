@@ -452,8 +452,11 @@ Route::any('admin/migration/start', 'AdminMigrationController@start');
 Route::any('admin/migration/hack', 'AdminMigrationController@hack');
 
 Route::get('member/e-payment/transaction-log', 'MemberEpaymentLogController@index');
+Route::post('member/e-payment/transaction-log', 'MemberEpaymentLogController@convert_slot_to_ewallet');
 Route::get('member/e-payment/transaction-log/e-wallet-to-currency', 'MemberEpaymentLogController@slot_wallet_to_currency');
 Route::get('member/e-payment/transaction-log/get_data', 'MemberEpaymentLogController@get_data');
 Route::get('member/e-payment/transaction-log/show_details', 'MemberEpaymentLogController@show_details');
+
+
 
 
