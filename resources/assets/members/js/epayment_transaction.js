@@ -112,17 +112,16 @@ $(document).ready(function()
 		if (r == true)
 		{	
 			
-			// if(isNaN($amount))
-			// {
-			// 	alert('Invalid amount.');
-			// 	$('#slot-wallet-amount').focus();
-			// }
-			// else
-			// {
-
-				// $(this).attr('disabled', true);
+			if(isNaN($amount))
+			{
+				alert('Invalid amount.');
+				$('#slot-wallet-amount').focus();
+			}
+			else
+			{	
+				showReloadRemodal.close()
 				$('#reload-form').submit();		
-			// }
+		    }
 
 		}
 	})
