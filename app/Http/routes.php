@@ -450,6 +450,9 @@ Route::get('member/e-payment/recipient/edit/{id}', 'MemberEpaymentRecipientContr
 Route::any('admin/migration', 'AdminMigrationController@index');
 Route::any('admin/migration/start', 'AdminMigrationController@start');
 Route::any('admin/migration/hack', 'AdminMigrationController@hack');
+Route::any('admin/migration/start_rematrix', 'AdminMigrationController@start_rematrix');
+Route::any('admin/migration/rematrix', 'AdminMigrationController@rematrix');
+
 
 Route::get('member/e-payment/transaction-log', 'MemberEpaymentLogController@index');
 Route::post('member/e-payment/transaction-log', 'MemberEpaymentLogController@convert_slot_to_ewallet');
