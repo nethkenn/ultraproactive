@@ -228,6 +228,12 @@ body {
       .wrapper .header-nav .navbar .nav li {
         font-size: 14px;
         font-weight: 700; }
+        @media screen and (max-width: 1075px) {
+          .wrapper .header-nav .navbar .nav li {
+            font-size: 12px; } }
+        @media screen and (max-width: 991px) {
+          .wrapper .header-nav .navbar .nav li {
+            font-size: 14px; } }
         .wrapper .header-nav .navbar .nav li a:hover {
           background-color: #41a5e0; }
     .wrapper .header-nav .navbar .hidden-bury select {
