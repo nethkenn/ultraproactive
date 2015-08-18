@@ -6,6 +6,8 @@ use Crypt;
 use App\Tbl_slot;
 use App\Tbl_hack;
 use App\Tbl_account;
+use App\Classes\Compute;
+
 
 class AdminMigrationController extends AdminController
 {
@@ -60,6 +62,19 @@ class AdminMigrationController extends AdminController
 		}
 
 
+		echo json_encode("success!");
+	}
+	public function start_rematrix()
+	{
+		$data["_slots"] = Tbl_slot::get();
+		DB::table("tbl_tree_placement")->truncate();
+		DB::table("tbl_tree_sponsor")->truncate();
+		return json_encode($data["_slots"]);
+	}
+	public function rematrix()
+	{
+		$slot_id = Request::input("slot_id");
+		Compute::tree($slot_id);
 		echo json_encode("success!");
 	}
 

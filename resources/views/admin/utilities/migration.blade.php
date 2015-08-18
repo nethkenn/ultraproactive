@@ -5,7 +5,8 @@
             <h2><i class="fa fa-users"></i>  Migration</h2>
         </div>
         <div class="buttons col-md-4 text-right">
-             <button type="button" class="btn btn-primary start-migration"><i class="fa fa-refresh"></i> START MIGRATION</button>
+                <button type="button" class="btn btn-primary start-rematrix"><i class="fa fa-refresh"></i> START REMATRIX</button>
+                <button type="button" class="btn btn-primary start-migration"><i class="fa fa-refresh"></i> START MIGRATION</button>
         </div>
     </div>
     <div class="col-md-12 form-group-container" style="overflow: hidden;">
@@ -52,6 +53,7 @@
 @section('script')
 <script type="text/javascript">
     var tbl_hack;
+    var tbl_slot;
     var ctr = 0;
 
     $(".start-migration").click(function()
@@ -73,10 +75,54 @@
         });
     });
 
+    $(".start-rematrix").click(function()
+    {
+        $(".status").val("Getting Ready!");
+
+        $.ajax(
+        {
+            url:"admin/migration/start_rematrix",
+            dataType:"json",
+            data:"",
+            type:"post",
+            success: function(data)
+            {
+                tbl_slot = data;
+                rematrix(tbl_slot[ctr].slot_id);
+                $(".status").val("Initializing");
+            }
+        });
+    });
+
+    function rematrix($slot_id)
+    {
+        $.ajax(
+        {
+            url:"admin/migration/rematrix",
+            dataType:"json",
+            data:{slot_id:$slot_id},
+            type:"get",
+            success: function(data)
+            {
+                ctr++;
+                if(tbl_slot[ctr])
+                {
+                    rematrix(tbl_slot[ctr].slot_id);    
+                    $(".status").val("Rematrix - " + tbl_slot[ctr].slot_id);   
+                    $(".count-migrate").val(ctr);   
+                }
+                else
+                {
+                    $(".status").val("Done!");
+                }
+            },
+            error: function()
+            {  
+            }
+        });
+    }
     function migrate($hack_id)
     {
-        
-
         $.ajax(
         {
             url:"admin/migration/hack",
