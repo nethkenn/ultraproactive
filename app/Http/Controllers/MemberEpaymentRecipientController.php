@@ -105,7 +105,7 @@ class MemberEpaymentRecipientController extends MemberController
                         ->withInput();
         }
 
-        $transaction_profile = new Tbl_transaction_profile(Request::input());
+        $transaction_profile = new Tbl_transaction_profile($requests);
         $transaction_profile->save();
 
         if(Request::input('req'))
@@ -233,10 +233,28 @@ class MemberEpaymentRecipientController extends MemberController
 
     public function delete()
     {
-        $id = Request::input('id');
-        $transaction_profile = Tbl_transaction_profile::findOrFail($id);
-        $transaction_profile->delete();
-        return $transaction_profile;
+        $data['errors'] = null;
+        $data['transaction_profile'] = null;
+        $id = $requests['id'] = Request::input('id');
+        $rules['id'] = 'required|exists:tbl_transaction_profile,id,id,'.Customer::info()->account_id;
+        $validator = Validator::make($requests, $rules);
+
+
+        if ($validator->fails())
+        {   
+
+            $data['errors'] = $validator->errors()->first('id');
+        }
+        else
+        {
+            $transaction_profile = Tbl_transaction_profile::findOrFail($id);
+            $transaction_profile->delete();
+            $data['transaction_profile'] = $transaction_profile;
+        }
+
+
+        return json_encode($data);
+
     }
 
 

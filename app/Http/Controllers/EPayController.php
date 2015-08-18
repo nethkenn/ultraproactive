@@ -15,6 +15,7 @@ use App\Tbl_epayment_transaction;
 use App\Tbl_response_data;
 use Carbon\Carbon;
 use App\Tbl_account;
+use App\Tbl_transaction_profile_input;
 
 class EPayController extends MemberController
 {
@@ -28,11 +29,32 @@ class EPayController extends MemberController
         if(Request::isMethod('get') && Request::input('transaction_code'))
         {
 
-            $data['_input_field'] = EPayment::get_field(Request::input('transaction_code'));
-            dd($data['_input_field']);
+            $_input_field = EPayment::get_field(Request::input('transaction_code'));
+            if($_input_field)
+            {
+
+                foreach ($_input_field as $key => $value)
+                {
+                    $data['_input_field'][$key] = $value;
+                    if(Request::input('form_id') != null)
+                    {
+                        $input_val = Tbl_transaction_profile_input::getInput()->where('profile_id', Request::input('form_id'))->where('inputfield_name', $value['name'] )->first();
+                        if($input_val)
+                        {
+
+                            $data['_input_field'][$key]['value'] = $input_val->value;
+                        }
+                        else
+                        {
+                            $data['_input_field'][$key]['value'] = null;
+                        }
+                    }
+                }
+               
+            }
+
 
         }
-
         $data['service_chage'] = Tbl_service_charge::where('service_charge_id', 1)->first()->value;
         $data['_request_code'] = Tbl_epayment_transation_code_list::getFront()->get();
         return view('member.epayment', $data);

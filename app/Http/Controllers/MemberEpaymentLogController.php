@@ -77,6 +77,10 @@ class MemberEpaymentLogController extends MemberController
     {
 
         $data = $this->convert_pt_to_currency(Request::input('amount'));
+        if(!$data['slot'])
+        {
+            return "<p>No slot selected.<p>";
+        }
 
 
     	return view('member.epayment_log_convert_currency', $data);

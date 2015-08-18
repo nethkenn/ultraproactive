@@ -63,7 +63,7 @@
   <form class="form-horizontal" method="post" id="reload-form">
   <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
   <div class="form-group loader-container">
-  	<img class="loader" src="resources/assets/preloaders/preloader_skype.gif" style="display:none;">
+  	<img class="loader" src="/resources/assets/frontend/img/preloader_skype.GIF" style="display:none;">
   	<div id="point-conversion-table">
   		
   	</div>

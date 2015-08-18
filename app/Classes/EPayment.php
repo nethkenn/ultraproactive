@@ -78,6 +78,7 @@ class EPayment
             foreach ((array)$res['data'] as $key => $value)
             {
                 $data_field[$key] =  $value;
+                $data_field[$key]['value'] =  null;
                 $data_field[$key]['placeholder'] = "";
                 $data_field[$key]['true_type'] = $value['type'];
 

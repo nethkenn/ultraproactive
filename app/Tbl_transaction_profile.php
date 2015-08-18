@@ -13,5 +13,6 @@ class Tbl_transaction_profile extends Model
 							'profile_name',
 							'transaction_code',
 							'archived'
+							'account'
 						];
 }

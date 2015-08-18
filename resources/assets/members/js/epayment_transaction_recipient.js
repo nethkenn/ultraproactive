@@ -12,9 +12,16 @@ transactionRecipient.prototype.del = function()
   			dataType: 'json',
   			data: {id: this.$id},
   		})
-  		.done(function() {
-  			// console.log("success");
-  			$Table.draw();
+  		.done(function(data) {
+  			if(data['errors'].length > 0)
+  			{
+  				alert(data['errors']);
+  			}
+  			else
+  			{
+  				$Table.draw();
+  			}
+  			
   		})
   		.fail(function() {
   			// console.log("error");
