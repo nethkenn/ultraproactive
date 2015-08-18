@@ -12,7 +12,7 @@ class Tbl_transaction_profile extends Model
 	protected $fillable = [
 							'profile_name',
 							'transaction_code',
-							'archived'
+							'archived',
 							'account'
 						];
 }
