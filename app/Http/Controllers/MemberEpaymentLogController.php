@@ -92,8 +92,24 @@ class MemberEpaymentLogController extends MemberController
         $amount = (double) $amount;
         $country = Tbl_country::find(Customer::info()->account_country_id);
         $slot = Tbl_slot::find(Session::get('currentslot'));
-        $rate = $country->rate;
-        $slot_wallet = $slot->slot_wallet - $amount;
+        if($slot)
+        {
+            $slot_wallet = $slot->slot_wallet - $amount;
+        }
+        else
+        {
+            $slot_wallet = 0;
+        }
+        if($country)
+        {
+           $rate = $country->rate; 
+        }
+        else
+        {
+            $rate = 0;
+        }
+        
+        
         $converted_amount = $amount * $country->rate;
         $e_wallet = Customer::info()->e_wallet + $converted_amount ;
         $data['rate_formatted'] = "1.00 slot wallet points = " . number_format($rate,2,".",","). ' '.$country->currency;
