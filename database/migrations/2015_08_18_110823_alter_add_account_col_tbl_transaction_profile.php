@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblEwalletLog extends Migration
+class AlterAddAccountColTblTransactionProfile extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,9 @@ class CreateTblEwalletLog extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_e_wallet_log', function (Blueprint $table)
+        Schema::table('tbl_transaction_profile', function (Blueprint $table)
         {
-            $table->increments('e_wallet_log_id');
-            $table->integer('account')->nullable()->unsigned();
-            $table->string('e_wallet_details');
-            $table->double('e_wallet_update')->nullable();
-            $table->string('e_wallet_log_key');
-            $table->timestamps();
+            $table->integer('account')->unsigned()->nullable();
 
             $table->foreign('account')
               ->references('account_id')->on('tbl_account')
@@ -34,6 +29,8 @@ class CreateTblEwalletLog extends Migration
      */
     public function down()
     {
-        Schema::drop('tbl_e_wallet_log');
+        Schema::table('tbl_transaction_profile', function (Blueprint $table) {
+            $table->dropColumn('account');
+        });
     }
 }

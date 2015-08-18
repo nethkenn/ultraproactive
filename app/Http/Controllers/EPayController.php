@@ -29,6 +29,7 @@ class EPayController extends MemberController
         {
 
             $data['_input_field'] = EPayment::get_field(Request::input('transaction_code'));
+            dd($data['_input_field']);
 
         }
 
