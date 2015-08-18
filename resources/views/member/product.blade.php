@@ -108,7 +108,7 @@
     }
     .cart_opacity
     {
-        opacity: 0.5;
+        opacity: 0.2;
     }
     .cart_preloader,.checkout_preloader
     {

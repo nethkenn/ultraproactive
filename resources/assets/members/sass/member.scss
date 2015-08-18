@@ -319,6 +319,14 @@ body
 				{
 					font-size: 14px;
 					font-weight: 700;
+					@media screen and (max-width: 1075px)
+					{
+						font-size: 12px;
+					}
+					@media screen and (max-width: 991px)
+					{
+						font-size: 14px;
+					}
 					a
 					{
 						&:hover

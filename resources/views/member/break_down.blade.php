@@ -15,7 +15,6 @@
             <td>Amount </td>
             <td class="text-right">{{$amount_formatted}}</td>
         </tr>
-
         <tr>
             <td>Total Amount</td>
             <td class="text-right">{{$total_amount_formatted}} ({{$total_amount_in_country_formatted}})</td>
@@ -31,3 +30,4 @@
 
     </body>
 </table>
+<button id="submit-payment" type="submit" onclick=""class="btn btn-default">Submit</button>

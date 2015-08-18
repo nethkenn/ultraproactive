@@ -14,8 +14,6 @@ class AdminProfileFormSettingController extends AdminController
 {
     public function index()
     {
-
-
         $data['_input_field'] = null;
         $data['form_status'] = null;
         if(Request::isMethod('get') && Request::input('transaction_code'))

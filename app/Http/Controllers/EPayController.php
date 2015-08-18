@@ -4,12 +4,17 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Classes\EPayment;
+use App\Classes\Log;
 use Request;
 use App\Tbl_epayment_transation_code_list;
 use App\Classes\Customer;
 use App\Tbl_service_charge;
 use App\Tbl_exchange_rate;
-
+use App\Tbl_agentRefNo;
+use App\Tbl_epayment_transaction;
+use App\Tbl_response_data;
+use Carbon\Carbon;
+use App\Tbl_account;
 
 class EPayController extends MemberController
 {
@@ -36,42 +41,112 @@ class EPayController extends MemberController
     {
 
 
-        // Customer::info()->
-        $validate = EPayment::validate_field(Request::input('transaction_code'),Request::input('param'));
-
-        // dd($validate);
+        $req_param = Request::input('param');
         $transaction_code = Request::input('transaction_code');
+
+        /*GENERATE agentRefNo*/
+        $new_agentRefNo = new Tbl_agentRefNo();
+        $new_agentRefNo->transaction_code = $transaction_code;
+        $new_agentRefNo->account = Customer::info()->account_id;
+        $new_agentRefNo->save();
+
+        /*SET agentRefNo*/
+        $agentRefNo = $new_agentRefNo->agentRefNo;
+        $req_param['agentRefNo'] = $agentRefNo;
+        
+        
+        $validate = EPayment::validate_field(Request::input('transaction_code'), $req_param);
+        
         if($validate['responseCode'] != 100)
         {
+            /*DELETE agentRefNo IF THE TRANSACTION DID NOT PASS TO VENTAJA VALIDATION*/
+            Tbl_agentRefNo::where('agentRefNo', $agentRefNo)->delete();
             $error = 'Response code #'.$validate['responseCode']. ' : '.$validate['remarks'];
             return redirect()->back()->withInput()->with('error', $error);
         }
 
-        $e_wallet =  Customer::info()->e_wallet;
-        $customer_country_id = Customer::info()->account_country_id;
-        $conversion_rate = Tbl_exchange_rate::where('country_id', $customer_country_id)->first();
-        $e_wallet = 
 
 
 
-      
-
-
-         dd($validate,Customer::info(),$customer_country_id,$conversion_rate);
-
-
-
-
-
+        $transaction_breakdown = $this->compute_transaction($req_param['amount']);
+        /*CHECK IF E-WALLET IS ENOUGH*/
+        if($transaction_breakdown['current_wallet_less_total'] < 0 )
+        {
+            Tbl_agentRefNo::where('agentRefNo', $agentRefNo)->delete();
+            $error = "Your current E-wallet balance is not enough.";
+            return redirect()->back()->withInput()->with('error', $error);
+        }
+    
+        //dd({"responseCode":100,"remarks":"REQUESTACCEPTED","data":{"transactionNumber":"PagIbig-13201508-000005","referenceNumber":"14","dateEntry":"2015-08-11T17:12:40.687"}});
         
+        /*SAVE TO Tbl_agentRefNo*/
+        $transaction = EPayment::signIn('Process', $transaction_code, $req_param );
+        $update_agentRefNo = Tbl_agentRefNo::find($agentRefNo);
+        $update_agentRefNo->transaction_code = $transaction_code;
+        $update_agentRefNo->responseCode = array_key_exists('responseCode', $transaction) ? $transaction['responseCode'] : null;
+        $update_agentRefNo->remarks = array_key_exists('remarks', $transaction) ? $transaction['remarks'] : null;
+        if(array_key_exists('data', $transaction) && $transaction['data'] != null)
+        {
+            $update_agentRefNo->data = serialize($transaction['data']);
+        }
+        $update_agentRefNo->save();
+
+        if($transaction['responseCode'] != 100)
+        {
+
+            // Tbl_agentRefNo::where('agentRefNo', $agentRefNo)->delete();
+            $error = 'Response code #'.$transaction['responseCode']. ' : '.$transaction['remarks'];
+            return redirect()->back()->withInput()->with('error', $error);
+            // dd('THERE WAS AN ERROR PROCESSING YOU\'RE TRANSACTION (agentRefNo #'. $agentRefNo .')', $transaction );
+        }
+
+
+
+        $insert_transaction['agentRefNo'] = $agentRefNo;
+        $insert_transaction['country'] = Customer::info()->account_country_id;
+        $insert_transaction['account'] = Customer::info()->account_id;
+        $insert_transaction['transaction'] = $transaction_code;
+        $insert_transaction['rate_peso'] = $transaction_breakdown['exchange_rate'];
+        $insert_transaction['service_charge'] = $transaction_breakdown['service_charge'];
+        $insert_transaction['amount'] = $transaction_breakdown['amount'];
+        $insert_transaction['total_amount'] = $transaction_breakdown['total_amount'] ;
+        $insert_transaction['total_amount_in_country']= $transaction_breakdown['total_amount_in_country'];
+        $insert_transaction['e_wallet'] = $transaction_breakdown['current_wallet'];
+        $insert_transaction['e_wallet_less_total'] = $transaction_breakdown['current_wallet_less_total'];
+
+
+        $new_transaction = new Tbl_epayment_transaction($insert_transaction);
+        $new_transaction->save();
+
+        $e_wallet_update = Tbl_account::find(Customer::info()->account_id);
+        $e_wallet_update->e_wallet = $transaction_breakdown['current_wallet_less_total'];
+        $e_wallet_update->save();
+
+        if(array_key_exists('data', $transaction) && $transaction['data'] != null)
+        {
+            foreach ($transaction['data'] as $key => $value)
+            {
+                $insert_response_data['agentRefNo'] = $agentRefNo;
+                $insert_response_data['data_name'] = $key;
+                $insert_response_data['data_value'] = $value;
+                $response_data = new Tbl_response_data($insert_response_data);
+                $response_data->save();
+            }        
+        }
+
+        $transaction_log = Tbl_epayment_transation_code_list::where('transaction_code', Request::input('transaction_code'))->first();
         
+        $e_wallet_log = 'E-payment '.$transaction_log->description. ' transction by '.Customer::info()->account_name . ' ( ' .Customer::info()->account_username .' ). ';
+        Log::e_wallet(Customer::info()->account_id, $e_wallet_log, $e_wallet_update->e_wallet);
 
-        // $transaction = EPayment::signIn('Process', $transaction_code, Request::input());
-        // dd(Request::input(), $transaction);
-        // return $transaction;
+        // dd($transaction_code, $req_param, $transaction, $new_transaction);
+        $message = 'You\'re transaction has been successfull. View AGENT REF #'.$new_transaction->agentRefNo.' for details.';
+        return redirect('member/e-payment/transaction-log')->with('message',$message );
 
 
-        
+
+
+
 
     }
 
@@ -123,11 +198,8 @@ class EPayController extends MemberController
         // $bal = EPayment::signIn('Process', 100);
         // return ($bal);
         // $test = {"data":{"transactionNumber":"PagIbig-13201508-000005","referenceNumber":"14","dateEntry":"2015-08-11T17:12:40.687"};
-        
-        // // dd({"responseCode":100,"remarks":"REQUESTACCEPTED","data":{"transactionNumber":"PagIbig-13201508-000005","referenceNumber":"14","dateEntry":"2015-08-11T17:12:40.687"}});
-
+        // dd({"responseCode":100,"remarks":"REQUESTACCEPTED","data":{"transactionNumber":"PagIbig-13201508-000005","referenceNumber":"14","dateEntry":"2015-08-11T17:12:40.687"}});
         // dd($test);
-
         // {"responseCode":100,"remarks":"REQUESTACCEPTED","data":{"transactionNumber":"PagIbig-13201508-000003","referenceNumber":"12","dateEntry":"2015-08-11T16:33:46.583"}}
     }
 

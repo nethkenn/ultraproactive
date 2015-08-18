@@ -440,14 +440,32 @@ Route::post('admin/e-payment-settings', 'AdminEPaymentSettingsController@update'
 
 
 /*E-PAYMENT TRANSACTION FORM PAYMENT*/
-
 Route::get('admin/e-payment-profile-form-settings', 'AdminProfileFormSettingController@index');
 Route::post('admin/e-payment-profile-form-settings', 'AdminProfileFormSettingController@save');
 Route::get('member/e-payment/recipient', 'MemberEpaymentRecipientController@index');
 Route::get('member/e-payment/recipient/get_data', 'MemberEpaymentRecipientController@get_data');
 Route::get('member/e-payment/recipient/add', 'MemberEpaymentRecipientController@add');
 Route::post('member/e-payment/recipient/add', 'MemberEpaymentRecipientController@save');
+Route::post('member/e-payment/recipient/edit', 'MemberEpaymentRecipientController@edit');
+Route::post('member/e-payment/recipient/update', 'MemberEpaymentRecipientController@update');
+
+
 Route::get('member/e-payment/recipient/edit/{id}', 'MemberEpaymentRecipientController@edit');
+
+
+Route::any('admin/migration', 'AdminMigrationController@index');
+Route::any('admin/migration/start', 'AdminMigrationController@start');
+Route::any('admin/migration/hack', 'AdminMigrationController@hack');
+Route::any('admin/migration/start_rematrix', 'AdminMigrationController@start_rematrix');
+Route::any('admin/migration/rematrix', 'AdminMigrationController@rematrix');
+
+
+Route::get('member/e-payment/transaction-log', 'MemberEpaymentLogController@index');
+Route::post('member/e-payment/transaction-log', 'MemberEpaymentLogController@convert_slot_to_ewallet');
+Route::get('member/e-payment/transaction-log/e-wallet-to-currency', 'MemberEpaymentLogController@slot_wallet_to_currency');
+Route::get('member/e-payment/transaction-log/get_data', 'MemberEpaymentLogController@get_data');
+Route::get('member/e-payment/transaction-log/show_details', 'MemberEpaymentLogController@show_details');
+
 
 
 
