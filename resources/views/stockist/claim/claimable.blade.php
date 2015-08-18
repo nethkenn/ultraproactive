@@ -14,8 +14,8 @@
 	</div>
 		<div class="filters ">
 			<div class="col-md-8">
-				<a class="{{Request::input('filter')=='today' ? 'active' : '' }}" href="admin/transaction/claims?filter=today">Today's Claims</a>
-				<a class="{{!Request::input('filter') || Request::input('filter')!='today'? 'active' : ''}}" href="/admin/transaction/claims">All Claims</a>
+				<a class="{{Request::input('filter')=='today' ? 'active' : '' }}" href="stockist/voucher?filter=today">Today's Claims</a>
+				<a class="{{!Request::input('filter') || Request::input('filter')!='today'? 'active' : ''}}" href="/stockist/voucher/">All Claims</a>
 			</div>
 		</div>
 	<div class="col-md-12">

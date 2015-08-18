@@ -22,6 +22,8 @@ use App\Tbl_product_code;
 use App\Classes\Log;
 use App\Classes\Settings;
 use Mail;
+use App\Classes\StockistLog;
+
 class StockistProcessSales extends StockistController
 {
     public function index()
@@ -294,10 +296,23 @@ class StockistProcessSales extends StockistController
         $voucher = new Tbl_voucher($insert_voucher);
         $voucher->save();
 
+
+
+        $sub = $cart_total;
+        $disc = $_slot_discount;
+        $discam = ($_slot_discount / 100) * $cart_total;
+        $overall = $insert_voucher['total_amount'];
+        $name = Stockist::info()->stockist_un;
+        $stockist_id = Stockist::info()->stockist_id;
+        $transaction_to_id = NULL;
+        $voucherer = $voucher->voucher_id;
+        $extra = "Additional ".($additional/100) * $cart_total. "(".$additional."%)"; 
          /**
          * SAVE VOUCHER PRODUCT
          */
-        $this->add_product_to_voucher_list($voucher->voucher_id,$_cart,Request::input('member_type'), Request::input('status'));
+        $trans_id = StockistLog::transaction("Process Sale",$sub,$disc,$discam,$overall,$paid = 1,$claimed = 1,$name,"Non member","CASH",$stockist_id,$transaction_to_id,$extra,$voucherer);
+        
+        $this->add_product_to_voucher_list($voucher->voucher_id,$_cart,Request::input('member_type'), Request::input('status'),$trans_id);
 
         // $admin_log = "Sold Product Voucher # ".$voucher->voucher_id. " to a non-member as ".  Stockist::info()->admin_position_name.".";
         // Log::account(Admin::info()->account_id, $admin_log);
@@ -481,9 +496,37 @@ class StockistProcessSales extends StockistController
         }
 
 
+        $sub = $cart_total;
+        $disc = $_slot->discount;
+        $discam = ($_slot->discount / 100) * $cart_total;
+        $overall = $insert_voucher['total_amount'];
+        $name = Stockist::info()->stockist_un;
+        $stockist_id = Stockist::info()->stockist_id;
+        $transaction_to_id = Request::input('account_id');
+        $voucherer = ;
+        $extra = "Additional ".($additional/100) * $cart_total. "(".$additional."%)"; 
+
+        $trans_id = StockistLog::transaction("Process Sale",$sub,$disc,$discam,$overall,$paid = 1,$claimed = 1,$name,"Member","CASH",$stockist_id,$transaction_to_id,$extra,$voucherer);
+        
+
         $voucher = new Tbl_voucher($insert_voucher);
         $voucher->save();
-        $this->add_product_to_voucher_list($voucher->voucher_id,$_cart,Request::input('member_type'), Request::input('status'));
+
+
+        $sub = $cart_total;
+        $disc = $_slot->discount;
+        $discam = ($_slot->discount / 100) * $cart_total;
+        $overall = $insert_voucher['total_amount'];
+        $name = Stockist::info()->stockist_un;
+        $stockist_id = Stockist::info()->stockist_id;
+        $transaction_to_id = Request::input('account_id');
+        $voucherer = $voucher->voucher_id;
+        $extra = "Additional ".($additional/100) * $cart_total. "(".$additional."%)"; 
+
+        $trans_id = StockistLog::transaction("Process Sale",$sub,$disc,$discam,$overall,$paid = 1,$claimed = 1,$name,"Member","CASH",$stockist_id,$transaction_to_id,$extra,$voucherer);
+
+
+        $this->add_product_to_voucher_list($voucher->voucher_id,$_cart,Request::input('member_type'), Request::input('status'),$trans_id);
 
         /**
          * UPDATE ACCOUNT/ADMIN LOG
@@ -513,7 +556,7 @@ class StockistProcessSales extends StockistController
 
     }
 
-    public function add_product_to_voucher_list($voucher_id, $cart, $member_type, $status='processed')
+    public function add_product_to_voucher_list($voucher_id, $cart, $member_type,$status='processed',$trans_id)
     {
         foreach ((array)$cart as $key => $value)
         {
@@ -525,7 +568,7 @@ class StockistProcessSales extends StockistController
             if($status == 'processed' || $member_type == 1)
             {
                 $updated_stock = $product->stockist_quantity - $value['qty'];
-                Tbl_stockist_inventory::where('product_id',$key)->where('stockist_id',Stockist::info()->stockist_id)->lockForUpdate()->update(['stockist_quantity'=> $updated_stock] );
+                Tbl_stockist_inventory::where('product_id',$key)->where('stockist_id',Stockist::info()->stockist_id)->lockForUpdate()->update(['stockist_quantity'=> $updated_stock]);
                 // dd($status);
             }
 
@@ -540,6 +583,15 @@ class StockistProcessSales extends StockistController
             $new_voucher_product = new tbl_voucher_has_product($insert_vouher_product);
             $new_voucher_product->save();
 
+            $product_id = $value['product_id'];
+            $product_package_id = NULL;
+            $code_pin = NULL;
+            $transaction_amount = $value['price'];
+            $transaction_qty = $value['qty'];
+            $transaction_total = $value['sub_total'];
+            $log = "Product";
+            StockistLog::relative($trans_id,$if_product=1,$if_product_package = 0,$if_code_pin = 0,$product_id,$product_package_id,$code_pin,$transaction_amount,$log,$transaction_qty,$transaction_total);
+           
             if($member_type == 0)
             {
 
