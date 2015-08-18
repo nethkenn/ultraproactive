@@ -122,8 +122,6 @@ class MemberEpaymentLogController extends MemberController
         $requests['slot'] = Session::get('currentslot');
         $rules['slot'] = 'exists:tbl_slot,slot_id,slot_owner,'.Customer::info()->account_id;
 
-
-
         $validator = Validator::make($requests, $rules);
         // dd($amount, $conversion, $validator->errors()->all());
         if ($validator->fails())

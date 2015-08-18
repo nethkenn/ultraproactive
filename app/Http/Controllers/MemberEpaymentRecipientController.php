@@ -133,4 +133,9 @@ class MemberEpaymentRecipientController extends MemberController
     {
         return $id." test";
     }
+
+    public function update()
+    {
+        
+    }
 }
