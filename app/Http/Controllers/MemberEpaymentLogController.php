@@ -77,12 +77,6 @@ class MemberEpaymentLogController extends MemberController
     {
 
         $data = $this->convert_pt_to_currency(Request::input('amount'));
-        if(!$data['slot'])
-        {
-            return "<p>No slot selected.<p>";
-        }
-
-
     	return view('member.epayment_log_convert_currency', $data);
     }
 
@@ -98,7 +92,7 @@ class MemberEpaymentLogController extends MemberController
         }
         else
         {
-            $slot_wallet = 0;
+            $slot_wallet = 0 - $amount;
         }
         if($country)
         {
@@ -139,7 +133,7 @@ class MemberEpaymentLogController extends MemberController
         $requests['slot_wallet'] = $conversion['slot_wallet'];
         $rules['slot_wallet'] = 'required|numeric|min:0';
         
-        $requests['slot'] = 545454;
+        $requests['slot'] = Session::get('currentslot');
         // dd($requests['slot']);
         $rules['slot'] = 'required:exists:tbl_slot,slot_id,slot_owner,'.Customer::info()->account_id;
 
