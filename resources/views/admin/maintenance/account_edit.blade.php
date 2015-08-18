@@ -93,7 +93,7 @@
                     </ul>
                 </div>
             @endif
-                <input name="account_password" value="{{Crypt::decrypt($account->account_password) }}" required="required" class="form-control" id="" placeholder="" type="password">
+                <input name="account_password" value="{{Crypt::decrypt($account->account_password) }}" required="required" class="form-control" id="" placeholder="" type="text">
             </div>  
             @foreach($_account_field as $field)
             <div class="form-group col-md-6">

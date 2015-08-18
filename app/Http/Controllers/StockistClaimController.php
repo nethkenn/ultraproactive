@@ -16,6 +16,7 @@ use DB;
 use App\Classes\Stockist;
 use App\Tbl_stockist_package_inventory;
 use App\Tbl_stockist_inventory;
+use App\Tbl_transaction;
 class StockistclaimController extends StockistController
 {
 	public function index()
@@ -146,6 +147,8 @@ class StockistclaimController extends StockistController
 																	->leftjoin('tbl_product','tbl_product.product_id','=', 'tbl_voucher_has_product.product_id')
 																	->where('voucher_id', $voucher_id)
 																    ->get();
+
+		Tbl_transaction::where('voucher_id',$voucher_id)->update(['transaction_claimed'=>1,'transaction_paid'=>1]);														    
 
 		$request['product_count'] = count($_voucher_product);
 		$rules['product_count'] = 'prod_count';

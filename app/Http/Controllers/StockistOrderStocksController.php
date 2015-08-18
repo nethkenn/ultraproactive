@@ -94,9 +94,6 @@ class StockistOrderStocksController extends StockistController
                              
 
                                     return view('stockist.order.order_stocks_user', $data);                                              
-
-
-
     }
 
 
@@ -108,4 +105,128 @@ class StockistOrderStocksController extends StockistController
 
         return json_encode($data);
     }
+
+
+    public function check_rank()
+    {
+        $id = Stockist::info()->stockist_id;
+        $data['_error'] = Session::get('message');
+        $data['_success'] = Session::get('success');
+        if(isset($_POST['request']))
+        {
+            return Redirect::to('stockist/accept_stocks/accept?request='.$_POST['request']);
+        }
+        return view('stockist.order.accept_order',$data);  
+    }
+
+    public function accept()
+    {
+        $request = Request::input('request');
+        $id = Stockist::info()->stockist_id;
+        $sender = Tbl_order_stocks::where('order_stocks_id',$request)->join('tbl_stockist','tbl_stockist.stockist_id','=','tbl_order_stocks.stockist_id')
+                                                                     ->join('tbl_stockist_type','tbl_stockist_type.stockist_type_id','=','tbl_stockist.stockist_type')
+                                                                     ->first();
+        $receiver = Tbl_stockist::where('stockist_id',Stockist::info()->stockist_id)->join('tbl_stockist_type','stockist_type_id','=','stockist_type')->first();
+        $data['error'] = null;
+        if($sender)
+        {       
+                $product = Rel_order_stocks::where('order_stocks_id',$request)->get();
+                $package = Rel_order_stocks_package::where('order_stocks_id',$request)->get();
+                // $data['error'][$ctr] = $package_name->product_package_name." didn't refill, cannot give quantity that is higher than your stocks.";
+                // $ctr++;
+
+                $data['product'] = Rel_order_stocks::where('order_stocks_id',$request)->join('tbl_product','tbl_product.product_id','=','rel_order_stocks.product_id')->select('product_name','quantity','tbl_product.product_id')->get();
+                $data['package'] = Rel_order_stocks_package::where('order_stocks_id',$request)->join('tbl_product_package','tbl_product_package.product_package_id','=','rel_order_stocks_package.product_package_id')->select('product_package_name','quantity','tbl_product_package.product_package_id')->get();
+
+
+                if($sender->stockist_type_discount > $receiver->stockist_type_discount)
+                {
+                            if($sender->status != "Pending")
+                            {
+                                 return Redirect::to('stockist/accept_stocks')->with('message','This request is already completed.');     
+                            }
+
+                            if(isset($_POST['_token']))
+                            {   
+                                $condition = true;
+                                foreach($product as $key => $get)
+                                {
+                                    $sender_count = Tbl_stockist_inventory::where('stockist_id',$sender->stockist_id)->where('product_id',$get->product_id)->first();
+                                    $receiver_count = Tbl_stockist_inventory::where('stockist_id',$id)->where('product_id',$get->product_id)->first();
+
+                                    $sender_total = $sender_count->stockist_quantity + $get->quantity;
+                                    $receiver_total = $receiver_count->stockist_quantity - $get->quantity;
+
+                                    if($receiver_total < 0)
+                                    {
+                                        $condition = false;
+                                    } 
+                                }   
+
+                                foreach($package as $key => $get)
+                                {
+                                    $sender_count = Tbl_stockist_package_inventory::where('stockist_id',$sender->stockist_id)->where('product_package_id',$get->product_package_id)->first();
+                                    $receiver_count = Tbl_stockist_package_inventory::where('stockist_id',$id)->where('product_package_id',$get->product_package_id)->first();
+                                    $sender_total = $sender_count->package_quantity + $get->quantity;
+                                    $receiver_total = $receiver_count->package_quantity - $get->quantity;
+
+                                    if($receiver_total < 0)
+                                    {
+
+                                        $condition = false;
+                                    } 
+                                }    
+
+
+                                if($condition == true)
+                                {
+                                    foreach($product as $key => $get)
+                                    {
+                                        $sender_count = Tbl_stockist_inventory::where('stockist_id',$sender->stockist_id)->where('product_id',$get->product_id)->first();
+                                        $receiver_count = Tbl_stockist_inventory::where('stockist_id',$id)->where('product_id',$get->product_id)->first();
+
+                                        $update_sender['stockist_quantity'] = $sender_count->stockist_quantity + $get->quantity;
+                                        $update_receiver['stockist_quantity']= $receiver_count->stockist_quantity - $get->quantity;
+                                    
+                                        Tbl_stockist_inventory::where('stockist_id',$sender->stockist_id)->where('product_id',$get->product_id)->update($update_sender);
+                                        Tbl_stockist_inventory::where('stockist_id',$id)->where('product_id',$get->product_id)->update($update_receiver);
+                                    }   
+
+                                    foreach($package as $key => $get)
+                                    {
+                                        $sender_count = Tbl_stockist_package_inventory::where('stockist_id',$sender->stockist_id)->where('product_package_id',$get->product_package_id)->first();
+                                        $receiver_count = Tbl_stockist_package_inventory::where('stockist_id',$id)->where('product_package_id',$get->product_package_id)->first();
+
+                                        $update_sender2['package_quantity'] = $sender_count->package_quantity + $get->quantity;
+                                        $update_receiver2['package_quantity'] = $receiver_count->package_quantity - $get->quantity;
+
+                                        Tbl_stockist_package_inventory::where('stockist_id',$sender->stockist_id)->where('product_package_id',$get->product_package_id)->update($update_sender2);
+                                        Tbl_stockist_package_inventory::where('stockist_id',$id)->where('product_package_id',$get->product_package_id)->update($update_receiver2);
+                                    } 
+
+                                    Tbl_order_stocks::where('order_stocks_id',$id)->update(['status'=>"Confirm"]);
+                                    return Redirect::to('stockist/accept_stocks')->with('success','Requested orders are successfully given.');      
+                                }
+                                else
+                                {
+                                    $data['error'][0] = "One of your stocks quantity is not enough to refill this request";
+                                }                           
+                            }
+
+                    return view('stockist.order.accept_order_user',$data);                                           
+                }
+                else
+                {
+                     return Redirect::to('stockist/accept_stocks')->with('message','Cannot accept this request due to your rank.');     
+                }
+
+        }
+        else
+        {
+             return Redirect::to('stockist/accept_stocks')->with('message','Invalid request ID');           
+        }
+
+
+    }
+
 }

@@ -17,6 +17,10 @@ use App\Tbl_product_package_has;
 use App\Classes\Image;
 use Crypt;
 use App\Tbl_membership;
+use App\Tbl_stockist;
+use App\Tbl_stockist_inventory;
+use App\Tbl_stockist_package_inventory;
+
 class AdminProductPackageController extends AdminController
 {
 	public function index()
@@ -121,6 +125,8 @@ class AdminProductPackageController extends AdminController
 		}
 
 
+
+
 		Validator::extend('prod_qty', function($attribute, $value, $parameters) {
             return $parameters[0] > 0;
         });
@@ -142,6 +148,20 @@ class AdminProductPackageController extends AdminController
 		$product_package->save();
 		$id = $product_package->product_package_id;
 		$this->save_product_package($id, Request::input('product'));
+
+		$stockist = Tbl_stockist::all();
+        if($stockist)
+        {
+            foreach ($stockist as $key => $stockist)
+            {
+                $insert_stockist_inventory['stockist_id'] = $stockist->stockist_id;
+                $insert_stockist_inventory['product_package_id'] = $id;
+
+                $stockist_inventory = new Tbl_stockist_package_inventory($insert_stockist_inventory);
+                $stockist_inventory->save();
+            }
+        }
+
 		return Redirect('admin/maintenance/product_package');
 
 	}

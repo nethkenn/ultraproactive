@@ -14,6 +14,9 @@ use App\Tbl_product_category;
 use App\Tbl_product;
 use App\Classes\Image;
 use Crypt;
+use App\Tbl_stockist;
+use App\Tbl_stockist_package_inventory;
+
 class AdminProductController extends AdminController
 {
 	public function index()
@@ -60,6 +63,21 @@ class AdminProductController extends AdminController
 				$product->sku = Request::input('sku');
 				$product->upgrade_pts = Request::input('upgrade_pts');
 				$product->save();
+
+
+				$stockist = Tbl_stockist::all();
+		        if($stockist)
+		        {
+		            foreach ($stockist as $key => $stockist)
+		            {
+		                $insert_stockist_inventory['stockist_id'] = $stockist->stockist_id;
+		                $insert_stockist_inventory['product_id'] = $product->product_id;
+
+		                $stockist_inventory = new Tbl_stockist_inventory($insert_stockist_inventory);
+		                $stockist_inventory->save();
+		            }
+		        }
+
 				return redirect('admin/maintenance/product');
 			}
 			else

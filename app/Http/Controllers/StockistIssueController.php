@@ -42,7 +42,8 @@ class StockistIssueController extends StockistController
                         $id = $owner->stockist_id;
                         $data['error'] = null;  
                         $data['id'] = $id;
-
+                        $data['product'] = $user->stockist_type_discount;
+                        $data['pack'] = $user->stockist_type_package_discount;
 
                         CheckStockist::checkinventory($user->stockist_id);
                         CheckStockist::checkinventory($owner->stockist_id);
@@ -141,19 +142,26 @@ class StockistIssueController extends StockistController
     public function ajax_get_product()
     {
         $id = Request::input('id');
+        $discount = Request::input('product');
 
         $product = Tbl_stockist_inventory::where('stockist_id',$id)
                                                     ->orderBy('tbl_stockist_inventory.product_id','asc')
                                                     ->where('tbl_stockist_inventory.archived',0)
                                                     ->join('tbl_product','tbl_product.product_id','=','tbl_stockist_inventory.product_id')
                                                     ->get();
+        foreach($product as $key => $prod)
+        {
+            $product[$key]["total"] = $prod->price - (($discount/100)*$prod->price);
+        }                                           
         return Datatables::of($product) ->addColumn('add','<a class="add-to-package" href="#" product-id="{{$product_id}}">ADD</a>')
+                                        ->addColumn('percent',"$discount%")
                                         ->make(true);
     }
 
     public function ajax_get_product_package()
     {
         $id = Request::input('id');
+        $discount = Request::input('package');
 
         $product = Tbl_stockist_package_inventory::where('stockist_id',$id)
                                                     ->join('tbl_product_package','tbl_product_package.product_package_id','=','tbl_stockist_package_inventory.product_package_id')

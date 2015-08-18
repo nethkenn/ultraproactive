@@ -30,6 +30,7 @@ use App\Tbl_membership_code_sale_has_code;
 use App\Classes\Log;
 use App\Tbl_stockist_package_inventory;
 use Redirect;
+use App\Classes\StockistLog;
 class StockistCodeController extends StockistController
 {
     /**
@@ -87,7 +88,7 @@ class StockistCodeController extends StockistController
         $data['_code_type'] = Tbl_code_type::where('code_type_id', '!=' , 2)->get();
         $data['_prod_package'] = Tbl_product_package::all();
         $data['_account'] = Tbl_account::all();
-        $data['_inventory_update_type'] = Tbl_inventory_update_type::where('inventory_update_type_id','!=',3)->get();
+        $data['_inventory_update_type'] = Tbl_inventory_update_type::where('inventory_update_type_id','=',1)->get();
         $data['_error2'] = Session::get('message');
 
         return view('stockist.membership_code.stockist_membership_code_add', $data);
@@ -171,7 +172,8 @@ class StockistCodeController extends StockistController
                     $membership_total_amount = $membership_total_amount + $selected_membership->membership_price; 
                     $sale[] = $membership_code->code_pin;
 
-
+                    $container[$i]["amount"]   =  $selected_membership->membership_price;
+                    $container[$i]["code_pin"] =  $membership_code->code_pin;
 
                 }
 
@@ -230,7 +232,38 @@ class StockistCodeController extends StockistController
                     // $insert_voucher['admin_id'] = Admin::info()->admin_id;
 
                     $new_voucher = new Tbl_voucher($insert_voucher);
-                    $new_voucher->save();
+                    $new_voucher->save();     
+
+
+                    $member_name = Tbl_account::where('account_id',Request::input('account_id'))->first();            
+                    $package_name = Tbl_product_package::where('product_package_id',Request::input('product_package_id'))->first();
+                    $amount = $membership_total_amount;
+                    $discountp = 0;
+                    $discounta = 0;
+                    $total = $membership_total_amount;
+                    $transaction_by = Stockist::info()->stockist_un;
+                    $transaction_to = $member_name->account_name;
+                    $transaction_payment_type = "Generated code";
+                    $transaction_by_stockist_id = Stockist::info()->stockist_id;
+                    $transaction_to_id = $member_name->account_id;
+                    $extra = "Product included : ".$package_name->product_package_name;
+
+                    $trans_id = StockistLog::transaction("Membership Code",$amount,$discountp,$discounta,$total,$paid = 0,$claimed = 0,$transaction_by,$transaction_to,$transaction_payment_type,$transaction_by_stockist_id,$transaction_to_id,$extra,$new_voucher->voucher_id);
+                    
+                    foreach($container as $key => $con)
+                    {
+                        $product_id = NULL;
+                        $product_package_id = NULL;
+                        $code_pin = 1;
+                        $transaction_amount = $container[$key]["amount"];
+                        $transaction_qty = 1;
+                        $transaction_total =  $container[$key]["amount"];
+                        $log = "Code generated";
+                        $code_pin = $container[$key]["code_pin"];
+
+                        StockistLog::relative($trans_id,$if_product=0,$if_product_package = 0,$if_code_pin = 1,$product_id,$product_package_id,$code_pin,$transaction_amount,$log,$transaction_qty,$transaction_total);                       
+                    }
+
 
                     $prod = Tbl_product_package_has::where('product_package_id', Request::input('product_package_id'))->get();
                     foreach ($prod as $key => $value)
@@ -246,6 +279,7 @@ class StockistCodeController extends StockistController
                         $new_tbl_voucher_has_product = new Tbl_voucher_has_product($insert_voucher_item);
                         $new_tbl_voucher_has_product->save();
                     }
+
 
                 }
 

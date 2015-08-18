@@ -27,6 +27,9 @@
 								<th>ID</th>
 								<th>Name</th>
 								<th>Stockist Quantity</th>
+								<th>Price</th>
+								<th>Percent</th>
+								<th>Total</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -44,9 +47,9 @@
 							</tr>
 						</thead>
 						<tbody>
-
 						</tbody>
 					</table>
+					<div class="pricenopack text-right">Total Price: 0</div>
             	</div>
     </div>
 
@@ -119,19 +122,23 @@
 	<script type="text/javascript">
 
 	   	var $add_product_pop_up = $('[data-remodal-id=add_prod_modal]').remodal();
-
+	   	var total = 0;
+	   	var total2 = 0;
 		var $productTable = $('#product-table').DataTable({
 
 	        processing: true,
 	        serverSide: true,
 	        ajax:{
-	        	url:'stockist/issue_stocks/issue/product?id='+{{$id}},
+	        	url:'stockist/issue_stocks/issue/product?id='+{{$id}}+"&product="+{{$product}},
 	    	},
 
 	        columns: [
 	            {data: 'product_id', name: 'product_id'},
 	            {data: 'product_name', name: 'product_name'},
 	            {data: 'stockist_quantity', name: 'stockist_quantity'},
+	            {data: 'price', name: 'price'},
+	            {data: 'percent', name: 'percent'},
+	            {data: 'total', name: 'total'},
 	           	{data: 'add' ,name: 'product_id'}
 	            
 	           	
@@ -159,7 +166,6 @@
 				$('#pop-up-input').focus();
 			});
 
-
 			$('.nopack').on('click', function(event)
 			{
 				event.preventDefault();
@@ -176,9 +182,12 @@
 					'<td>'+$new_td[1]+'</td>'+
 					'<td>'+$new_td[2]+'</td>'+
 					'<td>'+'<input product-id = "'+$new_td[0]+'" style="width:100%;" type="number" name="quantity['+$new_td[0]+']" value="'+$('#pop-up-input').val()+'"></td>'+
-					'<td><a style="cursor: pointer;" class="remove-added-prod" product-id = "'+$new_td[0]+'">REMOVE</a></td>'+
+					'<td><a style="cursor: pointer;" class="remove-added-prod" product-id = "'+$new_td[0]+'" price="'+$new_td[5]+'" qty="'+$('#pop-up-input').val()+'">REMOVE</a></td>'+
 				'</tr>';
 
+ 				total = total + (parseFloat($new_td[5]) * parseInt($('#pop-up-input').val()));
+
+				$(".pricenopack").text("Total Price: "+total);
 				// console.log($append);
 				var $checktd = $('#added-product-table tbody td a[product-id='+$new_td[0]+']').length;
 				console.log($checktd);
@@ -205,8 +214,10 @@
 			{
 
 				var $prod_id = $(this).attr('product-id');
+				var $value = $(this).attr('qty') * $(this).attr('price');
 
-
+				total = total - parseFloat($value);
+				$(".pricenopack").text("Total Price: "+ total.toFixed(2));
 				$(this).closest('tr').remove();
 			});
 
@@ -231,7 +242,7 @@
 	        processing: true,
 	        serverSide: true,
 	        ajax:{
-	        	url:'stockist/issue_stocks/issue/product/package?id='+{{$id}},
+	        	url:'stockist/issue_stocks/issue/product/package?id='+{{$id}}+"&package="+{{$pack}},
 	    	},
 
 	        columns: [

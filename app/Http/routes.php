@@ -393,6 +393,8 @@ Route::get('stockist/process_sales/sales/get_product', 'StockistProcessSales@aja
 Route::any('stockist/order_stocks', 'StockistOrderStocksController@index');
 Route::any('stockist/order_stocks/order', 'StockistOrderStocksController@order');
 Route::any('stockist/order_stocks/get', 'StockistOrderStocksController@ajax_get');
+Route::any('stockist/accept_stocks', 'StockistOrderStocksController@check_rank');
+Route::any('stockist/accept_stocks/accept', 'StockistOrderStocksController@accept');
 
 //STOCKIST REPORTS PAGE
 Route::any('stockist/reports/sales', 'StockistReportsController@sales');
