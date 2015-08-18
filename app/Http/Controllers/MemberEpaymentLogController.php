@@ -139,8 +139,9 @@ class MemberEpaymentLogController extends MemberController
         $requests['slot_wallet'] = $conversion['slot_wallet'];
         $rules['slot_wallet'] = 'required|numeric|min:0';
         
-        $requests['slot'] = Session::get('currentslot');
-        $rules['slot'] = 'exists:tbl_slot,slot_id,slot_owner,'.Customer::info()->account_id;
+        $requests['slot'] = 545454;
+        // dd($requests['slot']);
+        $rules['slot'] = 'required:exists:tbl_slot,slot_id,slot_owner,'.Customer::info()->account_id;
 
         $validator = Validator::make($requests, $rules);
         // dd($amount, $conversion, $validator->errors()->all());
@@ -154,7 +155,9 @@ class MemberEpaymentLogController extends MemberController
 
         $slot = Tbl_slot::find(Session::get('currentslot'));
         $slot->slot_wallet = $slot->slot_wallet - $amount;
-        $slot->save();
+        $slot->save();  
+
+
 
 
         $slog_log = 'Converted '.$amount.' slot wallet  to '. $conversion['converted_amount'] . ' ' . $conversion['currency']. ' by '.Customer::info()->account_name . ' ( ' .Customer::info()->account_username .' ). ';
