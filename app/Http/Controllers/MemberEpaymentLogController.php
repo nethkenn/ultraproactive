@@ -142,8 +142,8 @@ class MemberEpaymentLogController extends MemberController
         if ($validator->fails())
         {
             return redirect('member/e-payment/transaction-log')
-                        ->withErrors($validator)
-                        ->withInput();
+                        ->withErrors($validator);
+                        // ->withInput();
         }
 
 
