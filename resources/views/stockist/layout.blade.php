@@ -91,6 +91,7 @@
 									<a href="admin/utilities" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Reports  <span class="caret"></span></a>
 									<ul class="dropdown-menu" role="menu">
 										<li><a href="stockist/reports/sales">Sales</a></li>
+										<li><a href="stockist/reports/transaction">Transactions</a></li>
 									</ul>
 							</li>
 						</ul>

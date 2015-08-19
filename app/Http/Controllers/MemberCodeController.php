@@ -355,9 +355,24 @@ class MemberCodeController extends MemberController
         												 ->join('tbl_account','tbl_account.account_id','=','tbl_member_code_history.by_account_id')
         											     ->orderBy('updated_at','DESC')
         											     ->first();
-
-        	$data['code'][$key]->transferer = $get->account_name;	
-        	$data['code'][$key]->encrypt    = Crypt::encrypt($d->code_pin);									     
+		    $data['code'][$key]->encrypt    = Crypt::encrypt($d->code_pin);	
+          if($get)
+          {
+         	$data['code'][$key]->transferer = $get->account_name;	  			         	
+          }
+          else
+          {
+				$get = DB::table('tbl_membership_code')->where('code_pin',$d->code_pin)->join('tbl_stockist','tbl_stockist.stockist_id','=','tbl_membership_code.origin')->first();          	
+          		if($get)
+          		{
+          			$data['code'][$key]->transferer = $get->stockist_full_name;
+          		}	
+          		else
+          		{
+          			$data['code'][$key]->transferer = "Admin";
+          		}
+          }
+						     
         }
 
 

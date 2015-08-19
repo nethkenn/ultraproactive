@@ -52,7 +52,11 @@
                     <td>{{$c->code_pin}}</td>
                     <td>{{$c->code_activation}}</td>
                     <td>{{$c->code_type_name}}</td>
+                    @if(isset($c->transferer))
                     <td>{{$c->transferer}}</td>
+                    @else
+                    <td>{{$c->description}}</td>
+                    @endif
                     <td>{{$c->membership_name}}</td>
                     <td>
                         <div class="check">

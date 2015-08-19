@@ -9,13 +9,21 @@ use App\Tbl_account;
 use App\Tbl_account_field;
 use App\Classes\Admin;
 use Validator;
-
+use App\Classes\Customer;
 class AdminAccountController extends AdminController
 {
 	public function index()
 	{
 
 		$data["page"] = "Account Maintenance";
+		if(isset($_POST['login']))
+		{
+			$login = Tbl_account::where('account_id',Request::input('login'))->first();
+			Customer::login($login->account_id,$login->account_password);	
+			return Redirect::to('/member');		
+		}
+
+
         return view('admin.maintenance.account', $data);
 	}
 	
@@ -37,6 +45,7 @@ class AdminAccountController extends AdminController
 		$class = Request::input('archived') ? 'restore-account' : 'archive-account';
         return Datatables::of($account)	->addColumn('edit','<a href="admin/maintenance/accounts/edit?id={{$account_id}}">EDIT</a>')
         								->addColumn('archive','<a class="'.$class.'" href="#" account-id="{{$account_id}}">'.$text.'</a>')
+        								->addColumn('login','<button name="login" type="submit" value="{{$account_id}}" class="form-control">Login</button>')
         								->make(true);
 
 

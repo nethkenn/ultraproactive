@@ -18,6 +18,13 @@
 			        </ul>
 			    </div>
 		    @endif
+		    @if(Session::has('success'))
+			    <div class="alert alert-danger">
+			        <ul>
+			            <li>{{ $_success }}</li>
+			        </ul>
+			    </div>
+		    @endif
             <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
             <div class="form-group col-md-6">
                 <label for="username" class="col-sm-12 control-label" >Enter Stockist Username</label>

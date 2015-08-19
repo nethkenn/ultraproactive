@@ -15,13 +15,15 @@ use App\Tbl_stockist_package_inventory;
 use Datatables;
 use App\Tbl_product_package;
 use App\Tbl_product;
+use App\Classes\StockistLog;
+use App\Tbl_product_package_has;
 class StockistIssueController extends StockistController
 {
     public function index()
     {
         $id = Stockist::info()->stockist_id;
         $data['_error'] = Session::get('message');
-
+        $data['_success'] = Session::get('success');
         if(isset($_POST['username']))
         {
             return Redirect::to('stockist/issue_stocks/issue?username='.$_POST['username']);
@@ -59,10 +61,15 @@ class StockistIssueController extends StockistController
                                                                     ->join('tbl_product','tbl_product.product_id','=','tbl_stockist_inventory.product_id')
                                                                     ->get();
 
-                         $ctr = 0;       
-                                                              
+
                          if(Request::input('quantity'))
                          {
+
+                                $ctr = 0;       
+                                $overall = 0;
+                                $overallpercent = 0;
+                                $overallwithout = 0;
+                                
                                 foreach($_POST['quantity'] as $key => $value)
                                 {
 
@@ -72,12 +79,29 @@ class StockistIssueController extends StockistController
                                     $prodname = Tbl_product::where('product_id',$key)->first();
                                     $updaterecipient['stockist_quantity'] = $recipient->stockist_quantity + $value;    
 
+                                    $product = Tbl_stockist_inventory::where('stockist_id',$id)
+                                                                                ->orderBy('tbl_stockist_inventory.product_id','asc')
+                                                                                ->where('tbl_stockist_inventory.archived',0)
+                                                                                ->join('tbl_product','tbl_product.product_id','=','tbl_stockist_inventory.product_id')
+                                                                                ->get();
+
+
                                     if($updateown['stockist_quantity'] >= 0)
                                     {
                                         if($value >= 0)
                                         {
                                             Tbl_stockist_inventory::where('stockist_id',$id)->where('product_id',$key)->update($updateown);
                                             Tbl_stockist_inventory::where('stockist_id',$user->stockist_id)->where('product_id',$key)->update($updaterecipient);
+                                            
+                                            $overall = $overall + $prodname->price - (($data['product']/100)*$prodname->price);
+                                            $overall = $overall * $value;
+
+                                            $overallpercent = $data['product'];
+                                            $overallwithout = $overallwithout + $prodname->price * $value;
+                                            $total[$key]['sub'] = $prodname->price - (($data['product']/100)*$prodname->price);
+                                            $total[$key]['id'] = $prodname->product_id;
+                                            $total[$key]['qty'] = $value;
+                                            $total[$key]['total'] = $total[$key]['sub'] * $value;
                                         }
                                         else
                                         {
@@ -92,10 +116,46 @@ class StockistIssueController extends StockistController
                                     }
 
                                 }
+
+                                $process = "ISSUE STOCK";
+                                $amount = $overallwithout;
+                                $discountp = $data['product'];
+                                $discounta = $overallpercent;
+                                $totality = $overall;
+                                $paid = 0;
+                                $claimed = 0;
+                                $transaction_by = Stockist::info()->stockist_un;
+                                $transaction_to = Request::input('username');
+                                $transaction_payment_type = "ISSUE STOCK";
+                                $transaction_by_stockist_id = Stockist::info()->stockist_id;
+                                $transaction_to_id = $user->stockist_id;
+                                $extra = "ISSUED";
+                                $voucher = NULL;
+
+                                $id = StockistLog::transaction($process,$amount,$discountp,$discounta,$totality,$paid = 0,$claimed = 0,$transaction_by,$transaction_to,$transaction_payment_type,$transaction_by_stockist_id,$transaction_to_id,$extra,$voucher);
+                                foreach($total as $key => $t)
+                                {
+                                    $product_id = $total[$key]['id']; 
+                                    $product_package_id = NULL;
+                                    $code_pin = NULL;
+                                    $transaction_amount = $total[$key]['sub'];
+                                    $log = "Product Issued";
+                                    $transaction_qty  = $total[$key]['qty'];
+                                    $transaction_total = $total[$key]['total'];
+                                    StockistLog::relative($id,$if_product=1,$if_product_package = 0,$if_code_pin = 0,$product_id,$product_package_id,$code_pin,$transaction_amount,$log,$transaction_qty,$transaction_total);
+                                }
+
                          }             
 
                          if(Request::input('quantitypack'))
                          {
+
+                                $ctr = 0;       
+                                $overall = 0;
+                                $overallpercent = 0;
+                                $overallwithout = 0;
+
+
                                 foreach($_POST['quantitypack'] as $key => $value)
                                 {
 
@@ -103,13 +163,36 @@ class StockistIssueController extends StockistController
                                     $recipient = Tbl_stockist_package_inventory::where('stockist_id',$user->stockist_id)->where('product_package_id',$key)->first();
                                     $package_name = Tbl_product_package::where('product_package_id',$key)->first();
                                     $updateowner['package_quantity'] = $own->package_quantity - $value;
-                                    $updaterecipients['package_quantity'] = $recipient->package_quantity + $value;    
+                                    $updaterecipients['package_quantity'] = $recipient->package_quantity + $value;   
+
+
+
                                     if($updateowner['package_quantity'] >= 0)
                                     {
                                         if($value >= 0)
                                         {
                                             Tbl_stockist_package_inventory::where('stockist_id',$id)->where('product_package_id',$key)->update($updateowner);
                                             Tbl_stockist_package_inventory::where('stockist_id',$user->stockist_id)->where('product_package_id',$key)->update($updaterecipients);
+                                       
+                                            $get = Tbl_product_package_has::where('product_package_id',$package_name->product_package_id)->product()->get();
+                                            
+                                            $package_price = 0;
+
+                                            foreach($get as  $g)
+                                            {
+                                                $package_price = $package_price + $g->price;
+                                            }
+
+                                            $overall = $overall + $package_price - (($data['pack']/100)*$package_price);
+                                            $overall = $overall * $value;
+
+                                            $overallpercent = $data['pack'];
+                                            $overallwithout = $overallwithout + $package_price * $value;
+                                            $total[$key]['sub'] = $package_price - (($data['pack']/100)*$package_price);
+                                            $total[$key]['id'] = $key;
+                                            $total[$key]['qty'] = $value;
+                                            $total[$key]['total'] = $total[$key]['sub'] * $value;
+
                                         }
                                         else
                                         {
@@ -124,7 +207,41 @@ class StockistIssueController extends StockistController
                                     }
 
                                 }
-                         }                                
+
+
+                                $process = "ISSUE STOCK";
+                                $amount = $overallwithout;
+                                $discountp = $data['pack'];
+                                $discounta = $overallpercent;
+                                $totality = $overall;
+                                $paid = 0;
+                                $claimed = 0;
+                                $transaction_by = Stockist::info()->stockist_un;
+                                $transaction_to = Request::input('username');
+                                $transaction_payment_type = "ISSUE STOCK";
+                                $transaction_by_stockist_id = Stockist::info()->stockist_id;
+                                $transaction_to_id = $user->stockist_id;
+                                $extra = "ISSUED";
+                                $voucher = NULL;
+
+                                $id = StockistLog::transaction($process,$amount,$discountp,$discounta,$totality,$paid = 0,$claimed = 0,$transaction_by,$transaction_to,$transaction_payment_type,$transaction_by_stockist_id,$transaction_to_id,$extra,$voucher);
+                                foreach($total as $key => $t)
+                                {
+                                    $product_id = NULL; 
+                                    $product_package_id = $total[$key]['id'];
+                                    $code_pin = NULL;
+                                    $transaction_amount = $total[$key]['sub'];
+                                    $log = "Product Issued";
+                                    $transaction_qty  = $total[$key]['qty'];
+                                    $transaction_total = $total[$key]['total'];
+                                    StockistLog::relative($id,$if_product=0,$if_product_package = 1,$if_code_pin = 0,$product_id,$product_package_id,$code_pin,$transaction_amount,$log,$transaction_qty,$transaction_total);
+                                }
+                         }
+                             
+                         if(Request::input('quantitypack') || Request::input('quantity'))
+                         {
+                                            return Redirect::to('stockist/issue_stocks')->with('success','Successfully issued');
+                         }   
 
                         return view('stockist.issue.issue_stockist_user', $data);                                              
             }
@@ -143,19 +260,37 @@ class StockistIssueController extends StockistController
     {
         $id = Request::input('id');
         $discount = Request::input('product');
-
-        $product = Tbl_stockist_inventory::where('stockist_id',$id)
-                                                    ->orderBy('tbl_stockist_inventory.product_id','asc')
-                                                    ->where('tbl_stockist_inventory.archived',0)
-                                                    ->join('tbl_product','tbl_product.product_id','=','tbl_stockist_inventory.product_id')
-                                                    ->get();
-        foreach($product as $key => $prod)
+        if($discount)
         {
-            $product[$key]["total"] = $prod->price - (($discount/100)*$prod->price);
-        }                                           
-        return Datatables::of($product) ->addColumn('add','<a class="add-to-package" href="#" product-id="{{$product_id}}">ADD</a>')
-                                        ->addColumn('percent',"$discount%")
-                                        ->make(true);
+            $product = Tbl_stockist_inventory::where('stockist_id',$id)
+                                                        ->orderBy('tbl_stockist_inventory.product_id','asc')
+                                                        ->where('tbl_stockist_inventory.archived',0)
+                                                        ->join('tbl_product','tbl_product.product_id','=','tbl_stockist_inventory.product_id')
+                                                        ->get();
+            foreach($product as $key => $prod)
+            {
+                $product[$key]["total"] = $prod->price - (($discount/100)*$prod->price);
+            }                                           
+            return Datatables::of($product) ->addColumn('add','<a class="add-to-package" href="#" product-id="{{$product_id}}">ADD</a>')
+                                            ->addColumn('percent',"$discount%")
+                                            ->make(true);            
+        }
+        else
+        {
+            $product = Tbl_stockist_inventory::where('stockist_id',$id)
+                                                        ->orderBy('tbl_stockist_inventory.product_id','asc')
+                                                        ->where('tbl_stockist_inventory.archived',0)
+                                                        ->join('tbl_product','tbl_product.product_id','=','tbl_stockist_inventory.product_id')
+                                                        ->get();
+            foreach($product as $key => $prod)
+            {
+                $product[$key]["total"] = $prod->price;
+            }                                           
+            return Datatables::of($product) ->addColumn('add','<a class="add-to-package" href="#" product-id="{{$product_id}}">ADD</a>')
+                                            ->addColumn('percent',"No Discount")
+                                            ->make(true);   
+         }
+
     }
 
     public function ajax_get_product_package()
@@ -163,11 +298,53 @@ class StockistIssueController extends StockistController
         $id = Request::input('id');
         $discount = Request::input('package');
 
-        $product = Tbl_stockist_package_inventory::where('stockist_id',$id)
-                                                    ->join('tbl_product_package','tbl_product_package.product_package_id','=','tbl_stockist_package_inventory.product_package_id')
-                                                    ->get();
+        if($discount)
+        {
+            $product = Tbl_stockist_package_inventory::where('stockist_id',$id)
+                                                        ->join('tbl_product_package','tbl_product_package.product_package_id','=','tbl_stockist_package_inventory.product_package_id')
+                                                        ->get();
 
-        return Datatables::of($product) ->addColumn('add','<a class="add-to-package-pack" href="#" product-id="{{$product_package_id}}">ADD</a>')
-                                        ->make(true);
+            foreach($product as $key => $prod)
+            {
+                $total = 0;
+                $get = Tbl_product_package_has::where('product_package_id',$prod->product_package_id)->product()->get();
+
+                foreach($get as  $g)
+                {
+                    $total = $total + ($g->price * $g->quantity);
+                }
+                $product[$key]["price"] = $total;
+                $product[$key]["total"] = $total - (($discount/100)*$prod->price);
+            }          
+
+            return Datatables::of($product) ->addColumn('add','<a class="add-to-package-pack" href="#" product-id="{{$product_package_id}}">ADD</a>')
+                                            ->addColumn('percent',"$discount%")
+                                            ->make(true);            
+        }
+        else
+        {
+            $product = Tbl_stockist_package_inventory::where('stockist_id',$id)
+                                            ->join('tbl_product_package','tbl_product_package.product_package_id','=','tbl_stockist_package_inventory.product_package_id')
+                                            ->get();
+            foreach($product as $key => $prod)
+            {
+                $total = 0;
+                $get = Tbl_product_package_has::where('product_package_id',$prod->product_package_id)->product()->get();
+
+                foreach($get as  $g)
+                {
+                    $total = $total + ($g->price * $g->quantity);
+                }
+
+                $product[$key]["price"] = $total;
+                $product[$key]["total"] = $total;
+
+            }          
+
+            return Datatables::of($product) ->addColumn('add','<a class="add-to-package-pack" href="#" product-id="{{$product_package_id}}">ADD</a>')
+                                            ->addColumn('percent',"No Discount")
+                                            ->make(true);
+        }
+
     }
 }
