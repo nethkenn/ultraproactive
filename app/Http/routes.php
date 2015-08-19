@@ -85,7 +85,7 @@ Route::any('admin/transaction/unilevel-distribution', 'AdminUnilevelController@i
 
 
 /* ADMIN / MAINTENANCE */
-Route::get('admin/maintenance/accounts', 'AdminAccountController@index');
+Route::any('admin/maintenance/accounts', 'AdminAccountController@index');
 Route::get('admin/maintenance/accounts/data', 'AdminAccountController@data');
 Route::any('admin/maintenance/accounts/add', 'AdminAccountController@add');
 Route::any('admin/maintenance/accounts/edit', 'AdminAccountController@edit');
@@ -398,7 +398,9 @@ Route::any('stockist/accept_stocks/accept', 'StockistOrderStocksController@accep
 
 //STOCKIST REPORTS PAGE
 Route::any('stockist/reports/sales', 'StockistReportsController@sales');
-
+Route::any('stockist/reports/transaction', 'StockistReportsController@transaction');
+Route::any('stockist/reports/transaction/view', 'StockistReportsController@view_transaction');
+Route::any('stockist/reports/transaction/get', 'StockistReportsController@ajax_get_trans');
 //STOCKIST PAGE TRANSFER
 Route::any('stockist/transfer_wallet', 'StockistTransferController@index');
 

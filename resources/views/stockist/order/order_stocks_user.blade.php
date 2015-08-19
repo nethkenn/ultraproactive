@@ -27,6 +27,7 @@
 								<th>ID</th>
 								<th>Name</th>
 								<th>Stockist Quantity</th>
+								<th>Price</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -47,6 +48,7 @@
 
 						</tbody>
 					</table>
+					<div class="pricenopack text-right">Total Price: 0</div>
             	</div>
     </div>
 
@@ -66,6 +68,7 @@
 								<th>ID</th>
 								<th>Name</th>
 								<th>Stockist Quantity</th>
+								<th>Price</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -86,6 +89,7 @@
 
 						</tbody>
 					</table>
+					<div class="pricepack text-right">Total Price: 0</div>
             	</div>
         </form>
     </div>
@@ -116,9 +120,11 @@
 
 @endsection
 @section('script')
-	<script type="text/javascript">
+
+		<script type="text/javascript">
 
 	   	var $add_product_pop_up = $('[data-remodal-id=add_prod_modal]').remodal();
+	   	var total = 0;
 
 		var $productTable = $('#product-table').DataTable({
 
@@ -132,6 +138,7 @@
 	            {data: 'product_id', name: 'product_id'},
 	            {data: 'product_name', name: 'product_name'},
 	            {data: 'stockist_quantity', name: 'stockist_quantity'},
+	            {data: 'price', name: 'price'},
 	           	{data: 'add' ,name: 'product_id'}
 	            
 	           	
@@ -159,7 +166,6 @@
 				$('#pop-up-input').focus();
 			});
 
-
 			$('.nopack').on('click', function(event)
 			{
 				event.preventDefault();
@@ -175,10 +181,13 @@
 					'<td>'+$new_td[0]+'</td>'+
 					'<td>'+$new_td[1]+'</td>'+
 					'<td>'+$new_td[2]+'</td>'+
-					'<td>'+'<input product-id = "'+$new_td[0]+'" style="width:100%;" type="number" name="quantity['+$new_td[0]+']" value="'+$('#pop-up-input').val()+'"></td>'+
-					'<td><a style="cursor: pointer;" class="remove-added-prod" product-id = "'+$new_td[0]+'">REMOVE</a></td>'+
+					'<td>'+'<input readonly product-id = "'+$new_td[0]+'" style="width:100%; text-align: center; border:0 none;" type="text" name="quantity['+$new_td[0]+']" value="'+$('#pop-up-input').val()+'" readonly></td>'+
+					'<td><a style="cursor: pointer;" class="remove-added-prod" product-id = "'+$new_td[0]+'" price="'+$new_td[3]+'" qty="'+$('#pop-up-input').val()+'">REMOVE</a></td>'+
 				'</tr>';
 
+ 				total = total + (parseFloat($new_td[3]) * parseInt($('#pop-up-input').val()));
+
+				$(".pricenopack").text("Total Price: "+total.toFixed(2));
 				// console.log($append);
 				var $checktd = $('#added-product-table tbody td a[product-id='+$new_td[0]+']').length;
 				console.log($checktd);
@@ -203,10 +212,20 @@
 
 			$( "#added-product-table" ).delegate( ".remove-added-prod", "click", function()
 			{
-
+				var $new_td = [];
 				var $prod_id = $(this).attr('product-id');
+				var value = $(this).attr('price');
+				$td = $selected_product.closest('tr').find('td');
+				$($td).each (function(index,element) {
 
+					$new_td[index] = $(element).html();
 
+				});
+
+				var qty =  $('input[product-id='+$new_td[0]+']').val();
+
+				total = total - (parseFloat(value) * qty);
+				$(".pricenopack").text("Total Price: "+ total.toFixed(2));
 				$(this).closest('tr').remove();
 			});
 
@@ -223,7 +242,7 @@
 
 
 	<script type="text/javascript">
-
+	   	var total2 = 0;
 	   	var $add_product_pop_up_pack = $('[data-remodal-id=add_prod_pack_modal]').remodal();
 
 		var $productTable = $('#product-package-table').DataTable({
@@ -238,6 +257,7 @@
 	            {data: 'product_package_id', name: 'product_package_id'},
 	            {data: 'product_package_name', name: 'product_package_name'},
 	            {data: 'package_quantity', name: 'package_quantity'},
+	            {data: 'price', name: 'price'},
 	           	{data: 'add' ,name: 'product_id'}
 	            
 	           	
@@ -256,8 +276,8 @@
 
 			$('.add-to-package-pack').on('click', function(event)
 			{
-				$selected_product = $(this);
-				var $prod_id = $selected_product.attr('product-id');
+				$selected_product2 = $(this);
+				var $prod_id = $selected_product2.attr('product-id2');
 				event.preventDefault();
 				$('#pop-up-input2').val("");
 				$('#pop-up-input2').attr('name', 'product['+$prod_id+'][quantity]');
@@ -270,7 +290,7 @@
 			{
 				event.preventDefault();
 				var $new_td = [];
-				$td = $selected_product.closest('tr').find('td');
+				$td = $selected_product2.closest('tr').find('td');
 				$($td).each (function(index,element) {
 
 					$new_td[index] = $(element).html();
@@ -281,22 +301,23 @@
 					'<td>'+$new_td[0]+'</td>'+
 					'<td>'+$new_td[1]+'</td>'+
 					'<td>'+$new_td[2]+'</td>'+
-					'<td>'+'<input product-id = "'+$new_td[0]+'" style="width:100%;" type="number" name="quantitypack['+$new_td[0]+']" value="'+$('#pop-up-input2').val()+'"></td>'+
-					'<td><a style="cursor: pointer;" class="remove-added-prod-pack" product-id = "'+$new_td[0]+'">REMOVE</a></td>'+
+					'<td>'+'<input readonly product-id2 = "'+$new_td[0]+'" style="width:100%; text-align: center; border:0 none;" type="text" name="quantitypack['+$new_td[0]+']" value="'+$('#pop-up-input2').val()+'"></td>'+
+					'<td><a style="cursor: pointer;" class="remove-added-prod-pack" product-id2 = "'+$new_td[0]+'" qty="'+$('#pop-up-input2').val()+'" price="'+$new_td[3]+'">REMOVE</a></td>'+
 				'</tr>';
 
+ 				total2 = total2 + (parseFloat($new_td[3]) * parseInt($('#pop-up-input2').val()));
+
+				$(".pricepack").text("Total Price: "+total2.toFixed(2));
 				// console.log($append);
-				var $checktd = $('#added-product-table-pack tbody td a[product-id='+$new_td[0]+']').length;
+				var $checktd = $('#added-product-table-pack tbody td a[product-id2='+$new_td[0]+']').length;
 				console.log($checktd);
 				if($checktd > 0)
 				{
-					var $input =  $('input[product-id='+$new_td[0]+']').val();
+					var $input =  $('input[product-id2='+$new_td[0]+']').val();
 
 					$final_input = parseInt($input) + parseInt($('#pop-up-input2').val());
 
-
-					
-					$('input[product-id='+$new_td[0]+']').val($final_input);
+					$('input[product-id2='+$new_td[0]+']').val($final_input);
 
 				}
 				else
@@ -310,7 +331,24 @@
 			$( "#added-product-table-pack" ).delegate( ".remove-added-prod-pack", "click", function()
 			{
 
-				var $prod_id = $(this).attr('product-id');
+				var $prod_id = $(this).attr('product-id2');
+
+				var value = $(this).attr('price');
+
+				var $new_td = [];
+
+				$td = $selected_product2.closest('tr').find('td');
+
+				$($td).each (function(index,element) {
+
+					$new_td[index] = $(element).html();
+
+				});
+
+				var qty =  $('input[product-id2='+$new_td[0]+']').val();
+				total2 = total2 - (parseFloat(value) * qty);
+				$(".pricepack").text("Total Price: "+ total2.toFixed(2));
+
 
 
 				$(this).closest('tr').remove();

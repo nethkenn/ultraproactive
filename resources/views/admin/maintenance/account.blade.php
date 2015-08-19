@@ -19,6 +19,8 @@
 				<a class="{{$active = Request::input('archived') ? 'active' : '' }}" href="admin/maintenance/accounts/?archived=1">ARCHIVED</a>
 			</div>
 		</div>
+	<form method="POST" form action="admin/maintenance/accounts" target="_blank">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
 	<div class="col-md-12">
 			<table id="table" class="table table-bordered">
 				<thead>
@@ -27,12 +29,14 @@
 						<th>Full Name</th>
 						<th>Username</th>
 						<th>Country Name</th>
+						<th class="col-md-1"></th>
 						<th class="option-col"></th>
 						<th class="option-col"></th>
 					</tr>
 				</thead>
 			</table>
 	</div>
+	</form>
 @endsection
 
 @section('script')
@@ -52,6 +56,7 @@ $(function() {
             {data: 'account_name', name: 'account_name'},
             {data: 'account_username', name: 'account_username'},
             {data: 'country_name', name: 'country_name'},
+            {data: 'login', name: 'login'},
             {data: 'edit', name: 'account_id'},
             {data: 'archive', name: 'account_id'},
         ],

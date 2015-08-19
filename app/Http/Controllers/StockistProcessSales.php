@@ -496,17 +496,17 @@ class StockistProcessSales extends StockistController
         }
 
 
-        $sub = $cart_total;
-        $disc = $_slot->discount;
-        $discam = ($_slot->discount / 100) * $cart_total;
-        $overall = $insert_voucher['total_amount'];
-        $name = Stockist::info()->stockist_un;
-        $stockist_id = Stockist::info()->stockist_id;
-        $transaction_to_id = Request::input('account_id');
-        $voucherer = ;
-        $extra = "Additional ".($additional/100) * $cart_total. "(".$additional."%)"; 
+        // $sub = $cart_total;
+        // $disc = $_slot->discount;
+        // $discam = ($_slot->discount / 100) * $cart_total;
+        // $overall = $insert_voucher['total_amount'];
+        // $name = Stockist::info()->stockist_un;
+        // $stockist_id = Stockist::info()->stockist_id;
+        // $transaction_to_id = Request::input('account_id');
+        // $voucherer = $voucher->voucher_id;
+        // $extra = "Additional ".($additional/100) * $cart_total. "(".$additional."%)"; 
 
-        $trans_id = StockistLog::transaction("Process Sale",$sub,$disc,$discam,$overall,$paid = 1,$claimed = 1,$name,"Member","CASH",$stockist_id,$transaction_to_id,$extra,$voucherer);
+        // $trans_id = StockistLog::transaction("Process Sale",$sub,$disc,$discam,$overall,$paid = 1,$claimed = 1,$name,"Member","CASH",$stockist_id,$transaction_to_id,$extra,$voucherer);
         
 
         $voucher = new Tbl_voucher($insert_voucher);
