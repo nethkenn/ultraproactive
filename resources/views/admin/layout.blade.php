@@ -136,13 +136,13 @@
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Content <span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="admin/content/news">News</a></li>
-									<!-- <li><a href="admin/content/earn">Earn</a></li> -->
+									<li><a href="admin/content/stories">Stories</a></li>
 									<li><a href="admin/content/slide">Slide</a></li>
 									<li><a href="admin/content/team">Team</a></li>
-									<li><a href="admin/content/testimony">Testimonial</a></li>
-									<li><a href="admin/content/partner">Partners</a></li>
-									<li><a href="admin/content/service">Services</a></li>
-									<li><a href="admin/content/about">Others</a></li>
+									<li><a href="admin/content/mindsync">MindSync</a></li>
+									<!-- <li><a href="admin/content/partner">Partners</a></li>
+									<li><a href="admin/content/service">Services</a></li> -->
+									<!-- <li><a href="admin/content/about">Others</a></li> -->
 								</ul>
 							</li>
 						</ul>

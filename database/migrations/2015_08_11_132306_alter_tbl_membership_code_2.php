@@ -15,7 +15,7 @@ class AlterTblMembershipCode2 extends Migration
         Schema::table('tbl_membership_code', function (Blueprint $table) {
             $table->dropColumn('origin');
 
-
+           
         });
     }
 

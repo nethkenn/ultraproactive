@@ -1,73 +1,73 @@
 @extends('front.layout')
 @section('content')
-<div class="top_wrapper   no-transparent">
-    <!-- .header -->
-    <!-- Page Head -->
-    <!-- Page Head -->
-    <div class="header_page basic background_image" style="background-image:url(/resources/assets/ausart/assets/img/default_header.jpg);background-repeat: no-repeat; -webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover; color:#2f383d; ">
+<section id="title_breadcrumbs_bar">
         <div class="container">
-            <style>
-            .breadcrumbs_c {
-                color: #fff;
-                font-size: 13px;
-            }
-            
-            h1.title {
-                color: #fff !important;
-                font-size: 50px
-            }
-            </style>
-            <h1 class="title">Product Content</h1>
-            <div class="breadcrumbss">
-
-            </div>
-        </div>
-    </div>
-    <!-- Main Content -->
-    <section id="content" style="background:;">
-        <div class="row-fluid">
-            <div class="span12 portfolio_single" data-id="3388">
-                <div class="container">
-                    <div class="row-fluid single_content side_single">
-                        <div class="row-fluid" style="margin-top:0px;">
-                            
-                            <div class="span8 slider_full with_thumbnails_container">
-                                <div class="slideshow_container slide_layout_" >
-                                    <ul class="slides slide_flexslider_thumb">
-                                        <li data-thumb='{{ $product->image }}' class=' slide_element slide3 frame3'><img src='{{ $product->image }}' title='shutterstock_185759639' alt='' /> </li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="span4">
-                                <div class="details_side">
-                                    <h1>{{ $product->product_name }}</h1>
-                                </div>
-                                <div class="details_content">
-                                    <p style="white-space: pre-wrap;">{{ $product->product_info }}</p>
-                                </div>
-                                <div class="details_side" style="margin-top: 20px;">
-                                    <h1>Date</h1>
-                                </div>
-                                <div class="details_content">
-                                    <p>{{ $product->month }} {{ $product->day }}, {{ $product->year }}</p>
-                                </div>
-                                <div class="details_side" style="margin-top: 20px;">
-                                    <h1>Price</h1>
-                                </div>
-                                <div class="details_content">
-                                    <p style="white-space: pre-wrap; word-break: keep-all !important;">{{ $product->price }}</p>
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </div>
+            <div class="row">
+                <div class="span8">
+                    <h1>{{ $product->product_name }}</h1>
+                </div>
+                <div class="span4 right_aligned">
+                    <div class="breadcrumbs">
+                     
+                    </div>                                  
                 </div>
             </div>
         </div>
     </section>
-    <!-- #content -->
-    <!-- Social Profiles -->
-    <!-- Footer -->
-</div>
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="span8 content_with_right_sidebar">
+                    <img src="{{ $product->image }}" class="portfolio_item_image" alt="">                
+                </div>
+                <div id="portfolio_item_meta" class="span4">
+                    <h2 class="column_title_left">Description</h2>
+                    <p>
+                        {{ $product->product_info }}
+                    </p>
+                    <h2 class="column_title_left">Details</h2>
+                    <p class="portfolio_single_detail">
+                        <span class="portfolio_item_meta_label">Date:</span>
+                        <span class="portfolio_item_meta_data">{{ $product->month }} {{ $product->day }}, {{ $product->year }}</span>
+                    </p>
+                    <p class="portfolio_single_detail">
+                        <span class="portfolio_item_meta_label">Price:</span>
+                        <span class="portfolio_item_meta_data">{{ $product->price }}</span>
+                    </p>
+                    <p class="portfolio_single_detail">
+                        <span class="portfolio_item_meta_label">Category:</span>
+                        <span class="portfolio_item_meta_data">{{ $category->product_category_name }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="related_portfolio">
+        <div class="container">
+            <h3 class="column_title_left">Similar Products</h3>
+            <div class="row">
+                @foreach($_product as $products)
+                <div class="portfolio_item portfolio_item_4 identity illustrations">
+                    <div class="overlayed">
+                        <img src="{{ $products->image }}" alt="">
+                        <a class="overlay" href="/product_content?id={{ $products->product_id }}">
+                            <p class="overlay_title">{{ $products->product_name }}</p>
+                            <p class="portfolio_item_tags"></p>
+                        </a>
+                    </div>
+                </div>  
+                @endforeach    
+            </div>
+            <div id="single_portfolio_pagination" class="clearfix">
+                <!-- <span class="prev" style="{{ $product->product_id == '1' ? 'display: none;' : '' }}">
+                    <a href="/product_content?id={{ $prev_id }}" rel="prev"><i class="ABdev_icon-chevron-left"></i> Prev Product</a>
+                </span>
+                <span class="next" style="{{ $product->product_id == $product_id ? 'display: none;' : '' }}">
+                    <a href="/product_content?id={{ $next_id }}" rel="next"><i class="ABdev_icon-chevron-right"></i> Next Product</a>
+                </span> -->
+            </div>
+        </div>
+    </section>
 @endsection

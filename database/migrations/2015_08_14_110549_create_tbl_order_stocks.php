@@ -13,7 +13,7 @@ class CreateTblOrderStocks extends Migration
     public function up()
     {   
 
-        if (Schema::hasTable('tbl_order_stocks'))
+        if (!Schema::hasTable('tbl_order_stocks'))
         {
 
             Schema::create('tbl_order_stocks', function (Blueprint $table)

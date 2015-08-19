@@ -1,13 +1,16 @@
 @extends('admin.layout')
 @section('content')
-<div class="row">
+<div>
 	<div class="header">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<div class="title col-md-8">
 			<h2><i class="fa fa-teampaper-o"></i> team MANAGEMENT</h2>
 		</div>
-		<div class="buttons col-md-4 text-right">
-			<button onclick="location.href='admin/content/team/add'" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> ADD team</button>
+		<div class="buttons col-md-2 text-right">
+			<button onclick="location.href='admin/content/team/sort'" type="button" class="btn btn-primary">SORT TEAM</button>
+		</div>
+		<div class="buttons col-md-2 text-right">
+			<button onclick="location.href='admin/content/team/add'" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> ADD TEAM</button>
 		</div>
 	</div>
 	<div class="filters ">

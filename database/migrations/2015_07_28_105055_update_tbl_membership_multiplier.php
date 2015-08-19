@@ -15,6 +15,7 @@ class UpdateTblMembershipMultiplier extends Migration
         Schema::table('tbl_membership', function (Blueprint $table)
         {
             $table->integer('multiplier')->default(1);
+            $table->double('max_income');
         });
     }
 

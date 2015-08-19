@@ -16,7 +16,7 @@ class FrontController extends Controller
 		foreach ($data["_news"] as $key => $value) 
 		{
 			$get = $value->news_image;
-			$imagee = Image::view($get, "300x160");
+			$imagee = Image::view($get, "150x150");
 			$data["_news"][$key]->image = $imagee;
 		}
 
@@ -24,25 +24,29 @@ class FrontController extends Controller
 		{
 			$datee = $values->news_date;
 			$time=strtotime($datee);
-			$month=date("F",$time);
+			$month=date("M",$time);
 			$day=date("d",$time);
+			$year=date("Y",$time);
 			$data["_news"][$keys]->month = $month;
 			$data["_news"][$keys]->day = $day;
+			$data["_news"][$keys]->year = $year;
 		}
 
-		$data["_product"] = DB::table("tbl_product")->where("image_file", "!=", "default.jpg")->where("image_file", "!=", "")->orderBy('created_at', 'desc')->where("archived", 0)->take(6)->get();
+		$data["_product"] = DB::table("tbl_product")->where("image_file", "!=", "default.jpg")->where("image_file", "!=", "")->orderBy('created_at', 'desc')->where("archived", 0)->take(8)->get();
 		foreach ($data["_product"] as $keyss => $valuess) 
 		{
 			$gets = $valuess->image_file;
-			$imagees = Image::view($gets, "514x360");
+			$imagees = Image::view($gets, "770x619");
 			$data["_product"][$keyss]->image = $imagees;
 		}
+
+		$data["_category"] = DB::table("tbl_product_category")->where("archived", 0)->get();
 
 		$data["_slide"] = DB::table("tbl_slide")->where("archived", 0)->get();
 		foreach ($data["_slide"] as $keysss => $valuesss) 
 		{
 			$getss = $valuesss->slide_image;
-			$imageess = Image::view($getss, "1110x400");
+			$imageess = Image::view($getss, "1366x461");
 			$data["_slide"][$keysss]->image = $imageess;
 		}
 		foreach ($data["_slide"] as $xx => $yy) {
@@ -51,11 +55,11 @@ class FrontController extends Controller
 			$data["_slide"][$xx]->thumb = $bb;
 		}
 
-		$data["_team"] = DB::table("tbl_team")->where("archived", 0)->get();
+		$data["_team"] = DB::table("tbl_team")->where("archived", 0)->orderBy('team_sort', 'asc')->get();
 		foreach ($data["_team"] as $susi => $halaga) 
 		{
 			$kuha = $halaga->team_image;
-			$litrato = Image::view($kuha, "415x415");
+			$litrato = Image::view($kuha, "468x467");
 			$data["_team"][$susi]->image = $litrato;
 		}
 
@@ -74,36 +78,25 @@ class FrontController extends Controller
 	}
 	public function about()
 	{
-		$data["_team"] = DB::table("tbl_team")->where("archived", 0)->get();
+		$data["_team"] = DB::table("tbl_team")->where("archived", 0)->orderBy('team_sort', 'asc')->get();
 		foreach ($data["_team"] as $susi => $halaga) 
 		{
 			$kuha = $halaga->team_image;
-			$litrato = Image::view($kuha, "415x415");
+			$litrato = Image::view($kuha, "468x467");
 			$data["_team"][$susi]->image = $litrato;
 		}
-		$data["about"] = DB::table("tbl_about")->where("archived", 0)->where("about_name", "About")->first();
-		$data["vision"] = DB::table("tbl_about")->where("archived", 0)->where("about_name", "Vision")->first();
-		$data["mission"] = DB::table("tbl_about")->where("archived", 0)->where("about_name", "Mission")->first();
-		$data["philosophy"] = DB::table("tbl_about")->where("archived", 0)->where("about_name", "Philosophy")->first();
+
         return view('front.about', $data);
 	}
-	public function partner()
+	public function stories()
 	{
-		$data["_partner"] = DB::table("tbl_partner")->where("archived", 0)->get();
-		foreach ($data["_partner"] as $key => $value) 
-		{
-			$get = $value->partner_image;
-			$imagee = Image::view($get, "150x60");
-			$data["_partner"][$key]->image = $imagee;
-		}
+		$data["_stories"] = DB::table("tbl_stories")->where("archived", 0)->get();
 
-		$data["_testimony"] = DB::table("tbl_testimony")->where("archived", 0)->get();
-		$data["partner"] = DB::table("tbl_about")->where("archived", 0)->where("about_name", "Partners")->first();
-        return view('front.partner', $data);
+        return view('front.stories', $data);
 	}
-	public function earn()
+	public function opportunity()
 	{
-        return view('front.earn', $data);
+        return view('front.opportunity');
 	}
 	public function service()
 	{	
@@ -123,7 +116,7 @@ class FrontController extends Controller
 		foreach ($data["_product"] as $key => $value) 
 		{
 			$get = $value->image_file;
-			$imagee = Image::view($get, "256x180");
+			$imagee = Image::view($get, "770x619");
 			$data["_product"][$key]->image = $imagee;
 		}
 
@@ -134,9 +127,9 @@ class FrontController extends Controller
 	public function product_content()
 	{
 		$id = Request::input("id");
-		$data["product"] = DB::table("tbl_product")->where("archived", 0)->where("product_id", $id)->first();
+		$data["product"] = DB::table("tbl_product")->where("product_id", $id)->first();
 		$get = $data["product"]->image_file;
-		$imagee = Image::view($get, "726x750");
+		$imagee = Image::view($get, "770x619");
 		$data["product"]->image = $imagee;
 	
 		$date = $data["product"]->created_at;
@@ -148,6 +141,54 @@ class FrontController extends Controller
 		$data["product"]->month = $month;
 		$data["product"]->day = $day;
 		$data["product"]->year = $year;
+
+		$category_id = $data["product"]->product_category_id;
+		$data["category"] = DB::table("tbl_product_category")->where("product_category_id", $category_id)->first();
+		$data["_product"] = DB::table("tbl_product")->where("product_category_id", $category_id)->where("archived", 0)->take(4)->get();
+
+		$product_id = DB::table("tbl_product")->where("archived", 0)->orderBy('product_id', 'desc')->first();
+		$data["product_id"] = $product_id->product_id;
+		
+		$next_id = $data["product"]->product_id;
+		$next_id_next = $next_id + 1;
+		$next_id_check = DB::table("tbl_product")->where("product_id", $next_id_next)->first();
+		$next_id_check_id = $next_id_check->archived;
+		if ($next_id_check_id == 1) 
+		{
+			$next_get = $next_id_next + 1;
+		}
+		else
+		{
+			$next_get = $next_id_next;
+		}
+
+		$data["next_id"] = $next_get;
+		$prev_id = $data["product"]->product_id;
+		$prev_ids = $prev_id;
+		if ($prev_id == 1) 
+		{
+			$prev_ids = $prev_id + 1;
+		}
+		$prev_id_prev = $prev_ids - 1;
+		$prev_id_check = DB::table("tbl_product")->where("product_id", $prev_id_prev)->first();
+		$prev_id_check_id = $prev_id_check->archived;
+		if ($prev_id_check_id == 1) 
+		{
+			$prev_get = $prev_id_prev - 1;
+		}
+		else
+		{
+			$prev_get = $prev_id_prev;
+		}
+
+		$data["prev_id"] = $prev_get;
+
+		foreach ($data["_product"] as $key => $value) 
+		{
+			$image =  $value->image_file;
+			$view = Image::view($image, "770x619");
+			$data["_product"][$key]->image = $view;
+		}
 		return view('front.product_content', $data);
 	}
 	public function news()
@@ -175,17 +216,18 @@ class FrontController extends Controller
 		$id = Request::input("id");
 		$data["news"] = DB::table("tbl_news")->where("news_id", $id)->first();
 		// $imagee = Image::view($data["news"]->news_image, "1100x473");
-		$imagee = Image::view($data["news"]->news_image, "700x301");
+		$imagee = Image::view($data["news"]->news_image, "1170x500");
 		$data["news"]->image = $imagee;
 
 		$datee = $data["news"]->news_date;
 		$time=strtotime($datee);
 		$month=date("F",$time);
 		$day=date("d",$time);
+		$year=date("Y",$time);
 
 		$data["news"]->month = $month;
 		$data["news"]->day = $day;
-
+		$data["news"]->year = $year;
 	
 
 		// $multidate = Globals::multiexplode(array("-","-"," "), $datee);
@@ -234,5 +276,22 @@ class FrontController extends Controller
 	public function register()
 	{
         return view('front.register');
+	}
+	public function mindsync()
+	{
+		$data["_mindsync"] = DB::table("tbl_mindsync")->where("archived", 0)->where("mindsync_image", "!=", "default.jpg")->where("mindsync_image", "!=", "")->get();
+		foreach ($data["_mindsync"] as $key => $value) 
+		{
+			$explode = $value;
+			$get = explode(",", $explode->mindsync_image);
+			foreach ($get as $susi => $halaga) 
+			{
+				$imagee[$susi] = Image::view($halaga, "300x300");
+			}
+			// $imagee = "http://image.primiaworks.com/uploads/ultraproactive.net/image/$get/$get";
+			$data["_mindsync"][$key]->image = $imagee;
+		}
+		
+		return view('front.mindsync', $data);
 	}
 }

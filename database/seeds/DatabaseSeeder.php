@@ -34,8 +34,11 @@ class DatabaseSeeder extends Seeder
         $this->call('tbl_about');
         $this->call('tbl_service');
         $this->call('tbl_settings');
+        $this->call('tbl_stories');
     }
 }
+
+
 
 
 
@@ -46,8 +49,12 @@ class tbl_settings extends Seeder
     {
         DB::table('tbl_settings')->delete();
         DB::statement("INSERT INTO `tbl_settings` (`logs_id`, `key`, `value`) VALUES
-        (1, 'company_email',    'admin@prolife.global'),
-        (2, 'company_name', 'Prolife');");
+        (1, 'company_email',    'ultraproactive2014@gmail.com'),
+        (2, 'company_name', 'UltraProactive'),
+        (3, 'company_address',  ' Second level, Metrowalk Commercial Complex, Meralco Avenue,Ortigas Business Center, 1605 Pasig City, Philippines'),
+        (4, 'company_mobile',   '0927-7447286'),
+        (5, 'company_telephone',    ' +63 (02) 234-1993 0927-7447286');
+        ");
     } 
 }
 
@@ -110,9 +117,12 @@ class tbl_product_category extends Seeder
     {
         DB::table('tbl_product_category')->delete();
         DB::statement("INSERT INTO `tbl_product_category` (`product_category_id`, `product_category_name`, `slug`, `created_at`, `updated_at`, `archived`) VALUES
-        (4, 'Beverages',    'beverages',    '2015-07-17 07:58:38',  '2015-07-17 07:58:38',  0),
-        (5, 'Beauty Products',  'beauty-products',  '2015-07-17 08:11:29',  '2015-07-17 08:11:29',  0),
-        (6, 'Hygiene',  'hygiene',  '2015-07-17 08:34:40',  '2015-07-17 08:34:40',  0);"
+        (4, 'Beverages',    'beverages',    '2015-07-16 23:58:38',  '2015-07-16 23:58:38',  1),
+        (5, 'Beauty Products',  'beauty-products',  '2015-07-17 00:11:29',  '2015-07-17 00:11:29',  1),
+        (6, 'Hygiene',  'hygiene',  '2015-07-17 00:34:40',  '2015-07-17 00:34:40',  1),
+        (7, 'Personal Care',    'personal-care',    '2015-08-03 13:38:50',  '2015-08-03 13:38:50',  0),
+        (8, 'Healthy Beverages',    'healthy-beverages',    '2015-08-03 13:40:05',  '2015-08-03 13:40:05',  0),
+        (9, 'Nutraceuticals',   'nutraceuticals',   '2015-08-03 13:40:54',  '2015-08-03 13:40:54',  0);"
         );
     } 
 }
@@ -154,7 +164,7 @@ class tbl_module extends Seeder
         (1, 'Transaction / Process Sale',   'sales',    0),
         (2, 'Transaction / Process Payout', 'payout',   0),
         (3, 'Transaction / Process Claims', 'claims',   0),
-        (4, 'Transaction / Unilevel Distribution',  'unilevel-distribution', 0),
+        (4, 'Transaction / Unilevel Distribution',  'unilevel', 0),
         (5, 'Maintenance / Accounts',   'accounts', 0),
         (6, 'Maintenance / Membership Codes',   'codes',    0),
         (7, 'Maintenance / Package',    'product_package',  0),
@@ -185,7 +195,8 @@ class tbl_module extends Seeder
         (33,    'Content / Others', 'about',    0),
         (34,    'Content / Services',   'service',  0),
         (35,    'Maintenance / Product Category',   'product_category', 0),
-        (36,    'Utilities / Rank Requirements',   'rank', 0);
+        (36,    'Utilities / Rank Requirements',   'rank', 0),
+        (37,    'Content / Stories',   'stories', 0);
         ");
     } 
 }
@@ -194,9 +205,12 @@ class tbl_team extends Seeder
     public function run()
     {
         DB::table('tbl_team')->delete();
-        DB::statement("INSERT INTO `tbl_team` (`team_id`, `team_title`, `team_description`, `team_role`, `team_image`, `created_at`, `updated_at`, `archived`) VALUES
-        (1, 'Mrs. Rose S. Rajeh',   '', '', '1436855352.jpg',   '2015-07-14 06:29:16',  '2015-07-14 06:29:32',  0),
-        (2, 'Mr. Gino Antonio S. Rajeh',    '', '', '1436855359.jpg',   '2015-07-14 06:29:49',  '0000-00-00 00:00:00',  0);
+        DB::statement("INSERT INTO `tbl_team` (`team_id`, `team_title`, `team_role`, `team_description`, `team_image`, `created_at`, `updated_at`, `archived`) VALUES
+        (1, 'Atty. Freddie Villamor',   'CEO/President',    '', '1438672528.jpg',   '2015-07-13 14:29:16',  '2015-08-04 07:15:17',  0),
+        (2, 'Eric Melad',   'Vice President',   '', '1438672528.jpg',   '2015-07-13 14:29:49',  '2015-08-04 07:15:24',  0),
+        (3, 'Lito Ferrer',  'Operations Manager',   '', '1438672528.jpg',   '2015-08-04 07:08:38',  '2015-08-04 07:15:31',  0),
+        (4, 'Marlon Dizon', 'Marketing & Training Manager', '', '1438672528.jpg',   '2015-08-04 07:09:03',  '2015-08-04 07:15:40',  0),
+        (5, 'Chet Angeline D. Portuguez',   'Finance Officer',  '', '1438672528.jpg',   '2015-08-04 07:09:27',  '2015-08-04 07:15:47',  0);
         ");
     } 
 }
@@ -279,7 +293,8 @@ class tbl_admin_position_has_module extends Seeder
         (55,    1,  33),
         (56,    1,  34),
         (57,    1,  35),
-        (58,    1,  36);
+        (58,    1,  36),
+        (59,    1,  37);
         ");
     } 
 }
@@ -301,10 +316,12 @@ class tbl_slide extends Seeder
     {
         DB::table('tbl_slide')->delete();
         DB::statement("INSERT INTO `tbl_slide` (`slide_id`, `slide_title`, `slide_image`, `created_at`, `updated_at`, `archived`) VALUES
-        (1, 'Skin Care',    '1436764123.jpg',   '2015-07-16 23:45:25',  '0000-00-00 00:00:00',  0),
-        (2, 'OFW',  '1436763703.jpg',   '2015-07-16 23:45:48',  '0000-00-00 00:00:00',  0),
-        (3, 'Cafe Verde',   '1437449561.jpg',   '2015-07-16 23:46:03',  '2015-07-21 03:32:30',  0),
-        (4, 'Chocorite',    '1436763179.jpg',   '2015-07-16 23:46:14',  '0000-00-00 00:00:00',  0);
+        (1, '1',    '1433238019.jpg',   '2015-07-16 07:45:25',  '2015-08-03 07:58:01',  0),
+        (2, '2',    '1434419871.png',   '2015-07-16 07:45:48',  '2015-08-03 07:58:06',  0),
+        (3, '3',    '1433238048.jpg',   '2015-07-16 07:46:03',  '2015-08-03 07:58:12',  0),
+        (4, '4',    '1434420026.jpg',   '2015-07-16 07:46:14',  '2015-08-04 07:40:29',  0),
+        (5, '5',    '1434362721.png',   '2015-08-04 07:40:41',  '2015-08-04 07:41:19',  0),
+        (6, '6',    '1434419853.png',   '2015-08-04 07:41:09',  '0000-00-00 00:00:00',  0);
         ");
     }
 }
@@ -328,22 +345,23 @@ class tbl_product extends Seeder
     public function run()
     {
         DB::table('tbl_product')->delete();
-        DB::statement("INSERT INTO `tbl_product` (`product_id`, `sku`, `product_name`, `product_info`, `slug`, `product_category_id`, `unilevel_pts`, `binary_pts`, `price`, `image_file`, `stock_qty`, `created_at`, `updated_at`, `archived`) VALUES
-(1, '0',    'Cafe Verde',   'A stimulating and refreshing coffee drink enriched with distinct aromatic taste. It is made from natural and organic blend of Acai Berries, Moringa, Barley, Spirulina, Green Tea, Chlorella, Stevia and Green Coffee. PROLIFE CAFÉ VERDE will surely perk up your mood anytime of the day.\r\n\r\nPROLIFE CAFE VERDE is caffeine-free, contains natural  sweet compound that has no carcinogenic activity. It is  loaded with protein, fibre, essential fatty acids, anti-oxidants, amino acids, vitamins and minerals that helps to reduce the risks of damaged cells, helps in lowering bad cholesterol, treats unpleasant body and breath odour, cleanses digestive tracts, helps reduce body fats and improves  the body’s rate of metabolism for a completely healthy lifestyle.\r\n',   'cafe-verde',   4,  0,  0,  0,  '1437119789.jpg',   100,    '2015-07-17 07:58:38',  '2015-07-17 07:58:38',  0),
-(2, '1',    'Chocorite',    'A delicious and nutritious chocolate drink that helps to strengthen the immune system and enhances regeneration of damaged tissues. CHOCO-RITE helps to maintain mental alertness and sharpen memory. \r\n \r\nFortified with calcium, CHOCO-RITE is made from Ginkgo Biloba and Chlorella Growth Factor that is known to regulate the production of body enzymes, gives energy and protein for a complete and balance development of neuro-mechanism.\r\n \r\nThe right chocolate drink for everybody!\r\n',  'chocorite',    4,  1,  1,  1,  '1437119806.jpg',   100,    '2015-07-17 08:10:06',  '2015-07-17 08:10:06',  0),
-(3, '2',    'Pearl White Cream',    'Helps to deeply moisturize and lighten the skin. \r\nContains special sun-filters that helps protect the skin from damaging free radicals.\r\nHelps to prevent dark spots and hyper-pigmentation caused by aging and over-exposure to the sun.\r\nComprises of Vitamin B3 as a triple Vitamin Sunscreen. \r\nEnriched with Anti-oxidants such as Vitamin B5, Vitamin E and Glutathione.\r\nMade from Grapefruit and Apple Extract.\r\n100% Paraben free and Mercury free.\r\n',    'pearl-white-cream',    5,  2,  2,  2,  '1437119893.jpg',   100,    '2015-07-17 08:11:29',  '2015-07-17 08:11:29',  0),
-(4, '3',    'Pearl White Lotion',   'With its rich and generous texture, Pearl White Lotion will help plump the skin, hydrate and deeply nourish through the epidermis.\r\nHelps provide natural radiance to the skin.\r\nUltrafine protection from UV rays of the sun.\r\nMoisturize and softens the skin.\r\nPrevents dry, itchy skin and minor skin irritations.\r\n',   'pearl-white-lotion',   5,  3,  3,  3,  '1437119902.jpg',   100,    '2015-07-17 08:12:30',  '2015-07-17 08:12:30',  0),
-(5, '4',    'Pearl White Deodorant',    'Under-arm protection from odour and sweat.\r\nDries quickly, non-sticky and does not sting.\r\nWhitening effect on armpit.\r\n',   'pearl-white-deodorant',    5,  4,  4,  4,  '1437119898.jpg',   100,    '2015-07-17 08:26:31',  '2015-07-17 08:26:31',  0),
-(6, '5',    'Pearl White Talcum Powder',    'For whole day protection and freshness.\r\nReduces rashes and irritation.\r\nHelps to absorb moisture.\r\nPrevents chafing. \r\n', 'pearl-white-talcum-powder',    5,  5,  5,  5,  '1437119906.jpg',   100,    '2015-07-17 08:27:44',  '2015-07-17 08:27:44',  0),
-(7, '6',    'Pearl White Facial Toner', 'Enhanced whitening for bright, light and beautiful skin. Brings out your skin’s natural radiance.\r\nAs part of your daily skin care regime, use this toner to help brighten skin, refine skin texture and minimize pores.\r\nRemoves make-up, dirt and excess oil. Leaving your skin fresh and clean.\r\n',   'pearl-white-facial-toner', 5,  6,  6,  6,  'default.jpg',  100,    '2015-07-17 08:29:55',  '2015-07-17 08:29:55',  0),
-(8, '7',    'Cell Allure Soap', 'A fragrance soap that utilizes the properties of fruit stem cell and Kojic Acid. \r\n\r\nCell Allure Soap helps to:\r\nRENEW and trim dormant cells.\r\nREPAIR damaged cells due to UV radiation exposure\r\nREGENERATE healthy cells for total protection of skin at cellular level\r\nREJUVENATE for smooth and silky skin. \r\n',   'cell-allure-soap', 5,  7,  7,  7,  '1437119799.jpg',   100,    '2015-07-17 08:30:44',  '2015-07-17 08:30:44',  0),
-(9, '8',    'Prolife Rose Essence Soap',    'This unique and refreshing soap has a combination of essential ingredients that create a feeling of complete, refreshing and detoxifying bath experience. \r\nThe gentle lather of PROLIFE ROSE ESSENCE SOAP removes impurities, smoothens and tones skin, leaving it soft, supple and looking younger. \r\n\r\nPROLIFE ROSE ESSENCE SOAP - for fresh and youthful glowing skin.\r\n', 'prolife-rose-essence-soap',    5,  8,  8,  8,  '1437119915.jpg',   100,    '2015-07-17 08:31:18',  '2015-07-17 08:31:18',  0),
-(10,    '9',    'Prolife Noni Soap',    'A unique soap noted for its moisturizing and cleansing abilities, leaves your skin clean, smoother and softer. Flavored with essences of vanilla and sunburst orange fragrance, it gives a sensual aroma that lingers in the skin.\r\nWith a blend of moisturizers and essential oils, PROLIFE NONI SOAP also contains premium ingredients such as coconut oil, morinda seed oil, alkali builders, dried noni fruits and leaves.\r\n\r\nPROLIFE NONI SOAP - cleanses, moisturizes and keeps skin free from harmful bacteria.\r\n', 'prolife-noni-soap',    5,  9,  9,  9,  '1437119824.jpg',   100,    '2015-07-17 08:32:11',  '2015-07-17 08:32:11',  0),
-(11,    '10',   'Prolife Green Kojic Soap', 'PROLIFE GREEN KOJIC SOAP is formulated with pure Kojic acid derived from mushrooms that has been successfully used to lighten pigment spots, removes blemishes and helps to whiten skin without the usual drying effect. It helps in removing pimples, freckles and other skin blemishes. \r\n  \r\nPROLIFE GREEN  KOJIC SOAP is primarily an exfoliating skincare product that  helps to break down the top layer of skin cells and peel away damaged skin.\r\n\r\nPROLIFE GREEN KOJIC SOAP - the safest herbal extract for fresh and healthier skin.\r\n',   'prolife-green-kojic-soap', 5,  10, 10, 10, '1437119814.jpg',   100,    '2015-07-17 08:32:59',  '2015-07-17 08:32:59',  0),
-(12,    '11',   'Prolife Gluta Plus Soap',  'PROLIFE GLUTA PLUS SOAP helps to remove toxins produced by the body, assists to inhibit the skin’s production of melanin, resulting in natural lightening of the skin.\r\n\r\nPROLIFE GLUTA PLUS SOAP contributes to remove free radicals and harmful toxins in the skin. It is also often used to treat hyper-pigmentation, freckles, melasma, age spots, blemishes and other uneven skin tones.  \r\n \r\nPROLIFE GLUTA PLUS SOAP - for a fairer and lovelier skin.\r\n\r\n',    'prolife-gluta-plus-soap',  5,  11, 11, 11, 'default.jpg',  100,    '2015-07-17 08:33:52',  '2015-07-17 08:33:52',  0),
-(13,    '12',   'Prolife Hand Sanitizer',   'Prolife Hand Sanitizer has 2 active ingredients:\r\n\r\nEthyl Alcohol - helps destroy transient germs. Monolaurin - a germicide that aids in moisturizing the skin. \r\n\r\nProlife Hand Sanitizer helps prevent dryness and itchiness making your hands smooth and germ-free. \r\n\r\n\r\n\r\n\r\n\r\n\r\n',  'prolife-hand-sanitizer',   6,  12, 12, 12, '1437119819.jpg',   100,    '2015-07-17 08:34:40',  '2015-07-17 08:34:40',  0),
-(14,    '13',   'Prolife Regime Oil',   '   Prolife Regime Oil is formulated from the combination of  specially selected oils. \r\n\r\n Prolife Regime Oil helps:\r\nNourishes the skin to promote cell turn-over\r\nCombat irritation and inflammation\r\nTo heal damaged tissues\r\nReduce unwanted fats effectively\r\nStimulate the production of Collagen and Elastin which can soften and hydrate the skin.\r\n', 'prolife-regime-oil',   6,  13, 13, 13, '1437119910.jpg',   100,    '2015-07-17 08:35:24',  '2015-07-17 08:35:24',  0);
-");
+        DB::statement("
+            INSERT INTO `tbl_product` (`product_id`, `sku`, `product_name`, `product_info`, `slug`, `product_category_id`, `unilevel_pts`, `binary_pts`, `price`, `image_file`, `stock_qty`, `created_at`, `updated_at`, `archived`) VALUES
+            (1, '0',    'Victorie La Belle Facial and Body Expoliating Kit',    'Victoria La Belle Facial and Body Exfoliating Kit is a skin care set formulated with the Filipino skin in mind. It contains ingredients that blend well with tropical climat, a mildness that does not irritate even the sensitive skin, and a very dramatic effect that can be seen and felt after the first use.',   'victorie-la-belle-facial-and-body-expoliating-kit',    7,  0,  0,  0,  'http://image.primiaworks.com/view?source=online.ultraproactive.net&filename=1434424400.jpg&size=250x250&mode=crop',    100,    '2015-07-16 23:58:38',  '2015-08-03 13:38:50',  0),
+            (2, '1',    'Victoria La Belle All Natural Bleaching Soap', 'Contains Goat\'s milk, Olive oil, Squalene Oil, Sampaguita Oil, Papaya Extract and Natural Bleach Extracts. It effectively whitens, midly exfloates dead skin cells, minizes wrinkles and prevents premature aging. Best for sensitive skins.',    'victoria-la-belle-all-natural-bleaching-soap', 7,  1,  1,  1,  'http://image.primiaworks.com/view?source=online.ultraproactive.net&filename=1434424404.jpg&size=250x250&mode=crop',    100,    '2015-07-17 00:10:06',  '2015-08-03 13:39:35',  0),
+            (3, '2',    ' Pomegranate Super Juice', 'A thick skinned super seedy fruit, with a brilliant red hue which is now touted as a wonder fruit by scientific reserachers. In comaprisoin to other health drinks, pomegranate is an exceptional source of vitamins A, C and E and minerals such as calcium, phosphorus, potassium, iron, folic acid, niacin, thiamin, floates and riboflavin and it contains approxiamtely 3 times more antioxidants than green tea, acai berry and oranges.',   'pomegranate-super-juice',  8,  2,  2,  2,  'http://image.primiaworks.com/view?source=online.ultraproactive.net&filename=1434424447.jpg&size=250x250&mode=crop',    100,    '2015-07-17 00:11:29',  '2015-08-03 13:40:05',  0),
+            (4, '3',    'Turmeric Tablets', 'Moringa oleifera belongs to the Moringacea family. It is know by many names, such as horseradish tree, drumstick tree and kelor tree. It has an impressive range of medicinal uses with high nutritional value and medicinal benefits. Different parts of Moringa contain a profile of important minerals and are a good source of protein, vitamins, beta-carotene, amino acids and various pehnolics',   'turmeric-tablets', 9,  3,  3,  3,  'http://image.primiaworks.com/view?source=online.ultraproactive.net&filename=http://image.primiaworks.com/view?source=online.ultraproactive.net&filename=1434424450.jpg&size=250x250&mode=crop&size=250x250&mode=crop', 100,    '2015-07-17 00:12:30',  '2015-08-03 13:40:54',  0),
+            (5, '4',    ' Moringa Tablets', 'Moringa oleifera belongs to the Moringacea family. It is known by many names, such as horseradish tree, drumstick tree and kelor tree. It has an impressive range of medicinal uses with high nutritional value and medicinal benefits. Different parts of Moringa contain a profile of important minerals and are a good source of protein, vitamins, beta-carotene, amino acids and various phenolics. ',    'moringa-tablets',  9,  4,  4,  4,  'http://image.primiaworks.com/view?source=online.ultraproactive.net&filename=1434424469.jpg&size=250x250&mode=crop',    100,    '2015-07-17 00:26:31',  '2015-08-03 13:41:27',  0),
+            (6, '5',    'Dermcee',  'Derm Cee is an alkaline - buffered mineral salt - form of vitamin c and has a higher bioavailability than the more known ascorbic acid. It helps the body fight bacterial and viral infections and prevents a person from developing common illness such as colds and flu; It can stimulate the production and function of white blood cells which play a big role in the body\'s fight against diseases.',    'dermcee',  7,  5,  5,  5,  'http://image.primiaworks.com/view?source=online.ultraproactive.net&filename=1434424472.jpg&size=250x250&mode=crop',    100,    '2015-07-17 00:27:44',  '2015-08-03 13:41:46',  0),
+            (7, '6',    '8 in 1 Premium Coffee',    'A delicious coffee blend with Non-fat skim milk, Cocosugar, Tongkat ali, Mangosteen, C-soy hydrolyzed protein, Hazelnut and Peppermint. A potent anti-oxidant mix in a world\'s favorite beverage.',   '8-in-1-premium-coffee',    8,  6,  6,  6,  'http://image.primiaworks.com/view?source=online.ultraproactive.net&filename=1434424474.jpg&size=250x250&mode=crop',    100,    '2015-07-17 00:29:55',  '2015-08-03 13:42:17',  0),
+            (8, '7',    'EAU de Parfum',    'El Divo is the scent of a hero. The scent of this perfume is capable of sending a strong message of one \'s masculinity. It arouses self confidence. You would never go unnoticed after you have this perfume on. It will do well on a special hang out with your partner or perhaps your first date. La Diva is a lively fragrance that can make women irresistibly preey. La Diva can make you feel that there is nothing greater than being love.', 'eau-de-parfum',    7,  7,  7,  7,  'http://image.primiaworks.com/view?source=online.ultraproactive.net&filename=1434425612.jpg&size=250x250&mode=crop',    100,    '2015-07-17 00:30:44',  '2015-08-03 13:42:30',  0),
+            (9, '8',    'Prolife Rose Essence Soap',    'This unique and refreshing soap has a combination of essential ingredients that create a feeling of complete, refreshing and detoxifying bath experience. \r\nThe gentle lather of PROLIFE ROSE ESSENCE SOAP removes impurities, smoothens and tones skin, leaving it soft, supple and looking younger. \r\n\r\nPROLIFE ROSE ESSENCE SOAP - for fresh and youthful glowing skin.\r\n', 'prolife-rose-essence-soap',    5,  8,  8,  8,  '1437119915.jpg',   100,    '2015-07-17 00:31:18',  '2015-07-29 05:39:38',  1),
+            (10,    '9',    'Prolife Noni Soap',    'A unique soap noted for its moisturizing and cleansing abilities, leaves your skin clean, smoother and softer. Flavored with essences of vanilla and sunburst orange fragrance, it gives a sensual aroma that lingers in the skin.\r\nWith a blend of moisturizers and essential oils, PROLIFE NONI SOAP also contains premium ingredients such as coconut oil, morinda seed oil, alkali builders, dried noni fruits and leaves.\r\n\r\nPROLIFE NONI SOAP - cleanses, moisturizes and keeps skin free from harmful bacteria.\r\n', 'prolife-noni-soap',    5,  9,  9,  9,  '1434424400.jpg',   100,    '2015-07-17 00:32:11',  '2015-08-03 13:42:54',  1),
+            (11,    '10',   'Prolife Green Kojic Soap', 'PROLIFE GREEN KOJIC SOAP is formulated with pure Kojic acid derived from mushrooms that has been successfully used to lighten pigment spots, removes blemishes and helps to whiten skin without the usual drying effect. It helps in removing pimples, freckles and other skin blemishes. \r\n  \r\nPROLIFE GREEN  KOJIC SOAP is primarily an exfoliating skincare product that  helps to break down the top layer of skin cells and peel away damaged skin.\r\n\r\nPROLIFE GREEN KOJIC SOAP - the safest herbal extract for fresh and healthier skin.\r\n',   'prolife-green-kojic-soap', 5,  10, 10, 10, '1437119814.jpg',   100,    '2015-07-17 00:32:59',  '2015-07-29 05:40:08',  1),
+            (12,    '11',   'Prolife Gluta Plus Soap',  'PROLIFE GLUTA PLUS SOAP helps to remove toxins produced by the body, assists to inhibit the skin’s production of melanin, resulting in natural lightening of the skin.\r\n\r\nPROLIFE GLUTA PLUS SOAP contributes to remove free radicals and harmful toxins in the skin. It is also often used to treat hyper-pigmentation, freckles, melasma, age spots, blemishes and other uneven skin tones.  \r\n \r\nPROLIFE GLUTA PLUS SOAP - for a fairer and lovelier skin.\r\n\r\n',    'prolife-gluta-plus-soap',  5,  11, 11, 11, 'default.jpg',  100,    '2015-07-17 00:33:52',  '2015-07-29 05:40:05',  1),
+            (13,    '12',   'Prolife Hand Sanitizer',   'Prolife Hand Sanitizer has 2 active ingredients:\r\n\r\nEthyl Alcohol - helps destroy transient germs. Monolaurin - a germicide that aids in moisturizing the skin. \r\n\r\nProlife Hand Sanitizer helps prevent dryness and itchiness making your hands smooth and germ-free. \r\n\r\n\r\n\r\n\r\n\r\n\r\n',  'prolife-hand-sanitizer',   6,  12, 12, 12, '1437119819.jpg',   100,    '2015-07-17 00:34:40',  '2015-07-29 05:40:01',  1),
+            (14,    '13',   'Prolife Regime Oil',   '   Prolife Regime Oil is formulated from the combination of  specially selected oils. \r\n\r\n Prolife Regime Oil helps:\r\nNourishes the skin to promote cell turn-over\r\nCombat irritation and inflammation\r\nTo heal damaged tissues\r\nReduce unwanted fats effectively\r\nStimulate the production of Collagen and Elastin which can soften and hydrate the skin.\r\n', 'prolife-regime-oil',   6,  13, 13, 13, '1437119910.jpg',   100,    '2015-07-17 00:35:24',  '2015-07-29 05:39:58',  1);
+        ");
     }
 }
 
@@ -353,8 +371,8 @@ class tbl_news extends Seeder
     {
         DB::table('tbl_news')->delete();
         DB::statement("INSERT INTO `tbl_news` (`news_id`, `news_title`, `news_description`, `news_date`, `news_image`, `archived`) VALUES
-        (1, 'Green coffee extract', 'A green coffee extract is an extract of unroasted, green coffee beans. Green coffee extract has been used as a weight-loss supplement and as an ingredient in other weight-loss products. Its efficacy and mechanism of action have been the subject of controversy.\r\n\r\nThere is tentative evidence of benefit; however, the quality of the evidence is poor.[1] In 2014 one of the primary trials showing benefit was retracted and the company that sponsored the study, Applied Food Sciences, was fined by the Federal Trade Commission for making baseless weight-loss claims using the flawed study.[2]\r\n\r\nGreen coffee extract is sold under various proprietary brand names including Svetol, and is included in weight-loss products such as CoffeeSlender.[1]',  '2015-07-17 17:13:58',  '1437123725.png',   0),
-        (2, 'Chocolate is made of cocoa',   'The cocoa bean, also cacao bean[1] or simply cocoa is the dried and fully fermented fatty seed of Theobroma cacao, from which cocoa solids and cocoa butter are extracted.[2] They are the basis of chocolate, as well as many Mesoamerican foods such as mole sauce and tejate.\r\n\r\nA cocoa pod (fruit) has a rough and leathery rind about 2 cm (0.79 in) to 3 cm (1.2 in) thick (this varies with the origin and variety of pod). It is filled with sweet, mucilaginous pulp (called baba de cacao in South America) with a lemonade like taste enclosing 30 to 50 large seeds that are fairly soft and a pale lavender to dark brownish purple color. Due to heat buildup in the fermentation process, cacao beans lose most of the purplish hue and become mostly brown in color, with an adhered skin which includes the dried remains of the fruity pulp. This skin is released easily after roasting by winnowing. White seeds are found in some rare varieties, usually mixed with purples, and are considered of higher value.[3][4][5] Historically, white cacao was cultivated by the Rama people of Nicaragua.',   '2015-07-17 17:14:39',  '1437124031.jpg',   0);
+        (1, 'Sample 1', 'A green coffee extract is an extract of unroasted, green coffee beans. Green coffee extract has been used as a weight-loss supplement and as an ingredient in other weight-loss products. Its efficacy and mechanism of action have been the subject of controversy.\r\n\r\nThere is tentative evidence of benefit; however, the quality of the evidence is poor.[1] In 2014 one of the primary trials showing benefit was retracted and the company that sponsored the study, Applied Food Sciences, was fined by the Federal Trade Commission for making baseless weight-loss claims using the flawed study.[2]\r\n\r\nGreen coffee extract is sold under various proprietary brand names including Svetol, and is included in weight-loss products such as CoffeeSlender.[1]',  '2015-08-03 12:00:35',  '1433328012.jpg',   0),
+        (2, 'Sample 2', 'The cocoa bean, also cacao bean[1] or simply cocoa is the dried and fully fermented fatty seed of Theobroma cacao, from which cocoa solids and cocoa butter are extracted.[2] They are the basis of chocolate, as well as many Mesoamerican foods such as mole sauce and tejate.\r\n\r\nA cocoa pod (fruit) has a rough and leathery rind about 2 cm (0.79 in) to 3 cm (1.2 in) thick (this varies with the origin and variety of pod). It is filled with sweet, mucilaginous pulp (called baba de cacao in South America) with a lemonade like taste enclosing 30 to 50 large seeds that are fairly soft and a pale lavender to dark brownish purple color. Due to heat buildup in the fermentation process, cacao beans lose most of the purplish hue and become mostly brown in color, with an adhered skin which includes the dried remains of the fruity pulp. This skin is released easily after roasting by winnowing. White seeds are found in some rare varieties, usually mixed with purples, and are considered of higher value.[3][4][5] Historically, white cacao was cultivated by the Rama people of Nicaragua.',   '2015-08-03 12:00:46',  '1433328012.jpg',   0);
         ");
     }
 }
@@ -416,4 +434,21 @@ class tbl_company extends Seeder
         ");
     }
 }
+
+class tbl_stories extends Seeder
+{
+    public function run()
+    {
+        DB::table('tbl_stories')->delete();
+        DB::statement("INSERT INTO `tbl_stories` (`stories_id`, `stories_title`, `stories_link`, `stories_description`, `created_at`, `updated_at`, `archived`) VALUES
+        (1, '', 'mjDVtsCQreE',  '', '2015-08-03 07:33:09',  '0000-00-00 00:00:00',  1),
+        (2, 'Ms. Philippines Finalist 2014',    '1QRwW3JRDu0',  'Hello.. I am Cyra Guilalas 19 years old from Palawan, Beauty queen po ako, nag jojoin ako ng pageant, ms. world last year, ms. navotas, title holder po ako ng miss solaire, ms. palawan, ms. taytay, bikini open palawan. nag eextra po ko sa tv like home sweetie home, wonder , then meron po ako sa magazine apple soap ako po yung ambassador ngayon. so mga sinasalihan ko sobra po akong naging busy, kahit po yung mama ko nakakapansin na, yung kain ko wala na sa oras, so nung time na yun nag worry na din ako ksi nagkakaron ng mga fats di na ako yung gaya ng dati na halos rice nlang, then yung time na yon, lumapit ako sa isa kong handler, kay tita Ao, nagtanong ako sa kanya kung ano yung mas mabuting paraan para maging fit uli ako , kung ano yung pde kong maging maintenance na iinumin, so nung time na yun nirecommend nya saken itong Ultra Nutrifit Meal, so nung tinake ko ito kahit hindi ako kumain or uminom ng kahit vitamins, khit hindi ako kumain sa tamang oras, nagiging fit po ako , nagiging healthy ako, hindi kaya nung tinake ko na iba like biofit like that, nung ininom ko po yun meron pong side effects sken nag LBM po ako, hindi maganda sken. Merong time na nasa taping ako ng home sweetie home inabutan ako ng LBM dahil sa tinake ko na yun. So nung ito yung tinake ko Ultra Nutrifit Meal naging komportable ako saka lahat na all in one nandito na. Sa pagtake nito kelangan ng healthy lifestyle nandun pa din, go to gym. So i highly recommend Ultra Nutrifit Meal from the company of UltraProactive Marketing If you want to stay fit like me :)))))) Thank you po sa UltraProactive Marketing yung ganitong suplemment, sobrang nakatulong ito sa lahat ng nagttrabaho na gustong maging fit, lalo na sa beauty quenn na katulad ko na dapat maintain yung body ko, yung kasexihan ko :)))) thank you.',  '2015-08-03 07:34:22',  '2015-08-03 07:43:15',  0),
+        (3, 'Retired Banker',   'Y9kWnjRsBlY',  'I\'m currently working out six seven times a week im supervise by my doctor but i realise na pwede na palang pumayat ng mabilis at the same time healthy I\'m surprise na ung satisfaction ko when I take foods in the middle of workout na provide ng \"ULTRA NUTRIFIT\" pala at the same time na iba ung feeling ko because fighting solid foods its like eating a soup even it is just a drink thats why i tend to use more .', '2015-08-03 07:43:36',  '0000-00-00 00:00:00',  0),
+        (4, 'Freelance Model',  'Gp2eyvTHl8g',  'Hi I\'m Coleen I\'m 22 years old but now I have very busy schedule I have to work 6 days a week then ung one day ko rest I\'m supposed to have a excercise something to do for my fitness hindi ko siya magawa kasi minsan nasa party pa ako kaya natutulog lang ako pag ganon pero kahit ganon kahit pagod puyat ako magana akong kumain so ambilis kong tumaba ambilis kong maging chubby ampanget kasi as a dealer am also dealer model who wear sexy clothes there tapos ang hirap kasi nag kakadouble chin ako lumalaki ung braso ko I tried alot of dietary supplements and I learned na hindi siya safe kasi using the dietary like that a I ask my doctor its not safe for my kidney so I want to stop that I ask my friend and have a very sexy friend she\'s very slim I wonder why she\'s really slim but nagtratrabaho kami at the same graveyard schedule I ask her kung anong tinatake niya so inadvice niya ako she\'s taking something really safe and wala siyang side effect and all organic she give 3 bottles of \"ULTRA NUTRIFIT MEAL\" and I notice na hindi ako nagugutom na kagaya ng dati na sobrang gana ko while working na gusto ng burger and heavy meals and after that I have to go pizza parlors and eat alot and right after that matutulog na ako so after that when I woke up lagi akong akong bloated parang ang laki laki ng tiyan ko feeling ko hindi na bagay sakin ung rec ko kasi sexy siya sexy ung outfit ko kailangan maganda ung figure ko pero ang taba ko so sabi ko sa kanya bigyan niya pa ako ng konting bottles pa I bought some from her so I tried it for 2 weeks from now I got alot of changes feeling ko slim ako feeling ko ang gaan ko feeling ko sexy ako na nag gagain ako ng weight pero at the same time just the normal hindi ako malnourished hindi rin ako mataba I\'m maintaining my weight which is 45 kg. I like the result gusto ko siyang imaintain kahit mag takaw ako kahit kumain ako ng healthy foods kaya ko siyang imaintain ung weight feeling ko kasi na flaflashout ko siya agad na flaflashout ko agad ung unwatery fats ko and then ung mga toxins ko sa katawan so feeling ko healthy ako ung life style ko hindi siya maganda kasi because its a graveyard and ayon gusto ko siyang ipatry sa iba sa inyo kasi safe siya when you read the label everything is organic all are organic all are safe ingredients healthy and wala akong nakitang kahit anong side effects after using this im feeling very i\'m after the wall using this product.', '2015-08-03 07:43:53',  '0000-00-00 00:00:00',  0),
+        (5, 'Physical Therapist',   '_VpMb-eZCF8',  'Hi Good Morning by the way ang pangalan ko nga pala is Marlon Dizon ang profession ko ay physical therapist and the same time invote ako sa pag mamarket ng different kinds of foods supplements when I\'m invited here in Ultra Proactive was very hesitant kasi kala its the same food supplements that i\'ve marketed and nagulat ako I was advised by friend the owner of Ultra NutraFit so sabi ko baka it just was another supplement that I\'ve been take kasi nag gygym ako tapos when I\'m taking way protein ang problema ko ung way protein nang galing pa sa ibang bansa nakakatigyawat so sabi ko baka mapasa sa katawan ko and then para mawala ung doubt ko I took one bottle nagulat ako naka skip ako ng two meals tinake ko siya ng gabi and then nung umaga tska nung lunch nag skip na ako ng meals noon tapos sabi ko very effective pala and then I continue taking it for week I lost 2kg sabi ko without workout iyon and without crash diet just taking this because its a complete replacement meal hindi ako nagugutom actually and then ang problema ko noon pag marami akong kinakausap hirap na hirap ako kasi nagugutom ako kagaad acidic nung tinake ko to nabalanse ung acidic ng tiyan ko very effective pala to and siguro ang mga matetestimony ko dito I have a long term patient ng stroke ung patient na iyon talaga hindi talaga nakakalakad hindi rin nakakapag salita binigyan ko ng three bottles nito eventually nakita ko ung improvement ngayon nagagalaw na niya ung shoulders niya nakakatayo siya which is very big improvement compared na nag tatake siya ng synthetic medication so I assure na itong product na ito napakaganda sa katawan because its corrects the immune system at the same time it function as complete nutrition meal so ang pinaka ngayong natutuwa ako kasi marami akong nakausap na athletes I\'m invote also in training of basketball team isang commercial basketball league instead of taking na vitamins ito nalang ang itatake nila kasi ang sinasabi ko sa kanila na maganda to and you will not lose muscle instead a it will act as your replacement meals sa basketball hindi ka kasing pwedeng mag pataba at yung energy mo ung sinasabi naming nating tuparin so I\'m very contented with this product',   '2015-08-03 07:44:15',  '0000-00-00 00:00:00',  0);"
+        );
+    }
+}
+
+
 

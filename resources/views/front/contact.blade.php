@@ -1,121 +1,138 @@
 @extends('front.layout')
 @section('content')
-<div class="top_wrapper   no-transparent">
-        <!-- .header -->
-        <!-- Page Head -->
-        <div class="header_page basic background_image" style="background-image:url(/resources/assets/ausart/assets/img/default_header.jpg);background-repeat: no-repeat; -webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover; color:#2f383d; ">
-            <div class="container">
-                <style>
-                .breadcrumbs_c {
-                    color: #fff;
-                    font-size: 13px;
-                }
-                
-                h1.title {
-                    color: #fff !important;
-                    font-size: 50px
-                }
-                </style>
-                <h1 class="title">Contact Us</h1>
-                <div class="breadcrumbss">
-      
-                </div>
-            </div>
-        </div>
-        <section id="content" class="composer_content">
-            <div id="fws_556c6ed5416a5" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el full-width-content section-style    borders  " style="background-color: #f6f6f6; padding-top: 60px !important; padding-bottom: 0px !important; ">
-                <div class="triangle_bottom" style="border-color: #f6f6f6 transparent transparent transparent;"></div>
-                <div class="col span_12  dark">
-                    <div class="vc_col-sm-12 wpb_column column_container" style="" data-animation="" data-delay="0">
-                        <div class="wpb_wrapper">
-                            <div class="wpb_content_element dynamic_page_header style_3">
-                                <h1 style="font-size:36px; color:#1c1c1c">Please Get in Touch With Us</h1>
-                                <div class="line_under">
-                                    <div class="line_center"></div>
-                                </div>
-                                <div class="line_under below_line">
-                                    <div class="line_center"></div>
-                                </div>
-                                <p class="description style_3">{{ $contact->about_description }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="fws_556c6ed542363" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="padding-top: 60px !important; padding-bottom: 60px !important; ">
-                <div class="container  dark">
-                    <div class="section_clear">
-                        <div class="vc_col-sm-12 wpb_column column_container" style="" data-animation="" data-delay="0">
-                            <div class="wpb_wrapper">
-                                <div class="contact_form wpb_content_element">
-                                    <div class="row-fluid">
-                                        <div class="row-fluid">
-                                            <div class="span12">
-                                                <form name="contactForm" class="standard-form row-fluid" action="/contact/submit" method="post">
-                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                    <input class="span6" name="name" placeholder="Name" type="text" id="themeple_name" value="" required/>
-                                                    <input class="span6" name="email" placeholder="E-Mail" type="email" id="themeple_email" value="" required style="font-size: 13px !important; height: 50px !important; margin-bottom: 23px !important;"/>
-                                                    <input class="span6" name="subject" placeholder="Subject" type="text" id="themeple_subject" value="" required/>
-                                                    <textarea class="span12" placeholder="Message" name="message" cols="40" rows="7" id="themeple_message" required></textarea>
-                                                    <p class="perspective">
-                                                        <input type="submit" value="Submit Form" class="btn-system normal default" />
-                                                    </p>
-                                                </form>
-                                                <div id="ajaxresponse"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="fws_556c6ed543010" class="wpb_row animate_onoffset  vc_row-fluid  animate_onoffset row-dynamic-el section-style    " style="background-color: #f6f6f6; padding-top: 60px !important; padding-bottom: 60px !important; ">
-                <div class="triangle_top" style="border-color: transparent transparent #f6f6f6 transparent;"></div>
-                <div class="container  dark">
-                    <div class="section_clear">
-                        <div class="vc_col-sm-8 wpb_column column_container" style="" data-animation="" data-delay="0">
-                            <div class="wpb_wrapper">
-                                <div class="wpb_content_element">
-                                    <div class="row-fluid row-google-map " style="position:relative; height:250px;">
-                                        <div class="overlay" onClick=" style.pointerEvents= &apos; none &apos; "></div>
-                                        <iframe class="googlemap " style="height:250px;" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.0565175589063!2d55.304113699999995!3d25.26868415!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f434864ed5b6b%3A0x590f68566d8fb710!2sBldg+-+Dubai+-+United+Arab+Emirates!5e0!3m2!1sen!2sph!4v1437989317689"></iframe>
-                                        <div class="desc"></div>
-                                    </div>
-                                </div>
-                                <div style='margin-top:-36px' class="divider__ big_shadow"></div>
-                            </div>
-                        </div>
-                        <div class="vc_col-sm-4 wpb_column column_container" style="" data-animation="" data-delay="0">
-                            <div class="wpb_wrapper">
-                                <div class="wpb_content_element contact_info">
-                                    <div class="header">
-                                        <h2>Contact Info</h2></div>
-                                    <div class="content">
-                                        <p style="word-break: keep-all !important;">@if(isset($_setting->company_address)){{ $company->company_address }}@endif
-                                            <br /> @if(isset($_setting->company_email)){{ $company->company_email }}@endif
-                                            <br /> Telephone:@if(isset($_setting->company_telephone)){{ $company->company_telephone }}@endif
-                                            <br /> Phone:  @if(isset($_setting->company_telephone)){{ $company->company_mobile }}@endif
-                                        </p>
-                                        <div class="social">
-                                            <ul>
-                                                <li><a href="#"><i class="icon-google_plus"></i></a></li>
-                                                <li><a href="#"><i class="icon-linkedin"></i></a></li>
-                                                <li><a href="#"><i class="icon-pinterest"></i></a></li>
-                                                <li><a href="#"><i class="icon-twitter"></i></a></li>
-                                                <li><a href="#"><i class="icon-facebook"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Social Profiles -->
-        <!-- Footer -->
-    </div>
+<section id="title_breadcrumbs_bar">
+	<div class="container">
+		<div class="row">
+			<div class="span8">
+				<h1>Contact</h1>
+			</div>
+			<div class="span4 right_aligned">
+				<div class="breadcrumbs">
+					
+				</div>									
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="dzen_section_DD">
+	<header>
+		<div class="dzen_container">
+			<h3>Get in touch with us</h3>
+			<p>
+				Questions or Concerns? Don't hesitate to get in touch.
+			</p>
+		</div>
+	</header>
+	<div class="dzen_section_content">
+		<div class="dzen_container">
+			<div class="dzen_column_DD_span6">
+				<div class="dzencf" id="dzencf-wrapper" dir="ltr">
+					<form action="#" method="post" class="contact-form">
+							<input type="text" name="name" size="40" class="dzencf-text" placeholder="YOUR NAME (Required)">
+							<input type="email" name="email" size="40" class="dzencf-text dzencf-email dzencf-validates-as-email" placeholder="YOUR EMAIL (Required)">
+							<input type="text" name="subject" size="40" class="dzencf-text" placeholder="YOUR SUBJECT">
+							<textarea name="message" cols="40" rows="10" class="dzencf-textarea" placeholder="YOUR MESSAGE"></textarea>
+							<input type="submit" value="Send" class="dzencf-submit" id="dzencf-submit">
+					</form>
+					<div class="dzencf-response-output dzencf-display-none"></div>
+				</div>
+			</div>
+			<div class="dzen_column_DD_span6">
+				<h3 class="column_title_left">
+					<span>Contact info
+					</span>
+				</h3>
+				<table>
+					<tbody>
+						<tr>
+							<td>
+								<p class="contact_page_info">
+									<span class=""><i class="ABdev_icon-envelope"></i></span>ultraproactive2014@gmail.com
+								</p>
+								<p class="contact_page_info">
+									<span class=""><i class="ABdev_icon-home"></i></span>Second level, Metrowalk Commercial Complex, Meralco Avenue,Ortigas Business Center, 1605 Pasig City, Philippines
+								</p>
+								<p class="contact_page_info">
+									<span class=""><i class="ABdev_icon-globe"></i></span>www.ultraproactive.net
+								</p>
+							</td>
+							<td>
+								<p class="contact_page_info">
+									<span class=""><i class="ABdev_icon-phonealt"></i></span>+63 (02) 234-1993
+								</p>
+								<p class="contact_page_info">
+									<span class=""><i class="ABdev_icon-draft"></i></span>0927-7447286
+								</p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<h3 class="column_title_left">
+					<span>Stay social</span>
+				</h3>
+				<div class="dzen_follow_us">
+					<a title="Follow us on Facebook" class="dzen_socialicon_facebook dzen_tooltip" data-gravity="s" href="#" target="_blank"><i class="ABdev_icon-facebook"></i></a>
+					<a title="Follow us on Twitter" class="dzen_socialicon_twitter dzen_tooltip" data-gravity="s" href="#" target="_blank"><i class="ABdev_icon-twitter"></i></a>
+					<a title="Follow us on Google+" class="dzen_socialicon_googleplus dzen_tooltip" data-gravity="s" href="#" target="_blank"><i class="ABdev_icon-googleplus"></i></a>
+					<a title="Follow us on Linkedin" class="dzen_socialicon_linkedin dzen_tooltip" data-gravity="s" href="#" target="_blank"><i class="ABdev_icon-linkedin"></i></a>
+					<a title="Follow us on Youtube" class="dzen_socialicon_youtube dzen_tooltip" data-gravity="s" href="#" target="_blank"><i class="ABdev_icon-youtube"></i></a>
+					<a title="Our RSS feed" class="dzen_socialicon_feed dzen_tooltip" data-gravity="s" href="#" target="_blank"><i class="ABdev_icon-rss"></i></a>
+					<a title="Our Vimeo Profile" class="dzen_socialicon_vimeo dzen_tooltip" data-gravity="s" href="#" target="_blank"><i class="ABdev_icon-vimeo"></i></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="dzen_section_DD no_padding section_body_fullwidth">
+	<div class="dzen_section_content">
+		<div class="dzen_container">
+			<div class="dzen_column_DD_span12">
+				<div id="dzen_google_map_1" 
+					data-map_type="ROADMAP" 
+					data-lat="14.586892" 
+					data-lng="121.064550"
+					data-zoom="17" 
+					data-scrollwheel="0" 
+					data-maptypecontrol="1" 
+					data-pancontrol="1" 
+					data-zoomcontrol="1" 
+					data-scalecontrol="1" 
+					data-markertitle="Our Company" 
+					data-markericon="/resources/assets/path/images/map-pointer.png" 
+					data-markercontent="Our Address" 
+					data-markerlat="45.4385847" 
+					data-markerlng="12.3284471" 
+				 	class="dzen_google_map" style="height:400px;width:100%;">
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- <section class="dzen_section_DD no_padding">
+	<div class="dzen_section_content">
+		<div class="dzen_container">
+			<div class="dzen_column_DD_span12 ">
+				<div class="dzen-callout_box no_margin">
+					<div class="dzen_container">
+						<div class="dzen_column_DD_span9">
+							<span class="dzen-callout_box_title">Ready to buy this theme? This is call to action
+							</span>
+							<p>
+								Very easy to customize. Fully layered PSD with multi-purpose features. You can buy it right now
+							</p>
+						</div>
+						<div class="dzen_column_DD_span3">
+							<a href="#" target="_self" class="dzen-button dzen-button_blue dzen-button_normal dzen-button_large">Buy it now</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section> -->
 @endsection
+
+

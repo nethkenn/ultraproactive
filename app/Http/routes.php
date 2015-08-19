@@ -36,9 +36,9 @@ Route::any('/member/register', 'MemberRegisterController@index');
 /* ADMIN */
 Route::any('/', 'FrontController@index');
 Route::any('/about', 'FrontController@about');
-Route::any('/earn', 'FrontController@earn');
-Route::any('/partner', 'FrontController@partner');
-Route::any('/service', 'FrontController@service');
+Route::any('/opportunity', 'FrontController@opportunity');
+Route::any('/mindsync', 'FrontController@mindsync');
+Route::any('/stories', 'FrontController@stories');
 Route::any('/product', 'FrontController@product');
 Route::any('/product_content', 'FrontController@product_content');
 Route::any('/news', 'FrontController@news');
@@ -124,6 +124,22 @@ Route::get('admin/content/partner/edit', 'AdminPartnerController@edit');
 Route::any('admin/content/partner/edit_submit', 'AdminPartnerController@edit_submit');
 Route::any('admin/content/partner/delete', 'AdminPartnerController@delete');
 
+/* MINDSYNC MANAGEMENT */
+Route::get('admin/content/mindsync', 'AdminMindSyncController@index');
+Route::get('admin/content/mindsync/add', 'AdminMindSyncController@add');
+Route::any('admin/content/mindsync/add_submit', 'AdminMindSyncController@add_submit');
+Route::get('admin/content/mindsync/edit', 'AdminMindSyncController@edit');
+Route::any('admin/content/mindsync/edit_submit', 'AdminMindSyncController@edit_submit');
+Route::any('admin/content/mindsync/delete', 'AdminMindSyncController@delete');
+
+/* STORIES MANAGEMENT */
+Route::get('admin/content/stories', 'AdminStoriesController@index');
+Route::get('admin/content/stories/add', 'AdminStoriesController@add');
+Route::any('admin/content/stories/add_submit', 'AdminStoriesController@add_submit');
+Route::get('admin/content/stories/edit', 'AdminStoriesController@edit');
+Route::any('admin/content/stories/edit_submit', 'AdminStoriesController@edit_submit');
+Route::any('admin/content/stories/delete', 'AdminStoriesController@delete');
+
 /* TESTIMONY MANAGEMENT */
 Route::get('admin/content/testimony', 'AdminTestimonyController@index');
 Route::get('admin/content/testimony/add', 'AdminTestimonyController@add');
@@ -163,6 +179,8 @@ Route::get('admin/content/team/add', 'AdminTeamController@add');
 Route::any('admin/content/team/add_submit', 'AdminTeamController@add_submit');
 Route::get('admin/content/team/edit', 'AdminTeamController@edit');
 Route::any('admin/content/team/edit_submit', 'AdminTeamController@edit_submit');
+Route::any('admin/content/team/sort', 'AdminTeamController@sort');
+Route::any('admin/content/team/sort_submit', 'AdminTeamController@sort_submit');
 Route::any('admin/content/team/delete', 'AdminTeamController@delete');
 
 /**
