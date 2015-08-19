@@ -6,7 +6,7 @@
 				@foreach($_slide as $slide)
 				<div>
 					<!-- MAIN IMAGE -->
-					<img src="{{ $slide->image }}"  alt="{{ $slide->slide_image }}" style="width: 100%;" >
+					<img src="{{ $slide->image }}"  alt="{{ $slide->slide_image }}" style="width: 100%;">
 				</div>
 				@endforeach
 			</div>
