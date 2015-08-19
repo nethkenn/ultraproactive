@@ -5,8 +5,9 @@
             <h2><i class="fa fa-users"></i>  Migration</h2>
         </div>
         <div class="buttons col-md-4 text-right">
-                <button type="button" class="btn btn-primary start-rematrix"><i class="fa fa-refresh"></i> START REMATRIX</button>
-                <button type="button" class="btn btn-primary start-migration"><i class="fa fa-refresh"></i> START MIGRATION</button>
+            <button type="button" class="btn btn-primary start-rematrix"><i class="fa fa-refresh"></i> REMATRIX</button>
+            <button type="button" class="btn btn-primary start-migration"><i class="fa fa-refresh"></i> MIGRATION</button>
+            <button type="button" class="btn btn-primary start-recompute"><i class="fa fa-refresh"></i> RECOMPUTE</button>
         </div>
     </div>
     <div class="col-md-12 form-group-container" style="overflow: hidden;">
@@ -75,6 +76,8 @@
         });
     });
 
+
+
     $(".start-rematrix").click(function()
     {
         $(".status").val("Getting Ready!");
@@ -93,6 +96,53 @@
             }
         });
     });
+
+    $(".start-recompute").click(function()
+    {
+        $(".status").val("Getting Ready!");
+
+        $.ajax(
+        {
+            url:"admin/migration/start_recompute",
+            dataType:"json",
+            data:"",
+            type:"post",
+            success: function(data)
+            {
+                tbl_slot = data;
+                recompute(tbl_slot[ctr].slot_id);
+                $(".status").val("Initializing");
+            }
+        });
+    });
+
+    function recompute($slot_id)
+    {
+        $.ajax(
+        {
+            url:"admin/migration/recompute",
+            dataType:"json",
+            data:{slot_id:$slot_id},
+            type:"get",
+            success: function(data)
+            {
+                ctr++;
+                if(tbl_slot[ctr])
+                {
+                    recompute(tbl_slot[ctr].slot_id);    
+                    $(".status").val("Recompute - " + tbl_slot[ctr].slot_id);   
+                    $(".count-migrate").val(ctr);   
+                }
+                else
+                {
+                    $(".status").val("Done!");
+                }
+            },
+            error: function()
+            {
+            }
+        });
+    }
 
     function rematrix($slot_id)
     {
@@ -121,6 +171,7 @@
             }
         });
     }
+
     function migrate($hack_id)
     {
         $.ajax(

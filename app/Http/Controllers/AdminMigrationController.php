@@ -71,6 +71,17 @@ class AdminMigrationController extends AdminController
 		DB::table("tbl_tree_sponsor")->truncate();
 		return json_encode($data["_slots"]);
 	}
+	public function start_recompute()
+	{
+		$data["_slots"] = Tbl_slot::where("slot_membership", 2)->orWhere("slot_membership", 16)->get();
+		return json_encode($data["_slots"]);
+	}
+	public function recompute()
+	{
+		$slot_id = Request::input("slot_id");
+		Compute::entry($slot_id);
+		echo json_encode("success!");
+	}
 	public function rematrix()
 	{
 		$slot_id = Request::input("slot_id");

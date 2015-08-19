@@ -456,6 +456,8 @@ Route::any('admin/migration/start', 'AdminMigrationController@start');
 Route::any('admin/migration/hack', 'AdminMigrationController@hack');
 Route::any('admin/migration/start_rematrix', 'AdminMigrationController@start_rematrix');
 Route::any('admin/migration/rematrix', 'AdminMigrationController@rematrix');
+Route::any('admin/migration/start_recompute', 'AdminMigrationController@start_recompute');
+Route::any('admin/migration/recompute', 'AdminMigrationController@recompute');
 
 
 Route::get('member/e-payment/transaction-log', 'MemberEpaymentLogController@index');
