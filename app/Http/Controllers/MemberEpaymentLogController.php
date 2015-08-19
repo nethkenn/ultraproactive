@@ -77,8 +77,6 @@ class MemberEpaymentLogController extends MemberController
     {
 
         $data = $this->convert_pt_to_currency(Request::input('amount'));
-
-
     	return view('member.epayment_log_convert_currency', $data);
     }
 
@@ -88,8 +86,24 @@ class MemberEpaymentLogController extends MemberController
         $amount = (double) $amount;
         $country = Tbl_country::find(Customer::info()->account_country_id);
         $slot = Tbl_slot::find(Session::get('currentslot'));
-        $rate = $country->rate;
-        $slot_wallet = $slot->slot_wallet - $amount;
+        if($slot)
+        {
+            $slot_wallet = $slot->slot_wallet - $amount;
+        }
+        else
+        {
+            $slot_wallet = 0 - $amount;
+        }
+        if($country)
+        {
+           $rate = $country->rate; 
+        }
+        else
+        {
+            $rate = 0;
+        }
+        
+        
         $converted_amount = $amount * $country->rate;
         $e_wallet = Customer::info()->e_wallet + $converted_amount ;
         $data['rate_formatted'] = "1.00 slot wallet points = " . number_format($rate,2,".",","). ' '.$country->currency;
@@ -120,21 +134,24 @@ class MemberEpaymentLogController extends MemberController
         $rules['slot_wallet'] = 'required|numeric|min:0';
         
         $requests['slot'] = Session::get('currentslot');
-        $rules['slot'] = 'exists:tbl_slot,slot_id,slot_owner,'.Customer::info()->account_id;
+        // dd($requests['slot']);
+        $rules['slot'] = 'required:exists:tbl_slot,slot_id,slot_owner,'.Customer::info()->account_id;
 
         $validator = Validator::make($requests, $rules);
         // dd($amount, $conversion, $validator->errors()->all());
         if ($validator->fails())
         {
             return redirect('member/e-payment/transaction-log')
-                        ->withErrors($validator)
-                        ->withInput();
+                        ->withErrors($validator);
+                        // ->withInput();
         }
 
 
         $slot = Tbl_slot::find(Session::get('currentslot'));
         $slot->slot_wallet = $slot->slot_wallet - $amount;
-        $slot->save();
+        $slot->save();  
+
+
 
 
         $slog_log = 'Converted '.$amount.' slot wallet  to '. $conversion['converted_amount'] . ' ' . $conversion['currency']. ' by '.Customer::info()->account_name . ' ( ' .Customer::info()->account_username .' ). ';

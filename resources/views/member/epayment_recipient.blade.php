@@ -38,8 +38,7 @@
 	<script type="text/javascript" scr="//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 	<script type="text/javascript">
 
-		$(document).ready(function()
-		{
+
 			var $Table = $('#datatable').DataTable(
 			{
 		        processing: true,
@@ -67,6 +66,7 @@
 		        stateSave: true,
 	    	});
 			
-		});
+
 	</script>
+	<script type="text/javascript" src="resources/assets/members/js/epayment_transaction_recipient.js"></script>
 @endsection

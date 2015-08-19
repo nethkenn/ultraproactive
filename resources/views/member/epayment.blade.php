@@ -41,11 +41,11 @@
                         <select name="param[{{$input_field['name']}}]" class="form-control">
                             <option>Select {{$input_field['name']}}</option>
                             @foreach($input_field['data'] as $option)
-                                <option value="{{$option['value']}}" {{Request::old('param')[$input_field['name']] == $option['value'] ? 'selected' : '' }}>{{$option['name']}}</option>
+                                <option value="{{$option['value']}}" {{Request::old('param')[$input_field['name']] == $option['value'] || $input_field['value'] == $option['value']? 'selected' : '' }}>{{$option['name']}}</option>
                             @endforeach
                         </select>
                     @else
-                      <input type="{{$input_field['type']}}" name="param[{{$input_field['name']}}]" class="form-control" id="" placeholder="{{$input_field['placeholder']}}" value="{{Request::old('param')[$input_field['name']]}}">
+                      <input type="{{$input_field['type']}}" name="param[{{$input_field['name']}}]" class="form-control" id="" placeholder="{{$input_field['placeholder']}}" value="{{Request::old('param')[$input_field['name']] ? Request::old('param')[$input_field['name']] : $input_field['value']}}">
                     @endif
                     </div>
 

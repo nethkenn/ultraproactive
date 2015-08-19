@@ -448,11 +448,9 @@ Route::get('member/e-payment/recipient', 'MemberEpaymentRecipientController@inde
 Route::get('member/e-payment/recipient/get_data', 'MemberEpaymentRecipientController@get_data');
 Route::get('member/e-payment/recipient/add', 'MemberEpaymentRecipientController@add');
 Route::post('member/e-payment/recipient/add', 'MemberEpaymentRecipientController@save');
-Route::post('member/e-payment/recipient/edit', 'MemberEpaymentRecipientController@edit');
-Route::post('member/e-payment/recipient/update', 'MemberEpaymentRecipientController@update');
-
-
-Route::get('member/e-payment/recipient/edit/{id}', 'MemberEpaymentRecipientController@edit');
+Route::get('member/e-payment/recipient/edit', 'MemberEpaymentRecipientController@edit');
+Route::post('member/e-payment/recipient/edit', 'MemberEpaymentRecipientController@update');
+Route::post('member/e-payment/recipient/delete', 'MemberEpaymentRecipientController@delete');
 
 
 Route::any('admin/migration', 'AdminMigrationController@index');

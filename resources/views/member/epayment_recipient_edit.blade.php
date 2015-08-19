@@ -22,7 +22,7 @@
                                 </ul>
                             </div>
                         @endif
-                        <select name="transaction_code" class="form-control">
+                        <select name="transaction_code" class="form-control" disabled>
                             <option default> Select Transaction</option>
                             @if($_request_code)
                                 @foreach($_request_code as $request_code)
@@ -36,6 +36,7 @@
         <form id="recipient-add-form" method="post" class="form-horizontal">
 
             <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+            <input type="hidden" value="{{$profile->id}}" name="id">
             <div class="form-group">
                     <label for="Profile Name" class="col-md-2 control-label">Profile Name</label>
 
@@ -48,7 +49,7 @@
                             </ul>
                         </div>
                     @endif
-                        <input type="text" name="profile_name" class="form-control">
+                        <input type="text" name="profile_name" class="form-control" value="{{Request::old('profile_name') ? Request::old('profile_name') : $profile->profile_name}}">
                     </div>
             </div>
             @if($_input_field)
@@ -66,11 +67,11 @@
                     @if($input_field['type']=='select')
                         <select name="req[{{$input_field['name']}}]" class="form-control">
                             @foreach($input_field['data'] as $option)
-                                <option value="{{$option['value']}}" {{Request::old($input_field['name']) == $option['value'] ? 'selected' :  ''}}>{{$option['name']}}</option>
+                                <option value="{{$option['value']}}" {{Request::old($input_field['name']) == $option['value'] || $input_field['value'] ==  $option['value']? 'selected' :  ''}}>{{$option['name']}}</option>
                             @endforeach
                         </select>
                     @else
-                      <input type="{{$input_field['type']}}" name="req[{{$input_field['name']}}]" class="form-control" id="" placeholder="{{$input_field['placeholder']}}" value="{{Request::old($input_field['name'])}}">
+                      <input type="{{$input_field['type']}}" name="req[{{$input_field['name']}}]" class="form-control" id="" placeholder="{{$input_field['placeholder']}}" value="{{Request::old($input_field['name']) ? Request::old($input_field['name']) : $input_field['value']}}">
                     @endif
                     </div>
                   </div>

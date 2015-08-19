@@ -13,4 +13,10 @@ class Tbl_transaction_profile_input extends Model
 							'input_id',
 							'value'
 						];
+
+
+	public function scopeGetInput($query)
+    {
+        return $query->leftJoin('tbl_get_input','tbl_get_input.id','=', 'tbl_transaction_profile_input.input_id');
+    }
 }
