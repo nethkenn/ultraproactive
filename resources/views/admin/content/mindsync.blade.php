@@ -95,7 +95,7 @@
 			@foreach($_mindsync as $mindsync)
 			<tr class="text-center">
 				<td>https://www.youtube.com/watch?v={{ $mindsync->mindsync_video }}</td>
-				<td><a href="admin/content/mindsync/video/edit?id={{ $mindsync->mindsync_id }}">modify</a> | <a href="admin/content/mindsync/delete?id={{ $mindsync->mindsync_id }}">delete</a></td>
+				<td><a href="admin/content/mindsync/video/edit?id={{ $mindsync->mindsync_id }}">modify</a> | <a href="admin/content/mindsync/video/delete?id={{ $mindsync->mindsync_id }}">delete</a></td>
 			</tr>
 			@endforeach
 		</tbody>

@@ -35,7 +35,7 @@
 						<div class="post_main" style="margin-left: 0;">
 							<div class="row" style="margin-bottom: 50px;">
 								@foreach($_video as $video)
-								<div class="span6" style="float: left;">
+								<div class="span6" style="float: left; margin: 0 7.5px; margin-bottom: 15px;">
 									<div class="videoWrapper-youtube">
 										<iframe width="100%" src="http://www.youtube.com/embed/{{ $video->mindsync_video }}?showinfo=0&amp;autohide=1&amp;related=0" frameborder="0" allowfullscreen=""></iframe>
 									</div>
