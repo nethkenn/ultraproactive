@@ -48,4 +48,12 @@ class AdminFaqController extends AdminController
         	return view('admin.content.faq_edit', $data);
         }
 	}
+	public function delete()
+	{
+		$id = Request::input("id");
+		$type = Request::input("type");
+
+		DB::table("tbl_faq")->where("faq_id", $id)->update(['archived' => 1]);
+		return Redirect::to("/admin/content/faq?type=".$type);
+	}
 }

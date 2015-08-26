@@ -27,7 +27,7 @@
 			@foreach($_product as $product)
 			<tr class="text-center">
 				<td>{{ $product->faq_title }}</td>
-				<td><a href="admin/content/faq/edit?id={{ $product->faq_id }}&&type=product">modify</a> | <a href="admin/content/faq/delete?id={{ $product->faq_id }}">delete</a></td>
+				<td><a href="admin/content/faq/edit?id={{ $product->faq_id }}&&type=product">modify</a> | <a href="admin/content/faq/delete?id={{ $product->faq_id }}&&type=product">delete</a></td>
 			</tr>
 			@endforeach
 		</tbody>
@@ -60,7 +60,7 @@
 			@foreach($_mindsync as $mindsync)
 			<tr class="text-center">
 				<td>{{ $mindsync->faq_title }}</td>
-				<td><a href="admin/content/faq/edit?id={{ $mindsync->faq_id }}&&type=mindsync">modify</a> | <a href="admin/content/faq/delete?id={{ $mindsync->faq_id }}">delete</a></td>
+				<td><a href="admin/content/faq/edit?id={{ $mindsync->faq_id }}&&type=mindsync">modify</a> | <a href="admin/content/faq/delete?id={{ $mindsync->faq_id }}&&type=mindsync">delete</a></td>
 			</tr>
 			@endforeach
 		</tbody>
@@ -93,7 +93,7 @@
 			@foreach($_opportunity as $opportunity)
 			<tr class="text-center">
 				<td>{{ $opportunity->faq_title }}</td>
-				<td><a href="admin/content/faq/edit?id={{ $opportunity->faq_id }}&&type=opportunity">modify</a> | <a href="admin/content/faq/delete?id={{ $opportunity->faq_id }}">delete</a></td>
+				<td><a href="admin/content/faq/edit?id={{ $opportunity->faq_id }}&&type=opportunity">modify</a> | <a href="admin/content/faq/delete?id={{ $opportunity->faq_id }}&&type=opportunity">delete</a></td>
 			</tr>
 			@endforeach
 		</tbody>

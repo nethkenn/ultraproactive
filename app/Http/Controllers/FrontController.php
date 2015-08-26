@@ -307,6 +307,9 @@ class FrontController extends Controller
 		$data["type"] = Request::input("type");
 		if (isset($data["type"])) 
 		{
+			$data["_product"] = DB::table("tbl_faq")->where("archived", 0)->where("faq_type", "product")->get();
+			$data["_mindsync"] = DB::table("tbl_faq")->where("archived", 0)->where("faq_type", "mindsync")->get();
+			$data["_opportunity"] = DB::table("tbl_faq")->where("archived", 0)->where("faq_type", "opportunity")->get();
 			return view('front.faq', $data);
 		}
         else
