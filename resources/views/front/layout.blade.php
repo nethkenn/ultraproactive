@@ -34,6 +34,14 @@
 					<li class="{{ Request::segment(1) == 'stories' ? 'current-menu-item' : '' }}"><a href="/stories">Stories</a></li>
 					<li class="{{ Request::segment(1) == 'about' ? 'current-menu-item' : '' }}"><a href="/about">About us</a></li>
 					<li class="{{ Request::segment(1) == 'opportunity' ? 'current-menu-item' : '' }}"><a href="/opportunity">Opportunity</a></li>
+					<li class="{{ Request::segment(1) == 'faq' ? 'current-menu-item' : '' }}">
+						<a href="javascript:">F.A.Q.</a>
+						<ul>
+							<li><a href="/faq?type=product">Products</a></li>
+							<li><a href="/faq?type=mindsync">Mind Sync Project</a></li>
+							<li><a href="/faq?type=opportunity">Opportunity</a></li>
+						</ul>
+					</li>
 					<li class="{{ Request::segment(1) == 'contact' ? 'current-menu-item' : '' }}"><a href="/contact">Contact us</a></li>
 				</ul>		
 			</nav>

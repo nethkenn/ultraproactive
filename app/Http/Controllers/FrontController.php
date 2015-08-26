@@ -302,4 +302,9 @@ class FrontController extends Controller
 		
 		return view('front.mindsync', $data);
 	}
+	public function faq()
+	{
+		$data["type"] = Request::input("type");
+        return view('front.faq', $data);
+	}
 }

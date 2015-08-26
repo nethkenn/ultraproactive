@@ -45,6 +45,7 @@ Route::any('/news', 'FrontController@news');
 Route::any('/news_content', 'FrontController@news_content');
 Route::any('/contact', 'FrontController@contact');
 Route::any('/contact/submit', 'FrontController@contact_submit');
+Route::any('/faq', 'FrontController@faq');
 Route::any('/register', 'FrontController@register');
 Route::get('/admin', 'AdminController@index');
 Route::post('/admin','AdminController@postLogin');
