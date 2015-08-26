@@ -15,6 +15,7 @@
 		<!-- BOOTSTRAP -->
 		<link href="resources/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		<link href="resources/assets/bootstrap/bootstrap-switch.css" rel="stylesheet">
+		@yield("css")
 		<!-- FONT AWESEOME -->
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="/resources/assets/remodal/src/jquery.remodal.css">
