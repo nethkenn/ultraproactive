@@ -125,6 +125,12 @@ Route::get('admin/content/partner/edit', 'AdminPartnerController@edit');
 Route::any('admin/content/partner/edit_submit', 'AdminPartnerController@edit_submit');
 Route::any('admin/content/partner/delete', 'AdminPartnerController@delete');
 
+/* FAQ MANAGEMENT */
+Route::get('admin/content/faq', 'AdminFaqController@index');
+Route::any('admin/content/faq/add', 'AdminFaqController@add');
+Route::any('admin/content/faq/edit', 'AdminFaqController@edit');
+Route::any('admin/content/faq/delete', 'AdminFaqController@delete');
+
 /* MINDSYNC MANAGEMENT */
 Route::get('admin/content/mindsync', 'AdminMindSyncController@index');
 Route::get('admin/content/mindsync/video', 'AdminMindSyncController@video');

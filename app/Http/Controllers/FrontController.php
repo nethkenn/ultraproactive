@@ -305,6 +305,13 @@ class FrontController extends Controller
 	public function faq()
 	{
 		$data["type"] = Request::input("type");
-        return view('front.faq', $data);
+		if (isset($data["type"])) 
+		{
+			return view('front.faq', $data);
+		}
+        else
+       	{
+       		return Redirect::to("/");
+       	}
 	}
 }
