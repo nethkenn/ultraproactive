@@ -15,6 +15,7 @@
 		<!-- BOOTSTRAP -->
 		<link href="resources/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		<link href="resources/assets/bootstrap/bootstrap-switch.css" rel="stylesheet">
+		@yield("css")
 		<!-- FONT AWESEOME -->
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="/resources/assets/remodal/src/jquery.remodal.css">
@@ -129,6 +130,7 @@
 									<li><a href="admin/content/stories">Stories</a></li>
 									<li><a href="admin/content/slide">Slide</a></li>
 									<li><a href="admin/content/team">Team</a></li>
+									<li><a href="admin/content/faq">F.A.Q.</a></li>
 									<li><a href="admin/content/mindsync">MindSync</a></li>
 									<!-- <li><a href="admin/content/partner">Partners</a></li>
 									<li><a href="admin/content/service">Services</a></li> -->

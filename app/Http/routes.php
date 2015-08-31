@@ -1,6 +1,9 @@
 <?php
 // Route::any('/neil', 'NeilController@index');
 
+/* INCOME PROJECTION */
+Route::any('/projection', 'ProjectionController@index');
+
 /* MEMBER */
 Route::any('/member', 'MemberDashboardController@index');
 Route::any('/member/notification', 'MemberDashboardController@notification');
@@ -45,6 +48,7 @@ Route::any('/news', 'FrontController@news');
 Route::any('/news_content', 'FrontController@news_content');
 Route::any('/contact', 'FrontController@contact');
 Route::any('/contact/submit', 'FrontController@contact_submit');
+Route::any('/faq', 'FrontController@faq');
 Route::any('/register', 'FrontController@register');
 Route::get('/admin', 'AdminController@index');
 Route::post('/admin','AdminController@postLogin');
@@ -123,6 +127,12 @@ Route::any('admin/content/partner/add_submit', 'AdminPartnerController@add_submi
 Route::get('admin/content/partner/edit', 'AdminPartnerController@edit');
 Route::any('admin/content/partner/edit_submit', 'AdminPartnerController@edit_submit');
 Route::any('admin/content/partner/delete', 'AdminPartnerController@delete');
+
+/* FAQ MANAGEMENT */
+Route::get('admin/content/faq', 'AdminFaqController@index');
+Route::any('admin/content/faq/add', 'AdminFaqController@add');
+Route::any('admin/content/faq/edit', 'AdminFaqController@edit');
+Route::any('admin/content/faq/delete', 'AdminFaqController@delete');
 
 /* MINDSYNC MANAGEMENT */
 Route::get('admin/content/mindsync', 'AdminMindSyncController@index');
