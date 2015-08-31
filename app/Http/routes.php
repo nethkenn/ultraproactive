@@ -1,6 +1,9 @@
 <?php
 // Route::any('/neil', 'NeilController@index');
 
+/* INCOME PROJECTION */
+Route::any('/projection', 'ProjectionController@index');
+
 /* MEMBER */
 Route::any('/member', 'MemberDashboardController@index');
 Route::any('/member/notification', 'MemberDashboardController@notification');
