@@ -52,7 +52,7 @@
 							<!-- DASHBOARD -->
 							<li class="{{ Request::segment(2) == '' ? 'active' : 'inactive' }}"><a href="admin/">Dashboard</a></li>
 							<!-- TRANSACTION -->
-							<!-- <li class="dropdown {{ Request::segment(2) == 'transaction' ? 'active' : 'inactive' }}">
+							<li class="dropdown {{ Request::segment(2) == 'transaction' ? 'active' : 'inactive' }}">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Transaction <span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="admin/transaction/sales">Process Sales</a></li>
@@ -61,7 +61,7 @@
 									<!--<li><a href="admin/transaction/unilevel-distribution">Unilevel Distribution</a></li> -->
 									<li><a href="admin/transaction/unilevel-distribution/dynamic">Dynamic Compression</a></li>
 								</ul>
-							</li> -->
+							</li> 
 							<!-- MAINTENANCE -->
 							<li class="dropdown {{ Request::segment(2) == 'maintenance' ? 'active' : 'inactive' }}">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Maintenance <span class="caret"></span></a>
@@ -72,7 +72,7 @@
 									<li><a href="admin/maintenance/product">Product</a></li>
 									<li><a href="admin/maintenance/product_package">Product Package</a></li>
 									<li><a href="admin/maintenance/product_category">Product Categories</a></li>
-									<!-- <li><a href="admin/maintenance/inventory">Product Inventory</a></li>
+									<li><a href="admin/maintenance/inventory">Product Inventory</a></li>
 									<li class="divider" role="separator"></li>
 									<li><a href="admin/maintenance/membership">Membership</a></li>
 									<li><a href="admin/maintenance/codes">Membership Codes</a></li>
@@ -80,7 +80,7 @@
 									<li><a href="admin/maintenance/country">Country</a></li>
 									<li><a href="admin/maintenance/deduction">Deductions</a></li>
 									<li><a href="admin/maintenance/ranking">Ranking</a></li>
-									<li class="divider" role="separator"></li>
+									<!-- <li class="divider" role="separator"></li>
 									<li><a href="admin/admin_stockist">Stockist</a></li>
 									<li><a href="admin/admin_stockist_user">Stockist Users</a></li>
 									<li><a href="admin/stockist_type">Stockist Type</a></li>
@@ -90,7 +90,7 @@
 								</ul>
 							</li>
 							<!-- UTILITIES -->
-							<!-- <li class="dropdown {{ Request::segment(2) == 'utilities' ? 'active' : 'inactive' }}">
+							<li class="dropdown {{ Request::segment(2) == 'utilities' ? 'active' : 'inactive' }}">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Utilities <span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="admin/utilities/admin_maintenance">Admin</a></li>
@@ -104,24 +104,21 @@
 									<li><a href="admin/utilities/unilevel">Unilevel Computation</a></li>
 									<li class="divider" role="separator"></li>
 									<li><a href="admin/utilities/rank">Promotion Settings</a></li>
-									<li class="divider" role="separator"></li>
+									<!--<li class="divider" role="separator"></li>
 									<li><a href="admin/utilities/recompute">Recomputation</a></li>
 									<li class="divider" role="separator"></li>
-									<li><a href="admin/e-payment-settings">E-payment / E-Remit Settings</a></li>
-									<li><a href="admin/e-payment-profile-form-settings">E-payment Form Settings</a></li>
-
-
-
+									 <li><a href="admin/e-payment-settings">E-payment / E-Remit Settings</a></li>
+									<li><a href="admin/e-payment-profile-form-settings">E-payment Form Settings</a></li> -->
 								</ul>
-							</li> -->
+							</li> 
 							<!-- REPORTS -->
-							<!-- <li class="dropdown {{ Request::segment(2) == 'reports' ? 'active' : 'inactive' }}">
+							<li class="dropdown {{ Request::segment(2) == 'reports' ? 'active' : 'inactive' }}">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Reports <span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="admin/reports/product_sales">Product Sales Report</a></li>
 									<li><a href="admin/reports/membership_sales">Membership Sales Report</a></li>
 								</ul>
-							</li> -->
+							</li> 
 							<!-- CONTENT -->
 							<li class="dropdown {{ Request::segment(2) == 'content' ? 'active' : 'inactive' }}">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Content <span class="caret"></span></a>
