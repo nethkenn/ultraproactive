@@ -22,7 +22,7 @@
 	@yield('css')
 </head>
 
-<body style="overflow-x: hidden; margin-left: 15px; margin-right: 15px;">
+<body style="overflow-x: hidden; margin-left: 15px; margin-right: 15px; position: relative;">
 	<!-- <header id="dz_main_header" class="clearfix">
 		<div class="container">
 			<div id="logo">

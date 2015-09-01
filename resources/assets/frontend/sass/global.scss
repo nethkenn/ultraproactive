@@ -46,11 +46,9 @@ body
         background-color: #f1cb40;
         border: 0 !important;
         position: absolute;
-        top: 0;
+        top: -200px;
         z-index: 999;
-        width: -webkit-calc(100% - 30px);
-        width: -moz-calc(100% - 30px);
-        width: calc(100% - 30px);
+        width: 100%;
         ul
         {
             width: 100%;
