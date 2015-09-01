@@ -1,6 +1,6 @@
 @extends('front.layout')
 @section('content')
-<div class="register top_wrapper no-transparent">
+<div class="register top_wrapper no-transparent rw" style="background-color: #fff; margin: 0 -15px;">
 	<div class="title-header">User Registration Form</br><span>register here to become a member of our website.</span></div>
 
 	@if(Session::has('message'))
@@ -16,7 +16,7 @@
 	<form method="POST">
 		<div class="container">
 		<input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
-		<div class="vc_col-md-6 columnz">
+		<div class="col-md-6 columnz">
 			<div class="column-title">
 				<span>Personal Details</span>
 			</div>
@@ -59,8 +59,8 @@
 				</div>
 				<div class="form-group">
 					<div class="labelz">Birthday*</div>
-					<div class="inputz">
-						<div class="vc_col-md-4">
+					<div class="inputz" style="margin: 0">
+						<div class="col-md-4">
 								<select name="rmonth" id="mbirthday">
 									<option value="1">January</option>
 									<option value="2">February</option>
@@ -76,7 +76,7 @@
 									<option value="12">December</option>
 	 							</select>
 	 				    </div>
-	 					<div class="vc_col-md-4">
+	 					<div class="col-md-4">
 								<select id = "dbirthday" name = "rday" required = "required">	
 	 									@for($birthday = 1; $birthday <= 31; $birthday++)
 											<option value="{{$birthday}}"> 
@@ -85,7 +85,7 @@
 										@endfor				
 	 							</select>
 	 					</div>
-						<div class="vc_col-md-4">
+						<div class="col-md-4">
 							<select id = "ybirthday" name = "ryear">
 		 							@for($birthday=(date("Y")-120);$birthday<=date("Y");$birthday++)
 										<option value="{{$birthday}}">
@@ -112,7 +112,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="vc_col-md-6 columnz">
+		<div class="col-md-6 columnz">
 			<div class="column-title">
 				<span>Account Details</span>
 			</div>
@@ -131,7 +131,7 @@
 					<div class="inputz"><input type="password" name="rpass" value="{{Request::old('rpass')}}"></div>
 				</div>
 
-				<div class="form-group text-center">
+				<!-- <div class="form-group text-center">
 					<strong>Beneficiary</strong>
 				</div>
 				<div class="form-group">
@@ -172,10 +172,10 @@
 							<option>Add Relation</option>
 						</select>
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</div>
-		<div class="vc_col-md-12">
+		<div class="col-md-12" style="margin-top: 20px;">
 			<input type="submit" name="submit" value="Register Now" class="register-button">
 		</div>
 		</div>
@@ -217,6 +217,9 @@
 
 	})(jQuery);
 </script>
+@endsection
+@section("css")
+<link rel="stylesheet" type="text/css" href="/resources/assets/frontend/css/registration.css">
 @endsection
 
 

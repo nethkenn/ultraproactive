@@ -27,8 +27,8 @@
 
     display: block;
 
-    width: 50px;
-    height: 50px;
+/*    width: 50px;
+    height: 50px;*/
     margin-top: -10px;
     padding: 0;
 
@@ -65,7 +65,6 @@
 .slick-next:before
 {
     font-family: 'slick';
-    font-size: 50px;
     line-height: 1;
     color: #009DCD;
 
@@ -84,11 +83,23 @@
 }
 .slick-prev:before
 {
-    content: '←';
+    /*content: '←';*/
+    content:url(/resources/assets/frontend/img/arrow-left.png);
+    -webkit-transform: scale(.5);
+       -moz-transform: scale(.5);
+        -ms-transform: scale(.5);
+         -o-transform: scale(.5);
+            transform: scale(.5);
 }
 [dir='rtl'] .slick-prev:before
 {
-    content: '→';
+    /*content: '→';*/
+    content:url(/resources/assets/frontend/img/arrow-right.png);
+    -webkit-transform: scale(.5);
+       -moz-transform: scale(.5);
+        -ms-transform: scale(.5);
+         -o-transform: scale(.5);
+            transform: scale(.5);
 }
 
 .slick-next
@@ -102,17 +113,29 @@
 }
 .slick-next:before
 {
-    content: '→';
+    /*content: '→';*/
+    content:url(/resources/assets/frontend/img/arrow-right.png);
+    -webkit-transform: scale(.5);
+       -moz-transform: scale(.5);
+        -ms-transform: scale(.5);
+         -o-transform: scale(.5);
+            transform: scale(.5);
 }
 [dir='rtl'] .slick-next:before
 {
-    content: '←';
+    /*content: '←';*/
+    content:url(/resources/assets/frontend/img/arrow-left.png);
+    -webkit-transform: scale(.5);
+       -moz-transform: scale(.5);
+        -ms-transform: scale(.5);
+         -o-transform: scale(.5);
+            transform: scale(.5);
 }
 
 /* Dots */
 .slick-slider
 {
-    margin-bottom: 30px;
+   
 }
 
 .slick-dots

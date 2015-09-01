@@ -95,11 +95,11 @@ class MemberRegisterController extends Controller
 					'telephone' => $data['tp'],
 					'address' => $data['address'],
 					'gender' => $data['gender'],
-					'l_name' => $data['l_name'],
-					'f_name' => $data['f_name'],
-					'm_name' => $data['m_name'],
-					'beneficiary_gender' => $data['beneficiary_gender'],
-					'beneficiary_rel' =>$data['beneficiary_rel']
+					// 'l_name' => $data['l_name'],
+					// 'f_name' => $data['f_name'],
+					// 'm_name' => $data['m_name'],
+					// 'beneficiary_gender' => $data['beneficiary_gender'],
+					// 'beneficiary_rel' =>$data['beneficiary_rel']
 				],
 				[
 					'account_name' => 'required|min:5|regex:/^[a-zA-Z\s]*$/',
@@ -110,11 +110,11 @@ class MemberRegisterController extends Controller
 					'gender' => 'required',
 					'telephone' => 'required',
 					'address' => 'required|min:6',
-					'l_name' => 'required',
-					'm_name' => 'required',
-					'f_name' => 'required',
-					'beneficiary_gender' => 'required',
-					'beneficiary_rel' => 'required',
+					// 'l_name' => 'required',
+					// 'm_name' => 'required',
+					// 'f_name' => 'required',
+					// 'beneficiary_gender' => 'required',
+					// 'beneficiary_rel' => 'required',
 					// 'customer_province' => "required|exists:tbl_location,location_id",
 					// 'customer_municipality' => "required|exists:tbl_location,location_id",
 					// 'customer_barangay' => "required|exists:tbl_location,location_id",
@@ -122,9 +122,9 @@ class MemberRegisterController extends Controller
 				],
 
 				[
-					'l_name.required' => 'The beneficiary last name is required.',
-					'f_name.required' => 'The beneficiary first name is required.',
-					'm_name.required' => 'The beneficiary middle name is required.',
+					// 'l_name.required' => 'The beneficiary last name is required.',
+					// 'f_name.required' => 'The beneficiary first name is required.',
+					// 'm_name.required' => 'The beneficiary middle name is required.',
 				]
 				);
 

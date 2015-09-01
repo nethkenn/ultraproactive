@@ -251,7 +251,7 @@ Author URI: http://www.ab-themes.com
 
 	.dzen_section_DD header h3,
 	.column_title_left{
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 		font-weight: 300;
 		display: inline-block;
 		color: #505558;
@@ -369,7 +369,7 @@ Author URI: http://www.ab-themes.com
 		font-size: 18px;
 		line-height: 18px;
 		position: relative;
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 		font-weight: 300;
 	}
 
@@ -713,7 +713,7 @@ Author URI: http://www.ab-themes.com
 	}
 
 	.dzen-table th{
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 		font-weight: 300;
 		font-size: 20px;
 		color: #505558;
@@ -945,7 +945,7 @@ Author URI: http://www.ab-themes.com
 		font-size: 50px;
 		line-height: 50px;
 		font-weight: 300;
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 	}
 
 	.dzen_stats_excerpt .dzen_stats_number:after{
@@ -963,7 +963,7 @@ Author URI: http://www.ab-themes.com
 	.dzen_stats_excerpt p{
 		font-size: 24px;
 		font-weight: 300;
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 		margin-top: 32px;
 	}
 
@@ -1006,7 +1006,7 @@ Author URI: http://www.ab-themes.com
 		text-align: center;
 		visibility: hidden;
 		font-size: 32px;
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 		font-weight: 300;
 		z-index: 2;
 	}
@@ -1284,7 +1284,7 @@ Author URI: http://www.ab-themes.com
 
 	.dzen_pricing-table-2 .dzen_pricebox_name{
 		font-size: 24px;
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 		background: #fff;
 		color: #505558;
 		font-weight: 300;
@@ -1296,7 +1296,7 @@ Author URI: http://www.ab-themes.com
 	.dzen_pricing-table-2 .dzen_pricebox_currency{
 		font-size: 30px;
 		position: relative;
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 		color: #505558;
 	}
 
@@ -1305,7 +1305,7 @@ Author URI: http://www.ab-themes.com
 		line-height: 30px;
 		display: inline-block;
 		padding: 25px 0;
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 		color: #505558;
 	}
 
@@ -1362,7 +1362,7 @@ Author URI: http://www.ab-themes.com
 		display: inline-block;
 		line-height: 16px;
 		color: #505558;
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 		font-weight: 300;
 		font-size: 16px;
 	}
@@ -1402,7 +1402,7 @@ Author URI: http://www.ab-themes.com
 		top: -26px;
 		right: 0;
 		color: #505558;
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 		font-weight: 300;
 		font-size: 16px;
 	}
@@ -1685,7 +1685,7 @@ Author URI: http://www.ab-themes.com
 
 	.dzen-callout_box_title{
 		font-size: 32px;
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 		display: block;
 		font-weight: 300;
 		margin-bottom: 13px;
@@ -1723,7 +1723,7 @@ Author URI: http://www.ab-themes.com
 		margin-right: 10px;
 		margin-bottom: 20px;
 		text-decoration: none;
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 		font-weight: 300;
 	}
 
@@ -1946,7 +1946,7 @@ Author URI: http://www.ab-themes.com
 	}
 
 	h1, h2, h3, h4, h5, h6{
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 		font-weight: 300;
 		color: #505558;
 		margin-bottom: 13px;
@@ -2040,7 +2040,7 @@ Author URI: http://www.ab-themes.com
 		margin-bottom: 20px;
 		line-height: 20px;
 		font-size: 20px;
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 		font-weight: 300;
 		-webkit-border-radius: 3px;
 		-moz-border-radius: 3px;
@@ -2394,7 +2394,7 @@ Author URI: http://www.ab-themes.com
 
 	nav > ul > li a{
 		color: #b1b1b1;
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 		font-weight: 300;
 		font-size: 16px;
 		text-align: center;
@@ -2636,7 +2636,7 @@ Author URI: http://www.ab-themes.com
 		font-weight:300;
 		font-size:38px;
 		line-height:38px;
-		font-family:Roboto;
+		font-family: 'Raleway', sans-serif;
 		margin:0px;
 		border-width:0px;
 		border-style:none;
@@ -2649,7 +2649,7 @@ Author URI: http://www.ab-themes.com
 		font-weight:300;
 		font-size:24px;
 		line-height:32px;
-		font-family:Roboto;
+		font-family: 'Raleway', sans-serif;
 		margin:0px;
 		border-width:0px;
 		border-style:none;
@@ -3067,7 +3067,7 @@ Author URI: http://www.ab-themes.com
 
 	.post_meta_share span{
 		margin-right: 10px;
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 		font-weight: 300;
 		font-size: 20px;
 		color: #505558;
@@ -3187,7 +3187,7 @@ Author URI: http://www.ab-themes.com
 	.comment .comment-author{
 		font-size: 16px;
 		color: #505558;
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 		font-weight: 300;
 		margin-right: 30px;
 	}
@@ -3257,7 +3257,7 @@ Author URI: http://www.ab-themes.com
 		background: #056ab2;
 		margin: 0;
 		font-weight: 300;
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 	}
 
 	#respond #comment-submit:hover{
@@ -3284,7 +3284,7 @@ Author URI: http://www.ab-themes.com
 	#single_post_pagination .next a{
 		color: #fff;
 		background: #056ab2;
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 		font-weight: 300;
 		text-transform: uppercase;
 		font-size: 15px;
@@ -3374,7 +3374,7 @@ Author URI: http://www.ab-themes.com
 	#inner_post_pagination span{
 		color: #fff;
 		background: #505558;
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 		font-weight: 300;
 		text-transform: uppercase;
 		font-size: 15px;
@@ -3431,7 +3431,7 @@ Author URI: http://www.ab-themes.com
 		margin-bottom: 20px;
 		line-height: 20px !important;
 		font-size: 20px;
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 		font-weight: 300;
 		-webkit-border-radius: 3px;
 		-moz-border-radius: 3px;
@@ -3572,7 +3572,7 @@ Author URI: http://www.ab-themes.com
 	.sidebar-widget-heading h3,
 	#comments-title,
 	#reply-title{
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 		font-weight: 300;
 		color: #505558;
 		line-height: 36px;
@@ -3645,7 +3645,7 @@ Author URI: http://www.ab-themes.com
 	}
 
 	.search_resuls_number{
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 		font-size: 19px;
 		font-weight: 300;
 		position: absolute;
@@ -3706,7 +3706,7 @@ Author URI: http://www.ab-themes.com
 	}
 
 	.widget_rss .rsswidget{
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 		color: #505558;
 		font-size: 18px;
 	}
@@ -3757,7 +3757,7 @@ Author URI: http://www.ab-themes.com
 /*-------- 10.4. Flickr stream --------*/	
 	.flickr_stream a{
 		float: left;
-		margin: 0 9px 9px 0;
+		margin: 0 5px 5px 0;
 		display: inline-block;
 		position: relative;
 	}
@@ -3928,7 +3928,7 @@ Author URI: http://www.ab-themes.com
 		font-size: 30px;
 		font-weight: 300;
 		text-transform: uppercase;
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 	}
 
 	.portfolio_item h4 a:hover{
@@ -3954,7 +3954,7 @@ Author URI: http://www.ab-themes.com
 	}
 	
 	.portfolio_item .overlayed .overlay .overlay_title{
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 		font-size: 20px;
 		color: #fff;
 		font-weight: 300;
@@ -4051,7 +4051,7 @@ Author URI: http://www.ab-themes.com
 		-moz-border-radius: 3px;
 		border-radius: 3px;
 		padding: 5px 30px;
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 		font-weight: 300;
 	}
 
@@ -4123,7 +4123,7 @@ Author URI: http://www.ab-themes.com
 
 	#filters li a{
 		color: #939fa6;
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 		font-size: 16px;
 		font-weight: 300;
 		border: 1px solid #e1e9e9;
@@ -4188,7 +4188,7 @@ Author URI: http://www.ab-themes.com
 		-webkit-border-radius: 3px;
 		-moz-border-radius: 3px;
 		border-radius: 3px;
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 		font-size: 20px;
 		font-weight: 300;
 		color: #505558;
@@ -4215,7 +4215,7 @@ Author URI: http://www.ab-themes.com
 	}
 
 	#single_portfolio_pagination a{
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 		font-weight: 300;
 		font-size: 16px;
 		color: #505558;
@@ -4263,7 +4263,7 @@ Author URI: http://www.ab-themes.com
 	#page404 .big_404{
 		font-size: 410px;
 		line-height: 410px;
-		font-family: Roboto;
+		font-family: 'Raleway', sans-serif;
 		font-weight: 300;
 		color: #056ab2;
 	}
@@ -4652,6 +4652,7 @@ Author URI: http://www.ab-themes.com
 		#dz_main_header{
 			padding-left: 10px;
 			padding-right: 10px;
+			background-color: #f7d34d;
 		}
 
 		#title_breadcrumbs_bar .breadcrumbs{
