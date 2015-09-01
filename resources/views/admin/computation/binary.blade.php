@@ -51,6 +51,7 @@
 					<th>MEMBERSHIP</th>
 					<th>PAIRING COMBINATIONS COUNT</th>
 					<th>MAX PAIRS PER DAY</th>
+					<th>DAILY PAIR FOR GC</th>
 					<th class="option-col"></th>
 				</tr>
 			</thead>
@@ -61,6 +62,7 @@
 					<td>{{ $membership->membership_name }}</td>
 					<td>{{ $membership->count }}</td>
 					<td>{{ $membership->max_pairs_per_day }}</td>
+					<td>{{ $membership->every_gc_pair }}</td>
 					<td><a href="admin/utilities/binary/membership/binary/edit?id={{ $membership->membership_id }}">EDIT</a></td>
 				</tr>
 				@endforeach

@@ -9,7 +9,7 @@ use App\Tbl_unilevel_setting;
 use App\Tbl_slot;
 use App\Classes\Compute;
 use DB;
-
+use App\Tbl_matching_bonus;
 
 class AdminComplanController extends AdminController
 {
@@ -106,7 +106,18 @@ class AdminComplanController extends AdminController
 	{
 		if(Request::isMethod("post"))
 		{
-			$update["membership_direct_sponsorship_bonus"] = Request::input("membership_direct_sponsorship_bonus");
+			$number = preg_replace("/[^A-Za-z0-9 ]/", '', Request::input("membership_direct_sponsorship_bonus"));
+			$update["membership_direct_sponsorship_bonus"] = $number;
+			$string = preg_replace('/\s+/', '', Request::input("membership_direct_sponsorship_bonus"));
+			$percentage = substr($string, -1);
+			if($percentage == "%")
+			{
+				$update["if_matching_percentage"] = 1;
+			}
+			else
+			{
+				$update["if_matching_percentage"] = 0;
+			}
 			Tbl_membership::where("membership_id", Request::input("id"))->update($update);
 			return Redirect::to('/admin/utilities/direct');
 		}
@@ -157,13 +168,26 @@ class AdminComplanController extends AdminController
 	{
 		if(Request::isMethod("post"))
 		{
-			$update["membership_matching_bonus"] = Request::input("membership_matching_bonus");
-			Tbl_membership::where("membership_id", Request::input("id"))->update($update);
+			Tbl_matching_bonus::where("membership_id", Request::input("id"))->delete();
+			foreach(Request::input("level")["level"] as $level => $value)
+			{
+				$insert["membership_id"] = Request::input('id');
+				$insert["matching_percentage"] = Request::input("level")["level"][$level];
+				$insert["matching_requirement_count"] = Request::input("level")["count"][$level];
+				// $insert["matching_requirement_membership_id"] = Request::input("level")["member"][$level];
+				$insert["level"] = $level;
+				Tbl_matching_bonus::where("membership_id", Request::input("id"))->insert($insert);
+			}
+			Tbl_membership::where("membership_id", Request::input("id"))->update(["membership_mentor_level"=>$level]);
 			return Redirect::to('/admin/utilities/matching');
 		}
 		else
 		{
 			$data["data"] = Tbl_membership::where("membership_id", Request::input("id"))->first();
+			$data["member"] = Tbl_membership::where("archived",0)->select('membership_id','membership_name')->get();
+			$data["_member"] = Tbl_membership::where("archived",0)->select('membership_id','membership_name')->get();
+			$data["member"] = json_encode($data['member']);
+			$data["_level"] = Tbl_matching_bonus::where("membership_id", Request::input("id"))->get();
 			return view('admin.computation.matching_edit', $data);	
 		}
 	}
@@ -212,14 +236,29 @@ class AdminComplanController extends AdminController
 	{
 		if(Request::isMethod("post"))
 		{
-			$update["membership_required_upgrade"] = Request::input("membership_required_upgrade");
-			$update["upgrade_via_points"] = Request::input("upgrade_via_points");
+			if(Request::input("unilevel"))
+			{
+				$update["membership_required_unilevel_leg"] = 1;
+				$update["membership_unilevel_leg_id"] = Request::input("member");
+			}
+			else
+			{
+				$update["membership_required_unilevel_leg"] = 0;
+				$update["membership_unilevel_leg_id"] = null;
+			}
+
+			$update["membership_required_direct"] = Request::input("membership_required_direct");
+			$update["membership_required_pv_sales"] = Request::input("membership_required_pv_sales");
+			$update["membership_required_month_count"] = Request::input("membership_required_month_count");
 			Tbl_membership::where("membership_id", Request::input("id"))->update($update);
 			return Redirect::to('/admin/utilities/rank');
 		}
 		else
 		{
+			$data["member"] = Tbl_membership::where("archived",0)->select('membership_id','membership_name')->get();
+			$data["member"] = json_encode($data['member']);
 			$data["data"] = Tbl_membership::where("membership_id", Request::input("id"))->first();
+
 			return view('admin.computation.rank_edit', $data);	
 		}
 	}
@@ -257,6 +296,7 @@ class AdminComplanController extends AdminController
 		if(Request::isMethod("post"))
 		{
 			$update["max_pairs_per_day"] = Request::input("max");
+			$update["every_gc_pair"] = Request::input("every_gc_pair");
 			Tbl_membership::where("membership_id", Request::input("id"))->update($update);
 			return Redirect::to('/admin/utilities/binary');
 		}

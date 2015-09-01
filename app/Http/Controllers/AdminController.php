@@ -20,6 +20,13 @@ class AdminController extends Controller
         $Tbl_module->module_name = 'admin/register_url';
         $Tbl_module->save();
 
+        $data['slot_limit'] = DB::table('tbl_settings')->where('key','slot_limit')->first();
+
+        if(!$data['slot_limit'])
+        {
+            DB::table('tbl_settings')->insert(['key'=>'slot_limit','value'=>1]);
+        }
+        
         $admin_info = Admin::info();
         if($admin_info)
         {

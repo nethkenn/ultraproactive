@@ -58,7 +58,7 @@
 									<li><a href="admin/transaction/sales">Process Sales</a></li>
 									<li><a href="admin/transaction/claims">Process Claims</a></li>
 									<li><a href="admin/transaction/payout">Process Payout</a></li>
-									<li><a href="admin/transaction/unilevel-distribution">Unilevel Distribution</a></li>
+									<!--<li><a href="admin/transaction/unilevel-distribution">Unilevel Distribution</a></li> -->
 									<li><a href="admin/transaction/unilevel-distribution/dynamic">Dynamic Compression</a></li>
 								</ul>
 							</li> -->
@@ -98,7 +98,7 @@
 									<li><a href="admin/utilities/setting">Company Settings</a></li>
 									<li class="divider" role="separator"></li>
 									<li><a href="admin/utilities/binary">Binary Computation</a></li>
-									<li><a href="admin/utilities/matching">Matching Bonus Computation</a></li>
+									<li><a href="admin/utilities/matching">Mentor Bonus Computation</a></li>
 									<li><a href="admin/utilities/direct">Direct Sponsorship Bonus</a></li>
 									<li><a href="admin/utilities/indirect">Indirect Sponsorship Bonus</a></li>
 									<li><a href="admin/utilities/unilevel">Unilevel Computation</a></li>

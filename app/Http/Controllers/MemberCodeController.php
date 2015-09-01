@@ -32,6 +32,7 @@ class MemberCodeController extends MemberController
 {
 	public function index()
 	{
+
 		$id = Customer::id();
 		$data = $this->getslotbyid($id);
 		$data['_error'] = Session::get('message');
@@ -49,7 +50,7 @@ class MemberCodeController extends MemberController
 	 	{	
 		    	 	if(strtotime($check_date->join_date)  > strtotime(Carbon::now()->subDays(30)) && $check_date->used == 0)
 				 	{
-		    			$data['exist_lead'] = Tbl_lead::where('tbl_lead.account_id',$id)->getslot()->get();
+		    			$data['exist_lead'] = Tbl_lead::where('tbl_lead.account_id',$id)->getslot()->getaccount()->get();
 				 	}
 	 	}
 											 
@@ -180,6 +181,8 @@ class MemberCodeController extends MemberController
 
 		$return["message"] = "";
 		$data["message"] = "";
+		$limit = DB::table('tbl_settings')->where('key','slot_limit')->first();
+		$count = Tbl_slot::where('slot_owner',Customer::info()->account_id)->count();
 
 		if(strtolower(Request::input("slot_position")) == 'left' || strtolower(Request::input("slot_position")) == 'right')
 		{
@@ -222,105 +225,131 @@ class MemberCodeController extends MemberController
 				else
 				{
 					if($getslot->code_type_id == 3)
-					{
-						if($checking == true && $checking2 == true)
-						{
-							$insert["slot_membership"] =  $getslot->membership_id;
-							$insert["slot_type"] =  "CD";
-							$insert["slot_rank"] =  1;
-							$insert["slot_wallet"] =  0 - $getslot->membership_price;
-							$insert["slot_sponsor"] =  $data['sponsor'];
-							$insert["slot_placement"] =  $data['placement'];
-							$insert["slot_position"] =  strtolower($data['slot_position']);
-							$insert["slot_binary_left"] =  0;
-							$insert["slot_binary_right"] =  0;
-							$insert["slot_personal_points"] =  0;
-							$insert["slot_group_points"] =  0;
-							$insert["slot_upgrade_points"] = 0;
-							$insert["slot_total_withrawal"] =  0;
-							$insert["slot_total_earning"] =  0;
-							$insert["created_at"] =  Carbon::now();
-							$insert["slot_owner"] =  Customer::id();
-							$insert["membership_entry_id"] =  $getslot->membership_id;
-							$slot_id = Tbl_slot::insertGetId($insert);
-							Compute::tree($slot_id);
-							Compute::entry($slot_id);
-							$return["placement"] = Request::input("placement");
-							Tbl_membership_code::where('code_pin',$data['code_number'])->update(['used'=>1]);
-							$message['success'] = "Slot Created.";
-							$get = Rel_membership_code::where('code_pin',$data['code_number'])->first();
-							$insert2['slot_id'] = $slot_id;
-							$insert2['product_package_id'] = $get->product_package_id;
-							Rel_membership_product::insert($insert2);
-							return $message;
-						}
+					{		
+
+							if($checking == true && $checking2 == true)
+							{
+								if($limit->value >  $count)
+								{
+									$insert["slot_membership"] =  $getslot->membership_id;
+									$insert["slot_type"] =  "CD";
+									$insert["slot_rank"] =  1;
+									$insert["slot_wallet"] =  0 - $getslot->membership_price;
+									$insert["slot_sponsor"] =  $data['sponsor'];
+									$insert["slot_placement"] =  $data['placement'];
+									$insert["slot_position"] =  strtolower($data['slot_position']);
+									$insert["slot_binary_left"] =  0;
+									$insert["slot_binary_right"] =  0;
+									$insert["slot_personal_points"] =  0;
+									$insert["slot_group_points"] =  0;
+									$insert["slot_upgrade_points"] = 0;
+									$insert["slot_total_withrawal"] =  0;
+									$insert["slot_total_earning"] =  0;
+									$insert["created_at"] =  Carbon::now();
+									$insert["slot_owner"] =  Customer::id();
+									$insert["membership_entry_id"] =  $getslot->membership_id;
+									$slot_id = Tbl_slot::insertGetId($insert);
+									Compute::tree($slot_id);
+									Compute::entry($slot_id);
+									$return["placement"] = Request::input("placement");
+									Tbl_membership_code::where('code_pin',$data['code_number'])->update(['used'=>1]);
+									$message['success'] = "Slot Created.";
+									$get = Rel_membership_code::where('code_pin',$data['code_number'])->first();
+									$insert2['slot_id'] = $slot_id;
+									$insert2['product_package_id'] = $get->product_package_id;
+									Rel_membership_product::insert($insert2);
+									return $message;
+								}
+								else
+								{
+									$message = "";
+									return $message;	
+								}
+							}
+
 					}
 					else if($getslot->code_type_id == 1)
 					{
 						if($checking == true && $checking2 == true)
 						{
-							$insert["slot_membership"] =  $getslot->membership_id;
-							$insert["slot_type"] =  "PS";
-							$insert["slot_rank"] =  1;
-							$insert["slot_wallet"] =  0;
-							$insert["slot_sponsor"] =  $data['sponsor'];
-							$insert["slot_placement"] =  $data['placement'];
-							$insert["slot_position"] =  strtolower($data['slot_position']);
-							$insert["slot_binary_left"] =  0;
-							$insert["slot_binary_right"] =  0;
-							$insert["slot_personal_points"] =  0;
-							$insert["slot_group_points"] =  0;
-							$insert["slot_upgrade_points"] = 0;
-							$insert["slot_total_withrawal"] =  0;
-							$insert["slot_total_earning"] =  0;
-							$insert["created_at"] =  Carbon::now();
-							$insert["slot_owner"] =  Customer::id();
-							$insert["membership_entry_id"] =  $getslot->membership_id;
-							$slot_id = Tbl_slot::insertGetId($insert);
-							Compute::tree($slot_id);
-							Compute::entry($slot_id);
-							$return["placement"] = Request::input("placement");
-							Tbl_membership_code::where('code_pin',$data['code_number'])->update(['used'=>1]);
-							$message['success'] = "Slot Created.";
-							$get = Rel_membership_code::where('code_pin',$data['code_number'])->first();
-							$insert2['slot_id'] = $slot_id;
-							$insert2['product_package_id'] = $get->product_package_id;
-							Rel_membership_product::insert($insert2);
-							return $message;
+							if($limit->value >  $count)
+							{
+								$insert["slot_membership"] =  $getslot->membership_id;
+								$insert["slot_type"] =  "PS";
+								$insert["slot_rank"] =  1;
+								$insert["slot_wallet"] =  0;
+								$insert["slot_sponsor"] =  $data['sponsor'];
+								$insert["slot_placement"] =  $data['placement'];
+								$insert["slot_position"] =  strtolower($data['slot_position']);
+								$insert["slot_binary_left"] =  0;
+								$insert["slot_binary_right"] =  0;
+								$insert["slot_personal_points"] =  0;
+								$insert["slot_group_points"] =  0;
+								$insert["slot_upgrade_points"] = 0;
+								$insert["slot_total_withrawal"] =  0;
+								$insert["slot_total_earning"] =  0;
+								$insert["created_at"] =  Carbon::now();
+								$insert["slot_owner"] =  Customer::id();
+								$insert["membership_entry_id"] =  $getslot->membership_id;
+								$slot_id = Tbl_slot::insertGetId($insert);
+								Compute::tree($slot_id);
+								Compute::entry($slot_id);
+								$return["placement"] = Request::input("placement");
+								Tbl_membership_code::where('code_pin',$data['code_number'])->update(['used'=>1]);
+								$message['success'] = "Slot Created.";
+								$get = Rel_membership_code::where('code_pin',$data['code_number'])->first();
+								$insert2['slot_id'] = $slot_id;
+								$insert2['product_package_id'] = $get->product_package_id;
+								Rel_membership_product::insert($insert2);
+								return $message;
+							}
+							else
+							{
+								$message = "";
+								return $message;	
+							}
 						}
 					}
 					else
 					{
 						if($checking == true && $checking2 == true)
 						{
-							$insert["slot_membership"] =  $getslot->membership_id;
-							$insert["slot_type"] =  "FS";
-							$insert["slot_rank"] =  1;
-							$insert["slot_wallet"] =  0;
-							$insert["slot_sponsor"] =  $data['sponsor'];
-							$insert["slot_placement"] =  $data['placement'];
-							$insert["slot_position"] =  strtolower($data['slot_position']);
-							$insert["slot_binary_left"] =  0;
-							$insert["slot_binary_right"] =  0;
-							$insert["slot_personal_points"] =  0;
-							$insert["slot_group_points"] =  0;
-							$insert["slot_upgrade_points"] = 0;
-							$insert["slot_total_withrawal"] =  0;
-							$insert["slot_total_earning"] =  0;
-							$insert["created_at"] =  Carbon::now();
-							$insert["slot_owner"] =  Customer::id();
-							$insert["membership_entry_id"] =  $getslot->membership_id;
-							$slot_id = Tbl_slot::insertGetId($insert);
-							Compute::tree($slot_id);
-							Compute::entry($slot_id);
-							$return["placement"] = Request::input("placement");
-							Tbl_membership_code::where('code_pin',$data['code_number'])->update(['used'=>1]);
-							$message['success'] = "Slot Created.";
-							$get = Rel_membership_code::where('code_pin',$data['code_number'])->first();
-							$insert2['slot_id'] = $slot_id;
-							$insert2['product_package_id'] = $get->product_package_id;
-							Rel_membership_product::insert($insert2);
-							return $message;
+							if($limit->value >  $count)
+							{
+								$insert["slot_membership"] =  $getslot->membership_id;
+								$insert["slot_type"] =  "FS";
+								$insert["slot_rank"] =  1;
+								$insert["slot_wallet"] =  0;
+								$insert["slot_sponsor"] =  $data['sponsor'];
+								$insert["slot_placement"] =  $data['placement'];
+								$insert["slot_position"] =  strtolower($data['slot_position']);
+								$insert["slot_binary_left"] =  0;
+								$insert["slot_binary_right"] =  0;
+								$insert["slot_personal_points"] =  0;
+								$insert["slot_group_points"] =  0;
+								$insert["slot_upgrade_points"] = 0;
+								$insert["slot_total_withrawal"] =  0;
+								$insert["slot_total_earning"] =  0;
+								$insert["created_at"] =  Carbon::now();
+								$insert["slot_owner"] =  Customer::id();
+								$insert["membership_entry_id"] =  $getslot->membership_id;
+								$slot_id = Tbl_slot::insertGetId($insert);
+								Compute::tree($slot_id);
+								Compute::entry($slot_id);
+								$return["placement"] = Request::input("placement");
+								Tbl_membership_code::where('code_pin',$data['code_number'])->update(['used'=>1]);
+								$message['success'] = "Slot Created.";
+								$get = Rel_membership_code::where('code_pin',$data['code_number'])->first();
+								$insert2['slot_id'] = $slot_id;
+								$insert2['product_package_id'] = $get->product_package_id;
+								Rel_membership_product::insert($insert2);
+								return $message;
+							}
+							else
+							{
+								$message = "";
+								return $message;						
+							}
 						}						
 					}
 					
@@ -758,6 +787,8 @@ class MemberCodeController extends MemberController
 		$check_placement = Tbl_slot::checkposition(Request::input("placement"), strtolower(Request::input("slot_position")))->first();
 		$check_id = Tbl_slot::id(Request::input("slot_number"))->first();
 		$ifused = Tbl_membership_code::where('code_pin',Request::input("code_number"))->where('used',1)->first();
+	 	$limit = DB::table('tbl_settings')->where('key','slot_limit')->first();
+		$count = Tbl_slot::where('slot_owner',Customer::info()->account_id)->count();
 
 		if($check_placement)
 		{
@@ -767,16 +798,26 @@ class MemberCodeController extends MemberController
 		{
 			$return["message"] = "This code is already used";
 		}
+		elseif($limit->value <=  $count)
+		{
+			$return["message"] = "You've already reach the max slot per account. Max slot per account is ".$limit->value.".";
+		}
 		elseif($data["message"] != "")
 		{
 			$return["message"] = $data["message"];
 		}
+
+
 		echo json_encode($return);
 	}
 
 	public function get()
 	{
-		$e = Tbl_tree_placement::where('placement_tree_parent_id',Request::input('slot'))->lists('placement_tree_child_id');
+		$e[0] = Tbl_tree_placement::where('placement_tree_parent_id',Request::input('slot'))->join('tbl_slot','tbl_slot.slot_id','=','tbl_tree_placement.placement_tree_child_id')
+																						 ->join('tbl_account','tbl_slot.slot_owner','=','tbl_account.account_id')
+																						 ->lists('placement_tree_child_id','account_name');
+		$e[1] = Tbl_slot::where('slot_id',Request::input('slot'))->account()->lists('account_name');
+		
 		$r = json_encode($e);
 		$check = Tbl_slot::where('slot_id',Request::input('slot'))->first();
 		if($check == null)

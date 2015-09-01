@@ -23,6 +23,8 @@ function code_vault()
 		init_showdownline();
 		showdownline();
 		add_event_use_product_code();
+		$(".loadingicon").hide();
+		$(".loadingprodicon").hide();
 	}
 
 	// function getdata()
@@ -286,6 +288,8 @@ function code_vault()
         $(".c_slot").bind("click", function(e)
         {
     	    e.preventDefault();
+    	    $(".loadingicon").show();
+    	    $(".c_slot").hide();
 			var form = this;
             $('.c_slot').prop("disabled", true);	
             $.ajax(
@@ -302,6 +306,8 @@ function code_vault()
                     }
                     else
                     {
+                    	$(".loadingicon").hide();
+                    	$(".c_slot").show();
                     	$('.c_slot').prop("disabled", false);
                     	$(e.currentTarget).find("button").removeAttr("disabled");
                         alert(data.message);
@@ -310,6 +316,13 @@ function code_vault()
                 }
             });
             
+        });
+
+    	$(".usingprodcode").unbind("click");
+        $(".usingprodcode").bind("click", function(e)
+	    {
+	        	 $(".loadingprodicon").show();	
+	        	 $(".usingprodcode").hide();
         });
     }
     function showdownline()
@@ -331,10 +344,10 @@ function code_vault()
 			                	  $(".treecon").show();		                		
 			    				  $(".tree").empty(); 
 			    				  $x = jQuery.parseJSON(data);
-			    				  var str ="<option value='"+$(".sponse").val()+"'>Slot #"+$(".sponse").val()+"</option>";
-					              $.each($x, function( key, value ) 
+			    				  var str ="<option value='"+$(".sponse").val()+"'>Slot #"+$(".sponse").val()+" ("+$x[1]+")</option>";
+					              $.each($x[0], function( key, value ) 
 					              {
-					              		str = str + '<option value="'+value+'">Slot #'+value+'</option>';  
+					              		str = str + '<option value="'+value+'">Slot #'+value+' ('+key+')</option>';  
 					              }); 	
 					              $(".tree").append(str); 
 					              $('.c_slot').prop("disabled", false);		                		
@@ -376,10 +389,11 @@ function code_vault()
 		                	  $(".treecon").show();		                		
 		    				  $(".tree").empty(); 
 		    				  $x = jQuery.parseJSON(data);
+
 		    				  var str ="<option value='"+$(".sponser").val()+"'>Slot #"+$(".sponser").val()+"</option>";
-				              $.each($x, function( key, value ) 
+				              $.each($x[0], function( key, value ) 
 				              {
-				              		str = str + '<option value="'+value+'">Slot #'+value+'</option>';  
+				              		str = str + '<option value="'+value+'">Slot #'+value+' ('+key+')</option>';  
 				              }); 	
 				              $(".tree").append(str); 
 				              $('.c_slot').prop("disabled", false);		                		
@@ -423,9 +437,9 @@ function code_vault()
 		    				  $(".tree").empty(); 
 		    				  $x = jQuery.parseJSON(data);
 		    				  var str ="<option value='"+$(".sponse").val()+"'>Slot #"+$(".sponse").val()+"</option>";
-				              $.each($x, function( key, value ) 
+				              $.each($x[0], function( key, value ) 
 				              {
-				              		str = str + '<option value="'+value+'">Slot #'+value+'</option>';  
+				              		str = str + '<option value="'+value+'">Slot #'+value+' ('+key+')</option>';  
 				              }); 	
 				              $(".tree").append(str); 
 				              $('.c_slot').prop("disabled", false);		                		
@@ -466,9 +480,9 @@ function code_vault()
 		    				  $(".tree").empty(); 
 		    				  $x = jQuery.parseJSON(data);
 		    				  var str ="<option value='"+$(".sponser").val()+"'>Slot #"+$(".sponser").val()+"</option>";
-				              $.each($x, function( key, value ) 
+				              $.each($x[0], function( key, value ) 
 				              {
-				              		str = str + '<option value="'+value+'">Slot #'+value+'</option>';  
+				              		str = str + '<option value="'+value+'">Slot #'+value+' ('+key+')</option>';  
 				              }); 	
 				              $(".tree").append(str); 
 				              $('.c_slot').prop("disabled", false);		                		

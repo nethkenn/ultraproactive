@@ -69,7 +69,7 @@ $(document).ready(function()
 
 
 
-		$('#checkout-form-container').on('click', '#submit-checkout', function(event)
+			$('#checkout-form-container').on('click', '#submit-checkout', function(event)
     		{
 				event.preventDefault();
 
@@ -83,6 +83,42 @@ $(document).ready(function()
 	    			type: 'POST',
 	    			dataType: 'html',
 	    			data: {slot_id: $current_slot},
+	    		})
+
+
+	    		.done(function($data) {
+	    			setTimeout(function(){
+	    			$('.checkout_preloader').fadeOut();
+	    			$('#checkout-form-container').append($data);
+	    			console.log("post");
+	    			// console.log($data);
+	    			}, 100);
+	    		})
+	    		.fail(function() {
+	    			// console.log("error");
+	    			alert("Error on showing checkout form.");
+	    			$checkout_remodal.close();
+	    		})
+	    		.always(function() {
+	    			// console.log("complete");
+	    		});
+
+			});
+
+			$('#checkout-form-container').on('click', '#submit-checkout-gc', function(event)
+    		{
+				event.preventDefault();
+
+				var $current_slot = $(".tokens").val();
+
+	    		console.log('current_slot : ' + $current_slot);
+	    		$('.checkout_preloader').fadeIn();
+	    		$('#checkout-form-container').empty("");
+	    		$.ajax({
+	    			url: 'cart/checkout',
+	    			type: 'POST',
+	    			dataType: 'html',
+	    			data: {slot_id: $current_slot,gc:"true"},
 	    		})
 
 

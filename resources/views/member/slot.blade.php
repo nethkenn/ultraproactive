@@ -159,7 +159,7 @@
     </div>
     <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
     <div class="col-md-10 col-md-offset-1 para">
-        <form class="form-horizontal" method="get">
+        <form class="form-horizontal" method="POST">
             <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
             <input type="hidden" class="token" name="tols" id="tols" value="">
             <div class="alerted alert alert-danger">

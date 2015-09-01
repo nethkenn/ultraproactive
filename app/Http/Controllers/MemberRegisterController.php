@@ -53,6 +53,10 @@ class MemberRegisterController extends Controller
 					if(Request::input('submit'))
 					{	
 						$data =	$this->checkifvalidate2(Request::input(),$email);
+						if($data == "Success")
+						{
+							return Redirect::to('member');
+						}
 						return Redirect::to('lead/'.$slug)->with('message',$data);
 					}
 
@@ -145,7 +149,7 @@ class MemberRegisterController extends Controller
 					$Tbl_beneficiary->save();
 
 
-					$insert['beneficiary_id'] = $Tbl_beneficiary->beneficiary_id;
+					$insert['beneficiary_id']		  = $Tbl_beneficiary->beneficiary_id;
 					$insert['account_username'] 	  = $data['user'];
 					$insert['account_email']		  = $data['email'];
 					$insert['account_contact_number'] = $data['cp'];
@@ -242,6 +246,7 @@ class MemberRegisterController extends Controller
 					{
 						Log::account($info,'Successfully become a lead of '.$email->account_name.' through his/her link');
 					}
+					return "Success";
 			}
 			else
 			{

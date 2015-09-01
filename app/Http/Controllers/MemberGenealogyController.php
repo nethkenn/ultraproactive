@@ -138,8 +138,10 @@ class MemberGenealogyController extends MemberController
 		}
 		else if($position) 
 		{
+			$slot_info = Tbl_slot::where('slot_id',$placement)->account()->first();
+
 			return 	'	<li class="width-reference">
-							<span class="positioning parent parent-reference VC" position="'.$position.'" placement="'.$placement.'">
+							<span class="positioning parent parent-reference VC" position="'.$position.'" placement="'.$placement.'" y="'.$slot_info->account_name.'">
 								<div class="id">+</div>
 							</span>
 						</li>';
@@ -198,7 +200,13 @@ class MemberGenealogyController extends MemberController
 		}
 
 
-
+	 	$limit = DB::table('tbl_settings')->where('key','slot_limit')->first();
+		$count = Tbl_slot::where('slot_owner',Customer::info()->account_id)->count();
+		
+		if($limit->value <=  $count)
+		{
+			$data["message"] = "You've already reach the max slot per account. Max slot per account is ".$limit->value.".";
+		}
 
 
 

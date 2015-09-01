@@ -193,7 +193,8 @@
         </div>
         <br>
         <button class="button" type="button" data-remodal-action="cancel">Cancel</button>
-        <button class="button" type="submit" name="usingcode">Use Code</button>
+        <button class="usingprodcode button" type="submit" name="usingcode">Use Code</button>
+        <span class='loadingprodicon' style="margin-left: 50px;"><img class='loadingprodicon' src='/resources/assets/img/small-loading.GIF'></span>
     </form>
 </div>
 
@@ -244,8 +245,9 @@
             </div>
         </div>
         <br>
-        <button class="button" type="button" data-remodal-action="cancel">Cancel</button>
+        <button class="cancel button" type="button" data-remodal-action="cancel">Cancel</button>
         <button class="c_slot button"  type="submit" name="c_slot">Create Slot</button>
+        <span class='loadingicon' style="margin-left: 50px;"><img class='loadingicon' src='/resources/assets/img/small-loading.GIF'></span>
     </form>
 </div>
 

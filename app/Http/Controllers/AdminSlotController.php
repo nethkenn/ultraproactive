@@ -18,6 +18,19 @@ class AdminSlotController extends AdminController
 	public function index()
 	{
 		$data['membership'] = Tbl_membership::where('archived',0)->get();
+		$data['slot_limit'] = DB::table('tbl_settings')->where('key','slot_limit')->first();
+
+		if(!$data['slot_limit'])
+		{
+			DB::table('tbl_settings')->insert(['key'=>'slot_limit','value'=>1]);
+		}
+		
+		if(isset($_POST['slot_limit']))
+		{
+			DB::table('tbl_settings')->where('key','slot_limit')->update(['key'=>'slot_limit','value'=>Request::input('slot_limit')]);
+		    return Redirect::to('admin/maintenance/slots');
+		}
+
         return view('admin.maintenance.slot',$data);
 	}
 	public function data()
@@ -82,7 +95,14 @@ class AdminSlotController extends AdminController
 
 		$return["message"] = "";
 		$data["message"] = "";
-		
+
+	 	$limit = DB::table('tbl_settings')->where('key','slot_limit')->first();
+		$count = Tbl_slot::where('slot_owner',Request::input("account_id"))->count();
+		if($limit->value <=  $count)
+		{
+			$return["message"] = "This account is already reach the max slot per account. Max slot per account is ".$limit->value.".";
+		}
+
 		if(Request::input("account_id") == 0)
 		{
 			$data = $this->add_form_submit_new_account($data);

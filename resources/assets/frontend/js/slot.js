@@ -32,7 +32,7 @@ function slot()
 
 			if($('#tuu option').size() == 0)
 			{
-			$('#tuu').append('<option value="" class="shouldremove">No included product for this slow.</option>');  
+			$('#tuu').append('<option value="" class="shouldremove">No included product for this slot.</option>');  
 			}
 
 			var inst = $('[data-remodal-id=upgrade_member]').remodal();

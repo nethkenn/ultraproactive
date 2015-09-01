@@ -13,8 +13,12 @@
     <form id="country-add-form" method="post">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="form-group col-md-12">
-                <label for="account_contact">Max pairs per day</label>
+                <label for="account_contact">Max pairs per day/Daily GC</label>
                 <input name="max" value="{{ $data->max_pairs_per_day }}" required="required" class="form-control" id="" placeholder="" type="text">
+            </div>
+            <div class="form-group col-md-12">
+                <label for="account_contact">Daily pair for GC</label>
+                <input name="every_gc_pair" value="{{ $data->every_gc_pair }}" required="required" class="form-control" id="" placeholder="" type="text">
             </div>
     </form>
     <div class="col-md-12">

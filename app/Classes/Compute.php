@@ -8,7 +8,7 @@ use App\Tbl_unilevel_setting;
 use App\Tbl_membership;
 use App\Classes\Log;
 use Carbon\Carbon;
-
+use App\Tbl_matching_bonus;
 class Compute
 {
     public static function tree($new_slot_id)
@@ -84,6 +84,12 @@ class Compute
                         /* UPDATE WALLET */
                         $update_recipient["slot_group_points"] = $update_recipient["slot_group_points"] + $unilevel_bonus;
                         $update_recipient["slot_upgrade_points"] = $update_recipient["slot_upgrade_points"] + $upgrade_bonus;
+
+                        // if($update_recipient["slot_group_points"] > $slot_recipient->slot_highest_pv)
+                        // {
+                        //     $update_recipient["slot_highest_pv"] = $update_recipient["slot_group_points"];
+                        // }
+
                         /* INSERT LOG */
                         $log = "Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($unilevel_bonus, 2) . " group pv and ". $upgrade_bonus ." promotion points</b>. You earned it when slot #" . $buyer_slot_id . " uses a code worth " . number_format($unilevel_pts, 2) . " PV. That slot is located on the Level " . $tree->sponsor_tree_level . " of your sponsor genealogy. Your current membership is " . $slot_recipient->membership_name . " MEMBERSHIP.";
                         Log::account($slot_recipient->slot_owner, $log);
@@ -92,7 +98,7 @@ class Compute
                         Tbl_slot::id($slot_recipient->slot_id)->update($update_recipient);
 
                         /* CHECK IF QUALIFIED FOR PROMOTION */
-                        Compute::check_promotion_qualification($slot_recipient->slot_id);
+                        // Compute::check_promotion_qualification($slot_recipient->slot_id);
                     }
                 }
             }            
@@ -114,7 +120,7 @@ class Compute
                 foreach($_tree as $tree)
                 {
                     /* GET SLOT INFO FROM DATABASE */
-                    $slot_recipient = Tbl_slot::id($tree->placement_tree_parent_id)->first();
+                    $slot_recipient = Tbl_slot::id($tree->placement_tree_parent_id)->membership()->first();
                     // $update_recipient["slot_wallet"] = $slot_recipient->slot_wallet;
                     // $update_recipient["slot_total_earning"] = $slot_recipient->slot_total_earning;
 
@@ -155,9 +161,9 @@ class Compute
                                                 $count =  Tbl_slot::id($slot_recipient->slot_id)->first();
                                                 $member = Tbl_membership::where('membership_id',$slot_recipient->slot_membership)->first();
                                                 $count = $count->pairs_today;
-                                                $date = Carbon::now()->toDateString(); 
+                                                $date = Carbon::now()->format('Y-m-d A'); 
                                                 $condition = null;
-
+                                                $gc = false;
                                                 /* Check if date is equal today's date*/
                                                 if($slot_recipient->pairs_per_day_date == $date)
                                                 {
@@ -173,6 +179,15 @@ class Compute
                                                         $count = $count + 1;
                                                         $update['pairs_today'] = $count;
                                                         $condition = true;
+
+                                                        if($slot_recipient->every_gc_pair != 0)
+                                                        {
+                                                            if($count%$slot_recipient->every_gc_pair == 0)
+                                                            {
+                                                                $gc = true;
+                                                            }                                                        
+                                                        }
+
                                                     }
                                                 }
                                                 else
@@ -182,6 +197,17 @@ class Compute
                                                     $count = 1;
                                                     $update['pairs_today'] = $count;
                                                     $condition = true;
+
+                                                    //IF GC EVERY PAIR IS IS NOT EQuAL TO 0  
+                                                    if($slot_recipient->every_gc_pair != 0)
+                                                    {
+                                                        /* CHECK IF GC */
+                                                        if($count%$slot_recipient->every_gc_pair == 0)
+                                                        {
+                                                            $gc = true;
+                                                        }                                                        
+                                                    }
+
                                                 }
                                                 /* Insert Count */
                                                 Tbl_slot::where('slot_id',$slot_recipient->slot_id)->update($update);
@@ -196,7 +222,18 @@ class Compute
                                                         /* CHECK IF NOT FREE SLOT */
                                                         if($new_slot_info->slot_type != "FS" && $new_slot_info->slot_wallet >= 0)
                                                         {
-                                                            Compute::income_per_day($slot_recipient->slot_id,$pairing_bonus,'binary_repurchase',$slot_recipient->slot_owner,$log);
+                                                            //CHECK IF CONVERT TO GC OR NOT
+                                                            if($gc == false)
+                                                            {
+                                                                Compute::income_per_day($slot_recipient->slot_id,$pairing_bonus,'binary_repurchase',$slot_recipient->slot_owner,$log);
+                                                            }
+                                                            elseif($gc == true)
+                                                            {
+                                                                $gcbonus = $slot_recipient->slot_gc + $pairing_bonus;
+                                                                Tbl_slot::where('slot_id',$slot_recipient->slot_id)->update(["slot_gc"=>$gcbonus]);
+                                                                $log = "This is your ".$slot_recipient->every_gc_pair." MSB, Your ".$pairing_bonus." Income converted to GC (SLOT #".$slot_recipient->slot_id.")";
+                                                                Log::account($slot_recipient->slot_owner, $log);
+                                                            }                                                
                                                         }
 
                                                         /* INSERT LOG */
@@ -236,23 +273,38 @@ class Compute
     {
         $slot_info = Tbl_slot::membership()->id($slot_id)->first();
 
-        if($slot_info->upgrade_via_points == 1)
+        if($slot_info->slot_group_points > $slot_info->slot_highest_pv)
         {
-            $data["next_membership"] = Tbl_membership::where("membership_required_upgrade", ">",  $slot_info->membership_required_upgrade)->orderBy("membership_required_upgrade", "asc")->first();
+            $checkupdate["slot_highest_pv"] = $slot_info->slot_group_points;
+            Tbl_slot::id($slot_id)->update($checkupdate);
+        }
+
+        $slot_info = Tbl_slot::membership()->id($slot_id)->first();
+        $count = Tbl_tree_sponsor::where('sponsor_tree_parent_id',$slot_id)->where('sponsor_tree_level',1)->count();
+
+
+            $data["next_membership"] = Tbl_membership::where("membership_required_pv_sales", ">",  $slot_info->membership_required_pv_sales)->orderBy("membership_required_pv_sales", "asc")->first();
 
             if($data["next_membership"])
             {
-                /* CHECK IF QUALIFIED FOR UPGRADE */
-                if($slot_info->slot_upgrade_points >= $data["next_membership"]->membership_required_upgrade)
-                {
-                    $update_slot["slot_upgrade_points"] = 0;
-                    $update_slot["slot_membership"] = $data["next_membership"]->membership_id;
-                    $log = "Congratulation! Slot #" . $slot_id . " has been promoted from " . $slot_info->membership_name . " to " . $data["next_membership"]->membership_name . " when " . number_format($data["next_membership"]->membership_required_upgrade, 2) . " Promotion Points has been reached.";
-                    Tbl_slot::id($slot_id)->update($update_slot);
-                    Log::account($slot_info->slot_owner, $log);
-                }
+                $d = $data["next_membership"];
+                // if($d->membership_required_unilevel_leg == 0)
+                // {
+                    if($d->membership_required_pv_sales != 0)
+                    {   
+                        if($count >= $d->membership_required_direct && $slot_info->slot_highest_pv >= $d->membership_required_pv_sales && $slot_info->slot_maintained_month_count >= $d->membership_required_month_count)
+                        {
+                            $update_slot["slot_upgrade_points"] = 0;
+                            $update_slot["slot_membership"] = $data["next_membership"]->membership_id;
+                            $update_slot["slot_highest_pv"] = 0;
+
+                            $log = "Congratulation! Slot #" . $slot_id . " has been promoted from " . $slot_info->membership_name . " to " . $data["next_membership"]->membership_name;
+                            Tbl_slot::id($slot_id)->update($update_slot);
+                            Log::account($slot_info->slot_owner, $log);                  
+                        }                    
+                    }
+                // }
             }
-        }
     }
     public static function insert_tree_placement($slot_info, $new_slot_id, $level)
     {
@@ -298,7 +350,7 @@ class Compute
             foreach($_tree as $tree)
             {
                 /* GET SLOT INFO FROM DATABASE */
-                $slot_recipient = Tbl_slot::id($tree->placement_tree_parent_id)->first();
+                $slot_recipient = Tbl_slot::id($tree->placement_tree_parent_id)->membership()->first();
                 // $update_recipient["slot_wallet"] = $slot_recipient->slot_wallet;
                 // $update_recipient["slot_total_earning"] = $slot_recipient->slot_total_earning;
 
@@ -343,10 +395,11 @@ class Compute
                                                 $count =  Tbl_slot::id($tree->placement_tree_parent_id)->first();
                                                 $member = Tbl_membership::where('membership_id',$slot_recipient->slot_membership)->first();
                                                 $count = $count->pairs_today;
-                                                $date = Carbon::now()->toDateString(); 
+                                                $date = Carbon::now()->format('Y-m-d A'); 
                                                 $condition = null;
+                                                $gc = false;
 
-                                                /* Check if date is equal today's date*/
+                                                  /* Check if date is equal today's date*/
                                                 if($slot_recipient->pairs_per_day_date == $date)
                                                 {
                                                     if($member->max_pairs_per_day == $count)
@@ -361,6 +414,15 @@ class Compute
                                                         $count = $count + 1;
                                                         $update['pairs_today'] = $count;
                                                         $condition = true;
+
+                                                        if($slot_recipient->every_gc_pair != 0)
+                                                        {
+                                                            /* CHECK IF GC */
+                                                            if($count%$slot_recipient->every_gc_pair == 0)
+                                                            {
+                                                                $gc = true;
+                                                            }                                                        
+                                                        }
                                                     }
                                                 }
                                                 else
@@ -370,6 +432,15 @@ class Compute
                                                     $count = 1;
                                                     $update['pairs_today'] = $count;
                                                     $condition = true;
+
+                                                    if($slot_recipient->every_gc_pair != 0)
+                                                    {
+                                                        /* CHECK IF GC */
+                                                        if($count%$slot_recipient->every_gc_pair == 0)
+                                                        {
+                                                            $gc = true;
+                                                        }                                                        
+                                                    }
                                                 }
                                                 /* Insert Count */
                                                 Tbl_slot::where('slot_id',$slot_recipient->slot_id)->update($update);
@@ -387,7 +458,17 @@ class Compute
                                                     // Log::slot($slot_recipient->slot_id, $log, $pairing_bonus, "BINARY PAIRING");
                                                     if($new_slot_info->slot_type != "FS" && $new_slot_info->slot_wallet >= 0)
                                                     {
-                                                        Compute::income_per_day($slot_recipient->slot_id,$pairing_bonus,'binary',$slot_recipient->slot_owner,$log); 
+                                                            if($gc == false)
+                                                            {
+                                                                 Compute::income_per_day($slot_recipient->slot_id,$pairing_bonus,'binary',$slot_recipient->slot_owner,$log); 
+                                                            }
+                                                            elseif($gc == true)
+                                                            {
+                                                                $gcbonus = $slot_recipient->slot_gc + $pairing_bonus;
+                                                                Tbl_slot::where('slot_id',$slot_recipient->slot_id)->update(["slot_gc"=>$gcbonus]);
+                                                                $log = $log = "This is your ".$slot_recipient->every_gc_pair." MSB, Your ".$pairing_bonus." Income converted to GC (SLOT #".$slot_recipient->slot_id.")";
+                                                                Log::account($slot_recipient->slot_owner, $log);
+                                                            }    
                                                     } 
                                                  
                                                     /* MATCHING SALE BONUS */
@@ -425,35 +506,79 @@ class Compute
         $slot_recipient_id = $slot_recipient_for_binary->slot_sponsor;
 
         /* GET SLOT INFO FROM DATABASE */
-        $slot_recipient = Tbl_slot::id($slot_recipient_id)->membership()->first();
+        // $slot_recipient = Tbl_slot::id($slot_recipient_id)->membership()->first();
+           $slot_recipient = null;
 
-        /* CHECK IF SLOT RECIPIENT EXIST */
-        if($slot_recipient)
+        $_tree = Tbl_tree_sponsor::child($slot_recipient_for_binary->slot_id)->level()->distinct_level()->get();
+        $matching_setting = Tbl_matching_bonus::get();
+
+        $matching_bonus = null;
+
+        foreach($matching_setting as $key => $level)
         {
-            // $update_recipient["slot_wallet"] = $slot_recipient->slot_wallet;
-            // $update_recipient["slot_total_earning"] = $slot_recipient->slot_total_earning;
-
-            /* GET INFO OF REGISTREE */
-            $new_slot_info = Tbl_slot::id($new_slot_id)->account()->membership()->first();
-
-            /* COMPUTE FOR THE MATCHING INCOME */
-            $matching_income = ($slot_recipient->membership_matching_bonus/100) * $pairing_bonus;
-
-            if($matching_income != 0)
-            {
-                /* UPDATE WALLET */
-                // $update_recipient["slot_wallet"] = $update_recipient["slot_wallet"] + $matching_income;
-                // $update_recipient["slot_total_earning"] = $update_recipient["slot_total_earning"] + $matching_income;
-                $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($matching_income, 2) . " wallet</b> from <b>MATCHING BONUS</b>  due to pairing bonus earned by SLOT #" . $slot_recipient_for_binary->slot_id . ". You current membership is " . $slot_recipient->membership_name . " MEMBERSHIP which has " . number_format($slot_recipient->membership_matching_bonus, 2) . "% bonus for every income of your direct sponsor.";
-                Compute::income_per_day($slot_recipient->slot_id,$matching_income,'matching',$slot_recipient->slot_owner,$log);
-                /* INSERT LOG */
-                // Log::account($slot_recipient->slot_owner, $log);
-                // Log::slot($slot_recipient->slot_id, $log, $matching_income, "MATCHING BONUS");
-
-                /* UPDATE SLOT CHANGES TO DATABASE */
-                // Tbl_slot::id($slot_recipient->slot_id)->update($update_recipient);
-            }
+            $matching_bonus[$level->membership_id][$level->level]['percent'] =  $level->matching_percentage;
+            $matching_bonus[$level->membership_id][$level->level]['count'] =  $level->matching_requirement_count;
+            // $matching_bonus[$level->membership_id][$level->level]['member'] =  $level->matching_requirement_membership_id;
+            $matching_bonus[$level->membership_id][$level->level]['level'] =  $level->level;
         }
+        if($matching_bonus)
+        {
+            foreach($_tree as $key => $tree)
+            {
+                    // $update_recipient["slot_wallet"] = $slot_recipient->slot_wallet;
+                    // $update_recipient["slot_total_earning"] = $slot_recipient->slot_total_earning;
+
+                    /* GET SLOT INFO */
+                    $slot_recipient = Tbl_slot::id($tree->sponsor_tree_parent_id)->membership()->first();
+                    if(isset($matching_bonus[$slot_recipient->membership_id][$tree->sponsor_tree_level]['percent']))
+                    { 
+                        // $count = 0;
+                        $count = Tbl_tree_sponsor::where('sponsor_tree_parent_id',$slot_recipient->slot_id)->where('sponsor_tree_level',1)->count();
+                        // foreach($check_requirement as $check)
+                        // {
+                        //     $check = Tbl_slot::id($tree->sponsor_tree_parent_id)->membership()->first();
+                        //     if($check->membership_id == $matching_bonus[$slot_recipient->membership_id][$tree->sponsor_tree_level]['member'])
+                        //     {
+                        //         $count++;
+                        //     }
+                        // }
+                        if($count >= $matching_bonus[$slot_recipient->membership_id][$tree->sponsor_tree_level]['count'])
+                        {
+                          $matching_income = ($matching_bonus[$slot_recipient->membership_id][$tree->sponsor_tree_level]['percent']/100)*$pairing_bonus;      
+                        }
+                        else
+                        {
+                            $matching_income = 0;
+                        }
+                    }
+                    else
+                    {
+                            $matching_income = 0;
+                    }
+
+                    /* GET INFO OF REGISTREE */
+                    // $new_slot_info = Tbl_slot::id($new_slot_id)->account()->membership()->first();
+                    /* COMPUTE FOR THE MATCHING INCOME */
+
+
+                    if($matching_income != 0)
+                    {
+                        /* UPDATE WALLET */
+                        // $update_recipient["slot_wallet"] = $update_recipient["slot_wallet"] + $matching_income;
+                        // $update_recipient["slot_total_earning"] = $update_recipient["slot_total_earning"] + $matching_income;
+                        $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($matching_income, 2) . " wallet</b> from <b>MENTOR BONUS</b>  due to pairing bonus earned by SLOT #" . $slot_recipient_for_binary->slot_id . ". You current membership is " . $slot_recipient->membership_name . " MEMBERSHIP which has " . number_format($matching_bonus[$slot_recipient->membership_id][$tree->sponsor_tree_level]['percent'], 2) . "% bonus for every income of your level ".$matching_bonus[$slot_recipient->membership_id][$tree->sponsor_tree_level]['level']." of your direct sponsor. This bonus is required ".$matching_bonus[$slot_recipient->membership_id][$tree->sponsor_tree_level]['count'].".";
+                        Compute::income_per_day($slot_recipient->slot_id,$matching_income,'matching',$slot_recipient->slot_owner,$log);
+                        /* INSERT LOG */
+                        // Log::account($slot_recipient->slot_owner, $log);
+                        // Log::slot($slot_recipient->slot_id, $log, $matching_income, "MATCHING BONUS");
+
+                        /* UPDATE SLOT CHANGES TO DATABASE */
+                        // Tbl_slot::id($slot_recipient->slot_id)->update($update_recipient);
+                    }       
+            }            
+        }
+
+
     }
     public static function direct($new_slot_id, $method = "SLOT CREATION")
     {
@@ -476,7 +601,17 @@ class Compute
                 $new_slot_info = Tbl_slot::id($new_slot_id)->account()->membership()->first();
 
                 /* COMPUTE FOR THE DIRECT INCOME */
-                $direct_income = ($slot_recipient->membership_direct_sponsorship_bonus/100) * $new_slot_info->member_upgrade_pts;
+
+                /* Check if percentage or not */
+                if($new_slot_info->if_matching_percentage == 1)
+                {
+                   $direct_income = ($slot_recipient->membership_direct_sponsorship_bonus/100) * $new_slot_info->membership_price;                    
+                }
+                else
+                {
+                   $direct_income = $slot_recipient->membership_direct_sponsorship_bonus;        
+                }
+               
 
                 if($direct_income != 0)
                 {
@@ -493,12 +628,11 @@ class Compute
 
                     /* UPDATE SLOT CHANGES TO DATABASE */
                     Tbl_slot::id($slot_recipient->slot_id)->update($update_recipient);
-
-                    /* CHECK IF QUALIFIED FOR PROMOTION */
-                    Compute::check_promotion_qualification($slot_recipient->slot_id);
                 }
             }            
         }
+                    /* CHECK IF QUALIFIED FOR PROMOTION */                
+                    // Compute::check_promotion_qualification($slot_recipient->slot_id);
     }
     public static function indirect($new_slot_id, $method = "SLOT CREATION")
     {
@@ -558,7 +692,7 @@ class Compute
     }
     public static function income_per_day($slot_id,$income,$method,$owner,$log)
     {
-                $date = Carbon::now()->toDateString(); 
+                $date = Carbon::now()->format('Y-m-d A'); 
                 $getslot = Tbl_slot::where('slot_id',$slot_id)->membership()->first();
                 $ifnegative = $getslot->slot_wallet + $income;
 
