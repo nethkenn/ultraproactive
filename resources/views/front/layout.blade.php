@@ -66,7 +66,7 @@
 	      </div>
 	      <!-- Collect the nav links, forms, and other content for toggling -->
 	      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="border: 0;">
-	         <ul class="nav navbar-nav row">
+	         <ul class="nav navbar-nav">
 	            <li class="active"><a href="/">HOME</a></li>
 	            <li><a href="product">PRODUCT</a></li>
 	            <li><a href="mindsync">MIND SYNC PROJECT</a></li>
