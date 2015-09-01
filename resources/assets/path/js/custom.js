@@ -892,10 +892,9 @@ else
         hideCaptionAtLimit:0,
         hideAllCaptionAtLilmit:0,
         startWithSlide:0    });
-    
-}); /*ready*/
+        
 
-            
+}); /*ready*/      
 /**
  * jQuery.browser.mobile (http://detectmobilebrowser.com/)
  *
