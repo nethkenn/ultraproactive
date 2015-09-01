@@ -8,6 +8,7 @@ use App\Tbl_tree_placement;
 use App\Tbl_tree_sponsor;
 use Carbon\Carbon;
 use Request;
+use App\Classes\Compute; 
 use App\Classes\Log;
 class AdminUnilevelController extends AdminController
 {
@@ -61,11 +62,21 @@ class AdminUnilevelController extends AdminController
 
 		foreach($slots as $key => $slot)
 		{
+			// Compute::check_promotion_qualification($slot->slot_id);
 			$oneslot = Tbl_slot::account()->membership()->where('slot_id',$slot->slot_id)->first();
+
+			if($oneslot->slot_group_points > $oneslot->slot_highest_pv)
+            {
+                $update["slot_highest_pv"] = $oneslot->slot_group_points;
+            }
+
 			$placement = Tbl_tree_placement::child($slot->slot_id)->level()->distinct_level()->get();
 			$gpv = $oneslot->slot_group_points * $oneslot->multiplier;
 			$update['slot_wallet'] = $oneslot->slot_wallet + $gpv;
-			Tbl_slot::where('slot_id',$oneslot->slot_id)->update($update);
+			$update['slot_maintained_month_count'] = $oneslot->slot_maintained_month_count + 1;
+			Tbl_slot::where('slot_id',$slot->slot_id)->update($update);
+
+			Compute::check_promotion_qualification($oneslot->slot_id);
 			foreach($placement as $key => $tree)
 			{
 				$slot_recipient = Tbl_slot::account()->membership()->where('slot_id',$tree->placement_tree_parent_id)->first();

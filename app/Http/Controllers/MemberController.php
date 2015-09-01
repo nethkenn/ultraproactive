@@ -7,13 +7,20 @@ use Session;
 use Request;
 use Carbon\Carbon;
 use App\Tbl_slot;
+
 class MemberController extends Controller
 {
 	function __construct()
 	{
-		$date = Carbon::now()->toDateString(); 
+		$checktime = Carbon::now();
 		$customer_info = Customer::info();
+		$date =  Carbon::now()->format('Y-m-d A'); 
+		$data['slot_limit'] = DB::table('tbl_settings')->where('key','slot_limit')->first();
 
+		if(!$data['slot_limit'])
+		{
+			DB::table('tbl_settings')->insert(['key'=>'slot_limit','value'=>1]);
+		}
 		// dd($customer_info);
         if($customer_info)
         {
@@ -34,6 +41,7 @@ class MemberController extends Controller
 												  ->join('tbl_membership','tbl_membership.membership_id','=','tbl_slot.slot_membership')
 												  ->join('tbl_rank','tbl_rank.rank_id','=','tbl_slot.slot_rank')
 												  ->first();
+
 				if($data3)
 				{
 					if($data3->slot_today_date != $date)

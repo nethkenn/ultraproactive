@@ -97,6 +97,12 @@
                 </div>
             </div>
             <div class="form-group para">
+                <label for="a3" class="col-sm-3 control-label">Remaining GC after use</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="a3" value="{{$remaining_bal_gc}}" readonly>
+                </div>
+            </div>
+            <div class="form-group para">
                 <label for="a4" class="col-sm-3 control-label">Total Unilevel Points</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control" id="a4" value="{{$pts['unilevel']}}" readonly>
@@ -125,6 +131,7 @@
     <br>
     <button id="cancel-checkout" class="button">Cancel</button>
     <button type="submit" class="checkawt button" id="submit-checkout">Submit Checkout</button>
+    <button type="submit" class="checkawt button" id="submit-checkout-gc">Submit Checkout Using GC</button>
 </form>
 
 

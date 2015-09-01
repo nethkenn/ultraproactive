@@ -1,6 +1,9 @@
 <?php
 // Route::any('/neil', 'NeilController@index');
 
+/* INCOME PROJECTION */
+Route::any('/projection', 'ProjectionController@index');
+
 /* MEMBER */
 Route::any('/member', 'MemberDashboardController@index');
 Route::any('/member/notification', 'MemberDashboardController@notification');
@@ -242,7 +245,7 @@ Route::post('admin/maintenance/product_package/archive', 'AdminProductPackageCon
 Route::post('admin/maintenance/product_package/restore', 'AdminProductPackageController@restore_product_package');
 
 /* SLOTS MAINTENANCE */
-Route::get('admin/maintenance/slots', 'AdminSlotController@index');
+Route::any('admin/maintenance/slots', 'AdminSlotController@index');
 Route::get('admin/maintenance/slots/data', 'AdminSlotController@data');
 Route::get('admin/maintenance/slots/add', 'AdminSlotController@add');
 Route::get('admin/maintenance/slots/edit', 'AdminSlotController@edit');

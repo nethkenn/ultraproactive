@@ -14,7 +14,9 @@
 			<tr>
 				<th class="option-col">ID</th>
 				<th>MEMBERSHIP</th>
-				<th>PROMOTION REQUIREMENTS</th>
+				<th>REQUIRED COUNT</th>
+				<th>REQUIRED GROUP PV SALES</th>
+				<th>REQUIRED MONTHS MAINTAINED IN UNILEVEL</th>
 				<th>ENABLE PROMOTION</th>
 				<th class="option-col"></th>
 			</tr>
@@ -24,7 +26,9 @@
 			<tr>
 				<td>{{ $membership->membership_id }}</td>
 				<td>{{ $membership->membership_name }}</td>
-				<td>{{ number_format($membership->membership_required_upgrade, 2) }}</td>
+				<td>{{ $membership->membership_required_direct }} {{$membership->membership_required_unilevel_leg == 1 ? "Different Unilevel Legs Direct/Indirect Counts ($membership->membership_name)" : "Direct Counts"}}</td>
+				<td>{{ number_format($membership->membership_required_pv_sales, 2) }}</td>
+				<td>{{ $membership->membership_required_month_count }}</td>
 				<td><input disabled="disabled" type="checkbox" {{ $membership->upgrade_via_points == 1 ? 'checked' : '' }}></td>
 				<td><a href="admin/utilities/rank/edit?id={{ $membership->membership_id }}">EDIT</a></td>
 			</tr>

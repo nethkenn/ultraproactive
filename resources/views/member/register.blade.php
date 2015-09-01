@@ -162,14 +162,13 @@
 					<div class="labelz">
 						Relationship</div>
 					<div class="inputz">
-						<select id="add-relation" name="beneficiary_rel">
-							
+						<select id="add-relation" name="beneficiary_rel" required>
+							<option>Add Relation</option>
 							@if($_beneficiary_rel)
 								@foreach($_beneficiary_rel as $beneficiary_rel)
-									<option value = "{{$beneficiary_rel->relation}}" {{Request::old('beneficiary_rel') == $beneficiary_rel->relation ? 'selected' : ''}}>{{$beneficiary_rel->relation}}</option>
+									<option value = "{{$beneficiary_rel->relation}}" {{Request::old('beneficiary_rel_id') == $beneficiary_rel->relation ? 'selected' : ''}}>{{$beneficiary_rel->relation}}</option>
 								@endforeach
 							@endif
-							<option>Add Relation</option>
 						</select>
 					</div>
 				</div> -->

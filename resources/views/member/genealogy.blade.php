@@ -1,10 +1,10 @@
 @extends('member.layout')
 @section('content')
 <div class="encashment genealogy" style="margin-top: -20px;">
-	 <h3>{{ strtoupper(Request::input("mode")) }} GENEALOGY</h3>
-	<div class="body para">
-		 <iframe src="/member/genealogy/tree?mode={{ Request::input("mode") }}" style="width: 100%; height: 510px; border: 0;"></iframe> 
-	</div>
+     <h3>{{ strtoupper(Request::input("mode")) }} GENEALOGY</h3>
+    <div class="body para">
+         <iframe src="/member/genealogy/tree?mode={{ Request::input("mode") }}" style="width: 100%; height: 510px; border: 0;"></iframe> 
+    </div>
 </div>
 
 @if($code)
@@ -64,6 +64,12 @@
                 </div>
             </div>
             <div class="form-group para">
+                <label for="sponsor" class="col-sm-3 control-label">Sponsor Name</label>
+                <div class="col-sm-9">
+                    <input for="sponsor" class="sponsorname form-control" disabled ></input>
+                </div>
+            </div>
+            <div class="form-group para">
                 <label for="placement" class="col-sm-3 control-label">Placement</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control type" id="placement" disabled>
@@ -85,7 +91,8 @@
         </div>
         <br>
         <span class="removeifempty"><button class="button" type="button" data-remodal-action="cancel">Cancel</button>
-        <button class="button" type="button" name="usingcode" id="use">Use Code</button></span>
+        <button class="usingcode button" type="button" name="usingcode" id="use">Use Code</button></span>
+        <span class='loadingusecode' style="margin-left: 50px;"><img class='loadingusecode' src='/resources/assets/img/small-loading.GIF'></span>
     </form>
     </div>
 </div>
@@ -119,11 +126,13 @@ $('iframe').load(function()
 { 
     $(this).contents().find("body").on('click','.positioning', function(event)
     { 
+
                forthis = $(this).closest('.downline-container').parent().children('span:first');
                container = $(this).closest('.downline-container').find("ul");
                var position = $(this).attr('position');
-               var placement = $(this).attr('placement'); 
-               $('#placement').val('Slot #'+placement);
+               var placement = $(this).attr('placement');
+               var name = $(this).attr('y'); 
+               $('#placement').val('Slot #'+placement +' ('+name+')');
                $('#placement2').val(placement);
                $('#position').val(position);
                $('#sponsor').val(placement);
@@ -147,11 +156,34 @@ $('iframe').load(function()
                                     $("#membership").val($x.membership_name);
                                     $("#type").val($x.code_type_name);     
                                     $("#newslot").val(data['latest']); 
-
+                                }
+                                else
+                                {
 
                                 }
                             }
-                });      
+                }); 
+
+                $(".sponsorname").val("Loading...");  
+                $.ajax(
+                {
+                    url:"member/code_vault/get",
+                    dataType:"json",
+                    data: {'slot':$("#sponsor").val()},
+                    type:"post",
+                    success: function(data)
+                    {
+                        if(data != "x")
+                        { 
+                          $x = jQuery.parseJSON(data);
+                          $(".sponsorname").val($x[1]);                            
+                        }
+                        else
+                        {
+                           $(".sponsorname").val("Sponsor's ID is not existing");  
+                        }
+                    } 
+                });     
     });
 
         $("#111").bind('change',function()
@@ -220,15 +252,56 @@ $('iframe').load(function()
                                         {
                                             $(".removeifempty").remove();
                                             $('.changeifempty').text('You have no available codes');
+                                        }
+                                        else
+                                        {
+                                             $(".usingcode").show();  
+                                             $(".loadingusecode").hide();
                                         } 
+
                     }
                     else
                     {
                         alert(data.message);
+                        $(".usingcode").show();  
+                        $(".loadingusecode").hide();
                     }
                 }
             });
         });
+        $(".loadingusecode").hide();
+        $(".usingcode").click(function(e)
+        {
+                 $(".usingcode").hide();  
+                 $(".loadingusecode").show();
+        });
+
+
+
+        $("#sponsor").keyup(function()
+        {           
+                    $(".sponsorname").val("Loading...");  
+                    $.ajax(
+                    {
+                        url:"member/code_vault/get",
+                        dataType:"json",
+                        data: {'slot':$("#sponsor").val()},
+                        type:"post",
+                        success: function(data)
+                        {
+                            if(data != "x")
+                            { 
+                              $x = jQuery.parseJSON(data);
+                              $(".sponsorname").val($x[1]);                            
+                            }
+                            else
+                            {
+                               $(".sponsorname").val("Sponsor's ID is not existing");  
+                            }
+                        } 
+                    });
+
+        }); 
 });
 
 </script>
