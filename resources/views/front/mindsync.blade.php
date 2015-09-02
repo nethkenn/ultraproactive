@@ -1,13 +1,10 @@
 @extends('front.layout')
 @section('content')
-<section id="title_breadcrumbs_bar" style="margin: 0 -15px; background-image: none; background-color: #2774DA; margin-top: -70px;">
+<section id="title_breadcrumbs_bar" class="rw" style="margin: 0 -15px; background-image: none; background-color: #2774DA; margin-top: -70px;">
 	<div class="container">
 		<div class="row">
-			<div class="span8">
+			<div class="span12">
 				<h1>Mind Sync Project</h1>
-			</div>
-			<div class="span4 right_aligned">
-				
 			</div>
 		</div>
 	</div>
@@ -28,14 +25,14 @@
 				</div>
 			</header>
 		</div>
-		<div class="row" style="margin-bottom: 30px;">
+		<div style="margin-bottom: 30px;">
 			<div class="blog_category_index span12 content_with_right_sidebar">
 				<div class="post post_wrapper clearfix" style="border: 0; margin: 0;">
 					<div class="post_content" style="padding: 0;">
 						<div class="post_main" style="margin-left: 0;">
 							<div class="row" style="margin-bottom: 50px;">
 								@foreach($_video as $video)
-								<div class="span6" style="float: left; padding: 0 7.5px; margin: 0; margin-bottom: 15px;">
+								<div class="col-md-6" style="margin-bottom: 15px;">
 									<div class="videoWrapper-youtube">
 										<iframe width="100%" src="http://www.youtube.com/embed/{{ $video->mindsync_video }}?showinfo=0&amp;autohide=1&amp;related=0" frameborder="0" allowfullscreen=""></iframe>
 									</div>
