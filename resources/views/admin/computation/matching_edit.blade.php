@@ -25,18 +25,20 @@
         
 
             <div class="level-container">
-                @foreach($_level as $key => $level)
-                <div class="form-group col-md-12">
-                 <label for="account_contact">Level {{ $level->level }} (0-100%)</label>
-                 <input name="level[level][{{ $level->level }}]" value="{{$level->matching_percentage}}" required="required" class="form-control" id="" placeholder="" type="text">
-                </div>
+                @if($_level)
+                    @foreach($_level as $key => $level)
+                    <div class="form-group col-md-12">
+                     <label for="account_contact">Level {{ $level->level }} (0-100%)</label>
+                     <input name="level[level][{{ $level->level }}]" value="{{$level->matching_percentage}}" required="required" class="form-control" id="" placeholder="" type="text">
+                    </div>
 
-                <div class="form-group col-md-12">
-                    <label for="account_contact">How many required member to have bonus?</label>
-                    <input name="level[count][{{$level->level}}]" value="{{$level->matching_requirement_count}}" required="required" class="form-control" id="" placeholder="" type="text">
-                    <hr style="width: 100%; color: black; height: 1px; background-color:black;"/>
-                </div>
-                @endforeach
+                    <div class="form-group col-md-12">
+                        <label for="account_contact">How many required member to have bonus?</label>
+                        <input name="level[count][{{$level->level}}]" value="{{$level->matching_requirement_count}}" required="required" class="form-control" id="" placeholder="" type="text">
+                        <hr style="width: 100%; color: black; height: 1px; background-color:black;"/>
+                    </div>
+                    @endforeach
+                @endif
             </div>
         </form>
     </div>
@@ -44,16 +46,7 @@
 <script type="text/javascript">
     $(document).ready(function()
     {
-          // $x = jQuery.parseJSON($("#getmembership").attr("list"));
 
-
-          //       <div class="form-group col-md-12"><label for="account_contact"> Direct Sponsor Required Membership </label> 
-          //           <select class="form-control" name="level[member][{{$level->level}}]">
-          //               @foreach($_member as $mem)
-          //                   <option value="{{$mem->membership_id}}" {{$level->matching_requirement_membership_id == $mem->membership_id ? "selected" : ""}}>{{$mem->membership_name}}</option>
-          //               @endforeach
-          //           </select>
-          //       </div>
 
 
         $(".level-input").keyup(function(e)
