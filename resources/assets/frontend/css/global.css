@@ -57,6 +57,13 @@ a {
 
 body {
   background-color: #1767d2; }
+  body .stickies {
+    position: fixed;
+    top: 0;
+    margin: 0 -15px !important;
+    border-radius: 0px; }
+    body .stickies .logo-holder {
+      display: none !important; }
   body .navbar {
     margin-bottom: 0;
     margin-top: 80px;
