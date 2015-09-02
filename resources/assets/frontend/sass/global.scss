@@ -78,6 +78,19 @@ a
 body
 {
     background-color: #1767d2;
+    //STICKY NAV
+    .stickies
+    {
+        position: fixed;
+        top: 0;
+        margin: 0 -15px !important;
+        border-radius: 0px;
+        .logo-holder
+        {
+            display: none !important;
+
+        }
+    }
     //NAVIGATION
     .navbar
     {

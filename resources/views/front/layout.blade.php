@@ -220,5 +220,27 @@
 		});
     })(jQuery);
 	</script>
+	<script type="text/javascript">
+	;(function($){
+		var $document = $(document),
+        $element = $('.navbar'),
+        className = 'stickies';
+
+        $document.scroll(function() {
+          if ($document.scrollTop() >= 150) 
+          {
+            // user scrolled 50 pixels or more;
+            // do stuff
+            $element.addClass(className);
+        
+          } 
+          else 
+          {
+            $element.removeClass(className);
+           
+          }
+        });
+	})(jQuery);
+	</script>
 </body>
 </html>

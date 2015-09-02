@@ -22,46 +22,6 @@ jQuery(document).ready(function($) {
         }
     });
 
-    //contact form
-    $("#dzencf-submit").on('click',function(e) {
-        "use strict";
-        e.preventDefault();
-        var $button=$(this);
-        var $form = $button.parents('form');
-        var $wrapper = $form.parents('#dzencf-wrapper');
-        $wrapper.find('.dzencf-response-output').slideUp(300);
-        $button.val('Sending').prop('disabled', true).addClass('disabled');
-        var success_msg = '';
-        if($form.find('#formid').val()=='planner'){
-            success_msg = "Project details are successfuly sent. Thank you for your interest, we will respond as soon as possible.";
-        }
-        else{
-            success_msg = "Message is successfuly sent. Thank you for your interest, we will respond as soon as possible.";
-        }
-        var str = $form.serialize() + '&action=js';
-        $.ajax({
-            type: "POST",
-            url: 'php/sendmail.php',
-            data: str,
-            success: function(msg){
-                if(msg == "OK"){
-                    $button.val('Sended');
-                    $('.gtt_reg_data_field').prop('disabled', true).addClass('disabled_text_input');
-                    var form_height = $form.outerHeight();
-                    $form.slideUp(1200);
-                    $('html, body').animate({scrollTop: $(window).scrollTop() - form_height});
-                    $wrapper.find('.dzencf-response-output').addClass('success').html(success_msg).slideDown(600);
-                }
-                else{
-                    $button.val('Send').prop('disabled', false).removeClass('disabled');
-                    $wrapper.find('.dzencf-response-output').html(msg).slideDown(600);
-                }
-            }
-        });
-        return false;
-    });
-    
-
     $('.home.page .dzen_section_DD').waypoint(function(direction) {
         var section_id = $(this).attr('id');
         if(section_id!==undefined){
@@ -89,52 +49,6 @@ jQuery(document).ready(function($) {
     },{
       offset: 100
     });
-
-
-
-    var $main_header = $('#dz_main_header');
-    var $header_spacer = $('#dz_header_spacer');
-
-    var header_height = $main_header.outerHeight();
-
-    $header_spacer.height(header_height).hide();
-    var admin_toolbar_height = parseInt($('html').css('marginTop'), 10);
-
-    function sticky_header(){
-        if($(window).width()>767){
-            $main_header.removeClass('sticky_header').removeClass('sticky_header_low');
-            $main_header.css({
-                'z-index': '2000',
-                'position': 'static'
-            });
-            $main_header.css('position','fixed').css('top', 0+admin_toolbar_height).addClass('sticky_header');
-            $header_spacer.show();
-            $(document).scroll(function(){
-                var scroll_top = $(document).scrollTop();
-                var padding_diff = Math.floor(scroll_top/2);
-                padding_diff = (padding_diff > 20) ? 20 : padding_diff;
-                if(padding_diff==20){
-                    $main_header.addClass('sticky_header_low');
-                }
-                else{
-                    $main_header.removeClass('sticky_header_low').css({'paddingTop':30-padding_diff , 'paddingBottom':30-padding_diff});
-                    $header_spacer.height(header_height - padding_diff*2);
-                }
-            });
-        }
-        else{
-            $header_spacer.hide();
-            $main_header.css({
-                'position':'relative',
-                'top': 0,
-                'padding-top': '30px',
-                'padding-bottom': '30px',
-                'z-index': '0'
-            }).removeClass('sticky_header').removeClass('sticky_header_low');
-        }
-    }
-    sticky_header();
-
     
 
     $('.accordion-group').on('show', function() {
