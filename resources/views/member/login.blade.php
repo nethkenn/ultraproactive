@@ -16,7 +16,7 @@
     	<div class="wrapper">
     		<div class="content para">
                 <div class="logo">
-                    <img src="/resources/assets/frontend/img/big-logo.png">
+                    <img src="/resources/assets/frontend/img/logo.png">
                 </div>
                 @if(Session::has('errored'))
                     <div class="alert alert-danger">
@@ -33,13 +33,13 @@
                 </div>
                 <div class="forgot"><a href="javascript:">Forgot Password?</a></div>
                 <a href="javascript:">
-                    <button type="submit" name="login" style="margin-top: 20px;">LOGIN</button>
+                    <button style="background-color: #F1CB40;" type="submit" name="login" style="margin-top: 20px;">LOGIN</button>
                 </a>
                 <a href="/">
-                    <button type="button" style="margin-top: 5px;">GO BACK</button>
+                    <button type="button" style="margin-top: 5px; background-color: #F1CB40;">GO BACK</button>
                 </a>
                 <div class="create">
-                    <a href="register">New here? Create an account.</a>
+                    <a href="register" style="color: #056EFC;">New here? Create an account.</a>
                 </div>
     		</div>
     	</div>

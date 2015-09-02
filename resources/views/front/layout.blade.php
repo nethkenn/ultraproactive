@@ -52,6 +52,11 @@
 			</div>
 		</div>
 	</header> -->
+	<div class="account">
+		<a href="/member/login"><div class="text">LOGIN</div></a>
+		<span>|</span>
+		<a href="/member/register"><div class="text">REGISTER</div></a>
+	</div>
 	<nav class="navbar navbar-default">
 	   <div>
 	      <!-- Brand and toggle get grouped for better mobile display -->

@@ -39,6 +39,42 @@ a
 {
     font-weight: bold !important;
 }
+//ACCOUNT
+.account
+{
+    position: absolute;
+    top: -55px;
+    right: 0;
+    overflow: auto;
+    clear: both;
+    .text
+    {
+        color: #fff;
+        display: inline-block;
+        font-weight: 600;
+        font-size: 18px;
+        font-family: "Raleway", sans-serif;
+        vertical-align: middle;
+        -webkit-transition: 0.3s all ease;
+           -moz-transition: 0.3s all ease;
+             -o-transition: 0.3s all ease;
+                transition: 0.3s all ease;
+        &:hover
+        {
+            color: #F1CB40;
+        }
+    }
+    a
+    {
+        vertical-align: middle;
+    }
+    span
+    {
+        vertical-align: middle;
+        color: #fff;
+        font-size: 20px;
+    }
+}
 body
 {
     background-color: #1767d2;

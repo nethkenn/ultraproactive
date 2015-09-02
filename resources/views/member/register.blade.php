@@ -1,7 +1,7 @@
 @extends('front.layout')
 @section('content')
-<div class="register top_wrapper no-transparent rw" style="background-color: #fff; margin: 0 -15px;">
-	<div class="title-header">User Registration Form</br><span>register here to become a member of our website.</span></div>
+<div class="register top_wrapper no-transparent rw" style="background-color: #fff; margin: 0 -15px; margin-top: -70px;">
+	<div class="title-header" style="padding-top: 100px;">User Registration Form</br><span>register here to become a member of our website.</span></div>
 
 	@if(Session::has('message'))
 		<div class="alert alert-danger">
