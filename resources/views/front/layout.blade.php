@@ -119,7 +119,7 @@
 	   </div>
 	   <!-- /.container-fluid -->
 	</nav>
-	<div style="margin-top: 70px">
+	<div style="margin-top: 70px" id="wazzup">
 	@yield('content')
 	</div>
 	<footer id="dz_main_footer" style="margin: 0 -15px;">
@@ -232,12 +232,12 @@
             // user scrolled 50 pixels or more;
             // do stuff
             $element.addClass(className);
-        
+        	$("#wazzup").addClass("mtop");
           } 
           else 
           {
             $element.removeClass(className);
-           
+           	$("#wazzup").removeClass("mtop");
           }
         });
 	})(jQuery);
