@@ -1,6 +1,6 @@
 @extends('front.layout')
 @section('content')
-<section id="title_breadcrumbs_bar">
+<section id="title_breadcrumbs_bar" style="margin: 0 -15px; background-image: none; background-color: #2774DA; margin-top: -70px;">
 	<div class="container">
 		<div class="row">
 			<div class="span8">
@@ -15,7 +15,7 @@
 	</div>
 </section>
 
-<section>
+<section style="background-color: #fff; margin: 0 -15px;">
 	<div class="container">
 		<div class="row">
 			<div class="blog_category_index span12 content_with_right_sidebar">
@@ -23,13 +23,13 @@
 				<div class="post post_wrapper clearfix">
 					<div class="post_content">
 						<div class="post_main" style="margin: 0;">
-							<h2>
+							<h2 class="rw bold">
 								<a href="javascript:">{{ $stories->stories_title }}</a>
 							</h2>
 							<div class="videoWrapper-youtube">
 								<iframe src="https://www.youtube.com/embed/{{ $stories->stories_link }}" frameborder="0" allowfullscreen=""></iframe>
 							</div>										
-							<p>
+							<p class="rw">
 								{{ $stories->stories_description }}
 							</p>
 						</div>

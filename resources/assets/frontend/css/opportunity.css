@@ -35,9 +35,6 @@
     .opportunity .opportunity-holder .number-holder {
       display: table-cell;
       width: 160px; }
-      @media screen and (max-width: 991px) {
-        .opportunity .opportunity-holder .number-holder {
-          display: block; } }
       .opportunity .opportunity-holder .number-holder .number {
         font-size: 50px;
         line-height: 50px;
@@ -68,9 +65,6 @@
       color: #50576d;
       margin: 0 25px;
       padding: 20px 30px; }
-      @media screen and (max-width: 991px) {
-        .opportunity .opportunity-holder .text {
-          display: block; } }
       .opportunity .opportunity-holder .text .name {
         font-size: 28px;
         line-height: 28px;
@@ -101,12 +95,20 @@
         .opportunity .opportunity-holder .text .tables table thead {
           background-color: #E1E1E1; }
         .opportunity .opportunity-holder .text .tables table th {
-          vertical-align: middle; }
+          vertical-align: middle;
+          text-align: center !important; }
         .opportunity .opportunity-holder .text .tables table td {
           padding: 0 25px;
           border-right: 2px solid #e2dede;
           vertical-align: middle; }
-        .opportunity .opportunity-holder .text .tables table td:last-child {
-          border-right: none; }
+          .opportunity .opportunity-holder .text .tables table td:last-child {
+            border-right: none; }
+
+@media screen and (max-width: 991px) {
+  .opportunity .opportunity-holder .number-holder {
+    display: block; } }
+@media screen and (max-width: 991px) {
+  .opportunity .opportunity-holder .text {
+    display: block; } }
 
 /*# sourceMappingURL=opportunity.css.map */
