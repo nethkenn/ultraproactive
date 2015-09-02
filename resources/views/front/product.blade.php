@@ -1,6 +1,6 @@
 @extends('front.layout')
 @section('content')
-<section id="title_breadcrumbs_bar">
+<section id="title_breadcrumbs_bar" style="margin: 0 -15px; background-image: none; background-color: #2774DA; margin-top: -70px;">
 	<div class="container">
 		<div class="row">
 			<div class="span8">
@@ -15,7 +15,7 @@
 	</div>
 </section>
 
-<section class="clearfix ">
+<section class="clearfix " style="background-color: #fff; margin: 0 -15px;">
 	<div class="container">
 		<ul id="filters" class="portfolio_filter option-set clearfix" data-option-key="filter">
 			<li><a href="javascript:" data-option-value="*" class="selected">All</a></li>

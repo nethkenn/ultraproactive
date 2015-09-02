@@ -1,6 +1,6 @@
 @extends('front.layout')
 @section('content')
-<section id="title_breadcrumbs_bar">
+<section id="title_breadcrumbs_bar" style="margin: 0 -15px; background-image: none; background-color: #2774DA; margin-top: -70px;">
 	<div class="container">
 		<div class="row">
 			<div class="span8">
@@ -12,7 +12,7 @@
 		</div>
 	</div>
 </section>
-<section>
+<section style="background-color: #fff; margin: 0 -15px;">
 	<div class="container">
 		<div class="row" style="margin-bottom: 30px;">
 			<div class="blog_category_index span12 content_with_right_sidebar" id="slick">

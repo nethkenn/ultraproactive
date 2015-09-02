@@ -1,6 +1,6 @@
 @extends('front.layout')
 @section('content')
-<section id="title_breadcrumbs_bar">
+<section id="title_breadcrumbs_bar" style="margin: 0 -15px; background-image: none; background-color: #2774DA; margin-top: -70px;">
     <div class="container">
         <div class="row">
             <div class="span8">
@@ -15,7 +15,7 @@
     </div>
 </section>
 
-<section>
+<section style="background-color: #fff; margin: 0 -15px;">
     <div class="container">
         <div class="row">
             <div class="span12 content_with_right_sidebar">
@@ -35,8 +35,8 @@
                             </p> -->
                             <!-- <p class="post_meta_comments"><i class="ABdev_icon-comment"></i>3</p> -->
                         </div>
-                        <h2>{{ $news->news_title }}</h2>                               
-                        <p>
+                        <h2 class="rw bold">{{ $news->news_title }}</h2>                               
+                        <p class="op">
                             {{ $news->news_description }}
                         </p>    
                     </div>

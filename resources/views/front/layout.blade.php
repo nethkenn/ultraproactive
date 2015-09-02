@@ -67,15 +67,22 @@
 	      <!-- Collect the nav links, forms, and other content for toggling -->
 	      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="border: 0;">
 	         <ul class="nav navbar-nav">
-	            <li class="active"><a href="/">HOME</a></li>
-	            <li><a href="product">PRODUCT</a></li>
-	            <li><a href="mindsync">MIND SYNC PROJECT</a></li>
-	            <li><a href="stories">STORIES</a></li>
-	            <li class="logo-holder"><img class="logo" src="/resources/assets/frontend/img/logo.png"></li>
-	            <li><a href="about">ABOUT</a></li>
-	            <li><a href="opportunity">OPPORTUNITY</a></li>
-	            <li><a href="faq">FAQs</a></li>
-	            <li><a href="contact">CONTACT US</a></li>
+	            <li class="nav-inside active"><a href="/">HOME</a></li>
+	            <li class="nav-inside"><a href="product">PRODUCT</a></li>
+	            <li class="nav-inside"><a href="mindsync">MIND SYNC PROJECT</a></li>
+	            <li class="nav-inside"><a href="stories">STORIES</a></li>
+	            <li class="nav-inside logo-holder"><img class="logo" src="/resources/assets/frontend/img/logo.png"></li>
+	            <li class="nav-inside"><a href="about">ABOUT</a></li>
+	            <li class="nav-inside"><a href="opportunity">OPPORTUNITY</a></li>
+	            <li class="nav-inside dropdown">
+	               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">FAQs</span></a>
+	               <ul class="dropdown-menu">
+	                  <li><a href="/faq?type=product">Products</a></li>
+	                  <li><a href="/faq?type=mindsync">Mind Sync Project</a></li>
+	                  <li><a href="/faq?type=opportunity">Opportunity</a></li>
+	               </ul>
+	            </li>
+	            <li class="nav-inside"><a href="contact">CONTACT US</a></li>
 	            <!-- <li class="dropdown">
 	               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
 	               <ul class="dropdown-menu">
@@ -107,7 +114,7 @@
 	   </div>
 	   <!-- /.container-fluid -->
 	</nav>
-	<div style="margin-top: 200px">
+	<div style="margin-top: 70px">
 	@yield('content')
 	</div>
 	<footer id="dz_main_footer" style="margin: 0 -15px;">

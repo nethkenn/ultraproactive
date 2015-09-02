@@ -29,11 +29,15 @@ a
 }
 .op
 {
-    font-family: "Open Sans", sans-serif;
+    font-family: "Open Sans", sans-serif !important;
 }
 .rw
 {
-    font-family: "Raleway", sans-serif;
+    font-family: "Raleway", sans-serif !important;
+}
+.bold
+{
+    font-weight: bold !important;
 }
 body
 {
@@ -45,11 +49,10 @@ body
         margin-top: 80px;
         background-color: #f1cb40;
         border: 0 !important;
-        position: absolute;
-        top: -200px;
+        top: 0px;
         z-index: 999;
         width: 100%;
-        ul
+        .navbar-nav
         {
             width: 100%;
             display: table;
@@ -85,7 +88,7 @@ body
                     z-index: 999;
                 }
             }
-            li
+            .nav-inside
             {
                 display: table-cell;
                 float: none;
@@ -111,6 +114,19 @@ body
                     {
                         color: #fff !important;
                         background-color: transparent !important;
+                    }
+                }
+                .dropdown-menu
+                {
+                    li
+                    {
+                        a
+                        {
+                            &:hover
+                            {
+                                color: #1767D2 !important;
+                            }
+                        }
                     }
                 }
             }
