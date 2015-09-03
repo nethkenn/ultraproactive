@@ -9,6 +9,11 @@
 			<div class="buttons col-md-4 text-right">
 				<button onclick="location.href='admin/utilities/position/add'" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> ADD POSITION</button>
 			</div>
+			@if($allow == 0)
+            <div class="buttons col-md-4 text-right">
+                <button class="slot_limit btn btn-primary" type="button" style="width: 100%;"><i></i>Access for Update Slot</button>
+            </div>
+            @endif
 		</div>
 		<div class="filters ">
 			<div class="col-md-8">
@@ -30,6 +35,17 @@
 			</thead>
 		</table>
 	</div>
+	<div class="remodal create-slot" data-remodal-id="slot_limit" data-remodal-options="hashTracking: false">
+	    <button data-remodal-action="close" class="remodal-close"></button>
+	    <div class="header">
+	        Username that can allow to update the slot.
+	    </div>
+	    <form class="form-horizontal" method="POST">
+				<input type="hidden" name="_token" value="{{ csrf_token() }}">
+				<input type="text" name="allow_button" value="{{$allow_button}}" class="form-control">
+	    </form>
+	</div>
+
 @endsection
 
 @section('script')

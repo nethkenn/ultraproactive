@@ -317,4 +317,16 @@ class FrontController extends Controller
        		return Redirect::to("/");
        	}
 	}
+	public function foodcart()
+	{
+		$data["_foodcart"] = DB::table("tbl_foodcart")->where("archived", 0)->get();
+		foreach ($data["_foodcart"] as $key => $value) 
+		{
+			$image = $value->foodcart_image;
+			$image_view = Image::view_main($image);
+			$data["_foodcart"][$key]->image = $image_view;
+		}
+
+        return view('front.foodcart', $data);
+	}
 }

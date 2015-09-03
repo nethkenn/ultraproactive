@@ -49,7 +49,7 @@ Route::any('/news_content', 'FrontController@news_content');
 Route::any('/contact', 'FrontController@contact');
 Route::any('/contact/submit', 'FrontController@contact_submit');
 Route::any('/faq', 'FrontController@faq');
-Route::any('/register', 'FrontController@register');
+Route::any('/foodcart', 'FrontController@foodcart');
 Route::get('/admin', 'AdminController@index');
 Route::post('/admin','AdminController@postLogin');
 
@@ -99,6 +99,14 @@ Route::post('admin/maintenance/accounts/restore', 'AdminAccountController@restor
 
 Route::any('admin/maintenance/accounts/field', 'AdminAccountController@field');
 Route::get('admin/maintenance/accounts/field/delete', 'AdminAccountController@field_delete');
+
+/* FOODCART */
+Route::get('admin/content/foodcart', 'AdminFoodCartController@index');
+Route::get('admin/content/foodcart/add', 'AdminFoodCartController@add');
+Route::any('admin/content/foodcart/add_submit', 'AdminFoodCartController@add_submit');
+Route::get('admin/content/foodcart/edit', 'AdminFoodCartController@edit');
+Route::any('admin/content/foodcart/edit_submit', 'AdminFoodCartController@edit_submit');
+Route::any('admin/content/foodcart/delete', 'AdminFoodCartController@delete');
 
 /* PRODUCT CATEGORY */
 Route::get('admin/maintenance/product_category', 'AdminProductCategoryController@index');
@@ -297,7 +305,7 @@ Route::post('admin/utilities/admin_maintenance/add','AdminAdminController@create
 Route::get('admin/utilities/admin_maintenance/edit','AdminAdminController@admin_edit');
 Route::post('admin/utilities/admin_maintenance/edit','AdminAdminController@update_admin');
 Route::post('admin/utilities/admin_maintenance/delete','AdminAdminController@delete_admin');
-Route::get('admin/utilities/position', 'AdminPositionController@index');
+Route::any('admin/utilities/position', 'AdminPositionController@index');
 Route::get('admin/utilities/position/data', 'AdminPositionController@data');
 Route::get('admin/utilities/position/add', 'AdminPositionController@add');
 Route::post('admin/utilities/position/add', 'AdminPositionController@create');

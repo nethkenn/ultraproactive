@@ -220,7 +220,7 @@
                     <div class="balyu">{{ number_format($slotnow->total_earned_binary, 2) }}</div>
                 </div>
                 <div class="holders">
-                    <div class="leybel">MATCHING SALE BONUS</div>
+                    <div class="leybel">MENTOR BONUS</div>
                     <div class="balyu">{{ number_format($slotnow->total_earned_matching, 2) }}</div>
                 </div>
                 <div class="holders">
