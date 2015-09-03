@@ -21,7 +21,20 @@ class AdminPositionController extends AdminController
 	public function index()
 	{
 
-		
+		$data["allow_button"] = DB::table('tbl_settings')->where('key','allow_update')->first();
+
+       	$data["allow"] = Admin::info()->admin_position_rank;                                
+		if(!$data['allow_button'])
+		{
+			DB::table('tbl_settings')->insert(["key"=>"allow_update","value"=>"developer"]);
+			$data["allow_button"] = DB::table('tbl_settings')->where('key','allow_update')->first();
+		}
+		$data["allow_button"] = DB::table('tbl_settings')->where('key','allow_update')->first()->value;
+		if(Request::input('allow_button'))
+		{
+			DB::table('tbl_settings')->where('key','allow_update')->update(["value"=>Request::input('allow_button')]);
+			$data["allow_button"] = DB::table('tbl_settings')->where('key','allow_update')->first()->value;
+		}		
 		
 		
 		/**

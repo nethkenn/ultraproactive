@@ -305,7 +305,7 @@ Route::post('admin/utilities/admin_maintenance/add','AdminAdminController@create
 Route::get('admin/utilities/admin_maintenance/edit','AdminAdminController@admin_edit');
 Route::post('admin/utilities/admin_maintenance/edit','AdminAdminController@update_admin');
 Route::post('admin/utilities/admin_maintenance/delete','AdminAdminController@delete_admin');
-Route::get('admin/utilities/position', 'AdminPositionController@index');
+Route::any('admin/utilities/position', 'AdminPositionController@index');
 Route::get('admin/utilities/position/data', 'AdminPositionController@data');
 Route::get('admin/utilities/position/add', 'AdminPositionController@add');
 Route::post('admin/utilities/position/add', 'AdminPositionController@create');
