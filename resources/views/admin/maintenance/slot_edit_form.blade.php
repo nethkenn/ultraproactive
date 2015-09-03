@@ -94,7 +94,7 @@
             <div class="label">HACK SHEET REFERENCE ID</div>
             <div class="field"><input name="hack_reference" type="text" value="{{ $slot->hack_reference }}"></div>
         </div>
-        <button onclick="return false;" class="delete-slot" slot_id="{{ Request::input('slot_id') }}" style="background-color: gray">DELETE SLOT</button>
-        <button>UPDATE SLOT</button>
+        <!--<button onclick="return false;" class="delete-slot" slot_id="{{ Request::input('slot_id') }}" style="background-color: gray">DELETE SLOT</button>-->
+        @if($user == $allow_button)<button>UPDATE SLOT</button>@endif
     </form>
 <div>

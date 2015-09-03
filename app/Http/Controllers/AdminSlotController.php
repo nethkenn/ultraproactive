@@ -12,7 +12,7 @@ use App\Tbl_rank;
 use Crypt;
 use Validator;
 use App\Classes\Compute;
-
+use Session;
 class AdminSlotController extends AdminController
 {
 	public function index()
@@ -88,6 +88,16 @@ class AdminSlotController extends AdminController
 		$data["_rank"] = Tbl_rank::get();
 		$data["_country"] = Tbl_country::get();
 		$data["slot_number"] = Tbl_slot::max("slot_id") + 1;
+
+		$data["allow_button"] = DB::table('tbl_settings')->where('key','allow_update')->first();
+
+		if(!$data['allow_button'])
+		{
+			DB::table('tbl_settings')->insert(["key"=>"allow_update","value"=>"developer"]);
+			$data["allow_button"] = DB::table('tbl_settings')->where('key','allow_update')->first();
+		}
+		$data["allow_button"] = DB::table('tbl_settings')->where('key','allow_update')->first()->value;
+		$data['user'] = Session::get('admin')['username'];
 		return view('admin.maintenance.slot_edit_form', $data);
 	}
 	public function add_form_submit()
@@ -139,8 +149,10 @@ class AdminSlotController extends AdminController
 			$insert["slot_group_points"] =  Request::input("group_pv");
 			$insert["slot_upgrade_points"] =  Request::input("upgrade_points");
 			$insert["slot_total_withrawal"] =  Request::input("total_withrawal");
+			$insert["membership_entry_id"] = Request::input("slot_membership");
 			$insert["slot_total_earning"] =  Request::input("total_earning");
 			$insert["slot_owner"] = $account_id;
+			$insert["created_at"] = Carbon\Carbon::now();
 			$slot_id = Tbl_slot::insertGetId($insert);
 
 			Compute::tree($slot_id);
