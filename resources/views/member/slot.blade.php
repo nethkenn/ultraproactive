@@ -42,7 +42,7 @@
                             <div class="values">{{number_format($s->slot_wallet, 2)}}</div>
                             <div class="values">{{$s->membership_name}}</div>
                             <div class="values">{{$s->rank_name}}</div>
-                            <div class="values">7</div>
+                            <div class="values">{{$s->downline}}</div>
                         </div>
                     </div>
                     <div class="col-md-3 top-container">

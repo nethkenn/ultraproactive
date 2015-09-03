@@ -16,6 +16,7 @@ use App\Classes\Product;
 use App\Classes\Log;
 use App\Tbl_product;
 use App\Tbl_product_code;
+use App\Tbl_tree_placement;
 
 class MemberSlotController extends MemberController
 {
@@ -92,6 +93,7 @@ class MemberSlotController extends MemberController
 																	  			   ->join('tbl_product','tbl_product.product_id','=','tbl_product_package_has.product_id')
 																	  			   ->where('rel_membership_product.slot_id',$d->slot_id)
 																	  			   ->get();
+	   		$data['slot2'][$key]->downline = Tbl_tree_placement::where('placement_tree_parent_id',$d->slot_id)->count();														  			   
  		}
 
 		$data['count']= DB::table('tbl_slot')->where('slot_owner','=',$id)->count();
