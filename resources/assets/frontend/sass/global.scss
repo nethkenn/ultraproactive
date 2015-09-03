@@ -29,15 +29,72 @@ a
 }
 .op
 {
-    font-family: "Open Sans", sans-serif;
+    font-family: "Open Sans", sans-serif !important;
 }
 .rw
 {
-    font-family: "Raleway", sans-serif;
+    font-family: "Raleway", sans-serif !important;
+}
+.bold
+{
+    font-weight: bold !important;
+}
+//ACCOUNT
+.account
+{
+    position: absolute;
+    top: -55px;
+    right: 0;
+    overflow: auto;
+    clear: both;
+    .text
+    {
+        color: #fff;
+        display: inline-block;
+        font-weight: 600;
+        font-size: 18px;
+        font-family: "Raleway", sans-serif;
+        vertical-align: middle;
+        -webkit-transition: 0.3s all ease;
+           -moz-transition: 0.3s all ease;
+             -o-transition: 0.3s all ease;
+                transition: 0.3s all ease;
+        &:hover
+        {
+            color: #F1CB40;
+        }
+    }
+    a
+    {
+        vertical-align: middle;
+    }
+    span
+    {
+        vertical-align: middle;
+        color: #fff;
+        font-size: 20px;
+    }
+}
+.mtop
+{
+    margin-top: 200px !important;
 }
 body
 {
     background-color: #1767d2;
+    //STICKY NAV
+    .stickies
+    {
+        position: fixed;
+        top: 0;
+        margin: 0 -15px !important;
+        border-radius: 0px;
+        .logo-holder
+        {
+            display: none !important;
+
+        }
+    }
     //NAVIGATION
     .navbar
     {
@@ -45,11 +102,10 @@ body
         margin-top: 80px;
         background-color: #f1cb40;
         border: 0 !important;
-        position: absolute;
-        top: -200px;
+        top: 0px;
         z-index: 999;
         width: 100%;
-        ul
+        .navbar-nav
         {
             width: 100%;
             display: table;
@@ -85,7 +141,7 @@ body
                     z-index: 999;
                 }
             }
-            li
+            .nav-inside
             {
                 display: table-cell;
                 float: none;
@@ -111,6 +167,19 @@ body
                     {
                         color: #fff !important;
                         background-color: transparent !important;
+                    }
+                }
+                .dropdown-menu
+                {
+                    li
+                    {
+                        a
+                        {
+                            &:hover
+                            {
+                                color: #1767D2 !important;
+                            }
+                        }
                     }
                 }
             }

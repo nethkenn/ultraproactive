@@ -1,21 +1,16 @@
 @extends('front.layout')
 @section('content')
-<section id="title_breadcrumbs_bar">
+<section id="title_breadcrumbs_bar" class="rw" style="margin: 0 -15px; background-image: none; background-color: #2774DA; margin-top: -70px;">
         <div class="container">
             <div class="row">
-                <div class="span8">
+                <div class="span12">
                     <h1>{{ $product->product_name }}</h1>
-                </div>
-                <div class="span4 right_aligned">
-                    <div class="breadcrumbs">
-                     
-                    </div>                                  
                 </div>
             </div>
         </div>
     </section>
 
-    <section>
+    <section style="margin: 0 -15px; background-color: #fff">
         <div class="container">
             <div class="row">
                 <div class="span8 content_with_right_sidebar">
@@ -23,19 +18,19 @@
                 </div>
                 <div id="portfolio_item_meta" class="span4">
                     <h2 class="column_title_left">Description</h2>
-                    <p>
+                    <p class="rw">
                         {{ $product->product_info }}
                     </p>
                     <h2 class="column_title_left">Details</h2>
-                    <p class="portfolio_single_detail">
+                    <p class="portfolio_single_detail rw">
                         <span class="portfolio_item_meta_label">Date:</span>
                         <span class="portfolio_item_meta_data">{{ $product->month }} {{ $product->day }}, {{ $product->year }}</span>
                     </p>
-                    <p class="portfolio_single_detail">
+                    <p class="portfolio_single_detail rw">
                         <span class="portfolio_item_meta_label">Price:</span>
                         <span class="portfolio_item_meta_data">{{ $product->price }}</span>
                     </p>
-                    <p class="portfolio_single_detail">
+                    <p class="portfolio_single_detail rw">
                         <span class="portfolio_item_meta_label">Category:</span>
                         <span class="portfolio_item_meta_data">{{ $category->product_category_name }}</span>
                     </p>
@@ -44,7 +39,7 @@
         </div>
     </section>
 
-    <section id="related_portfolio">
+    <section id="related_portfolio" style="margin: 0 -15px; background-color: #fff">
         <div class="container">
             <h3 class="column_title_left">Similar Products</h3>
             <div class="row">

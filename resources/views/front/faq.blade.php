@@ -1,20 +1,17 @@
 @extends('front.layout')
 @section('content')
 @if($type == "product")
-<section id="title_breadcrumbs_bar">
+<section id="title_breadcrumbs_bar" class="rw" style="margin: 0 -15px; background-image: none; background-color: #2774DA; margin-top: -70px;">
     <div class="container">
         <div class="row">
-            <div class="span8">
+            <div class="span12">
                 <h1>F.A.Q.</h1>
-            </div>
-            <div class="span4 right_aligned">
-                                      
             </div>
         </div>
     </div>
 </section>
 
-<section class="dzen_section_DD section_title_left">
+<section class="dzen_section_DD section_title_left" style="background-color: #fff; margin: 0 -15px;">
     <header>
         <div class="dzen_container">
             <h3>F.A.Q for Products</h3>
@@ -51,7 +48,7 @@
 </section>
 @endif
 @if($type == "mindsync")
-<section id="title_breadcrumbs_bar">
+<section id="title_breadcrumbs_bar" style="margin: 0 -15px; background-image: none; background-color: #2774DA; margin-top: -70px;">
     <div class="container">
         <div class="row">
             <div class="span8">
@@ -64,7 +61,7 @@
     </div>
 </section>
 
-<section class="dzen_section_DD section_title_left">
+<section class="dzen_section_DD section_title_left" style="margin: 0 -15px; background-color: #fff;">
     <header>
         <div class="dzen_container">
             <h3>F.A.Q for Mind Sync</h3>
@@ -89,7 +86,7 @@
 </section>
 @endif
 @if($type == "opportunity")
-<section id="title_breadcrumbs_bar">
+<section id="title_breadcrumbs_bar" style="margin: 0 -15px; background-image: none; background-color: #2774DA; margin-top: -70px;">
     <div class="container">
         <div class="row">
             <div class="span8">
@@ -102,7 +99,7 @@
     </div>
 </section>
 
-<section class="dzen_section_DD section_title_left">
+<section class="dzen_section_DD section_title_left" style="background-color: #fff; margin: 0 -15px;">
     <header>
         <div class="dzen_container">
             <h3>F.A.Q for Opportunity</h3>

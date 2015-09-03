@@ -1,29 +1,24 @@
 @extends('front.layout')
 @section('content')
-<section id="title_breadcrumbs_bar">
+<section id="title_breadcrumbs_bar" class="rw" style="margin: 0 -15px; background-image: none; background-color: #2774DA; margin-top: -70px;">
 		<div class="container">
 			<div class="row">
-				<div class="span8">
+				<div class="span12">
 					<h1>About us</h1>
-				</div>
-				<div class="span4 right_aligned">
-					<div class="breadcrumbs">
-						
-					</div>									
 				</div>
 			</div>
 		</div>
 	</section>
 
-	<section class="dzen_section_DD ">
+	<section class="dzen_section_DD " style="background-color: #fff; margin: 0 -15px;">
 		<div class="dzen_section_content">
 			<div class="dzen_container">
 				<div style="overflow: auto; clear: both;">
 					<div class="dzen_column_DD_span6 about_us_introducton">
-						<h3>
+						<h3 class="rw bold">
 							<span>Mission</span>
 						</h3>
-						<div class="margin_bottom">
+						<div class="margin_bottom rb">
 							<div>
 								<span>
 									ULTRA PROACTIVE MARKETING INC. believes in creating sustainable livelihood for people who need them most through the creation of economic opportunities that empower them. The company also believes in making available to ordinary people the opportunity to become millionaires through the commercialization of unique products and services that benefit end-users and buyers.
@@ -32,10 +27,10 @@
 						</div>
 					</div>
 					<div class="dzen_column_DD_span6 about_us_introducton">
-						<h3>
+						<h3 class="rw bold">
 							<span>Vision</span>
 						</h3>
-						<div class="margin_bottom">
+						<div class="margin_bottom rb">
 							<div>
 								<span>
 									ULTRA PROACTIVE MARKETING INC. envisions itself to be a household name by becoming the top and most trusted company in the industry of personal care, health & wellness, unique & beneficial services, as well as to be one of the top companies in the multi-level-marketing business, not only in the Philippines, but also in the whole world
@@ -67,13 +62,13 @@
 						</div><!-- END REVOLUTION SLIDER -->
 					</div>
 					<div class="dzen_column_DD_span6 about_us_introducton">
-						<h3>
+						<h3 class="rw bold">
 							<span>The People Behind</span>
 						</h3>
-						<h5>
+						<h5 class="rw">
 							<span>Team of Experts and Entrepreneurs</span>
 						</h5>
-						<div class="margin_bottom">
+						<div class="margin_bottom rb">
 							<div>
 								<span>
 									Ultra Proactive Marketing Inc. was incorporated in 2014. The company made its mark in the MLM industry by introducing unique high quality products and services in the market. By now, the company is making a serious and aggresive bid to be one of the best MLM companies in the country. The management team is composed of professionals and experts from various fields, with a combined experienced of more than 30 years in corporate management, direct selling and network marketing industry.
@@ -148,11 +143,11 @@
 		</div>
 	</section> -->
 
-	<section id="our_team" class="dzen_section_DD ">
+	<section id="our_team" class="dzen_section_DD " style="background-color: #F2F4F5; margin: 0 -15px;">
 		<header>
 			<div class="dzen_container">
-				<h3>Meet our team</h3>
-				<p>
+				<h3 class="bold">Meet our team</h3>
+				<p class="rw">
 					When a team outgrows individual performance and learns team confidence, excellence becomes a reality. 
 				</p>
 			</div>

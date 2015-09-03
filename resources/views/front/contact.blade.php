@@ -1,21 +1,17 @@
 @extends('front.layout')
 @section('content')
-<section id="title_breadcrumbs_bar">
+<section id="title_breadcrumbs_bar" class="rw" style="margin: 0 -15px; background-image: none; background-color: #2774DA; margin-top: -70px;">
 	<div class="container">
 		<div class="row">
-			<div class="span8">
+			<div class="span12">
 				<h1>Contact</h1>
 			</div>
-			<div class="span4 right_aligned">
-				<div class="breadcrumbs">
-					
-				</div>									
-			</div>
+
 		</div>
 	</div>
 </section>
 
-<section class="dzen_section_DD">
+<section class="dzen_section_DD" style="margin: 0 -15px; background-color: #fff">
 	<header>
 		<div class="dzen_container">
 			<h3>Get in touch with us</h3>
@@ -85,7 +81,7 @@
 	</div>
 </section>
 
-<section class="dzen_section_DD no_padding section_body_fullwidth">
+<section class="dzen_section_DD no_padding section_body_fullwidth" style="margin: 0 -15px;">
 	<div class="dzen_section_content">
 		<div class="dzen_container">
 			<div class="dzen_column_DD_span12">

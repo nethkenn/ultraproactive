@@ -1,15 +1,10 @@
  @extends('frontend.layout')
  @section('content')
- <section id="title_breadcrumbs_bar">
+ <section class="rw" id="title_breadcrumbs_bar">
 		<div class="container">
 			<div class="row">
-				<div class="span8">
+				<div class="span12">
 					<h1>Single Product</h1>
-				</div>
-				<div class="span4 right_aligned">
-					<div class="breadcrumbs">
-					
-					</div>									
 				</div>
 			</div>
 		</div>
