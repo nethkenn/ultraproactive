@@ -718,6 +718,7 @@ class Compute
                               $update['slot_flushout']      =  $getslot->slot_flushout + $total2;
                               $update['slot_wallet'] =  $getslot->slot_wallet + $total;
                               Compute::method_reduced_flush($method,$slot_id,$total,$owner,$log,$total2);
+                              Compute::put_income_summary($slot_id,$method,$total);
                               Tbl_slot::where('slot_id',$slot_id)->update($update);
                            }
                            else
@@ -726,6 +727,7 @@ class Compute
                              $update['slot_total_earning'] = $getslot->slot_total_earning + $income;
                              $update['slot_wallet'] =  $getslot->slot_wallet + $income;
                              Compute::method_no_flush($method,$slot_id,$income,$owner,$log);
+                             Compute::put_income_summary($slot_id,$method,$income);
                              Tbl_slot::where('slot_id',$slot_id)->update($update);
                            }
                         }
@@ -757,6 +759,7 @@ class Compute
                               $update['slot_flushout']      =  $getslot->slot_flushout + $total2;
                               $update['slot_wallet'] =  $getslot->slot_wallet + $total;
                               Compute::method_reduced_flush($method,$slot_id,$total,$owner,$log,$total2);
+                              Compute::put_income_summary($slot_id,$method,$total);
                               Tbl_slot::where('slot_id',$slot_id)->update($update);
                            }
                            else
@@ -765,6 +768,7 @@ class Compute
                              $update['slot_total_earning'] = $getslot->slot_total_earning + $income;
                              $update['slot_wallet'] =  $getslot->slot_wallet + $income;
                              Compute::method_no_flush($method,$slot_id,$income,$owner,$log);
+                             Compute::put_income_summary($slot_id,$method,$income);
                              Tbl_slot::where('slot_id',$slot_id)->update($update);
                            }
                         }                        
@@ -787,5 +791,36 @@ class Compute
                     $log = $log." Max income is reached, wallet earned reduced to <b>".$income."</b> and flushed out <b>".$flush.'</b>.';
                     Log::account($owner, $log);
                     Log::slot($slot_id, $log, 0, $method);            
+    }
+    public static function put_income_summary($slot_id,$method,$amount)
+    {
+            if($method == "direct")
+            {
+                $get = Tbl_slot::where('slot_id',$slot_id)->first();                
+                $update['total_earned_direct'] = $get->total_earned_direct + $amount;
+                Tbl_slot::where('slot_id',$slot_id)->update($update); 
+                $update = null;
+            }
+            else if($method == "indirect")
+            {
+                $get = Tbl_slot::where('slot_id',$slot_id)->first();                
+                $update['total_earned_indirect'] = $get->total_earned_indirect + $amount;
+                Tbl_slot::where('slot_id',$slot_id)->update($update); 
+                $update = null;
+            }
+            else if($method == "binary")
+            {
+                $get = Tbl_slot::where('slot_id',$slot_id)->first();                
+                $update['total_earned_binary'] = $get->total_earned_binary + $amount;
+                Tbl_slot::where('slot_id',$slot_id)->update($update); 
+                $update = null;
+            }
+            else if($method == "matching")
+            {
+                $get = Tbl_slot::where('slot_id',$slot_id)->first();                
+                $update['total_earned_matching'] = $get->total_earned_matching + $amount;
+                Tbl_slot::where('slot_id',$slot_id)->update($update); 
+                $update = null;
+            }
     }
 }
