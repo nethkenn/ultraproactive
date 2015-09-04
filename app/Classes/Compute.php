@@ -773,7 +773,23 @@ class Compute
                            }
                         }                        
                      
+                 if($getslot->slot_type == "CD")
+                 {
+                     if($ifnegative >= 0)
+                     {
+                        $update["slot_type"] = "PS";
+                        $message = "Your slot #".$slot_id." becomes a paid slot.";
+                        Log::account($owner, $message);
+                        $vouch = DB::table('tbl_voucher')->where('slot_id',$slot_id)->first();
+                        if($vouch)
+                        {
+                            $check = Tbl_voucher::where('tbl_voucher.voucher_id',$vouch->voucher_id)->update(["status"=>"unclaimed"]);
+                        }
+                     }                   
+                 }                    
+
                 Tbl_slot::where('slot_id',$slot_id)->update($update);
+                $update = null;
     }
     public static function method_no_flush($method,$slot_id,$income,$owner,$log)
     {
