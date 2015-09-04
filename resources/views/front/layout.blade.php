@@ -192,7 +192,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="span7 footer_copyright">
-						© 2015, Primia It Solutions, All Rights Reserved<a href="/resources/assets/path/#"></a>
+						© 2015, UltraProactive, All Rights Reserved<a href="http://www.ultraproactive.net"></a>
 					</div>
 					<div class="span5 footer_social">
 						<!-- <a href="/resources/assets/path/#" target="_self"><i class="ABdev_icon-linkedin"></i></a> -->
