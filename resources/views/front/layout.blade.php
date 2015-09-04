@@ -73,12 +73,18 @@
 	      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="border: 0;">
 	         <ul class="nav navbar-nav">
 	            <li class="nav-inside active"><a href="/">HOME</a></li>
-	            <li class="nav-inside"><a href="product">PRODUCT</a></li>
-	            <li class="nav-inside"><a href="mindsync">MIND SYNC PROJECT</a></li>
-	            <li class="nav-inside"><a href="stories">STORIES</a></li>
+	            <li class="nav-inside"><a href="/product">PRODUCT</a></li>
+	            <li class="nav-inside dropdown">
+	               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">OTHERS</span></a>
+	               <ul class="dropdown-menu">
+	                  <li><a href="/mindsync">MIND SYNC PROJECT</a></li>
+	                  <li><a href="/foodcart">FOOD CART</a></li>
+	               </ul>
+	            </li>
+	            <li class="nav-inside"><a href="/stories">STORIES</a></li>
 	            <li class="nav-inside logo-holder"><img class="logo" src="/resources/assets/frontend/img/logo.png"></li>
-	            <li class="nav-inside"><a href="about">ABOUT</a></li>
-	            <li class="nav-inside"><a href="opportunity">OPPORTUNITY</a></li>
+	            <li class="nav-inside"><a href="/about">ABOUT</a></li>
+	            <li class="nav-inside"><a href="/opportunity">OPPORTUNITY</a></li>
 	            <li class="nav-inside dropdown">
 	               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">FAQs</span></a>
 	               <ul class="dropdown-menu">
@@ -87,7 +93,7 @@
 	                  <li><a href="/faq?type=opportunity">Opportunity</a></li>
 	               </ul>
 	            </li>
-	            <li class="nav-inside"><a href="contact">CONTACT US</a></li>
+	            <li class="nav-inside"><a href="/contact">CONTACT US</a></li>
 	            <!-- <li class="dropdown">
 	               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
 	               <ul class="dropdown-menu">

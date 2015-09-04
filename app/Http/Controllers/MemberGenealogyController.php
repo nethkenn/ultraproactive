@@ -117,11 +117,13 @@ class MemberGenealogyController extends MemberController
 
 		if($slot_info)
 		{
-			return 	'	<li class="width-reference">
+			if ($slot_info->image == "") 
+			{
+				return 	'	<li class="width-reference">
 							<span class="downline parent parent-reference PS SILVER" x="' . $slot_info->slot_id . '">
 								<div id="info">
 									<div id="photo">
-	                                    <img src="/resources/assets/img/default-image.JPG" alt="" />
+	                                    <img src="/resources/assets/img/default-image.jpg" alt="" />
 	                                </div>
 									<div id="cont">
 										<div>' . strtoupper($slot_info->account_name) . ' </div>
@@ -135,6 +137,28 @@ class MemberGenealogyController extends MemberController
 							</span>
 							<i class="downline-container"></i>
 						</li>';
+			}
+			else
+			{
+				return 	'	<li class="width-reference">
+							<span class="downline parent parent-reference PS SILVER" x="' . $slot_info->slot_id . '">
+								<div id="info">
+									<div id="photo">
+	                                    <img src="'.$slot_info->image.'" alt="" />
+	                                </div>
+									<div id="cont">
+										<div>' . strtoupper($slot_info->account_name) . ' </div>
+										<b>' . $slot_info->membership_name . ' </b>
+									</div>
+									<div>' . $slot_info->slot_type . '</div>
+									<div>
+									</div>
+								</div>
+								<div class="id">' . $slot_info->slot_id . '</div>
+							</span>
+							<i class="downline-container"></i>
+						</li>';
+			}
 		}
 		else if($position) 
 		{

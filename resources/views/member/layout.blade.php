@@ -86,7 +86,7 @@
 			        <li class="{{ Request::segment(2) == 'product' ? 'active' : '' }}"><a href="/member/product">Product</a></li>
 			        <li class="{{ Request::segment(2) == 'voucher' ? 'active' : '' }}"><a href="/member/voucher">Voucher</a></li>
 			        <li class="{{ Request::segment(2) == 'leads' ? 'active' : '' }}"><a href="/member/leads">Leads</a></li>
-                    <li class="{{ Request::segment(2) == 'genealogy' ? 'active' : '' }} dropdown">
+                   <li class="{{ Request::segment(2) == 'genealogy' ? 'active' : '' }} dropdown hide">
                         <!--<a href="/member/genealogy?mode=binary">E-payment</a>-->
                         <a href="member/e-payment/">E-payment</a>
                         <ul class="dropdown-menu">

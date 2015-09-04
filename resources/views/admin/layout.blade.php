@@ -129,6 +129,7 @@
 									<li><a href="admin/content/team">Team</a></li>
 									<li><a href="admin/content/faq">F.A.Q.</a></li>
 									<li><a href="admin/content/mindsync">MindSync</a></li>
+									<li><a href="admin/content/foodcart">FoodCart</a></li>
 									<!-- <li><a href="admin/content/partner">Partners</a></li>
 									<li><a href="admin/content/service">Services</a></li> -->
 									<!-- <li><a href="admin/content/about">Others</a></li> -->

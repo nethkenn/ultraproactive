@@ -48,7 +48,7 @@
 </section>
 @endif
 @if($type == "mindsync")
-<section id="title_breadcrumbs_bar" style="margin: 0 -15px; background-image: none; background-color: #2774DA; margin-top: -70px;">
+<section id="title_breadcrumbs_bar" class="rw" style="margin: 0 -15px; background-image: none; background-color: #2774DA; margin-top: -70px;">
     <div class="container">
         <div class="row">
             <div class="span8">
@@ -86,7 +86,7 @@
 </section>
 @endif
 @if($type == "opportunity")
-<section id="title_breadcrumbs_bar" style="margin: 0 -15px; background-image: none; background-color: #2774DA; margin-top: -70px;">
+<section id="title_breadcrumbs_bar" class="rw" style="margin: 0 -15px; background-image: none; background-color: #2774DA; margin-top: -70px;">
     <div class="container">
         <div class="row">
             <div class="span8">
