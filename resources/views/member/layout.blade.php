@@ -76,10 +76,10 @@
 			        <li class="{{ Request::segment(2) == 'slot' ? 'active' : '' }}"><a href="/member/slot">My Slots</a></li>
 			        <li class="{{ Request::segment(2) == 'code_vault' ? 'active' : '' }}"><a href="/member/code_vault">Code Vault</a></li>
 			        <li class="{{ Request::segment(2) == 'genealogy' ? 'active' : '' }} dropdown">
-                        <a href="/member/genealogy?mode=binary">Genealogy</a>
+                        <a href="javascript:">Genealogy</a>
                         <ul class="dropdown-menu">
-                            <li><a href="/member/genealogy?mode=binary">Binary Genealogy</a></li>
-                            <li><a href="/member/genealogy?mode=sponsor">Sponsor Genealogy</a></li>
+                            <li><a href="/member/genealogy/tree?mode=binary">Binary Genealogy</a></li>
+                            <li><a href="/member/genealogy/tree?mode=sponsor">Sponsor Genealogy</a></li>
                         </ul>
                     </li>
 			        <li class="{{ Request::segment(2) == 'encashment' ? 'active' : '' }}"><a href="/member/encashment">Encashment</a></li>
