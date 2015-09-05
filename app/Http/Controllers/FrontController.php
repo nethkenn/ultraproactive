@@ -279,19 +279,42 @@ class FrontController extends Controller
 	}
 	public function mindsync()
 	{
-		$data["_mindsync"] = DB::table("tbl_mindsync")->where("archived", 0)->where("mindsync_image", "!=", "default.jpg")->where("mindsync_image", "!=", "")->get();
-		foreach ($data["_mindsync"] as $key => $value) 
+		$data["_image"] = DB::table("tbl_mindsync")->where("mindsync_image", "!=", "")->where("archived", 0)->get();
+		foreach ($data["_image"] as $key => $value) 
 		{
-			$explode = $value;
-			$get = explode(",", $explode->mindsync_image);
-			foreach ($get as $susi => $halaga) 
-			{
-				$imagee[$susi] = Image::view($halaga, "300x300");
-			}
-			// $imagee = "http://image.primiaworks.com/uploads/ultraproactive.net/image/$get/$get";
-			$data["_mindsync"][$key]->image = $imagee;
+			$image = $value->mindsync_image;
+			$image_view = "http://image.primiaworks.com/uploads/ultraproactive.net/image/$image/$image";
+			$data["_image"][$key]->image = $image_view;
 		}
+		$data["_testimony"] = DB::table("tbl_mindsync")->where("mindsync_title", "!=", "")->where("mindsync_description", "!=", "")->where("archived", 0)->get();
+		$data["_video"] = DB::table("tbl_mindsync")->where("mindsync_video", "!=", "")->where("archived", 0)->get();
+		// foreach ($data["_mindsync"] as $key => $value) 
+		// {
+		// 	$explode = $value;
+		// 	$get = explode(",", $explode->mindsync_image);
+		// 	foreach ($get as $susi => $halaga) 
+		// 	{
+		// 		$imagee[$susi] = Image::view($halaga, "300x300");
+		// 	}
+		// 	// $imagee = "http://image.primiaworks.com/uploads/ultraproactive.net/image/$get/$get";
+		// 	$data["_mindsync"][$key]->image = $imagee;
+		// }
 		
 		return view('front.mindsync', $data);
+	}
+	public function faq()
+	{
+		$data["type"] = Request::input("type");
+		if (isset($data["type"])) 
+		{
+			$data["_product"] = DB::table("tbl_faq")->where("archived", 0)->where("faq_type", "product")->get();
+			$data["_mindsync"] = DB::table("tbl_faq")->where("archived", 0)->where("faq_type", "mindsync")->get();
+			$data["_opportunity"] = DB::table("tbl_faq")->where("archived", 0)->where("faq_type", "opportunity")->get();
+			return view('front.faq', $data);
+		}
+        else
+       	{
+       		return Redirect::to("/");
+       	}
 	}
 }

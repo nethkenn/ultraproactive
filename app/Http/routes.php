@@ -1,6 +1,9 @@
 <?php
 // Route::any('/neil', 'NeilController@index');
 
+/* INCOME PROJECTION */
+Route::any('/projection', 'ProjectionController@index');
+
 /* MEMBER */
 Route::any('/member', 'MemberDashboardController@index');
 Route::any('/member/notification', 'MemberDashboardController@notification');
@@ -45,6 +48,7 @@ Route::any('/news', 'FrontController@news');
 Route::any('/news_content', 'FrontController@news_content');
 Route::any('/contact', 'FrontController@contact');
 Route::any('/contact/submit', 'FrontController@contact_submit');
+Route::any('/faq', 'FrontController@faq');
 Route::any('/register', 'FrontController@register');
 Route::get('/admin', 'AdminController@index');
 Route::post('/admin','AdminController@postLogin');
@@ -124,13 +128,32 @@ Route::get('admin/content/partner/edit', 'AdminPartnerController@edit');
 Route::any('admin/content/partner/edit_submit', 'AdminPartnerController@edit_submit');
 Route::any('admin/content/partner/delete', 'AdminPartnerController@delete');
 
+/* FAQ MANAGEMENT */
+Route::get('admin/content/faq', 'AdminFaqController@index');
+Route::any('admin/content/faq/add', 'AdminFaqController@add');
+Route::any('admin/content/faq/edit', 'AdminFaqController@edit');
+Route::any('admin/content/faq/delete', 'AdminFaqController@delete');
+
 /* MINDSYNC MANAGEMENT */
 Route::get('admin/content/mindsync', 'AdminMindSyncController@index');
-Route::get('admin/content/mindsync/add', 'AdminMindSyncController@add');
-Route::any('admin/content/mindsync/add_submit', 'AdminMindSyncController@add_submit');
-Route::get('admin/content/mindsync/edit', 'AdminMindSyncController@edit');
-Route::any('admin/content/mindsync/edit_submit', 'AdminMindSyncController@edit_submit');
-Route::any('admin/content/mindsync/delete', 'AdminMindSyncController@delete');
+Route::get('admin/content/mindsync/video', 'AdminMindSyncController@video');
+Route::get('admin/content/mindsync/image', 'AdminMindSyncController@image');
+Route::get('admin/content/mindsync/testimony', 'AdminMindSyncController@testimony');
+Route::get('admin/content/mindsync/video/add', 'AdminMindSyncController@video_add');
+Route::any('admin/content/mindsync/video/add_submit', 'AdminMindSyncController@video_add_submit');
+Route::get('admin/content/mindsync/video/edit', 'AdminMindSyncController@video_edit');
+Route::any('admin/content/mindsync/video/edit_submit', 'AdminMindSyncController@video_edit_submit');
+Route::any('admin/content/mindsync/video/delete', 'AdminMindSyncController@video_delete');
+Route::get('admin/content/mindsync/image/add', 'AdminMindSyncController@image_add');
+Route::any('admin/content/mindsync/image/add_submit', 'AdminMindSyncController@image_add_submit');
+Route::get('admin/content/mindsync/image/edit', 'AdminMindSyncController@image_edit');
+Route::any('admin/content/mindsync/image/edit_submit', 'AdminMindSyncController@image_edit_submit');
+Route::any('admin/content/mindsync/image/delete', 'AdminMindSyncController@image_delete');
+Route::get('admin/content/mindsync/testimony/add', 'AdminMindSyncController@testimony_add');
+Route::any('admin/content/mindsync/testimony/add_submit', 'AdminMindSyncController@testimony_add_submit');
+Route::get('admin/content/mindsync/testimony/edit', 'AdminMindSyncController@testimony_edit');
+Route::any('admin/content/mindsync/testimony/edit_submit', 'AdminMindSyncController@testimony_edit_submit');
+Route::any('admin/content/mindsync/testimony/delete', 'AdminMindSyncController@testimony_delete');
 
 /* STORIES MANAGEMENT */
 Route::get('admin/content/stories', 'AdminStoriesController@index');

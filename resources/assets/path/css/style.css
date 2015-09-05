@@ -4883,3 +4883,24 @@ Author URI: http://www.ab-themes.com
 
 	}
 
+.mind-left
+{
+	display: table !important;
+	table-layout: fixed;
+}
+
+.mind-left .text
+{
+	display: table-cell;
+	vertical-align: top;
+	padding: 0 20px;
+	text-align: center;
+	font-size: 16px;
+}
+
+.mind-left .img
+{
+	display: table-cell;
+	vertical-align: top;
+}
+
