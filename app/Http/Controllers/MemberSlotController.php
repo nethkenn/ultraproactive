@@ -166,6 +166,11 @@ class MemberSlotController extends MemberController
 		$info = null;
 		$slot = Tbl_slot::where('slot_owner',Customer::id())->get();
 
+		/* SLOT LIMIT */
+	 	$limit = DB::table('tbl_settings')->where('key','slot_limit')->first();
+		$count = Tbl_slot::where('slot_owner',$data['acct'])->count();
+
+		
 
 		foreach($slot as $s)
 		{
@@ -177,16 +182,24 @@ class MemberSlotController extends MemberController
 
 		if($checking == true && isset($data['acct']))
 		{
-				if($rpass == $data['pass'])
-				{	
-					Tbl_slot::where('slot_id',$data['slot'])->update(['slot_owner'=>$data['acct']]);
-					Session::forget('currentslot');
-					$info['success'] = "Success";
+				if($limit->value <=  $count)
+				{
+					$info['error'] = "This account is already reach the max slot per account. Max slot per account is ".$limit->value.".";
 				}
 				else
 				{
-					$info['error'] = "Wrong Password";	
+					if($rpass == $data['pass'])
+					{	
+						Tbl_slot::where('slot_id',$data['slot'])->update(['slot_owner'=>$data['acct']]);
+						Session::forget('currentslot');
+						$info['success'] = "Success";
+					}
+					else
+					{
+						$info['error'] = "Wrong Password";	
+					}
 				}
+
 		}
 		else
 		{

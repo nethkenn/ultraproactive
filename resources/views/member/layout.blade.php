@@ -46,14 +46,14 @@
 			    <div class="navbar-header">
                 <span class="hidden-bury visible-xs visible-sm hidden-lg hidden-md pull-left">
                     @if($slotnow)
-                    <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 14px; font-weight: 700; color: #9BA0A7; display: block; padding: 15px 0;">SLOT #{{$slotnow->slot_id}} <span>{{ number_format($slotnow->slot_wallet, 2)}}</span> <b class="caret"></b></a>
+                    <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 14px; font-weight: 700; color: #9BA0A7; display: block; padding: 15px 0;">SLOT #{{$slotnow->slot_id}} <span>{{ number_format($slotnow->slot_wallet, 2)}}</span> | GC <span>{{ number_format($slotnow->slot_gc, 2)}}</span>  <b class="caret"></b></a>
                     @else
                     <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 14px; font-weight: 700; color: #9BA0A7; display: block; padding: 15px 0;">NO SLOTS<b class="caret"></b></a>
                     @endif
                     <ul class="dropdown-menu scrollable-menu" style="text-transform: normal; font-size: 14px; font-weight: 700; color: #9BA0A7;">
                         @if($slot)                                                    
                             @foreach($slot as $slots)
-                                   <li><a class="forslotchanging" slotid='{{$slots->slot_id}}' href="javascript:">SLOT #{{$slots->slot_id}} <span>{{ number_format($slots->slot_wallet, 2)}}</span></a></li> 
+                                   <li><a class="forslotchanging" slotid='{{$slots->slot_id}}' href="javascript:">SLOT #{{$slots->slot_id}} <span>{{ number_format($slots->slot_wallet, 2)}}</span> | GC <span>{{ number_format($slots->slot_gc, 2)}}</span> </a></li> 
                             @endforeach
                         @endif    
                         <li><a href="/member/settings">Account Settings</a></li>
@@ -114,14 +114,14 @@
                         <div class="select-label">You have no slots</div>   
                         @endif -->
                         @if($slotnow)
-                        <a href="javascript:" class="dropdown-toggle hidden-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SLOT #{{$slotnow->slot_id}} <span>{{ number_format($slotnow->slot_wallet, 2)}}</span> <b class="caret"></b></a>
+                        <a href="javascript:" class="dropdown-toggle hidden-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SLOT #{{$slotnow->slot_id}} <span>{{ number_format($slotnow->slot_wallet, 2)}}</span> | GC <span>{{ number_format($slotnow->slot_gc, 2)}}</span>  <b class="caret"></b></a>
                         @else
                         <a href="javascript:" class="dropdown-toggle hidden-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">NO SLOTS<b class="caret"></b></a>
                         @endif
                         <ul class="dropdown-menu scrollable-menu hidden-sm" style="text-transform: normal">
                             @if($slot)                                                    
                                 @foreach($slot as $slots)
-                                       <li><a class="forslotchanging" slotid='{{$slots->slot_id}}' href="javascript:">SLOT #{{$slots->slot_id}} <span>{{ number_format($slots->slot_wallet, 2)}}</span></a></li> 
+                                       <li><a class="forslotchanging" slotid='{{$slots->slot_id}}' href="javascript:">SLOT #{{$slots->slot_id}} <span>{{ number_format($slots->slot_wallet, 2)}}</span> |  GC <span>{{ number_format($slots->slot_gc, 2)}}</span></a></li> 
                                 @endforeach
                             @endif      
                             <li><a href="/member/settings">Account Settings</a></li>

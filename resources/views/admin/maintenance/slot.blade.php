@@ -5,8 +5,11 @@
 			<div class="title col-md-8">
 				<h2><i class="fa fa-share-alt"></i> SLOTS</h2>
 			</div>
-			<div class="buttons col-md-4 text-right">
-				<button onclick="location.href='admin/maintenance/slots/add'" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> GENERATE SLOTS</button>
+			<div class="buttons col-md-2 text-right">
+				<button class="slot_limit btn btn-primary" type="button" style="width: 100%;"><i></i>Slot Limit ({{$slot_limit->value}})</button>
+			</div>
+			<div class="buttons col-md-2 text-right">
+				<button onclick="location.href='admin/maintenance/slots/add'" style="width: 100%;" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> GENERATE SLOTS</button>
 			</div>
 		</div>
 		<div class="filters ">
@@ -29,6 +32,19 @@
 				</thead>
 			</table>
 	</div>
+
+<div class="remodal create-slot" data-remodal-id="slot_limit" data-remodal-options="hashTracking: false">
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <div class="header">
+        Slot Limit per account:
+    </div>
+    <form class="form-horizontal" method="POST">
+	    <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
+	    <input type="number" class="form-control" value="{{$slot_limit->value}}" name="slot_limit" style="text-align: center;">
+		<button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Change Limit</button>
+    </form>
+</div>
+
 @endsection
 
 @section('script')
@@ -83,6 +99,14 @@ $(function() {
   	str = str + '</select>';
 	$('#table_filter').prepend(str);
     $.fn.dataTableExt.sErrMode = 'throw';
+
+    $(".slot_limit").click(function()
+    {
+			var inst = $('[data-remodal-id=slot_limit]').remodal();
+          	inst.open(); 
+    });
+
+
 });
 </script>
 @endsection

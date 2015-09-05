@@ -23,7 +23,7 @@
 			<tr>
 				<td>{{ $membership->membership_id }}</td>
 				<td>{{ $membership->membership_name }}</td>
-				<td>{{ number_format($membership->membership_direct_sponsorship_bonus, 2) }} %</td>
+				<td>@if($membership->if_matching_percentage == 1){{ number_format($membership->membership_direct_sponsorship_bonus, 2) }} % @else {{ number_format($membership->membership_direct_sponsorship_bonus, 2) }} @endif</td>
 				<td><a href="admin/utilities/direct/edit?id={{ $membership->membership_id }}">EDIT</a></td>
 			</tr>
 			@endforeach

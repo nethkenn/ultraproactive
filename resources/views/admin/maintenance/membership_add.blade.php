@@ -51,6 +51,21 @@
                     @endif
                     <input name="max_income" value="{{Request::input('max_income')}}" required="required" class="form-control" id="" placeholder="" type="number">
                 </div>
+
+                <div class="form-group col-md-6">
+                    <label for="slot_limit">Slot Limit Per Account</label>
+                    @if($_error['slot_limit'])
+                        <div class="col-md-12 alert alert-danger form-errors">
+                            <ul>
+                                @foreach($_error['slot_limit'] as $error)
+                                    <li>{{$error}}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <input name="slot_limit" value="{{Request::input('slot_limit')}}" required="required" class="form-control" id="" placeholder="" type="number">
+                </div>
+                
                 <div class="form-group col-md-6">
                     <label for="discount">Discount</label>
                     @if($_error['discount'])
@@ -64,19 +79,6 @@
                     @endif
                     <input name="discount" value="{{Request::input('discount')}}" required="required" class="form-control" id="" placeholder="" type="number">
                 </div>
-                <div class="form-group col-md-6">
-                    <label for="member_upgrade_pts">Upgrade PTS</label>
-                    @if($_error['member_upgrade_pts'])
-                        <div class="col-md-12 alert alert-danger form-errors">
-                            <ul>
-                                @foreach($_error['member_upgrade_pts'] as $error)
-                                    <li>{{$error}}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                    <input name="member_upgrade_pts" value="{{Request::input('member_upgrade_pts')}}" required="required" class="form-control" id="" placeholder="" type="number">
-                </div> 
                 <div class="form-group col-md-6">
                     <label for="discount">Enable Entry</label>
                     @if($_error['membership_entry'])

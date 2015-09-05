@@ -17,8 +17,8 @@
                 <input disabled="disabled" value="{{ $data->membership_name }}" class="form-control" id="" placeholder="" type="text">
             </div>  
             <div class="form-group col-md-12">
-                <label for="account_contact">Direct Sponsorship Bonus</label>
-                <input name="membership_direct_sponsorship_bonus" value="{{ $data->membership_direct_sponsorship_bonus }}" required="required" class="form-control" id="" placeholder="" type="text">
+                <label for="account_contact">Direct Sponsorship Bonus (Add % sign if percent of membership price / Fixed value)</label>
+                <input name="membership_direct_sponsorship_bonus" value="{{ $data->membership_direct_sponsorship_bonus }}{{$data->if_matching_percentage == 1 ? "%" : ""}}" required="required" class="form-control" id="" placeholder="" type="text">
             </div>
         </form>
     </div>
