@@ -49,11 +49,8 @@
 <section id="title_breadcrumbs_bar" class="rw" style="margin: 0 -15px; background-image: none; background-color: #2774DA; margin-top: -70px;">
     <div class="container">
         <div class="row">
-            <div class="span8">
+            <div class="span12">
                 <h1>F.A.Q.</h1>
-            </div>
-            <div class="span4 right_aligned">
-                                      
             </div>
         </div>
     </div>
@@ -85,11 +82,8 @@
 <section id="title_breadcrumbs_bar" class="rw" style="margin: 0 -15px; background-image: none; background-color: #2774DA; margin-top: -70px;">
     <div class="container">
         <div class="row">
-            <div class="span8">
+            <div class="span12">
                 <h1>F.A.Q.</h1>
-            </div>
-            <div class="span4 right_aligned">
-                                      
             </div>
         </div>
     </div>
@@ -110,6 +104,39 @@
                         <span class="ui-accordion-header-icon ui-icon-triangle-1-e"></span>{{ $opportunity->faq_title }}
                     </h3>
                     <div class="ui-accordion-content" id="ui-accordion-1-panel-0" aria-labelledby="ui-accordion-1-header-{{ $opportunity->faq_id }}" role="tabpanel" aria-expanded="false" aria-hidden="true" style="white-space: pre-wrap !important;">{{ $opportunity->faq_content }}</div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@endif
+@if($type == "glossary")
+<section id="title_breadcrumbs_bar" class="rw" style="margin: 0 -15px; background-image: none; background-color: #2774DA; margin-top: -70px;">
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+                <h1>F.A.Q.</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="dzen_section_DD section_title_left" style="background-color: #fff; margin: 0 -15px;">
+    <header>
+        <div class="dzen_container">
+            <h3>F.A.Q for Glossary</h3>
+        </div>
+    </header>
+    <div class="dzen_section_content">
+        <div class="dzen_container">
+            <div class="dzen_column_DD_span12 ">
+                <div class="dzen-accordion" data-expanded="2" role="tablist">
+                    @foreach($_glossary as $glossary)
+                    <h3 class="ui-accordion-header" style="margin-bottom: 0;" role="tab" id="ui-accordion-1-header-0" aria-controls="ui-accordion-1-panel-{{ $glossary->faq_id }}" aria-selected="false" tabindex="0">
+                        <span class="ui-accordion-header-icon ui-icon-triangle-1-e"></span>{{ $glossary->faq_title }}
+                    </h3>
+                    <div class="ui-accordion-content" id="ui-accordion-1-panel-0" aria-labelledby="ui-accordion-1-header-{{ $glossary->faq_id }}" role="tabpanel" aria-expanded="false" aria-hidden="true" style="white-space: pre-wrap !important;">{{ $glossary->faq_content }}</div>
                     @endforeach
                 </div>
             </div>

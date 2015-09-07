@@ -98,6 +98,7 @@
 	            <li class="nav-inside dropdown">
 	               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">FAQs</span></a>
 	               <ul class="dropdown-menu">
+	               	  <li><a href="/faq?type=glossary">Glossary</a></li>
 	                  <li><a href="/faq?type=product">Products</a></li>
 	                  <li><a href="/faq?type=mindsync">Mind Sync Project</a></li>
 	                  <li><a href="/faq?type=opportunity">Opportunity</a></li>
