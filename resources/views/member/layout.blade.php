@@ -3,6 +3,7 @@
 <head>
 	<link rel="stylesheet" type="text/css" href="/resources/assets/members/css/member.css">
     @yield('css')
+    <link rel="shortcut icon" type="image/x-icon" href="/resources/assets/frontend/img/logo.png">
 	<link rel="stylesheet" type="text/css" href="/resources/assets/bootstrap/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="/resources/assets/bootstrap/css/bootstrap-theme.css">
 	<link rel="stylesheet" type="text/css" href="/resources/assets/remodal/src/jquery.remodal.css">
@@ -10,6 +11,7 @@
 	<link rel="stylesheet" type="text/css" href="/resources/assets/jquery-ui/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="/resources/assets/font-awesome/css/font-awesome.min.css">
     <link href="/resources/assets/footable/css/footable.core.css" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" type="image/x-icon" href="/resources/assets/frontend/img/logo.png">
     <!-- <link href="/resources/assets/footable/css/footable.standalone.css" rel="stylesheet" type="text/css" /> -->
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300' rel='stylesheet' type='text/css'>
     <!--<base href="{{$_SERVER['SERVER_NAME']}}">-->

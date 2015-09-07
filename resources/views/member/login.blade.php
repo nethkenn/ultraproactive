@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en-US" class="css3transitions">
 <head>
+    <link rel="shortcut icon" type="image/x-icon" href="/resources/assets/frontend/img/logo.png">
+    <title>UltraProactive - Member Login</title>
 	<link rel="stylesheet" type="text/css" href="/resources/assets/members/css/login.css">
 	<link rel="stylesheet" type="text/css" href="/resources/assets/bootstrap/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="/resources/assets/bootstrap/css/bootstrap-theme.css">

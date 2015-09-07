@@ -3,9 +3,9 @@
 <head>
 	<title>Ultra Proactive</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta name="description" content="Dzen HTML5 premium template">
+	<meta name="description" content="UltraProactive">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="shortcut icon" type="image/x-icon" href="/resources/assets/path/images/favicon.png">
+	<link rel="shortcut icon" type="image/x-icon" href="/resources/assets/frontend/img/logo.png">
 	<!--[if lt IE 9]>
 	<script src="/resources/assets/path///html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
