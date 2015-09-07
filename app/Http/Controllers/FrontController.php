@@ -12,7 +12,7 @@ class FrontController extends Controller
 
 	public function index()
 	{
-		$data["_news"] = DB::table("tbl_news")->where("archived", 0)->orderBy('news_date', 'desc')->take(2)->get();
+		$data["_news"] = DB::table("tbl_news")->where("archived", 0)->orderBy('news_date', 'desc')->take(4)->get();
 		foreach ($data["_news"] as $key => $value) 
 		{
 			$get = $value->news_image;
