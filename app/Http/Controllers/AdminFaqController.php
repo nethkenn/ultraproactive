@@ -12,6 +12,7 @@ class AdminFaqController extends AdminController
 		$data["_product"] = DB::table("tbl_faq")->where("faq_type", "product")->where("archived", 0)->get();
 		$data["_mindsync"] = DB::table("tbl_faq")->where("faq_type", "mindsync")->where("archived", 0)->get();
 		$data["_opportunity"] = DB::table("tbl_faq")->where("faq_type", "opportunity")->where("archived", 0)->get();
+		$data["_glossary"] = DB::table("tbl_faq")->where("faq_type", "glossary")->where("archived", 0)->get();
         return view('admin.content.faq', $data);
 	}
 	public function add()

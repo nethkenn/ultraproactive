@@ -25,9 +25,7 @@
                     <h3 class="ui-accordion-header" style="margin-bottom: 0;" role="tab" id="ui-accordion-1-header-0" aria-controls="ui-accordion-1-panel-{{ $product->faq_id }}" aria-selected="false" tabindex="0">
                         <span class="ui-accordion-header-icon ui-icon-triangle-1-e"></span>{{ $product->faq_title }}
                     </h3>
-                    <div class="ui-accordion-content" id="ui-accordion-1-panel-0" aria-labelledby="ui-accordion-1-header-{{ $product->faq_id }}" role="tabpanel" aria-expanded="false" aria-hidden="true" style="white-space: pre-wrap !important;">
-                        {{ $product->faq_content }}
-                    </div>
+                    <div class="ui-accordion-content" id="ui-accordion-1-panel-0" aria-labelledby="ui-accordion-1-header-{{ $product->faq_id }}" role="tabpanel" aria-expanded="false" aria-hidden="true" style="white-space: pre-wrap !important;">{{ $product->faq_content }}</div>
                     @endforeach
                     <!-- <h3 class="ui-accordion-header ui-accordion-header-active" role="tab" id="ui-accordion-1-header-1" aria-controls="ui-accordion-1-panel-1" aria-selected="true" tabindex="0">
                         <span class="ui-accordion-header-icon ui-icon-triangle-1-s"></span>Accordion Title Two
@@ -75,9 +73,7 @@
                     <h3 class="ui-accordion-header" style="margin-bottom: 0;" role="tab" id="ui-accordion-1-header-0" aria-controls="ui-accordion-1-panel-{{ $mindsync->faq_id }}" aria-selected="false" tabindex="0">
                         <span class="ui-accordion-header-icon ui-icon-triangle-1-e"></span>{{ $mindsync->faq_title }}
                     </h3>
-                    <div class="ui-accordion-content" id="ui-accordion-1-panel-0" aria-labelledby="ui-accordion-1-header-{{ $mindsync->faq_id }}" role="tabpanel" aria-expanded="false" aria-hidden="true" style="white-space: pre-wrap !important;">
-                        {{ $mindsync->faq_content }}
-                    </div>
+                    <div class="ui-accordion-content" id="ui-accordion-1-panel-0" aria-labelledby="ui-accordion-1-header-{{ $mindsync->faq_id }}" role="tabpanel" aria-expanded="false" aria-hidden="true" style="white-space: pre-wrap !important;">{{ $mindsync->faq_content }}</div>
                     @endforeach
                 </div>
             </div>
@@ -113,9 +109,7 @@
                     <h3 class="ui-accordion-header" style="margin-bottom: 0;" role="tab" id="ui-accordion-1-header-0" aria-controls="ui-accordion-1-panel-{{ $opportunity->faq_id }}" aria-selected="false" tabindex="0">
                         <span class="ui-accordion-header-icon ui-icon-triangle-1-e"></span>{{ $opportunity->faq_title }}
                     </h3>
-                    <div class="ui-accordion-content" id="ui-accordion-1-panel-0" aria-labelledby="ui-accordion-1-header-{{ $opportunity->faq_id }}" role="tabpanel" aria-expanded="false" aria-hidden="true" style="white-space: pre-wrap !important;">
-                        {{ $opportunity->faq_content }}
-                    </div>
+                    <div class="ui-accordion-content" id="ui-accordion-1-panel-0" aria-labelledby="ui-accordion-1-header-{{ $opportunity->faq_id }}" role="tabpanel" aria-expanded="false" aria-hidden="true" style="white-space: pre-wrap !important;">{{ $opportunity->faq_content }}</div>
                     @endforeach
                 </div>
             </div>
