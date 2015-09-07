@@ -318,13 +318,13 @@
 					<div class="dzen_team_member">
 						<div class="dzen_overlayed">
 							<img src="{{ $team->image }}" alt="{{ $team->team_title }}">
-							<div class="dzen_overlay">
+							<!-- <div class="dzen_overlay">
 								<p>
 									<a href="#" target="_self"><i class="ABdev_icon-twitter"></i></a>
 									<a href="#" target="_self"><i class="ABdev_icon-linkedin"></i></a>
 									<a href="#" target="_self"><i class="ABdev_icon-facebook"></i></a>
 								</p>
-							</div>
+							</div> -->
 						</div>
 						<a class="dzen_team_member_link dzen_team_member_modal_link" href="#">
 							<span class="dzen_team_member_name">{{ $team->team_title }}</span>
