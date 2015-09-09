@@ -212,6 +212,32 @@ body
 			{
 				font-size: 14.48px;
 			}
+			.open
+			{
+				.dropdown-toggle
+				{
+					background-image: none;
+					background-color: #40A3DD;
+					&:focus
+					{
+						background-image: none;
+						background-color: #40A3DD;
+						color: #fff;
+					}
+					&:active
+					{
+						background-image: none;
+						background-color: #40A3DD;
+						color: #fff;
+					}
+					&:hover
+					{
+						background-image: none;
+						background-color: #40A3DD;
+						color: #fff;
+					}
+				}
+			}
 			.nav
 			{
 				text-transform: uppercase;
@@ -222,6 +248,24 @@ body
 						background-color: #41A5E0 !important;
 						background-image: none;
 						color: #fff;
+						&:focus
+						{
+							background-color: #41A5E0 !important;
+							background-image: none;
+							color: #fff;
+						}
+						&:active
+						{
+							background-color: #41A5E0 !important;
+							background-image: none;
+							color: #fff;
+						}
+						&:hover
+						{
+							background-image: none;
+							background-color: #40A3DD;
+							color: #fff;
+						}
 					}
 				}
 				li
@@ -243,6 +287,10 @@ body
 					}
 					a
 					{
+						@media screen and (max-width: 1055px)
+						{
+							padding: 15px 10px;
+						}
 						&:hover
 						{
 							background-color: #41a5e0;
