@@ -122,39 +122,41 @@ body {
     width: 100%; }
     .wrapper .header-nav .navbar .select-label {
       font-size: 14.48px; }
-    .wrapper .header-nav .navbar .open .dropdown-toggle {
-      background-image: none;
-      background-color: #40A3DD; }
-      .wrapper .header-nav .navbar .open .dropdown-toggle:focus {
+    @media screen and (min-width: 991px) {
+      .wrapper .header-nav .navbar .open .dropdown-toggle {
         background-image: none;
-        background-color: #40A3DD;
-        color: #fff; }
-      .wrapper .header-nav .navbar .open .dropdown-toggle:active {
-        background-image: none;
-        background-color: #40A3DD;
-        color: #fff; }
-      .wrapper .header-nav .navbar .open .dropdown-toggle:hover {
-        background-image: none;
-        background-color: #40A3DD;
-        color: #fff; }
-    .wrapper .header-nav .navbar .nav {
-      text-transform: uppercase; }
-      .wrapper .header-nav .navbar .nav .active a {
-        background-color: #41A5E0 !important;
-        background-image: none;
-        color: #fff; }
-        .wrapper .header-nav .navbar .nav .active a:focus {
-          background-color: #41A5E0 !important;
-          background-image: none;
-          color: #fff; }
-        .wrapper .header-nav .navbar .nav .active a:active {
-          background-color: #41A5E0 !important;
-          background-image: none;
-          color: #fff; }
-        .wrapper .header-nav .navbar .nav .active a:hover {
+        background-color: #40A3DD; }
+        .wrapper .header-nav .navbar .open .dropdown-toggle:focus {
           background-image: none;
           background-color: #40A3DD;
           color: #fff; }
+        .wrapper .header-nav .navbar .open .dropdown-toggle:active {
+          background-image: none;
+          background-color: #40A3DD;
+          color: #fff; }
+        .wrapper .header-nav .navbar .open .dropdown-toggle:hover {
+          background-image: none;
+          background-color: #40A3DD;
+          color: #fff; } }
+    .wrapper .header-nav .navbar .nav {
+      text-transform: uppercase; }
+      @media screen and (min-width: 991px) {
+        .wrapper .header-nav .navbar .nav .active a {
+          background-color: #41A5E0 !important;
+          background-image: none;
+          color: #fff; }
+          .wrapper .header-nav .navbar .nav .active a:focus {
+            background-color: #41A5E0 !important;
+            background-image: none;
+            color: #fff; }
+          .wrapper .header-nav .navbar .nav .active a:active {
+            background-color: #41A5E0 !important;
+            background-image: none;
+            color: #fff; }
+          .wrapper .header-nav .navbar .nav .active a:hover {
+            background-image: none;
+            background-color: #40A3DD;
+            color: #fff; } }
       .wrapper .header-nav .navbar .nav li {
         font-size: 14px;
         font-weight: 700; }

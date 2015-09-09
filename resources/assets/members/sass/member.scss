@@ -214,27 +214,30 @@ body
 			}
 			.open
 			{
-				.dropdown-toggle
+				@media screen and (min-width: 991px)
 				{
-					background-image: none;
-					background-color: #40A3DD;
-					&:focus
+					.dropdown-toggle
 					{
 						background-image: none;
 						background-color: #40A3DD;
-						color: #fff;
-					}
-					&:active
-					{
-						background-image: none;
-						background-color: #40A3DD;
-						color: #fff;
-					}
-					&:hover
-					{
-						background-image: none;
-						background-color: #40A3DD;
-						color: #fff;
+						&:focus
+						{
+							background-image: none;
+							background-color: #40A3DD;
+							color: #fff;
+						}
+						&:active
+						{
+							background-image: none;
+							background-color: #40A3DD;
+							color: #fff;
+						}
+						&:hover
+						{
+							background-image: none;
+							background-color: #40A3DD;
+							color: #fff;
+						}
 					}
 				}
 			}
@@ -243,28 +246,31 @@ body
 				text-transform: uppercase;
 				.active
 				{
-					a
+					@media screen and (min-width: 991px)
 					{
-						background-color: #41A5E0 !important;
-						background-image: none;
-						color: #fff;
-						&:focus
+						a
 						{
 							background-color: #41A5E0 !important;
 							background-image: none;
 							color: #fff;
-						}
-						&:active
-						{
-							background-color: #41A5E0 !important;
-							background-image: none;
-							color: #fff;
-						}
-						&:hover
-						{
-							background-image: none;
-							background-color: #40A3DD;
-							color: #fff;
+							&:focus
+							{
+								background-color: #41A5E0 !important;
+								background-image: none;
+								color: #fff;
+							}
+							&:active
+							{
+								background-color: #41A5E0 !important;
+								background-image: none;
+								color: #fff;
+							}
+							&:hover
+							{
+								background-image: none;
+								background-color: #40A3DD;
+								color: #fff;
+							}
 						}
 					}
 				}
