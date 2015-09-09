@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US" class="css3transitions">
 <head>
+    <title>UltraProactive - Members Area</title>
 	<link rel="stylesheet" type="text/css" href="/resources/assets/members/css/member.css">
     @yield('css')
     <link rel="shortcut icon" type="image/x-icon" href="/resources/assets/frontend/img/logo.png">

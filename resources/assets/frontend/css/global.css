@@ -93,7 +93,7 @@ body {
             width: 200px; } }
         @media screen and (max-width: 991px) {
           body .navbar .navbar-nav .logo-holder {
-            display: none; } }
+            display: none !important; } }
         body .navbar .navbar-nav .logo-holder .logo {
           position: absolute;
           left: 0;
