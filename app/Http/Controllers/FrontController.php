@@ -259,7 +259,7 @@ class FrontController extends Controller
 	    $subject = Input::get('subject');
 	    $data["data"] = Input::get('message');
 
-	    $toEmail = 'admin@prolife.global';
+	    $toEmail = 'admin@ultraproactive.net';
 	    $toName = 'Customer';
 
 	    Mail::send('emails.contact', $data, function($message) use ($toEmail, $toName, $fromEmail, $fromName, $subject)

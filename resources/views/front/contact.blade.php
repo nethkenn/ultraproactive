@@ -24,12 +24,13 @@
 		<div class="dzen_container">
 			<div class="dzen_column_DD_span6">
 				<div class="dzencf" id="dzencf-wrapper" dir="ltr">
-					<form action="#" method="post" class="contact-form">
-							<input type="text" name="name" size="40" class="dzencf-text" placeholder="YOUR NAME (Required)">
-							<input type="email" name="email" size="40" class="dzencf-text dzencf-email dzencf-validates-as-email" placeholder="YOUR EMAIL (Required)">
-							<input type="text" name="subject" size="40" class="dzencf-text" placeholder="YOUR SUBJECT">
-							<textarea name="message" cols="40" rows="10" class="dzencf-textarea" placeholder="YOUR MESSAGE"></textarea>
-							<input type="submit" value="Send" class="dzencf-submit" id="dzencf-submit">
+					<form method="post" class="contact-form" action="/contact/submit">
+						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+						<input type="text" name="name" size="40" class="dzencf-text" placeholder="YOUR NAME (Required)" required>
+						<input type="email" name="email" size="40" class="dzencf-text dzencf-email dzencf-validates-as-email" placeholder="YOUR EMAIL (Required)" required>
+						<input type="text" name="subject" size="40" class="dzencf-text" placeholder="YOUR SUBJECT" required>
+						<textarea name="message" cols="40" rows="10" class="dzencf-textarea" placeholder="YOUR MESSAGE" required></textarea>
+						<input type="submit" value="Send" class="dzencf-submit" id="dzencf-submit">
 					</form>
 					<div class="dzencf-response-output dzencf-display-none"></div>
 				</div>
