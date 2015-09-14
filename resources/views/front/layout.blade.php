@@ -3,9 +3,9 @@
 <head>
 	<title>Ultra Proactive</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta name="description" content="Dzen HTML5 premium template">
+	<meta name="description" content="UltraProactive">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="shortcut icon" type="image/x-icon" href="/resources/assets/path/images/favicon.png">
+	<link rel="shortcut icon" type="image/x-icon" href="/resources/assets/frontend/img/logo.png">
 	<!--[if lt IE 9]>
 	<script src="/resources/assets/path///html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
@@ -20,6 +20,16 @@
 	<link rel="stylesheet" type="text/css" href="/resources/assets/bootstrap/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="/resources/assets/frontend/css/global.css">
 	@yield('css')
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-65579552-3', 'auto');
+	  ga('send', 'pageview');
+
+	</script>
 </head>
 
 <body style="overflow-x: hidden; margin-left: 15px; margin-right: 15px; position: relative;">
@@ -53,9 +63,9 @@
 		</div>
 	</header> -->
 	<div class="account">
-		<a href="/member/login"><div class="text">LOGIN</div></a>
+		<a href="http://ultraproactive.biz/sysonline/login.php"><div class="text">LOGIN</div></a>
 		<span>|</span>
-		<a href="/member/register"><div class="text">REGISTER</div></a>
+		<a href="http://ultraproactive.biz/sysonline/register_paid.php"><div class="text">REGISTER</div></a>
 	</div>
 	<nav class="navbar navbar-default">
 	   <div>
@@ -88,6 +98,7 @@
 	            <li class="nav-inside dropdown">
 	               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">FAQs</span></a>
 	               <ul class="dropdown-menu">
+	               	  <li><a href="/faq?type=glossary">Glossary</a></li>
 	                  <li><a href="/faq?type=product">Products</a></li>
 	                  <li><a href="/faq?type=mindsync">Mind Sync Project</a></li>
 	                  <li><a href="/faq?type=opportunity">Opportunity</a></li>
@@ -192,7 +203,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="span7 footer_copyright">
-						© 2015, Primia It Solutions, All Rights Reserved<a href="/resources/assets/path/#"></a>
+						© 2015, UltraProactive, All Rights Reserved<a href="http://www.ultraproactive.net"></a>
 					</div>
 					<div class="span5 footer_social">
 						<!-- <a href="/resources/assets/path/#" target="_self"><i class="ABdev_icon-linkedin"></i></a> -->

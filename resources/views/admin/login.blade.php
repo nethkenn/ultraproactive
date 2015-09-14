@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title></title>
+        <title>Admin Panel - UltraProactive</title>
         <base href="<?php echo "http://" . $_SERVER["SERVER_NAME"] ?>">
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,7 +9,6 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <meta name="_token" content="{{ csrf_token() }}">
-        <title>Admin Panel - Intogadgets</title>
         <!-- GOOGLE FONT -->
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
         <!-- BOOTSTRAP -->
@@ -28,7 +27,7 @@
         var image_server = '{{ Config::get("app.image_server") }}';
         var source = '{{ $_SERVER["SERVER_NAME"] }}';
         </script>
-        <link rel="icon" type="image/png" href="/resources/assets/frontend/img/favicon.png">
+        <link rel="shortcut icon" type="image/x-icon" href="/resources/assets/frontend/img/logo.png">
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>

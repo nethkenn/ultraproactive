@@ -24,12 +24,13 @@
 		<div class="dzen_container">
 			<div class="dzen_column_DD_span6">
 				<div class="dzencf" id="dzencf-wrapper" dir="ltr">
-					<form action="#" method="post" class="contact-form">
-							<input type="text" name="name" size="40" class="dzencf-text" placeholder="YOUR NAME (Required)">
-							<input type="email" name="email" size="40" class="dzencf-text dzencf-email dzencf-validates-as-email" placeholder="YOUR EMAIL (Required)">
-							<input type="text" name="subject" size="40" class="dzencf-text" placeholder="YOUR SUBJECT">
-							<textarea name="message" cols="40" rows="10" class="dzencf-textarea" placeholder="YOUR MESSAGE"></textarea>
-							<input type="submit" value="Send" class="dzencf-submit" id="dzencf-submit">
+					<form method="post" class="contact-form" action="/contact/submit">
+						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+						<input type="text" name="name" size="40" class="dzencf-text" placeholder="YOUR NAME (Required)" required>
+						<input type="email" name="email" size="40" class="dzencf-text dzencf-email dzencf-validates-as-email" placeholder="YOUR EMAIL (Required)" required>
+						<input type="text" name="subject" size="40" class="dzencf-text" placeholder="YOUR SUBJECT" required>
+						<textarea name="message" cols="40" rows="10" class="dzencf-textarea" placeholder="YOUR MESSAGE" required></textarea>
+						<input type="submit" value="Send" class="dzencf-submit" id="dzencf-submit">
 					</form>
 					<div class="dzencf-response-output dzencf-display-none"></div>
 				</div>
@@ -68,13 +69,13 @@
 					<span>Stay social</span>
 				</h3>
 				<div class="dzen_follow_us">
-					<a title="Follow us on Facebook" class="dzen_socialicon_facebook dzen_tooltip" data-gravity="s" href="#" target="_blank"><i class="ABdev_icon-facebook"></i></a>
-					<a title="Follow us on Twitter" class="dzen_socialicon_twitter dzen_tooltip" data-gravity="s" href="#" target="_blank"><i class="ABdev_icon-twitter"></i></a>
-					<a title="Follow us on Google+" class="dzen_socialicon_googleplus dzen_tooltip" data-gravity="s" href="#" target="_blank"><i class="ABdev_icon-googleplus"></i></a>
+					<a title="Follow us on Facebook" class="dzen_socialicon_facebook dzen_tooltip" data-gravity="s" href="https://www.facebook.com/UltraNutrifitMeal?ref=ts&fref=ts" target="_blank"><i class="ABdev_icon-facebook"></i></a>
+					<a title="Follow us on Twitter" class="dzen_socialicon_twitter dzen_tooltip" data-gravity="s" href="https://twitter.com/NutrifitMeal" target="_blank"><i class="ABdev_icon-twitter"></i></a>
+					{{-- <a title="Follow us on Google+" class="dzen_socialicon_googleplus dzen_tooltip" data-gravity="s" href="#" target="_blank"><i class="ABdev_icon-googleplus"></i></a>
 					<a title="Follow us on Linkedin" class="dzen_socialicon_linkedin dzen_tooltip" data-gravity="s" href="#" target="_blank"><i class="ABdev_icon-linkedin"></i></a>
 					<a title="Follow us on Youtube" class="dzen_socialicon_youtube dzen_tooltip" data-gravity="s" href="#" target="_blank"><i class="ABdev_icon-youtube"></i></a>
 					<a title="Our RSS feed" class="dzen_socialicon_feed dzen_tooltip" data-gravity="s" href="#" target="_blank"><i class="ABdev_icon-rss"></i></a>
-					<a title="Our Vimeo Profile" class="dzen_socialicon_vimeo dzen_tooltip" data-gravity="s" href="#" target="_blank"><i class="ABdev_icon-vimeo"></i></a>
+					<a title="Our Vimeo Profile" class="dzen_socialicon_vimeo dzen_tooltip" data-gravity="s" href="#" target="_blank"><i class="ABdev_icon-vimeo"></i></a> --}}
 				</div>
 			</div>
 		</div>

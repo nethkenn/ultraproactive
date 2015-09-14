@@ -12,7 +12,7 @@ class FrontController extends Controller
 
 	public function index()
 	{
-		$data["_news"] = DB::table("tbl_news")->where("archived", 0)->orderBy('news_date', 'desc')->take(3)->get();
+		$data["_news"] = DB::table("tbl_news")->where("archived", 0)->orderBy('news_date', 'desc')->take(4)->get();
 		foreach ($data["_news"] as $key => $value) 
 		{
 			$get = $value->news_image;
@@ -259,7 +259,7 @@ class FrontController extends Controller
 	    $subject = Input::get('subject');
 	    $data["data"] = Input::get('message');
 
-	    $toEmail = 'admin@prolife.global';
+	    $toEmail = 'admin@ultraproactive.net';
 	    $toName = 'Customer';
 
 	    Mail::send('emails.contact', $data, function($message) use ($toEmail, $toName, $fromEmail, $fromName, $subject)
@@ -310,6 +310,7 @@ class FrontController extends Controller
 			$data["_product"] = DB::table("tbl_faq")->where("archived", 0)->where("faq_type", "product")->get();
 			$data["_mindsync"] = DB::table("tbl_faq")->where("archived", 0)->where("faq_type", "mindsync")->get();
 			$data["_opportunity"] = DB::table("tbl_faq")->where("archived", 0)->where("faq_type", "opportunity")->get();
+			$data["_glossary"] = DB::table("tbl_faq")->where("archived", 0)->where("faq_type", "glossary")->get();
 			return view('front.faq', $data);
 		}
         else

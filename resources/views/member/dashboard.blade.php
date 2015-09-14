@@ -98,7 +98,7 @@
         <div class="profile-button">
             <button type="button" onClick="location.href='/member/settings'">EDIT PROFILE</button>
             <button type="button" onClick="location.href='/member/settings#cpass'">CHANGE PASSWORD</button>
-            <button type="button">MESSAGES (5)</button>
+            <!-- <button type="button">MESSAGES (5)</button> -->
             <button type="button" onClick="location.href='/member/leads'">LEADS ({{$leadc}})</button>
         </div>
     </div>
@@ -429,7 +429,7 @@
     </div>
     @endif
     <!-- REAL TOP EARNERS :: THIS IS REAL THIS REAL -->
-    <div class="holder" style="padding-bottom: 0;">
+    <!-- <div class="holder" style="padding-bottom: 0;">
         <div class="header earn">TOP EARNERS OF THE MONTH</div>
         <div class="holders holders-no">
             <div class="img">
@@ -486,7 +486,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 @endsection
 @section('css')

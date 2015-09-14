@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en-US" class="css3transitions">
 <head>
+    <title>UltraProactive - Members Area</title>
 	<link rel="stylesheet" type="text/css" href="/resources/assets/members/css/member.css">
     @yield('css')
+    <link rel="shortcut icon" type="image/x-icon" href="/resources/assets/frontend/img/logo.png">
 	<link rel="stylesheet" type="text/css" href="/resources/assets/bootstrap/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="/resources/assets/bootstrap/css/bootstrap-theme.css">
 	<link rel="stylesheet" type="text/css" href="/resources/assets/remodal/src/jquery.remodal.css">
@@ -10,6 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="/resources/assets/jquery-ui/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="/resources/assets/font-awesome/css/font-awesome.min.css">
     <link href="/resources/assets/footable/css/footable.core.css" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" type="image/x-icon" href="/resources/assets/frontend/img/logo.png">
     <!-- <link href="/resources/assets/footable/css/footable.standalone.css" rel="stylesheet" type="text/css" /> -->
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300' rel='stylesheet' type='text/css'>
     <!--<base href="{{$_SERVER['SERVER_NAME']}}">-->
@@ -22,7 +25,7 @@
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-      ga('create', 'UA-65579552-1', 'auto');
+      ga('create', 'UA-65579552-3', 'auto');
       ga('send', 'pageview');
 
     </script>
@@ -76,7 +79,7 @@
 			        <li class="{{ Request::segment(2) == 'slot' ? 'active' : '' }}"><a href="/member/slot">My Slots</a></li>
 			        <li class="{{ Request::segment(2) == 'code_vault' ? 'active' : '' }}"><a href="/member/code_vault">Code Vault</a></li>
 			        <li class="{{ Request::segment(2) == 'genealogy' ? 'active' : '' }} dropdown">
-                        <a href="/member/genealogy?mode=binary">Genealogy</a>
+                        <a href="javascript:">Genealogy</a>
                         <ul class="dropdown-menu">
                             <li><a href="/member/genealogy/tree?mode=binary">Binary Genealogy</a></li>
                             <li><a href="/member/genealogy/tree?mode=sponsor">Sponsor Genealogy</a></li>

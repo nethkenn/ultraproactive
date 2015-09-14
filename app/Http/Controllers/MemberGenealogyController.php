@@ -39,11 +39,11 @@ class MemberGenealogyController extends MemberController
 		$data["slot"] = Tbl_slot::rank()->membership()->account()->id(Customer::slot_id())->first();
 		$data['l'] = Tbl_tree_placement::where('placement_tree_parent_id',Customer::slot_id())->where('placement_tree_position','left')->count();
 		$data['r'] = Tbl_tree_placement::where('placement_tree_parent_id',Customer::slot_id())->where('placement_tree_position','right')->count();
+
 		if($data["slot"])
 		{
 			$data["downline"] = $this->downline(Customer::slot_id());			
 		}
-
 
 		$data['code'] = DB::table('tbl_membership_code')  ->where('tbl_membership_code.archived',0)
 														  ->where('tbl_membership_code.blocked',0)

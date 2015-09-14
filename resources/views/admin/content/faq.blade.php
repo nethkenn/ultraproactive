@@ -99,6 +99,39 @@
 		</tbody>
 	</table>
 </div>
+<!-- OPPORTUNITY -->
+@elseif($category == "glossary")
+<div class="row">
+	<div class="header">
+		<input type="hidden" name="_token" value="{{ csrf_token() }}">
+		<div class="title col-md-8">
+			<h2><i class="fa fa-newspaper-o"></i> FAQ GLOSSARY</h2>
+		</div>
+		<div class="buttons col-md-4 text-right">
+			<button onclick="location.href='admin/content/faq/add?type=glossary'" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> ADD FAQ</button>
+		</div>
+	</div>
+	<div class="filters ">
+	</div>
+</div>
+<div class="col-md-12">
+	<table id="table" class="table table-bordered">
+		<thead>
+			<tr class="text-center">
+				<td>Faq Title</td>
+				<td></td>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach($_glossary as $glossary)
+			<tr class="text-center">
+				<td>{{ $glossary->faq_title }}</td>
+				<td><a href="admin/content/faq/edit?id={{ $glossary->faq_id }}&&type=glossary">modify</a> | <a href="admin/content/faq/delete?id={{ $glossary->faq_id }}&&type=glossary">delete</a></td>
+			</tr>
+			@endforeach
+		</tbody>
+	</table>
+</div>
 @else
 <!-- INDEX -->
 <div class="row">
@@ -109,17 +142,22 @@
 		</div>
 	</div>
 	<div class="contents row text-center">
-		<div class="col-md-4">
+		<div class="col-md-3">
+			<a href="/admin/content/faq?type=glossary">
+				<button type="button" class="btn btn-default" style="width: 100%; height: 100px; font-weight: 600; font-size: 18px;">GLOSSARY</button>
+			</a>
+		</div>
+		<div class="col-md-3">
 			<a href="/admin/content/faq?type=product">
 				<button type="button" class="btn btn-default" style="width: 100%; height: 100px; font-weight: 600; font-size: 18px;">PRODUCT</button>
 			</a>
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-3">
 			<a href="/admin/content/faq?type=mindsync">
 				<button type="button" class="btn btn-default" style="width: 100%; height: 100px; font-weight: 600; font-size: 18px;">MINDSYNC</button>
 			</a>
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-3">
 			<a href="/admin/content/faq?type=opportunity">
 				<button type="button" class="btn btn-default" style="width: 100%; height: 100px; font-weight: 600; font-size: 18px;">OPPORTUNITY</button>
 			</a>

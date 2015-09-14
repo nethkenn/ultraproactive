@@ -79,7 +79,7 @@
 		</div>
 	</section> -->
 	<div style="clear: both; overflow: auto;">
-		<section class="dzen_section_DD section_from_blog col-md-5" style="background-color: #2774da; padding-top: 5px; border: 3px solid #fff; margin-top: 30px; padding: 5px 30px;">
+		<section class="dzen_section_DD section_from_blog col-md-12" style="background-color: #2774da; padding-top: 5px; border: 3px solid #fff; margin: 30px 0; padding: 5px 30px;">
 			<header>
 				<div>
 					<div style="color: #fff0b8; font-size: 30px; font-weight: bold; padding: 20px 0 50px; font-family: 'Raleway', sans-serif;">News and Announcements</div>
@@ -111,9 +111,9 @@
 				</div>
 			</div>
 		</section>
-		<section class="col-md-7" style="padding-top: 30px; text-align: center;">
+		<!-- <section class="col-md-7" style="padding-top: 30px; text-align: center;">
 			<img src="/resources/assets/frontend/img/puzzle.png" class="img-responsive" style="margin: auto;">
-		</section>
+		</section> -->	
 	</div>
 	<section id="our_team" class="dzen_section_DD " style="background-color: #fff; margin: auto -15px;">
 		<header>
@@ -318,13 +318,13 @@
 					<div class="dzen_team_member">
 						<div class="dzen_overlayed">
 							<img src="{{ $team->image }}" alt="{{ $team->team_title }}">
-							<div class="dzen_overlay">
+							<!-- <div class="dzen_overlay">
 								<p>
 									<a href="#" target="_self"><i class="ABdev_icon-twitter"></i></a>
 									<a href="#" target="_self"><i class="ABdev_icon-linkedin"></i></a>
 									<a href="#" target="_self"><i class="ABdev_icon-facebook"></i></a>
 								</p>
-							</div>
+							</div> -->
 						</div>
 						<a class="dzen_team_member_link dzen_team_member_modal_link" href="#">
 							<span class="dzen_team_member_name">{{ $team->team_title }}</span>

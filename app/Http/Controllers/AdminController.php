@@ -97,7 +97,7 @@ class AdminController extends Controller
     {
         include('resources/views/sikreto/gapi.class.php');
 
-        $profile_id = "105785789";
+        $profile_id = "107929951";
         $report_id = "xxxxxxxx";
         $dimensions = array('date');
         $metrics = array('pageviews','visits');
@@ -108,7 +108,7 @@ class AdminController extends Controller
         $start_index = 1;
         $max_results = 10000;
 
-        $ga = new gapi('529499913489-tqo50906hcr6do6elgi18d54inr7rvac@developer.gserviceaccount.com','client_secrets.p12');
+        $ga = new gapi('593916331522-79d647ld3kdmqadbss30a4pads94sqlp@developer.gserviceaccount.com','ultraproactive.p12');
 
         $ga->requestReportData($profile_id, $dimensions, $metrics, $sort_metric, $filter, $start_date, $end_date, $start_index, $max_results);
 
@@ -129,6 +129,10 @@ class AdminController extends Controller
         $data['json'] = json_encode($data['json']);
  
         // echo '<p>Total pageviews: ' . $ga->getPageviews() . ' total visits: ' . $ga->getVisits() . '</p>';
+
+        $data["members"] = DB::table("tbl_account")->count();
+        $data["slots"] = DB::table("tbl_slot")->count();
+        $data["codes"] = DB::table("tbl_membership_code")->count();
         return view('admin.dashboard.dashboard',$data);
     }
 }
