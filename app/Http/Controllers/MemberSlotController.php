@@ -194,6 +194,7 @@ class MemberSlotController extends MemberController
 					{	
 						Tbl_slot::where('slot_id',$data['slot'])->update(['slot_owner'=>$data['acct']]);
 						Session::forget('currentslot');
+						Tbl_account::where('account_id',$data['acct'])->update(['account_approved'=>1]);
 						$info['success'] = "Success";
 					}
 					else
@@ -219,7 +220,7 @@ class MemberSlotController extends MemberController
                                                                         ->where('slot_owner', $customer->account_id)
                                                                         ->first();
         $data['slot'] = $slot;
-  //       $cart = Session::get('cart');
+ 		// $cart = Session::get('cart');
  		$prod_pts = Tbl_product::find($pid);
         // $sum_cart = $this->get_final_total($cart);
         $data['final_total'] = $prod_pts->price + (($slot->discount/100) * $prod_pts->price);

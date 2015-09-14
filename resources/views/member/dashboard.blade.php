@@ -209,7 +209,6 @@
 
             </div>
         </div>
-        @endif
         <div class="holder">
             <div class="title">
                 <span>INCOME</span></br> SUMMARY
@@ -233,6 +232,7 @@
                 </div>
             </div>
         </div>
+         @endif
     </div>
     <!-- <div class="detail para">
         <div class="header">Account Summary</div>

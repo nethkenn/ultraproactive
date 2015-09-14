@@ -1,6 +1,9 @@
 <?php
 // Route::any('/neil', 'NeilController@index');
 
+/* Developer's Area*/
+Route::any('admin/developer/migration', 'AdminDevelopersController@migration');
+
 /* INCOME PROJECTION */
 Route::any('/projection', 'ProjectionController@index');
 
@@ -18,6 +21,7 @@ Route::post('/member/code_vault/lock2', 'MemberCodeController@set_active2');
 Route::any('/member/encashment', 'MemberEncashmentController@index');
 Route::any('/member/genealogy', 'MemberGenealogyController@index');
 Route::any('/member/genealogy/add_form', 'MemberGenealogyController@add_form');
+Route::any('/member/genealogy/add_form_message', 'MemberGenealogyController@add_form_message');
 Route::any('/member/genealogy/tree', 'MemberGenealogyController@tree');
 Route::any('/member/genealogy/get', 'MemberGenealogyController@get');
 // Route::any('/member/genealogy/getsponsor', 'MemberGenealogyController@getsponsor');
@@ -260,6 +264,7 @@ Route::get('admin/maintenance/slots/edit', 'AdminSlotController@edit');
 Route::get('admin/maintenance/slots/archive', 'AdminSlotController@archive');
 Route::get('admin/maintenance/slots/add_form', 'AdminSlotController@add_form');
 Route::get('admin/maintenance/slots/edit_form', 'AdminSlotController@edit_form');
+Route::post('admin/maintenance/slots/add_form_submit_message', 'AdminSlotController@add_form_submit_message');
 Route::post('admin/maintenance/slots/add_form_submit', 'AdminSlotController@add_form_submit');
 Route::post('admin/maintenance/slots/edit_form_submit', 'AdminSlotController@edit_form_submit');
 Route::get('admin/maintenance/slots/downline', 'AdminSlotController@downline');

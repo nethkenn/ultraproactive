@@ -1,41 +1,15 @@
 <?php namespace App\Http\Controllers;
-
 use DB;
+use Redirect;
 use Request;
-use Crypt;
-use App\Tbl_slot;
-use App\Tbl_hack;
-use App\Tbl_account;
+use App\Classes\Image;
 use App\Classes\Compute;
-
-
-class AdminMigrationController extends AdminController
+use Crypt;
+class AdminDevelopersController extends AdminController
 {
-	public function index()
+	public function migration()
 	{
-		$data["page"] = "Migration Maintenance";
-		$data["slot_count"] = Tbl_slot::count();
-		$data["hack_count"] = DB::table('tbl_members')->count();
-		$data["slot_hack_count"] = Tbl_slot::where("hack_reference", "!=", 0)->count();
-
-        return view('admin.utilities.migration', $data);
-	}
-	public function start()
-	{
-		$data["_hack"] = DB::table('tbl_members')->get();
-		DB::table('tbl_account')->where('account_id','!=',1)->delete();
-		DB::table('tbl_slot')->delete();
-
-		return json_encode($data["_hack"]);
-	}
-	public function hack()
-	{
-		// $hack = Tbl_hack::where("hack_id", Request::input("hack_id"))->first();
-		// $slot_info = Tbl_slot::where("hack_reference", Request::input("hack_id"))->first();
-
-		$id_code = Request::input('hack_id');
-		$g = DB::table('tbl_members')->where('id_code',$id_code)->first();
-
+		$id_code = 'ultratop';
 		//tbl_members , tbl_binary_points , tbl_binary_pairings , tbl_encashment, tbl_bonuses
 		$right = DB::table('tbl_binary_points')->select('points', DB::raw('SUM(points) as total_amount'))->where('id_code',$id_code)->where('position',"right")->first();
 		$left  = DB::table('tbl_binary_points')->select('points', DB::raw('SUM(points) as total_amount'))->where('id_code',$id_code)->where('position',"left")->first();
@@ -59,11 +33,21 @@ class AdminMigrationController extends AdminController
 
 		$slot_gc = $slot_gc->total_amount - $minus_gc->total_amount;
 
+		dd($right,$left,$slot_wallet,$slot_gc);
+		// Continue processing...
 
 
 
+		if(Request::input('migrate'))
+		{
 
-				$get = DB::table('tbl_members')->where('tbpi_ctr','!=',1)->get();
+			DB::table('tbl_account')->delete();
+			DB::table('tbl_slot')->delete();
+
+			$get = DB::table('tbl_members')->where('tbpi_ctr','!=',1)->get();
+			foreach($get as $key => $g)
+			{
+
 
 
 		       	$password =   DB::table('tbl_members')->select((DB::raw("DECODE(password, 'yourtheboss2014') AS decoded")))
@@ -88,6 +72,8 @@ class AdminMigrationController extends AdminController
 			    	}
 
 			    	$beneficiary_id = DB::table('tbl_beneficiary')->insertGetId(['whole_name'=>$g->beneficiary,'beneficiary_rel_id'=>$bene_id]);
+
+
 			    }
 
 
@@ -147,7 +133,7 @@ class AdminMigrationController extends AdminController
 				$insert['telephone'] = $landline;
 				$insert['gender'] = $gender;
 				$insert['address'] = $address;
-				$insert['account_password'] = Crypt::encrypt($password->decoded);
+				$insert['account_password'] = Crypt::encrypt($password);
 				$insert['custom_field_value'] = " ";
 				$insert['image'] = "";
 				$insert['account_created_from'] = "Old System";
@@ -158,6 +144,34 @@ class AdminMigrationController extends AdminController
 				$account_id = DB::table('tbl_account')->insertGetId($insert);
 
 				$insert = null;
+
+				$slot_wallet = 0;
+				$slot_gc = 0;
+
+				$oldwallet = DB::table('tbl_bonuses')->where('recepient_code',$g->username)->get();
+
+				/*DGC,DSI,PAIR,PGC*/
+
+				foreach($oldwallet as $old)
+				{
+					if($old->bonus_type == "DGC")
+					{
+						$slot_gc = $slot_gc + $old->amount;
+					}
+					elseif ($old->bonus_type == "PGC") 
+					{
+						$slot_gc = $slot_gc + $old->amount;
+					}
+					elseif ($old->bonus_type == "PAIR") 
+					{
+						$slot_wallet = $slot_wallet + $old->amount;
+					}
+					elseif ($old->bonus_type == "DSI") 
+					{
+						$slot_wallet = $slot_wallet + $old->amount;
+					}
+				} 
+
 
 				if($g->username=="ULTRATOP")
 				{
@@ -182,83 +196,20 @@ class AdminMigrationController extends AdminController
 					$insert["slot_position"] = "left";
 					$insert["slot_wallet"] = $slot_wallet;
 					$insert["slot_gc"] = $slot_gc;
-					$insert["slot_binary_left"] = $left;
-					$insert["slot_binary_right"] = $right;
-					$insert["membership_entry_id"] = 1;
-					$insert["created_at"] =  $g->date_registered;
 					DB::table('tbl_slot')->insert($insert);
 				}
 				else
 				{
-					$acc_id  = Tbl_account::where('account_username',$g->upline_code)->first();
-					$sponsor_id  = Tbl_account::where('account_username',$g->sponsor_code)->first();
-					$slot_sponsor  = Tbl_slot::where('slot_owner',$sponsor_id->account_id)->first();
-					$slot_id = Tbl_slot::where('slot_owner',$acc_id->account_id)->first();
-					$insert['slot_owner'] = $account_id;
-					$insert['slot_membership'] = 1;
-					if($g->status_type == "PAID")
-					{
-						$slot_type = "PS";
-					}
-					else if($g->status_type == "FREE")
-					{
-						$slot_type = "FS";
-					}
-					else if($g->status_type == "CD")
-					{
-						$slot_type = "CD";
-					}
-				
-					$insert["slot_type"] = $slot_type;
-					$insert["slot_rank"] = 1;
-					$insert["slot_sponsor"] = $slot_sponsor->slot_id;
-					$insert["slot_placement"] = $slot_id->slot_id;
-					$insert["slot_position"] = strtolower($g->upline_pos);
-					$insert["slot_wallet"] = $slot_wallet;
-					$insert["slot_gc"] = $slot_gc;
-					$insert["slot_binary_left"] = $left;
-					$insert["slot_binary_right"] = $right;
-					$insert["membership_entry_id"] = 1;
-					$insert["created_at"] =  $g->date_registered;
-					$seed = DB::table('tbl_slot')->insertGetId($insert);
-					Compute::tree($seed);
+
 				}
 
 				$insert = null;
+			}
+			
 
+		}
 
-		echo json_encode("success!");
+        return view('admin.developer.migration');
 	}
-	public function start_rematrix()
-	{
-		$data["_slots"] = Tbl_slot::get();
-		DB::table("tbl_tree_placement")->truncate();
-		DB::table("tbl_tree_sponsor")->truncate();
-		return json_encode($data["_slots"]);
-	}
-	// public function start_recompute()
-	// {
-	// 	$data["_slots"] = Tbl_slot::where("slot_membership", 2)->orWhere("slot_membership", 16)->get();
-	// 	return json_encode($data["_slots"]);
-	// }
-	// public function recompute()
-	// {
-	// 	$slot_id = Request::input("slot_id");
-	// 	Compute::entry($slot_id);
-	// 	echo json_encode("success!");
-	// }
-	public function rematrix()
-	{
-		$slot_id = Request::input("slot_id");
-		Compute::tree($slot_id);
-		echo json_encode("success!");
-	}
-
-	public function parse_number($number, $dec_point=null) {
-	    if (empty($dec_point)) {
-	        $locale = localeconv();
-	        $dec_point = $locale['decimal_point'];
-	    }
-	    return floatval(str_replace($dec_point, '.', preg_replace('/[^\d'.preg_quote($dec_point).']/', '', $number)));
-	}
+	
 }

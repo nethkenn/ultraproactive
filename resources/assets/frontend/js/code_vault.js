@@ -335,7 +335,7 @@ function code_vault()
 			            {
 			                url:"member/code_vault/get",
 			                dataType:"json",
-			                data: {'slot':$(".sponse").val()},
+			                data: {'slot':$(".sponse").val(),'token':$('.token').val()},
 			                type:"post",
 			                success: function(data)
 			                {

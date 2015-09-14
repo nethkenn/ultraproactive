@@ -158,6 +158,8 @@ class MemberRegisterController extends Controller
 					$insert['account_name']	 		  = $data['fname']." ".$data['mname']." ".$data['lname'];
 					$insert['account_date_created']   = date('Y-m-d H:i:s');
 					$insert['account_created_from']   = "Front Register";
+					$insert['account_expired']   	  = 0;
+					$insert['account_approved']  	  = 0;
 					$insert['birthday'] = $birthday;
 					$insert['gender']   =  $data['gender'];
 					$insert['telephone']   = $data['tp'];
@@ -222,10 +224,12 @@ class MemberRegisterController extends Controller
 					$insert['account_name']	 		  = $data['fname']." ".$data['mname']." ".$data['lname'];
 					$insert['account_date_created']   = date('Y-m-d H:i:s');
 					$insert['account_created_from']   = "Front Register";
-					$insert['birthday'] 				  = $birthday;
+					$insert['birthday'] 			  = $birthday;
 					$insert['gender']   =  $data['gender'];
 					$insert['telephone']   = $data['tp'];
 					$insert['address']   = $data['address'];
+					$insert['account_expired']   	  = 0;
+					$insert['account_approved']  	  = 0;
 					$info = DB::table('tbl_account')->insertGetId($insert);
 					Customer::login($info,$insert['account_password']);
 					$data2 = true;

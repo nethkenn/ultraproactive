@@ -225,7 +225,7 @@ class Compute
                                                             //CHECK IF CONVERT TO GC OR NOT
                                                             if($gc == false)
                                                             {
-                                                                Compute::income_per_day($slot_recipient->slot_id,$pairing_bonus,'binary_repurchase',$slot_recipient->slot_owner,$log);
+                                                                Compute::income_per_day($slot_recipient->slot_id,$pairing_bonus,'binary_repurchase',$slot_recipient->slot_owner,$log,$buyer_slot_id);
                                                             }
                                                             elseif($gc == true)
                                                             {
@@ -460,7 +460,7 @@ class Compute
                                                     {
                                                             if($gc == false)
                                                             {
-                                                                 Compute::income_per_day($slot_recipient->slot_id,$pairing_bonus,'binary',$slot_recipient->slot_owner,$log); 
+                                                                 Compute::income_per_day($slot_recipient->slot_id,$pairing_bonus,'binary',$slot_recipient->slot_owner,$log,$new_slot_id); 
                                                             }
                                                             elseif($gc == true)
                                                             {
@@ -567,7 +567,7 @@ class Compute
                         // $update_recipient["slot_wallet"] = $update_recipient["slot_wallet"] + $matching_income;
                         // $update_recipient["slot_total_earning"] = $update_recipient["slot_total_earning"] + $matching_income;
                         $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($matching_income, 2) . " wallet</b> from <b>MENTOR BONUS</b>  due to pairing bonus earned by SLOT #" . $slot_recipient_for_binary->slot_id . ". You current membership is " . $slot_recipient->membership_name . " MEMBERSHIP which has " . number_format($matching_bonus[$slot_recipient->membership_id][$tree->sponsor_tree_level]['percent'], 2) . "% bonus for every income of your level ".$matching_bonus[$slot_recipient->membership_id][$tree->sponsor_tree_level]['level']." of your direct sponsor. This bonus is required ".$matching_bonus[$slot_recipient->membership_id][$tree->sponsor_tree_level]['count'].".";
-                        Compute::income_per_day($slot_recipient->slot_id,$matching_income,'matching',$slot_recipient->slot_owner,$log);
+                        Compute::income_per_day($slot_recipient->slot_id,$matching_income,'matching',$slot_recipient->slot_owner,$log,$new_slot_id);
                         /* INSERT LOG */
                         // Log::account($slot_recipient->slot_owner, $log);
                         // Log::slot($slot_recipient->slot_id, $log, $matching_income, "MATCHING BONUS");
@@ -622,7 +622,7 @@ class Compute
 
                     /* INSERT LOG */
                     $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($direct_income, 2) . " wallet</b> through <b>DIRECT SPONSORSHIP BONUS</b> because you've invited SLOT #" . $new_slot_info->slot_id . " to join. Your current membership is " . $slot_recipient->membership_name . " MEMBERSHIP. Your slot #" . $slot_recipient->slot_id . " also earned <b>" . $slot_recipient->member_upgrade_pts . " Promotion Points</b>.";
-                    Compute::income_per_day($slot_recipient->slot_id,$direct_income,'direct',$slot_recipient->slot_owner,$log);
+                    Compute::income_per_day($slot_recipient->slot_id,$direct_income,'direct',$slot_recipient->slot_owner,$log,$new_slot_id);
                     // Log::account($slot_recipient->slot_owner, $log);
                     // Log::slot($slot_recipient->slot_id, $log, $direct_income, "DIRECT SPONSORSHIP BONUS (DSB)");
 
@@ -677,7 +677,7 @@ class Compute
                         // $update_recipient["slot_wallet"] = $update_recipient["slot_wallet"] + $indirect_bonus;
                         // $update_recipient["slot_total_earning"] = $update_recipient["slot_total_earning"] + $indirect_bonus;
                         $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($indirect_bonus, 2) . " wallet</b> from <b>INDIRECT LEVEL BONUS</b>. You earned it when slot #" . $new_slot_id . " creates a new slot on the Level " . $tree->sponsor_tree_level . " of your sponsor genealogy. Your current membership is " . $slot_recipient->membership_name . " MEMBERSHIP.";
-                        $check = Compute::income_per_day($slot_recipient->slot_id,$indirect_bonus,'indirect',$slot_recipient->slot_owner,$log);
+                        $check = Compute::income_per_day($slot_recipient->slot_id,$indirect_bonus,'indirect',$slot_recipient->slot_owner,$log,$new_slot_id);
                         /* INSERT LOG */
 
 
@@ -690,7 +690,7 @@ class Compute
             }            
         }
     }
-    public static function income_per_day($slot_id,$income,$method,$owner,$log)
+    public static function income_per_day($slot_id,$income,$method,$owner,$log,$cause)
     {
                 $date = Carbon::now()->format('Y-m-d A'); 
                 $getslot = Tbl_slot::where('slot_id',$slot_id)->membership()->first();
@@ -706,7 +706,7 @@ class Compute
                              $update['slot_flushout']      =  $getslot->slot_flushout + $income;
                              $update['slot_total_earning'] =  $getslot->slot_total_earning;
                              $update['slot_wallet'] =  $getslot->slot_wallet;
-                             Compute::method_with_flush($method,$slot_id,$income,$owner,$log);
+                             Compute::method_with_flush($method,$slot_id,$income,$owner,$log,$cause);
                              Tbl_slot::where('slot_id',$slot_id)->update($update);
                            }
                            else if($getslot->max_income < $total)
@@ -717,7 +717,7 @@ class Compute
                               $update['slot_total_earning'] = $getslot->slot_total_earning + $total;
                               $update['slot_flushout']      =  $getslot->slot_flushout + $total2;
                               $update['slot_wallet'] =  $getslot->slot_wallet + $total;
-                              Compute::method_reduced_flush($method,$slot_id,$total,$owner,$log,$total2);
+                              Compute::method_reduced_flush($method,$slot_id,$total,$owner,$log,$total2,$cause);
                               Compute::put_income_summary($slot_id,$method,$total);
                               Tbl_slot::where('slot_id',$slot_id)->update($update);
                            }
@@ -726,7 +726,7 @@ class Compute
                              $update['slot_today_income'] = $total; 
                              $update['slot_total_earning'] = $getslot->slot_total_earning + $income;
                              $update['slot_wallet'] =  $getslot->slot_wallet + $income;
-                             Compute::method_no_flush($method,$slot_id,$income,$owner,$log);
+                             Compute::method_no_flush($method,$slot_id,$income,$owner,$log,$cause);
                              Compute::put_income_summary($slot_id,$method,$income);
                              Tbl_slot::where('slot_id',$slot_id)->update($update);
                            }
@@ -747,7 +747,7 @@ class Compute
                              $update['slot_flushout']      =  $getslot->slot_flushout + $income;
                              $update['slot_total_earning'] =  $getslot->slot_total_earning;
                              $update['slot_wallet'] =  $getslot->slot_wallet;
-                             Compute::method_with_flush($method,$slot_id,$income,$owner,$log);
+                             Compute::method_with_flush($method,$slot_id,$income,$owner,$log,$cause);
                              Tbl_slot::where('slot_id',$slot_id)->update($update);
                            }
                            else if($getslot->max_income < $total)
@@ -758,7 +758,7 @@ class Compute
                               $update['slot_total_earning'] = $getslot->slot_total_earning + $total;
                               $update['slot_flushout']      =  $getslot->slot_flushout + $total2;
                               $update['slot_wallet'] =  $getslot->slot_wallet + $total;
-                              Compute::method_reduced_flush($method,$slot_id,$total,$owner,$log,$total2);
+                              Compute::method_reduced_flush($method,$slot_id,$total,$owner,$log,$total2,$cause);
                               Compute::put_income_summary($slot_id,$method,$total);
                               Tbl_slot::where('slot_id',$slot_id)->update($update);
                            }
@@ -767,7 +767,7 @@ class Compute
                              $update['slot_today_income'] = $total; 
                              $update['slot_total_earning'] = $getslot->slot_total_earning + $income;
                              $update['slot_wallet'] =  $getslot->slot_wallet + $income;
-                             Compute::method_no_flush($method,$slot_id,$income,$owner,$log);
+                             Compute::method_no_flush($method,$slot_id,$income,$owner,$log,$cause);
                              Compute::put_income_summary($slot_id,$method,$income);
                              Tbl_slot::where('slot_id',$slot_id)->update($update);
                            }
@@ -791,22 +791,22 @@ class Compute
                 Tbl_slot::where('slot_id',$slot_id)->update($update);
                 $update = null;
     }
-    public static function method_no_flush($method,$slot_id,$income,$owner,$log)
+    public static function method_no_flush($method,$slot_id,$income,$owner,$log,$cause)
     {
-                    Log::slot($slot_id, $log, $income, $method);
+                    Log::slot($slot_id, $log, $income, $method,$cause);
                     Log::account($owner, $log);            
     }
-    public static function method_with_flush($method,$slot_id,$income,$owner,$log)
+    public static function method_with_flush($method,$slot_id,$income,$owner,$log,$cause)
     {
                     $log = "Im sorry! You have already reach the max income for today, Your slot #" . $slot_id.' flushed out '.number_format($income, 2) . " wallet.";
                     Log::account($owner, $log);
-                    Log::slot($slot_id, $log, 0, $method);            
+                    Log::slot($slot_id, $log, 0, $method,$cause);            
     }
-    public static function method_reduced_flush($method,$slot_id,$income,$owner,$log,$flush)
+    public static function method_reduced_flush($method,$slot_id,$income,$owner,$log,$flush,$cause)
     {
                     $log = $log." Max income is reached, wallet earned reduced to <b>".$income."</b> and flushed out <b>".$flush.'</b>.';
                     Log::account($owner, $log);
-                    Log::slot($slot_id, $log, 0, $method);            
+                    Log::slot($slot_id, $log, 0, $method,$cause);            
     }
     public static function put_income_summary($slot_id,$method,$amount)
     {

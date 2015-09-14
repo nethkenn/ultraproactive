@@ -90,26 +90,39 @@ function genealogy_loader()
         {
             $(e.currentTarget).find("button").attr("disabled", "disabled");
 
+
+
             $.ajax(
             {
-                url:"admin/maintenance/slots/add_form_submit",
+                url:"admin/maintenance/slots/add_form_submit_message",
                 dataType:"json",
                 data: $(".submit-add-save").serialize(),
                 type:"post",
                 success: function(data)
                 {
-                    $(e.currentTarget).find("button").removeAttr("disabled");
-                    if(data.message == "")
+                    $.ajax(
                     {
-                        load_downline(data.placement)
-                        var x = $(this).attr("href");      
-                        var url = window.location.href.split('#')[0];
-                        window.location.href = url+"#";
-                    }
-                    else
-                    {
-                        alert(data.message);
-                    }
+                        url:"admin/maintenance/slots/add_form_submit",
+                        dataType:"json",
+                        data: $(".submit-add-save").serialize(),
+                        type:"post",
+                        complete: function (asd) {
+                                $(e.currentTarget).find("button").removeAttr("disabled");
+                                if(data.message == "")
+                                {
+                                    load_downline(data.placement);
+                                    var x = $(this).attr("href");      
+                                    var url = window.location.href.split('#')[0];
+                                    window.location.href = url+"#";
+                                }
+                                else
+                                {
+                                    alert(data.message);
+                                }
+                         }
+                    });
+
+
                 }
             });
             

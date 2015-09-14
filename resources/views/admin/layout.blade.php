@@ -135,7 +135,20 @@
 									<!-- <li><a href="admin/content/about">Others</a></li> -->
 								</ul>
 							</li>
+
+								<!-- DEVELOPERS AREA -->
+								@if($access_to_product_codes == 0)
+								<li class="dropdown {{ Request::segment(2) == 'developer' ? 'active' : 'inactive' }}">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Developer<span class="caret"></span></a>
+									<ul class="dropdown-menu" role="menu">
+										<li><a href="admin/migration">Migrations</a></li>
+									</ul>
+								</li>
+								@endif
 						</ul>
+
+
+
 						<ul class="nav navbar-nav navbar-right">
 							<li class="dropdown {{ Request::segment(2) == 'account' ? 'active' : 'inactive' }}">
 								<a href="admin/utilities" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Account Settings <span class="caret"></span></a>

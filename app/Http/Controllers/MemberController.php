@@ -7,7 +7,7 @@ use Session;
 use Request;
 use Carbon\Carbon;
 use App\Tbl_slot;
-
+use Crypt;
 class MemberController extends Controller
 {
 	function __construct()
@@ -16,6 +16,17 @@ class MemberController extends Controller
 		$customer_info = Customer::info();
 		$date =  Carbon::now()->format('Y-m-d A'); 
 		$data['slot_limit'] = DB::table('tbl_settings')->where('key','slot_limit')->first();
+
+
+        // $result =   DB::table('tbl_members')->select((DB::raw("DECODE(password, 'yourtheboss2014') AS decoded")))
+	      	// 								->selectRaw('password as encoded')
+								// 		    ->where('tbpi_ctr', '=', 1)->first();
+
+
+
+								// 		    dd($result);
+	
+
 
 		if(!$data['slot_limit'])
 		{

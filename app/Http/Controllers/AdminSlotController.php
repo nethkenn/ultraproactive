@@ -110,7 +110,7 @@ class AdminSlotController extends AdminController
 		$count = Tbl_slot::where('slot_owner',Request::input("account_id"))->count();
 		if($limit->value <=  $count)
 		{
-			$return["message"] = "This account is already reach the max slot per account. Max slot per account is ".$limit->value.".";
+			$data["message"] = "This account is already reach the max slot per account. Max slot per account is ".$limit->value.".";
 		}
 
 		if(Request::input("account_id") == 0)
