@@ -7,7 +7,7 @@ use App\Tbl_slot;
 use App\Tbl_hack;
 use App\Tbl_account;
 use App\Classes\Compute;
-
+use App\Classes\Admin;
 
 class AdminMigrationController extends AdminController
 {
@@ -17,7 +17,10 @@ class AdminMigrationController extends AdminController
 		$data["slot_count"] = Tbl_slot::count();
 		$data["hack_count"] = DB::table('tbl_members')->count();
 		$data["slot_hack_count"] = Tbl_slot::where("hack_reference", "!=", 0)->count();
-
+		if(Admin::info()->admin_rank_position != 0)
+		{
+			return Redirect::to('/admin');
+		}
         return view('admin.utilities.migration', $data);
 	}
 	public function start()

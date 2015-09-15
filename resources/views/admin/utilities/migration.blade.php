@@ -101,6 +101,7 @@
             },
             error: function()
             {
+                ctr++;
                 migrate(tbl_hack[ctr].id_code);    
                 $(".status").val("Migration - " + tbl_hack[ctr].username);   
                 $(".count-migrate").val(ctr);   
