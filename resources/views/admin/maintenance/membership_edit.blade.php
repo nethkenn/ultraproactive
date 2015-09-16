@@ -39,7 +39,7 @@
                     @endif
             		<input name="membership_price" value="{{Request::input('membership_price') ? Request::input('membership_price') : $membership->membership_price }}" required="required" class="form-control" id="" placeholder="" type="number">
             	</div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-6 hide">
                     <label for="max_income">Max income per day</label>
                     @if($_error['max_income'])
                         <div class="col-md-12 alert alert-danger form-errors">
