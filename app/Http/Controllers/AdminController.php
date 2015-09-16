@@ -49,7 +49,9 @@ class AdminController extends Controller
             $_admin_module[] = "account";
             $intersected_array = array_intersect($array_segment, $_admin_module);
             View()->share("admin", $admin_info);
-            if(Request::path() != "admin" && count($intersected_array) <= 1)
+            $access_to_product_codes = Admin::info()->admin_rank_position;
+            View()->share('access_to_product_codes',$access_to_product_codes);
+            if(Request::path() != "admin" && count($intersected_array) <= 1 && Request::path() != "admin/developer/migration")
             {
                 if(Admin::info()->admin_position_id == 1 )
                 {

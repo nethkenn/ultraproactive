@@ -26,18 +26,18 @@ use App\Rel_membership_code;
 use App\Tbl_voucher;
 use App\Classes\Globals;
 use App\Tbl_product;
-use App\tbl_membership_code_sale;
+use App\Tbl_membership_code_sale;
 use App\Tbl_lead;
+use App\Tbl_membership_code_sale_has_code;
 class MemberCodeController extends MemberController
 {
 	public function index()
 	{
-
 		$id = Customer::id();
 		$data = $this->getslotbyid($id);
 		$data['_error'] = Session::get('message');
 		$data['success']  = Session::get('success');
-		$data['availprod'] = Tbl_product_package::where('archived',0)->get();
+		$data['availprod'] = Tbl_product_package::where('tbl_product_package.archived',0)->join('tbl_membership','tbl_membership.membership_id','=','tbl_product_package.membership_id')->where('tbl_membership.if_product_include',1)->get();
 		$data['membership2'] = 	    					 DB::table('tbl_membership')->where('archived',0)
 	    												 ->orderBy('membership_price','ASC')
 	    												 ->where('membership_entry',1)
@@ -59,11 +59,10 @@ class MemberCodeController extends MemberController
 		{
 			foreach($data['availprod'] as $key => $d)
 			{
-				$s = Tbl_product_package_has::where('product_package_id',$d->product_package_id)->product()->get();
+				$s = Tbl_product_package_has::where('product_package_id',$d->product_package_id)->select('tbl_product.product_id','tbl_product.product_name','tbl_product.price','tbl_product_package_has.quantity')->product()->get();
 				$data['availprod'][$key]->productlist  = json_encode($s);
 			}	
 		}
-
 
 		$s = Tbl_account::where('tbl_account.account_id',$id)->belongstothis()->get();
 		// $j = Tbl_voucher_has_product::product()->voucher()->productcode()->where('account_id',Customer::id())->where('tbl_product_code.used',0)->get();
@@ -98,18 +97,35 @@ class MemberCodeController extends MemberController
 			return Redirect::to('member/code_vault')->with('message',$data['error']);
 		}
 
+		if(Request::input('message'))
+		{
+			sleep(3);
+			return Redirect::to('member/code_vault')->with('success',Request::input('message'));	
+		}
+
+		if(Request::input('wait'))
+		{
+			sleep(3);
+			return Redirect::to('member/code_vault');
+		}
 		if(isset($_POST['slot_position']))
 		{	
-			$info = $this->addslot(Request::input());
-			if(isset($info['success']))
-			{
-				$message = $info['success'];
-				return Redirect::to('member/code_vault')->with('success',$message);	
-			}
+
+
+				$info = $this->addslot(Request::input());
+				if(isset($info['success']))
+				{
+					$message = $info['success'];
+					return Redirect::to('member/code_vault')->with('success',$message);	
+				}
+
+
 		}
+
+
 		if(isset($_POST['sbmitbuy']))
 		{
-			if( Request::input('memid') && Request::input('package'))
+			if( Request::input('memid'))
 			{
 				$info = $this->add_code(Request::input());	
 
@@ -130,8 +146,24 @@ class MemberCodeController extends MemberController
         return view('member.code_vault',$data);
 	}
 
+
+
 	public function use_product_code()
 	{
+		ignore_user_abort(true);
+		set_time_limit(0);
+		$strURL = "/member/code_vault?wait=5";
+		header("Location: $strURL", true);
+		header("Connection: close", true);
+		header("Content-Encoding: none\r\n");
+		header("Content-Length: 0", true);
+
+
+		flush();
+		ob_flush();
+
+		session_write_close();
+
 		$customer_id = Customer::id();
 
 		$product_pin = Request::input("product_pin");
@@ -157,32 +189,63 @@ class MemberCodeController extends MemberController
 			{
 				die("You're trying to code that was already used.");
 			}
+			elseif($code_info->archived == 1)
+			{
+				die("You're trying to code that was already blocked by admin.");
+			}
 			else
 			{
-				$unilevel_pts = $code_info->unilevel_pts; 
-				$upgrade_pts = $code_info->upgrade_pts; 
-				$binary_pts = $code_info->binary_pts;
-				Compute::repurchase($slot_id, $binary_pts, $unilevel_pts, $upgrade_pts);
-				$update["used"] = 1;
-				$code_info = Tbl_product_code::where("product_pin", $product_pin)->update($update);
+				$code_info = Tbl_product_code::where("product_pin", $product_pin)->voucher()->product()->first();
+				if($code_info->used == 1)
+				{
+					die("You're trying to code that was already used.");
+				}
+				else
+				{
+					$update["used"] = 1;
+					$code_info = Tbl_product_code::where("product_pin", $product_pin)->update($update);
+					$unilevel_pts = $code_info->unilevel_pts; 
+					$upgrade_pts = $code_info->upgrade_pts; 
+					$binary_pts = $code_info->binary_pts;
+					Compute::repurchase($slot_id, $binary_pts, $unilevel_pts, $upgrade_pts);
 
-                /* INSERT LOG FOR THAT A CODE WAS USED */
-                $log = "You spent one of your Product Code (#" . $product_pin . ") for your slot #" . $slot_info->slot_id . " which contains <b>" . number_format($unilevel_pts, 2) . " unilevel points</b> and <b>" . number_format($binary_pts, 2) . " binary points</b>.";
-                Log::account($slot_info->slot_owner, $log);
+	                /* INSERT LOG FOR THAT A CODE WAS USED */
+	                $log = "You spent one of your Product Code (#" . $product_pin . ") for your slot #" . $slot_info->slot_id . " which contains <b>" . number_format($unilevel_pts, 2) . " unilevel points</b> and <b>" . number_format($binary_pts, 2) . " binary points</b>.";
+	                Log::account($slot_info->slot_owner, $log);
+				}
 			}
 
 		}
-
-
-		return Redirect::to("/member/code_vault");
+		sleep(5);
+		exit;
 	}
 	public function addslot($data)
 	{
+		ignore_user_abort(true);
+		set_time_limit(0);
+
+
+		$info2 = $this->addslotnoinsert(Request::input());
+
+		if(isset($info2['success']))
+		{
+			$message2 = $info2['success'];
+			$strURL = "/member/code_vault?message=$message2";
+			header("Location: $strURL", true);
+		}
+
+		header("Connection: close", true);
+		header("Content-Encoding: none\r\n");
+		header("Content-Length: 0", true);
+
+
+		flush();
+		ob_flush();
+
+		session_write_close();
 
 		$return["message"] = "";
 		$data["message"] = "";
-		$limit = DB::table('tbl_settings')->where('key','slot_limit')->first();
-		$count = Tbl_slot::where('slot_owner',Customer::info()->account_id)->count();
 
 		if(strtolower(Request::input("slot_position")) == 'left' || strtolower(Request::input("slot_position")) == 'right')
 		{
@@ -225,55 +288,75 @@ class MemberCodeController extends MemberController
 				else
 				{
 					if($getslot->code_type_id == 3)
-					{		
-
-							if($checking == true && $checking2 == true)
+					{
+						if($checking == true && $checking2 == true)
+						{
+							$ifused = Tbl_membership_code::where('code_pin',$data['code_number'])->where('used',1)->first();
+							
+							if($ifused)
 							{
-								if($limit->value >  $count)
+								$return["message"] = "This code is already used";
+							}
+							else
+							{
+								Tbl_membership_code::where('code_pin',$data['code_number'])->update(['used'=>1]);
+								$insert["slot_membership"] =  $getslot->membership_id;
+								$insert["slot_type"] =  "CD";
+								$insert["slot_rank"] =  1;
+								$insert["slot_wallet"] =  0 - $getslot->membership_price;
+								$insert["cd_done"] = 1;
+								$insert["slot_sponsor"] =  $data['sponsor'];
+								$insert["slot_placement"] =  $data['placement'];
+								$insert["slot_position"] =  strtolower($data['slot_position']);
+								$insert["slot_binary_left"] =  0;
+								$insert["slot_binary_right"] =  0;
+								$insert["slot_personal_points"] =  0;
+								$insert["slot_group_points"] =  0;
+								$insert["distributed"] =  0;
+								$insert["slot_upgrade_points"] = 0;
+								$insert["slot_total_withrawal"] =  0;
+								$insert["slot_total_earning"] =  0 - $getslot->membership_price;
+								$insert["created_at"] =  Carbon::now();
+								$insert["slot_owner"] =  Customer::id();
+								$insert["membership_entry_id"] =  $getslot->membership_id;
+								$slot_id = Tbl_slot::insertGetId($insert);
+								Compute::tree($slot_id);
+								Compute::entry($slot_id);
+								$return["placement"] = Request::input("placement");
+								$message['success'] = "Slot Created.";
+								$get = Rel_membership_code::where('code_pin',$data['code_number'])->first();
+								if(isset($get->product_package_id))
 								{
-									$insert["slot_membership"] =  $getslot->membership_id;
-									$insert["slot_type"] =  "CD";
-									$insert["slot_rank"] =  1;
-									$insert["slot_wallet"] =  0 - $getslot->membership_price;
-									$insert["slot_sponsor"] =  $data['sponsor'];
-									$insert["slot_placement"] =  $data['placement'];
-									$insert["slot_position"] =  strtolower($data['slot_position']);
-									$insert["slot_binary_left"] =  0;
-									$insert["slot_binary_right"] =  0;
-									$insert["slot_personal_points"] =  0;
-									$insert["slot_group_points"] =  0;
-									$insert["slot_upgrade_points"] = 0;
-									$insert["slot_total_withrawal"] =  0;
-									$insert["slot_total_earning"] =  0;
-									$insert["created_at"] =  Carbon::now();
-									$insert["slot_owner"] =  Customer::id();
-									$insert["membership_entry_id"] =  $getslot->membership_id;
-									$slot_id = Tbl_slot::insertGetId($insert);
-									Compute::tree($slot_id);
-									Compute::entry($slot_id);
-									$return["placement"] = Request::input("placement");
-									Tbl_membership_code::where('code_pin',$data['code_number'])->update(['used'=>1]);
-									$message['success'] = "Slot Created.";
-									$get = Rel_membership_code::where('code_pin',$data['code_number'])->first();
 									$insert2['slot_id'] = $slot_id;
 									$insert2['product_package_id'] = $get->product_package_id;
-									Rel_membership_product::insert($insert2);
-									return $message;
+									Rel_membership_product::insert($insert2);								
 								}
-								else
+								$code = Tbl_membership_code_sale_has_code::where('code_pin',$data['code_number'])->first();
+								if($code)
 								{
-									$message = "";
-									return $message;	
+									$code_sale = Tbl_membership_code_sale::where('membershipcode_or_num',$code->membershipcode_or_num)->first();
+									if($code_sale)
+									{
+										Tbl_voucher::where('voucher_id',$code_sale->voucher_id)->update(["slot_id"=>$slot_id]);
+									}								
 								}
+								Tbl_slot::where('slot_id',$slot_id)->update(['distributed'=>1]);
+								return $message;
 							}
-
+						}
 					}
 					else if($getslot->code_type_id == 1)
 					{
 						if($checking == true && $checking2 == true)
 						{
-							if($limit->value >  $count)
+							$ifused = Tbl_membership_code::where('code_pin',$data['code_number'])->where('used',1)->first();
+							if($ifused)
 							{
+								$return["message"] = "This code is already used";
+							}
+							else
+							{
+								Tbl_membership_code::where('code_pin',$data['code_number'])->update(['used'=>1]);
 								$insert["slot_membership"] =  $getslot->membership_id;
 								$insert["slot_type"] =  "PS";
 								$insert["slot_rank"] =  1;
@@ -286,6 +369,7 @@ class MemberCodeController extends MemberController
 								$insert["slot_personal_points"] =  0;
 								$insert["slot_group_points"] =  0;
 								$insert["slot_upgrade_points"] = 0;
+								$insert["distributed"] =  0;
 								$insert["slot_total_withrawal"] =  0;
 								$insert["slot_total_earning"] =  0;
 								$insert["created_at"] =  Carbon::now();
@@ -295,27 +379,35 @@ class MemberCodeController extends MemberController
 								Compute::tree($slot_id);
 								Compute::entry($slot_id);
 								$return["placement"] = Request::input("placement");
-								Tbl_membership_code::where('code_pin',$data['code_number'])->update(['used'=>1]);
 								$message['success'] = "Slot Created.";
+
 								$get = Rel_membership_code::where('code_pin',$data['code_number'])->first();
-								$insert2['slot_id'] = $slot_id;
-								$insert2['product_package_id'] = $get->product_package_id;
-								Rel_membership_product::insert($insert2);
+								if(isset($get->product_package_id))
+								{
+									$insert2['slot_id'] = $slot_id;
+									$insert2['product_package_id'] = $get->product_package_id;
+									Rel_membership_product::insert($insert2);								
+								}
+
+								Tbl_slot::where('slot_id',$slot_id)->update(['distributed'=>1]);
 								return $message;
+
 							}
-							else
-							{
-								$message = "";
-								return $message;	
-							}
+							
 						}
 					}
 					else
 					{
 						if($checking == true && $checking2 == true)
 						{
-							if($limit->value >  $count)
+							$ifused = Tbl_membership_code::where('code_pin',$data['code_number'])->where('used',1)->first();
+							if($ifused)
 							{
+								$return["message"] = "This code is already used";
+							}
+							else
+							{
+								Tbl_membership_code::where('code_pin',$data['code_number'])->update(['used'=>1]);
 								$insert["slot_membership"] =  $getslot->membership_id;
 								$insert["slot_type"] =  "FS";
 								$insert["slot_rank"] =  1;
@@ -330,6 +422,7 @@ class MemberCodeController extends MemberController
 								$insert["slot_upgrade_points"] = 0;
 								$insert["slot_total_withrawal"] =  0;
 								$insert["slot_total_earning"] =  0;
+								$insert["distributed"] =  0;
 								$insert["created_at"] =  Carbon::now();
 								$insert["slot_owner"] =  Customer::id();
 								$insert["membership_entry_id"] =  $getslot->membership_id;
@@ -337,19 +430,129 @@ class MemberCodeController extends MemberController
 								Compute::tree($slot_id);
 								Compute::entry($slot_id);
 								$return["placement"] = Request::input("placement");
-								Tbl_membership_code::where('code_pin',$data['code_number'])->update(['used'=>1]);
 								$message['success'] = "Slot Created.";
+
 								$get = Rel_membership_code::where('code_pin',$data['code_number'])->first();
-								$insert2['slot_id'] = $slot_id;
-								$insert2['product_package_id'] = $get->product_package_id;
-								Rel_membership_product::insert($insert2);
+								if(isset($get->product_package_id))
+								{
+									$insert2['slot_id'] = $slot_id;
+									$insert2['product_package_id'] = $get->product_package_id;
+									Rel_membership_product::insert($insert2);								
+								}
+
+
+								Tbl_slot::where('slot_id',$slot_id)->update(['distributed'=>1]);
 								return $message;
+							}
+						}						
+					}
+				}			
+		}
+		else
+		{
+			$message = "";
+			return $message;
+		}
+
+		sleep(1);
+		exit;
+
+
+	}
+
+	public function addslotnoinsert($data)
+	{
+
+		$return["message"] = "";
+		$data["message"] = "";
+
+		if(strtolower(Request::input("slot_position")) == 'left' || strtolower(Request::input("slot_position")) == 'right')
+		{
+				$getslot = Tbl_membership_code::where('code_pin',$data['code_number'])->getmembership()->first();
+				$check_placement = Tbl_slot::checkposition(Request::input("placement"), strtolower(Request::input("slot_position")))->first();
+				$check_id = Tbl_slot::id(Request::input("slot_number"))->first();
+				$checkifowned = Tbl_account::where('tbl_account.account_id',Customer::id())->belongstothis()->get();
+				$ifused = Tbl_membership_code::where('code_pin',$data['code_number'])->where('used',1)->first();
+				$checkslot = Tbl_slot::get();
+				$checking = false;
+				$checking2 = false;
+
+				foreach($checkifowned as $c)
+				{
+					if($c->code_pin == $data['code_number'])
+					{
+						$checking = true;
+					}
+				}
+
+				foreach($checkslot as $c)
+				{
+					if($c->slot_id == $data['sponsor'])
+					{
+						$checking2 = true;
+					}
+				}
+
+				if($check_placement)
+				{
+					$return["message"] = "The position you're trying to use is already occupied";
+				}
+				elseif($ifused)
+				{
+					$return["message"] = "This code is already used";
+				}
+				elseif($data["message"] != "")
+				{
+					$return["message"] = $data["message"];
+				}
+				else
+				{
+					if($getslot->code_type_id == 3)
+					{
+						if($checking == true && $checking2 == true)
+						{
+							$ifused = Tbl_membership_code::where('code_pin',$data['code_number'])->where('used',1)->first();
+							if($ifused)
+							{
+								$return["message"] = "This code is already used";
 							}
 							else
 							{
-								$message = "";
-								return $message;						
+								$message['success'] = "Slot Created.";
+								return $message;
+							}	
+						}
+					}
+					else if($getslot->code_type_id == 1)
+					{
+						if($checking == true && $checking2 == true)
+						{
+							$ifused = Tbl_membership_code::where('code_pin',$data['code_number'])->where('used',1)->first();
+							if($ifused)
+							{
+								$return["message"] = "This code is already used";
 							}
+							else
+							{
+								$message['success'] = "Slot Created.";
+								return $message;
+							}	
+						}
+					}
+					else
+					{
+						if($checking == true && $checking2 == true)
+						{		
+							$ifused = Tbl_membership_code::where('code_pin',$data['code_number'])->where('used',1)->first();
+							if($ifused)
+							{
+								$return["message"] = "This code is already used";
+							}
+							else
+							{
+								$message['success'] = "Slot Created.";
+								return $message;
+							}					
 						}						
 					}
 					
@@ -405,7 +608,7 @@ class MemberCodeController extends MemberController
         }
 
 
-		$data['prodcode'] = Tbl_product_code::where("account_id", Customer::id())->where('tbl_product_code.used',0)->voucher()->product()->orderBy("product_pin", "desc")->unused()->get();										 
+		$data['prodcode'] = Tbl_product_code::where("account_id", Customer::id())->where('tbl_product_code.used',0)->where('tbl_product_code.archived',0)->voucher()->product()->orderBy("product_pin", "desc")->unused()->get();										 
 		$data['count']= DB::table('tbl_membership_code')->where('archived',0)->where('tbl_membership_code.used',0)->where('account_id','=',$id)->where('tbl_membership_code.blocked',0)->count();		
 		$data['count2'] = Tbl_product_code::where("account_id", Customer::id())->where('tbl_product_code.used',0)->voucher()->product()->orderBy("product_pin", "desc")->unused()->count();										 
 		
@@ -642,7 +845,7 @@ class MemberCodeController extends MemberController
 	{
 			$rules['code_type_id'] = 'required|exists:tbl_code_type,code_type_id';
 			$rules['membership_id'] = 'required|exists:tbl_membership,membership_id';
-			$rules['product_package_id'] = 'required|exists:tbl_product_package,product_package_id';
+			// $rules['product_package_id'] = 'required|exists:tbl_product_package,product_package_id';
 			$rules['inventory_update_type_id'] = 'required|exists:tbl_inventory_update_type,inventory_update_type_id';
 			$rules['account_id'] = 'exists:tbl_account,account_id';
 			$rules['code_multiplier'] = 'min:1|integer';
@@ -666,6 +869,7 @@ class MemberCodeController extends MemberController
 												 ->get();
 			$checking = false;
 			$checking5 = false;
+			$checking6 = true;
 			foreach($datumn as $s)
 			{
 				if($s->membership_id == $x['memid'])
@@ -681,12 +885,18 @@ class MemberCodeController extends MemberController
 				}
 			}
 
-
+			if($x['package'] == "")
+			{
+				$checking = true;
+				$checking6 = false;
+				$d['product_package_id'] = null;
+			}
 			if($checking == true && $checking5 == true)
 			{
 				if($rcheck && $check)
 				{
 						$total = $rcheck->slot_wallet - $check->membership_price;
+						$withrawal = $rcheck->slot_total_withrawal + $check->membership_price;
 						$validator = Validator::make($d,$rules);
 						if($total >= 0)
 						{
@@ -705,17 +915,24 @@ class MemberCodeController extends MemberController
 									$insert['updated_at'] = $membership_code->created_at;
 									$insert['description'] = "Bought by $n->account_name";
 									DB::table("tbl_member_code_history")->insert($insert);
-									Tbl_slot::where('slot_id',Session::get('currentslot'))->update(['slot_wallet'=>$total]);
+									Tbl_slot::where('slot_id',Session::get('currentslot'))->update(['slot_wallet'=>$total,'slot_total_withrawal'=>$withrawal]);
 									$message['success'] = "Successfully bought.";
 									Log::account(Customer::id(),"You bought a membership code (Pin #$membership_code->code_pin)");
 									$c = Tbl_membership_code::where('code_pin',$membership_code->code_pin)->getmembership()->first();
-									$or_code = DB::table('tbl_membership_code_sale')->insertGetId(['membershipcode_or_code'=>$c->code_pin,'total_amount'=>($c->membership_price)+($c->membership_price * $c->discount),'created_at'=>Carbon::now(),'sold_to'=>Customer::id()]);
+									$or_code = DB::table('tbl_membership_code_sale')->insertGetId(['membershipcode_or_code'=>Globals::create_membership_code_sale(),'total_amount'=>($c->membership_price)+($c->membership_price * $c->discount),'created_at'=>Carbon::now(),'sold_to'=>Customer::id()]);
 									DB::table('tbl_membership_code_sale_has_code')->insert(['code_pin'=>$c->code_pin,'membershipcode_or_num'=>$or_code]);
-									$insert2['code_pin'] = $membership_code->code_pin;
-									$insert2['product_package_id'] =  $x['package'];
-									Rel_membership_code::insert($insert2);
-									Log::slot(Session::get('currentslot'),'Bought a membership code',$total);  
-									$this->additional($x['package'],Session::get('currentslot'));
+									
+									if($checking6 == true)
+									{
+										$insert2['code_pin'] = $membership_code->code_pin;
+										$insert2['product_package_id'] =  $x['package'];
+										Rel_membership_code::insert($insert2);
+										$this->additional($x['package'],Session::get('currentslot'),$check->membership_price);										
+									}
+
+
+									Log::slot(Session::get('currentslot'),'Bought a membership code',$check->membership_price,"Bought Membership Codes",Session::get('currentslot'));  
+									
 									return $message;
 								}
 							}
@@ -729,7 +946,7 @@ class MemberCodeController extends MemberController
 			}		
 	}
 
-	public function additional($pid,$slotid)
+	public function additional($pid,$slotid,$price)
 	{
 						$total = 0;
 						$datapackage = DB::table('tbl_product_package_has')->where('product_package_id',$pid)->get();
@@ -750,7 +967,7 @@ class MemberCodeController extends MemberController
 				                // $query = Tbl_voucher::where('voucher_code', Globals::code_generator())->first();
 				                $insert['voucher_code'] = Globals::create_voucher_code();
 				                $insert['discount'] = $slot->discount;
-				                $insert['total_amount'] =$total + (($slot->discount*100)*$total); //
+				                $insert['total_amount'] = $price; //
 				                $insert['account_id'] = $customer->account_id;
 				                $voucher = new Tbl_voucher($insert);
 				                $voucher->save();
@@ -763,9 +980,9 @@ class MemberCodeController extends MemberController
 				                    $insert_prod =  array(
 				                        'product_id' =>  $dt->product_id,
 				                        'voucher_id'=> $voucher->voucher_id,
-				                        'price' => $prod_pts->price,
+				                        'price' => 0,
 				                        'qty'=> $dt->quantity,
-				                        'sub_total' => $prod_pts->price * $dt->quantity,
+				                        'sub_total' => 0,
 				                        'binary_pts' => $prod_pts->binary_pts,
 				                        'unilevel_pts' => $prod_pts->unilevel_pts
 				                    );
@@ -787,8 +1004,6 @@ class MemberCodeController extends MemberController
 		$check_placement = Tbl_slot::checkposition(Request::input("placement"), strtolower(Request::input("slot_position")))->first();
 		$check_id = Tbl_slot::id(Request::input("slot_number"))->first();
 		$ifused = Tbl_membership_code::where('code_pin',Request::input("code_number"))->where('used',1)->first();
-	 	$limit = DB::table('tbl_settings')->where('key','slot_limit')->first();
-		$count = Tbl_slot::where('slot_owner',Customer::info()->account_id)->count();
 
 		if($check_placement)
 		{
@@ -798,24 +1013,17 @@ class MemberCodeController extends MemberController
 		{
 			$return["message"] = "This code is already used";
 		}
-		elseif($limit->value <=  $count)
-		{
-			$return["message"] = "You've already reach the max slot per account. Max slot per account is ".$limit->value.".";
-		}
 		elseif($data["message"] != "")
 		{
 			$return["message"] = $data["message"];
 		}
-
-
 		echo json_encode($return);
 	}
 
 	public function get()
 	{
 		$e[0] = Tbl_tree_placement::where('placement_tree_parent_id',Request::input('slot'))->join('tbl_slot','tbl_slot.slot_id','=','tbl_tree_placement.placement_tree_child_id')
-																						 ->join('tbl_account','tbl_slot.slot_owner','=','tbl_account.account_id')
-																						 ->lists('placement_tree_child_id','account_name');
+																						 ->lists('placement_tree_child_id');
 		$e[1] = Tbl_slot::where('slot_id',Request::input('slot'))->account()->lists('account_name');
 		
 		$r = json_encode($e);

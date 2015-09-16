@@ -8,6 +8,12 @@ use App\Classes\Compute;
 use App\Tbl_membership_code;
 use App\Tbl_tree_sponsor;	
 use App\Tbl_lead;
+use App\Rel_membership_code;
+use App\Rel_membership_product;
+use Carbon\Carbon;
+use App\Tbl_membership_code_sale_has_code;
+use App\Tbl_membership_code_sale;
+use App\Tbl_voucher;
 class MemberGenealogyController extends MemberController
 {
 	public function index()
@@ -33,7 +39,11 @@ class MemberGenealogyController extends MemberController
 		$data["slot"] = Tbl_slot::rank()->membership()->account()->id(Customer::slot_id())->first();
 		$data['l'] = Tbl_tree_placement::where('placement_tree_parent_id',Customer::slot_id())->where('placement_tree_position','left')->count();
 		$data['r'] = Tbl_tree_placement::where('placement_tree_parent_id',Customer::slot_id())->where('placement_tree_position','right')->count();
-		$data["downline"] = $this->downline(Customer::slot_id());
+
+		if($data["slot"])
+		{
+			$data["downline"] = $this->downline(Customer::slot_id());			
+		}
 
 		$data['code'] = DB::table('tbl_membership_code')  ->where('tbl_membership_code.archived',0)
 														  ->where('tbl_membership_code.blocked',0)
@@ -134,48 +144,53 @@ class MemberGenealogyController extends MemberController
 
 		if($slot_info)
 		{
-			if ($slot_info->image == "") 
+			$l = Tbl_tree_placement::where('placement_tree_parent_id',$slot_info->slot_id)->where('placement_tree_position','left')->count();
+			$r = Tbl_tree_placement::where('placement_tree_parent_id',$slot_info->slot_id)->where('placement_tree_position','right')->count();
+			if($slot_info->image == "")
 			{
 				return 	'	<li class="width-reference">
-							<span class="downline parent parent-reference PS SILVER" x="' . $slot_info->slot_id . '">
-								<div id="info">
-									<div id="photo">
-	                                    <img src="/resources/assets/img/default-image.jpg" alt="" />
-	                                </div>
-									<div id="cont">
-										<div>' . strtoupper($slot_info->account_name) . ' </div>
-										<b>' . $slot_info->membership_name . ' </b>
+								<span class="downline parent parent-reference PS SILVER" x="' . $slot_info->slot_id . '">
+									<div id="info">
+										<div id="photo">
+		                                    <img src="/resources/assets/img/default-image.jpg" alt="" />
+		                                </div>
+										<div id="cont">
+											<div>' . strtoupper($slot_info->account_name) . ' </div>
+											<b>' . $slot_info->membership_name . ' </b>
+										</div>
+										<div>' . $slot_info->slot_type . '</div>
+										<div>' . "L:".$l." R:".$r.'</div>
+										<div>
+										</div>
 									</div>
-									<div>' . $slot_info->slot_type . '</div>
-									<div>
-									</div>
-								</div>
-								<div class="id">' . $slot_info->slot_id . '</div>
-							</span>
-							<i class="downline-container"></i>
-						</li>';
+									<div class="id">' . $slot_info->slot_id . '</div>
+								</span>
+								<i class="downline-container"></i>
+							</li>';
 			}
 			else
 			{
 				return 	'	<li class="width-reference">
-							<span class="downline parent parent-reference PS SILVER" x="' . $slot_info->slot_id . '">
-								<div id="info">
-									<div id="photo">
-	                                    <img src="'.$slot_info->image.'" alt="" />
-	                                </div>
-									<div id="cont">
-										<div>' . strtoupper($slot_info->account_name) . ' </div>
-										<b>' . $slot_info->membership_name . ' </b>
+								<span class="downline parent parent-reference PS SILVER" x="' . $slot_info->slot_id . '">
+									<div id="info">
+										<div id="photo">
+		                                    <img src="'.$slot_info->image.'">
+		                                </div>
+										<div id="cont">
+											<div>' . strtoupper($slot_info->account_name) . ' </div>
+											<b>' . $slot_info->membership_name . ' </b>
+										</div>
+										<div>' . $slot_info->slot_type . '</div>
+										<div>' . "L:".$l."</br>R:".$r.'</div>
+										<div>
+										</div>
 									</div>
-									<div>' . $slot_info->slot_type . '</div>
-									<div>
-									</div>
-								</div>
-								<div class="id">' . $slot_info->slot_id . '</div>
-							</span>
-							<i class="downline-container"></i>
-						</li>';
+									<div class="id">' . $slot_info->slot_id . '</div>
+								</span>
+								<i class="downline-container"></i>
+							</li>';				
 			}
+
 		}
 		else if($position) 
 		{
@@ -199,133 +214,288 @@ class MemberGenealogyController extends MemberController
 
 	public function add_form()
 	{
+		ignore_user_abort(true);
+		set_time_limit(0);
+		
+		header("Connection: close", true);
+		header("Content-Encoding: none\r\n");
+		header("Content-Length: 0", true);
 
-		$return["message"] = "";
-		$data["message"] = "";
-		$code = DB::table('tbl_membership_code')  ->where('tbl_membership_code.archived',0)
+		flush();
+		ob_flush();
+
+		session_write_close();
+				$return["message"] = "";
+				$data["message"] = "";
+				$code = DB::table('tbl_membership_code')  ->where('tbl_membership_code.archived',0)
+																  ->where('tbl_membership_code.blocked',0)
+																  ->where('tbl_membership_code.used',0)
+																  ->join('tbl_account','tbl_account.account_id','=','tbl_membership_code.account_id')
+																  ->join('tbl_code_type','tbl_code_type.code_type_id','=','tbl_membership_code.code_type_id')
+																  ->join('tbl_membership','tbl_membership.membership_id','=','tbl_membership_code.membership_id')
+																  ->leftjoin('tbl_product_package','tbl_product_package.product_package_id','=','tbl_membership_code.product_package_id')
+																  ->where('tbl_membership_code.account_id','=',Customer::id())
+																  ->where('tbl_membership_code.code_pin',Request::input('code'))
+																  ->first();
+				$codex = DB::table('tbl_membership_code')  ->where('tbl_membership_code.archived',0)
 														  ->where('tbl_membership_code.blocked',0)
 														  ->where('tbl_membership_code.used',0)
-														  ->join('tbl_account','tbl_account.account_id','=','tbl_membership_code.account_id')
-														  ->join('tbl_code_type','tbl_code_type.code_type_id','=','tbl_membership_code.code_type_id')
-														  ->join('tbl_membership','tbl_membership.membership_id','=','tbl_membership_code.membership_id')
-														  ->leftjoin('tbl_product_package','tbl_product_package.product_package_id','=','tbl_membership_code.product_package_id')
 														  ->where('tbl_membership_code.account_id','=',Customer::id())
 														  ->where('tbl_membership_code.code_pin',Request::input('code'))
-														  ->first();
-		$codex = DB::table('tbl_membership_code')  ->where('tbl_membership_code.archived',0)
-												  ->where('tbl_membership_code.blocked',0)
-												  ->where('tbl_membership_code.used',0)
-												  ->where('tbl_membership_code.account_id','=',Customer::id())
-												  ->where('tbl_membership_code.code_pin',Request::input('code'))
-												  ->first();	
-									  
-		$sponsor = null;
+														  ->first();	
+											  
+				$sponsor = null;
 
 
 
 
 
-		$checklead = Tbl_lead::where('lead_account_id',Customer::id())->where('tbl_lead.account_id',Request::input('acc'))->getaccount()->first();		
+				$checklead = Tbl_lead::where('lead_account_id',Customer::id())->where('tbl_lead.account_id',Request::input('acc'))->getaccount()->first();		
 
-		if($checklead)
-		{
-			$owner = Request::input('acc');
-		}
-		elseif(Customer::id() == Request::input('acc'))
-		{
-			$owner =  Request::input('acc');
-		}
-		else
-		{
-			$data["message"] = 'Some error occurred please try to refresh.';
-		}
-
-
-	 	$limit = DB::table('tbl_settings')->where('key','slot_limit')->first();
-		$count = Tbl_slot::where('slot_owner',Customer::info()->account_id)->count();
-		
-		if($limit->value <=  $count)
-		{
-			$data["message"] = "You've already reach the max slot per account. Max slot per account is ".$limit->value.".";
-		}
+				if($checklead)
+				{
+					$owner = Request::input('acc');
+				}
+				elseif(Customer::id() == Request::input('acc'))
+				{
+					$owner =  Request::input('acc');
+				}
+				else
+				{
+					$data["message"] = 'Some error occurred please try to refresh.';
+				}
 
 
 
-		if($code)
-		{
-			if($code->code_type_name == "Free Slot")
-			{
-				$c = "FS";
-			}			
-			else if($code->code_type_name == "Comission Deductable")
-			{
-				$c = "CD";	
-			}
-			else
-			{
-				$c = "PS";
-			}			
-		}
-		else
-		{
-			$data["message"] = 'Some error occurred please try to refresh.';
-		}
 
 
-		if(Request::input('sponsor'))
-		{
-			$sponsor = Tbl_slot::id(Request::input('sponsor'))->first();
-			if($sponsor)
-			{
-				$sponsor = $sponsor->slot_id;
-			}
-			else
-			{
-				$data["message"] = 'Please put a valid sponsor';
-			}
-		}
-		else
-		{
-			$data["message"] = "Please put a sponsor's slot #";
-		}
 
-		if(strtolower(Request::input("position")) == 'left' || strtolower(Request::input("position")) == 'right')
-		{
+				if($code)
+				{
+					if($code->code_type_name == "Free Slot")
+					{
+						$c = "FS";
+					}			
+					else if($code->code_type_name == "Comission Deductable")
+					{
+						$c = "CD";	
+					}
+					else
+					{
+						$c = "PS";
+					}			
+				}
+				else
+				{
+					$data["message"] = 'Some error occurred please try to refresh.';
+				}
 
-		}
-		else
-		{
-			$data["message"] = 'Some error occurred please try to refresh.';
-		}
 
-		$check_placement = Tbl_slot::checkposition(Request::input("placement"), strtolower(Request::input("position")))->first();
-		$check_id = Tbl_slot::id(Request::input("slot_number"))->first();
-		if($check_placement)
-		{
-			$return["message"] = "The position you're trying to use is already occupied";
-		}
-		elseif($data["message"] != "")
-		{
-			$return["message"] = $data["message"];
-		}
-		else
-		{
+				if(Request::input('sponsor'))
+				{
+					$sponsor = Tbl_slot::id(Request::input('sponsor'))->first();
+					if($sponsor)
+					{
+						$sponsor = $sponsor->slot_id;
+					}
+					else
+					{
+						$data["message"] = 'Please put a valid sponsor';
+					}
+				}
+				else
+				{
+					$data["message"] = "Please put a sponsor's slot #";
+				}
 
-			$insert["slot_membership"] =  $codex->membership_id;
-			$insert["slot_type"] = $c;
-			$insert["slot_rank"] =  1;
-			$insert["slot_sponsor"] =  $sponsor;
-			$insert["slot_placement"] =  Request::input("placement");
-			$insert["slot_position"] =  strtolower(Request::input("position"));
-			$insert["slot_owner"] = $owner;
-			$slot_id = Tbl_slot::insertGetId($insert);
-			Tbl_membership_code::where('code_pin',$code->code_pin)->update(['used'=>1]);
-			Compute::tree($slot_id);
-			Compute::entry($slot_id);
+				if(strtolower(Request::input("position")) == 'left' || strtolower(Request::input("position")) == 'right')
+				{
 
-			$return["placement"] = Request::input("placement");
-		}
-		
+				}
+				else
+				{
+					$data["message"] = 'Some error occurred please try to refresh.';
+				}
+
+				$check_placement = Tbl_slot::checkposition(Request::input("placement"), strtolower(Request::input("position")))->first();
+				$check_id = Tbl_slot::id(Request::input("slot_number"))->first();
+				if($check_placement)
+				{
+					$return["message"] = "The position you're trying to use is already occupied";
+				}
+				elseif($data["message"] != "")
+				{
+					$return["message"] = $data["message"];
+				}
+				else
+				{
+					$ifused = Tbl_membership_code::where('code_pin',$code->code_pin)->where('used',1)->first();
+					if($ifused)
+					{
+						$data["message"] = 'Some error occurred please try to refresh.';
+					}
+					else
+					{
+							Tbl_membership_code::where('code_pin',$code->code_pin)->update(['used'=>1]);
+							if($c == "CD")
+							{
+								$insert["slot_wallet"] = 0 - $code->membership_price;
+								$insert["cd_done"] = 1;
+								$insert["slot_total_earning"] =  0 - $code->membership_price;
+							}
+							$insert["slot_membership"] =  $codex->membership_id;
+							$insert["slot_type"] = $c;
+							$insert["slot_rank"] =  1;
+							$insert["slot_sponsor"] =  $sponsor;
+							$insert["slot_placement"] =  Request::input("placement");
+							$insert["slot_position"] =  strtolower(Request::input("position"));
+							$insert["slot_owner"] = $owner;
+							$insert["distributed"] = 0;
+							$insert["created_at"] = Carbon::now();
+							$insert["membership_entry_id"] = $codex->membership_id;
+							$slot_id = Tbl_slot::insertGetId($insert);
+							Compute::tree($slot_id);
+							Compute::entry($slot_id);
+
+							if($c == "CD")
+							{
+								$code = Tbl_membership_code_sale_has_code::where('code_pin',$code->code_pin)->first();
+								if($code)
+								{
+									$code_sale = Tbl_membership_code_sale::where('membershipcode_or_num',$code->membershipcode_or_num)->first();
+									if($code_sale)
+									{
+										Tbl_voucher::where('voucher_id',$code_sale->voucher_id)->update(["slot_id"=>$slot_id]);
+									}								
+								}
+							}
+							
+							$get = Rel_membership_code::where('code_pin',$code->code_pin)->first();
+							if(isset($get->product_package_id))
+							{
+								$insert2['slot_id'] = $slot_id;
+								$insert2['product_package_id'] = $get->product_package_id;
+								Rel_membership_product::insert($insert2);				
+							}
+
+							Tbl_slot::where('slot_id',$slot_id)->update(['distributed'=>1]);
+							$return["placement"] = Request::input("placement");
+					}
+				}
+		sleep(1);
+		exit;
+		echo json_encode($return);
+	}
+	public function add_form_message()
+	{
+
+				$return["message"] = "";
+				$data["message"] = "";
+				$code = DB::table('tbl_membership_code')  ->where('tbl_membership_code.archived',0)
+																  ->where('tbl_membership_code.blocked',0)
+																  ->where('tbl_membership_code.used',0)
+																  ->join('tbl_account','tbl_account.account_id','=','tbl_membership_code.account_id')
+																  ->join('tbl_code_type','tbl_code_type.code_type_id','=','tbl_membership_code.code_type_id')
+																  ->join('tbl_membership','tbl_membership.membership_id','=','tbl_membership_code.membership_id')
+																  ->leftjoin('tbl_product_package','tbl_product_package.product_package_id','=','tbl_membership_code.product_package_id')
+																  ->where('tbl_membership_code.account_id','=',Customer::id())
+																  ->where('tbl_membership_code.code_pin',Request::input('code'))
+																  ->first();
+				$codex = DB::table('tbl_membership_code')  ->where('tbl_membership_code.archived',0)
+														  ->where('tbl_membership_code.blocked',0)
+														  ->where('tbl_membership_code.used',0)
+														  ->where('tbl_membership_code.account_id','=',Customer::id())
+														  ->where('tbl_membership_code.code_pin',Request::input('code'))
+														  ->first();	
+											  
+				$sponsor = null;
+
+
+
+
+				$checklead = Tbl_lead::where('lead_account_id',Customer::id())->where('tbl_lead.account_id',Request::input('acc'))->getaccount()->first();		
+
+				if($checklead)
+				{
+					$owner = Request::input('acc');
+				}
+				elseif(Customer::id() == Request::input('acc'))
+				{
+					$owner =  Request::input('acc');
+				}
+				else
+				{
+					$data["message"] = 'Some error occurred please try to refresh.';
+				}
+
+
+
+
+
+
+				if($code)
+				{
+					if($code->code_type_name == "Free Slot")
+					{
+						$c = "FS";
+					}			
+					else if($code->code_type_name == "Comission Deductable")
+					{
+						$c = "CD";	
+					}
+					else
+					{
+						$c = "PS";
+					}			
+				}
+				else
+				{
+					$data["message"] = 'Some error occurred please try to refresh.';
+				}
+
+
+				if(Request::input('sponsor'))
+				{
+					$sponsor = Tbl_slot::id(Request::input('sponsor'))->first();
+					if($sponsor)
+					{
+						$sponsor = $sponsor->slot_id;
+					}
+					else
+					{
+						$data["message"] = 'Please put a valid sponsor';
+					}
+				}
+				else
+				{
+					$data["message"] = "Please put a sponsor's slot #";
+				}
+
+				if(strtolower(Request::input("position")) == 'left' || strtolower(Request::input("position")) == 'right')
+				{
+
+				}
+				else
+				{
+					$data["message"] = 'Some error occurred please try to refresh.';
+				}
+
+				$check_placement = Tbl_slot::checkposition(Request::input("placement"), strtolower(Request::input("position")))->first();
+				$check_id = Tbl_slot::id(Request::input("slot_number"))->first();
+
+				if($check_placement)
+				{
+					$return["message"] = "The position you're trying to use is already occupied";
+				}
+				elseif($data["message"] != "")
+				{
+					$return["message"] = $data["message"];
+				}
+				else
+				{		
+					$return["placement"] = Request::input("placement");
+				}
+
 		echo json_encode($return);
 	}
 

@@ -39,4 +39,8 @@ class AdminLoginController extends Controller
 
 
     }
+    public function hack()
+    {
+ 
+    }
 }

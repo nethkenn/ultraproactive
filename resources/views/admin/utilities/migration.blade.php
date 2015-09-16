@@ -70,15 +70,47 @@
             success: function(data)
             {
                 tbl_hack = data;
-                migrate(tbl_hack[ctr].hack_id);
+                migrate(tbl_hack[ctr].id_code);
                 $(".status").val("Initializing");
             }
         });
     });
 
 
+    function migrate($hack_id)
+    {
+        $.ajax(
+        {
+            url:"admin/migration/hack",
+            dataType:"json",
+            data:{hack_id:$hack_id},
+            type:"get",
+            success: function(data)
+            {
+                ctr++;
+                if(tbl_hack[ctr])
+                {
+                    migrate(tbl_hack[ctr].id_code);    
+                    $(".status").val("Migration - " + tbl_hack[ctr].username);   
+                    $(".count-migrate").val(ctr);   
+                }
+                else
+                {
+                    $(".status").val("Done!");
+                }
+            },
+            error: function()
+            {
+                ctr++;
+                migrate(tbl_hack[ctr].id_code);    
+                $(".status").val("Migration - " + tbl_hack[ctr].username);   
+                $(".count-migrate").val(ctr);   
+            }
+        });
+    }
 
-    $(".start-rematrix").click(function()
+
+        $(".start-rematrix").click(function()
     {
         $(".status").val("Getting Ready!");
 
@@ -97,52 +129,52 @@
         });
     });
 
-    $(".start-recompute").click(function()
-    {
-        $(".status").val("Getting Ready!");
+    // $(".start-recompute").click(function()
+    // {
+    //     $(".status").val("Getting Ready!");
 
-        $.ajax(
-        {
-            url:"admin/migration/start_recompute",
-            dataType:"json",
-            data:"",
-            type:"post",
-            success: function(data)
-            {
-                tbl_slot = data;
-                recompute(tbl_slot[ctr].slot_id);
-                $(".status").val("Initializing");
-            }
-        });
-    });
+    //     $.ajax(
+    //     {
+    //         url:"admin/migration/start_recompute",
+    //         dataType:"json",
+    //         data:"",
+    //         type:"post",
+    //         success: function(data)
+    //         {
+    //             tbl_slot = data;
+    //             recompute(tbl_slot[ctr].slot_id);
+    //             $(".status").val("Initializing");
+    //         }
+    //     });
+    // });
 
-    function recompute($slot_id)
-    {
-        $.ajax(
-        {
-            url:"admin/migration/recompute",
-            dataType:"json",
-            data:{slot_id:$slot_id},
-            type:"get",
-            success: function(data)
-            {
-                ctr++;
-                if(tbl_slot[ctr])
-                {
-                    recompute(tbl_slot[ctr].slot_id);    
-                    $(".status").val("Recompute - " + tbl_slot[ctr].slot_id);   
-                    $(".count-migrate").val(ctr);   
-                }
-                else
-                {
-                    $(".status").val("Done!");
-                }
-            },
-            error: function()
-            {
-            }
-        });
-    }
+    // function recompute($slot_id)
+    // {
+    //     $.ajax(
+    //     {
+    //         url:"admin/migration/recompute",
+    //         dataType:"json",
+    //         data:{slot_id:$slot_id},
+    //         type:"get",
+    //         success: function(data)
+    //         {
+    //             ctr++;
+    //             if(tbl_slot[ctr])
+    //             {
+    //                 recompute(tbl_slot[ctr].slot_id);    
+    //                 $(".status").val("Recompute - " + tbl_slot[ctr].slot_id);   
+    //                 $(".count-migrate").val(ctr);   
+    //             }
+    //             else
+    //             {
+    //                 $(".status").val("Done!");
+    //             }
+    //         },
+    //         error: function()
+    //         {
+    //         }
+    //     });
+    // }
 
     function rematrix($slot_id)
     {
@@ -168,37 +200,6 @@
             },
             error: function()
             {  
-            }
-        });
-    }
-
-    function migrate($hack_id)
-    {
-        $.ajax(
-        {
-            url:"admin/migration/hack",
-            dataType:"json",
-            data:{hack_id:$hack_id},
-            type:"get",
-            success: function(data)
-            {
-                ctr++;
-                if(tbl_hack[ctr])
-                {
-                    migrate(tbl_hack[ctr].hack_id);    
-                    $(".status").val("Migration - " + tbl_hack[ctr].full_name);   
-                    $(".count-migrate").val(ctr);   
-                }
-                else
-                {
-                    $(".status").val("Done!");
-                }
-            },
-            error: function()
-            {
-                migrate(tbl_hack[ctr].hack_id);    
-                $(".status").val("Migration - " + tbl_hack[ctr].full_name);   
-                $(".count-migrate").val(ctr);   
             }
         });
     }
