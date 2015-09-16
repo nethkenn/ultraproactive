@@ -6,7 +6,7 @@
     <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
     <div class="para wew">
         <div class="col-md-6 siyet text-left">
-            <img src="/resources/assets/frontend/img/logo.png" style="height: 100px;">
+            <img src="/resources/assets/frontend/img/logo.png" style="height: 100px; ">
         </div>
         <div class="col-md-6 siyet text-right">
             <div>{{$account->country_name}}</div>
