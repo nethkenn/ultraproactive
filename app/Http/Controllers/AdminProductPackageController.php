@@ -280,7 +280,6 @@ class AdminProductPackageController extends AdminController
 		$text = Request::input('archived') ? 'RESTORE' : 'ARCHIVE';
 		$class = Request::input('archived') ? 'restore-product-package' : 'archive-product-package';
 		
-		
         return Datatables::of($product)	
         								->addColumn('edit','<a href="admin/maintenance/product_package/edit?id={{$product_package_id}}">EDIT</a>')
         								// ->editColumn('image_file','@if($image_file != "default.jpg")<a href="'.Image::get_path().'{{$image_file}}/{{$image_file}}" target="_blank">{{$image_file}}</a>@else{{$image_file}}@endif')
