@@ -84,9 +84,9 @@ class StockistCodeController extends StockistController
     public function add_code()
     {
         $data['_error'] = null;
-        $data['_membership'] = Tbl_membership::where('membership_entry', 1)->get();
+        $data['_membership'] = Tbl_membership::where('membership_entry', 1)->where('archived', 0)->get();
         $data['_code_type'] = Tbl_code_type::where('code_type_id', '!=' , 2)->get();
-        $data['_prod_package'] = Tbl_product_package::all();
+        $data['_prod_package'] = Tbl_product_package::where('archived', 0)->get();
         $data['_account'] = Tbl_account::all();
         $data['_inventory_update_type'] = Tbl_inventory_update_type::where('inventory_update_type_id','=',1)->get();
         $data['_error2'] = Session::get('message');

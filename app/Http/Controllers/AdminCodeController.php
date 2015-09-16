@@ -93,9 +93,9 @@ class AdminCodeController extends AdminController {
 	public function add_code()
 	{
 		$data['_error'] = null;
-		$data['_membership'] = Tbl_membership::where('membership_entry', 1)->get();
+		$data['_membership'] = Tbl_membership::where('membership_entry', 1)->where("archived", 0)->get();
 		$data['_code_type'] = Tbl_code_type::all();
-		$data['_prod_package'] = Tbl_product_package::all();
+		$data['_prod_package'] = Tbl_product_package::where('archived', 0)->get();
 		$data['_account'] = Tbl_account::all();
 		$data['_inventory_update_type'] = Tbl_inventory_update_type::all();
 
