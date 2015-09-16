@@ -23,6 +23,7 @@
 				<tr>
 					<th>ID</th>
 					<th>Name</th>
+					<th>Membership</th>
 					<th></th>
 					<th></th>
 				</tr>
@@ -64,6 +65,7 @@
 	        columns: [
 	            {data: 'product_package_id', name: 'product_package_id'},
 	            {data: 'linked', name: 'product_package_name'},
+	            {data: 'membership', name: 'membership_id'},
 	           	{data: 'edit' ,name: 'product_id'},
 	            {data: 'archive' ,name: 'product_id'},
 	            
@@ -105,6 +107,7 @@
             	'<td>'+value.price+'</td>';
             });
             $(".view_body").append(opt);
+
 	   		// alert(data);
 			// alert( obj.product_package_name );
 			// alert( obj.membership_id );

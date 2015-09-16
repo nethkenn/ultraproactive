@@ -121,10 +121,10 @@
                     <div class="leybel">TOTAL WITHDRAWAL</div>
                     <div class="balyu">{{$slotnow->slot_total_withrawal}}</div>
                 </div>
-                <div class="holders">
+                <!-- <div class="holders">
                     <div class="leybel">MAX INCOME PER DAY</div>
                     <div class="balyu">{{$slotnow->slot_today_income}}/{{$slotnow->max_income}}</div>
-                </div>
+                </div> -->
                 <div class="holders">
                     <div class="leybel">MAX PAIRS PER DAY</div>
                     <div class="balyu">{{$slotnow->pairs_today}}/{{$slotnow->max_pairs_per_day}}</div>

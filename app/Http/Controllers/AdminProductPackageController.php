@@ -284,6 +284,7 @@ class AdminProductPackageController extends AdminController
         								->addColumn('edit','<a href="admin/maintenance/product_package/edit?id={{$product_package_id}}">EDIT</a>')
         								// ->editColumn('image_file','@if($image_file != "default.jpg")<a href="'.Image::get_path().'{{$image_file}}/{{$image_file}}" target="_blank">{{$image_file}}</a>@else{{$image_file}}@endif')
         								->editColumn('linked','<a id="view_content" href="/admin/maintenance/product_package#view_content" package-id="{{$product_package_id}}">{{$product_package_name}}</a>')
+        								->editColumn('membership','')
 								        ->addColumn('archive','<a class="'.$class.'" href="#" product-package-id="{{$product_package_id}}">'.$text.'</a>')
 								        ->make(true);
         

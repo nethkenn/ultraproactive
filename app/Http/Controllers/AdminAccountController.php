@@ -190,7 +190,7 @@ class AdminAccountController extends AdminController
 			$data["_account_field"] = DB::table("tbl_account_field")->get();
 			$data["_country"] = DB::table("tbl_country")->where("archived", 0)->get();
 			$data["account"] = DB::table("tbl_account")->where("account_id", Request::input("id"))->first();
-			$data["_account_custom"] = unserialize($data["account"]->custom_field_value);
+			// $data["_account_custom"] = unserialize($data["account"]->custom_field_value);
 			// dd($data["_account_custom"]);
 			return view('admin.maintenance.account_edit', $data);
 		}
