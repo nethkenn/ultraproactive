@@ -46,7 +46,7 @@
 
 		</tbody>
 	</table>
-	  <button data-remodal-action="confirm" class="remodal-confirm">OK</button>
+	  <button data-remodal-action="confirm" class="remodal-confirm" id="view_oks">OK</button>
 	</div>
 @endsection
 
@@ -84,15 +84,6 @@
 	$(document).ready(function(){
    	   $('#product-table').on('click', '#view_content', function(e)
        {
-       	// $.ajax({
-        //     type: "POST",
-        //     url: "/admin/maintenance/product_package/view_content",
-        //     dataType: "json",
-        //     success: function(msg){
-        //         $('#resultip').html(msg);
-        //     }
-
-        // }); // Ajax Call
 	   	$.get("/admin/maintenance/product_package/view_content", { id: $(e.currentTarget).attr("package-id") }, function(data, status){
 	   		$x = jQuery.parseJSON( data );
 	   		var opt = "";
@@ -107,12 +98,10 @@
             	'<td>'+value.price+'</td>';
             });
             $(".view_body").append(opt);
-
-	   		// alert(data);
-			// alert( obj.product_package_name );
-			// alert( obj.membership_id );
-            // alert("Data: " + data + "\nStatus: " + status);
-        });
+        });//CALL MODAL
+       }); 
+       $('#view_oks').click(function(){
+       	$(".view_body").empty();
        });
 	});
 	</script>
