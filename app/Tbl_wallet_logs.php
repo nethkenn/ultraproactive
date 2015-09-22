@@ -3,9 +3,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use DB;
-class Tbl_Wallet_logs extends Model
+class Tbl_wallet_logs extends Model
 {
-	protected $table = 'tbl_Wallet_logs';
+	protected $table = 'tbl_wallet_logs';
 	protected $primaryKey = "wallet_logs_id";
 
 	public $timestamps = false;
