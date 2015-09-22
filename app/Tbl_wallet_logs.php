@@ -3,7 +3,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use DB;
-class tbl_Wallet_logs extends Model
+class Tbl_Wallet_logs extends Model
 {
 	protected $table = 'tbl_Wallet_logs';
 	protected $primaryKey = "wallet_logs_id";
