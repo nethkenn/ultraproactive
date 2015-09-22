@@ -22,7 +22,7 @@
 			<thead>
 				<tr>
 					<th class="option-col">ID</th>
-					<th>SKU</th>
+					<!-- <th>SKU</th> -->
 					<th>Name</th>
 					<th>Category</th>
 					<th>Price</th>
@@ -52,7 +52,7 @@
 
 	        columns: [
 	            {data: 'product_id', name: 'product_id'},
-	            {data: 'sku', name: 'sku'},
+	            // {data: 'sku', name: 'sku'},
 	            {data: 'product_name', name: 'product_name'},
 	            {data: 'product_category_name', name: 'product_category_name'},
 	            {data: 'price' ,name: 'price'},

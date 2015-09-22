@@ -23,24 +23,35 @@
 				<tr>
 					<th>ID</th>
 					<th>Name</th>
+					<th>Membership</th>
 					<th></th>
 					<th></th>
-					
-					
-					
-					
-
 				</tr>
 			</thead>
 		</table>
+	</div>
+	<div class="remodal" data-remodal-id="view_content">
+	  <h2 style="margin-bottom: 30px;">PRODUCT PACKAGE INFO</h2>
+	  <table id="product-table" class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Unilevel PTS</th>
+				<th>Binary PTS</th>
+				<th>Price</th>
+			</tr>
+		</thead>
+		<tbody class="view_body">
+
+		</tbody>
+	</table>
+	  <button data-remodal-action="confirm" class="remodal-confirm" id="view_oks">OK</button>
 	</div>
 @endsection
 
 @section('script')
 	<script type="text/javascript">
-
-
-
 		var $product_packageTable = $('#product-table').DataTable({
 	        processing: true,
 	        serverSide: true,
@@ -53,7 +64,8 @@
 
 	        columns: [
 	            {data: 'product_package_id', name: 'product_package_id'},
-	            {data: 'product_package_name', name: 'product_package_name'},
+	            {data: 'linked', name: 'product_package_name'},
+	            {data: 'membership', name: 'membership_id'},
 	           	{data: 'edit' ,name: 'product_id'},
 	            {data: 'archive' ,name: 'product_id'},
 	            
@@ -67,12 +79,31 @@
 	         	},
 	        stateSave: true,
 	    });
-
-
-		
-		
-
-
+	</script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+   	   $('#product-table').on('click', '#view_content', function(e)
+       {
+	   	$.get("/admin/maintenance/product_package/view_content", { id: $(e.currentTarget).attr("package-id") }, function(data, status){
+	   		$x = jQuery.parseJSON( data );
+	   		var opt = "";
+	   		$(".view_body").empty();
+	   		$.each($x, function( key, value ) 
+            {
+            	opt = opt + "<tr>"+
+            	'<td>'+value.product_id+'</td>'+
+            	'<td>'+value.product_name+'</td>'+
+            	'<td>'+value.unilevel_pts+'</td>'+
+            	'<td>'+value.binary_pts+'</td>'+
+            	'<td>'+value.price+'</td>';
+            });
+            $(".view_body").append(opt);
+        });//CALL MODAL
+       }); 
+       $('#view_oks').click(function(){
+       	$(".view_body").empty();
+       });
+	});
 	</script>
 	<script type="text/javascript" src="resources/assets/admin/product_package.js"></script>
 @endsection

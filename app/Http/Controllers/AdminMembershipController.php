@@ -66,6 +66,7 @@ class AdminMembershipController extends AdminController
 				$insert['membership_upgrade'] = Request::input('membership_upgrade');
 				$insert['max_income'] = Request::input('max_income');
 				$insert['discount'] = Request::input('discount');
+				$insert['slot_limit'] = Request::input('slot_limit');
 				// $insert['member_upgrade_pts'] = Request::input('member_upgrade_pts');
 				$membership = Tbl_membership::where('membership_id',$id)->update($insert);
 				return Redirect('admin/maintenance/membership');
@@ -79,6 +80,7 @@ class AdminMembershipController extends AdminController
 				$data['_error']['membership_upgrade'] = $errors->get('membership_upgrade');
 				$data['_error']['max_income'] = $errors->get('max_income');
 				$data['_error']['discount'] = $errors->get('discount');
+				$data['_error']['slot_limit'] = $errors->get('slot_limit');
 				// $data['_error']['member_upgrade_pts'] = $errors->get('member_upgrade_pts');
 			}
 
@@ -146,6 +148,7 @@ class AdminMembershipController extends AdminController
 				$insert['membership_upgrade'] = Request::input('membership_upgrade');
 				$insert['discount'] = Request::input('discount');
 				$insert['max_income'] = Request::input('max_income');
+				$insert['slot_limit'] = Request::input('slot_limit');
 		// 		$insert['member_upgrade_pts'] = Request::input('member_upgrade_pts');
 				// dd($insert);
 				$membership = new Tbl_membership($insert);
@@ -165,6 +168,7 @@ class AdminMembershipController extends AdminController
 				$data['_error']['membership_entry'] = $errors->get('membership_entry');
 				$data['_error']['membership_upgrade'] = $errors->get('membership_upgrade');
 				$data['_error']['max_income'] = $errors->get('max_income');
+				$data['_error']['slot_limit'] = $errors->get('slot_limit');
 		// 		$data['_error']['member_upgrade_pts'] = $errors->get('member_upgrade_pts');
 
 			}

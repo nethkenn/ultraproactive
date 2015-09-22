@@ -33,13 +33,15 @@
                 @if(Session::has('errored'))
                     <div class="alert alert-danger">
                         <ul>
-                                {{ $error }}
+                            {{ $error }}
                         </ul>
                     </div>
                  @endif
+                <div style="font-size: 14px; text-align: left;">Username</div>
                 <div class="input">
                     <input type="text" name="user">
                 </div>
+                <div style="font-size: 14px; text-align: left;">Password</div>
                 <div class="input">
                     <input type="password" name="pass">
                 </div>

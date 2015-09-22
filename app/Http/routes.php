@@ -261,6 +261,7 @@ Route::post('admin/maintenance/product_package/edit', 'AdminProductPackageContro
 Route::any('admin/maintenance/product_package/get_product', 'AdminProductPackageController@ajax_get_product');
 Route::post('admin/maintenance/product_package/archive', 'AdminProductPackageController@archive_product_package');
 Route::post('admin/maintenance/product_package/restore', 'AdminProductPackageController@restore_product_package');
+Route::any('admin/maintenance/product_package/view_content', 'AdminProductPackageController@view_content');
 
 /* SLOTS MAINTENANCE */
 Route::any('admin/maintenance/slots', 'AdminSlotController@index');

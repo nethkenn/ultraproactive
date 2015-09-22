@@ -272,20 +272,19 @@ class AdminProductPackageController extends AdminController
 		$this->save_product_package(Request::input('product_package_id'), Request::input('product'));
 		return Redirect('admin/maintenance/product_package');
 	}
-
-
-
 	public function ajax_get_product_package()
 	{
 		
 
-		$product = Tbl_product_package::where('archived',Request::input('archived'));
+		$product = Tbl_product_package::leftJoin('tbl_membership', 'tbl_product_package.membership_id', '=', 'tbl_membership.membership_id')->where('tbl_product_package.archived',Request::input('archived'))->get();
 		$text = Request::input('archived') ? 'RESTORE' : 'ARCHIVE';
 		$class = Request::input('archived') ? 'restore-product-package' : 'archive-product-package';
 		
         return Datatables::of($product)	
         								->addColumn('edit','<a href="admin/maintenance/product_package/edit?id={{$product_package_id}}">EDIT</a>')
         								// ->editColumn('image_file','@if($image_file != "default.jpg")<a href="'.Image::get_path().'{{$image_file}}/{{$image_file}}" target="_blank">{{$image_file}}</a>@else{{$image_file}}@endif')
+        								->editColumn('linked','<a id="view_content" href="/admin/maintenance/product_package#view_content" package-id="{{$product_package_id}}">{{$product_package_name}}</a>')
+        								->editColumn('membership','{{ $membership_name }}')
 								        ->addColumn('archive','<a class="'.$class.'" href="#" product-package-id="{{$product_package_id}}">'.$text.'</a>')
 								        ->make(true);
         
@@ -324,5 +323,20 @@ class AdminProductPackageController extends AdminController
 								        ->make(true);
         
 	}
-
+	public function view_content()
+	{
+		if( $_REQUEST["id"] )
+		{
+		   $id = $_REQUEST['id'];
+		   // $data = DB::table("tbl_product_package")->where("product_package_id", $id)->first();
+		   $package_has = DB::table("tbl_product_package_has")->where("product_package_id", $id)->get();
+		   foreach ($package_has as $key => $value) 
+		   {
+		   		$product = DB::table("tbl_product")->where("product_id", $value->product_id)->first();
+		   		$products[] = $product;
+		   }  
+		   // dd($products);
+		   echo json_encode($products);
+		}
+	}
 }

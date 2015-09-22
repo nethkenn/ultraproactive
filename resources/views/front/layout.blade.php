@@ -85,7 +85,7 @@
 	            <li class="nav-inside active"><a href="/">HOME</a></li>
 	            <li class="nav-inside"><a href="/product">PRODUCT</a></li>
 	            <li class="nav-inside dropdown">
-	               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">OTHERS</span></a>
+	               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">MINDSYNC</span></a>
 	               <ul class="dropdown-menu">
 	                  <li><a href="/mindsync">MIND SYNC PROJECT</a></li>
 	                  <li><a href="/foodcart">FOOD CART</a></li>

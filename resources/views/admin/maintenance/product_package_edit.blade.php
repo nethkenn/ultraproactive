@@ -43,7 +43,7 @@
 						<thead>
 							<tr>
 								<th>ID</th>
-								<th>SKU</th>
+								<!-- <th>SKU</th> -->
 								<th>Name</th>
 								<th>Unilevel PTS</th>
 								<th>Binary PTS</th>
@@ -59,7 +59,7 @@
 						<thead>
 							<tr>
 								<th>ID</th>
-								<th>SKU</th>
+								<!-- <th>SKU</th> -->
 								<th>Name</th>
 								<th>Unilevel PTS</th>
 								<th>Binary PTS</th>
@@ -73,7 +73,7 @@
 								@foreach($_product as $product)
 									<tr>
 										<td>{{$product->product_id}}</td>
-										<td>{{$product->sku}}</td>
+										<!-- <td>{{$product->sku}}</td> -->
 										<td>{{$product->product_name}}</td>
 										<td>{{$product->unilevel_pts}}</td>
 										<td>{{$product->binary_pts}}</td>
@@ -116,7 +116,7 @@
 
 	        columns: [
 	            {data: 'product_id', name: 'product_id'},
-	            {data: 'sku', name: 'sku'},
+	            // {data: 'sku', name: 'sku'},
 	            {data: 'product_name', name: 'product_name'},
 	            {data: 'unilevel_pts', name: 'unilevel_pts'},
 	            {data: 'binary_pts' ,name: 'binary_pts'},

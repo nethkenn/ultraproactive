@@ -35,7 +35,7 @@
                      <textarea class="form-control" name="product_info">{{Request::input('product_info') ? Request::input('product_info') : $product->product_info}}</textarea>
 
                 </div>
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-12 hide">
                     <label for="sku">SKU</label>
                     <input name="sku" value="{{Request::input('sku') ? Request::input('sku') : $product->sku}}" required="required" class="form-control" id="" placeholder="" type="text">
                 </div>
