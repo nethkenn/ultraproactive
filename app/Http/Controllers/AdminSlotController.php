@@ -13,6 +13,9 @@ use Crypt;
 use Validator;
 use App\Classes\Compute;
 use Session;
+use App\Tbl_wallet_logs;
+use App\Classes\Log;
+use App\Classes\Admin;	
 class AdminSlotController extends AdminController
 {
 	public function index()
@@ -48,7 +51,7 @@ class AdminSlotController extends AdminController
 
 	        return Datatables::of($_account)->addColumn('gen','<a href="admin/maintenance/slots/add?id={{$slot_id}}">GENEALOGY</a>')
 	        								->addColumn('info','<a href="admin/maintenance/slots/view?id={{$slot_id}}">INFO</a>')
-	        								->addColumn('wallet','{{number_format($slot_wallet, 2)}}')
+	        								->addColumn('wallet','{{App\Tbl_wallet_logs::id("$slot_id")->wallet()->sum("wallet_amount")}}')
 	        								->make(true);
 
 	}
@@ -81,6 +84,7 @@ class AdminSlotController extends AdminController
 	{
 		$data["page"] = "Slot Add Form";
 		$data["slot"] = Tbl_slot::rank()->membership()->account()->id(Request::input("slot_id"))->first();
+		$data["wallet"] = Tbl_wallet_logs::id(Request::input('slot_id'))->wallet()->sum('wallet_amount');
 		$data["position"] = Request::input("position");
 		$data["placement"] = Request::input("placement");
 		$data["_account"] = Tbl_account::get();
@@ -139,7 +143,7 @@ class AdminSlotController extends AdminController
 			$insert["slot_membership"] =  Request::input("slot_membership");
 			$insert["slot_type"] =  Request::input("slot_type");
 			$insert["slot_rank"] =  Request::input("rank");
-			$insert["slot_wallet"] =  Request::input("wallet");
+			// $insert["slot_wallet"] =  Request::input("wallet");
 			$insert["slot_sponsor"] =  Request::input("sponsor");
 			$insert["slot_placement"] =  Request::input("placement");
 			$insert["slot_position"] =  strtolower(Request::input("slot_position"));
@@ -151,13 +155,52 @@ class AdminSlotController extends AdminController
 			$insert["slot_total_withrawal"] =  Request::input("total_withrawal");
 			$insert["membership_entry_id"] = Request::input("slot_membership");
 			$insert["slot_total_earning"] =  Request::input("total_earning");
+			$insert["distributed"] =  0;
 			$insert["slot_owner"] = $account_id;
 			$insert["created_at"] = Carbon\Carbon::now();
 			$slot_id = Tbl_slot::insertGetId($insert);
 
+			$logs = "Your slot #".$slot_id." is created by admin (".Admin::info()->account_name.").";
+			Log::slot($slot_id, $logs,Request::input("wallet"), "New Slot",$slot_id);
+
 			Compute::tree($slot_id);
 			Compute::entry($slot_id);
 
+			Tbl_slot::where('slot_id',$slot_id)->update(['distributed'=>1]);
+			$return["placement"] = Request::input("placement");
+		}
+		
+		echo json_encode($return);
+	}
+	public function add_form_submit_message()
+	{	
+
+		$return["message"] = "";
+		$data["message"] = "";
+		
+		if(Request::input("account_id") == 0)
+		{
+			// $data = $this->add_form_submit_new_account($data);
+			// $account_id = $data["account_id"];
+		}
+		else
+		{
+			$account_id = Request::input("account_id");
+		}
+
+		$check_placement = Tbl_slot::checkposition(Request::input("placement"), strtolower(Request::input("slot_position")))->first();
+		$check_id = Tbl_slot::id(Request::input("slot_number"))->first();
+
+		if($check_placement)
+		{
+			$return["message"] = "The position you're trying to use is already occupied";
+		}
+		elseif($data["message"] != "")
+		{
+			$return["message"] = $data["message"];
+		}
+		else
+		{
 			$return["placement"] = Request::input("placement");
 		}
 		
@@ -210,12 +253,17 @@ class AdminSlotController extends AdminController
 		$update["slot_membership"] = Request::input("slot_membership");
 		$update["slot_type"] = Request::input("slot_type");
 		$update["slot_upgrade_points"] = Request::input("upgrade_points");
-		$update["slot_wallet"] = Request::input("wallet");
+		// $update["slot_wallet"] = Request::input("wallet");
 		$update["slot_total_withrawal"] =  Request::input("total_withrawal");
 		$update["slot_total_earning"] =  Request::input("total_earning");
 		$update["hack_reference"] = Request::input("hack_reference");
 		Tbl_slot::where('slot_id', Request::input("slot_id"))->update($update);
 
+		$logs = "Your slot #".Request::input('slot_id')." update your slot wallet to <b>".number_format(Request::input("wallet"),2)." wallet</br> (".Admin::info()->account_name.").";
+		$wallet = Tbl_wallet_logs::id(Request::input('slot_id'))->wallet()->sum('wallet_amount');
+		$wallet =  Request::input('wallet') - $wallet;
+
+		Log::slot(Request::input("slot_id"), $logs,$wallet, "Update Slot",Request::input("slot_id"));
 		$return["placement"] = $data["slot"]->slot_placement;
 
 		echo json_encode($return);

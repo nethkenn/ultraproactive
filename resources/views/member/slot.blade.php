@@ -39,7 +39,7 @@
                             <div class="labels">Downlines</div>
                         </div>
                         <div class="col-xs-6 labels-container">
-                            <div class="values">{{number_format($s->slot_wallet, 2)}}</div>
+                            <div class="values">{{number_format($s->total_wallet, 2)}}</div>
                             <div class="values">{{$s->membership_name}}</div>
                             <div class="values">{{$s->rank_name}}</div>
                             <div class="values">{{$s->downline}}</div>
@@ -48,7 +48,7 @@
                     <div class="col-md-3 top-container">
                         <div class="btn-holder">
                             <a style="cursor: pointer;">
-                                <button class="upbtn" type="button" tols="{{$s->slot_id}}" wallet="{{$s->slot_wallet}}" memship="{{$s->membership_price}}">Upgrade Membership</button>
+                                <button class="upbtn" type="button" tols="{{$s->slot_id}}" wallet="{{$s->total_wallet}}" memship="{{$s->membership_price}}">Upgrade Membership</button>
                             </a>
                         </div>
                         <div class="btn-holder">           

@@ -8,7 +8,11 @@
 			<div class="buttons col-md-4 text-right">
 				<form method="POST">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
-					<button type="submit" class="btn btn-primary" name="sbmt">Distribute Dynamically</button>
+				@if($check->value == 0)	
+					<button type="submit" class="btn btn-primary" name="sbmt">Distribute Dynamically</button> 
+				@else
+				    <button type="button" class="btn btn-primary" name="sbmt" disabled>Still Processing</button>
+				@endif
 				<!--	<button type="button" class="btn btn-primary" id="histoir">History</button> -->
 				</form>
 			</div>
@@ -29,6 +33,8 @@
 						<th>Slot #</th>
 						<th>Owner</th>
 						<th>Personal PV</th>
+						<th>Borrowed PV</th>
+						<th>Total PV</th>
 						<th>Group PV</th>
 						<th>Multiplier</th>
 						<th>Group PV to Wallet</th>
@@ -40,6 +46,8 @@
 						<td>{{$s->slot_id}}</td>
 						<td>{{$s->account_name}}</td>
 						<td>{{$s->slot_personal_points}}</td>
+						<td>{{$s->gained_pv - $s->slot_personal_points}}</td>
+						<td>{{$s->gained_pv}}</td>
 						<td>{{$s->slot_group_points}}</td>
 						<td>{{$s->multiplier}}</td>
 						<td>{{$s->slot_group_points * $s->multiplier}}</td>

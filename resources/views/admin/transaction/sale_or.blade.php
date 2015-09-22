@@ -32,7 +32,7 @@
 	            </tr>
 	        @endforeach
 	        <tr><td class="text-right" colspan="7"><strong>Item total Price : {{$product_total}}</strong></td></tr>
-	         <tr><td class="text-right" colspan="7"><strong>Discount : {{$voucher->discount}} ({{$discount_pts}})</strong></td></tr>
+	         <tr><td class="text-right" colspan="7"><strong>Discount :  {{$discount_pts}}</strong></td></tr>
 	          <tr><td class="text-right" colspan="7"><strong>Additional : {{$voucher->other_charge}} ({{(($voucher->other_charge/100)*$product_total)}})</strong></td></tr>
 	        <tr><td class="text-right" colspan="7"><strong>Grand Total : {{$voucher->total_amount}}</strong></td></tr>
 	    @endif

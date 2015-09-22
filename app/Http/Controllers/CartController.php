@@ -5,6 +5,7 @@ use App\Tbl_product;
 use App\Classes\Product;
 use App\Tbl_slot;
 use App\Classes\Customer;
+use App\Tbl_product_discount;
 class CartController extends MemberController
 {
 	public function index()
@@ -28,9 +29,20 @@ class CartController extends MemberController
 				// $data['_cart'][$key]['total'] = Product::currency_format($value['total']); 
 
 				$data['_cart'][$key]['price'] = $value['price']; 
-				$data['_cart'][$key]['total'] = $value['total'];
+				$discount = Tbl_product_discount::where('product_id',$key)->where('membership_id',$slot->slot_membership)->first();
 
+				if($discount)
+				{
+					$discount = $discount->discount;
+				}
+				else
+				{
+					$discount = 0;
+				}
+				$data['_cart'][$key]['discount'] = $discount;
+				$data['_cart'][$key]['total'] = $value['total'] - (($discount/100)*$value['total']);
 				$final_total[] = $value['total'];
+				$reduced_amount[] = ($discount/100)*$value['total'];
 			}
 		}
 
@@ -38,11 +50,11 @@ class CartController extends MemberController
 		$discount= $slot->discount;
 		$product_sum_total = array_sum($final_total);
 
-		$final_total = $product_sum_total - ($discount/100 * ($product_sum_total));
-		$discount_in_decimal = $discount/100 * $product_sum_total;
-
-		$data['sum_product'] = $this->return_format_num( $product_sum_total );
-		$data['discount'] =    $this->return_format_num($discount_in_decimal) . " (".$discount . "%)";
+		
+		$discount_in_decimal = array_sum($reduced_amount);
+		$final_total = $product_sum_total - $discount_in_decimal;
+		$data['sum_product'] = $this->return_format_num($product_sum_total);
+		$data['discount'] =    $this->return_format_num($discount_in_decimal);
 		$data['final_total'] = $this->return_format_num($final_total);
 
 		

@@ -380,7 +380,7 @@ function process_sale()
 						$selected = "selected";
 					}
 	
-					$('#select-slot').append('<option value="'+val['slot_id']+'"'+$selected+'>Slot # '+val['slot_id']+' ( '+val['discount']+'% discount)</option>');
+					$('#select-slot').append('<option value="'+val['slot_id']+'"'+$selected+'>Slot # '+val['slot_id']+'</option>');
 				});
 			})
 			.fail(function() {

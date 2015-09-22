@@ -68,6 +68,7 @@
                     <label for="price">Price</label>
                     <input name="price" value="{{Request::input('price')}}" required="required" class="form-control" id="" placeholder="" type="number">
                 </div>
+
             </div>
 
             <div class="form-group col-md-4 text-center">

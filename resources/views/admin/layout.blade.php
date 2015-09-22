@@ -111,7 +111,10 @@
 									<li><a href="admin/utilities/matching">Mentor Bonus Computation</a></li>
 									<li><a href="admin/utilities/direct">Direct Sponsorship Bonus</a></li>
 									<li><a href="admin/utilities/indirect">Indirect Sponsorship Bonus</a></li>
+									<li><a href="admin/utilities/unilevel_check_match">Unilevel Check Match</a></li>
 									<li><a href="admin/utilities/unilevel">Unilevel Computation</a></li>
+									<li><a href="admin/utilities/leadership_bonus">Leadership Bonus</a></li>
+									<li><a href="admin/utilities/breakaway">Breakaway Bonus</a></li>
 									<li class="divider" role="separator"></li>
 									<li><a href="admin/utilities/rank">Promotion Settings</a></li>
 									<!--<li class="divider" role="separator"></li>

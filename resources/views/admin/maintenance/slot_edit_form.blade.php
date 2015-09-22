@@ -60,7 +60,7 @@
         </div>
         <div class="fieldset">
             <div class="label">AVAILABLE BALANCE</div>
-            <div class="field"><input name="wallet" type="text" value="{{ $slot->slot_wallet }}"></div>
+            <div class="field"><input name="wallet" type="text" value="{{ $wallet }}"></div>
         </div>
         <div class="fieldset">
             <div class="label">UPGRADE POINTS</div>

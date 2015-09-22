@@ -49,14 +49,14 @@
 			    <div class="navbar-header">
                 <span class="hidden-bury visible-xs visible-sm hidden-lg hidden-md pull-left">
                     @if($slotnow)
-                    <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 14px; font-weight: 700; color: #9BA0A7; display: block; padding: 15px 0;">SLOT #{{$slotnow->slot_id}} <span>{{ number_format($slotnow->slot_wallet, 2)}}</span> | GC <span>{{ number_format($slotnow->slot_gc, 2)}}</span>  <b class="caret"></b></a>
+                    <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 14px; font-weight: 700; color: #9BA0A7; display: block; padding: 15px 0;">SLOT #{{$slotnow->slot_id}} <span>{{ number_format($current_wallet, 2)}}</span> | GC <span>{{ number_format($current_gc, 2)}}</span>  <b class="caret"></b></a>
                     @else
                     <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 14px; font-weight: 700; color: #9BA0A7; display: block; padding: 15px 0;">NO SLOTS<b class="caret"></b></a>
                     @endif
                     <ul class="dropdown-menu scrollable-menu" style="text-transform: normal; font-size: 14px; font-weight: 700; color: #9BA0A7;">
                         @if($slot)                                                    
                             @foreach($slot as $slots)
-                                   <li><a class="forslotchanging" slotid='{{$slots->slot_id}}' href="javascript:">SLOT #{{$slots->slot_id}} <span>{{ number_format($slots->slot_wallet, 2)}}</span> | GC <span>{{ number_format($slots->slot_gc, 2)}}</span> </a></li> 
+                                   <li><a class="forslotchanging" slotid='{{$slots->slot_id}}' href="javascript:">SLOT #{{$slots->slot_id}} <span>{{ number_format($slots->total_wallet, 2)}}</span> | GC <span>{{ number_format($slots->total_gc, 2)}}</span> </a></li> 
                             @endforeach
                         @endif    
                         <li><a href="/member/settings">Account Settings</a></li>
@@ -89,6 +89,7 @@
 			        <li class="{{ Request::segment(2) == 'product' ? 'active' : '' }}"><a href="/member/product">Product</a></li>
 			        <li class="{{ Request::segment(2) == 'voucher' ? 'active' : '' }}"><a href="/member/voucher">Voucher</a></li>
 			        <li class="{{ Request::segment(2) == 'leads' ? 'active' : '' }}"><a href="/member/leads">Leads</a></li>
+                    <li class="{{ Request::segment(2) == 'transfer' ? 'active' : '' }}"><a href="/member/transfer_wallet">Transfer Wallet</a></li>
                    <li class="{{ Request::segment(2) == 'genealogy' ? 'active' : '' }} dropdown hide">
                         <!--<a href="/member/genealogy?mode=binary">E-payment</a>-->
                         <a href="member/e-payment/">E-payment</a>
@@ -101,30 +102,15 @@
 			      </ul>
 			      <ul class="nav navbar-nav navbar-right" style="margin-right: 0;">
 			         <li>
-                       <!--  @if($slotnow)
-                            <form method="post" name="myform">
-                                <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
-                                <select class="form-control slot-number-container" onchange="this.form.submit()" name="slotnow"> 
-                                        <option value="{{$slotnow->slot_id}}">SLOT #{{$slotnow->slot_id}} [ {{ number_format($slotnow->slot_wallet, 2)}} ]</option> 
-                                        @if($slot)                                                    
-                                            @foreach($slot as $slots)
-                                            <option value="{{$slots->slot_id}}">SLOT #{{$slots->slot_id}} [ {{ number_format($slots->slot_wallet, 2)}} ]</option>
-                                            @endforeach
-                                        @endif    
-                                 </select>
-                            </form>
-                        @else
-                        <div class="select-label">You have no slots</div>   
-                        @endif -->
                         @if($slotnow)
-                        <a href="javascript:" class="dropdown-toggle hidden-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SLOT #{{$slotnow->slot_id}} <span>{{ number_format($slotnow->slot_wallet, 2)}}</span> | GC <span>{{ number_format($slotnow->slot_gc, 2)}}</span>  <b class="caret"></b></a>
+                        <a href="javascript:" class="dropdown-toggle hidden-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SLOT #{{$slotnow->slot_id}} <span>{{ number_format($current_wallet, 2)}}</span> | GC <span>{{ number_format($current_gc, 2)}}</span>  <b class="caret"></b></a>
                         @else
                         <a href="javascript:" class="dropdown-toggle hidden-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">NO SLOTS<b class="caret"></b></a>
                         @endif
                         <ul class="dropdown-menu scrollable-menu hidden-sm" style="text-transform: normal">
                             @if($slot)                                                    
                                 @foreach($slot as $slots)
-                                       <li><a class="forslotchanging" slotid='{{$slots->slot_id}}' href="javascript:">SLOT #{{$slots->slot_id}} <span>{{ number_format($slots->slot_wallet, 2)}}</span> |  GC <span>{{ number_format($slots->slot_gc, 2)}}</span></a></li> 
+                                       <li><a class="forslotchanging" slotid='{{$slots->slot_id}}' href="javascript:">SLOT #{{$slots->slot_id}} <span>{{ number_format($slots->total_wallet, 2)}}</span> |  GC <span>{{ number_format($slots->total_gc, 2)}}</span></a></li> 
                                 @endforeach
                             @endif      
                             <li><a href="/member/settings">Account Settings</a></li>
@@ -158,51 +144,6 @@
 
 </body>
 
- <!--   <div class="remodal create-slot" data-remodal-id="transfer_code" data-remodal-options="hashTracking: false">
-        <button data-remodal-action="close" class="remodal-close"></button>
-        <div class="header">
-            <img src="/resources/assets/frontend/img/icon-transfer.png">
-            Transfer Code
-        </div>
-        <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
-        <div class="col-md-10 col-md-offset-1 para">
-            <form class="form-horizontal" method="POST">
-                <div class="form-group para">
-                    <label for="11" class="col-sm-3 control-label">Code</label>
-                    <div class="col-sm-9">
-                        <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
-                        <input type="hidden" class="form-control" id="11s" name="code">
-                        <input type="text" class="form-control" id="11" disabled>
-                    </div>
-                </div>
-                <div class="form-group para">
-                    <label for="22" class="col-sm-3 control-label">Recipient</label>
-                    <div class="col-sm-9">
-                        <select class="form-control" id="22" name="account">
-                            @if($accountlist)
-                                @foreach($accountlist  as $a)
-                                     <option value="{{$a->account_id}}">{{$a->account_email}}({{$a->account_name}})</option>
-                                @endforeach
-                            @endif
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group para">
-                    <label for="33" class="col-sm-3 control-label">Enter Password</label>
-                    <div class="col-sm-9">
-                        <input type="password" class="form-control" id="33" name="pass">
-                    </div>
-                </div>
-        
-        </div>
-        <br>
-        <button class="button" data-remodal-action="cancel">Cancel</button>
-        <button class="button" type="submit" name="codesbmt">Initiate Transfer</button>
-    </div>
-</form> -->
-
-
-
 <div class="remodal create-slot" data-remodal-id="claim_code" data-remodal-options="hashTracking: false">
     <button data-remodal-action="close" class="remodal-close"></button>
     <div class="header">
@@ -231,84 +172,6 @@
                 <button class="button" type="submit" name="sbmtclaim">Claim Code</button>
         </form>
 </div>
-
-
-
-<!--<div class="remodal create-slot" data-remodal-id="voucher">
-    <button data-remodal-action="close" class="remodal-close"></button>
-    <div class="header">
-        <img src="/resources/assets/frontend/img/icon-vouchers.png">
-        Vouchers
-    </div>
-    <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
-    <div class="para wew">
-        <div class="col-md-6 siyet text-left">
-            <img src="/resources/assets/frontend/img/member-logo.png">
-        </div>
-        <div class="col-md-6 siyet text-right">
-            <div>#18 M. Marcos Street</div>
-            <div>Pandi, Bulacan</div>
-            <div>Guillermo Tabligan</div>
-        </div>
-    </div>
-    <div class="para epal">
-        <div class="title">Ref. No. 14</div>
-        <div class="sub para">
-            <div class="tudaleft col-md-6 siyet">Code ( VL89M )</div>
-            <div class="tudaright col-md-6 siyet">August 25, 2015</div>
-        </div>
-    </div>
-    <div class="para tae">
-        <table class="footable">
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th data-hide="phone">Price</th>
-                    <th data-hide="phone">Quantity</th>
-                    <th data-hide="phone">Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="tibolru">
-                    <td>Sample Product 1</td>
-                    <td>12,500.00</td>
-                    <td>3</td>
-                    <td>38,500.00</td>
-                </tr>
-                <tr class="tibolru">
-                    <td>Sample Product 1</td>
-                    <td>12,500.00</td>
-                    <td>3</td>
-                    <td>38,500.00</td>
-                </tr>
-                <tr class="tibolru">
-                    <td>Sample Product 1</td>
-                    <td>12,500.00</td>
-                    <td>3</td>
-                    <td>38,500.00</td>
-                </tr>
-                <tr class="tibolru">
-                    <td>Sample Product 1</td>
-                    <td>12,500.00</td>
-                    <td>3</td>
-                    <td>38,500.00</td>
-                </tr>
-                <tr class="tibolru">
-                    <td>Sample Product 1</td>
-                    <td>12,500.00</td>
-                    <td>3</td>
-                    <td>38,500.00</td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="potek">
-            <a href="javascript:">
-                <img src="/resources/assets/frontend/img/icon-print.png">
-                Print Voucher
-            </a>
-        </div>
-    </div>
-</div>-->
 
 
 <div class="remodal message" data-remodal-id="message">

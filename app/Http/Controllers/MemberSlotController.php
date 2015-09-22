@@ -17,6 +17,7 @@ use App\Classes\Log;
 use App\Tbl_product;
 use App\Tbl_product_code;
 use App\Tbl_tree_placement;
+use App\Tbl_wallet_logs;
 
 class MemberSlotController extends MemberController
 {
@@ -93,6 +94,7 @@ class MemberSlotController extends MemberController
 																	  			   ->join('tbl_product','tbl_product.product_id','=','tbl_product_package_has.product_id')
 																	  			   ->where('rel_membership_product.slot_id',$d->slot_id)
 																	  			   ->get();
+			$data['slot2'][$key]->total_wallet = Tbl_wallet_logs::where("slot_id", $d->slot_id)->wallet()->sum('wallet_amount');																  			   
 	   		$data['slot2'][$key]->downline = Tbl_tree_placement::where('placement_tree_parent_id',$d->slot_id)->count();														  			   
  		}
 
@@ -109,14 +111,14 @@ class MemberSlotController extends MemberController
 									  ->leftjoin('tbl_product_package_has','tbl_product_package_has.product_package_id','=','rel_membership_product.product_package_id')
 									  ->leftJoin('tbl_product','Tbl_product.product_id','=','tbl_product_package_has.product_id')
 									  ->get();
-
-		$remaining = $slot->slot_wallet - $membership->membership_price;
+		$wallet    = Tbl_wallet_logs::where("slot_id", $id)->wallet()->sum('wallet_amount');	
+		$remaining = $wallet - $membership->membership_price;
 
 		$datumn		 = 	    		 DB::table('tbl_membership')->where('archived',0)
 												 ->orderBy('membership_price','ASC')
 												 ->where('membership_upgrade',1)
 												 ->get();
-
+		$current_membership = DB::table('tbl_membership')->where('membership_id',$slot->slot_membership)->first();
 		$check2 = false;
 
 		foreach($datumn as $d)
@@ -133,7 +135,7 @@ class MemberSlotController extends MemberController
 
 				foreach($datas as $d)
 				{
-					if($d->product_id == $pid)
+					if($d->product_id == $pid && $pid != "")
 					{
 						$check = true;
 					}
@@ -146,7 +148,9 @@ class MemberSlotController extends MemberController
 
 				if($remaining >= 0)
 				{
-					DB::table('tbl_slot')->where('slot_id','=',$id)->update(['slot_wallet'=>$remaining,'slot_membership'=>$membership->membership_id]);
+					DB::table('tbl_slot')->where('slot_id','=',$id)->update(['slot_membership'=>$membership->membership_id]);
+					$log = "Successfully upgrade your slot #".$id." from ".$current_membership->membership_name." to ".$membership->membership_name.", Costs <b>".$membership->membership_price." wallet. </b>";
+					Log::slot($id, $log, 0 - $membership->membership_price , "Upgrade Membership",$id);
 					$data = "Success";
 				}
 				else

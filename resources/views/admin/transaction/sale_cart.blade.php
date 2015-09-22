@@ -14,7 +14,7 @@
 			<td class="text-right" colspan="6">Cart Total :  {{$cart_total}}</td>
 		</tr>
 		<tr>
-			<td class="text-right" colspan="6">Discount : {{$discount}}% ( {{$discount_pts}} )</td>
+			<td class="text-right" colspan="6">Discount : {{$discount}} </td>
 		</tr>
 		<tr>
 			<td class="text-right" colspan="6">Other Charges : {{$other}}% ( {{$other_pts}} )</td>

@@ -13,7 +13,7 @@
             <div class="linyanglinya"></div>
             <div class="liness para">
                 <div class="date col-md-12">{{ $log->date }}</div>
-                <div class="text col-md-11">{!! $log->account_log_details !!}</div>
+                <div class="text col-md-11">{!! $log->logs !!}</div>
             </div>
         </div>
         @endforeach

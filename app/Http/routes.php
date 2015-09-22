@@ -28,9 +28,15 @@ Route::any('/member/genealogy/get', 'MemberGenealogyController@get');
 Route::any('/member/genealogy/downline', 'MemberGenealogyController@downline');
 
 
+/* Transfer wallet */
+Route::any('/member/transfer_wallet', 'MemberTransferWalletController@index');
+Route::any('/member/transfer_wallet/get', 'MemberTransferWalletController@get');
+
+/* Voucher */
 Route::any('/member/voucher', 'MemberVoucherController@index');
 Route::get('/member/voucher/product', 'MemberVoucherController@showVoucherProduct');
 
+/* Settings */
 Route::any('/member/settings', 'MemberAccountSettingsController@index');
 Route::any('/member/settings/upload', 'MemberAccountSettingsController@upload');
 
@@ -285,6 +291,7 @@ Route::any('admin/maintenance/deduction/restore', 'AdminDeductionController@rest
 Route::get('admin/maintenance/membership', 'AdminMembershipController@index');
 Route::any('admin/maintenance/membership/data', 'AdminMembershipController@data');
 Route::any('admin/maintenance/membership/edit', 'AdminMembershipController@edit');
+Route::any('admin/maintenance/membership/product_discount', 'AdminMembershipController@product_discount');
 Route::any('admin/maintenance/membership/archive', 'AdminMembershipController@archive_membership');
 Route::any('admin/maintenance/membership/restore', 'AdminMembershipController@restore_membership');
 Route::any('admin/maintenance/membership/add', 'AdminMembershipController@add');
@@ -346,6 +353,11 @@ Route::any('admin/utilities/indirect/edit', 'AdminComplanController@indirect_edi
 Route::any('admin/utilities/unilevel', 'AdminComplanController@unilevel');
 Route::any('admin/utilities/unilevel/edit', 'AdminComplanController@unilevel_edit');
 
+Route::any('admin/utilities/unilevel_check_match', 'AdminComplanController@unilevel_check_match');
+Route::any('admin/utilities/unilevel_check_match/edit', 'AdminComplanController@unilevel_check_match_edit');
+
+Route::any('admin/utilities/leadership_bonus', 'AdminComplanController@leadership_bonus');
+Route::any('admin/utilities/leadership_bonus/edit', 'AdminComplanController@leadership_bonus_edit');
 
 Route::any('admin/utilities/rank', 'AdminComplanController@rank');
 Route::any('admin/utilities/rank/edit', 'AdminComplanController@rank_edit');

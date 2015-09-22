@@ -30,6 +30,7 @@
 						<th>Max income per day</th>
 						<th class="option-col">Entry</th>
 						<th class="option-col">Upgrade</th>
+						<th class="option-col">Discounted Product</th>
 						<th class="option-col"></th>
 						<th class="option-col"></th>
 					</tr>
@@ -58,6 +59,7 @@ $(function() {
             {data: 'max_income', name: 'max_income'},            
             {data: 'entry', name: 'membership_id'},
             {data: 'upgrade', name: 'membership_id'},
+            {data: 'product_discount', name: 'product_discount'},
             {data: 'edit', name: 'membership_id'},
             {data: 'archive', name: 'membership_id'},
         ],

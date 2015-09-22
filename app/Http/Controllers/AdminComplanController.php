@@ -10,6 +10,7 @@ use App\Tbl_slot;
 use App\Classes\Compute;
 use DB;
 use App\Tbl_matching_bonus;
+use App\Tbl_unilevel_check_match;
 
 class AdminComplanController extends AdminController
 {
@@ -191,6 +192,45 @@ class AdminComplanController extends AdminController
 			return view('admin.computation.matching_edit', $data);	
 		}
 	}
+
+	public function unilevel_check_match()
+	{
+		$data["_membership"] = Tbl_membership::active()->get();
+		return view('admin.computation.unilevel_check_match', $data);
+	}
+	public function unilevel_check_match_edit()
+	{
+		if(Request::isMethod("post"))
+		{
+			$update["check_match_level"] = Request::input("check_match_level");
+			// $update["membership_required_pv"] = Request::input("membership_required_pv");
+			// $update["membership_required_gpv"] = Request::input("membership_required_gpv");
+			// $update["multiplier"] = Request::input("multiplier");
+			Tbl_membership::where("membership_id", Request::input("id"))->update($update);
+
+			$ctr = 0;
+			Tbl_unilevel_check_match::where("membership_id", Request::input("id"))->delete();
+
+			foreach(Request::input("level") as $level => $value)
+			{
+				$insert[$ctr]["level"] = $level;
+				$insert[$ctr]["value"] = $value;
+				$insert[$ctr]["membership_id"] = Request::input("id");
+				$ctr++;
+			}
+
+			Tbl_unilevel_check_match::insert($insert);
+
+			return Redirect::to('/admin/utilities/unilevel_check_match');
+		}
+		else
+		{
+			$data["data"] = Tbl_membership::where("membership_id", Request::input("id"))->first();
+			$data["_level"] = Tbl_unilevel_check_match::where("membership_id", Request::input("id"))->get();
+			return view('admin.computation.unilevel_check_match_edit', $data);	
+		}
+	}
+
 	public function unilevel()
 	{
 		$data["_membership"] = Tbl_membership::active()->get();
@@ -202,6 +242,7 @@ class AdminComplanController extends AdminController
 		{
 			$update["membership_repurchase_level"] = Request::input("membership_repurchase_level");
 			$update["membership_required_pv"] = Request::input("membership_required_pv");
+			// $update["membership_required_gpv"] = Request::input("membership_required_gpv");
 			$update["multiplier"] = Request::input("multiplier");
 			Tbl_membership::where("membership_id", Request::input("id"))->update($update);
 
@@ -227,6 +268,33 @@ class AdminComplanController extends AdminController
 			return view('admin.computation.unilevel_edit', $data);	
 		}
 	}
+
+	public function leadership_bonus()
+	{
+		$data["_membership"] = Tbl_membership::active()->get();
+		return view('admin.computation.leadership_bonus', $data);
+	}
+	public function leadership_bonus_edit()
+	{
+		if(Request::isMethod("post"))
+		{
+			$update["leadership_bonus"] = Request::input("leadership_bonus");
+			// $update["membership_required_pv"] = Request::input("membership_required_pv");
+			// $update["membership_required_gpv"] = Request::input("membership_required_gpv");
+			// $update["multiplier"] = Request::input("multiplier");
+			Tbl_membership::where("membership_id", Request::input("id"))->update($update);
+
+
+			return Redirect::to('/admin/utilities/leadership_bonus');
+		}
+		else
+		{
+			$data["data"] = Tbl_membership::where("membership_id", Request::input("id"))->first();
+			$data["_level"] = Tbl_unilevel_check_match::where("membership_id", Request::input("id"))->get();
+			return view('admin.computation.leadership_bonus_edit', $data);	
+		}
+	}
+
 	public function rank()
 	{
 		$data["_membership"] = Tbl_membership::active()->get();

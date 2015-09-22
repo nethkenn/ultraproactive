@@ -69,7 +69,8 @@
                 <div class="form-group col-md-12">
                     <label for="price">Price</label>
                     <input name="price" value="{{Request::input('price') ? Request::input('price') : $product->price}}" required="required" class="form-control" id="" placeholder="" type="number">
-                </div>
+                </div>                
+
             </div>
 
             <div class="form-group col-md-4 text-center">

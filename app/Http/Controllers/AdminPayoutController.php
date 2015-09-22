@@ -12,7 +12,7 @@ use App\Tbl_slot;
 use App\Tbl_country;
 use Session;
 use App\Classes\Log;
-
+use App\Tbl_wallet_logs;
 class AdminPayoutController extends AdminController
 {
 	public function index()
@@ -144,7 +144,8 @@ class AdminPayoutController extends AdminController
 
             foreach($slot as $data)
             {
-                if($data->slot_wallet != 0)
+                $slot_wallet = Tbl_wallet_logs::where("slot_id", $data->slot_id)->wallet()->sum('wallet_amount');
+                if($slot_wallet != 0 && $slot_wallet >= 0)
                 {
                     if(!isset($forprocess))
                     {
@@ -179,17 +180,17 @@ class AdminPayoutController extends AdminController
 
                     $insert['slot_id'] = $data->slot_id;
                     $insert['account_id'] = $data->slot_owner;
-                    $insert['amount'] = $data->slot_wallet;
+                    $insert['amount'] = $slot_wallet;
                     $insert['encashment_date'] = Carbon::now();
                     $insert['deduction'] = $totald;
                     $insert['type'] = 'Cheque';
                     $insert['status'] = 'Processed';
                     $insert['processed_no'] = $e; 
 
-                    $update['slot_wallet'] = $data->slot_wallet - $data->slot_wallet;
-                    Tbl_slot::where('slot_id',$data->slot_id)->update($update);
+                    // $update['slot_wallet'] = $data->slot_wallet - $data->slot_wallet;
+                    // Tbl_slot::where('slot_id',$data->slot_id)->update($update);
                     Tbl_account_encashment_history::insert($insert);  
-                    Log::slot($data->slot_id,'Encashed all remaining wallet(by Admin)',$update['slot_wallet']);                
+                    Log::slot($data->slot_id,'Encashed all remaining wallet by '.Admin::info()->account_name. '(' .Admin::info()->admin_position_name.')',0 - $slot_wallet,"Encash all wallet",$data->slot_id);                
                 }
             }
     }

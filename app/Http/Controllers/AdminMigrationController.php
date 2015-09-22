@@ -8,6 +8,7 @@ use App\Tbl_hack;
 use App\Tbl_account;
 use App\Classes\Compute;
 use App\Classes\Admin;
+use App\Classes\Log;
 
 class AdminMigrationController extends AdminController
 {
@@ -183,13 +184,19 @@ class AdminMigrationController extends AdminController
 					$insert["slot_sponsor"] = 999999999;
 					$insert["slot_placement"] = 999999999;
 					$insert["slot_position"] = "left";
-					$insert["slot_wallet"] = $slot_wallet;
+					// $insert["slot_wallet"] = $slot_wallet;
 					$insert["slot_gc"] = $slot_gc;
 					$insert["slot_binary_left"] = $left;
 					$insert["slot_binary_right"] = $right;
 					$insert["membership_entry_id"] = 1;
 					$insert["created_at"] =  $g->date_registered;
-					DB::table('tbl_slot')->insert($insert);
+					$new_id = DB::table('tbl_slot')->insertGetId($insert);
+			        $log = "Amount of <b>".number_format($slot_wallet,2)." wallet </b> gained from old system.";
+					if($slot_wallet != 0)
+					{
+        				Log::slot($new_id, $log, $slot_wallet,"Old System Wallet",$new_id);
+    				}
+
 				}
 				else
 				{
@@ -217,13 +224,18 @@ class AdminMigrationController extends AdminController
 					$insert["slot_sponsor"] = $slot_sponsor->slot_id;
 					$insert["slot_placement"] = $slot_id->slot_id;
 					$insert["slot_position"] = strtolower($g->upline_pos);
-					$insert["slot_wallet"] = $slot_wallet;
+					// $insert["slot_wallet"] = $slot_wallet;
 					$insert["slot_gc"] = $slot_gc;
 					$insert["slot_binary_left"] = $left;
 					$insert["slot_binary_right"] = $right;
 					$insert["membership_entry_id"] = 1;
 					$insert["created_at"] =  $g->date_registered;
 					$seed = DB::table('tbl_slot')->insertGetId($insert);
+					if($slot_wallet != 0)
+					{
+				        $log = "Amount of <b>".number_format($slot_wallet,2)." wallet </b> gained from old system.";
+        				Log::slot($seed, $log, $slot_wallet,"Old System Wallet",$seed);					
+					}
 					Compute::tree($seed);
 				}
 

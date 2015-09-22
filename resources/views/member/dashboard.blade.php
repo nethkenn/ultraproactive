@@ -9,7 +9,7 @@
                 </div>
                 <div class="text col-md-6">
                     <div class="middle">
-                        <div class="total">TOTAL</div>
+                        <div class="total">CURRENT</div>
                         <div>WALLET</div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                         <div>INCOME</div>
                     </div>
                 </div>
-                <div class="valuez para">{{$slotnow->slot_total_earning}}</div>
+                <div class="valuez para">{{$earnings['total_income']}}</div>
             </div>
         </div>
     </a>
@@ -63,7 +63,7 @@
                         <div>SPENT</div>
                     </div>
                 </div>
-                <div class="valuez para">0</div>
+                <div class="valuez para">{{$earnings['total_withdrawal']}}</div>
             </div>
         </div>
     </a>
@@ -115,11 +115,11 @@
                 </div>
                 <div class="holders">
                     <div class="leybel">TOTAL INCOME</div>
-                    <div class="balyu">{{$slotnow->slot_total_earning}}</div>
+                    <div class="balyu">{{$earnings['total_income']}}</div>
                 </div>
                 <div class="holders">
                     <div class="leybel">TOTAL WITHDRAWAL</div>
-                    <div class="balyu">{{$slotnow->slot_total_withrawal}}</div>
+                    <div class="balyu">{{$earnings['total_withdrawal']}}</div>
                 </div>
                 <div class="holders">
                     <div class="leybel">MAX INCOME PER DAY</div>
@@ -216,19 +216,19 @@
             <div class="info">
                 <div class="holders">
                     <div class="leybel">BINARY PAIRING BONUS</div>
-                    <div class="balyu">{{ number_format($slotnow->total_earned_binary, 2) }}</div>
+                    <div class="balyu">{{ number_format($earnings['binary'], 2) }}</div>
                 </div>
                 <div class="holders">
                     <div class="leybel">MENTOR BONUS</div>
-                    <div class="balyu">{{ number_format($slotnow->total_earned_matching, 2) }}</div>
+                    <div class="balyu">{{ number_format($earnings['mentor'], 2) }}</div>
                 </div>
                 <div class="holders">
                     <div class="leybel">DIRECT SPONSORSHIP BONUS</div>
-                    <div class="balyu">{{ number_format($slotnow->total_earned_direct, 2) }}</div>
+                    <div class="balyu">{{ number_format($earnings['direct'], 2) }}</div>
                 </div>
                 <div class="holders">
                     <div class="leybel">INDIRECT LEVEL BONUS</div>
-                    <div class="balyu">{{ number_format($slotnow->total_earned_indirect, 2) }}</div>
+                    <div class="balyu">{{ number_format($earnings['indirect'], 2) }}</div>
                 </div>
             </div>
         </div>
@@ -266,128 +266,7 @@
         </div>
     </div> -->
 
-   <!--  @if($slotnow)
-    <div class="detail para">
-        <div class="header">Details For Slot #{{$slotnow->slot_id}}</div>
-        <div class="holder para">
-            <div class="title blue tinde">Overview</div>
-            <div class="input form-horizontal para">
-                <div class="form-group">
-                    <label for="1" class="col-sm-6 control-label">Wallet</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control highlight" id="1" readonly value="{{ number_format($slotnow->slot_wallet, 2) }}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="2" class="col-sm-6 control-label">Membership</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="2" readonly value="{{$slotnow->membership_name}}">
-                    </div>
-                </div>
-    
-                <div class="form-group">
-                    <label for="3" class="col-sm-6 control-label">Ranking</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="3" readonly value="{{$slotnow->rank_name}}">
-                    </div>
-                </div>
 
-                <div class="form-group">
-                    <label for="4" class="col-sm-6 control-label">Total Income</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="4" readonly value="{{$slotnow->slot_total_earning}}">
-                    </div>
-                </div>
-            </div>
-            <div class="title sblue">Unilevel</div>
-            <div class="input form-horizontal para">
-                <div class="form-group">
-                    <label for="11" class="col-sm-6 control-label">Group PV</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="11" readonly value="{{ number_format($slotnow->slot_group_points, 2) }}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="22" class="col-sm-6 control-label">Personal PV</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="22" readonly value="{{ number_format($slotnow->slot_personal_points, 2) }}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="33" class="col-sm-6 control-label">Required Personal PV</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="33" readonly value="{{ number_format($slotnow->membership_required_pv, 2) }}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="44" class="col-sm-6 control-label">Status</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="44" readonly value="{{ $slotnow->slot_personal_points >= $slotnow->membership_required_pv ? 'Qualified for Unilevel' : 'Not Yet Qualified' }}">
-                    </div>
-                </div>
-            </div>
-
-            @if($next_membership)
-            <div class="title sblue">Promotion Information</div>
-            <div class="input form-horizontal para">
-                <div class="form-group">
-                    <label for="11" class="col-sm-6 control-label">Current Membership</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="11" readonly value="{{ $slotnow->membership_name }}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="11" class="col-sm-6 control-label">Next Membership</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="11" readonly value="{{ $next_membership->membership_name }}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="11" class="col-sm-6 control-label">Promotion Point(s)</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="11" readonly value="{{ number_format($slotnow->slot_upgrade_points, 2) }}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="11" class="col-sm-6 control-label">Required Upgrade Points</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="11" readonly value="{{ number_format($next_membership->membership_required_upgrade, 2) }}">
-                    </div>
-                </div>
-            </div>
-            @endif
-            <div class="title blue tinde">Binary</div>
-            <div class="input form-horizontal para">
-                <div class="form-group">
-                    <label for="111" class="col-sm-6 control-label">Points on Left</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="111" readonly value="{{ number_format($slotnow->slot_binary_left, 2) }}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="222" class="col-sm-6 control-label">Points on Right</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="222" readonly value="{{ number_format($slotnow->slot_binary_right, 2) }}">
-                    </div>
-                </div>
-            </div>
-
-            @if(empty($_slot_log))
-            <div class="title sblue">Total Bonuses</div>
-            <div class="input form-horizontal para">
-                @foreach($_slot_log as $slot_log)
-                <div class="form-group">
-                    <label for="1111" class="col-sm-6 control-label">{{ strtoupper($slot_log->slot_log_key) }}</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control highlight" id="1111" readonly value="{{ number_format($slot_log->total, 2) }}">
-                    </div>
-                </div>
-                @endforeach
-            </div>
-            @endif
-        </div>
-    </div>
-    @endif -->
 </div>
 <div class="col-md-3 right">
     <!-- NOTIFICATIONS -->
@@ -418,7 +297,7 @@
         <div class="header notif">LATEST NOTIFICATION</div>
         @foreach($_notification as $log)
             <div class="holders">
-                <div class="text">{!! $log->account_log_details !!}</div>
+                <div class="text">{!! $log->logs !!}</div>
                 <div class="date">{{ $log->date }}</div>
                 <!-- <div class="time">{{ date("g:i a", strtotime("$log->date")) }}</div> -->
             </div>

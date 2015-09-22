@@ -23,7 +23,8 @@ class AdminPositionController extends AdminController
 
 		$data["allow_button"] = DB::table('tbl_settings')->where('key','allow_update')->first();
 
-       	$data["allow"] = Admin::info()->admin_position_rank;                                
+       	$data["allow"] = Admin::info()->admin_position_rank;  
+                        
 		if(!$data['allow_button'])
 		{
 			DB::table('tbl_settings')->insert(["key"=>"allow_update","value"=>"developer"]);
@@ -54,7 +55,7 @@ class AdminPositionController extends AdminController
 			}
 		}
 
-        return view('admin.utilities.position');
+        return view('admin.utilities.position',$data);
 	}
 
 	public function add()

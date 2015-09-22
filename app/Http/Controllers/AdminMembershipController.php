@@ -5,9 +5,9 @@ use Redirect;
 use Carbon\Carbon;
 use Datatables;
 use App\Tbl_membership;
-
+use App\Tbl_product_discount;
 use Validator;
-
+use App\Tbl_product;
 class AdminMembershipController extends AdminController
 {
 	public function index()
@@ -24,6 +24,7 @@ class AdminMembershipController extends AdminController
         return Datatables::of($account)	->addColumn('entry','<input type="checkbox" disabled="disabled" {{ $membership_entry == 1 ? "checked" : "" }}>')
         								->addColumn('upgrade','<input type="checkbox" disabled="disabled" {{ $membership_upgrade == 1 ? "checked" : "" }}>')
         								->addColumn('edit','<a href="admin/maintenance/membership/edit?id={{$membership_id}}">EDIT</a>')
+        								->addColumn('product_discount','<a href="admin/maintenance/membership/product_discount?id={{$membership_id}}">SET</a>')
         								->addColumn('archive','<a class="'.$class.'" href="#" membership-id="{{ $membership_id}}">'.$text.'</a>')
         								->make(true);
 	
@@ -87,6 +88,32 @@ class AdminMembershipController extends AdminController
 		return view('admin.maintenance.membership_edit',$data);
 	}
 
+	public function product_discount()
+	{
+		$data['product_discount'] = Tbl_product_discount::where('membership_id',Request::input('id'))->product()->get();
+		$data['_product'] = Tbl_product::where('archived',0)->get();
+		$data['membership'] = Tbl_membership::where('membership_id',Request::input('id'))->first();
+
+		if(isset($_POST['product']))
+		{
+			$this->put_product_discounted(Request::input());
+		}
+
+		return view('admin.maintenance.membership_product_discount',$data);
+	}
+
+	public function put_product_discounted($data)
+	{	
+		$id = $data['id'];
+		Tbl_product_discount::where('membership_id',$id)->delete();
+		foreach($data['product'] as $key => $p)
+		{
+			$insert['product_id'] = $key;
+			$insert['discount'] = $p['quantity'];
+			$insert['membership_id'] = $id;
+			Tbl_product_discount::insert($insert);
+		}
+	}
 
 	public function add()
 	{

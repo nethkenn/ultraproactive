@@ -37,9 +37,10 @@ class MemberEncashmentController extends MemberController
 		$total = 0;
 		$slot_id = Session::get('currentslot');
 		$slot = Tbl_slot::where('slot_id',$slot_id)->first();
-		if($slot->slot_wallet >= $amt)
+		$wallet = Tbl_wallet_logs::where("slot_id", $slot_id)->wallet()->sum('wallet_amount');
+		if($wallet >= $amt)
 		{
-			$total = $slot->slot_wallet - $amt;
+			$total = $wallet - $amt;
 			$withdrawal = $amt + $slot->slot_total_withrawal;
 			$insert['slot_id'] = $slot_id;
 			$insert['account_id'] = $id;
@@ -63,11 +64,12 @@ class MemberEncashmentController extends MemberController
 
 			if($x >= 0)
 			{
-				Tbl_slot::where('slot_id',$slot_id)->update(['slot_wallet'=>$total,'slot_total_withrawal'=>$withdrawal]);
+				// Tbl_slot::where('slot_id',$slot_id)->update(['slot_wallet'=>$total,'slot_total_withrawal'=>$withdrawal]);
 				$insert['deduction'] = $t;
 				Tbl_account_encashment_history::insert($insert);
+				$negative_total = ($amt)*(-1);
 				Log::account(Customer::id(),'Encashed a wallet total of '.$amt); 
-				Log::slot(Session::get('currentslot'),'Encash a wallet',$total); 				
+				Log::slot(Session::get('currentslot'),'Encashed a wallet total of '.$amt,$negative_total,"Encashment",Session::get('currentslot')); 				
 			}
 
 		}

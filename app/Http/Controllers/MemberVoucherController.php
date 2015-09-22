@@ -24,7 +24,7 @@ class MemberVoucherController extends MemberController
 	{
 
 		$customer_id = Customer::info()->account_id;
-
+		$discount = 0;
 
 		$voucher_id = Request::input('voucher_id');
 		$voucher = Tbl_voucher::where('voucher_id',$voucher_id)->first();
@@ -40,11 +40,13 @@ class MemberVoucherController extends MemberController
 		$sub_total = array();
 		foreach ($_voucher_product as $key => $value) {
 
-			$sub_total[] = $value->sub_total;
+			$sub_total[] = $value->sub_total + $value->product_discount_amount;
+			$discount_amount[] = $value->product_discount_amount;
+			$total[] = $value->sub_total;
 		}
 
 		$data['prod_sum'] = Product::return_format_num(array_sum($sub_total));
-		$data['discount_decimal'] = Product::return_format_num($data['prod_sum'] *  ($voucher->discount / 100));
+		$data['discount_decimal'] = Product::return_format_num(array_sum($discount_amount));
 
 
 

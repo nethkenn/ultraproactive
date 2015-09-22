@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use App\Tbl_membership_code_sale_has_code;
 use App\Tbl_membership_code_sale;
 use App\Tbl_voucher;
+use App\Classes\Log;
 class MemberGenealogyController extends MemberController
 {
 	public function index()
@@ -159,7 +160,8 @@ class MemberGenealogyController extends MemberController
 											<b>' . $slot_info->membership_name . ' </b>
 										</div>
 										<div>' . $slot_info->slot_type . '</div>
-										<div>' . "L:".$l." R:".$r.'</div>
+										<div>' . "L:".$l." / R:".$r.'</div>
+										<div>' . "Left Points:".$slot_info->slot_binary_left." / Right Ponts:".$slot_info->slot_binary_right.'</div>
 										<div>
 										</div>
 									</div>
@@ -337,10 +339,13 @@ class MemberGenealogyController extends MemberController
 					else
 					{
 							Tbl_membership_code::where('code_pin',$code->code_pin)->update(['used'=>1]);
+							$amount = 0;
+
 							if($c == "CD")
 							{
-								$insert["slot_wallet"] = 0 - $code->membership_price;
-								$insert["cd_done"] = 1;
+								$amount = 0 - $code->membership_price;
+								// $insert["slot_wallet"] = 0 - $code->membership_price;
+								// $insert["cd_done"] = 1;
 								$insert["slot_total_earning"] =  0 - $code->membership_price;
 							}
 							$insert["slot_membership"] =  $codex->membership_id;
@@ -354,6 +359,12 @@ class MemberGenealogyController extends MemberController
 							$insert["created_at"] = Carbon::now();
 							$insert["membership_entry_id"] = $codex->membership_id;
 							$slot_id = Tbl_slot::insertGetId($insert);
+
+
+							$logs = "Successfully create slot #".$slot_id." using membership code #".$code->code_pin.".";
+							
+							Log::slot($slot_id, $logs, $amount, "New slot",$slot_id);
+
 							Compute::tree($slot_id);
 							Compute::entry($slot_id);
 

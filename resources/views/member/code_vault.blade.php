@@ -19,7 +19,7 @@
         <div class="table-head para">
             <div class="col-md-6 aw">
                 <img src="/resources/assets/frontend/img/icon-member.png">
-                Membership Codes ({{$count}})
+                Unused Membership Codes ({{$count}})
             </div>
             <div class="col-md-6 ew">
                 <a style="cursor: pointer;">
@@ -76,45 +76,62 @@
                 </tr>
                 @endforeach
                 @endif
-                <!-- <tr class="tibolru">
-                    <td>516</td>
-                    <td>K65N4</td>
-                    <td>PS</td>
-                    <td>Guillermo Tabligan (Admin)</td>
-                    <td>Associate</td>
-                    <td><div class="check"><input type="checkbox"><div class="bgs"></div></div></td>
-                    <td>Set A</td>
-                    <td>Available</td>
-                    <td><a href="#create_slot">Create Slot</a></td>
-                    <td><a href="#transfer_code">Transfer Code</a></td>
-                </tr>
-                <tr class="tibolru">
-                    <td>516</td>
-                    <td>K65N4</td>
-                    <td>PS</td>
-                    <td>Guillermo Tabligan (Admin)</td>
-                    <td>Associate</td>
-                    <td><div class="check"><input type="checkbox"><div class="bgs"></div></div></td>
-                    <td>Set A</td>
-                    <td>Available</td>
-                    <td><a href="#create_slot">Create Slot</a></td>
-                    <td><a href="#transfer_code">Transfer Code</a></td>
-                </tr>
-                <tr class="tibolru">
-                    <td>516</td>
-                    <td>K65N4</td>
-                    <td>PS</td>
-                    <td>Guillermo Tabligan (Admin)</td>
-                    <td>Associate</td>
-                    <td><div class="check"><input type="checkbox"><div class="bgs"></div></div></td>
-                    <td>Set A</td>
-                    <td>Available</td>
-                    <td><a href="#create_slot">Create Slot</a></td>
-                    <td><a href="#transfer_code">Transfer Code</a></td>
-                </tr> !-->
             </tbody>
         </table>
     </div>
+
+    <div class="table">
+        <div class="table-head para">
+            <div class="col-md-6 aw">
+                Used Membership Codes ({{$used_count}})
+            </div>
+            <div class="col-md-6 ew">
+                <a style="cursor: pointer;">
+                 
+                </a>
+                <a style="cursor: pointer;" class="claim_code">
+
+                </a>
+            </div>
+        </div>
+        <table class="footable">
+            @if($used_code)
+            <thead>
+                <tr>
+                    <th>Pin</th>
+                    <th data-hide="phone">Code</th>
+                    <th data-hide="phone">Type</th>
+                    <th data-hide="phone">Obtained From</th>
+                    <th data-hide="phone,phonie">Membership</th>
+                    <th data-hide="phone,phonie">Product Set</th>
+                    <th data-hide="phone,phonie">Status</th>
+                    <th data-hide="phone,phonie,tablet"></th>
+                    <th data-hide="phone,phonie,tablet"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($used_code as $c)
+                <tr class="tibolru" loading="{{$c->code_pin}}">
+                    <td>{{$c->code_pin}}</td>
+                    <td>{{$c->code_activation}}</td>
+                    <td>{{$c->code_type_name}}</td>
+                    @if(isset($c->transferer))
+                    <td>{{$c->transferer}}</td>
+                    @else
+                    <td>{{$c->description}}</td>
+                    @endif
+                    <td>{{$c->membership_name}}</td>
+                    <td>{{$c->product_package_name}}</td>
+                    <td>{{$c->used == 0 ? "Available" : "Used"}}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                @endforeach
+                @endif
+            </tbody>
+        </table>
+    </div>
+
 
     <!-- PRODUCT CODE TABLE -->
     <div class="table">
@@ -206,6 +223,7 @@
         Create Slot
     </div>
     <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
+    <div class="sponsornot"></div>
     <div class="col-md-10 col-md-offset-1 para">
         <form class="form-horizontal" method="POST" id="createslot">
             <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
@@ -228,9 +246,10 @@
             <div class="form-group para">
                 <label for="2" class="col-sm-3 control-label">Placement</label>
                 <div class="treecon col-sm-9">
-                    <select class="tree form-control" id="2" name="placement" required>
+                    <select class="tree form-control hidden" id="2" name="placement" required disabled>
                         <option value="">Input a slot sponsor</option>
                     </select>
+                    <input type="number" class="form-control placement-input" name="placement">
                 </div>
                 <input type="hidden" id="code_number" value"" name="code_number">
             </div>
@@ -305,7 +324,7 @@
                 <label for="22222" class="col-sm-3 control-label">Wallet</label>
                 <div class="col-sm-9">
                     @if($slotnow)
-                    <input type="text" class="form-control" id="22222" name="wallet" value="{{$slotnow->slot_wallet}}" disabled>
+                    <input type="text" class="form-control" id="22222" name="wallet" value="{{$current_wallet}}" disabled>
                     @else
                     <input type="text" class="form-control" id="22222" name="wallet" value="0" disabled>
                     @endif

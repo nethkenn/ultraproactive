@@ -19,9 +19,10 @@
 
             <div class="form-group col-md-12">
                 <label for="account_name">Required PV</label>
-                <input name="membership_required_pv" value="{{ $data->membership_required_pv }}" class="form-control" id="" placeholder="" type="text">
+                <input name="membership_required_pv" value="{{ $data->membership_required_pv }}" class="form-control" id="" placeholder="" type="number">
             </div>  
-         
+
+
             <div class="form-group col-md-12">
                 <label for="multiplier">Multiplier</label>
                 <input name="multiplier" value="{{ $data->multiplier }}" required="required" class="form-control" id="" placeholder="" type="text">

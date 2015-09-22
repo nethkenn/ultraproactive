@@ -45,7 +45,7 @@ class AdminProductController extends AdminController
 			$rules['binary_pts'] = 'numeric|min:0';
 			$rules['upgrade_pts'] = 'numeric|min:0';
 			$rules['price'] = 'numeric|min:0';
-			
+
 
 			$message = [
 				'product_name.regex' => 'The :attribute must only have letters , numbers, spaces, hypens ( - ) and underscores ( _ )',
@@ -62,6 +62,7 @@ class AdminProductController extends AdminController
 				$product->product_category_id = $this->get_prod_cat(Request::input('product_category'));
 				$product->sku = Request::input('sku');
 				$product->upgrade_pts = Request::input('upgrade_pts');
+				// $product->product_discount = Request::input('product_discount');
 				$product->save();
 
 
@@ -183,7 +184,7 @@ class AdminProductController extends AdminController
 			$rules['binary_pts'] = 'numeric|min:0';
 			$rules['upgrade_pts'] = 'numeric|min:0';
 			$rules['price'] = 'numeric|min:0';
-			
+
 
 			$message = [
 				'product_name.regex' => 'The :attribute must only have letters , numbers, spaces, hypens ( - ) and underscores ( _ )',
@@ -204,6 +205,7 @@ class AdminProductController extends AdminController
 				$product->product_info = Request::input('product_info');
 				$product->product_name = Request::input('product_name');
 				$product->unilevel_pts = Request::input('unilevel_pts');
+				// $product->product_discount = Request::input('product_discount');
 				$product->binary_pts = Request::input('binary_pts');
 				$product->upgrade_pts = Request::input('upgrade_pts');
 				$product->image_file = Request::input('image_file');

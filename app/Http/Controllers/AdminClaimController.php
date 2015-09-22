@@ -440,7 +440,8 @@ class AdminClaimController extends AdminController
 				{
 					foreach ($data['_voucher_product'] as $key => $value)
 					{
-						$total_product[] =  $value->sub_total;
+						$total_product[] =  $value->sub_total + $value->product_discount_amount;
+						$discount[] = $value->product_discount_amount;
 					}
 				}else
 				{
@@ -448,9 +449,10 @@ class AdminClaimController extends AdminController
 				}
 
 				$data['product_total'] = array_sum($total_product);
-				$data['discount_pts'] = ($data['voucher']->discount / 100) * $data['product_total'] ;
+				$data['discount_pts'] =	 array_sum($discount);
 
 
+		
 
 
 
