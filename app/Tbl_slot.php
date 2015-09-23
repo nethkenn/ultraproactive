@@ -23,7 +23,7 @@ class Tbl_slot extends Model
     }
     public function scopeId($query, $slot_id)
     {
-        return $query->where("slot_id", $slot_id);
+        return $query->where("tbl_slot.slot_id", $slot_id);
     }
     public function scopePlacement($query, $slot_id)
     {
@@ -41,6 +41,9 @@ class Tbl_slot extends Model
     {
         return $query->leftjoin('tbl_product_package_has','tbl_product_package_has.product_package_id','=','Rel_membership_product.product_package_id');
     }
-
+    public function scopeSum($query)
+    {
+        return $query->leftjoin('tbl_wallet_logs','tbl_wallet_logs.slot_id','=','tbl_slot.slot_id');
+    }
 
 }
