@@ -439,7 +439,7 @@ function process_sale()
 		$("#select-member-type").change(function(){
 			if($("#select-member-type").val() == 0)
 			{                  
-				$("#payment-option").append("<option value='3' {{Request::old('3') == '3' ? 'selected' : '' }}>E-wallet</option>");
+				$("#payment-option").append('<option value="3" {{Request::old("3") == "3" ? "selected" : "" }}>E-wallet</option>');
 			}
 			else
 			{

@@ -8,7 +8,11 @@
 			<div class="buttons col-md-4 text-right">
 				<form method="POST">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
+				@if($check->value == 0)	
 					<button type="submit" class="btn btn-primary" name="sbmt">Start Sharing</button> 
+				@else
+				    <button type="button" class="btn btn-primary" name="sbmt" disabled>Still Processing</button>
+				@endif
 				<!--	<button type="button" class="btn btn-primary" id="histoir">History</button> -->
 				</form>
 			</div>

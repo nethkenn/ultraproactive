@@ -22,6 +22,7 @@ use App\Tbl_wallet_logs;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Tbl_product_discount;
+use App\Tbl_transaction;
 class AdminSalesController extends AdminController
 {
 	public function index()
@@ -239,6 +240,22 @@ class AdminSalesController extends AdminController
         $additional = 0;
 
        	$insert_voucher['payment_option'] = Request::input('payment_option');
+       	if(Request::input('payment_option') == 1)
+       	{
+       		$name_of_payment = "Credit Card";
+       	}
+       	elseif(Request::input('payment_option') == 2)
+       	{
+       		$name_of_payment = "Cheque";
+       	}
+       	elseif(Request::input('payment_option') == 0)
+       	{
+       		$name_of_payment = "Cash";
+       	}
+       	else
+       	{
+       		die("Please try again...");
+       	}
         if(Request::input('other_charge'))
         {
         	$additional = $additional + Request::input('other_charge');
@@ -271,10 +288,31 @@ class AdminSalesController extends AdminController
         $voucher = new Tbl_voucher($insert_voucher);
         $voucher->save();
 
+        /* INSERT TRANSACTION RECORD */
+		$transact['transaction_description'] = "Purchase from Admin Area";
+		$transact['transaction_amount'] = 0;
+		$transact['transaction_discount_percentage'] = 0;
+		$transact['transaction_discount_amount'] = 0;
+		$transact['transaction_total_amount'] = $insert_voucher['total_amount'];
+		$transact['transaction_paid'] = 1;
+		$transact['transaction_claimed'] = 0;
+		$transact['archived'] = 0;
+		$transact['transaction_by'] = Admin::info()->account_name;
+		$transact['transaction_to'] = "Non Member";
+		$transact['transaction_payment_type'] = $name_of_payment." - Non-member";
+		$transact['transaction_by_stockist_id'] = null;
+		$transact['transaction_to_id'] = null;
+		$transact['extra'] = "Admin - Process Sales (Additional Charges = ".$additional."%)";
+		$transact['voucher_id'] = $voucher->voucher_id;
+		$transact['earned_pv'] = 0;
+		$transact['created_at'] = Carbon::now();
+		$transact['transaction_slot_id'] = null;
+		$transaction_id = Log::transaction($transact);
+
          /**
          * SAVE VOUCHER PRODUCT
          */
-        $this->add_product_to_voucher_list($voucher->voucher_id,$_cart,Request::input('member_type'), Request::input('status'));
+        $this->add_product_to_voucher_list($voucher->voucher_id,$_cart,Request::input('member_type'), Request::input('status'),$transaction_id);
 
         $admin_log = "Sold Product Voucher # ".$voucher->voucher_id. " to a non-member as ".  Admin::info()->admin_position_name.".";
         Log::account(Admin::info()->account_id, $admin_log);
@@ -455,7 +493,53 @@ class AdminSalesController extends AdminController
 
         $voucher = new Tbl_voucher($insert_voucher);
         $voucher->save();
-        $this->add_product_to_voucher_list($voucher->voucher_id,$_cart,Request::input('member_type'), Request::input('status'));
+        $get_slot_owner = Tbl_slot::id(Request::input('slot_id'))->account()->first();
+
+        /* Name of Payment */
+        if(Request::input('payment_option') == 1)
+       	{
+       		$name_of_payment = "Credit Card";
+       	}
+       	elseif(Request::input('payment_option') == 2)
+       	{
+       		$name_of_payment = "Cheque";
+       	}
+       	elseif(Request::input('payment_option') == 0)
+       	{
+       		$name_of_payment = "Cash";
+       	}
+       	elseif(Request::input('payment_option') == 3)
+       	{
+       		$name_of_payment = "E-Wallet";
+       	}
+       	else
+       	{
+       		die("Please try again...");
+       	}
+
+        /* INSERT TRANSACTION RECORD */
+		$transact['transaction_description'] = "Purchase from Admin Area";
+		$transact['transaction_amount'] = 0;
+		$transact['transaction_discount_percentage'] = 0;
+		$transact['transaction_discount_amount'] = 0;
+		$transact['transaction_total_amount'] = $insert_voucher['total_amount'];
+		$transact['transaction_paid'] = 1;
+		$transact['transaction_claimed'] = 0;
+		$transact['archived'] = 0;
+		$transact['transaction_by'] = Admin::info()->account_name;
+		$transact['transaction_to'] = $get_slot_owner->account_name;
+		$transact['transaction_payment_type'] = $name_of_payment." - Member";
+		$transact['transaction_by_stockist_id'] = null;
+		$transact['transaction_to_id'] = $get_slot_owner->account_id;
+		$transact['extra'] = "Admin - Process Sales (Additional Charges = ".$additional."%)";
+		$transact['voucher_id'] = $voucher->voucher_id;
+		$transact['earned_pv'] = 0;
+		$transact['created_at'] = Carbon::now();
+		$transact['transaction_slot_id'] = Request::input('slot_id');
+		$transaction_id = Log::transaction($transact);
+
+
+        $this->add_product_to_voucher_list($voucher->voucher_id,$_cart,Request::input('member_type'), Request::input('status'),$transaction_id);
 
     	/**
 		 * UPDATE ACCOUNT/ADMIN LOG
@@ -481,10 +565,13 @@ class AdminSalesController extends AdminController
         return redirect('admin/transaction/sales/')->with('success_message', $success_message);
 	}
 
-	public function add_product_to_voucher_list($voucher_id, $cart, $member_type, $status='processed')
+	public function add_product_to_voucher_list($voucher_id, $cart, $member_type, $status='processed',$transaction_id)
 	{
 		$voucher = Tbl_voucher::where('voucher_id',$voucher_id)->first();
 		$slot = Tbl_slot::id($voucher->slot_id)->first();
+		$earned_pv = 0;
+		$amount_of_discount_total = 0;
+		$without_discount_total = 0;
 		foreach ((array)$cart as $key => $value)
 		{
 			$product = Tbl_product::find($key);
@@ -526,6 +613,27 @@ class AdminSalesController extends AdminController
 			$new_voucher_product = new tbl_voucher_has_product($insert_vouher_product);
 			$new_voucher_product->save();
 
+
+			/* PER PRODUCT TRANSACTION */
+			$prod_transact['transaction_id'] = $transaction_id;
+			$prod_transact['if_product'] = 1;  
+			$prod_transact['if_product_package'] = 0;  
+			$prod_transact['if_code_pin'] = 0; 
+			$prod_transact['product_id'] = $value['product_id'];  
+			$prod_transact['product_package_id'] = null;  
+			$prod_transact['code_pin'] = null;    
+			$prod_transact['transaction_amount'] = $value['price'];  
+			$prod_transact['transaction_qty'] = $value['qty']; 
+			$prod_transact['product_discount'] = $discount;
+			$prod_transact['product_discount_amount'] =  $discount_amount;
+			$prod_transact['transaction_total'] = $sub_total;  
+			$prod_transact['rel_transaction_log'] = $product->product_name; 
+			$prod_transact['sub_earned_pv'] = $product->unilevel_pts * $value['qty'];  
+			Log::transaction_product($prod_transact);
+
+			$earned_pv = $earned_pv + ($product->unilevel_pts * $value['qty']);
+			$amount_of_discount_total = $amount_of_discount_total + $discount_amount;
+			$without_discount_total = $without_discount_total + ($value['price'] * $value['qty']);
 		    if($member_type == 0)
 		    {
 
@@ -554,6 +662,11 @@ class AdminSalesController extends AdminController
 
 
 		}
+
+		$update_transaction['earned_pv'] = $earned_pv;
+		$update_transaction['transaction_discount_amount'] = $amount_of_discount_total;
+		$update_transaction['transaction_amount'] = $without_discount_total;
+		Tbl_transaction::where('transaction_id',$transaction_id)->update($update_transaction);
 	}	
 
 
@@ -662,41 +775,57 @@ class AdminSalesController extends AdminController
 		return $_slot;
 	}
 
-	public function get_cart_total($cart,$slot_id)
+	public function get_cart_total($cart,$slot_id = null)
 	{	
 		$total = []; 
-		
+		$overall = [0];
+		$discount_amount = [0];
+		if($slot_id)
+		{	
+	        foreach ((array) $cart as $key => $value)
+	        {
 
-        foreach ((array) $cart as $key => $value)
-        {
-
-	        	if($slot_id)
-	        	{
-		        	$slot = Tbl_slot::where('slot_id',$slot_id)->first();
-		            $discount = Tbl_product_discount::where('product_id',$key)->where('membership_id',$slot->slot_membership)->first();
-		            if($discount)
-		            {
-		                $discount = $discount->discount;
-		            }
-		            else
-		            {
-		                $discount = 0;
-		            }        		
-	        	}
-	        	else
-	        	{
-	        		$discount = 0;
-	        	}        		
+		        	if($slot_id)
+		        	{
+			        	$slot = Tbl_slot::where('slot_id',$slot_id)->first();
+			            $discount = Tbl_product_discount::where('product_id',$key)->where('membership_id',$slot->slot_membership)->first();
+			            if($discount)
+			            {
+			                $discount = $discount->discount;
+			            }
+			            else
+			            {
+			                $discount = 0;
+			            }        		
+		        	}
+		        	else
+		        	{
+		        		$discount = 0;
+		        	}        		
 
 
 
-            $sub_total =   $value['sub_total'] - (($discount/100)*$value['sub_total']);
-            $total[]   =   $value['sub_total'];
-            $discount_amount[]   =   ($discount/100)*$value['sub_total'];
-            $overall[] =   $sub_total;
+	            $sub_total =   $value['sub_total'] - (($discount/100)*$value['sub_total']);
+	            $total[]   =   $value['sub_total'];
+	            $discount_amount[]   =   ($discount/100)*$value['sub_total'];
+	            $overall[] =   $sub_total;
 
-        	// $total[] = $value['sub_total'];
-        }
+	        	// $total[] = $value['sub_total'];
+	        }		
+		}
+		else
+		{
+	        foreach ((array) $cart as $key => $value)
+	        {
+
+        		$discount = 0;
+	            $sub_total =   $value['sub_total'] - (($discount/100)*$value['sub_total']);
+	            $total[]   =   $value['sub_total'];
+	            $discount_amount[]   =   ($discount/100)*$value['sub_total'];
+	            $overall[] =   $sub_total;
+	        }			
+		}
+
 
 
         $data['total'] = array_sum($overall);

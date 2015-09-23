@@ -60,8 +60,9 @@ class Log
 		$insert["transaction_total"]   = $insert['transaction_total'];	
 		$insert["rel_transaction_log"] = $insert['rel_transaction_log'];	
 		$insert["sub_earned_pv"] 	   = $insert['sub_earned_pv'];	
-
-		Tbl_transaction::insert($insert);
+		$insert["product_discount"] 	   = $insert['product_discount'];
+		$insert["product_discount_amount"] 	   = $insert['product_discount_amount'];
+		Rel_transaction::insert($insert);
 	}
 	// public static function slot($slot_id, $log, $wallet_update, $log_key = "OTHERS")
 	// {
