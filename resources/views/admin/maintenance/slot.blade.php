@@ -98,7 +98,7 @@ $(function() {
 
   	str = str + '</select>';
 	$('#table_filter').prepend(str);
-    $.fn.dataTableExt.sErrMode = 'throw';
+
 
     $(".slot_limit").click(function()
     {
