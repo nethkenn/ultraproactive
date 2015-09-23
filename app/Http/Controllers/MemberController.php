@@ -68,7 +68,7 @@ class MemberController extends Controller
 					    $data3 = $data3['data3'];
 		    			/* Check Date if need to reset daily pair */
 					    /* Check Date if need to reset daily income*/
-						$this->$check_daily($data3['data3']);
+						$this->check_daily($data3);
 					}	
 			    }	 					  
 			}	

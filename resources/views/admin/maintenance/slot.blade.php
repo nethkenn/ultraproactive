@@ -61,12 +61,12 @@ $(function() {
 	    	},
         columns: [
             {data: 'slot_id', name: 'slot_id'},
-            {data: 'account_name', name: 'account_name'},
-            {data: 'membership_name', name: 'membership_name'},
-            {data: 'slot_type', name: 'slot_type'},
-            {data: 'wallet', name: 'slot_wallet'},
-            {data: 'gen', name: 'slot_id'},
-            {data: 'info', name: 'slot_id'},
+            // {data: 'account_name', name: 'account_name'},
+            // {data: 'membership_name', name: 'membership_name'},
+            // {data: 'slot_type', name: 'slot_type'},
+            // {data: 'wallet', name: 'slot_wallet'},
+            // {data: 'gen', name: 'slot_id'},
+            // {data: 'info', name: 'slot_id'},
         ],
         "lengthMenu": [[8, 10, 25, 50, -1], [10, 25, 50, "All"]],
         "oLanguage": 
@@ -78,33 +78,33 @@ $(function() {
     });
 
 
-    var mem  = '{!! Request::input("memid")  !!}';
-  	var json = '{!! json_encode($membership) !!}';
-  	json = $.parseJSON(json);
-  	var str = '<select onchange="if (this.value) window.location.href=this.value" class="style form-control"><option value="/admin/maintenance/slots">All</option>';
+ //    var mem  = '{!! Request::input("memid")  !!}';
+ //  	var json = '{!! json_encode($membership) !!}';
+ //  	json = $.parseJSON(json);
+ //  	var str = '<select onchange="if (this.value) window.location.href=this.value" class="style form-control"><option value="/admin/maintenance/slots">All</option>';
 
-  	$.each(json, function(key, val)
-	{	
-		if(mem == val.membership_id)
-		{
-			str = str + '<option value="/admin/maintenance/slots?memid='+val.membership_id+'" selected>'+val.membership_name+'</option>';			
-		}
-		else
-		{
-			str = str + '<option value="/admin/maintenance/slots?memid='+val.membership_id+'">'+val.membership_name+'</option>';
-		}
+ //  	$.each(json, function(key, val)
+	// {	
+	// 	if(mem == val.membership_id)
+	// 	{
+	// 		str = str + '<option value="/admin/maintenance/slots?memid='+val.membership_id+'" selected>'+val.membership_name+'</option>';			
+	// 	}
+	// 	else
+	// 	{
+	// 		str = str + '<option value="/admin/maintenance/slots?memid='+val.membership_id+'">'+val.membership_name+'</option>';
+	// 	}
 
-	});
+	// });
 
-  	str = str + '</select>';
-	$('#table_filter').prepend(str);
+ //  	str = str + '</select>';
+	// $('#table_filter').prepend(str);
 
 
-    $(".slot_limit").click(function()
-    {
-			var inst = $('[data-remodal-id=slot_limit]').remodal();
-          	inst.open(); 
-    });
+ //    $(".slot_limit").click(function()
+ //    {
+	// 		var inst = $('[data-remodal-id=slot_limit]').remodal();
+ //          	inst.open(); 
+ //    });
 
 
 });
