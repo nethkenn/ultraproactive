@@ -19,7 +19,8 @@ use App\Classes\Product;
 use App\Classes\Log;
 use App\Tbl_wallet_logs;
 use App\Tbl_product_discount;
-
+use App\Tbl_transaction;
+use Carbon\Carbon;
 class MemberCheckoutController extends Controller
 {
     /**
@@ -109,7 +110,7 @@ class MemberCheckoutController extends Controller
                     $voucher = new Tbl_voucher($insert);
                     $voucher->save();
                     
-                    $log = "Purchase Product worth ".Product::return_format_num($insert['total_amount']). " with Voucher Num: ".$voucher->voucher_id." , Voucher Code: ".$voucher->voucher_code.".";
+                    $log = "Purchase Product worth ".Product::return_format_num($insert['total_amount']). " with Voucher Num: ".$voucher->voucher_id." , Voucher Code: ".$voucher->voucher_code.", using GC";
                     Log::slot(Request::input('slot_id'), $log, $amt,"Purchase Product",Request::input('slot_id'),1);
                     Log::account($customer->account_id, $log);
                     $total = 0;
@@ -230,12 +231,36 @@ class MemberCheckoutController extends Controller
 
                 $voucher = new Tbl_voucher($insert);
                 $voucher->save();
-                
+
+                /* INSERT TRANSACTION RECORD */
+                $transact['transaction_description'] = "Purchase from Product Area";
+                $transact['transaction_amount'] = 0;
+                $transact['transaction_discount_percentage'] = 0;
+                $transact['transaction_discount_amount'] = 0;
+                $transact['transaction_total_amount'] = $data['final_total'];
+                $transact['transaction_paid'] = 1;
+                $transact['transaction_claimed'] = 0;
+                $transact['archived'] = 0;
+                $transact['transaction_by'] = "Product Checkout";
+                $transact['transaction_to'] = $customer->account_name;
+                $transact['transaction_payment_type'] = "Cash";
+                $transact['transaction_by_stockist_id'] = null;
+                $transact['transaction_to_id'] = $customer->account_id;
+                $transact['extra'] = "Member - Product Checkout (Wallet)";
+                $transact['voucher_id'] = $voucher->voucher_id;
+                $transact['earned_pv'] = 0;
+                $transact['created_at'] = Carbon::now();
+                $transact['transaction_slot_id'] = Request::input('slot_id');
+                $transaction_id = Log::transaction($transact);
+
+
                 $log = "Purchase Product worth ".Product::return_format_num($insert['total_amount']). " with Voucher Num: ".$voucher->voucher_id." , Voucher Code: ".$voucher->voucher_code.".";
-                // Log::slot(Request::input('slot_id'), $log, $data['remaining_bal']);
                 Log::slot(Request::input('slot_id'), $log, $amt, "Purchase Product",Request::input('slot_id'));
                 Log::account($customer->account_id, $log);
                 $total = 0;
+                $amount_of_discount_total = 0;
+                $earned_pv = 0;
+                $without_discount_total = 0;
                 foreach ((array)$cart as $key => $value)
                 {
                     $discount = Tbl_product_discount::where('membership_id',$slot->slot_membership)->where('product_id',$key)->first();
@@ -263,11 +288,33 @@ class MemberCheckoutController extends Controller
                         'product_discount' => $discount,
                         'product_discount_amount' => $discount_amount
                     );
-                    $total = $total + $value['total'];
-                    // $product = Tbl_product::find($key);
-                    // $updated_stock_qty = $product->stock_qty - $value['qty'];
-                    // Tbl_product::where('product_id', $key)->lockForUpdate()->update(['stock_qty'=>$updated_stock_qty]);
 
+                    /*FOR TRANSACTION LOG UPDATE TOTAL*/
+                    $total = $total + $value['total'];
+                    $without_discount_total   =  $without_discount_total + $value['price'];
+                    $amount_of_discount_total =  $amount_of_discount_total + $discount_amount;
+
+                    /* PER PRODUCT TRANSACTION */
+                    $prod_transact['transaction_id'] = $transaction_id;
+                    $prod_transact['if_product'] = 1;  
+                    $prod_transact['if_product_package'] = 0;  
+                    $prod_transact['if_code_pin'] = 0; 
+                    $prod_transact['product_id'] = $key;  
+                    $prod_transact['product_package_id'] = null;  
+                    $prod_transact['code_pin'] = null;    
+                    $prod_transact['transaction_amount'] = $value['price'];  
+                    $prod_transact['transaction_qty'] = $value['qty']; 
+                    $prod_transact['product_discount'] = $discount;
+                    $prod_transact['product_discount_amount'] =  $discount_amount;
+                    $prod_transact['transaction_total'] = $value['total'];   
+                    $prod_transact['rel_transaction_log'] = $prod_pts->product_name; 
+                    $prod_transact['sub_earned_pv'] = $prod_pts->unilevel_pts * $value['qty'];   
+                    Log::transaction_product($prod_transact);
+
+                    /*TOTAL EARNED PV*/
+                    $earned_pv = $earned_pv + ($prod_pts->unilevel_pts * $value['qty']);
+
+                    /* INSERT VOUCHER PRODUCT */
                     $voucher_has_product = new Tbl_voucher_has_product($insert_prod);
                     $voucher_has_product->save();
                     
@@ -286,7 +333,10 @@ class MemberCheckoutController extends Controller
 
 
                 }
-
+                $update_transaction['earned_pv'] = $earned_pv;
+                $update_transaction['transaction_discount_amount'] = $amount_of_discount_total;
+                $update_transaction['transaction_amount'] = $without_discount_total;
+                Tbl_transaction::where('transaction_id',$transaction_id)->update($update_transaction);
 
                 Session::put('cart',[]);
 
