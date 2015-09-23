@@ -42,7 +42,7 @@ class AdminSlotController extends AdminController
 
 		if($membership == "")
 		{
-	        $_account = Tbl_slot::rank()->membership()->account()->get();
+	        $_account = Tbl_slot::rank()->id(1)->membership()->account()->get();
 		}
 		else
 		{
@@ -51,7 +51,7 @@ class AdminSlotController extends AdminController
 
 	        return Datatables::of($_account)->addColumn('gen','<a href="admin/maintenance/slots/add?id={{$slot_id}}">GENEALOGY</a>')
 	        								->addColumn('info','<a href="admin/maintenance/slots/view?id={{$slot_id}}">INFO</a>')
-	        								// ->addColumn('wallet','{{App\Tbl_wallet_logs::id("$slot_id")->wallet()->sum("wallet_amount")}}')
+	        								->addColumn('wallet','{{App\Tbl_wallet_logs::id("$slot_id")->wallet()->sum("wallet_amount")}}')
 	        								->make(true);
 
 	}
