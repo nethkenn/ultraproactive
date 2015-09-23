@@ -22,6 +22,7 @@ class AdminSlotController extends AdminController
 	{
 		$data['membership'] = Tbl_membership::where('archived',0)->get();
 		$data['slot_limit'] = DB::table('tbl_settings')->where('key','slot_limit')->first();
+
 		if(!$data['slot_limit'])
 		{
 			DB::table('tbl_settings')->insert(['key'=>'slot_limit','value'=>1]);
@@ -48,13 +49,9 @@ class AdminSlotController extends AdminController
 	        $_account = Tbl_slot::rank()->membership()->account()->where('slot_membership',$membership)->get();
 		}
 
-		foreach($_account as $key => $acc)
-		{
-			$_account[$key]->wallet = Tbl_wallet_logs::wallet()->where('slot_id',$acc->slot_id)->sum('wallet_amount');
-		}
 	        return Datatables::of($_account)->addColumn('gen','<a href="admin/maintenance/slots/add?id={{$slot_id}}">GENEALOGY</a>')
 	        								->addColumn('info','<a href="admin/maintenance/slots/view?id={{$slot_id}}">INFO</a>')
-	        								->addColumn('wallet','{{$wallet}}')
+	        								// ->addColumn('wallet','{{App\Tbl_wallet_logs::id("$slot_id")->wallet()->sum("wallet_amount")}}')
 	        								->make(true);
 
 	}

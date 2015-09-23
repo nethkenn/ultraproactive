@@ -25,7 +25,7 @@
 						<th>Owner</th>
 						<th>Membership</th>
 						<th>Type</th>
-						<th>Wallet</th>
+{{-- 						<th>Wallet</th> --}}
 						<th></th>
 						<th></th>
 					</tr>
@@ -64,7 +64,7 @@ $(function() {
             {data: 'account_name', name: 'account_name'},
             {data: 'membership_name', name: 'membership_name'},
             {data: 'slot_type', name: 'slot_type'},
-            {data: 'wallet', name: 'slot_wallet'},
+            // {data: 'wallet', name: 'slot_wallet'},
             {data: 'gen', name: 'slot_id'},
             {data: 'info', name: 'slot_id'},
         ],
