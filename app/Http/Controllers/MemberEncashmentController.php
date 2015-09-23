@@ -10,7 +10,7 @@ use App\Tbl_account_encashment_history;
 use Carbon\Carbon;
 use Redirect;
 use App\Classes\Log;
-
+use App\Tbl_wallet_logs;
 class MemberEncashmentController extends MemberController
 {
 	public function index()

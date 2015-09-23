@@ -7,6 +7,8 @@ use App\Tbl_e_wallet_log;
 use Carbon;
 use App\Tbl_wallet_logs;
 use App\Tbl_slot;
+use App\Tbl_transaction;
+use App\Rel_transaction;
 class Log
 {
 	public static function account($account_id, $log)
@@ -17,6 +19,50 @@ class Log
 		Tbl_account_log::insert($insert);
 	}
 	
+	public static function transaction($insert)
+	{
+		$insert["transaction_description"] = 		$insert['transaction_description'];
+		$insert["transaction_amount"] =			    $insert['transaction_amount'];
+		$insert["transaction_discount_percentage"]= $insert['transaction_discount_percentage'];
+		$insert["transaction_discount_amount"] = 	$insert['transaction_discount_amount'];
+		$insert["transaction_total_amount"] = 		$insert['transaction_total_amount'];
+		$insert["transaction_paid"] =				$insert['transaction_paid'];
+		$insert["transaction_claimed"] = 			$insert['transaction_claimed'];
+		$insert["archived"] =						$insert['archived'];
+		$insert["transaction_by"] =			    	$insert['transaction_by'];
+		$insert["transaction_to"] = 				$insert['transaction_to'];
+		$insert["transaction_payment_type"] = 		$insert['transaction_payment_type'];
+		$insert["transaction_by_stockist_id"] = 	$insert['transaction_by_stockist_id'];
+		$insert["transaction_to_id"] = 				$insert['transaction_to_id'];
+		$insert["extra"] = 							$insert['extra'];
+		$insert["voucher_id"] = 					$insert['voucher_id'];
+		$insert["earned_pv"] = 						$insert['earned_pv'];
+		$insert["created_at"] = 					$insert['created_at'];
+		$insert["transaction_slot_id"] = 			$insert['transaction_slot_id'];
+
+		$id = Tbl_transaction::insertGetId($insert);
+
+		return $id;
+	}
+	
+
+	public static function transaction_product($insert)
+	{
+		$insert["transaction_id"]      = $insert['transaction_id'];
+		$insert["if_product"]		   = $insert['if_product'];	
+		$insert["if_product_package"]  = $insert['if_product_package'];	
+		$insert["if_code_pin"] 	       = $insert['if_code_pin'];	
+		$insert["product_id"]		   = $insert['product_id'];	
+		$insert["product_package_id"]  = $insert['product_package_id'];	
+		$insert["code_pin"] 		   = $insert['code_pin'];	
+		$insert["transaction_amount"]  = $insert['transaction_amount'];	
+		$insert["transaction_qty"] 	   = $insert['transaction_qty'];	
+		$insert["transaction_total"]   = $insert['transaction_total'];	
+		$insert["rel_transaction_log"] = $insert['rel_transaction_log'];	
+		$insert["sub_earned_pv"] 	   = $insert['sub_earned_pv'];	
+
+		Tbl_transaction::insert($insert);
+	}
 	// public static function slot($slot_id, $log, $wallet_update, $log_key = "OTHERS")
 	// {
 	// 	$insert["slot_id"] = $slot_id;

@@ -88,12 +88,6 @@ class Compute
                         $update_recipient["slot_group_points"] = $update_recipient["slot_group_points"] + $unilevel_bonus;
                         $update_recipient["slot_upgrade_points"] = $update_recipient["slot_upgrade_points"] + $upgrade_bonus;
                         
-                        $insert['value'] = $unilevel_bonus;
-                        $insert['slot_id'] = $slot_recipient->slot_id;
-                        $insert['done'] = 0;
-                        $insert['created_at'] = Carbon::now();
-
-                        DB::table('tbl_global_pv_logs')->insert($insert);
                         // if($update_recipient["slot_group_points"] > $slot_recipient->slot_highest_pv)
                         // {
                         //     $update_recipient["slot_highest_pv"] = $update_recipient["slot_group_points"];
