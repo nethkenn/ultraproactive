@@ -42,11 +42,13 @@ class AdminSlotController extends AdminController
 
 		if($membership == "")
 		{
-	        $_account = Tbl_slot::rank()->membership()->account()->get();
+	        $_account = 		Tbl_slot::select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))
+	        						->rank()->membership()->account()->get();
 		}
 		else
 		{
-	        $_account = Tbl_slot::rank()->membership()->account()->where('slot_membership',$membership)->get();
+	        $_account = 		Tbl_slot::select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))
+	        					->rank()->membership()->account()->where('slot_membership',$membership)->get();
 		}
 		
 	        return Datatables::of($_account)->addColumn('gen','<a href="admin/maintenance/slots/add?id={{$slot_id}}">GENEALOGY</a>')

@@ -35,11 +35,11 @@ class Tbl_slot extends Model
     }
     public function scopeChosenProduct($query)
     {
-        return $query->leftjoin('Rel_membership_product','Rel_membership_product.slot_id','=','Tbl_slot.slot_id');
+        return $query->leftjoin('rel_membership_product','rel_membership_product.slot_id','=','tbl_slot.slot_id');
     }
     public function scopeGetChosen($query)
     {
-        return $query->leftjoin('tbl_product_package_has','tbl_product_package_has.product_package_id','=','Rel_membership_product.product_package_id');
+        return $query->leftjoin('tbl_product_package_has','tbl_product_package_has.product_package_id','=','rel_membership_product.product_package_id');
     }
     public function scopeSum($query)
     {
