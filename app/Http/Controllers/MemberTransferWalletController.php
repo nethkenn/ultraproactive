@@ -73,7 +73,7 @@ class MemberTransferWalletController extends MemberController
 						    Log::account($account->account_id, $log);
 
 						    $log = "Transfer ID #".$trans_id.",You sent an amount of ".Request::input('transfer_wallet')." using slot #".Session::get('currentslot')." to ".$recipient_slot->account_name." (Slot #".Request::input('placement').").";
-						    Log::slot(Request::input('placement') , $log, 0 - Request::input('transfer_wallet') , "Transfer Wallet Pending",Request::input('placement'));
+						    Log::slot(Session::get('currentslot') , $log, 0 - Request::input('transfer_wallet') , "Transfer Wallet Pending",Request::input('placement'));
 							return Redirect::to('member/transfer_wallet')->with('success',"Transfer sent");
 						}
 						else

@@ -17,11 +17,11 @@ class AdminUnilevelController extends AdminController
 
 	public function indexs()
 	{
-		$data['slot'] = $this->get_data_view();
+		$data['slot'] = $this->get_data_passed();
 		$data['last_update'] = Tbl_distribution_history::orderBy('distribution_id','DESC')->first();
 		$data['history'] = Rel_distribution_history::get();
 		$check = DB::table('tbl_settings')->where('key','check_match')->first();
-
+		
 		if(!$check)
 		{	
 			DB::table('tbl_settings')->insert(['key'=>'check_match','value'=>'0']);
@@ -32,25 +32,24 @@ class AdminUnilevelController extends AdminController
 
 		if(isset($_POST['sbmt']))
 		{
-			ignore_user_abort(true);
-			set_time_limit(0);
-			$strURL = "/admin/transaction/unilevel-distribution/dynamic?sleep=1";
-			header("Location: $strURL", true);
-			header("Connection: close", true);
-			header("Content-Encoding: none\r\n");
-			header("Content-Length: 0", true);
+			// ignore_user_abort(true);
+			// set_time_limit(0);
+			// $strURL = "/admin/transaction/unilevel-distribution/dynamic?sleep=1";
+			// header("Location: $strURL", true);
+			// header("Connection: close", true);
+			// header("Content-Encoding: none\r\n");
+			// header("Content-Length: 0", true);
 
 
-			flush();
-			ob_flush();
+			// flush();
+			// ob_flush();
 
-			session_write_close();
+			// session_write_close();
 
-			$data = $this->dynamic();
-			// return Redirect::to('admin/transaction/unilevel-distribution/dynamic');
-			
-			sleep(5);
-			exit;
+			$this->dynamic();
+
+			// sleep(5);
+			// exit;
 		}
 
 		if(Request::input('sleep'))
@@ -64,104 +63,109 @@ class AdminUnilevelController extends AdminController
 
 
 	public function dynamic()
-	{	
-
+	{		
 		$check = DB::table('tbl_settings')->where('key','check_match')->first();
-		/* CHECK IF IT STILL PROCESSING */
+		DB::table('tbl_settings')->where('key','check_match')->update(['value'=>1]);
+		$check_match = null;	
 		if($check->value == 0)
 		{
-			DB::table('tbl_settings')->where('key','check_match')->update(['value'=>1]);
-			$slots = $this->get_data();
-			$unilevel_setting = DB::table('tbl_unilevel_setting')->get();
-			$unilevel = null;
-			$check_match_slot = null;
-
-			/* SET THE UNILEVEL SETTING*/
-			foreach($unilevel_setting as $key => $uni)
+			$failed_slots = $this->get_data_failed();
+			foreach($failed_slots as $key => $f)
 			{
-				$unilevel[$uni->membership_id][$uni->level] = $uni->value;
-			}
-
-			foreach($slots as $key => $slot)
-			{
-				$oneslot = Tbl_slot::account()->membership()->where('slot_id',$slot->slot_id)->first();
-
-				/* UPDATE HIGHEST PV*/
-				if($oneslot->slot_group_points > $oneslot->slot_highest_pv)
-	            {
-	                $update["slot_highest_pv"] = $oneslot->slot_group_points;
-	            }
-	            
-	            /* GET SPONSOR LIST */
-				$placement = Tbl_tree_sponsor::child($slot->slot_id)->level()->distinct_level()->get();
-
-				/* GET GROUP PV AND CONVERT TO WALLET*/
-				$gpv = $oneslot->slot_group_points * $oneslot->multiplier;
-
-				/* PUT DATA FOR UNILEVEL CHECK MATCH */
-				// if(isset($check_match_slot[$slot->slot_id]))
-				// {
-	 			//   $check_match_slot[$slot->slot_id] = $check_match_slot[$slot->slot_id] + $gpv;
-				// }
-				// else
-				// {
-				//   $check_match_slot[$slot->slot_id] = $gpv;
-				// }
-
-				/* UPDATE THE MONTH COUNT */
-				$update['slot_maintained_month_count'] = $oneslot->slot_maintained_month_count + 1;
-				Tbl_slot::where('slot_id',$slot->slot_id)->update($update);
-
-				/* LOGS FOR WALLET */
-				$log = "Your slot #".$slot->slot_id." met the requirement PV (".$oneslot->membership_required_pv.") and convert your ".$oneslot->slot_group_points."GPV to<b> ".number_format($gpv, 2)." wallet </b>"; 
-	            Log::account($slot->slot_owner, $log);
-	 			$log = "Your slot #".$slot->slot_id." met the requirement PV (".$oneslot->membership_required_pv.") and convert your ".$oneslot->slot_group_points."GPV to<b> ".number_format($gpv, 2)." wallet </b>";           
-	            Log::slot($slot->slot_id,$log,$gpv,"Dynamic Compression",$slot->slot_id); 	
-
-	 			/* CHECK IF PROMOTED */
-				Compute::check_promotion_qualification($oneslot->slot_id);
-
-				/* UNILEVEL BONUS */
+				$ctr = 0;
+				$placement = Tbl_tree_sponsor::child($f->slot_id)->orderby("sponsor_tree_level", "asc")->distinct_level()
+																	->join('tbl_slot','tbl_slot.slot_id','=','tbl_tree_sponsor.sponsor_tree_parent_id')
+																	->join('tbl_membership','tbl_membership.membership_id','=','tbl_slot.slot_membership')
+																	->where('slot_personal_points', '>=', DB::raw('membership_required_pv'))
+																	->get();
+				$gpv = $f->slot_group_points;
+				/* COMPRESS */
 				foreach($placement as $key => $tree)
 				{
-					$slot_recipient = Tbl_slot::account()->membership()->where('slot_id',$tree->sponsor_tree_parent_id)->first();
-					if(isset($unilevel[$slot_recipient->membership_id][$tree->sponsor_tree_level]))
-					{
-						/* COMPUTE */
-						$percentage = $unilevel[$slot_recipient->slot_membership][$tree->sponsor_tree_level];	
-						$amt = ($unilevel[$slot_recipient->slot_membership][$tree->sponsor_tree_level]/100)*$gpv;
-						if($amt != 0)
+					$recipient = Tbl_slot::id($tree->sponsor_tree_parent_id)->membership()->first();
+					$max_gpv   = $recipient->max_group_pv;
+					$r_gpv 	   = $recipient->slot_group_points;
+						if($max_gpv > $r_gpv)
 						{
-							/* PUT ON WALLET LOGS*/
-							$log = "Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($amt, 2) . " wallet</b> from ".$percentage."% of slot #".$slot->slot_id." GPV(".$gpv.") dynamic compression (Your current membership is ".$slot_recipient->membership_name." and your the sponsor level ".$tree->sponsor_tree_level." of slot #".$slot->slot_id.") ";
-			                Log::account($slot_recipient->slot_owner, $log);
-			                Log::slot($slot_recipient->slot_id,$log,$amt,"Dynamic Compression",$slot_recipient->slot_id); 	
-
-							/* PUT DATA FOR UNILEVEL CHECK MATCH */
-							if(isset($check_match_slot[$slot_recipient->slot_id]))
+							$r_gpv = $r_gpv + $gpv;
+							
+							if($r_gpv >= $max_gpv)
 							{
-				           	  $check_match_slot[$slot_recipient->slot_id] = $check_match_slot[$slot_recipient->slot_id] + $amt;
+								$gpv = $r_gpv - $max_gpv;
+								$r_gpv = $r_gpv - $gpv;
 							}
 							else
 							{
-							  $check_match_slot[$slot_recipient->slot_id] = $amt;
-							}						
+								$gpv = 0;
+							}
 						}
-					}
+					$update_recipient['slot_group_points'] = $r_gpv;
+					Tbl_slot::id($tree->sponsor_tree_parent_id)->update($update_recipient);
+						if($gpv == 0)
+						{
+							break;
+						}
 				}
+				$update['slot_group_points'] = 0;
+				Tbl_slot::id($f->slot_id)->update($update);
 			}
 
-			/* PUT THE UNILEVEL CHECK DATA TO ANOTHER FUNCTION */
-			$this->distribute_check_match($check_match_slot);
+			$slots = $this->get_data_passed();
+			if($slots)
+			{
+				foreach($slots as $key => $slot)
+				{
+					$oneslot = Tbl_slot::account()->membership()->where('slot_id',$slot->slot_id)->first();
+					/* UPDATE HIGHEST PV*/
+					if($oneslot->slot_group_points > $oneslot->slot_highest_pv)
+		            {
+		                $update["slot_highest_pv"] = $oneslot->slot_group_points;
+		            }
+		            
+		            /* GET SPONSOR LIST */
+					$placement = Tbl_tree_sponsor::child($slot->slot_id)->level()->distinct_level()->get();
+
+					/* GET GROUP PV AND CONVERT TO WALLET*/
+					$gpv = $oneslot->slot_group_points * $oneslot->multiplier;
+
+					/* UPDATE THE MONTH COUNT */
+					$update['slot_maintained_month_count'] = $oneslot->slot_maintained_month_count + 1;
+					Tbl_slot::where('slot_id',$slot->slot_id)->update($update);
+
+					if($gpv != 0)
+					{
+						/* LOGS FOR WALLET */
+						$log = "Your slot #".$slot->slot_id." met the requirement PV (".$oneslot->membership_required_pv.") and convert your ".$oneslot->slot_group_points."GPV to<b> ".number_format($gpv, 2)." wallet </b>"; 
+			            Log::account($slot->slot_owner, $log);
+			 			$log = "Your slot #".$slot->slot_id." met the requirement PV (".$oneslot->membership_required_pv.") and convert your ".$oneslot->slot_group_points."GPV to<b> ".number_format($gpv, 2)." wallet </b>";           
+			            Log::slot($slot->slot_id,$log,$gpv,"Dynamic Compression",$slot->slot_id); 						
+						
+						if(isset($check_match[$slot->slot_id]))
+						{
+							$check_match[$slot->slot_id]= $check_match[$slot->slot_id] + $gpv;
+						}
+						else
+						{
+							$check_match[$slot->slot_id] = $gpv;
+						}
+
+					}
+
+		 			/* CHECK IF PROMOTED */
+					Compute::check_promotion_qualification($oneslot->slot_id);				
+				}				
+			}
+
+
+			/* Distribute Bonus For Check Match */
+			$this->distribute_check_match($check_match);
 
 			/* UPDATE ALL SLOT TO ZERO GPV AND PV*/
 			$updateall['slot_group_points'] = 0;
 			$updateall['slot_personal_points'] = 0;
 			Tbl_slot::account()->membership()->update($updateall);	
-
-			/* PROCESS AVAILABLE */
 			DB::table('tbl_settings')->where('key','check_match')->update(['value'=>0]);
-		}
+		}	
 
 	}
 
@@ -205,134 +209,26 @@ class AdminUnilevelController extends AdminController
 	}
 
 
-	public function get_data()
+	public function get_data_passed()
 	{
+		$slots = Tbl_slot::account()->membership()
+						->where('slot_personal_points', '>=', DB::raw('membership_required_pv'))
+						->get();
+		if($slots->count() == 0)
+		{
+			$slots = null;
+		}
 
-			$slots = Tbl_slot::account()->membership()->where('slot_personal_points','>',0)->lists('slot_id');
-			$sponsor_share = Tbl_tree_sponsor::whereIn('sponsor_tree_child_id',$slots)->level()->groupBy('sponsor_tree_parent_id')->lists('sponsor_tree_parent_id');
-			$unilevel_setting = DB::table('tbl_unilevel_setting')->get();
-			$unilevel = null;
-			$slots = Tbl_slot::account()->membership()
-										->whereIn('slot_id',$sponsor_share)
-										->orWhereIn('slot_id',$slots)
-										->get();
-			$ctr = 0;	
-			$return = null;		
-			$check = DB::table('tbl_settings')->where('key','check_match')->first();
-
-
-				foreach($unilevel_setting as $key => $uni)
-				{
-					$unilevel[$uni->membership_id][$uni->level] = $uni->value;
-				}
-
-				foreach($slots as $key => $slot)
-				{
-					$pv = 0;
-					$oneslot = Tbl_slot::account()->membership()->where('slot_id',$slot->slot_id)->first();
-
-					$pv = $pv + $oneslot->slot_personal_points;
-
-					if($oneslot->slot_group_points > $oneslot->slot_highest_pv)
-		            {
-		                $update["slot_highest_pv"] = $oneslot->slot_group_points;
-		                Tbl_slot::where('slot_id',$oneslot->slot_id)->update($update);
-		            }
-
-					$placement = Tbl_tree_sponsor::child($slot->slot_id)->level()->distinct_level()->get();
-					$gpv = $oneslot->slot_group_points * $oneslot->multiplier;
-					if($pv < $slot->membership_required_pv)
-					{
-						foreach($placement as $keys => $tree)
-						{
-							if($pv < $slot->membership_required_pv)
-							{
-								$slot_recipient = Tbl_slot::account()->membership()->where('slot_id',$tree->sponsor_tree_parent_id)->first();
-								if(isset($unilevel[$slot_recipient->membership_id][$tree->sponsor_tree_level]))
-								{
-									$pv = $pv + $slot_recipient->slot_personal_points;				
-								}
-							}
-						}
-					}
-
-					if($pv >= $slot->membership_required_pv)
-					{
-						$return[$ctr] = Tbl_slot::id($slot->slot_id)->account()->membership()->first();
-						$return[$ctr]->gained_pv = $pv;
-						$ctr++;
-					}
-				}				
-				
-
-
-			return $return;
+		return $slots;		
 	}
 
-	public function get_data_view()
+	public function get_data_failed()
 	{
-
-			$slots = Tbl_slot::account()->membership()->where('slot_personal_points','>',0)->lists('slot_id');
-			$sponsor_share = Tbl_tree_sponsor::whereIn('sponsor_tree_child_id',$slots)->level()->groupBy('sponsor_tree_parent_id')->lists('sponsor_tree_parent_id');
-			$unilevel_setting = DB::table('tbl_unilevel_setting')->get();
-			$unilevel = null;
-			$slots = Tbl_slot::account()->membership()
-										->whereIn('slot_id',$sponsor_share)
-										->orWhereIn('slot_id',$slots)
-										->get();
-			$ctr = 0;	
-			$return = null;		
-			$check = DB::table('tbl_settings')->where('key','check_match')->first();
-
-			if($check->value == 0)
-			{
-				foreach($unilevel_setting as $key => $uni)
-				{
-					$unilevel[$uni->membership_id][$uni->level] = $uni->value;
-				}
-
-				foreach($slots as $key => $slot)
-				{
-					$pv = 0;
-					$oneslot = Tbl_slot::account()->membership()->where('slot_id',$slot->slot_id)->first();
-
-					$pv = $pv + $oneslot->slot_personal_points;
-
-					if($oneslot->slot_group_points > $oneslot->slot_highest_pv)
-		            {
-		                $update["slot_highest_pv"] = $oneslot->slot_group_points;
-		                Tbl_slot::where('slot_id',$oneslot->slot_id)->update($update);
-		            }
-
-					$placement = Tbl_tree_sponsor::child($slot->slot_id)->level()->distinct_level()->get();
-					$gpv = $oneslot->slot_group_points * $oneslot->multiplier;
-
-					if($pv < $slot->membership_required_pv)
-					{
-						foreach($placement as $keys => $tree)
-						{
-							if($pv < $slot->membership_required_pv)
-							{
-								$slot_recipient = Tbl_slot::account()->membership()->where('slot_id',$tree->sponsor_tree_parent_id)->first();
-								if(isset($unilevel[$slot_recipient->membership_id][$tree->sponsor_tree_level]))
-								{
-									$pv = $pv + $slot_recipient->slot_personal_points;				
-								}
-							}
-						}						
-					}
-
-					if($pv >= $slot->membership_required_pv)
-					{
-						$return[$ctr] = Tbl_slot::id($slot->slot_id)->account()->membership()->first();
-						$return[$ctr]->gained_pv = $pv;
-						$ctr++;
-					}
-				}				
-			}				
-
-
-			return $return;
+		$slots = Tbl_slot::account()->membership()
+						->where('slot_personal_points', '<', DB::raw('membership_required_pv'))
+						->where('slot_group_points','!=',0)
+						->get();
+		return $slots;
 	}
 }
 

@@ -148,7 +148,7 @@ class MemberCodeController extends MemberController
 	{
 		ignore_user_abort(true);
 		set_time_limit(0);
-		$strURL = "/admin/transaction/unilevel-distribution/dynamic?message=finish";
+		$strURL = "/member/code_vault?wait=5";
 		header("Location: $strURL", true);
 		header("Connection: close", true);
 		header("Content-Encoding: none\r\n");
@@ -167,6 +167,7 @@ class MemberCodeController extends MemberController
 
 		/* CHECK IF SLOT AND CODE PIN BELONGS TO THE ACCOUNT */
 		$code_info = Tbl_product_code::where("product_pin", $product_pin)->voucher()->product()->first();
+		$check_if_archived = Tbl_product_code::where("product_pin", $product_pin)->first();
 		$slot_info = Tbl_slot::id($slot_id)->first();
 
 		if($customer_id != $code_info->account_id)
@@ -185,7 +186,7 @@ class MemberCodeController extends MemberController
 			{
 				die("You're trying to code that was already used.");
 			}
-			elseif($code_info->archived == 1)
+			elseif($check_if_archived->archived == 1)
 			{
 				die("You're trying to code that was already blocked by admin.");
 			}
@@ -212,6 +213,7 @@ class MemberCodeController extends MemberController
 			}
 
 		}
+		
 		sleep(5);
 		exit;
 	}
@@ -611,7 +613,6 @@ class MemberCodeController extends MemberController
 															  ->get();
 
 		$data['getallslot'] = Tbl_slot::where('slot_owner',Customer::id())->get();
-
         foreach($data['code'] as $key => $d)
         {
         	$get =	 DB::table('tbl_member_code_history')->where('code_pin',$d->code_pin)
@@ -1062,10 +1063,14 @@ class MemberCodeController extends MemberController
 		$check_placement = Tbl_slot::checkposition(Request::input("placement"), strtolower(Request::input("slot_position")))->first();
 		$check_id = Tbl_slot::id(Request::input("slot_number"))->first();
 		$ifused = Tbl_membership_code::where('code_pin',Request::input("code_number"))->where('used',1)->first();
-
+	    $check_slot = Tbl_slot::id(Request::input("placement"))->first();
 		if($check_placement)
 		{
 			$return["message"] = "The position you're trying to use is already occupied";
+		}
+		elseif(!$check_slot) 
+		{
+			$return["message"] = "Placement not existing.";
 		}
 		elseif(Request::input("placement") == 0)
 		{

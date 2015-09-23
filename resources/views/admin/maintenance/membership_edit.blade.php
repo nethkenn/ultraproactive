@@ -54,6 +54,20 @@
                 </div>
 
                 <div class="form-group col-md-6">
+                    <label for="global_pool_sharing">Global Pool Sharing</label>
+                    @if($_error['global_pool_sharing'])
+                        <div class="col-md-12 alert alert-danger form-errors">
+                            <ul>
+                                @foreach($_error['global_pool_sharing'] as $error)
+                                    <li>{{$error}}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <input name="global_pool_sharing" value="{{Request::input('global_pool_sharing') ? Request::input('global_pool_sharing') : $membership->global_pool_sharing }}" required="required" class="form-control" id="" placeholder="" type="number">
+                </div>
+
+                <div class="form-group col-md-6">
                     <label for="discount">Discount</label>
                     @if($_error['discount'])
                         <div class="col-md-12 alert alert-danger form-errors">

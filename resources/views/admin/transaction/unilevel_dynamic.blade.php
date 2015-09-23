@@ -33,8 +33,6 @@
 						<th>Slot #</th>
 						<th>Owner</th>
 						<th>Personal PV</th>
-						<th>Borrowed PV</th>
-						<th>Total PV</th>
 						<th>Group PV</th>
 						<th>Multiplier</th>
 						<th>Group PV to Wallet</th>
@@ -46,8 +44,6 @@
 						<td>{{$s->slot_id}}</td>
 						<td>{{$s->account_name}}</td>
 						<td>{{$s->slot_personal_points}}</td>
-						<td>{{$s->gained_pv - $s->slot_personal_points}}</td>
-						<td>{{$s->gained_pv}}</td>
 						<td>{{$s->slot_group_points}}</td>
 						<td>{{$s->multiplier}}</td>
 						<td>{{$s->slot_group_points * $s->multiplier}}</td>
@@ -58,7 +54,7 @@
 	</div>
 @endif
 
-
+<!--
 <div class="remodal create-slot" data-remodal-id="history">
 	<div class="col-md-12">
 		@if($history)
@@ -84,7 +80,8 @@
 		No History
 		@endif
 	</div>
-</div>
+</div> 
+-->
 
 
 @endsection

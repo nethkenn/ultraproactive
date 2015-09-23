@@ -92,11 +92,13 @@ Route::any('admin/transaction/payout/add', 'AdminPayoutController@add');
 Route::any('admin/transaction/payout/archive', 'AdminPayoutController@archive');
 Route::any('admin/transaction/payout/restore', 'AdminPayoutController@restore');
 
-
+/* Unilevel Compression*/
 Route::any('admin/transaction/unilevel-distribution/dynamic', 'AdminUnilevelController@indexs');
 // Route::any('admin/transaction/unilevel-distribution/dynamic/setting', 'AdminUnilevelController@setting');
 Route::any('admin/transaction/unilevel-distribution', 'AdminUnilevelController@index');
 
+/* Global Pool Sharing - Admin */
+Route::any('admin/transaction/global_pool_sharing', 'AdminGlobalPoolSharingController@index');
 
 /* ADMIN / MAINTENANCE */
 Route::any('admin/maintenance/accounts', 'AdminAccountController@index');

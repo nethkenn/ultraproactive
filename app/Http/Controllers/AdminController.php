@@ -45,6 +45,11 @@ class AdminController extends Controller
                 }
             }
 
+            if(!DB::table('tbl_settings')->where('key','global_pv_sharing_percentage')->first())
+            {
+                DB::table('tbl_settings')->insert(['key'=>'global_pv_sharing_percentage','value'=>3]);
+            }
+
             $_admin_module[] = "admin";  
             $_admin_module[] = "account";
             $intersected_array = array_intersect($array_segment, $_admin_module);
@@ -57,25 +62,12 @@ class AdminController extends Controller
                 {
                     return redirect('admin/register_url?new_admin_url='.Request::path())->send();
                 }
-
-              
-
-
-               
-                
                 // return abort(404);
                    return redirect('admin')->with('not_allow','You are no allowed to access '. Request::path())->send();
                 // return view('admin.not_allow');
-
-
-
             }
             // dd($array_segment,$admin_module, $_admin_module);
-            // var_dump( $intersected_array);
-
-
-
-           
+            // var_dump( $intersected_array);   
         }
         else
         {

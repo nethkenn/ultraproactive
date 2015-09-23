@@ -82,12 +82,18 @@ class Compute
                     }
                     
                     /* CHECK IF BONUS IS ZERO */
-                    if($unilevel_bonus != 0)
+                    if($unilevel_bonus != 0 || $upgrade_bonus != 0)
                     {
                         /* UPDATE WALLET */
                         $update_recipient["slot_group_points"] = $update_recipient["slot_group_points"] + $unilevel_bonus;
                         $update_recipient["slot_upgrade_points"] = $update_recipient["slot_upgrade_points"] + $upgrade_bonus;
+                        
+                        $insert['value'] = $unilevel_bonus;
+                        $insert['slot_id'] = $slot_recipient->slot_id;
+                        $insert['done'] = 0;
+                        $insert['created_at'] = Carbon::now();
 
+                        DB::table('tbl_global_pv_logs')->insert($insert);
                         // if($update_recipient["slot_group_points"] > $slot_recipient->slot_highest_pv)
                         // {
                         //     $update_recipient["slot_highest_pv"] = $update_recipient["slot_group_points"];
@@ -256,7 +262,7 @@ class Compute
                                                 {   
                                                         $log = "Im sorry! Max pairing per day already exceed your slot #" . $slot_recipient->slot_id . " flushed out <b>" . number_format($pairing_bonus, 2) . " wallet</b> from <b>PAIRING BONUS</b> due to pairing combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining binary points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right. This combination was caused by a repurchase of one of your downlines.";          
                                                         // Log::account($slot_recipient->slot_owner, $log);
-                                                        Log::slot($buyer_slot_info->slot_id, $log, 0,$method,$buyer_slot_id);
+                                                        Log::slot($slot_recipient->slot_id, $log, 0,$method,$buyer_slot_id);
                                                         $flushpoints =  $flushpoints+$pairing_bonus;
                                                 }
                                     }

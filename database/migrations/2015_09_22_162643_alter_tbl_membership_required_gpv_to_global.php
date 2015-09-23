@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AlterTblSlotDate extends Migration
+class AlterTblMembershipRequiredGpvToGlobal extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,10 @@ class AlterTblSlotDate extends Migration
      */
     public function up()
     {
-            DB::statement('ALTER TABLE `tbl_slot` MODIFY `pairs_per_day_date` VARCHAR(100) default 0;');
-            DB::statement('ALTER TABLE `tbl_slot` MODIFY `slot_today_date` VARCHAR(100) default 0; NOT NULL');
-
+        Schema::table('tbl_membership', function($table)
+        {
+            $table->renameColumn('membership_required_gpv', 'global_pool_sharing');
+        }); 
     }
 
     /**

@@ -70,6 +70,7 @@
 									<li><a href="admin/transaction/payout">Process Payout</a></li>
 									<!--<li><a href="admin/transaction/unilevel-distribution">Unilevel Distribution</a></li> -->
 									<li><a href="admin/transaction/unilevel-distribution/dynamic">Dynamic Compression</a></li>
+									<li><a href="admin/transaction/global_pool_sharing">Global Pool Sharing</a></li>
 								</ul>
 							</li> 
 							<!-- MAINTENANCE -->
@@ -132,6 +133,7 @@
 									<li><a href="admin/reports/membership_sales">Membership Sales Report</a></li>
 								</ul>
 							</li> 
+
 							<!-- CONTENT -->
 							<li class="dropdown {{ Request::segment(2) == 'content' ? 'active' : 'inactive' }}">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Content <span class="caret"></span></a>

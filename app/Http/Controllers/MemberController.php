@@ -68,11 +68,10 @@ class MemberController extends Controller
 					    $data3 = $data3['data3'];
 		    			/* Check Date if need to reset daily pair */
 					    /* Check Date if need to reset daily income*/
-						$this->$check_daily($data3);
+						$this->$check_daily($data3['data3']);
 					}	
 			    }	 					  
 			}	
-
             View()->share("member", $customer_info);
             View()->share("slot", $data2);
             View()->share("slotnow", $data3);
@@ -109,6 +108,13 @@ class MemberController extends Controller
 										  ->join('tbl_membership','tbl_membership.membership_id','=','tbl_slot.slot_membership')
 										  ->join('tbl_rank','tbl_rank.rank_id','=','tbl_slot.slot_rank')
 										  ->first();
+		    if(!$data['data3'])
+		    {
+    		$data['data3'] = DB::table('tbl_slot')->where('slot_owner',$id)
+										  ->join('tbl_membership','tbl_membership.membership_id','=','tbl_slot.slot_membership')
+										  ->join('tbl_rank','tbl_rank.rank_id','=','tbl_slot.slot_rank')
+										  ->first();
+		    }
 
 		    $data['current_wallet'] = Tbl_wallet_logs::id(Session::get('currentslot'))->wallet()->sum('wallet_amount');
 		    $data['current_gc'] = Tbl_wallet_logs::id(Session::get('currentslot'))->gc()->sum('wallet_amount');

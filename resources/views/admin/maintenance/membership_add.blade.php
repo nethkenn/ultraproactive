@@ -53,6 +53,20 @@
                 </div>
 
                 <div class="form-group col-md-6">
+                    <label for="global_pool_sharing">Global Pool Sharing (0-100%)</label>
+                    @if($_error['global_pool_sharing'])
+                        <div class="col-md-12 alert alert-danger form-errors">
+                            <ul>
+                                @foreach($_error['global_pool_sharing'] as $error)
+                                    <li>{{$error}}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <input name="global_pool_sharing" value="{{Request::input('global_pool_sharing')}}" required="required" class="form-control" id="" placeholder="" type="number">
+                </div>
+
+                <div class="form-group col-md-6">
                     <label for="slot_limit">Slot Limit Per Account</label>
                     @if($_error['slot_limit'])
                         <div class="col-md-12 alert alert-danger form-errors">

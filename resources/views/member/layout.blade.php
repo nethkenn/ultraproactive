@@ -85,11 +85,17 @@
                             <li><a href="/member/genealogy/tree?mode=sponsor">Sponsor Genealogy</a></li>
                         </ul>
                     </li>
-			        <li class="{{ Request::segment(2) == 'encashment' ? 'active' : '' }}"><a href="/member/encashment">Encashment</a></li>
+                    <li class="{{ Request::segment(2) == 'encashment' ? 'active' : '' }} {{ Request::segment(2) == 'transfer_wallet' ? 'active' : '' }} dropdown">
+                        <a href="javascript:">Wallet</a>
+                        <ul class="dropdown-menu">
+                             <li><a href="/member/encashment">Encashment</a></li>
+                            <li><a href="/member/transfer_wallet">Transfer Wallet</a></li>
+                        </ul>
+                    </li>
 			        <li class="{{ Request::segment(2) == 'product' ? 'active' : '' }}"><a href="/member/product">Product</a></li>
 			        <li class="{{ Request::segment(2) == 'voucher' ? 'active' : '' }}"><a href="/member/voucher">Voucher</a></li>
 			        <li class="{{ Request::segment(2) == 'leads' ? 'active' : '' }}"><a href="/member/leads">Leads</a></li>
-                    <li class="{{ Request::segment(2) == 'transfer' ? 'active' : '' }}"><a href="/member/transfer_wallet">Transfer Wallet</a></li>
+                    
                    <li class="{{ Request::segment(2) == 'genealogy' ? 'active' : '' }} dropdown hide">
                         <!--<a href="/member/genealogy?mode=binary">E-payment</a>-->
                         <a href="member/e-payment/">E-payment</a>

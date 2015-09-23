@@ -46,7 +46,7 @@
                         <div>INCOME</div>
                     </div>
                 </div>
-                <div class="valuez para">{{$earnings['total_income']}}</div>
+                <div class="valuez para">{{ number_format($earnings['total_income'],2)}}</div>
             </div>
         </div>
     </a>
@@ -115,11 +115,11 @@
                 </div>
                 <div class="holders">
                     <div class="leybel">TOTAL INCOME</div>
-                    <div class="balyu">{{$earnings['total_income']}}</div>
+                    <div class="balyu">{{ number_format($earnings['total_income'],2)}}</div>
                 </div>
                 <div class="holders">
                     <div class="leybel">TOTAL WITHDRAWAL</div>
-                    <div class="balyu">{{$earnings['total_withdrawal']}}</div>
+                    <div class="balyu">{{number_format($earnings['total_withdrawal'],2)}}</div>
                 </div>
                 <!-- <div class="holders">
                     <div class="leybel">MAX INCOME PER DAY</div>

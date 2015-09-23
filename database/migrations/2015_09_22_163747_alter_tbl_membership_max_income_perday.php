@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateTblMembership extends Migration
+class AlterTblMembershipMaxIncomePerday extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,7 @@ class UpdateTblMembership extends Migration
      */
     public function up()
     {
-        Schema::table('tbl_membership', function (Blueprint $table)
-        {
-            $table->integer('slot_limit')->default(1);
-        });
+        DB::statement('ALTER TABLE `tbl_membership` MODIFY `max_income` double default 999999  NOT NULL;');
     }
 
     /**

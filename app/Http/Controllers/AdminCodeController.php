@@ -79,7 +79,7 @@ class AdminCodeController extends AdminController {
 
         ->addColumn('delete','<a href="#" class="block-membership-code" membership-code-id ="{{$code_pin}}">BLOCK</a>')
         								->addColumn('transfer','<a class="transfer-membership-code"  href="#" membership-code-id="{{$code_pin}}" account-id="{{$account_id}}">TRANSFER</a>')
-        								->editColumn('created_at','{{$created_at->format("F d, Y g:ia")}}')
+        								// ->editColumn('created_at','{{$created_at->format("F d, Y g:ia")}}')
         								->editColumn('inventory_update_type_id','<input type="checkbox" {{$inventory_update_type_id == 1 ? \'checked="checked"\' : \'\'}} name="" value="" readonly disabled>')
         								->editColumn('account_name','{{$account_name or "No owner"}}')
         								->make(true);

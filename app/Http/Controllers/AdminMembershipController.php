@@ -50,6 +50,7 @@ class AdminMembershipController extends AdminController
 			$rules['membership_entry'] = 'numeric|numeric|min:0|max:1';
 			$rules['membership_upgrade'] = 'numeric|min:0|max:1';
 			$rules['max_income'] = 'numeric|min:1';
+			$rules['global_pool_sharing'] = 'numeric|min:0';
 			// $rules['member_upgrade_pts'] = 'numeric|min:0';
 			$message = [
 				'product_name.regex' => 'The :attribute must only have letters , numbers, spaces, hypens ( - ) and underscores ( _ )',
@@ -67,6 +68,7 @@ class AdminMembershipController extends AdminController
 				$insert['max_income'] = Request::input('max_income');
 				$insert['discount'] = Request::input('discount');
 				$insert['slot_limit'] = Request::input('slot_limit');
+				$insert['global_pool_sharing'] = Request::input('global_pool_sharing');
 				// $insert['member_upgrade_pts'] = Request::input('member_upgrade_pts');
 				$membership = Tbl_membership::where('membership_id',$id)->update($insert);
 				return Redirect('admin/maintenance/membership');
@@ -81,6 +83,7 @@ class AdminMembershipController extends AdminController
 				$data['_error']['max_income'] = $errors->get('max_income');
 				$data['_error']['discount'] = $errors->get('discount');
 				$data['_error']['slot_limit'] = $errors->get('slot_limit');
+				$data['_error']['global_pool_sharing'] = $errors->get('global_pool_sharing');
 				// $data['_error']['member_upgrade_pts'] = $errors->get('member_upgrade_pts');
 			}
 
@@ -130,6 +133,7 @@ class AdminMembershipController extends AdminController
 			$rules['membership_price'] = 'required|unique:tbl_membership,membership_price|numeric|min:0';
 			$rules['discount'] = 'numeric|min:0|max:100';
 			$rules['max_income'] = 'numeric|min:1';
+			$rules['global_pool_sharing'] = 'numeric|min:0';
 		// 	$rules['member_upgrade_pts'] = 'numeric|min:0';
 
 
@@ -149,6 +153,7 @@ class AdminMembershipController extends AdminController
 				$insert['discount'] = Request::input('discount');
 				$insert['max_income'] = Request::input('max_income');
 				$insert['slot_limit'] = Request::input('slot_limit');
+				$insert['global_pool_sharing'] = Request::input('global_pool_sharing');
 		// 		$insert['member_upgrade_pts'] = Request::input('member_upgrade_pts');
 				// dd($insert);
 				$membership = new Tbl_membership($insert);
@@ -169,6 +174,7 @@ class AdminMembershipController extends AdminController
 				$data['_error']['membership_upgrade'] = $errors->get('membership_upgrade');
 				$data['_error']['max_income'] = $errors->get('max_income');
 				$data['_error']['slot_limit'] = $errors->get('slot_limit');
+				$data['_error']['global_pool_sharing'] = $errors->get('global_pool_sharing');
 		// 		$data['_error']['member_upgrade_pts'] = $errors->get('member_upgrade_pts');
 
 			}
