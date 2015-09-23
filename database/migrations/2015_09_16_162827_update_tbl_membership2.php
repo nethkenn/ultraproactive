@@ -12,7 +12,7 @@ class UpdateTblMembership2 extends Migration
      */
     public function up()
     {
-        if (!Schema::hasColumn('tbl_membership', 'max_group_pv'))
+        if (!Schema::hasColumn('tbl_membership', 'slot_limit'))
         {
             Schema::table('tbl_membership', function (Blueprint $table)
             {
