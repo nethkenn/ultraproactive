@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblAdminLogs extends Migration
+class UpdateTblMembershipBreakawayBonus extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,10 @@ class CreateTblAdminLogs extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('tbl_membership', function (Blueprint $table)
+        {   
+                $table->double('breakaway_bonus_level')->default(0);
+        });
     }
 
     /**

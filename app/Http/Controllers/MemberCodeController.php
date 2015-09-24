@@ -271,8 +271,14 @@ class MemberCodeController extends MemberController
 						$checking2 = true;
 					}
 				}
-
-				if($check_placement)
+				
+			 	$limit = DB::table('tbl_settings')->where('key','slot_limit')->first();
+				$count = Tbl_slot::where('slot_owner',Customer::id())->count();
+				if($limit->value <=  $count)
+				{
+					$data["message"] = "This account is already reach the max slot per account. Max slot per account is ".$limit->value.".";
+				}
+				elseif($check_placement)
 				{
 					$return["message"] = "The position you're trying to use is already occupied";
 				}
@@ -1064,6 +1070,13 @@ class MemberCodeController extends MemberController
 		$check_id = Tbl_slot::id(Request::input("slot_number"))->first();
 		$ifused = Tbl_membership_code::where('code_pin',Request::input("code_number"))->where('used',1)->first();
 	    $check_slot = Tbl_slot::id(Request::input("placement"))->first();
+
+	 	$limit = DB::table('tbl_settings')->where('key','slot_limit')->first();
+		$count = Tbl_slot::where('slot_owner',Customer::id())->count();
+		if($limit->value <=  $count)
+		{
+			$data["message"] = "This account is already reach the max slot per account. Max slot per account is ".$limit->value.".";
+		}
 		if($check_placement)
 		{
 			$return["message"] = "The position you're trying to use is already occupied";

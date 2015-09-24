@@ -9,6 +9,8 @@ use App\Tbl_wallet_logs;
 use App\Tbl_slot;
 use App\Tbl_transaction;
 use App\Rel_transaction;
+use App\Tbl_admin_log;
+use App\Tbl_admin_log_url;
 class Log
 {
 	public static function account($account_id, $log)
@@ -19,6 +21,22 @@ class Log
 		Tbl_account_log::insert($insert);
 	}
 	
+	public static function Admin($account_id,$log)
+	{
+		$insert["account_id"] = $account_id;
+		$insert["logs"] = $log;
+		$insert["created_at"] = Carbon\Carbon::now();
+		Tbl_admin_log::insert($insert);
+	}
+
+	public static function AdminUrl($account_id,$log)
+	{
+		$insert["account_id"] = $account_id;
+		$insert["logs_url"] = $log;
+		$insert["created_at"] = Carbon\Carbon::now();
+		Tbl_admin_log_url::insert($insert);
+	}
+
 	public static function transaction($insert)
 	{
 		$insert["transaction_description"] = 		$insert['transaction_description'];

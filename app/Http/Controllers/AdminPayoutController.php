@@ -19,12 +19,12 @@ class AdminPayoutController extends AdminController
 	{
 		$data["page"] = "Process Payout"; 
         $data['success'] = Session::get('success');
-
+        Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Process payout.");
         if(isset($_POST['processall']))
         {
             $this->processall();
             $success = "Proccessed all payout successfully.";
-
+            Log::Admin(Admin::info()->account_id,Admin::info()->account_username." processed all payout.");
 
             if(Request::input('processed') == 1)
             {
@@ -52,7 +52,7 @@ class AdminPayoutController extends AdminController
         {
             $this->encashallwallet();
             $success = "Auto Encashment Success (Processed Request)";
-
+            Log::Admin(Admin::info()->account_id,Admin::info()->account_username." encashed all wallet.");
 
             if(Request::input('processed') == 1)
             {
@@ -70,6 +70,7 @@ class AdminPayoutController extends AdminController
             $this->singleprocess(Request::input('idtoprocess'));
             $success = "Single Process complete (Processed Request)";
 
+            Log::Admin(Admin::info()->account_id,Admin::info()->account_username." processed the payout id #".Request::input('idtoprocess'));
 
             if(Request::input('processed') == 1)
             {

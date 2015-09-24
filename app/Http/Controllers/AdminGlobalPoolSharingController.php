@@ -12,16 +12,25 @@ use App\Classes\Log;
 use Carbon\Carbon;
 use App\Tbl_membership;
 use App\Tbl_transaction;
+use Redirect;
 class AdminGlobalPoolSharingController extends AdminController
 {
 	public function index()
 	{
+		$data['settings_for_global'] = DB::table('tbl_settings')->where('key','settings_for_global')->first();
 		$data["page"] = "Global Pool Sharing";
 		$data['gps'] = DB::table('tbl_settings')->where('key','=','global_pv_sharing_percentage')->first()->value;
         $data['total_pv'] = $this->compute_gained_pv();
         $data['shared'] = ($data['gps']/100 )* $data['total_pv'];
 		$data['check'] = DB::table('tbl_settings')->where('key','global_enable')->first();
 		
+		if(Request::input('settings_for_global'))
+		{
+			DB::table('tbl_settings')->where('key','settings_for_global')->update(['value'=>Request::input('settings_for_global')]);
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." changed  the setting for starting global pool sharing to ".Request::input('settings_for_global').".");
+			$data['settings_for_global'] = DB::table('tbl_settings')->where('key','settings_for_global')->first();
+		}
+
 		if(!$data['check'])
 		{	
 			DB::table('tbl_settings')->insert(['key'=>'global_enable','value'=>'0']);
@@ -32,6 +41,10 @@ class AdminGlobalPoolSharingController extends AdminController
 		{
 			sleep(1);
 			return Redirect::to('/admin/transaction/global_pool_sharing');
+		}
+		else
+		{
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visit Global Pool Sharing.");
 		}
 
 		if(isset($_POST['sbmt']))
@@ -51,7 +64,7 @@ class AdminGlobalPoolSharingController extends AdminController
 			session_write_close();
 			DB::table('tbl_settings')->where('key','global_enable')->update(['value'=>1]);
 			$this->shared_distribution();
-
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." starts the Global Pool Sharing.");
 			$last_date = DB::table('tbl_global_pv_done')->orderBy('global_pv_done_id','DESC')->first();
 			if($last_date)
 			{

@@ -110,6 +110,10 @@
 				});
 			})
 
+	       $(".slot_limit").click(function(){
+	       		var inst = $('[data-remodal-id=slot_limit]').remodal();
+	          	inst.open(); 
+	       });
 
 			$('#postion-table').on('click', '.restore-position', function(event)
 			{
@@ -139,13 +143,7 @@
 				.always(function() {
 					console.log("complete");
 				});
-			})
-
-
-
-
-
-					
+			})				
 		});
 	</script>
 @endsection

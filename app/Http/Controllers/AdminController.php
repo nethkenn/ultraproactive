@@ -11,7 +11,7 @@ use App\Tbl_module;
 use gapi;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use App\Classes\Log;
 class AdminController extends Controller
 {
 	public function __construct()
@@ -25,6 +25,12 @@ class AdminController extends Controller
         if(!$data['slot_limit'])
         {
             DB::table('tbl_settings')->insert(['key'=>'slot_limit','value'=>1]);
+        }
+
+
+        if(!DB::table('tbl_settings')->where('key','settings_for_global')->first())
+        {
+            DB::table('tbl_settings')->insert(['key'=>'settings_for_global','value'=>"Manual"]);
         }
         
         $admin_info = Admin::info();
@@ -49,6 +55,8 @@ class AdminController extends Controller
             {
                 DB::table('tbl_settings')->insert(['key'=>'global_pv_sharing_percentage','value'=>3]);
             }
+
+            Log::AdminUrl(Admin::info()->account_id,Admin::info()->account_username." visits url: ".$_SERVER['REQUEST_URI']);
 
             $_admin_module[] = "admin";  
             $_admin_module[] = "account";
@@ -89,6 +97,7 @@ class AdminController extends Controller
     {
         include('resources/views/sikreto/gapi.class.php');
 
+        Log::Admin(Admin::info()->account_id,Admin::info()->account_username." Visits Dashboard");
         $profile_id = "107929951";
         $report_id = "xxxxxxxx";
         $dimensions = array('date');

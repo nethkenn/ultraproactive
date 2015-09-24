@@ -347,6 +347,18 @@ Route::any('admin/utilities/binary/product/edit', 'AdminComplanController@binary
 Route::any('admin/utilities/matching', 'AdminComplanController@matching');
 Route::any('admin/utilities/matching/edit', 'AdminComplanController@matching_edit');
 
+Route::any('admin/utilities/travel_qualification', 'AdminComplanController@travel_qualification');
+Route::any('admin/utilities/travel_qualification/edit', 'AdminComplanController@travel_qualification_edit');
+Route::any('admin/utilities/travel_qualification/add', 'AdminComplanController@travel_qualification_add');
+Route::any('admin/utilities/travel_qualification/delete', 'AdminComplanController@travel_qualification_delete');
+Route::any('admin/utilities/travel_qualification/restore', 'AdminComplanController@travel_qualification_restore');
+
+Route::any('admin/utilities/travel_reward', 'AdminComplanController@travel_reward');
+Route::any('admin/utilities/travel_reward/edit', 'AdminComplanController@travel_reward_edit');
+Route::any('admin/utilities/travel_reward/add', 'AdminComplanController@travel_reward_add');
+Route::any('admin/utilities/travel_reward/delete', 'AdminComplanController@travel_reward_delete');
+Route::any('admin/utilities/travel_reward/restore', 'AdminComplanController@travel_reward_restore');
+
 Route::any('admin/utilities/direct', 'AdminComplanController@direct');
 Route::any('admin/utilities/direct/edit', 'AdminComplanController@direct_edit');
 
@@ -361,6 +373,10 @@ Route::any('admin/utilities/unilevel_check_match/edit', 'AdminComplanController@
 
 Route::any('admin/utilities/leadership_bonus', 'AdminComplanController@leadership_bonus');
 Route::any('admin/utilities/leadership_bonus/edit', 'AdminComplanController@leadership_bonus_edit');
+
+/*BREAKAWAY BONUS*/
+Route::any('admin/utilities/breakaway_bonus', 'AdminComplanController@breakaway_bonus');
+Route::any('admin/utilities/breakaway_bonus/edit', 'AdminComplanController@breakaway_bonus_edit');
 
 Route::any('admin/utilities/rank', 'AdminComplanController@rank');
 Route::any('admin/utilities/rank/edit', 'AdminComplanController@rank_edit');

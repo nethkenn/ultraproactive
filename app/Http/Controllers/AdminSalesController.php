@@ -27,12 +27,14 @@ class AdminSalesController extends AdminController
 {
 	public function index()
 	{
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." Visits Sales");
         return view('admin.transaction.sale');
 	}
 
 
 	public function process_sale()
-	{
+	{	
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." Visits Process Sales");
 		$data['_member_account'] = Tbl_account::all();
         return view('admin.transaction.sale_process', $data);
 	}
@@ -164,10 +166,6 @@ class AdminSalesController extends AdminController
 
 
 		$_cart_product = Session::get('admin_cart');
-
-
-
-	   
 
 		$request['member_type'] = Request::input('member_type');
 		$rules['member_type'] = 'required|check_member_type';
@@ -312,7 +310,7 @@ class AdminSalesController extends AdminController
          /**
          * SAVE VOUCHER PRODUCT
          */
-        $this->add_product_to_voucher_list($voucher->voucher_id,$_cart,Request::input('member_type'), Request::input('status'),$transaction_id);
+        $this->add_product_to_voucher_list($voucher->voucher_id,$_cart,Request::input('member_type'), Request::input('status'),$transaction_id,1);
 
         $admin_log = "Sold Product Voucher # ".$voucher->voucher_id. " to a non-member as ".  Admin::info()->admin_position_name.".";
         Log::account(Admin::info()->account_id, $admin_log);
@@ -565,7 +563,7 @@ class AdminSalesController extends AdminController
         return redirect('admin/transaction/sales/')->with('success_message', $success_message);
 	}
 
-	public function add_product_to_voucher_list($voucher_id, $cart, $member_type, $status='processed',$transaction_id)
+	public function add_product_to_voucher_list($voucher_id, $cart, $member_type, $status='processed',$transaction_id,$nonmember = 0)
 	{
 		$voucher = Tbl_voucher::where('voucher_id',$voucher_id)->first();
 		$slot = Tbl_slot::id($voucher->slot_id)->first();
@@ -663,6 +661,16 @@ class AdminSalesController extends AdminController
 
 		}
 
+		if($nonmember == 1)
+		{
+			$earned_pv = 0;
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username."create the voucher #".$voucher_id."(Non-Member)");
+		}
+		else
+		{
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username."create the voucher #".$voucher_id."(Member)");
+		}
+		
 		$update_transaction['earned_pv'] = $earned_pv;
 		$update_transaction['transaction_discount_amount'] = $amount_of_discount_total;
 		$update_transaction['transaction_amount'] = $without_discount_total;
@@ -881,8 +889,10 @@ class AdminSalesController extends AdminController
 		$voucher->formatted_date_created = $voucher->created_at->toFormattedDateString();
 
 
-
+		$total_product = [];
+		$discount = [];
 		
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." View voucher #". Request::input('voucher_id'));
 
 		$data['voucher'] = 	$voucher;
 		$data['_voucher_product']  = Tbl_voucher_has_product::where('voucher_id', $voucher_id)->product()->get();
@@ -894,7 +904,8 @@ class AdminSalesController extends AdminController
 				$total_product[] =  $value->sub_total + $voucher->product_discount_amount;
 				$discount[] = $value->product_discount_amount;
 			}
-		}else
+		}
+		else
 		{
 			$total_product = [];
 		}
@@ -906,7 +917,7 @@ class AdminSalesController extends AdminController
 
 		if(Request::isMethod('post'))
 		{
-
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." Send an email to the owner of voucher #". Request::input('voucher_id'));
 			$company_email = Settings::get('company_email');
 			$company_name = Settings::get('company_name');
 			$sold_to = Tbl_account::find($data['voucher']->account_id);
