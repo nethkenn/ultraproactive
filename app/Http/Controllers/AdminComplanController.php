@@ -11,7 +11,11 @@ use App\Classes\Compute;
 use DB;
 use App\Tbl_matching_bonus;
 use App\Tbl_unilevel_check_match;
-
+use App\Classes\Log;
+use App\Tbl_tree_sponsor;
+use App\Tbl_travel_reward;
+use Validator;
+use App\Tbl_travel_qualification;
 class AdminComplanController extends AdminController
 {
 	public function index()
@@ -160,6 +164,181 @@ class AdminComplanController extends AdminController
 			return view('admin.computation.indirect_edit', $data);	
 		}
 	}
+
+	public function travel_reward()
+	{
+		
+		if(Request::input('status') == "archived")
+		{
+			$data["_reward"] = Tbl_travel_reward::where('archived',1)->get();
+		}
+		else
+		{
+			$data["_reward"] = Tbl_travel_reward::where('archived',0)->get();
+		}
+
+		return view('admin.computation.travel_reward', $data);
+	}
+
+	public function travel_reward_edit()
+	{
+		$data['_error'] = null;
+		$data['data'] = Tbl_travel_reward::where('travel_reward_id',Request::input('id'))->first();
+		if(Request::isMethod("post"))
+		{
+				$rules['travel_reward_name'] = 'required|unique:tbl_membership,membership_name|regex:/^[A-Za-z0-9\s-_]+$/';
+				$rules['required_points'] = 'numeric|min:1';
+				$validator = Validator::make(Request::input(),$rules);
+				if (!$validator->fails())
+				{
+
+					$update['travel_reward_name'] = Request::input('travel_reward_name');
+					$update['required_points'] = Request::input('required_points');
+					Tbl_travel_reward::where('travel_reward_id',Request::input('id'))->update($update);	
+				
+					return Redirect::to('/admin/utilities/travel_reward');
+				}
+				else
+				{	
+					$errors =  $validator->errors();
+					$data['_error']['travel_reward_name'] = $errors->get('travel_reward_name');
+					$data['_error']['required_points'] = $errors->get('required_points');
+				}			
+		}
+
+		return view('admin.computation.travel_reward_edit',$data);	
+	}
+
+	public function travel_reward_add()
+	{	
+		$data['_error'] = null;
+		if(Request::isMethod("post"))
+		{
+				$rules['travel_reward_name'] = 'required|unique:tbl_membership,membership_name|regex:/^[A-Za-z0-9\s-_]+$/';
+				$rules['required_points'] = 'numeric|min:1';
+				$validator = Validator::make(Request::input(),$rules);
+				if (!$validator->fails())
+				{
+
+					$insert['travel_reward_name'] = Request::input('travel_reward_name');
+					$insert['required_points'] = Request::input('required_points');
+					Tbl_travel_reward::insert($insert);	
+				
+					return Redirect::to('/admin/utilities/travel_reward');
+				}
+				else
+				{	
+					$errors =  $validator->errors();
+					$data['_error']['travel_reward_name'] = $errors->get('travel_reward_name');
+					$data['_error']['required_points'] = $errors->get('required_points');
+				}			
+		}
+
+		return view('admin.computation.travel_reward_add',$data);	
+	}
+
+	public function travel_reward_delete()
+	{
+		Tbl_travel_reward::where('travel_reward_id',Request::input('id'))->update(['archived'=>1]);	
+		return Redirect::to('/admin/utilities/travel_reward');
+	}
+
+	public function travel_reward_restore()
+	{
+		Tbl_travel_reward::where('travel_reward_id',Request::input('id'))->update(['archived'=>0]);	
+		return Redirect::to('/admin/utilities/travel_reward?status=archived');
+	}
+
+	public function travel_qualification()
+	{
+		if(Request::input('status') == "archived")
+		{
+			$data["_qualification"] = Tbl_travel_qualification::where('archived',1)->get();
+		}
+		else
+		{
+			$data["_qualification"] = Tbl_travel_qualification::where('archived',0)->get();
+		}
+
+		return view('admin.computation.travel_qualification', $data);
+	}
+
+	public function travel_qualification_edit()
+	{
+		$data['_error'] = null;
+		$data['data'] = Tbl_travel_qualification::where('travel_qualification_id',Request::input('id'))->first();
+		if(Request::isMethod("post"))
+		{
+				$rules['travel_qualification_name'] = 'required|unique:tbl_membership,membership_name|regex:/^[A-Za-z0-9\s-_]+$/';
+				$rules['item'] = 'numeric|min:1';
+				$rules['points'] = 'numeric|min:1';
+				$validator = Validator::make(Request::input(),$rules);
+				if (!$validator->fails())
+				{
+
+					$update['travel_qualification_name'] = Request::input('travel_qualification_name');
+					$update['item'] = Request::input('item');
+					$update['points'] = Request::input('points');
+					Tbl_travel_qualification::where('travel_qualification_id',Request::input('id'))->update($update);	
+				
+					return Redirect::to('/admin/utilities/travel_qualification');
+				}
+				else
+				{	
+					$errors =  $validator->errors();
+					$data['_error']['travel_qualification_name'] = $errors->get('travel_qualification_name');
+					$data['_error']['item'] = $errors->get('item');
+					$data['_error']['points'] = $errors->get('points');
+				}			
+		}
+
+		return view('admin.computation.travel_qualification_edit',$data);	
+	}
+
+	public function travel_qualification_add()
+	{	
+		$data['_error'] = null;
+		if(Request::isMethod("post"))
+		{
+				$rules['travel_qualification_name'] = 'required|unique:tbl_membership,membership_name|regex:/^[A-Za-z0-9\s-_]+$/';
+				$rules['item'] = 'numeric|min:1';
+				$rules['points'] = 'numeric|min:1';
+				$validator = Validator::make(Request::input(),$rules);
+				if (!$validator->fails())
+				{
+					$insert['travel_qualification_name'] = Request::input('travel_qualification_name');
+					$insert['item'] = Request::input('item');
+					$insert['points'] = Request::input('points');
+					Tbl_travel_qualification::insert($insert);	
+				
+					return Redirect::to('/admin/utilities/travel_qualification');
+				}
+				else
+				{	
+					$errors =  $validator->errors();
+					$data['_error']['travel_qualification_name'] = $errors->get('travel_qualification_name');
+					$data['_error']['item'] = $errors->get('item');
+					$data['_error']['points'] = $errors->get('points');
+				}			
+		}
+
+		return view('admin.computation.travel_qualification_add',$data);	
+	}
+
+	public function travel_qualification_delete()
+	{
+		Tbl_travel_qualification::where('travel_qualification_id',Request::input('id'))->update(['archived'=>1]);	
+	
+		return Redirect::to('/admin/utilities/travel_qualification');
+	}
+
+	public function travel_qualification_restore()
+	{
+		Tbl_travel_qualification::where('travel_qualification_id',Request::input('id'))->update(['archived'=>0]);	
+	
+		return Redirect::to('/admin/utilities/travel_qualification?status=archived');
+	}
+
 	public function matching()
 	{
 		$data["_membership"] = Tbl_membership::active()->get();
@@ -295,11 +474,60 @@ class AdminComplanController extends AdminController
 		}
 	}
 
+
+	/* BREAKAWAY BONUS */
+	public function breakaway_bonus()
+	{
+		$data["_membership"] = Tbl_membership::active()->get();
+		return view('admin.utilities.breakaway_bonus', $data);
+	}
+
+
+	public function breakaway_bonus_edit()
+	{
+		if(Request::isMethod("post"))
+		{
+			$update["breakaway_bonus_level"] = Request::input("breakaway_bonus_level");
+			// $update["membership_required_pv"] = Request::input("membership_required_pv");
+			// $update["membership_required_gpv"] = Request::input("membership_required_gpv");
+			// $update["multiplier"] = Request::input("multiplier");
+			Tbl_membership::where("membership_id", Request::input("id"))->update($update);
+
+			$update["membership_repurchase_level"] = Request::input("membership_repurchase_level");
+			$update["membership_required_pv"] = Request::input("membership_required_pv");
+			// $update["membership_required_gpv"] = Request::input("membership_required_gpv");
+			$update["multiplier"] = Request::input("multiplier");
+			Tbl_membership::where("membership_id", Request::input("id"))->update($update);
+
+			$ctr = 0;
+			DB::table('tbl_breakaway_bonus_setting')->where("membership_id", Request::input("id"))->delete();
+
+			foreach(Request::input("level") as $level => $value)
+			{
+				$insert[$ctr]["level"] = $level;
+				$insert[$ctr]["value"] = $value;
+				$insert[$ctr]["membership_id"] = Request::input("id");
+				$ctr++;
+			}
+
+			DB::table('tbl_breakaway_bonus_setting')->insert($insert);
+
+			return Redirect::to('/admin/utilities/breakaway_bonus');
+		}
+		else
+		{
+			$data["data"] = Tbl_membership::where("membership_id", Request::input("id"))->first();
+			$data["_level"] = DB::table('tbl_breakaway_bonus_setting')->where("membership_id", Request::input("id"))->get();
+			return view('admin.utilities.breakaway_bonus_edit', $data);	
+		}
+	}
+
 	public function rank()
 	{
 		$data["_membership"] = Tbl_membership::active()->get();
 		return view('admin.computation.rank', $data);
 	}
+
 	public function rank_edit()
 	{
 		if(Request::isMethod("post"))
@@ -330,6 +558,7 @@ class AdminComplanController extends AdminController
 			return view('admin.computation.rank_edit', $data);	
 		}
 	}
+
 	public function recompute()
 	{
 
@@ -357,6 +586,7 @@ class AdminComplanController extends AdminController
 			echo json_encode("success");
 		}
 	}
+
 	public function binary_entry()
 	{
 		$data["_pairing"] = Tbl_binary_pairing::where('membership_id',Request::input("id"))->get();

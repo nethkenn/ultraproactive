@@ -269,7 +269,12 @@ class MemberGenealogyController extends MemberController
 
 
 
-
+			 	$limit = DB::table('tbl_settings')->where('key','slot_limit')->first();
+				$count = Tbl_slot::where('slot_owner',Customer::id())->count();
+				if($limit->value <=  $count)
+				{
+					$data["message"] = "This account is already reach the max slot per account. Max slot per account is ".$limit->value.".";
+				}
 
 
 				if($code)
@@ -441,7 +446,12 @@ class MemberGenealogyController extends MemberController
 
 
 
-
+			 	$limit = DB::table('tbl_settings')->where('key','slot_limit')->first();
+				$count = Tbl_slot::where('slot_owner',Customer::id())->count();
+				if($limit->value <=  $count)
+				{
+					$data["message"] = "This account is already reach the max slot per account. Max slot per account is ".$limit->value.".";
+				}
 
 
 				if($code)

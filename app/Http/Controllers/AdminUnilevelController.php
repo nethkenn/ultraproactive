@@ -11,6 +11,7 @@ use Request;
 use App\Classes\Compute; 
 use App\Classes\Log;
 use App\Tbl_wallet_logs;
+use App\Classes\Admin;
 use App\Tbl_unilevel_check_match;
 class AdminUnilevelController extends AdminController
 {
@@ -21,7 +22,7 @@ class AdminUnilevelController extends AdminController
 		$data['last_update'] = Tbl_distribution_history::orderBy('distribution_id','DESC')->first();
 		$data['history'] = Rel_distribution_history::get();
 		$check = DB::table('tbl_settings')->where('key','check_match')->first();
-		
+
 		if(!$check)
 		{	
 			DB::table('tbl_settings')->insert(['key'=>'check_match','value'=>'0']);
@@ -45,7 +46,7 @@ class AdminUnilevelController extends AdminController
 			ob_flush();
 
 			session_write_close();
-
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." used the dynamic compression.");
 			$this->dynamic();
 
 			sleep(5);
@@ -56,6 +57,10 @@ class AdminUnilevelController extends AdminController
 		{
 			sleep(1);
 			return Redirect::to('admin/transaction/unilevel-distribution/dynamic');
+		}
+		else
+		{	
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visit Dynamic Compression.");
 		}
 
         return view('admin.transaction.unilevel_dynamic',$data);
@@ -164,6 +169,9 @@ class AdminUnilevelController extends AdminController
 			/* Distribute Bonus For Check Match */
 			$this->distribute_check_match($check_match);
 
+			/* Leadership Bonus */
+			$this->leadership_bonus($check_match);
+
 			/* UPDATE ALL SLOT TO ZERO GPV AND PV*/
 			$updateall['slot_group_points'] = 0;
 			$updateall['slot_personal_points'] = 0;
@@ -214,6 +222,86 @@ class AdminUnilevelController extends AdminController
 
 	}
 
+	public function leadership_bonus($slots)
+	{
+
+		if($slots)
+		{
+			$unilevel_setting = DB::table('tbl_unilevel_setting')->get();
+			$unilevel = null;
+
+			foreach($unilevel_setting as $key => $uni)
+			{
+				$unilevel[$uni->membership_id][$uni->level] = $uni->value;
+			}
+
+			$breakaway_bonus_setting = DB::table('tbl_unilevel_setting')->get();
+			$breakaway = null;
+
+			foreach($breakaway_bonus_setting as $key => $uni)
+			{
+				$breakaway[$uni->membership_id][$uni->level] = $uni->value;
+			}
+
+			foreach($slots as $key => $amount)
+			{
+				/* GET THE SlOT */
+				$oneslot = Tbl_slot::account()->membership()->where('slot_id',$key)->first();
+
+		        /* GET SPONSOR LIST */
+				$placement = Tbl_tree_sponsor::child($oneslot->slot_id)->orderby("sponsor_tree_level", "asc")->distinct_level()->get();
+
+				/* FOR BREAK STATEMENT */
+				$ctr = 0;
+
+				/* UNILEVEL CHECK MATCH BONUS */
+				foreach($placement as $keys => $tree)
+				{
+						/* SLOT RECIPIENT */
+						$slot_recipient = Tbl_slot::account()->membership()->where('slot_id',$tree->sponsor_tree_parent_id)->first();
+						
+						/* CHECK PERCENTAGE */
+						$percentage = $slot_recipient->leadership_bonus - $oneslot->leadership_bonus;
+
+						/* GIVE A BONUS IF PERCENTAGE IS NOT 0*/
+						if($percentage > 0)
+						{
+							$wallet = ($percentage/100)*$amount;
+							$logs = "Your slot #".$slot_recipient->slot_id." earned <b>".number_format($wallet,2)." wallet</b>  from ".$percentage."% of Leadership Bonus(".$amount."). You earned it when slot #".$oneslot->slot_id." gain a ".$amount." wallet from Unilevel bonus.";
+							Log::slot($slot_recipient->slot_id, $logs, $wallet,"Leadership Bonus",$oneslot->slot_id);
+							$ctr++;
+						}
+						else
+						{
+							$this->breakaway_bonus($slot_recipient,$tree,$breakaway,$amount,$oneslot);
+						}	
+
+						/* STOP IF ALREADY GIVE A LEADERSHIP BONUS */
+						if($ctr != 0)
+						{
+							break;
+						}
+				}				
+			}
+		
+		}
+		
+	}
+
+	public function breakaway_bonus($slot,$tree,$breakaway,$bonus,$oneslot)
+	{
+            if(isset($breakaway[$slot->membership_id][$tree->sponsor_tree_level]))
+            {
+            	$amount = ($breakaway[$slot->membership_id][$tree->sponsor_tree_level]/100) * $bonus;
+            	$percentage = $breakaway[$slot->membership_id][$tree->sponsor_tree_level];
+
+            	if($amount != 0)
+            	{
+					$logs = "Your slot #".$slot->slot_id." earned <b>".number_format($amount,2)." wallet</b>  from ".$percentage."% of Breakaway Bonus(".$bonus."). You earned it when slot #".$oneslot->slot_id." gain a ".$amount." wallet from Unilevel bonus.";
+					Log::slot($slot->slot_id, $logs, $amount,"Breakaway Bonus",$oneslot->slot_id);
+            	}
+            }
+	}
 
 	public function get_data_passed()
 	{

@@ -19,7 +19,7 @@ class AdminClaimController extends AdminController
 	{
 
 		// dd(Admin::info());
-
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Voucher Claims.");
         return view('admin.transaction.claim');
 	}
 
@@ -60,13 +60,13 @@ class AdminClaimController extends AdminController
 		$data['_message'] = null;
 		$data['voucher'] = null;
 		$data['_voucher_product'] = null; 
-
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Check Claims.");
 		if(isset($_POST['voucher_id']))
 		{
 			
 			$admin_pass = Crypt::decrypt(Admin::info()->account_password);
 
-
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." check the voucher #".Request::input('voucher_id')." if existing.");
 
 
 	        Validator::extend('foo', function($attribute, $value, $parameters)
@@ -259,7 +259,7 @@ class AdminClaimController extends AdminController
 
 
 
-
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." processed the voucher #".Request::input('voucher_id'));
 			/**
 			 * UPDATE ACCOUNT/ADMIN LOG
 			 */
@@ -413,6 +413,9 @@ class AdminClaimController extends AdminController
 			/**
 			 * UPDATE ACCOUNT/ADMIN LOG
 			 */
+
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." voids the voucher #".Request::input('voucher_id'));
+
             $log2 = "Voided Voucher # ".Request::input('voucher_id'). " as ".  Admin::info()->admin_position_name.".";
             Log::account(Admin::info()->account_id, $log2);
 

@@ -3,7 +3,7 @@ use DB;
 use Request;
 use Redirect;
 use App\Classes\Admin;
-
+use App\Classes\Log;
 class AdminLoginController extends Controller
 {
     public function index()
@@ -17,10 +17,9 @@ class AdminLoginController extends Controller
             $admin = Admin::authenticate(Request::input('username'), Request::input('password'));
             if($admin)
             {
-                
                 Admin::login($admin->account_username, Request::input('password'));
+                Log::Admin($admin->account_id,$admin->account_username." Logged in");
                 return Redirect::to("admin");
-
             }
             else
             {
