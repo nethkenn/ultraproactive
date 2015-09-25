@@ -12,10 +12,10 @@
     <div class="col-md-12 form-group-container" id="getmembership" list="{{$member}}">
         <form id="country-add-form" method="post">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-          <!-- <div class="form-group col-md-12">
+           <div class="form-group col-md-12">
                 <label for="unilevel">Different Unilevel Leg Count</label>
                 <input type="checkbox" name="unilevel" id="unilevel" value="1" {{$data->membership_required_unilevel_leg == 1 ? "checked" : ""}}>
-            </div> -->
+            </div> 
             <div class="form-group col-md-12">
                 <label id="changename" for="direct">Direct Counts</label>
                 <input name="membership_required_direct" value="{{ $data->membership_required_direct }}" required="required" class="form-control" id="direct" placeholder="" type="text">
@@ -41,123 +41,123 @@
 @endsection
 @section('script')
 <script type="text/javascript">
-// $(document).ready(function(){
+$(document).ready(function(){
 
-//         $x = jQuery.parseJSON($("#getmembership").attr("list"));
+        $x = jQuery.parseJSON($("#getmembership").attr("list"));
 
-//         if({{$data->membership_required_unilevel_leg}} != 0)
-//         {
-//            $memid = "{{$data->membership_unilevel_leg_id}}"; 
-//         }
-//         else
-//         {
+        if({{$data->membership_required_unilevel_leg}} != 0)
+        {
+           $memid = "{{$data->membership_unilevel_leg_id}}"; 
+        }
+        else
+        {
 
-//         }
-
-
-//         if ( $('input[id="unilevel"]').is(':checked') ) 
-//         {      
-//             if({{$data->membership_required_unilevel_leg}} == 1)  
-//             {
-//                var str = '<div class="form-group col-md-12"><label for="member"> Required Membership in Unilevel Legs</label> <select class="form-control" name="member" id="member">';
-
-//                 $.each($x, function( key, value ) 
-//                 {
-//                     if({{$data->membership_required_unilevel_leg}} != 0)
-//                     {
-//                             if(value.membership_id == $memid)
-//                             {
-//                                 str = str + '<option value="'+value.membership_id+'" selected>'+value.membership_name+'</option>';    
-//                             }
-//                             else
-//                             {
-//                                 str = str + '<option value="'+value.membership_id+'">'+value.membership_name+'</option>';
-//                             }
-//                     }
-//                     else
-//                     {
-//                              str = str + '<option value="'+value.membership_id+'">'+value.membership_name+'</option>';
-//                     }
+        }
 
 
-//                 });  
+        if ( $('input[id="unilevel"]').is(':checked') ) 
+        {      
+            if({{$data->membership_required_unilevel_leg}} == 1)  
+            {
+               var str = '<div class="form-group col-md-12"><label for="member"> Required Membership in Unilevel Legs</label> <select class="form-control" name="member" id="member">';
 
-//                 str = str + '</select></div>';             
-//             }     
-//             else
-//             {
-//                var str =    '<div class="form-group col-md-12"><label for="member"> Required Membership in Unilevel Legs</label> <select class="form-control" name="member" id="member">';
-
-//                 $.each($x, function( key, value ) 
-//                 {
-//                    str = str + '<option value="'+value.membership_id+'">'+value.membership_name+'</option>';
-//                 });  
-
-//                 str = str + '</select></div>';                 
-//             }   
-
-
-//             $(".containerer").append(str);
-//             $("#changename").text("Direct/Indirect in a Different Unilevel Leg Counts");
-//         } 
-//         else
-//         {
-//             $(".containerer").empty();
-//             $("#changename").text("Direct Counts");
-//         }
-
-//         $("#unilevel").click(function()
-//         {
-//                 if ( $('input[id="unilevel"]').is(':checked') ) 
-//                 {      
-//                     if({{$data->membership_required_unilevel_leg}} == 1)  
-//                     {
-//                        var str = '<div class="form-group col-md-12"><label for="member"> Required Membership in Unilevel Legs</label> <select class="form-control" name="member" id="member">';
-
-//                         $.each($x, function( key, value ) 
-//                         {
-//                                 if({{$data->membership_required_unilevel_leg}} != 0)
-//                                 {
-//                                         if(value.membership_id == $memid)
-//                                         {
-//                                             str = str + '<option value="'+value.membership_id+'" selected>'+value.membership_name+'</option>';    
-//                                         }
-//                                         else
-//                                         {
-//                                             str = str + '<option value="'+value.membership_id+'">'+value.membership_name+'</option>';
-//                                         }
-//                                 }
-//                                 else
-//                                 {
-//                                          str = str + '<option value="'+value.membership_id+'">'+value.membership_name+'</option>';
-//                                 }
-//                         });  
-
-//                         str = str + '</select></div>';             
-//                     }     
-//                     else
-//                     {
-//                        var str =    '<div class="form-group col-md-12"><label for="member"> Required Membership in Unilevel Legs</label> <select class="form-control" name="member" id="member">';
-
-//                         $.each($x, function( key, value ) 
-//                         {
-//                            str = str + '<option value="'+value.membership_id+'">'+value.membership_name+'</option>';
-//                         });  
-
-//                         str = str + '</select></div>';                 
-//                     }   
+                $.each($x, function( key, value ) 
+                {
+                    if({{$data->membership_required_unilevel_leg}} != 0)
+                    {
+                            if(value.membership_id == $memid)
+                            {
+                                str = str + '<option value="'+value.membership_id+'" selected>'+value.membership_name+'</option>';    
+                            }
+                            else
+                            {
+                                str = str + '<option value="'+value.membership_id+'">'+value.membership_name+'</option>';
+                            }
+                    }
+                    else
+                    {
+                             str = str + '<option value="'+value.membership_id+'">'+value.membership_name+'</option>';
+                    }
 
 
-//                     $(".containerer").append(str);
-//                     $("#changename").text("Direct/Indirect in a Different Unilevel Leg Counts");
-//                 } 
-//                 else
-//                 {
-//                     $(".containerer").empty();
-//                     $("#changename").text("Direct Counts");
-//                 }
-//         });
+                });  
 
-// }); 
+                str = str + '</select></div>';             
+            }     
+            else
+            {
+               var str =    '<div class="form-group col-md-12"><label for="member"> Required Membership in Unilevel Legs</label> <select class="form-control" name="member" id="member">';
+
+                $.each($x, function( key, value ) 
+                {
+                   str = str + '<option value="'+value.membership_id+'">'+value.membership_name+'</option>';
+                });  
+
+                str = str + '</select></div>';                 
+            }   
+
+
+            $(".containerer").append(str);
+            $("#changename").text("Direct/Indirect in a Different Unilevel Leg Counts");
+        } 
+        else
+        {
+            $(".containerer").empty();
+            $("#changename").text("Direct Counts");
+        }
+
+        $("#unilevel").click(function()
+        {
+                if ( $('input[id="unilevel"]').is(':checked') ) 
+                {      
+                    if({{$data->membership_required_unilevel_leg}} == 1)  
+                    {
+                       var str = '<div class="form-group col-md-12"><label for="member"> Required Membership in Unilevel Legs</label> <select class="form-control" name="member" id="member">';
+
+                        $.each($x, function( key, value ) 
+                        {
+                                if({{$data->membership_required_unilevel_leg}} != 0)
+                                {
+                                        if(value.membership_id == $memid)
+                                        {
+                                            str = str + '<option value="'+value.membership_id+'" selected>'+value.membership_name+'</option>';    
+                                        }
+                                        else
+                                        {
+                                            str = str + '<option value="'+value.membership_id+'">'+value.membership_name+'</option>';
+                                        }
+                                }
+                                else
+                                {
+                                         str = str + '<option value="'+value.membership_id+'">'+value.membership_name+'</option>';
+                                }
+                        });  
+
+                        str = str + '</select></div>';             
+                    }     
+                    else
+                    {
+                       var str =    '<div class="form-group col-md-12"><label for="member"> Required Membership in Unilevel Legs</label> <select class="form-control" name="member" id="member">';
+
+                        $.each($x, function( key, value ) 
+                        {
+                           str = str + '<option value="'+value.membership_id+'">'+value.membership_name+'</option>';
+                        });  
+
+                        str = str + '</select></div>';                 
+                    }   
+
+
+                    $(".containerer").append(str);
+                    $("#changename").text("Direct/Indirect in a Different Unilevel Leg Counts");
+                } 
+                else
+                {
+                    $(".containerer").empty();
+                    $("#changename").text("Direct Counts");
+                }
+        });
+
+}); 
 </script>
 @endsection

@@ -14,6 +14,7 @@ class AdminMigrationController extends AdminController
 {
 	public function index()
 	{
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Migration Maintenance");
 		$data["page"] = "Migration Maintenance";
 		$data["slot_count"] = Tbl_slot::count();
 		$data["hack_count"] = DB::table('tbl_members')->count();
@@ -26,6 +27,7 @@ class AdminMigrationController extends AdminController
 	}
 	public function start()
 	{
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Start Migration");
 		$data["_hack"] = DB::table('tbl_members')->get();
 		DB::table('tbl_account')->where('account_id','!=',1)->delete();
 		DB::table('tbl_slot')->delete();
@@ -264,6 +266,7 @@ class AdminMigrationController extends AdminController
 	// }
 	public function rematrix()
 	{
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Start Rematrix");
 		$slot_id = Request::input("slot_id");
 		Compute::tree($slot_id);
 		echo json_encode("success!");

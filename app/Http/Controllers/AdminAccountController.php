@@ -10,17 +10,26 @@ use App\Tbl_account_field;
 use App\Classes\Admin;
 use Validator;
 use App\Classes\Customer;
+use App\Classes\Log;
 class AdminAccountController extends AdminController
 {
 	public function index()
 	{
 
 		$data["page"] = "Account Maintenance";
+		
 		if(isset($_POST['login']))
 		{
 			$login = Tbl_account::where('account_id',Request::input('login'))->first();
+
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." login the account #".$login->account_id);
+
 			Customer::login($login->account_id,$login->account_password);	
 			return Redirect::to('/member');		
+		}
+		else
+		{
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Account Maintenance");
 		}
 
 
@@ -54,6 +63,7 @@ class AdminAccountController extends AdminController
     
 	public function add()
 	{
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Add Account Maintenance");
 		if(Request::isMethod("post"))
 		{
 
@@ -111,6 +121,7 @@ class AdminAccountController extends AdminController
 			$insert["account_date_created"] = Carbon\Carbon::now();
 			$insert["custom_field_value"] = serialize(Request::input('custom_field'));
 			DB::table("tbl_account")->insert($insert);
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." add new account (".Request::input('account_username').")",null,serialize($request));
 			return Redirect::to('admin/maintenance/accounts');
 		}
 		else
@@ -122,6 +133,7 @@ class AdminAccountController extends AdminController
 	}
 	public function edit()
 	{
+
 		if(Request::isMethod("post"))
 		{
 
@@ -174,6 +186,7 @@ class AdminAccountController extends AdminController
 	                        ->withErrors($validator)
 	                        ->withInput(Request::input());
 	        }
+	        $old = DB::table("tbl_account")->where("account_id", Request::input("id"))->first();
 			$update["account_name"] = Request::input('account_name');
 			$update["account_email"] = Request::input('account_meail');
 			$update["account_username"] = Request::input('account_username');
@@ -183,6 +196,9 @@ class AdminAccountController extends AdminController
 			$update["account_date_created"] = Carbon\Carbon::now();
 			$update["custom_field_value"] = serialize(Request::input('custom_field'));
 			DB::table("tbl_account")->where("account_id", Request::input("id"))->update($update);
+			$new = DB::table("tbl_account")->where("account_id", Request::input("id"))->first();
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." edit the account #".Request::input('id'),serialize($old),serialize($new));
+
 			return Redirect::to('admin/maintenance/accounts');
 		}
 		else
@@ -190,6 +206,8 @@ class AdminAccountController extends AdminController
 			$data["_account_field"] = DB::table("tbl_account_field")->get();
 			$data["_country"] = DB::table("tbl_country")->where("archived", 0)->get();
 			$data["account"] = DB::table("tbl_account")->where("account_id", Request::input("id"))->first();
+
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Edit Account Maintenance Slot #".Request::input('id'));
 			// $data["_account_custom"] = unserialize($data["account"]->custom_field_value);
 			// dd($data["_account_custom"]);
 			return view('admin.maintenance.account_edit', $data);
@@ -221,6 +239,7 @@ class AdminAccountController extends AdminController
 			return view('admin.maintenance.account_field', $data);	
 		}
 	}
+	
 	public function field_delete()
 	{
 		DB::table("tbl_account_field")->where("account_field_id", Request::input("id"))->delete();
@@ -233,7 +252,7 @@ class AdminAccountController extends AdminController
 
 		$id = Request::input('id');
 		$data['query'] = Tbl_account::where('account_id',$id)->update(['archived'=>'1']);
-
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." archive the account #".Request::input('id'));
 		return json_encode($data);
 	}
 
@@ -242,7 +261,7 @@ class AdminAccountController extends AdminController
 
 		$id = Request::input('id');
 		$data['query'] = Tbl_account::where('account_id',$id)->update(['archived'=>'0']);
-
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." restore the account #".Request::input('id'));
 		return json_encode($data);
 	}
 }

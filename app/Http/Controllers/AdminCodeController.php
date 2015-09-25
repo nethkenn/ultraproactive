@@ -40,6 +40,7 @@ class AdminCodeController extends AdminController {
 	public function index()
 	{
 		$data['_account'] = Tbl_account::all();
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Membership Code");
 		return view('admin.maintenance.code', $data);
 	}
 
@@ -207,6 +208,7 @@ class AdminCodeController extends AdminController {
 					$membership_code->created_at = Carbon::now();
 					$membership_code->save();
 
+					Log::Admin(Admin::info()->account_id,Admin::info()->account_username." create Membership Code Pin #".$membership_code->code_pin);
 					/**
 					* INSERT TO Rel_membership_code history
 					*/

@@ -6,24 +6,29 @@ use Request;
 use Hash;
 use Validator;
 use Crypt;
+use App\Classes\Log;
 class AdminAccountSettingsController extends AdminController
 {
 	public function settings()
 	{
 		$data['error_message'] = null;
 		$data['info'] = Admin::info();
-
 		 if(isset($_POST["name"]))
          {
-
+         		$old = DB:: table ('tbl_account')->where('account_id','=',$data['info']->account_id)->first();
 					DB:: table ('tbl_account') -> where('account_id','=',$data['info']->account_id) 
                                 		       -> update(['account_name'=> $_POST['name']]);
 
         			return Redirect::to("admin/account/settings/profile"); 
 
-
+				$new = DB:: table ('tbl_account')->where('account_id','=',$data['info']->account_id)->first();    	
+				Log::Admin(Admin::info()->account_id,Admin::info()->account_username." edit His Admin Profile",serialize($old),serialize($new));
 
  
+         }
+         else
+         {
+         	Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits His Admin Profile");
          }
 		return view('admin.adminsettings.admin_profile',$data);
 	}
@@ -48,10 +53,14 @@ class AdminAccountSettingsController extends AdminController
 			{
 				if($new_pass == $rnew_pass)
 				{
+					$old = DB:: table ('tbl_account') -> where('account_id','=',$data['info']->account_id)->first(); 
 					$password_hashed = Crypt::encrypt($password_hashed);
 					DB:: table ('tbl_account') -> where('account_id','=',$data['info']->account_id) 
-                                  			 -> update(['account_password'=> $password_hashed]);                  			 
+                                  			 -> update(['account_password'=> $password_hashed]);      
+  
+          			$new = DB:: table ('tbl_account') -> where('account_id','=',$data['info']->account_id)->first(); 
          			$data['success'] =  "Password successfully changed";   
+         			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." change his password",serialize($old),serialize($new));
 				}
 				else
 				{

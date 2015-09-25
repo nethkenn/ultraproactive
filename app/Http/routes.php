@@ -385,6 +385,7 @@ Route::any('admin/utilities/recompute', 'AdminComplanController@recompute');
 /* ADMIN / REPORTS */
 Route::any('admin/reports/product_sales', 'AdminReportProductController@product_sales');
 Route::any('admin/reports/membership_sales', 'AdminReportMembershipController@index');
+Route::any('admin/reports/audit_trail', 'AdminAuditTrailController@index');
 
 Route::any('admin/account/settings/profile', 'AdminAccountSettingsController@settings');
 Route::any('admin/account/settings/change_pass', 'AdminAccountSettingsController@changepass');

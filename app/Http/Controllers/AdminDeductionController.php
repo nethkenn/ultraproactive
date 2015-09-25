@@ -5,12 +5,14 @@ use App\Tbl_deduction;
 use App\Tbl_country;
 use App\Rel_deduction_country;
 use Redirect;
+use App\Classes\Admin;
+use App\Classes\Log;
 class AdminDeductionController extends AdminController
 {
 	public function index()
 	{	
 		$status = Request::input('archived');
-
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Deduction Maintenance");
 		if($status == "")
 		{
 			$status = 0;
@@ -32,6 +34,10 @@ class AdminDeductionController extends AdminController
 	 	$this->post(Request::input());
 	 	return Redirect::to('admin/maintenance/deduction');
 	 }
+	 else
+	 {
+	 	Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Add Deduction Maintenance");
+	 }
 	 return view('admin.maintenance.encashment_deduction_add',$data);
 	}
 	public function edit()
@@ -46,6 +52,10 @@ class AdminDeductionController extends AdminController
 		 	$e = $this->repost(Request::input(),Request::input('id'));
 	
 	 		return Redirect::to('admin/maintenance/deduction');
+		}
+		else
+		{
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Edit Deduction Maintenance id #".Request::input('id'));
 		}
 
 		return view('admin.maintenance.encashment_deduction_edit',$data);	
@@ -84,10 +94,12 @@ class AdminDeductionController extends AdminController
 		if(substr($data['amt'], -1) == "%")
 		{
 		   $inserts['percent'] = 1;
+		   $sign = "Percentage";
 		}
 		else
 		{
 		   $inserts['percent'] = 0;
+		   $sign = "Whole value";
 		}	
 
 
@@ -109,9 +121,13 @@ class AdminDeductionController extends AdminController
 			$insert['country_id'] = $c->country_id;
 			Rel_deduction_country::insert($insert);
 		}
+
+		$new = DB::table('rel_deduction_country')->where('deduction_id',$id)->get();
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." Add Deduction id #".$id." = ".$sign,null,serialize($new));
 	}
 	public function repost($data,$id)
 	{
+		$old = DB::table('rel_deduction_country')->where('deduction_id',$id)->get();
 		Rel_deduction_country::where('deduction_id',$id)->delete();
 		$data['amt'] = str_replace(' ', '', $data['amt']);
 		$inserts['deduction_amount'] = $data['amt']; 
@@ -122,10 +138,12 @@ class AdminDeductionController extends AdminController
 		if(substr($data['amt'], -1) == "%")
 		{
 		   $inserts['percent'] = 1;
+		   $sign = "Percentage";
 		}
 		else
 		{
 		   $inserts['percent'] = 0;
+		   $sign = "Whole value";
 		}	
 
 		Tbl_deduction::where('deduction_id',$id)->update($inserts);
@@ -146,5 +164,7 @@ class AdminDeductionController extends AdminController
 			$insert['country_id'] = $c->country_id;
 			Rel_deduction_country::insert($insert);
 		}
+		$new = DB::table('rel_deduction_country')->where('deduction_id',$id)->get();
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." Edit Deduction id #".Request::input('id')." to ".$sign,serialize($old),serialize($new));
 	}
 }

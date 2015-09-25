@@ -38,9 +38,9 @@
 				<td>{{ $qualification->points }}</td>
 				<td><a href="admin/utilities/travel_qualification/edit?id={{ $qualification->travel_qualification_id }}">EDIT</a></td>
 				@if(Request::input('status') == 'archived')
-				<td><a href="admin/utilities/travel_qualification/restore?id={{ $qualification->travel_reward_id }}">RESTORE</a></td>
+				<td><a href="admin/utilities/travel_qualification/restore?id={{ $qualification->travel_qualification_id }}">RESTORE</a></td>
 				@else
-				<td><a href="admin/utilities/travel_qualification/delete?id={{ $qualification->travel_reward_id }}">ARCHIVE</a></td>
+				<td><a href="admin/utilities/travel_qualification/delete?id={{ $qualification->travel_qualification_id }}">ARCHIVE</a></td>
 				@endif
 			</tr>
 			@endforeach

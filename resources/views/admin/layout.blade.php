@@ -117,9 +117,9 @@
 									<li class="divider" role="separator"></li>
 									<li><a href="admin/utilities/breakaway_bonus">Breakaway Bonus</a></li>
 									<li><a href="admin/utilities/leadership_bonus">Leadership Bonus</a></li>
-									<!--<li class="divider" role="separator"></li>
+									<li class="divider" role="separator"></li>
 									<li><a href="admin/utilities/travel_qualification">Travel And Car Bonus Qualification</a></li>
-									<li><a href="admin/utilities/travel_reward">Travel And Car Bonus Reward</a></li>-->
+									<li><a href="admin/utilities/travel_reward">Travel And Car Bonus Reward</a></li>
 									<li class="divider" role="separator"></li>
 									<li><a href="admin/utilities/rank">Promotion Settings</a></li>
 									<!--<li class="divider" role="separator"></li>
@@ -135,6 +135,7 @@
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="admin/reports/product_sales">Product Sales Report</a></li>
 									<li><a href="admin/reports/membership_sales">Membership Sales Report</a></li>
+									<li><a href="admin/reports/audit_trail">Audit Trail</a></li>
 								</ul>
 							</li> 
 

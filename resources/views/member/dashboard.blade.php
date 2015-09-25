@@ -230,41 +230,36 @@
                     <div class="leybel">INDIRECT LEVEL BONUS</div>
                     <div class="balyu">{{ number_format($earnings['indirect'], 2) }}</div>
                 </div>
+                @if($oldwallet != 0)
+                    <div class="holders">
+                        <div class="leybel">WALLET FROM OLD SYSTEM</div>
+                        <div class="balyu">{{ number_format($oldwallet, 2) }}</div>
+                    </div>
+                @endif
             </div>
         </div>
+
+        <div class="holder">
+            <div class="title">
+                <span>TRAVEL BONUS</span></br> SUMMARY
+            </div>
+            <div class="info">
+                <div class="holders">
+                    <div class="leybel">TRAVEL POINTS</div>
+                    <div class="balyu">{{ number_format($points, 2) }}</div>
+                </div>
+                @if($reward)
+                    <div class="holders">
+                        <div class="leybel">YOUR REWARD IS</div>
+                        <div class="balyu">{{$reward->travel_reward_name}}</div>
+                    </div>
+                @endif
+            </div>
+        </div>
+
          @endif
     </div>
-    <!-- <div class="detail para">
-        <div class="header">Account Summary</div>
-        <div class="holder para">
-            <div class="input form-horizontal para">
-                <div class="form-group">
-                    <label for="1" class="col-sm-6 control-label">Total Wallet</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control highlight" id="1" readonly value="{{ number_format($total_wallet, 2) }}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="2" class="col-sm-6 control-label">Total Number of Slots</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="2" readonly value="{{$total_count}} SLOT(S)">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="3" class="col-sm-6 control-label">Email</label>
-                    <div class="col-sm-6">
-                        <a href="mailto:{{ $member->account_email }}">{{ $member->account_email }}</a>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="4" class="col-sm-6 control-label">Date Joined</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="4" readonly value="{{ date('F d, Y',strtotime($member->account_date_created)) }}">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
+   
 
 
 </div>

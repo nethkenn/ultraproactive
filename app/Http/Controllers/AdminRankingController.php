@@ -6,11 +6,13 @@ use Carbon;
 use Datatables;
 use App\Tbl_rank;
 use Validator;
-
+use App\Classes\Log;
+use App\Classes\Admin;
 class AdminRankingController extends AdminController
 {
 	public function index()
-	{
+	{	
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Ranking Maintenance");
         return view('admin.maintenance.ranking');
 	}
 	public function data()
@@ -66,6 +68,8 @@ class AdminRankingController extends AdminController
 				
 				$ranking = new Tbl_rank(Request::input());
 				$ranking->save();
+				$new = DB::table('tbl_rank')->where('rank_id',$ranking->rank_id)->first();
+				Log::Admin(Admin::info()->account_id,Admin::info()->account_username." add a Ranking id #".$ranking->rank_id,null,serialize($new));
 
 				return Redirect('admin/maintenance/ranking');
 
@@ -127,13 +131,20 @@ class AdminRankingController extends AdminController
 			if (!$validator->fails())
 			{
 
-				
+				$old = DB::table('tbl_rank')->where('rank_id',Request::input('id'))->first();
+
 				Tbl_rank::where('rank_level',Request::input('rank_level'))->update(['rank_level'=>$ranking->rank_level]);
 
 				$ranking =Tbl_rank::find($ranking_id);
 				$ranking->rank_name = Request::input('rank_name');
 				$ranking->rank_level = Request::input('rank_level');
 				$ranking->save();
+
+
+
+				$new = DB::table('tbl_rank')->where('rank_id',$ranking->rank_id)->first();
+				Log::Admin(Admin::info()->account_id,Admin::info()->account_username." edit Ranking id #".$ranking->rank_id,serialize($old),serialize($new));
+
 				return Redirect('admin/maintenance/ranking');
 
 
@@ -159,7 +170,10 @@ class AdminRankingController extends AdminController
 	public function delete_ranking()
 	{
 		// return 'delete_ranking';
+		$old = DB::table('tbl_rank')->where('rank_id',Request::input('rank_id'))->first();
 		$query =Tbl_rank::findOrFail(Request::input('rank_id'))->delete();
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." delete Ranking id #".Request::input('rank_id'),serialize($old));
+
 		return json_encode($query);
 		// return json_encode('success');
 	}

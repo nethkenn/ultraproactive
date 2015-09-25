@@ -9,13 +9,15 @@ use Request;
 use Validator;
 use Datatables;
 use App\Tbl_country;
-
+use App\Classes\Log;
+use App\Classes\Admin;
 
 class AdminCountryController extends AdminController
 {
 	public function index()
 	{	
 		$data["page"] = "Country Maintenance";
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Country Maintenance");
         return view('admin.maintenance.country', $data);
 	}
 	public function add_country()
@@ -41,14 +43,19 @@ class AdminCountryController extends AdminController
 				$insert['currency'] = Request::input('currency');
 				$insert['rate'] = Request::input('rate');
 
-				DB::table('tbl_country')->insert($insert);
-
+				$id = DB::table('tbl_country')->insertGetId($insert);
+				$new = DB::table('tbl_country')->where('country_id',$id)->first();
+				Log::Admin(Admin::info()->account_id,Admin::info()->account_username." add Country Id #".$id,null,serialize($new));
 				return redirect('admin/maintenance/country');
 			}
 			else
 			{
 				$data['_error'] = $validator->errors()->all();
 			}
+		}
+		else
+		{
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Add Country Maintenance");
 		}
 
 		return view('admin.maintenance.country_add',$data);
@@ -75,18 +82,24 @@ class AdminCountryController extends AdminController
 
 			if (!$validator->fails())
 			{
+				$old = DB::table('tbl_country')->where('country_id',$country_id)->first();
 				$update['country_name'] = Request::input('country_name');
 				$update['currency'] = Request::input('currency');
 				$update['rate'] = Request::input('rate');
 
 				DB::table('tbl_country')->where('country_id', $country_id )->update($update);
-
+				$new = DB::table('tbl_country')->where('country_id',$country_id)->first();
+				Log::Admin(Admin::info()->account_id,Admin::info()->account_username." edit Country Id #".$country_id,serialize($old),serialize($new));
 				return redirect('admin/maintenance/country');
 			}
 			else
 			{
 				$data['_error'] = $validator->errors()->all();
 			}
+		}
+		else
+		{
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Edit Country Maintenance id #".$country_id);
 		}
 
 		return view('admin.maintenance.country_edit', $data);
@@ -96,6 +109,7 @@ class AdminCountryController extends AdminController
 	{	
 
 		$id = Request::input('id');
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." archive Country id #".$id);
 		$data['query'] = DB::table('tbl_country')->where('country_id',$id)->update(['archived'=>'1']);
 
 		return json_encode($data);
@@ -104,6 +118,7 @@ class AdminCountryController extends AdminController
 	public function restore_country()
 	{	
 		$id = Request::input('id');
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." restore Country id #".$id);
 		$data['query'] = DB::table('tbl_country')->where('country_id',$id)->update(['archived'=>'0']);
 
 		return json_encode($data);
