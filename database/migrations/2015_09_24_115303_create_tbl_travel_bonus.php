@@ -12,22 +12,25 @@ class CreateTblTravelBonus extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_travel_reward', function (Blueprint $table)
+        if (!Schema::hasTable('tbl_travel_reward'))
         {
-            $table->increments('travel_reward_id');
-            $table->string('travel_reward_name');
-            $table->double('required_points');
-            $table->tinyInteger('archived')->default(0);
-        });
+            Schema::create('tbl_travel_reward', function (Blueprint $table)
+            {
+                $table->increments('travel_reward_id');
+                $table->string('travel_reward_name');
+                $table->double('required_points');
+                $table->tinyInteger('archived')->default(0);
+            });
 
-        Schema::create('tbl_travel_qualification', function (Blueprint $table)
-        {
-            $table->increments('travel_qualification_id');
-            $table->string('travel_qualification_name');
-            $table->integer('item');
-            $table->double('points');
-            $table->tinyInteger('archived')->default(0);
-        });
+            Schema::create('tbl_travel_qualification', function (Blueprint $table)
+            {
+                $table->increments('travel_qualification_id');
+                $table->string('travel_qualification_name');
+                $table->integer('item');
+                $table->double('points');
+                $table->tinyInteger('archived')->default(0);
+            });
+        }
     }
 
     /**

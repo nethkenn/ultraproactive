@@ -12,14 +12,17 @@ class CreateTblBreakawayBonusSetting extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_breakaway_bonus_setting', function (Blueprint $table)
+        if (!Schema::hasTable('tbl_breakaway_bonus_setting'))
         {
-            $table->increments('breakaway_bonus_setting_id');
-            $table->integer('level');
-            $table->double('value');
-            $table->integer('membership_id')->unsigned();
-            $table->foreign('membership_id')->references('membership_id')->on('tbl_membership');
-        });
+            Schema::create('tbl_breakaway_bonus_setting', function (Blueprint $table)
+            {
+                $table->increments('breakaway_bonus_setting_id');
+                $table->integer('level');
+                $table->double('value');
+                $table->integer('membership_id')->unsigned();
+                $table->foreign('membership_id')->references('membership_id')->on('tbl_membership');
+            });
+        } 
     }
 
     /**

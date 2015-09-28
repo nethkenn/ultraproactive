@@ -12,12 +12,15 @@ class CreateTblGlobalPv extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_global_pv_done', function (Blueprint $table)
-        {   
-            $table->increments("global_pv_done_id");
-            $table->dateTime('start_date');
-            $table->dateTime('last_date');
-        });
+        if (!Schema::hasTable('tbl_global_pv_done'))
+        {
+            Schema::create('tbl_global_pv_done', function (Blueprint $table)
+            {   
+                $table->increments("global_pv_done_id");
+                $table->dateTime('start_date');
+                $table->dateTime('last_date');
+            });
+        }
     }
 
     /**

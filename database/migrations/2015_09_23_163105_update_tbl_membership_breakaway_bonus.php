@@ -12,10 +12,13 @@ class UpdateTblMembershipBreakawayBonus extends Migration
      */
     public function up()
     {
-        Schema::table('tbl_membership', function (Blueprint $table)
-        {   
-                $table->double('breakaway_bonus_level')->default(0);
-        });
+        if (!Schema::hasColumn('tbl_membership', 'breakaway_bonus_level'))
+        {
+            Schema::table('tbl_membership', function (Blueprint $table)
+            {   
+                    $table->double('breakaway_bonus_level')->default(0);
+            });
+        }
     }
 
     /**
