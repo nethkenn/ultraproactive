@@ -12,13 +12,16 @@ class CreateTblAdminLogUrl extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_admin_log_url', function (Blueprint $table)
+        if (!Schema::hasTable('tbl_admin_log_url'))
         {
-            $table->increments('admin_log_url_id');
-            $table->integer('account_id')->unsigned();
-            $table->string('logs_url');
-            $table->timestamps();
-        });
+            Schema::create('tbl_admin_log_url', function (Blueprint $table)
+            {
+                $table->increments('admin_log_url_id');
+                $table->integer('account_id')->unsigned();
+                $table->string('logs_url');
+                $table->timestamps();
+            });
+        } 
     }
 
     /**
