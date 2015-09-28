@@ -129,8 +129,11 @@
         </form>
     </div>
 @endsection
+@section('css')
+<link rel="stylesheet" type="text/css" href="/resources/assets/chosen_v1.4.2/chosen.min.css">
+@endsection
 @section('script')
-    <script type="text/javascript" src="resources/assets/chosen_v1.4.2/chosen.jquery.min.js"></script>
+    <script type="text/javascript" src="/resources/assets/chosen_v1.4.2/chosen.jquery.min.js"></script>
     <link rel="stylesheet" href="resources/assets/chosen_v1.4.2/chosen.css">
     <script type="text/javascript">
         
@@ -190,5 +193,8 @@
 
 
         });
+    </script>
+    <script type="text/javascript">
+        $(".chosen-select").chosen({disable_search_threshold: 10});
     </script>
 @endsection
