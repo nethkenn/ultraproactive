@@ -20,22 +20,24 @@ use App\Tbl_membership;
 use App\Tbl_stockist;
 use App\Tbl_stockist_inventory;
 use App\Tbl_stockist_package_inventory;
-
+use App\Classes\Log;
+use App\Classes\Admin;
 class AdminProductPackageController extends AdminController
 {
 	public function index()
 	{
 
 		$data["page"] = "Product Package Maintenance";
-
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Product Package Maintenance");
 
 		
         return view('admin.maintenance.product_package',$data);
 	}
 
 
-	public function save_product_package($id,$product)
+	public function save_product_package($id,$product,$method)
 	{
+		$old = DB::table('tbl_product_package_has')->where('product_package_id',$id)->get();
 		Tbl_product_package_has::where('product_package_id',$id)->delete();
 		$ctr=0;
 
@@ -49,7 +51,12 @@ class AdminProductPackageController extends AdminController
 			$ctr++;
 		}
 
+
+
 		Tbl_product_package_has::insert($insert);
+
+		$new = DB::table('tbl_product_package_has')->where('product_package_id',$id)->get();
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." ".$method." Product Package Id #".$id,serialize($old),serialize($new));
 	}
 
 	public function add_product_package()
@@ -147,7 +154,7 @@ class AdminProductPackageController extends AdminController
 		$product_package->membership_id = Request::input('membership_id');
 		$product_package->save();
 		$id = $product_package->product_package_id;
-		$this->save_product_package($id, Request::input('product'));
+		$this->save_product_package($id, Request::input('product'),"Add");
 
 		$stockist = Tbl_stockist::all();
         if($stockist)
@@ -269,7 +276,7 @@ class AdminProductPackageController extends AdminController
 		$product_package->product_package_name = Request::input('product_package_name');
 		$product_package->membership_id = Request::input('membership_id');
 		$product_package->save();
-		$this->save_product_package(Request::input('product_package_id'), Request::input('product'));
+		$this->save_product_package(Request::input('product_package_id'), Request::input('product'),"Edit");
 		return Redirect('admin/maintenance/product_package');
 	}
 	public function ajax_get_product_package()
@@ -296,7 +303,7 @@ class AdminProductPackageController extends AdminController
 		// dd('lol');
 
 		$id = Request::input('id');
-		// dd($id);
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." archive Product Package Id #".$id);
 		$data['query'] = Tbl_product_package::where('product_package_id',$id)->update(['archived'=>'1']);
 
 		return json_encode($data);
@@ -306,7 +313,7 @@ class AdminProductPackageController extends AdminController
 	{	
 
 		$id = Request::input('id');
-
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." restore Product Package Id #".$id);
 		$data['query'] = Tbl_product_package::where('product_package_id',$id)->update(['archived'=>'0']);
 
 		return json_encode($data);

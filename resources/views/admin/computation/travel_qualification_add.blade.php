@@ -5,7 +5,7 @@
             <h2><i class="fa fa-users"></i>  Add Qualification</h2>
         </div>
         <div class="buttons col-md-4 text-right">
-            <button onclick="location.href='admin/utilities/travel_reward'" type="button" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back</button>
+            <button onclick="location.href='admin/utilities/travel_qualification'" type="button" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back</button>
             <button onclick="$('#country-add-form').submit();" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Add</button>
         </div>
     </div>

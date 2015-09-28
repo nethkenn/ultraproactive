@@ -10,6 +10,7 @@ use App\Tbl_product_code;
 use App\Tbl_tree_placement;
 use App\Tbl_wallet_logs;
 use Session;
+use App\Classes\Compute;
 class MemberDashboardController extends MemberController
 {
 	public function index()
@@ -39,6 +40,10 @@ class MemberDashboardController extends MemberController
 		$slot_info = Tbl_slot::membership()->id(Customer::slot_id())->first();
 		if($slot_info)
 		{
+			$travel = Compute::compute_travel($slot_info);
+			$data['points'] = $travel['points'];
+			$data['reward'] = $travel['reward'];
+			$data['oldwallet'] = Tbl_wallet_logs::id(Session::get('currentslot'))->where('keycode','Old System Wallet')->wallet()->sum('wallet_amount');	
 			$data["next_membership"] = Tbl_membership::where("membership_required_upgrade", ">",  $slot_info->membership_required_upgrade)->orderBy("membership_required_upgrade", "asc")->first();			
 		}
 		

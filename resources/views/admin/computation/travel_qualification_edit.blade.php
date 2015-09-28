@@ -2,11 +2,11 @@
 @section('content')
     <div class="row header">
         <div class="title col-md-8">
-            <h2><i class="fa fa-users"></i>  Add Qualification</h2>
+            <h2><i class="fa fa-users"></i>  Edit Qualification</h2>
         </div>
         <div class="buttons col-md-4 text-right">
-            <button onclick="location.href='admin/utilities/travel_reward'" type="button" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back</button>
-            <button onclick="$('#country-add-form').submit();" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Add</button>
+            <button onclick="location.href='admin/utilities/travel_qualification'" type="button" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back</button>
+            <button onclick="$('#country-add-form').submit();" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
         </div>
     </div>
     <div class="col-md-12 form-group-container">
@@ -23,7 +23,12 @@
                         </ul>
                     </div>
                 @endif
-                <input name="travel_qualification_name" value="{{$data->travel_qualification_name}}" required="required" class="form-control" id="" placeholder="" type="text">
+                <select class="form-control" name="travel_qualification_name">
+                    <option value="Direct Referral" {{$data->travel_qualification_name == "Direct Referral" ?  "selected" : ""}}>Direct Referral</option>
+                    <option value="Total Income" {{$data->travel_qualification_name == "Total Income" ?  "selected" : ""}}>Total Income</option>
+                    <option value="Total Spent" {{$data->travel_qualification_name == "Total Spent" ?  "selected" : ""}}>Total Spent</option>
+                    <option value="Total Downline" {{$data->travel_qualification_name == "Total Downline" ?  "selected" : ""}}>Total Downline</option>
+                </select> 
             </div>  
             <div class="form-group col-md-6">
                 <label for="account_meail">Item </label>

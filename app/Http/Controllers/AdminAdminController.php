@@ -12,6 +12,7 @@ use App\Http\Requests\AdminEditRequest;
 // use Illuminate\Http\Request;
 use Request;
 use Validator;
+use App\Classes\Log;
 
 class AdminAdminController extends AdminController
 {
@@ -20,6 +21,8 @@ class AdminAdminController extends AdminController
         // $admin = Tbl_admin::select('tbl_admin.*', 'tbl_admin_position.admin_position_name', 'tbl_admin_position.admin_position_rank', 'tbl_account.account_name', 'tbl_account.account_email',DB::raw('count(*) as slot_count, tbl_slot.slot_owner'))
         //                         ->account()->slot()->position()->groupBy('tbl_admin.admin_id')->get();
         // dd($admin);
+        Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Admin Maintenance");
+
         return view('admin.utilities.admin');
 	}
 
@@ -46,7 +49,7 @@ class AdminAdminController extends AdminController
         $admin_rank = Admin::info()->admin_position_rank;
         $data['_position']= Tbl_position::where('admin_position_rank', '>',  $admin_rank)->get();
 
-
+        Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Add Admin Maintenance");
 
         return view('admin.utilities.admin_add', $data);
     }
@@ -104,6 +107,9 @@ class AdminAdminController extends AdminController
 
             $admin = new Tbl_admin(Request::input());
             $admin->save();
+            $new = DB::table('tbl_admin')->where('admin_id',$admin->admin_id)->first();
+            Log::Admin(Admin::info()->account_id,Admin::info()->account_username." add an Admin ID #".$admin->admin_id,null,serialize($new));
+
             return redirect('admin/utilities/admin_maintenance');
 
     }
@@ -125,7 +131,7 @@ class AdminAdminController extends AdminController
 
         // dd($seleted_admin->admin_position_rank, $admin_rank );
 
-
+        Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Edit Admin Maintenance Id #".Request::input('admin_id'));
         if($seleted_admin->admin_position_rank <= $admin_rank)
         {
             die('Forbidden');
@@ -173,16 +179,21 @@ class AdminAdminController extends AdminController
 
 
 
-
+        $old = DB::table('tbl_admin')->where('admin_id',Request::input('admin_id'))->first();
         $admin = Tbl_admin::findOrFail(Request::input('admin_id'));
         $admin->admin_position_id = Request::input('admin_position_id');
         $admin->save();
+
+        $new = DB::table('tbl_admin')->where('admin_id',Request::input('admin_id'))->first();
+        Log::Admin(Admin::info()->account_id,Admin::info()->account_username." edit Admin ID #".$admin->admin_id,serialize($old),serialize($new));
+
         return redirect('admin/utilities/admin_maintenance');
     }
 
 
     public function delete_admin(Request $request)
     {   
+        $old = DB::table('tbl_admin')->where('admin_id',Request::input('admin_id'))->first();
         $admin_rank = Admin::info()->admin_position_rank;
         $seleted_admin = Tbl_admin::position()->findOrFail(Request::input('admin_id'));
         if($seleted_admin->admin_position_rank <= $admin_rank)
@@ -190,6 +201,8 @@ class AdminAdminController extends AdminController
             die('Forbidden');
         }
         $seleted_admin->delete();
+
+        Log::Admin(Admin::info()->account_id,Admin::info()->account_username." delete Admin ID #".Request::input('admin_id'),serialize($old));
 
         return json_encode(true);
 

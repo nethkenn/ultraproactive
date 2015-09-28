@@ -3,17 +3,20 @@ use DB;
 use Redirect;
 use Request;
 use App\Classes\Image;
-
+use App\Classes\Log;
+use App\Classes\Admin;
 class AdminStoriesController extends AdminController
 {
 	public function index()
 	{
 		$data["_stories"] = DB::table("tbl_stories")->where("archived", 0)->get();
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Stories Maintenance");
 
         return view('admin.content.stories', $data);
 	}
 	public function add()
 	{
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Add Stories Maintenance");
         return view('admin.content.stories_add');
 	}
 	public function add_submit()
@@ -29,7 +32,10 @@ class AdminStoriesController extends AdminController
 		$video_id = $video_id[0];
 		$date = date('Y-m-d H:i:s');
 
-		DB::table("tbl_stories")->insert(['stories_title' => $title, 'stories_description' => $description, 'created_at' => $date, 'stories_link' => $video_id]);
+		$id = DB::table("tbl_stories")->insertGetId(['stories_title' => $title, 'stories_description' => $description, 'created_at' => $date, 'stories_link' => $video_id]);
+		
+		$new = DB::table("tbl_stories")->where('stories_id',$id)->first();
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." Add Stories #".$id,null,serialize($new));
 
         return Redirect::to("/admin/content/stories");
 	}	
@@ -37,7 +43,7 @@ class AdminStoriesController extends AdminController
 	{
 		$id = Request::input("id");
 		$data["stories"] = DB::table("tbl_stories")->where("stories_id", $id)->first();
-
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Edit Stories Maintenance ID #".$id);
         return view('admin.content.stories_edit', $data);
 	}
 	public function edit_submit()
@@ -54,14 +60,17 @@ class AdminStoriesController extends AdminController
 		$video_id = $video_id[0];
 		$date = date('Y-m-d H:i:s');
 
+		$old = DB::table("tbl_stories")->where('stories_id',$id)->first();
 		DB::table("tbl_stories")->where("stories_id", $id)->update(['stories_title' => $title, 'stories_description' => $description, 'updated_at' => $date, 'stories_link' => $video_id]);
+		$new = DB::table("tbl_stories")->where('stories_id',$id)->first();
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." Edit Stories #".$id,serialize($old),serialize($new));
 
         return Redirect::to("/admin/content/stories");
 	}	
 	public function delete()
 	{
 		$id = Request::input("id");
-
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." Delete Stories #".$id);
 		DB::table("tbl_stories")->where("stories_id", $id)->update(['archived' => 1]);
 
         return Redirect::to("/admin/content/stories");

@@ -22,7 +22,7 @@ class AdminSlotController extends AdminController
 	{
 		$data['membership'] = Tbl_membership::where('archived',0)->get();
 		$data['slot_limit'] = DB::table('tbl_settings')->where('key','slot_limit')->first();
-
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Slot Maintenance");
 		if(!$data['slot_limit'])
 		{
 			DB::table('tbl_settings')->insert(['key'=>'slot_limit','value'=>1]);
@@ -30,7 +30,9 @@ class AdminSlotController extends AdminController
 		
 		if(isset($_POST['slot_limit']))
 		{
+			$old = DB::table('tbl_settings')->where('key','slot_limit')->first();
 			DB::table('tbl_settings')->where('key','slot_limit')->update(['key'=>'slot_limit','value'=>Request::input('slot_limit')]);
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." change slot limit ".$old->value.' to '.Request::input('slot_limit'));
 		    return Redirect::to('admin/maintenance/slots');
 		}
 
@@ -59,13 +61,16 @@ class AdminSlotController extends AdminController
 	}
 	public function add()
 	{
+
 		if(Request::input("id") != "")
 		{
 			$data["slot"] = Tbl_slot::rank()->membership()->account()->id(Request::input("id"))->first();
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." Visits Slot Genealogy of slot #".Request::input('id'));
 		}
 		else
 		{
 			$data["slot"] = Tbl_slot::rank()->membership()->account()->first();
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." Visits Slot Genealogy of slot #".$data["slot"]->slot_id);
 		}
 		
 		return view('admin.maintenance.slot_add', $data);
@@ -80,6 +85,7 @@ class AdminSlotController extends AdminController
 		$data["_rank"] = Tbl_rank::get();
 		$data["_country"] = Tbl_country::get();
 		$data["slot_number"] = Tbl_slot::max("slot_id") + 1;
+
 		return view('admin.maintenance.slot_add_form', $data);
 	}
 	public function edit_form()
@@ -104,6 +110,7 @@ class AdminSlotController extends AdminController
 		}
 		$data["allow_button"] = DB::table('tbl_settings')->where('key','allow_update')->first()->value;
 		$data['user'] = Session::get('admin')['username'];
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." view Slot #".Request::input('slot_id'));
 		return view('admin.maintenance.slot_edit_form', $data);
 	}
 	public function add_form_submit()
@@ -165,6 +172,8 @@ class AdminSlotController extends AdminController
 			$logs = "Your slot #".$slot_id." is created by admin (".Admin::info()->account_name.").";
 			Log::slot($slot_id, $logs,Request::input("wallet"), "New Slot",$slot_id);
 
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." create new slot #".$slot_id,null,serialize($insert));
+			
 			Compute::tree($slot_id);
 			Compute::entry($slot_id);
 
@@ -237,6 +246,7 @@ class AdminSlotController extends AdminController
 		{
 			$data["message"] = "";
 			$data["account_id"] = Tbl_account::insertGetId($insert);
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." create new account #".$data["account_id"],null,serialize($insert));
 		}
 
 		return $data;
@@ -246,7 +256,7 @@ class AdminSlotController extends AdminController
 		$return["message"] = "";
 
 		$data["slot"] = Tbl_slot::id(Request::input("slot_id"))->first();
-		
+		$old  = DB::table('tbl_slot')->where('slot_id',Request::input('slot_id'))->first();
 		$update["slot_owner"] = Request::input("account_id");
 		$update["slot_binary_left"] = Request::input("binary_left");
 		$update["slot_binary_right"] = Request::input("binary_right");
@@ -264,7 +274,7 @@ class AdminSlotController extends AdminController
 		$logs = "Your slot #".Request::input('slot_id')." update your slot wallet to <b>".number_format(Request::input("wallet"),2)." wallet</br> (".Admin::info()->account_name.").";
 		$wallet = Tbl_wallet_logs::id(Request::input('slot_id'))->wallet()->sum('wallet_amount');
 		$wallet =  Request::input('wallet') - $wallet;
-
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." edit Slot #".Request::input("slot_id"),serialize($old),serialize($update));
 		Log::slot(Request::input("slot_id"), $logs,$wallet, "Update Slot",Request::input("slot_id"));
 		$return["placement"] = $data["slot"]->slot_placement;
 
@@ -323,6 +333,7 @@ class AdminSlotController extends AdminController
  		}
  		else
  		{
+ 			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." delete Slot #".Request::input("slot_id"),serialize($slot_info));
  			Tbl_slot::id(Request::input("slot_id"))->delete();
  		}
 

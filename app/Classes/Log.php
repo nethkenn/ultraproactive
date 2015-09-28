@@ -21,11 +21,13 @@ class Log
 		Tbl_account_log::insert($insert);
 	}
 	
-	public static function Admin($account_id,$log)
+	public static function Admin($account_id,$log,$old = null,$new = null)
 	{
 		$insert["account_id"] = $account_id;
 		$insert["logs"] = $log;
 		$insert["created_at"] = Carbon\Carbon::now();
+		$insert["old_data"] = $old;
+		$insert["new_data"] = $new;
 		Tbl_admin_log::insert($insert);
 	}
 

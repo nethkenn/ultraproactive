@@ -5,10 +5,13 @@ use DB;
 use App\Classes\Product;
 use Carbon\Carbon;
 use Config;
+use App\Classes\Log;
+use App\Classes\Admin;
 class AdminReportMembershipController extends AdminController
 {
 	public function index()
-	{
+	{	
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Membership Sales");
 
 		if(Request::isMethod("post"))
 		{

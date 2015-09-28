@@ -7,11 +7,14 @@ use Datatables;
 use App\Tbl_membership;
 use App\Tbl_product_discount;
 use Validator;
+use App\Classes\Log;
+use App\Classes\Admin;
 use App\Tbl_product;
 class AdminMembershipController extends AdminController
 {
 	public function index()
 	{
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Membership");
         return view('admin.maintenance.membership');
 	}
 	public function data()
@@ -39,7 +42,7 @@ class AdminMembershipController extends AdminController
 		$membership = Tbl_membership::findOrFail(Request::input('id'));
 		$id = $membership->membership_id;
 		$data['membership'] = $membership;
-		
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." view Edit Membership id #".$id);
 
 		if(isset($_POST['membership_name']))
 		{
@@ -60,7 +63,7 @@ class AdminMembershipController extends AdminController
 			
 			if (!$validator->fails())
 			{
-
+				$old = DB::table('tbl_membership')->where('membership_id',$id)->first();
 				$insert['membership_name'] = strtoupper(Request::input('membership_name'));
 				$insert['membership_price'] = Request::input('membership_price');
 				$insert['membership_entry'] = Request::input('membership_entry');
@@ -71,6 +74,11 @@ class AdminMembershipController extends AdminController
 				$insert['global_pool_sharing'] = Request::input('global_pool_sharing');
 				// $insert['member_upgrade_pts'] = Request::input('member_upgrade_pts');
 				$membership = Tbl_membership::where('membership_id',$id)->update($insert);
+
+				$new = DB::table('tbl_membership')->where('membership_id',$id)->first();
+
+				Log::Admin(Admin::info()->account_id,Admin::info()->account_username." edit Membership id #".$id,serialize($old),serialize($new));
+
 				return Redirect('admin/maintenance/membership');
 			}
 			else
@@ -98,10 +106,13 @@ class AdminMembershipController extends AdminController
 		$data['product_discount'] = Tbl_product_discount::where('membership_id',Request::input('id'))->product()->get();
 		$data['_product'] = Tbl_product::where('archived',0)->get();
 		$data['membership'] = Tbl_membership::where('membership_id',Request::input('id'))->first();
-
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." view Set product membership discount id #".Request::input('id'));
 		if(isset($_POST['product']))
 		{
 			$this->put_product_discounted(Request::input());
+			$data['product_discount'] = Tbl_product_discount::where('membership_id',Request::input('id'))->product()->get();
+			$data['_product'] = Tbl_product::where('archived',0)->get();
+			$data['membership'] = Tbl_membership::where('membership_id',Request::input('id'))->first();
 		}
 
 		return view('admin.maintenance.membership_product_discount',$data);
@@ -110,6 +121,9 @@ class AdminMembershipController extends AdminController
 	public function put_product_discounted($data)
 	{	
 		$id = $data['id'];
+
+		$old = DB::table('tbl_product_discount')->where('membership_id',$id)->get();
+
 		Tbl_product_discount::where('membership_id',$id)->delete();
 		foreach($data['product'] as $key => $p)
 		{
@@ -118,6 +132,9 @@ class AdminMembershipController extends AdminController
 			$insert['membership_id'] = $id;
 			Tbl_product_discount::insert($insert);
 		}
+
+		$new = DB::table('tbl_product_discount')->where('membership_id',$id)->get();
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." change the Set of product discount id membership #".$id,serialize($old),serialize($new));
 	}
 
 	public function add()
@@ -160,6 +177,8 @@ class AdminMembershipController extends AdminController
 			
 				$membership->save();
 
+				$new = DB::table('tbl_membership')->where('membership_id',$membership->membership_id)->first();
+				Log::Admin(Admin::info()->account_id,Admin::info()->account_username." add membership #".$membership->membership_id,null,serialize($new));
 				return Redirect('admin/maintenance/membership');
 			}
 			else
@@ -188,10 +207,9 @@ class AdminMembershipController extends AdminController
 
 	public function archive_membership()
 	{	
-
 		$id = Request::input('id');
 		$data['query'] = Tbl_membership::where('membership_id',$id)->update(['archived'=>'1']);
-
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." archive membership #".$id);
 		return json_encode($data);
 	}
 
@@ -199,7 +217,7 @@ class AdminMembershipController extends AdminController
 	{	
 		$id = Request::input('id');
 		$data['query'] = Tbl_membership::where('membership_id',$id)->update(['archived'=>'0']);
-
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." restore membership #".$id);
 		return json_encode($data);
 	}
 

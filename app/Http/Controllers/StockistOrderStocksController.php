@@ -157,7 +157,7 @@ class StockistOrderStocksController extends StockistController
 
                 }    
 
-                if($sender->stockist_type_discount > $receiver->stockist_type_discount)
+                if($sender->stockist_type_discount < $receiver->stockist_type_discount)
                 {
                             $data['prod'] = $receiver->stockist_type_discount;
                             $data['pack'] = $receiver->stockist_type_package_discount;

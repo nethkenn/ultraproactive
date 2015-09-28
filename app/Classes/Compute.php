@@ -12,6 +12,9 @@ use App\Tbl_matching_bonus;
 use DB;
 use App\Tbl_voucher;
 use App\Tbl_wallet_logs;
+use App\Tbl_travel_reward;
+use Session;
+use App\Tbl_travel_qualification;
 class Compute
 {
     public static function tree($new_slot_id)
@@ -861,5 +864,59 @@ class Compute
                 Tbl_slot::where('slot_id',$slot_id)->update($update); 
                 $update = null;
             }
+    }
+
+    public static function compute_travel($slot)
+    {
+        $reward = null;
+        $points = 0 ;
+
+
+        $required = Tbl_travel_qualification::where('archived',0)->get();
+
+        foreach($required as $key => $r)
+        {
+            if($r->travel_qualification_name == "Direct Referral")
+            {
+                $count = Tbl_tree_sponsor::where('sponsor_tree_parent_id',$slot->slot_id)->where('sponsor_tree_level',1)->count();
+                if($count >= $r->item)
+                {
+                    $points = $points + $r->points;
+                }
+            }
+            elseif($r->travel_qualification_name == "Total Spent")
+            {
+                $count = Tbl_wallet_logs::id($slot->slot_id)->wallet()->where('wallet_amount','<=',0)->sum('wallet_amount');
+                $count = $count * (-1);
+
+                if($count >= $r->item)
+                {
+                    $points = $points + $r->points;
+                }          
+            }
+            elseif($r->travel_qualification_name == "Total Income")
+            {
+                $count = Tbl_wallet_logs::id($slot->slot_id)->wallet()->where('wallet_amount','>=',0)->sum('wallet_amount');
+                if($count >= $r->item)
+                {
+                    $points = $points + $r->points;
+                }  
+            }
+            elseif($r->travel_qualification_name == "Total Downline")
+            {
+                $count = Tbl_tree_placement::where('placement_tree_parent_id',$slot->slot_id)->count();
+                if($count >= $r->item)
+                {
+                    $points = $points + $r->points;
+                }  
+            }
+        }
+
+        $reward = Tbl_travel_reward::where('archived',0)->where('required_points','<=',$points)->orderBy('required_points','DESC')->first();
+
+        $data['points'] = $points;
+        $data['reward'] = $reward;
+
+        return $data;
     }
 }

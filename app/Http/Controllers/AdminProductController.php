@@ -16,12 +16,13 @@ use App\Classes\Image;
 use Crypt;
 use App\Tbl_stockist;
 use App\Tbl_stockist_package_inventory;
-
+use App\Classes\Log;
+use App\Classes\Admin;
 class AdminProductController extends AdminController
 {
 	public function index()
 	{
-
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Product");
 		$data["page"] = "Product Maintenance";
 		
         return view('admin.maintenance.product');
@@ -64,7 +65,8 @@ class AdminProductController extends AdminController
 				$product->upgrade_pts = Request::input('upgrade_pts');
 				// $product->product_discount = Request::input('product_discount');
 				$product->save();
-
+				$new = DB::table('tbl_product')->where('product_id',$product->product_id)->first();
+				Log::Admin(Admin::info()->account_id,Admin::info()->account_username." add new product called ".$product->product_name." id #".$product->product_id,null,serialize($new));
 
 				$stockist = Tbl_stockist::all();
 		        if($stockist)
@@ -76,6 +78,8 @@ class AdminProductController extends AdminController
 
 		                $stockist_inventory = new Tbl_stockist_inventory($insert_stockist_inventory);
 		                $stockist_inventory->save();
+
+		                
 		            }
 		        }
 
@@ -89,7 +93,10 @@ class AdminProductController extends AdminController
 			
 
 		}
-		
+		else
+		{
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Add Product");
+		}
 
 
 		
@@ -199,6 +206,7 @@ class AdminProductController extends AdminController
 
 				// dd(Request::input());
 				var_dump(Request::input());
+				$old = DB::table('tbl_product')->where('product_id',Request::input('product_id'))->first();
 				$product = Tbl_product::findOrFail(Request::input('product_id'));
 				$product->product_category_id = $this->get_prod_cat(Request::input('product_category'));
 				$product->price = Request::input('price');
@@ -211,7 +219,9 @@ class AdminProductController extends AdminController
 				$product->image_file = Request::input('image_file');
 				$product->sku = Request::input('sku');
 				$product->save();
+				$new = DB::table('tbl_product')->where('product_id',$product->product_id)->first();
 
+				Log::Admin(Admin::info()->account_id,Admin::info()->account_username." edit the product id #".$product->product_id,serialize($old),serialize($new));
 				return redirect('admin/maintenance/product');
 			}
 			else
@@ -233,6 +243,7 @@ class AdminProductController extends AdminController
 	{	
 
 		$id = Request::input('id');
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." archive id #".Request::input('id'));
 		$data['query'] = Tbl_product::where('product_id',$id)->update(['archived'=>'1']);
 		Tbl_stockist_inventory::where('product_id',$id)->update(['archived'=>'1']);
 		return json_encode($data);
@@ -243,6 +254,7 @@ class AdminProductController extends AdminController
 
 		$id = Request::input('id');
 		$data['query'] = Tbl_product::where('product_id',$id)->update(['archived'=>'0']);
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." restore id #".Request::input('id'));
 		Tbl_stockist_inventory::where('product_id',$id)->update(['archived'=>'0']);
 		return json_encode($data);
 	}

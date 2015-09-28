@@ -15,7 +15,7 @@ use App\Http\Requests;
 use App\Http\Requests\AdminPositionAddRequest;
 use App\Http\Requests\AdminPositionEditRequest;
 use Validator;
-
+use App\Classes\Log;
 class AdminPositionController extends AdminController
 {
 	public function index()
@@ -35,6 +35,10 @@ class AdminPositionController extends AdminController
 		{
 			DB::table('tbl_settings')->where('key','allow_update')->update(["value"=>Request::input('allow_button')]);
 			$data["allow_button"] = DB::table('tbl_settings')->where('key','allow_update')->first()->value;
+		}
+		else
+		{
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Admin Position");
 		}		
 		
 		
@@ -51,7 +55,7 @@ class AdminPositionController extends AdminController
 				$insert['module_id'] = $value->module_id;
 				$position_has_module = new Tbl_admin_position_has_module($insert);
 				$position_has_module->save();
-			
+				
 			}
 		}
 
@@ -60,14 +64,13 @@ class AdminPositionController extends AdminController
 
 	public function add()
 	{
-
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Add Admin Position");
 		$admin_position_id = Admin::info()->admin_position_id;
 		$data["_module"] = Tbl_admin_position_has_module::leftJoin('tbl_module','tbl_module.module_id','=','tbl_admin_position_has_module.module_id')
 							->where('admin_position_id', $admin_position_id)
 							->get();
 
-		$data["_module_array"] = $data["_module"]->pluck('module_id')->toArray();			
-
+		$data["_module_array"] = $data["_module"]->pluck('module_id')->toArray();
 
         return view('admin.utilities.position_add', $data);
 	}
@@ -111,7 +114,11 @@ class AdminPositionController extends AdminController
 
 		$position = new Tbl_position(Request::input());
 		$position->save();
+
+		$old['module'] = DB::table('tbl_admin_position_has_module')->where('admin_position_id',$position->admin_position_id)->get();	
+		$old['position'] = DB::table('tbl_admin_position')->where('admin_position_id',$position->admin_position_id)->first();
 		Tbl_admin_position_has_module::where('admin_position_id',$position->admin_position_id)->delete();
+
 		foreach ((array)Request::input('module') as $key => $value)
 		{
 			$insert['admin_position_id'] = $position->admin_position_id;
@@ -119,6 +126,13 @@ class AdminPositionController extends AdminController
 			$position_has_module = new Tbl_admin_position_has_module($insert);
 			$position_has_module->save();
 		}
+
+
+		$new['module'] = DB::table('tbl_admin_position_has_module')->where('admin_position_id',$position->admin_position_id)->get();	
+		$new['position'] = DB::table('tbl_admin_position')->where('admin_position_id',$position->admin_position_id)->first();
+
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." add Admin Position Id #".$position->admin_position_id,serialize($old),serialize($new));
+
         return redirect('/admin/utilities/position');
 	}
 
@@ -132,10 +146,7 @@ class AdminPositionController extends AdminController
 	public function edit()
 	{
 
-
-
-		
-
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Edit Admin Position id #".Request::input('admin_position_id'));
 		$data['position'] = Tbl_position::findOrFail(Request::input('admin_position_id'));
 
 		$data['selected_position_module_array'] = Tbl_admin_position_has_module::where('admin_position_id',Request::input('admin_position_id'))->get()->pluck('module_id')->toArray();;
@@ -218,6 +229,9 @@ class AdminPositionController extends AdminController
 		$position->admin_position_rank = Request::input('admin_position_rank');
 		$position->save();
 
+		$old['module'] = DB::table('tbl_admin_position_has_module')->where('admin_position_id',$position->admin_position_id)->get();	
+		$old['position'] = DB::table('tbl_admin_position')->where('admin_position_id',$position->admin_position_id)->first();
+
 		Tbl_admin_position_has_module::where('admin_position_id',Request::input('admin_position_id'))->delete();
 		foreach ((array)Request::input('module') as $key => $value)
 		{
@@ -228,26 +242,25 @@ class AdminPositionController extends AdminController
 		}
 
 
+		$new['module'] = DB::table('tbl_admin_position_has_module')->where('admin_position_id',$position->admin_position_id)->get();	
+		$new['position'] = DB::table('tbl_admin_position')->where('admin_position_id',$position->admin_position_id)->first();
+
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." edit Admin Position Id #".$position->admin_position_id,serialize($old),serialize($new));
+
 
 		return redirect('/admin/utilities/position');
 	}
 
 	public function delete()
 	{
-
-
-
 		$position = $data['position']  = Tbl_position::findOrFail(Request::input('admin_position_id'));
 		if(Admin::info()->admin_position_rank >= $position->admin_position_rank)
 		{
 			die("Forbidden");
 		}
 
-
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." archived Admin position id #".Request::input('admin_position_id'));
 		return Tbl_position::where('admin_position_id', Request::input('admin_position_id'))->update(['archived'=>1]);
-
-		
-
 	}
 
 
@@ -262,6 +275,8 @@ class AdminPositionController extends AdminController
 		{
 			die("Forbidden");
 		}
+
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." restore Admin position id #".Request::input('admin_position_id'));
 		return Tbl_position::where('admin_position_id', Request::input('admin_position_id'))->update(['archived'=>0]);
 
 		

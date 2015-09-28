@@ -3,7 +3,8 @@ use DB;
 use Redirect;
 use Request;
 use Settings;
-
+use App\Classes\Admin;
+use App\Classes\Log;
 class AdminSettingsController extends AdminController
 {
 	public function index()
@@ -11,7 +12,7 @@ class AdminSettingsController extends AdminController
 		if(Request::isMethod("post"))
 		{
 			$_settings = Request::input();
-
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Company Settings");
 			$ctr = 0;
 			foreach($_settings as $key => $setting)
 			{
@@ -56,12 +57,19 @@ class AdminSettingsController extends AdminController
 		$telephone = Request::input("telephone");
 		$address = Request::input("address");
 
+		$old = DB::table('tbl_settings')->get();
 		//SUBMIT QUERY
 		DB::table("tbl_settings")->where("key", "company_name")->update(['value' => $name]);
 		DB::table("tbl_settings")->where("key", "company_email")->update(['value' => $email]);
 		DB::table("tbl_settings")->where("key", "company_mobile")->update(['value' => $mobile]);
 		DB::table("tbl_settings")->where("key", "company_telephone")->update(['value' => $telephone]);
 		DB::table("tbl_settings")->where("key", "company_address")->update(['value' => $address]);
+
+		$new = DB::table('tbl_settings')->get();
+
+
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." archived change the Company Settings",serialize($old),serialize($new));
+
 
         return Redirect::to("/admin/utilities/setting");
 	}
