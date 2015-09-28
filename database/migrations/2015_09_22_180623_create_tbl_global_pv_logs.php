@@ -12,14 +12,17 @@ class CreateTblGlobalPvLogs extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_global_pv_logs', function (Blueprint $table)
+        if (!Schema::hasTable('tbl_global_pv_logs'))
         {
-            $table->increments('global_pv_logs_id');
-            $table->integer('slot_id');
-            $table->double('value');
-            $table->tinyInteger('done')->default(0);
-            $table->timestamps();
-        });
+            Schema::create('tbl_global_pv_logs', function (Blueprint $table)
+            {
+                $table->increments('global_pv_logs_id');
+                $table->integer('slot_id');
+                $table->double('value');
+                $table->tinyInteger('done')->default(0);
+                $table->timestamps();
+            });
+        }
     }
 
     /**
