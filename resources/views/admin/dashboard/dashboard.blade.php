@@ -31,7 +31,10 @@
 			</div>
 		</div>
 	</div>
-
+	<input type="hidden" id="jsoncontainer" value="{{$json}}">
+	<div class="graph">
+		<div id="container" style="width:100%; height:400px;"></div>
+	</div>
 	<div class="logs hide">
 		<div class="log-header"><i class="fa fa-users"></i> <span>System Logs</span><button>View All</button></div>
 		<div class="log-content row">
