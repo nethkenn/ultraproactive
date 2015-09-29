@@ -78,6 +78,7 @@ class AdminReportProductController extends AdminController
 		$_order = DB::table("tbl_voucher")->select(DB::raw($select))
 											->groupBy(DB::raw($groupBy))
 											->where('status','<>','cancelled')
+											->where('membership_code',0)
 											->where(function($query) use($filter_sales)
 											{ 
 												switch ($filter_sales)

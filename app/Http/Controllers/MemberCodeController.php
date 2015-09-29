@@ -984,7 +984,7 @@ class MemberCodeController extends MemberController
 									$message['success'] = "Successfully bought.";
 									Log::account(Customer::id(),"You bought a membership code (Pin #$membership_code->code_pin)");
 									$c = Tbl_membership_code::where('code_pin',$membership_code->code_pin)->getmembership()->first();
-									$or_code = DB::table('tbl_membership_code_sale')->insertGetId(['membershipcode_or_code'=>Globals::create_membership_code_sale(),'total_amount'=>($c->membership_price)+($c->membership_price * $c->discount),'created_at'=>Carbon::now(),'sold_to'=>Customer::id()]);
+									$or_code = DB::table('tbl_membership_code_sale')->insertGetId(['membershipcode_or_code'=>Globals::create_membership_code_sale(),'total_amount'=>($c->membership_price),'created_at'=>Carbon::now(),'sold_to'=>Customer::id()]);
 									DB::table('tbl_membership_code_sale_has_code')->insert(['code_pin'=>$c->code_pin,'membershipcode_or_num'=>$or_code]);
 									
 									if($checking6 == true)
@@ -1034,6 +1034,7 @@ class MemberCodeController extends MemberController
 				                $insert['discount'] = $slot->discount;
 				                $insert['total_amount'] = $price; //
 				                $insert['account_id'] = $customer->account_id;
+				                $insert['membership_code'] = 1;
 				                $voucher = new Tbl_voucher($insert);
 				                $voucher->save();
 				                // $log = "Upgrade member include product worth ".Product::return_format_num($insert['total_amount']). " with Voucher Num: ".$voucher->voucher_id." , Voucher Code: ".$voucher->voucher_code.".";

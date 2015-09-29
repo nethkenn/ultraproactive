@@ -91,13 +91,13 @@
 									<li><a href="admin/maintenance/country">Country</a></li>
 									<li><a href="admin/maintenance/deduction">Deductions</a></li>
 									<li><a href="admin/maintenance/ranking">Ranking</a></li>
-									<!-- <li class="divider" role="separator"></li>
+									<li class="divider" role="separator"></li>
 									<li><a href="admin/admin_stockist">Stockist</a></li>
 									<li><a href="admin/admin_stockist_user">Stockist Users</a></li>
 									<li><a href="admin/stockist_type">Stockist Type</a></li>
 									<li><a href="admin/stockist_inventory">Stockist Inventory</a></li>
 									<li><a href="admin/stockist_wallet">Stockist Refill Wallet</a></li>
-									<li><a href="admin/stockist_request">Stockist Order Request</a></li> -->
+									<li><a href="admin/stockist_request">Stockist Order Request</a></li>
 								</ul>
 							</li>
 							<!-- UTILITIES -->

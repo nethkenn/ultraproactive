@@ -275,6 +275,7 @@ class AdminCodeController extends AdminController {
 							$insert_voucher_membership = Tbl_membership::find(Request::input('membership_id'));
 							$insert_voucher['total_amount']= $insert_voucher_membership->membership_price;
 							$insert_voucher['payment_mode'] = 1;
+							$insert_voucher['membership_code'] = 1;
 							$insert_voucher['processed_by_name'] = Admin::info()->account_name .' ('.Admin::info()->admin_position_name.')';
 							$insert_voucher['admin_id'] = Admin::info()->admin_id;
 
