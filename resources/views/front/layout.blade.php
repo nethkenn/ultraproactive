@@ -9,19 +9,21 @@
 	<!--[if lt IE 9]>
 	<script src="/resources/assets/path///html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
-	<link rel="stylesheet" type="text/css" href="/resources/assets/frontend/css/branch.css">
-	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400%7COpen+Sans:400" type="text/css">
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Raleway:400,700,300' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="/resources/assets/path/rs-plugin/css/settings.css" type="text/css" media="all">
 	<link rel="stylesheet" href="/resources/assets/path/css/whhg.css" type="text/css" media="all">
 	<link rel="stylesheet" href="/resources/assets/path/css/scripts.css" type="text/css" media="all">
 	<link rel="stylesheet" href="/resources/assets/path/css/style.css" type="text/css" media="all">
 	<link rel="stylesheet" type="text/css" href="/resources/assets/slick/slick.css">
 	<link rel="stylesheet" type="text/css" href="/resources/assets/slick/slick-theme.css">
+	<link rel="stylesheet" type="text/css" href="/resources/assets/bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="/resources/assets/frontend/css/global.css">
 	@yield('css')
 </head>
 
-<body style="overflow-x: hidden;">
-	<header id="dz_main_header" class="clearfix">
+<body style="overflow-x: hidden; margin-left: 15px; margin-right: 15px; position: relative;">
+	<!-- <header id="dz_main_header" class="clearfix">
 		<div class="container">
 			<div id="logo">
 				<a href="/"><img src="/resources/assets/path/images/logo.png" style="height: 60px; margin-top: -10px; margin-bottom: -10px;"></a>
@@ -49,29 +51,84 @@
 				<i class="ABdev_icon-menu"></i>
 			</div>
 		</div>
-	</header>
-	<div id="dz_header_spacer">
-	</div>
+	</header> -->
+	<nav class="navbar navbar-default">
+	   <div>
+	      <!-- Brand and toggle get grouped for better mobile display -->
+	      <div class="navbar-header">
+	         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+	         <span class="sr-only">Toggle navigation</span>
+	         <span class="icon-bar"></span>
+	         <span class="icon-bar"></span>
+	         <span class="icon-bar"></span>
+	         </button>
+	         <!-- <a class="navbar-brand" href="#">Brand</a> -->
+	      </div>
+	      <!-- Collect the nav links, forms, and other content for toggling -->
+	      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="border: 0;">
+	         <ul class="nav navbar-nav">
+	            <li class="active"><a href="/">HOME</a></li>
+	            <li><a href="product">PRODUCT</a></li>
+	            <li><a href="mindsync">MIND SYNC PROJECT</a></li>
+	            <li><a href="stories">STORIES</a></li>
+	            <li class="logo-holder"><img class="logo" src="/resources/assets/frontend/img/logo.png"></li>
+	            <li><a href="about">ABOUT</a></li>
+	            <li><a href="opportunity">OPPORTUNITY</a></li>
+	            <li><a href="faq">FAQs</a></li>
+	            <li><a href="contact">CONTACT US</a></li>
+	            <!-- <li class="dropdown">
+	               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+	               <ul class="dropdown-menu">
+	                  <li><a href="#">Action</a></li>
+	                  <li><a href="#">Another action</a></li>
+	                  <li><a href="#">Something else here</a></li>
+	                  <li role="separator" class="divider"></li>
+	                  <li><a href="#">Separated link</a></li>
+	                  <li role="separator" class="divider"></li>
+	                  <li><a href="#">One more separated link</a></li>
+	               </ul>
+	            </li> -->
+	         </ul>
+	         <!-- <ul class="nav navbar-nav navbar-right">
+	            <li><a href="#">Link</a></li>
+	            <li class="dropdown">
+	               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+	               <ul class="dropdown-menu">
+	                  <li><a href="#">Action</a></li>
+	                  <li><a href="#">Another action</a></li>
+	                  <li><a href="#">Something else here</a></li>
+	                  <li role="separator" class="divider"></li>
+	                  <li><a href="#">Separated link</a></li>
+	               </ul>
+	            </li>
+	         </ul> -->
+	      </div>
+	      <!-- /.navbar-collapse -->
+	   </div>
+	   <!-- /.container-fluid -->
+	</nav>
+	<div style="margin-top: 200px">
 	@yield('content')
-	<footer id="dz_main_footer">
+	</div>
+	<footer id="dz_main_footer" style="margin: 0 -15px;">
 		<div id="footer_columns">
 			<div class="container">
 				<div class="row">
 					<div class="span3 clearfix">
 						<div class="widget">
-							<h3>About us</h3>			
-							<div class="textwidget">
+							<h3 class="rw">About us</h3>			
+							<div class="textwidget op">
 								Ultra Proactive Marketing Inc. was incorporated in 2014. The company made its mark in the MLM industry by introducing unique high quality products and services in the market. By now, the company is making a serious and aggresive bid to be one of the best MLM companies in the country. 
 							</div>
 						</div>						
 					</div>
 					<div class="span3 clearfix">
 						<div class="widget rpwe_widget">
-							<h3>Recent News</h3>
+							<h3 class="rw">Recent News</h3>
 							<div class="rpwe-block">
 								<ul>
 									@foreach($_newsfooter as $newsfooter)
-									<li>
+									<li class="op">
 										<a href="/news_content?id={{ $newsfooter->news_id }}">
 											<img src="{{ $newsfooter->image }}" class="rpwe-thumb">			
 										</a>
@@ -87,8 +144,8 @@
 					</div>
 					<div class="span3 clearfix">
 						<div class="widget">
-							<h3>Stay in touch</h3>		
-							<div class="contact_info_widget">
+							<h3 class="rw">Stay in touch</h3>		
+							<div class="contact_info_widget op">
 								<p><i class="ABdev_icon-envelope"></i><a href="mailto:@if(isset($_setting->company_email)){{ $_setting->company_email }}@endif">@if(isset($_setting->company_email)){{ $_setting->company_email }}@endif</a></p>
 								<p><i class="ABdev_icon-phonealt"></i>
 									@if(isset($_setting->company_telephone)){{ $_setting->company_telephone }}@endif 
@@ -102,7 +159,7 @@
 					</div>
 					<div class="span3 clearfix">
 						<div class="widget flickr-stream">
-							<h3>Recent Products</h3>
+							<h3 class="rw">Recent Products</h3>
 							<div class="flickr_stream">
 								@foreach($_productfooter as $productfooter)
 								<a class="link-middle-image" href="/product_content?id={{ $productfooter->product_id }}"><img src="{{ $productfooter->image }}" alt=""></a>
@@ -137,6 +194,7 @@
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&amp;ver=4.0.1"></script>
 	<script type="text/javascript" src="/resources/assets/path/js/scripts.js"></script>
 	<script type="text/javascript" src="/resources/assets/path/js/custom.js"></script>
+	<script type="text/javascript" src="/resources/assets/bootstrap/js/bootstrap.min.js"></script>
 	@yield('script')
 	<script type="text/javascript">
 	;(function($){
