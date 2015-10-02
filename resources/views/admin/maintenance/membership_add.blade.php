@@ -79,7 +79,7 @@
                     @endif
                     <input name="slot_limit" value="{{Request::input('slot_limit')}}" required="required" class="form-control" id="" placeholder="" type="number">
                 </div>
-                
+                <!--
                 <div class="form-group col-md-6">
                     <label for="discount">Discount</label>
                     @if($_error['discount'])
@@ -92,7 +92,7 @@
                         </div>
                     @endif
                     <input name="discount" value="{{Request::input('discount')}}" required="required" class="form-control" id="" placeholder="" type="number">
-                </div>
+                </div> -->
                 <div class="form-group col-md-6">
                     <label for="discount">Enable Entry</label>
                     @if($_error['membership_entry'])

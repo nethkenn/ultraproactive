@@ -7,7 +7,7 @@ use Carbon;
 
 class StockistLog
 {
-	public static function transaction($process,$amount,$discountp,$discounta,$total,$paid = 0,$claimed = 0,$transaction_by,$transaction_to,$transaction_payment_type,$transaction_by_stockist_id,$transaction_to_id,$extra,$voucher = NULL)
+	public static function transaction($process,$amount,$discountp,$discounta,$total,$paid = 0,$claimed = 0,$transaction_by,$transaction_to,$transaction_payment_type,$transaction_by_stockist_id,$transaction_to_id,$extra,$voucher = NULL,$issue = NULL)
 	{
 		if($voucher == NULL)
 		{
@@ -29,6 +29,7 @@ class StockistLog
 		$insert["extra"] = $extra;
 		$insert["voucher_id"] = $voucher;
 		$insert["created_at"] = Carbon\Carbon::now();
+		$insert["issued_stockist_id"] = $issue;
 
 		$id = Tbl_transaction::insertGetId($insert);
 		return $id;

@@ -35,7 +35,7 @@ class StockistIssueController extends StockistController
     {
         $user = Request::input('username');
         $owner = Tbl_stockist::where('stockist_id',Stockist::info()->stockist_id)->join('tbl_stockist_type','stockist_type','=','stockist_type_id')->first();
-        $user = Tbl_stockist_user::where('stockist_un',$user)->stockist()->join('tbl_stockist_type','stockist_type','=','stockist_type_id')->first();
+        $user = Tbl_stockist_user::where('tbl_stockist_user.stockist_un',$user)->stockist()->join('tbl_stockist_type','stockist_type','=','stockist_type_id')->first();
         if($user)
         {
 
@@ -43,10 +43,12 @@ class StockistIssueController extends StockistController
             {
                         $id = $owner->stockist_id;
                         $data['error'] = null;  
+                        $data["success"] = null;
                         $data['id'] = $id;
-                        $data['product'] = $user->stockist_type_discount;
-                        $data['pack'] = $user->stockist_type_package_discount;
-
+                        $data['product'] = $owner->stockist_type_discount;
+                        $data['pack'] = $owner->stockist_type_package_discount;
+                        $status = false;
+                        $status2 = false;
                         CheckStockist::checkinventory($user->stockist_id);
                         CheckStockist::checkinventory($owner->stockist_id);
                         CheckStockist::checkpackage($user->stockist_id);
@@ -61,7 +63,7 @@ class StockistIssueController extends StockistController
                                                                     ->join('tbl_product','tbl_product.product_id','=','tbl_stockist_inventory.product_id')
                                                                     ->get();
 
-
+                         $total  = null;
                          if(Request::input('quantity'))
                          {
 
@@ -90,6 +92,7 @@ class StockistIssueController extends StockistController
                                     {
                                         if($value >= 0)
                                         {
+                                            $status = true;
                                             Tbl_stockist_inventory::where('stockist_id',$id)->where('product_id',$key)->update($updateown);
                                             Tbl_stockist_inventory::where('stockist_id',$user->stockist_id)->where('product_id',$key)->update($updaterecipient);
                                             
@@ -132,21 +135,29 @@ class StockistIssueController extends StockistController
                                 $extra = "ISSUED";
                                 $voucher = NULL;
 
-                                $id = StockistLog::transaction($process,$amount,$discountp,$discounta,$totality,$paid = 0,$claimed = 0,$transaction_by,$transaction_to,$transaction_payment_type,$transaction_by_stockist_id,$transaction_to_id,$extra,$voucher);
-                                foreach($total as $key => $t)
-                                {
-                                    $product_id = $total[$key]['id']; 
-                                    $product_package_id = NULL;
-                                    $code_pin = NULL;
-                                    $transaction_amount = $total[$key]['sub'];
-                                    $log = "Product Issued";
-                                    $transaction_qty  = $total[$key]['qty'];
-                                    $transaction_total = $total[$key]['total'];
-                                    StockistLog::relative($id,$if_product=1,$if_product_package = 0,$if_code_pin = 0,$product_id,$product_package_id,$code_pin,$transaction_amount,$log,$transaction_qty,$transaction_total);
-                                }
+                                $trans_id = StockistLog::transaction($process,$amount,$discountp,$discounta,$totality,$paid = 0,$claimed = 0,$transaction_by,$transaction_to,$transaction_payment_type,$transaction_by_stockist_id,null,$extra,$voucher,$transaction_to_id);
+                               if(isset($total))
+                               {
+                                    foreach($total as $key => $t)
+                                    {
+                                        $product_id = $total[$key]['id']; 
+                                        $product_package_id = NULL;
+                                        $code_pin = NULL;
+                                        $transaction_amount = $total[$key]['sub'];
+                                        $log = "Product Issued";
+                                        $transaction_qty  = $total[$key]['qty'];
+                                        $transaction_total = $total[$key]['total'];
+                                        StockistLog::relative($trans_id,$if_product=1,$if_product_package = 0,$if_code_pin = 0,$product_id,$product_package_id,$code_pin,$transaction_amount,$log,$transaction_qty,$transaction_total);
+                                    }                                
+                               }
 
-                         }             
 
+                         }  
+                         else
+                         {
+                             $status = true;
+                         }           
+                         $total  = null;
                          if(Request::input('quantitypack'))
                          {
 
@@ -158,7 +169,6 @@ class StockistIssueController extends StockistController
 
                                 foreach($_POST['quantitypack'] as $key => $value)
                                 {
-
                                     $own = Tbl_stockist_package_inventory::where('stockist_id',$id)->where('product_package_id',$key)->first();
                                     $recipient = Tbl_stockist_package_inventory::where('stockist_id',$user->stockist_id)->where('product_package_id',$key)->first();
                                     $package_name = Tbl_product_package::where('product_package_id',$key)->first();
@@ -171,6 +181,7 @@ class StockistIssueController extends StockistController
                                     {
                                         if($value >= 0)
                                         {
+                                            $status2 = true;
                                             Tbl_stockist_package_inventory::where('stockist_id',$id)->where('product_package_id',$key)->update($updateowner);
                                             Tbl_stockist_package_inventory::where('stockist_id',$user->stockist_id)->where('product_package_id',$key)->update($updaterecipients);
                                        
@@ -224,24 +235,35 @@ class StockistIssueController extends StockistController
                                 $extra = "ISSUED";
                                 $voucher = NULL;
 
-                                $id = StockistLog::transaction($process,$amount,$discountp,$discounta,$totality,$paid = 0,$claimed = 0,$transaction_by,$transaction_to,$transaction_payment_type,$transaction_by_stockist_id,$transaction_to_id,$extra,$voucher);
-                                foreach($total as $key => $t)
-                                {
-                                    $product_id = NULL; 
-                                    $product_package_id = $total[$key]['id'];
-                                    $code_pin = NULL;
-                                    $transaction_amount = $total[$key]['sub'];
-                                    $log = "Product Issued";
-                                    $transaction_qty  = $total[$key]['qty'];
-                                    $transaction_total = $total[$key]['total'];
-                                    StockistLog::relative($id,$if_product=0,$if_product_package = 1,$if_code_pin = 0,$product_id,$product_package_id,$code_pin,$transaction_amount,$log,$transaction_qty,$transaction_total);
-                                }
+                                $transpack_id = StockistLog::transaction($process,$amount,$discountp,$discounta,$totality,$paid = 0,$claimed = 0,$transaction_by,$transaction_to,$transaction_payment_type,$transaction_by_stockist_id,$transaction_to_id,$extra,$voucher);
+                               if(isset($total))
+                               {
+                                    foreach($total as $key => $t)
+                                    {
+                                        $product_id = NULL; 
+                                        $product_package_id = $total[$key]['id'];
+                                        $code_pin = NULL;
+                                        $transaction_amount = $total[$key]['sub'];
+                                        $log = "Product Issued";
+                                        $transaction_qty  = $total[$key]['qty'];
+                                        $transaction_total = $total[$key]['total'];
+                                        StockistLog::relative($transpack_id,$if_product=0,$if_product_package = 1,$if_code_pin = 0,$product_id,$product_package_id,$code_pin,$transaction_amount,$log,$transaction_qty,$transaction_total);
+                                    }                                
+                               }
+
+                         }
+                         else
+                         {
+                             $status2 = true;
                          }
                              
-                         if(Request::input('quantitypack') || Request::input('quantity'))
-                         {
-                                            return Redirect::to('stockist/issue_stocks')->with('success','Successfully issued');
-                         }   
+                        if(Request::input('quantity') || Request::input('quantitypack'))
+                        {
+                            if($status == true && $status2 == true)
+                            {
+                                $data['success'][0] = "Successfully issued without any problem.";
+                            }  
+                        }
 
                         return view('stockist.issue.issue_stockist_user', $data);                                              
             }

@@ -28,8 +28,9 @@
 							<tr>
 								<th>ID</th>
 								<th>Name</th>
-								<th>Stockist Quantity</th>
 								<th>Quantity Owned</th>
+								<th>Discount</th>
+								<th>Price</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -42,7 +43,7 @@
 							<tr>
 								<th>ID</th>
 								<th>Name</th>
-								<th>Stockist Quantity</th>
+								<th></th>
 								<th></th>
 							</tr>
 						</thead>
@@ -50,6 +51,7 @@
 
 						</tbody>
 					</table>
+						<div class="pricenopack text-right">Total Price: 0</div>
             	</div>
         </form>
     </div>
@@ -68,7 +70,7 @@
 @endsection
 @section('script')
 	<script type="text/javascript">
-
+		var total = 0;
 	   	var $add_product_pop_up = $('[data-remodal-id=add_prod_modal]').remodal();
 
 		var $productTable = $('#product-table').DataTable({
@@ -76,14 +78,15 @@
 	        processing: true,
 	        serverSide: true,
 	        ajax:{
-	        	url:'admin/stockist_inventory/get_product/product/package?id='+{{Request::input('id')}},
+	        	url:'admin/stockist_inventory/get_product/product/package?id='+{{Request::input('id')}}+"&discount="+{{$discount}},
 	    	},
 
 	        columns: [
 	            {data: 'product_package_id', name: 'product_package_id'},
 	            {data: 'product_package_name', name: 'product_package_name'},
-	            {data: 'quantity', name: 'package_quantity'},
 	            {data: 'estimated', name: 'estimated'},
+	            {data: 'discount', name: 'discount'},
+	            {data: 'price', name: 'price'},
 	           	{data: 'add' ,name: 'product_id'}
 	            
 	           	
@@ -114,7 +117,7 @@
 
 			$('.remodal-confirm').on('click', function(event)
 			{
-				event.preventDefault();
+					event.preventDefault();
 				var $new_td = [];
 				$td = $selected_product.closest('tr').find('td');
 				$($td).each (function(index,element) {
@@ -126,11 +129,13 @@
 				var $append = '<tr>'+
 					'<td>'+$new_td[0]+'</td>'+
 					'<td>'+$new_td[1]+'</td>'+
-					'<td>'+$new_td[2]+'</td>'+
-					'<td>'+'<input product-id = "'+$new_td[0]+'" style="width:100%;" type="number" name="quantity['+$new_td[0]+']" value="'+$('#pop-up-input').val()+'"></td>'+
-					'<td><a style="cursor: pointer;" class="remove-added-prod" product-id = "'+$new_td[0]+'">REMOVE</a></td>'+
+					'<td>'+'<input readonly product-id = "'+$new_td[0]+'" style="width:100%; text-align: center; border:0 none;" type="text" name="quantity['+$new_td[0]+']" value="'+$('#pop-up-input').val()+'" readonly></td>'+
+					'<td><a style="cursor: pointer;" class="remove-added-prod" product-id = "'+$new_td[0]+'" price="'+$new_td[4]+'" qty="'+$('#pop-up-input').val()+'">REMOVE</a></td>'+
 				'</tr>';
 
+ 				total = total + (parseFloat($new_td[4]) * parseInt($('#pop-up-input').val()));
+
+				$(".pricenopack").text("Total Price: "+total.toFixed(2));
 				// console.log($append);
 				var $checktd = $('#added-product-table tbody td a[product-id='+$new_td[0]+']').length;
 				console.log($checktd);
@@ -156,9 +161,20 @@
 			$( "#added-product-table" ).delegate( ".remove-added-prod", "click", function()
 			{
 
+				var $new_td = [];
 				var $prod_id = $(this).attr('product-id');
+				var value = $(this).attr('price');
+				$td = $selected_product.closest('tr').find('td');
+				$($td).each (function(index,element) {
 
+					$new_td[index] = $(element).html();
 
+				});
+
+				var qty =  $('input[product-id='+$new_td[0]+']').val();
+
+				total = total - (parseFloat(value) * qty);
+				$(".pricenopack").text("Total Price: "+ total.toFixed(2));
 				$(this).closest('tr').remove();
 			});
 
