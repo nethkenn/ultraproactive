@@ -292,13 +292,16 @@ class AdminUnilevelController extends AdminController
 	{
             if(isset($breakaway[$slot->membership_id][$tree->sponsor_tree_level]))
             {
-            	$amount = ($breakaway[$slot->membership_id][$tree->sponsor_tree_level]/100) * $bonus;
-            	$percentage = $breakaway[$slot->membership_id][$tree->sponsor_tree_level];
-
-            	if($amount != 0)
+            	if($breakaway[$slot->membership_id][$tree->sponsor_tree_level] != 0)
             	{
-					$logs = "Your slot #".$slot->slot_id." earned <b>".number_format($amount,2)." wallet</b>  from ".$percentage."% of Breakaway Bonus(".$bonus."). You earned it when slot #".$oneslot->slot_id." gain a ".$amount." wallet from Unilevel bonus.";
-					Log::slot($slot->slot_id, $logs, $amount,"Breakaway Bonus",$oneslot->slot_id);
+	            	$amount = ($breakaway[$slot->membership_id][$tree->sponsor_tree_level]/100) * $bonus;
+	            	$percentage = $breakaway[$slot->membership_id][$tree->sponsor_tree_level];
+
+	            	if($amount != 0)
+	            	{
+						$logs = "Your slot #".$slot->slot_id." earned <b>".number_format($amount,2)." wallet</b>  from ".$percentage."% of Breakaway Bonus(".$bonus."). You earned it when slot #".$oneslot->slot_id." gain a ".$amount." wallet from Unilevel bonus.";
+						Log::slot($slot->slot_id, $logs, $amount,"Breakaway Bonus",$oneslot->slot_id);
+	            	}
             	}
             }
 	}

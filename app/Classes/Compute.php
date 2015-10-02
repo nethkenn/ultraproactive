@@ -303,8 +303,8 @@ class Compute
             if($data["next_membership"])
             {
                 $d = $data["next_membership"];
-                // if($d->membership_required_unilevel_leg == 0)
-                // {
+                if($d->membership_required_unilevel_leg == 0)
+                {
                     if($d->membership_required_pv_sales != 0)
                     {   
                         if($count >= $d->membership_required_direct && $slot_info->slot_highest_pv >= $d->membership_required_pv_sales && $slot_info->slot_maintained_month_count >= $d->membership_required_month_count)
@@ -321,7 +321,41 @@ class Compute
                             // Log::account($slot_info->slot_owner, $log);                  
                         }                    
                     }
-                // }
+                }
+                else
+                {
+
+                    if($d->membership_required_pv_sales != 0)
+                    {   
+                        if($slot_info->slot_highest_pv >= $d->membership_required_pv_sales && $slot_info->slot_maintained_month_count >= $d->membership_required_month_count)
+                        {
+                            $promote = false;
+                            $get_direct = Tbl_tree_sponsor::where('sponsor_tree_parent_id',$slot_id)->where('sponsor_tree_level',1)->get();
+                            $count_direct = 0;
+                            foreach($get_direct as $g)
+                            {
+                                $check = Tbl_tree_sponsor::where('tbl_sponsor_tree',$g->tbl_sponsor_tree)->join('tbl_slot','tbl_tree_sponsor.sponsor_tree_child_id','=','tbl_slot.slot_id')->where('slot_membership','=',$d->membership_unilevel_leg_id)->where('sponsor_tree_level',1)->first();
+                                $count = Tbl_tree_sponsor::where('sponsor_tree_parent_id',$g->sponsor_tree_child_id)->join('tbl_slot','tbl_tree_sponsor.sponsor_tree_child_id','=','tbl_slot.slot_id')->where('slot_membership','=',$d->membership_unilevel_leg_id)->count();
+                            
+                                if($check || $count > 0)
+                                {
+                                    $count_direct++;
+                                }
+                            }
+                            if($count_direct >=  $d->membership_required_direct)
+                            {
+                                    $update_slot["slot_upgrade_points"] = 0;
+                                    $update_slot["slot_membership"] = $data["next_membership"]->membership_id;
+                                    $update_slot["slot_highest_pv"] = 0;
+
+                                    $log = "Congratulation! Slot #" . $slot_id . " has been promoted from " . $slot_info->membership_name . " to " . $data["next_membership"]->membership_name;
+                                    Tbl_slot::id($slot_id)->update($update_slot);
+
+                                    Log::slot($slot_id, $log, 0,"Promoted",$slot_id);
+                            }
+                        }                    
+                    }
+                }
             }
     }
 
