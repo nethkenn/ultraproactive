@@ -11,7 +11,7 @@ class MemberProductController extends MemberController
 
 		$data['_product'] = null;
 		// $_product = Tbl_product::all();
-			$data['_product'] = Tbl_product::all();
+			$data['_product'] = Tbl_product::where('archived',0)->get();
 		// if($_product)
 		// {
 		// 	foreach ($_product as $key => $value)
