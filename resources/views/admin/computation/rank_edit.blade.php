@@ -33,7 +33,7 @@
                 <label for="account_meail">Allow Promotion</label>
                 <select name="upgrade_via_points" class="form-control">
                 	<option {{ $data->upgrade_via_points == 1 ? 'selected' : '' }} value="1">Enabled</option>
-                	<!--<option {{ $data->upgrade_via_points == 0 ? 'selected' : '' }} value="0">Disabled</option> -->
+                	<option {{ $data->upgrade_via_points == 0 ? 'selected' : '' }} value="0">Disabled</option> 
                 </select>
             </div>  
         </form>
