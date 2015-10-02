@@ -645,6 +645,15 @@ class AdminComplanController extends AdminController
 	public function rank()
 	{
 		$data["_membership"] = Tbl_membership::active()->get();
+		foreach($data["_membership"] as $key => $d)
+		{
+			$data["_membership"][$key]->required_leg = Tbl_membership::active()->where('membership_id',$d->membership_unilevel_leg_id)->first();
+			if($data["_membership"][$key]->required_leg)
+			{
+				$data["_membership"][$key]->required_leg = $data["_membership"][$key]->required_leg->membership_name;
+
+			}
+		}
 		return view('admin.computation.rank', $data);
 	}
 
