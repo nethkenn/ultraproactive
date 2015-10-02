@@ -38,20 +38,6 @@
                     @endif
             		<input name="membership_price" value="{{Request::input('membership_price')}}" required="required" class="form-control" id="" placeholder="" type="number">
             	</div>
-                <div class="form-group col-md-6 hide">
-                    <label for="max_income">Max income per day</label>
-                    @if($_error['max_income'])
-                        <div class="col-md-12 alert alert-danger form-errors">
-                            <ul>
-                                @foreach($_error['max_income'] as $error)
-                                    <li>{{$error}}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                    <input name="max_income" value="{{Request::input('max_income')}}" required="required" class="form-control" id="" placeholder="" type="number">
-                </div>
-
                 <div class="form-group col-md-6">
                     <label for="global_pool_sharing">Global Pool Sharing (0-100%)</label>
                     @if($_error['global_pool_sharing'])
