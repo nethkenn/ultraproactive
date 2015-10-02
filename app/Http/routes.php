@@ -344,6 +344,8 @@ Route::any('admin/utilities/binary/membership/edit', 'AdminComplanController@bin
 Route::any('admin/utilities/binary/membership/binary/edit', 'AdminComplanController@binary_entry');
 Route::any('admin/utilities/binary/product/edit', 'AdminComplanController@binary_product_edit');
 
+Route::any('admin/utilities/binary/product_package/edit', 'AdminComplanController@binary_product_package_edit');
+
 Route::any('admin/utilities/matching', 'AdminComplanController@matching');
 Route::any('admin/utilities/matching/edit', 'AdminComplanController@matching_edit');
 

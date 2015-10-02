@@ -10,7 +10,7 @@ class Tbl_product extends Model implements SluggableInterface
 {
 	protected $table = 'tbl_product';
 	protected $primaryKey = 'product_id';
-	protected $fillable = ['product_name','product_discount','slug','product_category_id', 'unilevel_pts', 'binary_pts', 'price','image_file','barcode','product_info'];
+	protected $fillable = ['product_name','hide','product_discount','slug','product_category_id', 'unilevel_pts', 'binary_pts', 'price','image_file','barcode','product_info'];
 	
 
     // protected $attributes = array(

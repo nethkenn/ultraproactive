@@ -28,4 +28,9 @@ class Tbl_product_package extends Model implements SluggableInterface
 	    'reserved'        => null,
     );
 
+	public function scopeActive($query)
+    {
+        return $query->where('archived', 0);
+    }
+
 }
