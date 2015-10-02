@@ -13,7 +13,7 @@ use App\Tbl_product_package;
 use App\Tbl_product_package_has;
 use App\Classes\Log;
 use App\Classes\Admin;
-
+use App\Classes\StockistLog;
 
 
 class AdminStockistInventoryController extends AdminController
@@ -37,12 +37,36 @@ class AdminStockistInventoryController extends AdminController
 													->where('tbl_stockist_inventory.archived',0)
 													->join('tbl_product','tbl_product.product_id','=','tbl_stockist_inventory.product_id')
 													->get();
-		$data['error'] = null;											
+		$data['error'] = null;									
 
+		$data['discount'] = $data['stockist']->stockist_type_discount;
 
 		if(isset($_POST['quantity']))
 		{
 			$ctr = 0;
+
+
+            $process = "REFILL PRODUCT STOCK";
+            $amount = 0;
+            $discountp = $data['discount'];
+            $discounta = 0;
+            $totality = 0;
+            $paid = 0;
+            $claimed = 0;
+            $transaction_by =  Admin::info()->account_name;
+            $transaction_to = "Stockist Id #".$id;
+            $transaction_payment_type = "Restock by Admin";
+            $transaction_by_stockist_id = NULL;
+            $transaction_to_id = $id;
+            $extra = "Restock by Admin Account #".Admin::info()->account_id;
+            $voucher = NULL;
+
+	        $trans_id = StockistLog::transaction($process,$amount,$discountp,$discounta,$totality,$paid = 0,$claimed = 0,$transaction_by,$transaction_to,$transaction_payment_type,$transaction_by_stockist_id,null,$extra,$voucher,$transaction_to_id);
+
+
+	        $prod_disc_amt = 0;
+	        $prod_subtotal_amt = 0;
+	        $prod_total_amt = 0;
 			foreach($_POST['quantity'] as $key => $value)
 			{
 				$prod_qty = Tbl_product::where('product_id',$key)->first();
@@ -56,7 +80,21 @@ class AdminStockistInventoryController extends AdminController
 					{
 						Log::inventory_log(Admin::info()->admin_id,$key,$value,"Transferred a ".$value." to "." a stockies.");
 						Tbl_stockist_inventory::where('stockist_id',$id)->where('product_id',$key)->update($update);
-						Tbl_product::where('product_id',$key)->update($update_prod);					
+						Tbl_product::where('product_id',$key)->update($update_prod);                    
+
+	                    $product_id = $key;
+	                    $product_package_id = NULL;
+	                    $code_pin = NULL;
+	                    $transaction_amount = $prod_qty->price - (($data['discount']/100)*$prod_qty->price);
+	                    $log = "Product Stocks";
+	                    $transaction_qty  = $value;
+	                    $transaction_total = $value * $transaction_amount;
+
+            	        $prod_disc_amt = $prod_disc_amt + ($value*(($data['discount']/100)*$prod_qty->price));
+				        $prod_subtotal_amt = $prod_subtotal_amt + $prod_qty->price;
+				        $prod_total_amt = $prod_total_amt + $transaction_total;
+
+						StockistLog::relative($trans_id,$if_product=1,$if_product_package = 0,$if_code_pin = 0,$product_id,$product_package_id,$code_pin,$transaction_amount,$log,$transaction_qty,$transaction_total);        					
 					}
 					else
 					{
@@ -70,6 +108,8 @@ class AdminStockistInventoryController extends AdminController
 					$ctr++;
 				}
 			}
+
+			DB::table('tbl_transaction')->where('transaction_id',$trans_id)->update(['transaction_amount'=>$prod_subtotal_amt,'transaction_discount_amount'=>$prod_disc_amt,'transaction_total_amount'=>$prod_total_amt]);
 
 		}
 
@@ -85,20 +125,44 @@ class AdminStockistInventoryController extends AdminController
 		$data["stockist"] = Tbl_stockist::where('tbl_stockist.stockist_id',$id)->join('tbl_stockist_type','tbl_stockist_type.stockist_type_id','=','tbl_stockist.stockist_type')																
 																 	     ->first();
 
+		$data['discount'] = $data['stockist']->stockist_type_package_discount;
 		$data['error'] = null;											
 		if(isset($_POST['quantity']))
 		{
+
+            $process = "REFILL PRODUCT PACKAGE STOCK";
+            $amount = 0;
+            $discountp = $data['discount'];
+            $discounta = 0;
+            $totality = 0;
+            $paid = 0;
+            $claimed = 0;
+            $transaction_by =  Admin::info()->account_name;
+            $transaction_to = "Stockist Id #".$id;
+            $transaction_payment_type = "Restock by Admin";
+            $transaction_by_stockist_id = NULL;
+            $transaction_to_id = $id;
+            $extra = "Restock Package by Admin Account #".Admin::info()->account_id;
+            $voucher = NULL;
+
+	        $trans_id = StockistLog::transaction($process,$amount,$discountp,$discounta,$totality,$paid = 0,$claimed = 0,$transaction_by,$transaction_to,$transaction_payment_type,$transaction_by_stockist_id,null,$extra,$voucher,$transaction_to_id);
+	        $prod_disc_amt = 0;
+	        $prod_subtotal_amt = 0;
+	        $prod_total_amt = 0;
+
 			$ctr = 0;
 			foreach($_POST['quantity'] as $package_id => $value)
 			{
 				$condition = false;
 
+				$price = 0;
 				$product = Tbl_product_package_has::where('product_package_id',$package_id)->product()->get();
 				$package_name = Tbl_product_package::where('product_package_id',$package_id)->first();
 				foreach($product as $key => $prod)
 				{
 					$container[$key] = $prod->stock_qty;
 					$multiplier[$key] = $prod->quantity;
+					$price = $price + $prod->price; 
 				}
 
 				foreach($container as $key => $cont)
@@ -126,12 +190,32 @@ class AdminStockistInventoryController extends AdminController
 						$new['stock_qty'] = $container[$key];
 						Tbl_product::where('product_id',$prod->product_id)->update($new);
 					}
+
 						$package = Tbl_stockist_package_inventory::where('stockist_id',$id)->where('product_package_id',$package_id)->first();
+
+
+						$product_id = NULL;
+						$product_package_id = $package_id;
+						$code_pin = NULL;
+						$transaction_amount = $price - (($data['discount']/100)*$price);
+						$log = "Product Package Stocks";
+						$transaction_qty  = $value;
+						$transaction_total = $value * $transaction_amount;
+
+						$prod_disc_amt = $prod_disc_amt + ($value*(($data['discount']/100)*$price));
+						$prod_subtotal_amt = $prod_subtotal_amt + $price;
+						$prod_total_amt = $prod_total_amt + $transaction_total;
+
+						StockistLog::relative($trans_id,$if_product=1,$if_product_package = 0,$if_code_pin = 0,$product_id,$product_package_id,$code_pin,$transaction_amount,$log,$transaction_qty,$transaction_total);     
+
+
 						$update['package_quantity'] = $package->package_quantity + $value;
 						Tbl_stockist_package_inventory::where('stockist_id',$id)->where('product_package_id',$package_id)->update($update);
 				}
 
 			}
+
+			DB::table('tbl_transaction')->where('transaction_id',$trans_id)->update(['transaction_amount'=>$prod_subtotal_amt,'transaction_discount_amount'=>$prod_disc_amt,'transaction_total_amount'=>$prod_total_amt]);
 
 		}
 
@@ -141,24 +225,30 @@ class AdminStockistInventoryController extends AdminController
 	public function ajax_get_product()
 	{
 		$id = Request::input('id');
-
-		$product = Tbl_stockist_inventory::where('stockist_id',$id)
-													->orderBy('tbl_stockist_inventory.product_id','asc')
-													->where('tbl_stockist_inventory.archived',0)
-													->join('tbl_product','tbl_product.product_id','=','tbl_stockist_inventory.product_id')
-													->get();
-        return Datatables::of($product)	->addColumn('add','<a class="add-to-package" href="#" product-id="{{$product_id}}">ADD</a>')
-								        ->make(true);
+		$discount = Request::input('discount');
+	    $product = Tbl_stockist_inventory::where('stockist_id',$id)
+	                                                ->orderBy('tbl_stockist_inventory.product_id','asc')
+	                                                ->where('tbl_stockist_inventory.archived',0)
+	                                                ->join('tbl_product','tbl_product.product_id','=','tbl_stockist_inventory.product_id')
+	                                                ->get();
+	    foreach($product as $key => $prod)
+	    {
+	        $product[$key]["total"] = $prod->price - (($discount/100)*$prod->price);
+	    }                                           
+	    return Datatables::of($product) ->addColumn('add','<a class="add-to-package" href="#" product-id="{{$product_id}}">ADD</a>')
+	                                    ->addColumn('percent',"$discount%")
+	                                    ->make(true);     
 	}
 
 	public function ajax_get_product_package()
 	{
 		$id = Request::input('id');
-
+		$discount = Request::input('discount');
 		$product = Tbl_stockist_package_inventory::where('stockist_id',$id)
 													->orderBy('tbl_stockist_package_inventory.product_package_id','asc')
 													->where('tbl_stockist_package_inventory.archived',0)
 													->join('tbl_product_package','tbl_product_package.product_package_id','=','tbl_stockist_package_inventory.product_package_id')
+													->where('tbl_product_package.archived',0)
 													->get();
 		foreach($product as $key => $prod)
 		{
@@ -169,10 +259,12 @@ class AdminStockistInventoryController extends AdminController
 			$value = null;
 			$estimated = 0;
 			$condition = false;
+			$price = 0;
 			foreach($package as $keys => $pack)
 			{
 				$stock[$keys] = $pack->stock_qty;
 				$value[$keys] = $pack->quantity;
+				$price = $price + $pack->price;
 			}
 
 			while($condition == false)
@@ -200,10 +292,13 @@ class AdminStockistInventoryController extends AdminController
 			}
 
 			$product[$key]->estimated = $estimated;
+			$product[$key]->price = $price - (($discount/100)*$price);
 		}
 
         return datatables::of($product)	->addColumn('add','<a class="add-to-package" href="#" product-id="{{$product_package_id}}">ADD</a>')
         								->addColumn('quantity','{{$package_quantity}}')
+        								->addColumn('discount',$discount."%")
+        								->addColumn('price','{{$price}}')
 								        ->make(true);
 	}
 }

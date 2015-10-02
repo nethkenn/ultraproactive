@@ -16,7 +16,7 @@
 					<tr class="text-center">
 						<th>ID</th>
 						<th>Stockist Name</th>
-						<th class="option-col"></th>
+						<th class="col-md-2"></th>
 						<th class="col-md-2"></th>
 					</tr>
 				</thead>
@@ -25,7 +25,7 @@
 					<tr>
 						<td>{{$stock->stockist_id}}</td>
 						<td>{{$stock->stockist_full_name}}</td>
-						<td><a href="admin/stockist_inventory/refill?id={{$stock->stockist_id}}">Refill</a></td>
+						<td><a href="admin/stockist_inventory/refill?id={{$stock->stockist_id}}">Refill Product</a></td>
 						<td><a href="admin/stockist_inventory/refill/package?id={{$stock->stockist_id}}">Refill Package</a></td>
 					</tr>
 					@endforeach

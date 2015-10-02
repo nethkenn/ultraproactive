@@ -26,7 +26,7 @@
 						<th class="option-col">ID</th>
 						<th>Membership Name</th>
 						<th>Membership Price</th>
-						<th>Discount(%)</th>
+						<!--<th>Discount(%)</th>-->
 						<th>Global Pool Sharing(%)</th>
 						<th class="option-col">Entry</th>
 						<th class="option-col">Upgrade</th>
@@ -55,7 +55,7 @@ $(function() {
             {data: 'membership_id', name: 'membership_id'},
             {data: 'membership_name', name: 'membership_name'},
             {data: 'membership_price', name: 'membership_price'},
-            {data: 'discount', name: 'discount'},
+            // {data: 'discount', name: 'discount'},
             {data: 'global_pool_sharing', name: 'global_pool_sharing'},            
             {data: 'entry', name: 'membership_id'},
             {data: 'upgrade', name: 'membership_id'},

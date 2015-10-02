@@ -49,12 +49,13 @@ class StockistTransferController extends StockistController
                 if(Request::input('amount') <= $owned)
                 {
                     $update['stockist_wallet'] = $owned - Request::input('amount');
-                    $update_recipient['slot_wallet'] = $recipient->slot_wallet + Request::input('amount');
+                    // $update_recipient['slot_wallet'] = $recipient->slot_wallet + Request::input('amount');
 
                     Tbl_stockist::where('stockist_id',Stockist::info()->stockist_id)->update($update);
-                    Tbl_slot::where('slot_id',Request::input('member'))->update($update_recipient);
-                    Log::account($recipient->account_id,"Amount of ".number_format(Request::input('amount'),2)." is transferred to your Slot #".Request::input('member').".");
-                    Log::slot(Request::input('member'), number_format(Request::input('amount'),2)." is transferred.", Request::input('amount'), "STOcKIST");
+                    // Tbl_slot::where('slot_id',Request::input('member'))->update($update_recipient);
+                    Log::slot(Request::input('member'),'Stockist '.Stockist::info()->stockist_un.' transferred '.Request::input('amount').' amount to your wallet.',Request::input('member')); 
+
+
                     Log::stockist(Stockist::info()->stockist_id,Stockist::info()->stockist_user_id,"Amount of ".number_format(Request::input('amount'),2)." is transferred to ".$recipient->account_name." Slot #".Request::input('member').".");
                     return Redirect::to('stockist/transfer_wallet')->with('success','Transfer Complete');
                 }
