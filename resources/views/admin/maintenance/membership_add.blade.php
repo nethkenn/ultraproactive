@@ -79,20 +79,6 @@
                     @endif
                     <input name="slot_limit" value="{{Request::input('slot_limit')}}" required="required" class="form-control" id="" placeholder="" type="number">
                 </div>
-                <!--
-                <div class="form-group col-md-6">
-                    <label for="discount">Discount</label>
-                    @if($_error['discount'])
-                        <div class="col-md-12 alert alert-danger form-errors">
-                            <ul>
-                                @foreach($_error['discount'] as $error)
-                                    <li>{{$error}}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                    <input name="discount" value="{{Request::input('discount')}}" required="required" class="form-control" id="" placeholder="" type="number">
-                </div> -->
                 <div class="form-group col-md-6">
                     <label for="discount">Enable Entry</label>
                     @if($_error['membership_entry'])
