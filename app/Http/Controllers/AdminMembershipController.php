@@ -48,7 +48,7 @@ class AdminMembershipController extends AdminController
 		{
 
 			$rules['membership_name'] = 'required|unique:tbl_membership,membership_name,'.$id.',membership_id|regex:/^[A-Za-z0-9\s-_]+$/';
-			$rules['membership_price'] = 'required|unique:tbl_membership,membership_price,'.$id.',membership_id|numeric|min:0';
+			$rules['membership_price'] = 'required|numeric|min:0';
 			// $rules['discount'] = 'numeric|min:0|max:100';
 			$rules['membership_entry'] = 'numeric|numeric|min:0|max:1';
 			$rules['membership_upgrade'] = 'numeric|min:0|max:1';
@@ -147,7 +147,7 @@ class AdminMembershipController extends AdminController
 		{
 
 			$rules['membership_name'] = 'required|unique:tbl_membership,membership_name|regex:/^[A-Za-z0-9\s-_]+$/';
-			$rules['membership_price'] = 'required|unique:tbl_membership,membership_price|numeric|min:0';
+			$rules['membership_price'] = 'required|numeric|min:0';
 			// $rules['discount'] = 'numeric|min:0|max:100';
 			// $rules['max_income'] = 'numeric|min:1';
 			$rules['global_pool_sharing'] = 'numeric|min:0';
