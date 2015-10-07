@@ -39,7 +39,7 @@
 		<div class="header">
 			<input type="hidden" name="_token" value="{{ csrf_token() }}">
 			<div class="title col-md-8">
-				<h2><i class="fa fa-star-half-o"></i> PAIRING COMBINATIONS </h2>
+				<h2><i class="fa fa-star-half-o"></i> MATCHING COMBINATIONS </h2>
 			</div>
 		</div>
 	</div>
@@ -49,9 +49,9 @@
 				<tr>
 					<th class="option-col">ID</th>
 					<th>MEMBERSHIP</th>
-					<th>PAIRING COMBINATIONS COUNT</th>
-					<th>MAX PAIRS PER DAY</th>
-					<th>DAILY PAIR FOR GC</th>
+					<th>MATCHING COMBINATIONS COUNT</th>
+					<th>MAX MATCH PER DAY</th>
+					<th>DAILY MATCH FOR GC</th>
 					<th class="option-col"></th>
 				</tr>
 			</thead>
@@ -84,7 +84,7 @@
 				<tr>
 					<th class="option-col">ID</th>
 					<th>MEMBERSHIP</th>
-					<th>BINARY POINTS</th>
+					<th>MATCH POINTS</th>
 					<th class="option-col"></th>
 				</tr>
 			</thead>
@@ -115,7 +115,7 @@
 				<tr>
 					<th class="option-col">ID</th>
 					<th>PRODUCT NAME</th>
-					<th>BINARY POINTS</th>
+					<th>MATCH POINTS</th>
 					<th class="option-col"></th>
 				</tr>
 			</thead>

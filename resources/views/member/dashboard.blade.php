@@ -63,7 +63,7 @@
                         <div>SPENT</div>
                     </div>
                 </div>
-                <div class="valuez para">{{$earnings['total_withdrawal']}}</div>
+                <div class="valuez para">{{number_format($earnings['total_withdrawal'],2)}}</div>
             </div>
         </div>
     </a>

@@ -2,7 +2,7 @@
 @section('content')
     <div class="row header">
         <div class="title col-md-8">
-            <h2><i class="fa fa-users"></i>  Binary / Modify Pairing Combination</h2>
+            <h2><i class="fa fa-users"></i>  Match / Modify Pairing Combination</h2>
         </div>
         <div class="buttons col-md-4 text-right">
             <button onclick="location.href='admin/utilities/binary/membership/binary/edit?id={{Request::input('membership')}}'" type="button" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back</button>
