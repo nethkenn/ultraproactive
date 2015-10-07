@@ -44,8 +44,8 @@
 								<th>ID</th>
 								<!-- <th>SKU</th> -->
 								<th>Name</th>
-								<th>Unilevel PTS</th>
-								<th>Binary PTS</th>
+								<!--<th>Unilevel PTS</th>-->
+								<!--<th>Binary PTS</th>-->
 								<th>Price</th>
 								<th></th>
 							</tr>
@@ -60,8 +60,8 @@
 								<th>ID</th>
 								<!-- <th>SKU</th> -->
 								<th>Name</th>
-								<th>Unilevel PTS</th>
-								<th>Binary PTS</th>
+								<!--<th>Unilevel PTS</th>-->
+								<!--<th>Binary PTS</th>-->
 								<th>Price</th>
 								<th>Qty</th>
 								<th></th>
@@ -104,8 +104,8 @@
 	            {data: 'product_id', name: 'product_id'},
 	            // {data: 'sku', name: 'sku'},
 	            {data: 'product_name', name: 'product_name'},
-	            {data: 'unilevel_pts', name: 'unilevel_pts'},
-	            {data: 'binary_pts' ,name: 'binary_pts'},
+	            // {data: 'unilevel_pts', name: 'unilevel_pts'},
+	            // {data: 'binary_pts' ,name: 'binary_pts'},
 	            {data: 'price' ,name: 'price'},
 	           	{data: 'add' ,name: 'product_id'}
 	            
@@ -150,9 +150,6 @@
 					'<td>'+$new_td[0]+'</td>'+
 					'<td>'+$new_td[1]+'</td>'+
 					'<td>'+$new_td[2]+'</td>'+
-					'<td>'+$new_td[3]+'</td>'+
-					'<td>'+$new_td[4]+'</td>'+
-					'<td>'+$new_td[5]+'</td>'+
 					'<td>'+'<input product-id = "'+$new_td[0]+'" style="width:100%;" type="number" name="'+$('#pop-up-input').attr('name')+'" value="'+$('#pop-up-input').val()+'"></td>'+
 					'<td><a style="cursor: pointer;" class="remove-added-prod" product-id = "'+$new_td[0]+'">REMOVE</a></td>'+
 				'</tr>';

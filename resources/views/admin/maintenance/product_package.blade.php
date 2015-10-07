@@ -37,8 +37,8 @@
 			<tr>
 				<th>ID</th>
 				<th>Name</th>
-				<th>Unilevel PTS</th>
-				<th>Binary PTS</th>
+				<!--<th>Unilevel PTS</th>-->
+				<!--<th>Binary PTS</th>-->
 				<th>Price</th>
 			</tr>
 		</thead>
@@ -93,8 +93,8 @@
             	opt = opt + "<tr>"+
             	'<td>'+value.product_id+'</td>'+
             	'<td>'+value.product_name+'</td>'+
-            	'<td>'+value.unilevel_pts+'</td>'+
-            	'<td>'+value.binary_pts+'</td>'+
+            	// '<td>'+value.unilevel_pts+'</td>'+
+            	// '<td>'+value.binary_pts+'</td>'+
             	'<td>'+value.price+'</td>';
             });
             $(".view_body").append(opt);
