@@ -608,7 +608,7 @@ class AdminSalesController extends AdminController
 			$insert_vouher_product['binary_pts'] = $product->binary_pts * $value['qty'];
 			$insert_vouher_product['product_discount'] = $discount;
 			$insert_vouher_product['product_discount_amount'] = $discount_amount;
-			$new_voucher_product = new tbl_voucher_has_product($insert_vouher_product);
+			$new_voucher_product = new Tbl_voucher_has_product($insert_vouher_product);
 			$new_voucher_product->save();
 
 

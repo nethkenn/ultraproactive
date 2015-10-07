@@ -66,7 +66,7 @@ class AdminProductPackageController extends AdminController
 
 		$data["page"] = "Add Package Maintenance";
 		$data['_error'] = null;
-		$data['membership'] = Tbl_membership::where('archived',0)->get();
+		$data['membership'] = Tbl_membership::where('archived',0)->where('membership_entry',1)->get();
 
 		// if(isset($_POST['product_package_name']))
 		// {
@@ -188,7 +188,7 @@ class AdminProductPackageController extends AdminController
 		$data["page"] = "Edit Package Maintenance";
 		$data['_error'] = null;
 		$data['_product'] = Tbl_product_package_has::Product()->where('product_package_id',$prod_package_id)->get();
-		$data['membership'] = Tbl_membership::where('archived',0)->get();
+		$data['membership'] = Tbl_membership::where('archived',0)->where('membership_entry',1)->get();
 		// if(isset($_POST['product_package_name']))
 		// {
 			

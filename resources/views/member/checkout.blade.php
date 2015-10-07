@@ -19,25 +19,25 @@
             <div class="form-group para">
                 <label for="a1" class="col-sm-3 control-label">Wallet</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="a1" value="{{$current_wallet}}" readonly>
+                    <input type="text" class="form-control" id="a1" value="{{number_format($current_wallet,2)}}" readonly>
                 </div>
             </div>
             <div class="form-group para">
                 <label for="a2" class="col-sm-3 control-label">Total Amount</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="a2" value="{{$final_total}}" readonly>
+                    <input type="text" class="form-control" id="a2" value="{{number_format($final_total,2)}}" readonly>
                 </div>
             </div>
             <div class="form-group para">
                 <label for="a3" class="col-sm-3 control-label">Remaining</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="a3" value="{{$remaining_bal}}" readonly>
+                    <input type="text" class="form-control" id="a3" value="{{number_format($remaining_bal,2)}}" readonly>
                 </div>
             </div>
             <div class="form-group para">
                 <label for="a3" class="col-sm-3 control-label">Remaining GC after use</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="a3" value="{{$remaining_bal_gc}}" readonly>
+                    <input type="text" class="form-control" id="a3" value="{{number_format($remaining_bal_gc,2)}}" readonly>
                 </div>
             </div>
             <div class="form-group para">

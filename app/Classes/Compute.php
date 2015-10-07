@@ -144,7 +144,7 @@ class Compute
                         $binary[$tree->placement_tree_position] = $binary[$tree->placement_tree_position] + $earned_points; 
                         
                         /* INSERT LOG FOR EARNED POINTS IN ACCOUNT */
-                        $log = "Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($earned_points, 2) . " binary points</b> on " . $tree->placement_tree_position . " when " . $new_slot_info->account_name . " used one if his/her product code.";
+                        $log = "Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($earned_points, 2) . " match points</b> on " . $tree->placement_tree_position . " when " . $new_slot_info->account_name . " used one if his/her product code.";
                         Log::slot($slot_recipient->slot_id, $log, 0,$method,$buyer_slot_id);
                         // Log::account($slot_recipient->slot_owner, $log);
 
@@ -226,7 +226,7 @@ class Compute
                                                         /* UPDATE WALLET */
                                                         // $update_recipient["slot_wallet"] = $update_recipient["slot_wallet"] + $pairing_bonus;
                                                         // $update_recipient["slot_total_earning"] = $update_recipient["slot_total_earning"] + $pairing_bonus;
-                                                        $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($pairing_bonus, 2) . " wallet</b> from <b>PAIRING BONUS</b> due to pairing combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining binary points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right. This combination was caused by a repurchase of one of your downlines."; 
+                                                        $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($pairing_bonus, 2) . " wallet</b> from <b>MATCHING BONUS</b> due to matching combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining match points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right. This combination was caused by a repurchase of one of your downlines."; 
                                                         /* CHECK IF NOT FREE SLOT */
                                                         $check_wallet = Tbl_wallet_logs::id($new_slot_info->slot_id)->wallet()->sum('wallet_amount');
                                                         if($new_slot_info->slot_type != "FS" && $check_wallet >= 0)
@@ -257,7 +257,7 @@ class Compute
                                                 }
                                                 else
                                                 {   
-                                                        $log = "Im sorry! Max pairing per day already exceed your slot #" . $slot_recipient->slot_id . " flushed out <b>" . number_format($pairing_bonus, 2) . " wallet</b> from <b>PAIRING BONUS</b> due to pairing combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining binary points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right. This combination was caused by a repurchase of one of your downlines.";          
+                                                        $log = "Im sorry! Max matching per day already exceed your slot #" . $slot_recipient->slot_id . " flushed out <b>" . number_format($pairing_bonus, 2) . " wallet</b> from <b>MATCHING BONUS</b> due to matching combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining match points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right. This combination was caused by a repurchase of one of your downlines.";          
                                                         // Log::account($slot_recipient->slot_owner, $log);
                                                         Log::slot($slot_recipient->slot_id, $log, 0,$method,$buyer_slot_id);
                                                         $flushpoints =  $flushpoints+$pairing_bonus;
@@ -424,7 +424,7 @@ class Compute
                     if($new_slot_info->slot_type != "FS" && $check_wallet >= 0)
                     {
                         /* INSERT LOG FOR EARNED POINTS IN ACCOUNT */
-                        $log = "Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($earned_points, 2) . " binary points</b> on " . $tree->placement_tree_position . " when " . $new_slot_info->account_name . " with " . $new_slot_info->membership_name . " MEMBERSHIP created a new slot (#" . $new_slot_info->slot_id . ").";
+                        $log = "Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($earned_points, 2) . " match points</b> on " . $tree->placement_tree_position . " when " . $new_slot_info->account_name . " with " . $new_slot_info->membership_name . " MEMBERSHIP created a new slot (#" . $new_slot_info->slot_id . ").";
                         Log::slot($slot_recipient->slot_id, $log, 0,"Binary Earn",$slot_recipient->slot_id);
                         // Log::account($slot_recipient->slot_owner, $log);                       
                     }
@@ -509,7 +509,7 @@ class Compute
                                                     // $update_recipient["slot_total_earning"] = $update_recipient["slot_total_earning"] + $pairing_bonus;
 
                                                     /* INSERT LOG */
-                                                    $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($pairing_bonus, 2) . " wallet</b> from <b>PAIRING BONUS</b> due to pairing combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining binary points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right.";
+                                                    $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($pairing_bonus, 2) . " wallet</b> from <b>MATCHING BONUS</b> due to matching combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining match points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right.";
                                                     // Log::account($slot_recipient->slot_owner, $log);
                                                     // Log::slot($slot_recipient->slot_id, $log, $pairing_bonus, "BINARY PAIRING");
                                                     $check_wallet = Tbl_wallet_logs::id($new_slot_info->slot_id)->wallet()->sum('wallet_amount');
@@ -535,7 +535,7 @@ class Compute
                                                 }
                                                 else
                                                 {   
-                                                        $log = "Im sorry! Max pairing per day already exceed your slot #" . $slot_recipient->slot_id . " flushed out <b>" . number_format($pairing_bonus, 2) . " wallet</b> from <b>PAIRING BONUS</b> due to pairing combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining binary points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right. This combination was caused by a repurchase of one of your downlines.";          
+                                                        $log = "Im sorry! Max pairing per day already exceed your slot #" . $slot_recipient->slot_id . " flushed out <b>" . number_format($pairing_bonus, 2) . " wallet</b> from <b>MATCHING BONUS</b> due to matching combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining match points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right. This combination was caused by a repurchase of one of your downlines.";          
                                                         Log::slot($slot_recipient->slot_id, $log, 0,"binary_repurchase",$new_slot_id); 
                                                         // Log::account($slot_recipient->slot_owner, $log);
                                                         $flushpoints =  $flushpoints+$pairing_bonus;
@@ -845,6 +845,9 @@ class Compute
                         {
                             $check = Tbl_voucher::where('tbl_voucher.voucher_id',$vouch->voucher_id)->update(["status"=>"unclaimed"]);
                         }
+
+                        Compute::binary($slot_id, "CD TO PS");
+                        Compute::direct($slot_id, "CD TO PS");
                      }                   
                  }                    
 

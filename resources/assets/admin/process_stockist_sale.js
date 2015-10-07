@@ -380,7 +380,7 @@ function process_sale()
 						$selected = "selected";
 					}
 	
-					$('#select-slot').append('<option value="'+val['slot_id']+'"'+$selected+'>Slot # '+val['slot_id']+' ( '+val['discount']+'% discount)</option>');
+					$('#select-slot').append('<option value="'+val['slot_id']+'"'+$selected+'>Slot # '+val['slot_id']+'</option>');
 				});
 			})
 			.fail(function() {
@@ -439,7 +439,7 @@ function process_sale()
 		$("#select-member-type").change(function(){
 			if($("#select-member-type").val() == 0)
 			{                  
-				$("#payment-option").append("<option value='3' {{Request::old('3') == '3' ? 'selected' : '' }}>E-wallet</option>");
+				$("#payment-option").append('<option value="3" {{Request::old("3") == "3" ? "selected" : "" }}>E-wallet</option>');
 			}
 			else
 			{

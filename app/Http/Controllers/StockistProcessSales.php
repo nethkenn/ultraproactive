@@ -23,7 +23,7 @@ use App\Classes\Log;
 use App\Classes\Settings;
 use Mail;
 use App\Classes\StockistLog;
-
+use App\Tbl_product_discount;
 class StockistProcessSales extends StockistController
 {
     public function index()
@@ -138,15 +138,14 @@ class StockistProcessSales extends StockistController
         $other = $other + $credit;
 
 
-
+        $get_total = $this->get_cart_total($data['cart'],$slot_id);
         $data['other'] = $other;
-        $data['discount'] = $discount;
-        $cart_total = $data['cart_total'] = $this->get_cart_total($data['cart']);
+        $data['discount'] = $get_total['discount'];
+        $cart_total = $data['cart_total'] = $get_total['sub_total'];
         $discount_pts = $data['discount_pts'] = (($discount / 100) * $cart_total );
         $data['other_pts'] = (($other / 100) * $cart_total );
         $total_charge = $data['other_pts'];
-        $final_total = $data['final_total'] = $cart_total - $discount_pts + $total_charge;
-        
+        $final_total = $data['final_total'] = $get_total['total'] + $total_charge;
 
 
 
@@ -250,7 +249,8 @@ class StockistProcessSales extends StockistController
 
 
         $_cart = $_cart_product;
-        $cart_total = $this->get_cart_total($_cart);
+        $get_total = $this->get_cart_total($_cart);
+        $cart_total = $get_total['total'];
 
 
         // $insert_voucher['slot_id'] = Request::input('slot_id');
@@ -312,7 +312,7 @@ class StockistProcessSales extends StockistController
          */
         $trans_id = StockistLog::transaction("Process Sale",$sub,$disc,$discam,$overall,$paid = 1,$claimed = 1,$name,"Non member","CASH",$stockist_id,$transaction_to_id,$extra,$voucherer);
         
-        $this->add_product_to_voucher_list($voucher->voucher_id,$_cart,Request::input('member_type'), Request::input('status'),$trans_id);
+        $this->add_product_to_voucher_list($voucher->voucher_id,$_cart,Request::input('member_type'), Request::input('status'),$trans_id,1);
 
         // $admin_log = "Sold Product Voucher # ".$voucher->voucher_id. " to a non-member as ".  Stockist::info()->admin_position_name.".";
         // Log::account(Admin::info()->account_id, $admin_log);
@@ -341,7 +341,7 @@ class StockistProcessSales extends StockistController
 
             $extra = 0;
             $_cart = Session::get('admin_cart');
-            $cart_total = $this->get_cart_total($_cart);
+            $cart_total = $this->get_cart_total($_cart,Request::input('slot_id'));
 
             if(Request::input('other_charge'))
             {
@@ -454,7 +454,8 @@ class StockistProcessSales extends StockistController
 
 
         $_cart = Session::get('admin_cart');
-        $cart_total = $this->get_cart_total($_cart);
+        $get_total = $this->get_cart_total($_cart,Request::input('slot_id'));
+        $cart_total = $get_total['total'];
         $additional = 0;
 
         $insert_voucher['slot_id'] = Request::input('slot_id');
@@ -548,18 +549,36 @@ class StockistProcessSales extends StockistController
         $success_message = "Voucher # " .$voucher->voucher_id. " was successfully process."; 
         return redirect('stockist/process_sales/')->with('success_message', $success_message);
 
-       
-        
-
-
-
-
     }
 
-    public function add_product_to_voucher_list($voucher_id, $cart, $member_type,$status='processed',$trans_id)
+    public function add_product_to_voucher_list($voucher_id, $cart, $member_type, $status='processed',$transaction_id,$nonmember = 0)
     {
+
+        $voucher = Tbl_voucher::where('voucher_id',$voucher_id)->first();
+        $slot = Tbl_slot::id($voucher->slot_id)->first();
+        $earned_pv = 0;
+        $amount_of_discount_total = 0;
+        $without_discount_total = 0;
+
         foreach ((array)$cart as $key => $value)
         {
+            if($slot)
+            {
+                    $discount = Tbl_product_discount::where('membership_id',$slot->slot_membership)->where('product_id',$key)->first();
+                    if($discount)
+                    {
+                        $discount = $discount->discount;
+                    }
+                    else
+                    {
+                        $discount = 0;
+                    }   
+            }
+            else
+            {
+                $discount = 0;
+            }
+
             $product = Tbl_product::join('tbl_stockist_inventory','tbl_stockist_inventory.product_id','=','tbl_product.product_id')
                                     ->where('stockist_id',Stockist::info()->stockist_id)
                                     ->find($key);
@@ -570,33 +589,52 @@ class StockistProcessSales extends StockistController
                 $updated_stock = $product->stockist_quantity - $value['qty'];
                 Tbl_stockist_inventory::where('product_id',$key)->where('stockist_id',Stockist::info()->stockist_id)->lockForUpdate()->update(['stockist_quantity'=> $updated_stock]);
                 // dd($status);
-            }
+            }      
 
 
+            $discount_amount = ($discount/100)*$value['sub_total'];
+            $sub_total = $value['sub_total'] - (($discount/100)*$value['sub_total']);
             $insert_vouher_product['voucher_id'] = $voucher_id;
             $insert_vouher_product['product_id'] = $value['product_id'];
             $insert_vouher_product['price'] = $value['price'];
             $insert_vouher_product['qty'] = $value['qty'];
-            $insert_vouher_product['sub_total'] = $value['sub_total'];
+            $insert_vouher_product['sub_total'] =$sub_total;
             $insert_vouher_product['unilevel_pts'] = $product->unilevel_pts * $value['qty'];
             $insert_vouher_product['binary_pts'] = $product->binary_pts * $value['qty'];
-            $new_voucher_product = new tbl_voucher_has_product($insert_vouher_product);
+            $insert_vouher_product['product_discount'] = $discount;
+            $insert_vouher_product['product_discount_amount'] = $discount_amount;
+            $new_voucher_product = new Tbl_voucher_has_product($insert_vouher_product);
             $new_voucher_product->save();
 
-            $product_id = $value['product_id'];
-            $product_package_id = NULL;
-            $code_pin = NULL;
-            $transaction_amount = $value['price'];
-            $transaction_qty = $value['qty'];
-            $transaction_total = $value['sub_total'];
-            $log = "Product";
-            StockistLog::relative($trans_id,$if_product=1,$if_product_package = 0,$if_code_pin = 0,$product_id,$product_package_id,$code_pin,$transaction_amount,$log,$transaction_qty,$transaction_total);
-           
+
+            /* PER PRODUCT TRANSACTION */
+            $prod_transact['transaction_id'] = $transaction_id;
+            $prod_transact['if_product'] = 1;  
+            $prod_transact['if_product_package'] = 0;  
+            $prod_transact['if_code_pin'] = 0; 
+            $prod_transact['product_id'] = $value['product_id'];  
+            $prod_transact['product_package_id'] = null;  
+            $prod_transact['code_pin'] = null;    
+            $prod_transact['transaction_amount'] = $value['price'];  
+            $prod_transact['transaction_qty'] = $value['qty']; 
+            $prod_transact['product_discount'] = $discount;
+            $prod_transact['product_discount_amount'] =  $discount_amount;
+            $prod_transact['transaction_total'] = $sub_total;  
+            $prod_transact['rel_transaction_log'] = $product->product_name; 
+            $prod_transact['sub_earned_pv'] = $product->unilevel_pts * $value['qty'];  
+            Log::transaction_product($prod_transact);
+
+            $earned_pv = $earned_pv + ($product->unilevel_pts * $value['qty']);
+            $amount_of_discount_total = $amount_of_discount_total + $discount_amount;
+            $without_discount_total = $without_discount_total + ($value['price'] * $value['qty']);
+
+
+
+
+
+
             if($member_type == 0)
             {
-
-
-
                  /**
                  * FOREACH ITEM QUANTITY CREATE PRODUCT CODE
                  */
@@ -620,6 +658,7 @@ class StockistProcessSales extends StockistController
 
 
         }
+
     }   
 
 
@@ -726,21 +765,64 @@ class StockistProcessSales extends StockistController
         return $_slot;
     }
 
-    public function get_cart_total($cart)
+    public function get_cart_total($cart,$slot_id = null)
     {   
         $total = []; 
-        
+        $overall = [0];
+        $discount_amount = [0];
+        if($slot_id)
+        {   
+            foreach ((array) $cart as $key => $value)
+            {
 
-        foreach ((array) $cart as $key => $value)
+                    if($slot_id)
+                    {
+                        $slot = Tbl_slot::where('slot_id',$slot_id)->first();
+                        $discount = Tbl_product_discount::where('product_id',$key)->where('membership_id',$slot->slot_membership)->first();
+                        if($discount)
+                        {
+                            $discount = $discount->discount;
+                        }
+                        else
+                        {
+                            $discount = 0;
+                        }               
+                    }
+                    else
+                    {
+                        $discount = 0;
+                    }               
+
+
+
+                $sub_total =   $value['sub_total'] - (($discount/100)*$value['sub_total']);
+                $total[]   =   $value['sub_total'];
+                $discount_amount[]   =   ($discount/100)*$value['sub_total'];
+                $overall[] =   $sub_total;
+
+                // $total[] = $value['sub_total'];
+            }       
+        }
+        else
         {
-            $total[] = $value['sub_total'];
+            foreach ((array) $cart as $key => $value)
+            {
+
+                $discount = 0;
+                $sub_total =   $value['sub_total'] - (($discount/100)*$value['sub_total']);
+                $total[]   =   $value['sub_total'];
+                $discount_amount[]   =   ($discount/100)*$value['sub_total'];
+                $overall[] =   $sub_total;
+            }           
         }
 
 
 
+        $data['total'] = array_sum($overall);
+        $data['sub_total'] = array_sum($total);
+        $data['discount'] = array_sum($discount_amount);
 
-
-        return array_sum($total);
+        return $data;
     }
 
 

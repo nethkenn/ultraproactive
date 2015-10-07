@@ -5,7 +5,7 @@
                     <td>{{$product['product_name']}}</td>
                     <td>{{$product['price']}}</td>
                     <td>{{$product['qty']}}</td>
-                    <td>{{$product['total']}}@if($product['discount'] != 0)({{$product['discount']}}%)@endif</td>
+                    <td>{{number_format($product['total'],2)}}@if($product['discount'] != 0)({{number_format($product['discount'],2)}}%)@endif</td>
                     <td><a class="remove-to-cart" product-id="{{$key}}" href="#">X</a></td>
                 </tr>
             @endforeach

@@ -38,13 +38,13 @@
 							<td>{{$voucher_product->product_name}}</td>
 							<td>{{$voucher_product->price}}</td>
 							<td>{{$voucher_product->qty}}</td>
-							<td>{{$voucher_product->sub_total}}@if($voucher_product->product_discount != 0)({{$voucher_product->product_discount}}%) @endif</td>
+							<td>{{number_format($voucher_product->sub_total,2)}}@if(number_format($voucher_product->product_discount,2) != 0)({{number_format($voucher_product->product_discount,2)}}%) @endif</td>
 						</tr>
 					@endforeach
                     <tr><td class="text-right" colspan="5">Total {{ $prod_sum }}</td></tr>
                     <tr><td class="text-right" colspan="5">Discount {{$discount_decimal}}</td></tr>
                     <tr><td class="text-right" colspan="5">Other Charges {{$voucher->other_charge}} % ({{(($voucher->other_charge/100)*$prod_sum)}})</td></tr>
-                    <tr><td class="text-right" colspan="5">Final Total: {{$voucher->total_amount}}</td></tr>
+                    <tr><td class="text-right" colspan="5">Final Total: {{number_format($voucher->total_amount,2)}}</td></tr>
 				@else
 					<tr><td colspan="5">No products</td></tr>
 				@endif

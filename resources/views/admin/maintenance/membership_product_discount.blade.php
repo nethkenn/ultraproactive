@@ -148,7 +148,8 @@
 					$new_td[index] = $(element).html();
 
 				});
-				var str = parseInt($new_td[5]) - ((parseInt($('#pop-up-input').val())/100)*parseInt($new_td[5]));
+				var str = parseFloat($new_td[5]) - ((parseFloat($('#pop-up-input').val())/100)*parseFloat($new_td[5]));
+				var str = str.toFixed(2);
 				var $append = '<tr>'+
 					'<td>'+$new_td[0]+'</td>'+
 					'<td>'+$new_td[1]+'</td>'+
