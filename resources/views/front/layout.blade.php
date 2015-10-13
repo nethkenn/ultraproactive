@@ -62,7 +62,7 @@
 			</div>
 		</div>
 	</header> -->
-	<div class="account hide">
+	<div class="account">
 		<a href="/member/login"><div class="text">LOGIN</div></a>
 		<span>|</span>
 		<a href="/member/register"><div class="text">REGISTER</div></a>
