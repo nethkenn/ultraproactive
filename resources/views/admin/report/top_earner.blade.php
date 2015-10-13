@@ -18,14 +18,9 @@
           <tr class="text-center">
             <th>Slot Id</th>      
             <th>Slot Owner</th>
-            <th>Wallet from Old System</th>
-            <th>Sponsor</th>
-            <th>Match</th>
-            <th>Mentors</th>
-            <th>Bonus from Dynamic Compression</th>
-            <th>Total Earned</th>
-            <th>Total Encashed</th>          
-            <th>Total Wallet</th>
+            <th>Total Earned GC</th>
+            <th>Total Encashed GC</th>          
+            <th>Total GC</th>
           </tr>
         </thead>
       </table>
@@ -40,7 +35,7 @@ $(function() {
         processing: true,
         serverSide: true,
          ajax:{
-            url:'admin/reports/bonus_summary/get',
+            url:'admin/reports/top_earner/get',
             data:{
                 archived : "{{$archived = Request::input('archived') ? 1 : 0 }}"
                }
@@ -48,11 +43,6 @@ $(function() {
         columns: [
             {data: 'slot_id', name: 'slot_id'},
             {data: 'account_name', name: 'account_name'},
-            {data: 'old', name: 'old'},
-            {data: 'sponsor', name: 'sponsor'},
-            {data: 'matching', name: 'sponsor'},
-            {data: 'mentor', name: 'mentor'},
-            {data: 'dynamic', name: 'dynamic'},
             {data: 'subtotal', name: 'subtotal'},
             {data: 'encash', name: 'encash'},
             {data: 'total', name: 'total'},

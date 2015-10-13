@@ -7,116 +7,103 @@ use Carbon\Carbon;
 use Config;
 use App\Classes\Log;
 use App\Classes\Admin;
-class AdminReportProductController extends AdminController
+use App\Tbl_wallet_logs;
+use App\Tbl_tree_sponsor;
+use Datatables;
+use App\Tbl_slot;
+class AdminReportController extends AdminController
 {
-	public function product_sales()
+	public function bonus_summary()
 	{	
-		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Product Sales");
+		$data['ctr']     = 1;
+		$data['title']   = 'Bonus summary';
 
 
-		if(Request::isMethod("post"))
-		{
-			$data["to"] = date("m/d/o", strtotime(Request::input("to")));
-			$data["from"] = date("m/d/o", strtotime(Request::input("from")));
-			$data["group"] = Request::input("group-date");
-		}
-		else
-		{
-			$data["to"] = $to = date("m/d/o", time());
-			$data["from"] = $from = date("m/d/o", time() - (60 * 60 * 24 * 30));
-			$data["group"] = "daily";
-		}
 
-		switch(Request::input("report-source"))
-		{
-			default: $data = $this->sales_report($data, Request::input("report-source")); break;
-		}
-
-        return view('admin.report.product_sales', $data);
+		return view('admin.report.other_report', $data);
 	}
 
-
-
-	public static function currency_format($price)
+	public function bonus_summary_get()
     {
-        $currency = Config::get('app.currency');
-        return number_format($price, 2);
+		$summary = Tbl_slot::select('tbl_slot.slot_id','account_name',DB::raw('SUM(CASE When keycode="Old System Wallet" And wallet_type="Wallet" Then wallet_amount Else 0 End ) as old'),
+														   DB::raw('SUM(CASE When keycode="Dynamic Compression" And wallet_type="Wallet" Then wallet_amount Else 0 End ) as dynamic'),
+														   DB::raw('SUM(CASE When keycode="binary" And wallet_type="Wallet" Then wallet_amount Else 0 End ) as matching'),
+														   DB::raw('SUM(CASE When keycode="direct" And wallet_type="Wallet" Then wallet_amount Else 0 End ) as sponsor'),
+														   DB::raw('SUM(CASE When keycode="matching" And wallet_type="Wallet" Then wallet_amount Else 0 End ) as mentor'),
+														   DB::raw('SUM(CASE When keycode="matching" or keycode="Dynamic Compression" or keycode="Old System Wallet" or keycode="direct" or keycode="binary" And wallet_type="Wallet" Then wallet_amount Else 0 End ) as subtotal'),
+														   DB::raw('SUM(CASE When wallet_amount < 0 And keycode!="Old System Wallet" And wallet_type="Wallet" Then wallet_amount Else 0 End ) as encash'),
+														   DB::raw('SUM(wallet_amount) as total'))
+								->leftJoin('tbl_wallet_logs','tbl_slot.slot_id','=','tbl_wallet_logs.slot_id')
+								->leftJoin('tbl_account','tbl_account.account_id','=','tbl_slot.slot_owner')
+								->groupBy('tbl_slot.slot_id')
+								->get();
+
+        return Datatables::of($summary)->editColumn('old','{{number_format($old,2)}}')
+								       ->editColumn('dynamic','{{number_format($dynamic,2)}}')
+								       ->editColumn('matching','{{number_format($matching,2)}}')
+								       ->editColumn('sponsor','{{number_format($sponsor,2)}}')
+									   ->editColumn('mentor','{{number_format($mentor,2)}}')
+									   ->editColumn('subtotal','{{number_format($subtotal,2)}}')
+									   ->editColumn('encash','{{number_format($encash,2)}}')
+									   ->editColumn('total','{{number_format($total,2)}}')
+        							   ->make(true);
+
+
     }
 
+	public function gc_summary()
+    {
+		$data['ctr']     = 1;
+		$data['title']   = 'GC summary';
 
-	public function sales_report($data, $filter_sales)
-	{
-		$to = $data["to"];
-		$from = $data["from"];
-		$group = $data["group"];
 
-		$column_date = 'created_at';
-		$column_value = 'SUM(`total_amount`)';
-		
-		if($group == "daily")
-		{
-			$select = "$column_value as 'value', $column_date as 'date'";
-			$groupBy = "YEAR($column_date), MONTH($column_date), DAY($column_date)";
-			$increment = "days";
-			$time_string = "m/d/o";
-		}
-		elseif($group == "monthly")
-		{
-			$select = "$column_value as 'value', $column_date as 'date'";
-			$groupBy = "YEAR($column_date), MONTH($column_date)";
-			$increment = "months";
-			$time_string = "F Y";
-		}
-		elseif($group == "yearly")
-		{
-			$select = "$column_value as 'value', $column_date as 'date'";
-			$groupBy = "YEAR($column_date)";
-			$increment = "years";
-			$time_string = "Y";
-		}
 
-		$_order = DB::table("tbl_voucher")->select(DB::raw($select))
-											->groupBy(DB::raw($groupBy))
-											->where('status','<>','cancelled')
-											->where('membership_code',0)
-											->where(function($query) use($filter_sales)
-											{ 
-												switch ($filter_sales)
-												{
-													case '0':
-														$query->where('payment_mode', '0');	
-														break;
-													case '1':
-														$query->where('payment_mode', '1');	
-														break;
-														$query->whereNotNull('payment_mode');	
-													default:
+		return view('admin.report.gc_summary', $data);
+    }
 
-												}
-												
-											})
-											->get();
+	public function gc_summary_get()
+    {
+		$summary = Tbl_slot::select('tbl_slot.slot_id','account_name',DB::raw('SUM(CASE When wallet_amount > 0 And wallet_type="GC" Then wallet_amount Else 0 End ) as subtotal'),
+							  		 DB::raw('SUM(CASE When wallet_type="GC" Then wallet_amount Else 0 End ) as total'),
+							  		 DB::raw('SUM(CASE When wallet_amount < 0 And wallet_type="GC" Then wallet_amount Else 0 End ) as encash'))
+									->leftjoin('tbl_wallet_logs','tbl_slot.slot_id','=','tbl_wallet_logs.slot_id')
+									->leftjoin('tbl_account','tbl_account.account_id','=','tbl_slot.slot_owner')
+									->groupBy('tbl_slot.slot_id')
+									->get();
 
-		foreach($_order as $key => $order)
-		{
-			$label = date($time_string, strtotime($order->date));
-			$data["_order"][$label] = $order;
-			$data["_order"][$label]->label = $label ;
-			$data["_order"][$label]->income = $this->currency_format($order->value);
-		}	
+        return Datatables::of($summary)->editColumn('subtotal','{{number_format($subtotal,2)}}')
+									   ->editColumn('encash','{{number_format($encash,2)}}')
+									   ->editColumn('total','{{number_format($total,2)}}')
+        							   ->make(true);
 
-		$ctr = 0;
 
-		while(strtotime($from) <= strtotime($to))
-		{
-			$date = date($time_string, strtotime($from));
-			$data["_report"][$ctr]["date"] = $date;
-			$data["_report"][$ctr]["value"] = isset($data["_order"][$date]->value) ? $data["_order"][$date]->value : 0;
-			$data["_report"][$ctr]["income"] = $this->currency_format($data["_report"][$ctr]["value"]);
-			$from = date($time_string, strtotime($from . "+1 $increment"));
-			$ctr++;
-		}
+    }
 
-		return $data;
-	}
+	// public function top_earner()
+ //    {
+	// 	$data['ctr']     = 1;
+	// 	$data['title']   = 'Top Earner';
+
+	// 	$summary = Tbl_slot::select('tbl_slot.slot_id','account_name','ROW_NUMBER() OVER (ORDER BY (SELECT 1)) AS number',DB::raw('SUM(CASE When wallet_amount > 0 And wallet_type="GC" Then wallet_amount Else 0 End ) as subtotal'),
+	// 						  		 DB::raw('SUM(CASE When wallet_type="GC" Then wallet_amount Else 0 End ) as total'),
+	// 						  		 DB::raw('SUM(CASE When wallet_amount < 0 And wallet_type="GC" Then wallet_amount Else 0 End ) as encash'))
+	// 								->leftjoin('tbl_wallet_logs','tbl_slot.slot_id','=','tbl_wallet_logs.slot_id')
+	// 								->leftjoin('tbl_account','tbl_account.account_id','=','tbl_slot.slot_owner')
+	// 								->groupBy('tbl_slot.slot_id')
+	// 								->first();
+	// 								dd($summary);
+	// 	return view('admin.report.gc_summary', $data);
+ //    }
+
+	// public function top_earner_get()
+ //    {
+
+
+ //        return Datatables::of($summary)->editColumn('subtotal','{{number_format($subtotal,2)}}')
+	// 								   ->editColumn('encash','{{number_format($encash,2)}}')
+	// 								   ->editColumn('total','{{number_format($total,2)}}')
+ //        							   ->make(true);
+
+
+ //    }
 }

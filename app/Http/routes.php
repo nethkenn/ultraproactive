@@ -363,7 +363,6 @@ Route::any('admin/utilities/travel_reward/restore', 'AdminComplanController@trav
 
 Route::any('admin/utilities/direct', 'AdminComplanController@direct');
 Route::any('admin/utilities/direct/edit', 'AdminComplanController@direct_edit');
-
 Route::any('admin/utilities/indirect', 'AdminComplanController@indirect');
 Route::any('admin/utilities/indirect/edit', 'AdminComplanController@indirect_edit');
 
@@ -388,6 +387,18 @@ Route::any('admin/utilities/recompute', 'AdminComplanController@recompute');
 Route::any('admin/reports/product_sales', 'AdminReportProductController@product_sales');
 Route::any('admin/reports/membership_sales', 'AdminReportMembershipController@index');
 Route::any('admin/reports/audit_trail', 'AdminAuditTrailController@index');
+
+Route::any('admin/reports/bonus_summary', 'AdminReportController@bonus_summary');
+Route::any('admin/reports/bonus_summary/get', 'AdminReportController@bonus_summary_get');
+
+Route::any('admin/reports/gc_summary', 'AdminReportController@gc_summary');
+Route::any('admin/reports/gc_summary/get', 'AdminReportController@gc_summary_get');
+
+Route::any('admin/reports/top_earner', 'AdminReportController@top_earner');
+Route::any('admin/reports/top_earner/get', 'AdminReportController@top_earner_get');
+// Route::any('admin/reports/top_ewallet', 'AdminReportController@top_ewallet');
+// Route::any('admin/reports/top_recruiter', 'AdminReportController@top_recruiter');
+// Route::any('admin/reports/top_earner', 'AdminReportController@index');
 
 Route::any('admin/account/settings/profile', 'AdminAccountSettingsController@settings');
 Route::any('admin/account/settings/change_pass', 'AdminAccountSettingsController@changepass');
