@@ -8,7 +8,7 @@ Route::any('admin/developer/migration', 'AdminDevelopersController@migration');
 Route::any('/projection', 'ProjectionController@index');
 
 /* MEMBER */
-Route::any('/member', 'MemberDashboardController@index');
+// Route::any('/member', 'MemberDashboardController@index');
 Route::any('/member/notification', 'MemberDashboardController@notification');
 Route::any('/member/slot', 'MemberSlotController@index');
 Route::any('/member/slot/changeslot', 'MemberSlotController@changeslot');
