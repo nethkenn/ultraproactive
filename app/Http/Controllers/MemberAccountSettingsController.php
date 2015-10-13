@@ -27,14 +27,14 @@ class MemberAccountSettingsController extends MemberController
 		{	
 
 			$sample = Request::input();
-			foreach($sample as $s)
-			{
-				if($s == "")
-				{   
-					$data = "Please fill all the blanks";
-					return Redirect::to('member/settings')->with('message',$data);
-				}
-			}
+			// foreach($sample as $s)
+			// {
+			// 	if($s == "")
+			// 	{   
+			// 		$data = "Please fill all the blanks";
+			// 		return Redirect::to('member/settings')->with('message',$data);
+			// 	}
+			// }
 
 			$data = $this->checkifvalidate(Request::input());
 			return Redirect::to('member/settings')->with('message',$data);
@@ -100,10 +100,10 @@ class MemberAccountSettingsController extends MemberController
 				[
 					'account_name' => 'required|min:5|regex:/^[a-zA-Z\s]*$/',
 					'account_country_id' => 'required', 
-					'phone' => 'required',
+					// 'phone' => 'required',
 					'gender' => 'required',
-					'telephone' => 'required',
-					'address' => 'required|min:6',
+					// 'telephone' => 'required',
+					// 'address' => 'required|min:6',
 					// 'customer_province' => "required|exists:tbl_location,location_id",
 					// 'customer_municipality' => "required|exists:tbl_location,location_id",
 					// 'customer_barangay' => "required|exists:tbl_location,location_id",

@@ -266,7 +266,7 @@ Select image to upload:
                         <form action="/member/settings/upload" method="post" enctype="multipart/form-data">
                         <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
                         <div style="margin: 20px 0;">
-                            <input type="file" name="fileToUpload" id="fileToUpload">
+                            <input style="margin: auto;" type="file" name="fileToUpload" id="fileToUpload">
                         </div>
                         <input type="submit" class="btn btn-warning" value="Change Image" name="submit" required>
                         </form>
