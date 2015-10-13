@@ -170,10 +170,10 @@ Select image to upload:
         <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
         <div>
             <div class="col-md-6">
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" name="fname" value="{{$acc->account_name}}" class="form-control" required>
-                </div>
+                </div> -->
                 <div class="form-group">
                     <label for="gender">Gender</label>
                     <div class="radio">

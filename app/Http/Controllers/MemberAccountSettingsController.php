@@ -88,7 +88,7 @@ class MemberAccountSettingsController extends MemberController
 
 				$validator = Validator::make(
 				[
-					'account_name' => $data['fname'],
+					// 'account_name' => $data['fname'],
 					'account_email'=>$data['email'],
 					'account_country_id'=>$data['country'],
 					'phone' => $data['cp'],			
@@ -98,7 +98,7 @@ class MemberAccountSettingsController extends MemberController
 
 				],
 				[
-					'account_name' => 'required|min:5|regex:/^[a-zA-Z\s]*$/',
+					// 'account_name' => 'required|min:5|regex:/^[a-zA-Z\s]*$/',
 					'account_country_id' => 'required', 
 					// 'phone' => 'required',
 					'gender' => 'required',
@@ -135,7 +135,7 @@ class MemberAccountSettingsController extends MemberController
 					$insert['account_contact_number'] = $data['cp'];
 					$insert['birthday'] = $birthday;
 					$insert['account_country_id']	  = $data['country'];
-					$insert['account_name']	 		  = $data['fname'];
+					// $insert['account_name']	 		  = $data['fname'];
 					$insert['gender']   =  $data['gender'];
 					$insert['telephone']   = $data['tp'];
 					$insert['address']   = $data['address'];
