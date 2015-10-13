@@ -226,16 +226,16 @@
 	<script type="text/javascript" src="/resources/assets/bootstrap/js/bootstrap.min.js"></script>
 	@yield('script')
 	<script type="text/javascript">
-	;(function($){
-        $("img").load(function(){
+	// ;(function($){
+ //        $("img").load(function(){
         
-	    })
-	    .error(function(){
-	        // in this case you must reload image with jQuery
-	        var imgSrc = $(this).attr('src');
-	        $(this).attr('src',imgSrc);
-		});
-    })(jQuery);
+	//     })
+	//     .error(function(){
+	//         // in this case you must reload image with jQuery
+	//         var imgSrc = $(this).attr('src');
+	//         $(this).attr('src',imgSrc);
+	// 	});
+ //    })(jQuery);
 	</script>
 	<script type="text/javascript">
 	;(function($){
