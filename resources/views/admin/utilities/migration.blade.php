@@ -13,7 +13,6 @@
 
             <!--<button type="button" class="btn btn-primary start-migration"><i class="fa fa-refresh"></i> MIGRATION</button>-->
 
-
             <!--<button type="button" class="btn btn-primary start-recompute"><i class="fa fa-refresh"></i> RECOMPUTE</button>-->
         </div>
     </div>

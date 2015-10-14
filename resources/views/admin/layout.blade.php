@@ -137,7 +137,6 @@
 									<li><a href="admin/reports/membership_sales">Membership Sales Report</a></li>
 									<li><a href="admin/reports/bonus_summary">Bonus Summary</a></li>
 									<li><a href="admin/reports/gc_summary">GC Summary</a></li>
-
 									<!-- <li><a href="admin/reports/top_earner">Top Earner</a></li> -->
 								</ul>
 							</li> 
