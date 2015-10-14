@@ -87,14 +87,14 @@
                         <option value=""></option>
                         @if($_account)
                         @foreach($_account as $account)
-                            <option value="{{$account->account_id}}" {{Request::input('account_id') == $account->account_id ? 'selected' : ''}}>{{$account->account_name}}</option>
+                            <option value="{{$account->account_id}}" {{Request::input('account_id') == $account->account_id ? 'selected' : ''}}>{{$account->account_name}} ({{$account->account_username}})</option>
                         @endforeach
                         @endif()
                     </select>
                 </div>
                 <div class="form-group col-md-12">
                 </div>
-                                <div class="form-group col-md-6">
+                <div class="form-group col-md-6">
                     <label for="Recipient">Code multiplier</label>
                     @if($_error['code_multiplier'])
                         <div class="col-md-12 alert alert-danger form-errors">
