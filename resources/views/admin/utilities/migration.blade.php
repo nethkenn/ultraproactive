@@ -10,7 +10,10 @@
                <button type="submit" class="btn btn-primary" name="get_gc"></i> GET GC</button>
             </form>
             <!--<button type="button" class="btn btn-primary start-rematrix"><i class="fa fa-refresh"></i> REMATRIX</button>-->
+
             <!--<button type="button" class="btn btn-primary start-migration"><i class="fa fa-refresh"></i> MIGRATION</button>-->
+
+
             <!--<button type="button" class="btn btn-primary start-recompute"><i class="fa fa-refresh"></i> RECOMPUTE</button>-->
         </div>
     </div>
