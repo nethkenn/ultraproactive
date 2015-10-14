@@ -19,6 +19,10 @@ class AdminMigrationController extends AdminController
 		$data["slot_count"] = Tbl_slot::count();
 		$data["hack_count"] = DB::table('tbl_members')->count();
 		$data["slot_hack_count"] = Tbl_slot::where("hack_reference", "!=", 0)->count();
+		if(isset($_POST['get_gc']))
+		{
+			$this->get_gc();
+		}
 		if(Admin::info()->admin_rank_position != 0)
 		{
 			return Redirect::to('/admin');
@@ -238,6 +242,11 @@ class AdminMigrationController extends AdminController
 				        $log = "Amount of <b>".number_format($slot_wallet,2)." wallet </b> gained from old system.";
         				Log::slot($seed, $log, $slot_wallet,"Old System Wallet",$seed);					
 					}
+					if($slot_gc != 0)
+					{
+				        $log = "Amount of <b>".number_format($slot_wallet,2)." GC </b> gained from old system.";
+        				Log::slot($seed, $log, $slot_wallet,"Old System Wallet",$seed,1);					
+					}
 					Compute::tree($seed);
 				}
 
@@ -278,5 +287,23 @@ class AdminMigrationController extends AdminController
 	        $dec_point = $locale['decimal_point'];
 	    }
 	    return floatval(str_replace($dec_point, '.', preg_replace('/[^\d'.preg_quote($dec_point).']/', '', $number)));
+	}
+
+	public function get_gc()
+	{
+
+		$get = Tbl_slot::where('slot_gc','!=',0)->get();
+		foreach($get as $g)
+		{
+			$gc = $g->slot_gc;
+			$update['slot_gc'] = 0;
+
+			Tbl_slot::where('slot_id',$g->slot_id)->update($update);
+
+	        $log = "Amount of <b>".number_format($gc,2)." GC </b> gained from old system.";
+
+			Log::slot($g->slot_id, $log, $gc,"Old System Wallet",$g->slot_id,1);			
+		}
+			
 	}
 }

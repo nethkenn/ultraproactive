@@ -5,9 +5,13 @@
             <h2><i class="fa fa-users"></i>  Migration</h2>
         </div>
         <div class="buttons col-md-4 text-right">
-            <button type="button" class="btn btn-primary start-rematrix"><i class="fa fa-refresh"></i> REMATRIX</button>
-            <button type="button" class="btn btn-primary start-migration"><i class="fa fa-refresh"></i> MIGRATION</button>
-            <button type="button" class="btn btn-primary start-recompute"><i class="fa fa-refresh"></i> RECOMPUTE</button>
+            <form method="POST">
+               <input type="hidden" name="_token" value="{{ csrf_token() }}">
+               <button type="submit" class="btn btn-primary" name="get_gc"></i> GET GC</button>
+            </form>
+            <!--<button type="button" class="btn btn-primary start-rematrix"><i class="fa fa-refresh"></i> REMATRIX</button>-->
+            <!--<button type="button" class="btn btn-primary start-migration"><i class="fa fa-refresh"></i> MIGRATION</button>-->
+            <!--<button type="button" class="btn btn-primary start-recompute"><i class="fa fa-refresh"></i> RECOMPUTE</button>-->
         </div>
     </div>
     <div class="col-md-12 form-group-container" style="overflow: hidden;">

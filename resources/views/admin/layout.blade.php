@@ -135,7 +135,9 @@
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="admin/reports/product_sales">Product Sales Report</a></li>
 									<li><a href="admin/reports/membership_sales">Membership Sales Report</a></li>
-									<li><a href="admin/reports/audit_trail">Audit Trail</a></li>
+									<li><a href="admin/reports/bonus_summary">Bonus Summary</a></li>
+									<li><a href="admin/reports/gc_summary">GC Summary</a></li>
+									<li><a href="admin/reports/top_earner">Top Earner</a></li>
 								</ul>
 							</li> 
 
