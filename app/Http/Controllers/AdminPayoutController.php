@@ -84,12 +84,45 @@ class AdminPayoutController extends AdminController
         }
 
 
+        if(isset($_POST['cancel_payout']))
+        {
+            $this->cancel_payout(Request::input('idtoprocess'));
+            $success = "Return Wallet complete";
 
+            Log::Admin(Admin::info()->account_id,Admin::info()->account_username." cancel the payout id #".Request::input('idtoprocess'));
+            
+            if(Request::input('processed') == 1)
+            {
+                 return Redirect::to('admin/transaction/payout/?processed=1')->with('success',$success);
+            }
+            else
+            {
+               return Redirect::to('admin/transaction/payout')->with('success',$success);
+            }
+        }
 
 
         $data['data'] = $account;   
         return view('admin.transaction.payout',$data);
 	}
+
+    public function cancel_payout($id)
+    {
+            $enc = Tbl_account_encashment_history::where('status','Pending')->where('account_id',$id)->orderBy('account_id','DESC')->get(); 
+            
+            foreach($enc as $data)
+            {
+                 $slot = Tbl_slot::id($data->slot_id)->first();
+
+
+                 $log = 'Your slot #'.$data->slot_id.' encashment has been cancelled and return the '.$data->amount.' amount to your wallet';
+
+                 Log::slot($data->slot_id,$log,$data->amount,"Cancel encashment",$data->slot_id);                      
+            } 
+
+            Tbl_account_encashment_history::where('status','Pending')->where('account_id',$id)->orderBy('account_id','DESC')->update(['status'=>'Cancelled']); 
+    }
+
     public function processall()
     {
             $e = Tbl_account_encashment_history::where('status','Processed')->orderBy('processed_no','DESC')->first(); 
