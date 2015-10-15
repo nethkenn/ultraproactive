@@ -50,6 +50,18 @@ class MemberCheckoutController extends Controller
 
         if(isset($_POST['slot_id']) && isset($_POST['gc']))
         {
+
+                foreach ((array)$cart as $key => $value)
+                {
+                    $get_product = Tbl_product::find($key);
+                    $amount = $get_product->stock_qty - $value['qty'];
+
+                    $request['prod_id'.$key] = $amount;
+                    $rules['prod_id'.$key] = 'required|numeric|min:0;';
+                    $message['prod_id'.$key] = "Product ".$get_product->product_name." stocks is not enough to the quantity you want to buy.";
+                }
+
+
                 $validate_slot_gc = $slot->slot_gc >= $data['final_total'];
                 $cart_count = count($cart) >= 1;
 
@@ -170,6 +182,18 @@ class MemberCheckoutController extends Controller
         elseif(isset($_POST['slot_id']))
         {
 
+            foreach ((array)$cart as $key => $value)
+            {
+                $get_product = Tbl_product::find($key);
+                $amount = $get_product->stock_qty - $value['qty'];
+
+                $request['prod_id'.$key] = $amount;
+                $rules['prod_id'.$key] = 'required|numeric|min:0;';
+
+                $message = [
+                    'prod_id'.$key.'.between' =>  "Product ".$get_product->product_name." stocks is not enough to the quantity you want to buy."
+                ];
+            }
 
             $validate_slot_wallet = $wallet >= $data['final_total'];
             $cart_count = count($cart) >= 1;
