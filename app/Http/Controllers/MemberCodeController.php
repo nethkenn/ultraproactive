@@ -1098,6 +1098,11 @@ class MemberCodeController extends MemberController
 		{
 			$return["message"] = $data["message"];
 		}
+		else
+		{
+			$return["placement_owner"] = Tbl_slot::id(Request::input("placement"))->account()->first()->account_name;
+			$return["sponsor_owner"] =  Tbl_slot::id(Request::input("sponsor"))->account()->first()->account_name;
+		}
 		echo json_encode($return);
 	}
 

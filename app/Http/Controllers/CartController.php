@@ -18,7 +18,7 @@ class CartController extends MemberController
                                                                         ->where('slot_id', $slot_id)
                                                                         ->where('slot_owner', $customer->account_id)
                        	                                                 ->first();
-
+        $reduced_amount[] = [0];
         // dd($slot->discount);     	                                                 
 		if($data['_cart'])
 		{

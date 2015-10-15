@@ -56,6 +56,9 @@ class AdminSlotController extends AdminController
 	        return Datatables::of($_account)->addColumn('gen','<a href="admin/maintenance/slots/add?id={{$slot_id}}">GENEALOGY</a>')
 	        								->addColumn('info','<a href="admin/maintenance/slots/view?id={{$slot_id}}">INFO</a>')
 	        								->addColumn('wallet','{{App\Tbl_wallet_logs::id("$slot_id")->wallet()->sum("wallet_amount")}}')
+	        								->addColumn('sponsor','{{App\Tbl_slot::id("$slot_sponsor")->account()->first() == null ? "---" : "Slot #".App\Tbl_slot::id("$slot_sponsor")->account()->first()->slot_id."(".App\Tbl_slot::id("$slot_sponsor")->account()->first()->account_name.")"}}')
+	        								->addColumn('placement','{{App\Tbl_slot::id("$slot_placement")->account()->first() == null ? "---" : "Slot #".App\Tbl_slot::id("$slot_placement")->account()->first()->slot_id."(".App\Tbl_slot::id("$slot_placement")->account()->first()->account_name.")"}}')
+	        								->addColumn('position','{{App\Tbl_slot::id("$slot_placement")->account()->first() == null ? "---" : strtoupper($slot_position)}}')
 	        								->make(true);
 
 	}
@@ -275,7 +278,12 @@ class AdminSlotController extends AdminController
 		$wallet = Tbl_wallet_logs::id(Request::input('slot_id'))->wallet()->sum('wallet_amount');
 		$wallet =  Request::input('wallet') - $wallet;
 		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." edit Slot #".Request::input("slot_id"),serialize($old),serialize($update));
-		Log::slot(Request::input("slot_id"), $logs,$wallet, "Update Slot",Request::input("slot_id"));
+		
+		if(Request::input('wallet') != 0)
+		{
+			Log::slot(Request::input("slot_id"), $logs,$wallet, "Update Slot",Request::input("slot_id"));			
+		}
+
 		$return["placement"] = $data["slot"]->slot_placement;
 
 		echo json_encode($return);
