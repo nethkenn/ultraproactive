@@ -156,6 +156,7 @@ class MemberGenealogyController extends MemberController
 		                                    <img src="/resources/assets/img/default-image.jpg" alt="" />
 		                                </div>
 										<div id="cont">
+											<div style="font-weight: 700;">' . strtoupper($slot_info->account_username) . ' </div>
 											<div>' . strtoupper($slot_info->account_name) . ' </div>
 											<b>' . $slot_info->membership_name . ' </b>
 										</div>
@@ -179,6 +180,7 @@ class MemberGenealogyController extends MemberController
 		                                    <img src="'.$slot_info->image.'">
 		                                </div>
 										<div id="cont">
+											<div style="font-weight: 700;">' . strtoupper($slot_info->account_username) . ' </div>
 											<div>' . strtoupper($slot_info->account_name) . ' </div>
 											<b>' . $slot_info->membership_name . ' </b>
 										</div>
