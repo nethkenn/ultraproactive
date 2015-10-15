@@ -18,7 +18,7 @@
         <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
         <input type="hidden" class="token" name="slot_id" value="{{ Request::input('slot_id') }}">
 
-        <div class="fieldset">
+        <div class="fieldset" style="display:none">
             <div class="label">SLOT OWNER</div>
             <div class="field">
                 <select class="slot_owner_change chosen-select" name="account_id">
@@ -28,7 +28,7 @@
                 </select>
             </div>
         </div>
-        <div class="fieldset">
+        <div class="fieldset" style="display:none">
             <div class="label">MEMBERSHIP</div>
             <div class="field">
                 <select name="slot_membership">
@@ -38,7 +38,7 @@
                 </select>
             </div>
         </div>
-        <div class="fieldset">
+        <div class="fieldset" style="display:none">
             <div class="label">RANK</div>
             <div class="field">
                 <select name="rank">
@@ -48,7 +48,7 @@
                 </select>
             </div>
         </div>
-        <div class="fieldset">
+        <div class="fieldset" style="display:none">
             <div class="label">SLOT TYPE</div>
             <div class="field">
                 <select name="slot_type">
@@ -58,11 +58,11 @@
                 </select>
             </div>
         </div>
-        <div class="fieldset">
+        <div class="fieldset" style="display:none">
             <div class="label">AVAILABLE BALANCE</div>
             <div class="field"><input name="wallet" type="text" value="{{ $wallet }}"></div>
         </div>
-        <div class="fieldset">
+        <div class="fieldset" style="display:none">
             <div class="label">UPGRADE POINTS</div>
             <div class="field"><input name="upgrade_points" type="text" value="{{ $slot->slot_upgrade_points }}"></div>
         </div>
@@ -74,23 +74,23 @@
             <div class="label">BINARY POINTS RIGHT</div>
             <div class="field"><input name="binary_right" type="text" value="{{ $slot->slot_binary_right }}"></div>
         </div>
-        <div class="fieldset">
+        <div class="fieldset" style="display:none">
             <div class="label">PERSONAL PV</div>
             <div class="field"><input name="personal_pv" type="text" value="{{ $slot->slot_personal_points }}"></div>
         </div>
-        <div class="fieldset">
+        <div class="fieldset" style="display:none">
             <div class="label">GROUP PV</div>
             <div class="field"><input name="group_pv" type="text" value="{{ $slot->slot_group_points }}"></div>
         </div>
-        <div class="fieldset">
+        <div class="fieldset" style="display:none">
             <div class="label">TOTAL EARNINGS</div>
             <div class="field"><input name="total_earning" type="text" value="{{ $slot->slot_total_earning }}"></div>
         </div>
-        <div class="fieldset">
+        <div class="fieldset" style="display:none">
             <div class="label">TOTAL WITHRAWAL</div>
             <div class="field"><input name="total_withrawal" type="text" value="{{ $slot->slot_total_withrawal }}"></div>
         </div>
-        <div class="fieldset">
+        <div class="fieldset" style="display:none">
             <div class="label">HACK SHEET REFERENCE ID</div>
             <div class="field"><input name="hack_reference" type="text" value="{{ $slot->hack_reference }}"></div>
         </div>
