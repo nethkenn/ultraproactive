@@ -170,10 +170,10 @@ Select image to upload:
         <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
         <div>
             <div class="col-md-6">
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" name="fname" value="{{$acc->account_name}}" class="form-control" required>
-                </div>
+                </div> -->
                 <div class="form-group">
                     <label for="gender">Gender</label>
                     <div class="radio">
@@ -266,7 +266,7 @@ Select image to upload:
                         <form action="/member/settings/upload" method="post" enctype="multipart/form-data">
                         <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
                         <div style="margin: 20px 0;">
-                            <input type="file" name="fileToUpload" id="fileToUpload">
+                            <input style="margin: auto;" type="file" name="fileToUpload" id="fileToUpload">
                         </div>
                         <input type="submit" class="btn btn-warning" value="Change Image" name="submit" required>
                         </form>
