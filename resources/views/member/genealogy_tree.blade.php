@@ -27,6 +27,7 @@
                                         @endif
                                     </div>
                                     <div id="cont">
+                                        <div style="font-weight: 700;">{{ strtoupper($slot->account_username) }}</div>
                                         <div>{{ strtoupper($slot->account_name) }}</div>
                                         <b>{{ $slot->membership_name }}</b>
                                     </div>
