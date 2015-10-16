@@ -61,6 +61,45 @@ class AdminReportController extends AdminController
 		return view('admin.report.gc_summary', $data);
     }
 
+	public function other_reports()
+    {
+
+		$data['total_flushed'] = Tbl_wallet_logs::sum('flushed_out');
+		$data['ps'] = Tbl_slot::where('slot_type','PS')->count();
+		$data['cd'] = Tbl_slot::where('slot_type','CD')->count();
+		$data['fs'] = Tbl_slot::where('slot_type','FS')->count();
+		$data['total_slot'] = Tbl_slot::count();
+
+		$data['matching_gc']	 = Tbl_wallet_logs::where('keycode','=','binary')->where('wallet_type','GC')->sum('wallet_amount');
+		$data['sponsor_gc']  = Tbl_wallet_logs::where('keycode','=','direct')->where('wallet_type','GC')->sum('wallet_amount');
+
+		$data['old_wallet'] = Tbl_wallet_logs::where('keycode','=','Old System Wallet')->sum('wallet_amount');
+		$data['mentor']   = Tbl_wallet_logs::where('keycode','=','matching')->wallet()->sum('wallet_amount');
+		$data['matching']	 = Tbl_wallet_logs::where('keycode','=','binary')->wallet()->sum('wallet_amount');
+		$data['sponsor']  = Tbl_wallet_logs::where('keycode','=','direct')->wallet()->sum('wallet_amount');
+		$data['dynamic'] = Tbl_wallet_logs::where('keycode','=','Dynamic Compression')->sum('wallet_amount');
+		// $data['binary_repurchase'] = Tbl_wallet_logs::where('keycode','=','binary_repurchase')->sum('wallet_amount');
+		$data['total']   = $data['old_wallet']+$data['mentor']  +$data['matching']+$data['sponsor'] +$data['dynamic'];
+		 
+		$data['total_encashment'] = Tbl_wallet_logs::where('keycode','=','Encashment')->sum('wallet_amount');
+		$data['count_encash'] = DB::table('tbl_account_encashment_history')->count();
+
+		$data['total_order'] = DB::table('tbl_voucher')->where('origin',null)->count();
+		$data['total_items'] = DB::table('tbl_voucher')->where('origin',null)->join('tbl_voucher_has_product','tbl_voucher_has_product.voucher_id','=','tbl_voucher.voucher_id')->sum('qty');
+		$data['total_sales'] = DB::table('tbl_voucher')->where('origin',null)->sum('total_amount');
+		$data['total_ps_price'] = DB::table('tbl_slot')->where('slot_type','PS')->join('tbl_membership','membership_id','=','membership_entry_id')->sum('membership_price');
+		$data['company_subtotal'] = $data['total_sales'] + $data['total_ps_price'];
+		$data['company_total'] = $data['company_subtotal'] - $data['total'];
+
+		$data['total_codes'] = DB::table('tbl_membership_code')->count();
+		$data['total_used_codes'] = DB::table('tbl_membership_code')->where('used',1)->count();
+		$data['total_avail_codes'] = DB::table('tbl_membership_code')->where('used',0)->count();
+
+
+
+		return view('admin.report.reports_other', $data);
+    }
+
 	public function gc_summary_get()
     {
 		$summary = Tbl_slot::select('tbl_slot.slot_id','account_name',DB::raw('SUM(CASE When wallet_amount > 0 And wallet_type="GC" Then wallet_amount Else 0 End ) as subtotal'),
@@ -79,31 +118,88 @@ class AdminReportController extends AdminController
 
     }
 
-	// public function top_earner()
- //    {
-	// 	$data['ctr']     = 1;
-	// 	$data['title']   = 'Top Earner';
+	public function top_earner()
+    {
+		$data['ctr']     = 1;
+		$data['title']   = 'Top Earner';
 
-	// 	$summary = Tbl_slot::select('tbl_slot.slot_id','account_name','ROW_NUMBER() OVER (ORDER BY (SELECT 1)) AS number',DB::raw('SUM(CASE When wallet_amount > 0 And wallet_type="GC" Then wallet_amount Else 0 End ) as subtotal'),
-	// 						  		 DB::raw('SUM(CASE When wallet_type="GC" Then wallet_amount Else 0 End ) as total'),
-	// 						  		 DB::raw('SUM(CASE When wallet_amount < 0 And wallet_type="GC" Then wallet_amount Else 0 End ) as encash'))
-	// 								->leftjoin('tbl_wallet_logs','tbl_slot.slot_id','=','tbl_wallet_logs.slot_id')
-	// 								->leftjoin('tbl_account','tbl_account.account_id','=','tbl_slot.slot_owner')
-	// 								->groupBy('tbl_slot.slot_id')
-	// 								->first();
-	// 								dd($summary);
-	// 	return view('admin.report.gc_summary', $data);
- //    }
+							
+		return view('admin.report.top_earner', $data);
+    }
 
-	// public function top_earner_get()
- //    {
+	public function top_earner_get()
+    {
 
 
- //        return Datatables::of($summary)->editColumn('subtotal','{{number_format($subtotal,2)}}')
-	// 								   ->editColumn('encash','{{number_format($encash,2)}}')
-	// 								   ->editColumn('total','{{number_format($total,2)}}')
- //        							   ->make(true);
+		$summary = Tbl_slot::select('tbl_slot.slot_id','account_name',
+									 DB::raw('SUM(CASE When wallet_amount > 0 And wallet_type="GC" Then wallet_amount Else 0 End ) as gc_earned'),
+							  		 DB::raw('SUM(CASE When wallet_amount > 0 And wallet_type="WALLET" Then wallet_amount Else 0 End ) as wallet_earned'),
+							  		 DB::raw('SUM(CASE When wallet_amount > 0 Then wallet_amount Else 0 End ) as total_earned'))
+									->leftjoin('tbl_wallet_logs','tbl_slot.slot_id','=','tbl_wallet_logs.slot_id')
+									->leftjoin('tbl_account','tbl_account.account_id','=','tbl_slot.slot_owner')
+									->groupBy('tbl_slot.slot_id')
+									->orderBy('total_earned','DESC')
+									->get();
+
+        return Datatables::of($summary)->editColumn('gc_earned','{{number_format($gc_earned,2)}}')
+									   ->editColumn('wallet_earned','{{number_format($wallet_earned,2)}}')
+									   ->editColumn('total_earned','{{number_format($total_earned,2)}}')
+        							   ->make(true);
 
 
- //    }
+    }
+
+	public function top_recruiter()
+    {
+		$data['ctr']     = 1;
+		$data['title']   = 'Top Recruiter';
+
+							
+		return view('admin.report.top_recruiter', $data);
+    }
+
+	public function top_recruiter_get()
+    {
+
+		$summary = Tbl_slot::select('tbl_slot.slot_id','account_name',DB::raw('COUNT(slot_id) as count')) ->account()
+																	->join('tbl_tree_sponsor','sponsor_tree_parent_id','=','slot_id')
+																	->where('sponsor_tree_level',1)
+																	->groupBy('slot_id')
+																	->orderBy('count','DESC')
+																	->get();
+		$ctr = 0;
+		$ctr2 = 0;
+		foreach($summary as $key => $s)
+		{
+
+			if(!isset($compare))
+			{
+				$compare = $summary[$key]->count;
+				$ctr++;
+				$ctr2++;
+				$summary[$key]->ctr = $ctr;
+			}
+			else
+			{
+				if($compare == $summary[$key]->count)
+				{
+					$ctr2++;
+					$summary[$key]->ctr = $ctr;
+				}
+				else
+				{
+					$ctr2++;
+					$ctr = $ctr2;
+					$summary[$key]->ctr = $ctr2;
+				}
+				$compare = $summary[$key]->count;
+			}	
+
+			
+
+		}
+        return Datatables::of($summary)->make(true);
+
+
+    }
 }

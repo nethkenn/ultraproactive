@@ -28,6 +28,7 @@
 						<th>ID</th>
 						<th>Full Name</th>
 						<th>Username</th>
+						<th>Account Date Created</th>
 						<th>Country Name</th>
 						<th class="col-md-1"></th>
 						<th class="option-col"></th>
@@ -55,6 +56,7 @@ $(function() {
        		{data: 'account_id', name: 'account_id'},
             {data: 'account_name', name: 'account_name'},
             {data: 'account_username', name: 'account_username'},
+            {data: 'account_date_created', name: 'account_date_created'},
             {data: 'country_name', name: 'country_name'},
             {data: 'login', name: 'login'},
             {data: 'edit', name: 'account_id'},

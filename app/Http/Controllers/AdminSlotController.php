@@ -348,6 +348,24 @@ class AdminSlotController extends AdminController
 		echo json_encode($return);
 	}
 
+	public function confirm_delete()
+	{
+
+
+		$password = Crypt::decrypt(Admin::info()->account_password);
+
+ 		if($password != Request::input('password'))
+ 		{
+ 			$return["message"] = "Wrong password.";
+ 		}
+ 		else
+ 		{
+ 			$return["message"] = null;
+ 		}
+
+		echo json_encode($return);
+	}
+
 	public function info()
 	{
 		$data["page"] = "Slot";

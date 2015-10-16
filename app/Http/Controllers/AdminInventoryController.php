@@ -76,7 +76,7 @@ class AdminInventoryController extends AdminController
                 Log::Admin(Admin::info()->account_id,Admin::info()->account_username." add an amount of ".$inserts['amount']." to product id #".$inserts['ing'],serialize($two),serialize($new));
 	      
                  $log = Admin::info()->account_username." add an amount of ".$inserts['amount']." to product id #".$inserts['ing'];
-                 Log::inventory_log(Admin::info()->account_id,$inserts['ing'],$inserts['amount'],$log);
+                 Log::inventory_log(Admin::info()->account_id,$inserts['ing'],$inserts['amount'],$log,0,0);
             }	
     }
 
@@ -91,7 +91,7 @@ class AdminInventoryController extends AdminController
             $new = DB::table('tbl_product')->where('product_id',$ings)->first();
             Log::Admin(Admin::info()->account_id,Admin::info()->account_username." consume the amount of product id #".$ings." by ".$amt,serialize($old),serialize($new));
             $log = Admin::info()->account_username." consume the amount of product id #".$ings." by ".$amt;
-            Log::inventory_log(Admin::info()->account_id,$ings,0-$amt,$log);
+            Log::inventory_log(Admin::info()->account_id,$ings,0-$amt,$log,0,0);
         }
         else if($opt == 2)
         {
@@ -102,7 +102,7 @@ class AdminInventoryController extends AdminController
             Log::Admin(Admin::info()->account_id,Admin::info()->account_username." change the amount of product id #".$ings." to ".$amt,serialize($old),serialize($new));
            
             $log = Admin::info()->account_username." change the amount of product id #".$ings." to ".$amt;
-            Log::inventory_log(Admin::info()->account_id,$ings,$amt - $two->stock_qty,$log);
+            Log::inventory_log(Admin::info()->account_id,$ings,$amt - $two->stock_qty,$log,0,0);
         }
         else
         {
@@ -113,7 +113,7 @@ class AdminInventoryController extends AdminController
             Log::Admin(Admin::info()->account_id,Admin::info()->account_username." add the amount of product id #".$ings." by ".$amt,serialize($old),serialize($new));
             
             $log = Admin::info()->account_username." add the amount of product id #".$ings." by ".$amt;
-            Log::inventory_log(Admin::info()->account_id,$ings,$amt,$log);
+            Log::inventory_log(Admin::info()->account_id,$ings,$amt,$log,0,0);
         }
 
         

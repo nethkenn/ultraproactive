@@ -40,6 +40,15 @@
         <div class="remodal slot-form update-slot-form" data-remodal-id="update-slot"></div>
         <!-- LOADING -->
         <div class="remodal slot-form pop-loading" data-remodal-id="loading"></div>
+        <!-- LOADING -->
+        <div class="remodal slot-form confirm_delete" data-remodal-id="confirm_delete" data-remodal-options="hashTracking: false">
+            
+            <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
+            Password: 
+            <input type="password" class="form-control" id="confirm_delete_form">
+            <button type="button" class="form-control" id="confirm_delete_button">Confirm</button>
+
+        </div>
     </body>
 </html>
 <style type="text/css">
@@ -54,3 +63,4 @@ button
     font-family: "Roboto", sans-serif !important;
 }
 </style>
+
