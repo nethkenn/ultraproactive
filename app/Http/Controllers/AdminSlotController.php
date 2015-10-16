@@ -129,6 +129,18 @@ class AdminSlotController extends AdminController
 			$data["message"] = "This account is already reach the max slot per account. Max slot per account is ".$limit->value.".";
 		}
 
+		if(Request::input("slot_type") == "CD")
+		{
+			if(Request::input("wallet") < 0)
+			{
+
+			}
+			else
+			{
+				$data["message"] = "Wallet amount should be negative";
+			}
+		}	
+
 		if(Request::input("account_id") == 0)
 		{
 			$data = $this->add_form_submit_new_account($data);
