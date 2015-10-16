@@ -88,8 +88,8 @@
                     <li class="{{ Request::segment(2) == 'encashment' ? 'active' : '' }} {{ Request::segment(2) == 'transfer_wallet' ? 'active' : '' }} dropdown">
                         <a href="javascript:">Wallet</a>
                         <ul class="dropdown-menu">
-                             <li><a href="/member/encashment">Encashment</a></li>
-                            <li><a href="/member/transfer_wallet">Transfer Wallet</a></li>
+                            <li><a href="/member/encashment">Encashment</a></li>
+                            <!-- <li><a href="/member/transfer_wallet">Transfer Wallet</a></li> -->
                         </ul>
                     </li>
 			        <li class="{{ Request::segment(2) == 'product' ? 'active' : '' }}"><a href="/member/product">Product</a></li>
