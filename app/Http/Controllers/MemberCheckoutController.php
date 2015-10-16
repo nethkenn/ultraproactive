@@ -86,6 +86,32 @@ class MemberCheckoutController extends Controller
 
                 });
 
+                foreach ((array)$cart as $key => $value)
+                {
+                    $get_product = Tbl_product::find($key);
+                    $amount = $get_product->stock_qty - $value['qty'];
+
+                    $request['product_'.$key] = $amount;
+                    $rules['product_'.$key] = 'check_stock_qty:'.$amount;
+                    $message['product_'.$key.'.check_stock_qty'] =  "Product ".$get_product->product_name." doesn't have enough stocks to provide the requested amount.";
+
+
+                    Validator::extend('check_stock_qty', function($attribute, $value, $parameters) 
+                    {
+                            $stock_qty = $parameters[0];
+
+                            if($stock_qty < 0)
+                            {
+                                return false;
+                            }
+                            else
+                            {
+                                return true;
+                            }
+                    });
+
+                }
+
                 $validator = Validator::make($request, $rules, $message);
                 if($validator->fails())
                 {
@@ -143,11 +169,14 @@ class MemberCheckoutController extends Controller
                             'product_discount_amount' => $discount_amount,
                             'gc'=>1
                         );
+
+                        $owned_stocks = $prod_pts->stock_qty - $value['qty'];
+                        Tbl_product::where('product_id',$key)->update(['stock_qty'=>$owned_stocks]);
+                        Log::inventory_log(Customer::info()->account_id,$key,0 - $value['qty'],"Bought a product/s, using GC");
+
                         $total = $total + $value['total'];
                         $voucher_has_product = new Tbl_voucher_has_product($insert_prod);
                         $voucher_has_product->save(); 
-
-
                     }
 
                     // Tbl_voucher::where('voucher_id',$voucher->voucher_id)->update(['total_amount'=>$total]);
@@ -191,6 +220,7 @@ class MemberCheckoutController extends Controller
 
 
             $message['slot_wallet.check_wallet'] = "Slot wallet balance is not enough.";
+
             Validator::extend('check_wallet', function($attribute, $value, $parameters)
             {
                  $slot_wallet = $value;
@@ -207,6 +237,32 @@ class MemberCheckoutController extends Controller
                  }
 
             });
+
+            foreach ((array)$cart as $key => $value)
+            {
+                $get_product = Tbl_product::find($key);
+                $amount = $get_product->stock_qty - $value['qty'];
+
+                $request['product_'.$key] = $amount;
+                $rules['product_'.$key] = 'check_stock_qty:'.$amount;
+                $message['product_'.$key.'.check_stock_qty'] =  "Product ".$get_product->product_name." doesn't have enough stocks to provide the requested amount.";
+
+
+                Validator::extend('check_stock_qty', function($attribute, $value, $parameters) 
+                {
+                        $stock_qty = $parameters[0];
+
+                        if($stock_qty < 0)
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                });
+
+            }
 
             $validator = Validator::make($request, $rules, $message);
             if($validator->fails())
@@ -288,6 +344,10 @@ class MemberCheckoutController extends Controller
                         'product_discount' => $discount,
                         'product_discount_amount' => $discount_amount
                     );
+
+                    $owned_stocks = $prod_pts->stock_qty - $value['qty'];
+                    Tbl_product::where('product_id',$key)->update(['stock_qty'=>$owned_stocks]);
+                    Log::inventory_log(Customer::info()->account_id,$key,0 - $value['qty'],"Bought a product/s.");
 
                     /*FOR TRANSACTION LOG UPDATE TOTAL*/
                     $total = $total + $value['total'];

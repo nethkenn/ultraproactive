@@ -74,7 +74,10 @@ class AdminInventoryController extends AdminController
 
                 $new = DB::table('tbl_product')->where('product_id',$inserts['ing'])->first();
                 Log::Admin(Admin::info()->account_id,Admin::info()->account_username." add an amount of ".$inserts['amount']." to product id #".$inserts['ing'],serialize($two),serialize($new));
-	        }	
+	      
+                 $log = Admin::info()->account_username." add an amount of ".$inserts['amount']." to product id #".$inserts['ing'];
+                 Log::inventory_log(Admin::info()->account_id,$inserts['ing'],$inserts['amount'],$log);
+            }	
     }
 
     public function singlecompute($ings,$amt,$opt)
@@ -87,6 +90,8 @@ class AdminInventoryController extends AdminController
             DB::table('tbl_product')->where('product_id',$ings)->update(['stock_qty'=>$amount]);
             $new = DB::table('tbl_product')->where('product_id',$ings)->first();
             Log::Admin(Admin::info()->account_id,Admin::info()->account_username." consume the amount of product id #".$ings." by ".$amt,serialize($old),serialize($new));
+            $log = Admin::info()->account_username." consume the amount of product id #".$ings." by ".$amt;
+            Log::inventory_log(Admin::info()->account_id,$ings,0-$amt,$log);
         }
         else if($opt == 2)
         {
@@ -95,6 +100,9 @@ class AdminInventoryController extends AdminController
             DB::table('tbl_product')->where('product_id',$ings)->update(['stock_qty'=>$amount]);
             $new = DB::table('tbl_product')->where('product_id',$ings)->first();
             Log::Admin(Admin::info()->account_id,Admin::info()->account_username." change the amount of product id #".$ings." to ".$amt,serialize($old),serialize($new));
+           
+            $log = Admin::info()->account_username." change the amount of product id #".$ings." to ".$amt;
+            Log::inventory_log(Admin::info()->account_id,$ings,$amt - $two->stock_qty,$log);
         }
         else
         {
@@ -103,6 +111,9 @@ class AdminInventoryController extends AdminController
             DB::table('tbl_product')->where('product_id',$ings)->update(['stock_qty'=>$amount]);
             $new = DB::table('tbl_product')->where('product_id',$ings)->first();
             Log::Admin(Admin::info()->account_id,Admin::info()->account_username." add the amount of product id #".$ings." by ".$amt,serialize($old),serialize($new));
+            
+            $log = Admin::info()->account_username." add the amount of product id #".$ings." by ".$amt;
+            Log::inventory_log(Admin::info()->account_id,$ings,$amt,$log);
         }
 
         

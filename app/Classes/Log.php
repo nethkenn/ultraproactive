@@ -64,7 +64,7 @@ class Log
 
 		return $id;
 	}
-	
+
 
 	public static function transaction_product($insert)
 	{
@@ -127,7 +127,7 @@ class Log
 	public static function inventory_log($account_id,$product_id,$quantity,$log)
 	{
 		$insert["account_id"] = $account_id;
-		$insert["wallet_amount"] = $log;
+		$insert["log"] = $log;
 		$insert["quantity"] = $quantity;
 		$insert["product_id"] =$product_id;
 		Tbl_inventory_logs::insert($insert);

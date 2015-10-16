@@ -314,13 +314,20 @@ function code_vault()
             {
                 url:"member/code_vault/check",
                 dataType:"json",
-                data: {'placement':$(".placement-input").val(),'slot_position':$("#3").val(),'code_number' : $("#code_number").val()},
+                data: {'placement':$(".placement-input").val(),'slot_position':$("#3").val(),'code_number' : $("#code_number").val(),'sponsor':$("#1").val()},
                 type:"post",
                 success: function(data)
                 {
                     if(data.message == "")
                     {
-                    	$("#createslot").submit();
+                    	$("#sponsor_owner").val(data.sponsor_owner);
+                    	$("#placement_owner").val(data.placement_owner);
+        				var inst = $('[data-remodal-id=confirm_slot]').remodal();
+          				inst.open(); 
+          				$(".loadingicon").hide();
+          				$(".loadingiconer").hide();
+						$(".c_slot").show();
+						$('.c_slot').prop("disabled", false);
                     }
                     else
                     {
@@ -334,6 +341,23 @@ function code_vault()
                 }
             });
             
+        });
+
+    	$(".canceler").unbind("click");
+        $(".canceler").bind("click", function(e)
+        {
+			var inst = $('[data-remodal-id=confirm_slot]').remodal();
+			inst.close(); 
+			var inst = $('[data-remodal-id=create_slot]').remodal();
+			inst.open(); 
+        });
+
+    	$(".confirmer").unbind("click");
+        $(".confirmer").bind("click", function(e)
+        {
+    		$(".confirmer").hide();
+    		$(".loadingiconer").show();
+    		$('#createslot').submit();
         });
 
     	$(".usingprodcode").unbind("click");

@@ -24,6 +24,9 @@
 						<th>Slot #</th>
 						<th>Owner</th>
 						<th>Membership</th>
+						<th>Placement</th>
+						<th>Position</th>
+						<th>Sponsor</th>
 						<th>Type</th>
 						<th>Wallet</th>
 						<th></th>
@@ -63,6 +66,9 @@ $(function() {
             {data: 'slot_id', name: 'slot_id'},
             {data: 'account_name', name: 'account_name'},
             {data: 'membership_name', name: 'membership_name'},
+            {data: 'placement', name: 'placement'},
+            {data: 'position', name: 'position'},
+            {data: 'sponsor', name: 'sponsor'},
             {data: 'slot_type', name: 'slot_type'},
             {data: 'wallet', name: 'slot_wallet'},
             {data: 'gen', name: 'slot_id'},

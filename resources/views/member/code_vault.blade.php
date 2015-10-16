@@ -265,9 +265,39 @@
         </div>
         <br>
         <button class="cancel button" type="button" data-remodal-action="cancel">Cancel</button>
-        <button class="c_slot button"  type="submit" name="c_slot">Create Slot</button>
+        <button class="c_slot button"  type="button" name="c_slot">Create Slot</button>
         <span class='loadingicon' style="margin-left: 50px;"><img class='loadingicon' src='/resources/assets/img/small-loading.GIF'></span>
     </form>
+</div>
+
+<!-- POPUP FOR CONFIRMATION / USE CODE -->
+<div class="remodal confirm_slot-slot" data-remodal-id="confirm_slot" data-remodal-options="hashTracking: false">
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <div class="header">
+        <img src="/resources/assets/frontend/img/icon-plis.png">
+        Confirm Slot
+    </div>
+    <img src="/resources/assets/frontend/img/sobranglupet.png" style="max-width: 100%; margin: 20px auto">
+    <div class="sponsornot"></div>
+    <div class="col-md-10 col-md-offset-1 para">
+        <div class="form-group para">
+            <label for="2" class="col-sm-3 control-label">Placement Owner</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="placement_owner" disabled>
+            </div>
+        </div>
+        <div class="form-group para">
+            <label for="2" class="col-sm-3 control-label">Sponsor Owner</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="sponsor_owner" disabled>
+            </div>
+        </div>
+        <button class="canceler button" type="button">Back</button>
+        <button class="confirmer button" type="button" name="c_slot">Create Slot</button>
+        <span class='loadingiconer' style="margin-left: 50px;"><img class='loadingiconer' src='/resources/assets/img/small-loading.GIF'></span>
+    </div>    
+
+        <br>
 </div>
 
 <!-- POPUP FOR BUYING OF CODES -->

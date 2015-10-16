@@ -122,6 +122,7 @@
     </div>
     <br>
     <button class="button" type="button" data-remodal-action="cancel">Cancel</button>
+    <button class="c_slot button"  type="submit" name="cancel_payout">Return Wallet</button>
     <button class="c_slot button"  type="submit" name="proccess">Process Payout</button>
     </form>
 </div>
