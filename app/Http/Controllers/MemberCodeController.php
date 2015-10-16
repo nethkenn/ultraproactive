@@ -106,21 +106,28 @@ class MemberCodeController extends MemberController
 		}
 		if(isset($_POST['slot_position']))
 		{	
-
-
 				$info = $this->addslot(Request::input());
 				if(isset($info['success']))
 				{
 					$message = $info['success'];
 					return Redirect::to('member/code_vault')->with('success',$message);	
 				}
-
-
 		}
 
 
 		if(isset($_POST['sbmitbuy']))
 		{
+			// $check = $this->check_additional_package(Request::input('package'));
+
+			// if($check == "yes")
+			// {
+
+			// }
+			// else
+			// {
+			// 	return Redirect::to('member/code_vault')->with('message',"Included package doesn't have enough stocks.");
+			// }
+			
 			if( Request::input('memid'))
 			{
 				$info = $this->add_code(Request::input());	
@@ -621,12 +628,12 @@ class MemberCodeController extends MemberController
 		$data['getallslot'] = Tbl_slot::where('slot_owner',Customer::id())->get();
         foreach($data['code'] as $key => $d)
         {
-        	$get =	 DB::table('tbl_member_code_history')->where('code_pin',$d->code_pin)
-        												 ->join('tbl_account','tbl_account.account_id','=','tbl_member_code_history.by_account_id')
-        											     ->orderBy('updated_at','DESC')
-        											     ->first();
-       											     
-		    $data['code'][$key]->encrypt    = Crypt::encrypt($d->code_pin);	
+    	$get =	 DB::table('tbl_member_code_history')->where('code_pin',$d->code_pin)
+    												 ->join('tbl_account','tbl_account.account_id','=','tbl_member_code_history.by_account_id')
+    											     ->orderBy('updated_at','DESC')
+    											     ->first();
+   											     
+	    $data['code'][$key]->encrypt    = Crypt::encrypt($d->code_pin);	
           if($get)
           {
          	$data['code'][$key]->transferer = $get->account_name;	  			         	
@@ -1009,6 +1016,28 @@ class MemberCodeController extends MemberController
 						}				
 				}				
 			}		
+	}
+
+	public function check_additional_package($pid)
+	{
+		$status = "Yes";
+		$check = Tbl_product_package::where('product_package_id',$pid)->first();
+		$datapackage = DB::table('tbl_product_package_has')->where('product_package_id',$pid)->get();
+		if($check)
+		{
+			foreach($datapackage as $d)
+			{	
+				$get = DB::table('tbl_product')->where('product_id',$d->product_id)->first();
+				$stocks = $get->stock_qty - $d->quantity;
+
+				if($stocks < 0)
+				{
+					$status = "No";
+				}
+			}
+		}
+
+		return $status;
 	}
 
 	public function additional($pid,$slotid,$price)
