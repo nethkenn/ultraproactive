@@ -388,6 +388,7 @@ Route::any('admin/utilities/recompute', 'AdminComplanController@recompute');
 Route::any('admin/reports/product_sales', 'AdminReportProductController@product_sales');
 Route::any('admin/reports/membership_sales', 'AdminReportMembershipController@index');
 Route::any('admin/reports/audit_trail', 'AdminAuditTrailController@index');
+Route::any('admin/reports/audit_trail/view', 'AdminAuditTrailController@view');
 Route::any('admin/reports/prod_inventory', 'AdminReportProductController@product_inventory');
 
 Route::any('admin/reports/bonus_summary', 'AdminReportController@bonus_summary');

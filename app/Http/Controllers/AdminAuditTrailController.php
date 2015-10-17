@@ -25,4 +25,14 @@ class AdminAuditTrailController extends AdminController
         return view('admin.report.audit_trail',$data);
 	}
 
+	public function view()
+	{ 
+        $admin_log_id = Request::input('id');
+        $get = Tbl_admin_log::admin()->account()->position()->where('admin_log_id',$admin_log_id)->first();
+        $data['_old'] = unserialize($get->old_data);
+        $data['_new'] = unserialize($get->new_data);
+
+        return view('admin.report.view_audit_trail',$data);
+	}
+
 }
