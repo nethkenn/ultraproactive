@@ -135,9 +135,12 @@
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="admin/reports/product_sales">Product Sales Report</a></li>
 									<li><a href="admin/reports/membership_sales">Membership Sales Report</a></li>
+									<li><a href="admin/reports/prod_inventory">Product Inventory Report</a></li>
 									<li><a href="admin/reports/bonus_summary">Bonus Summary</a></li>
 									<li><a href="admin/reports/gc_summary">GC Summary</a></li>
-									<!-- <li><a href="admin/reports/top_earner">Top Earner</a></li> -->
+									<li><a href="admin/reports/top_earner">Top Earner</a></li>
+									<li><a href="admin/reports/top_recruiter">Top Recruiter</a></li>
+									<li><a href="admin/reports/other_reports">Other Reports</a></li>
 								</ul>
 							</li> 
 

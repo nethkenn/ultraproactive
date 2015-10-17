@@ -172,7 +172,7 @@ class MemberCheckoutController extends Controller
 
                         $owned_stocks = $prod_pts->stock_qty - $value['qty'];
                         Tbl_product::where('product_id',$key)->update(['stock_qty'=>$owned_stocks]);
-                        Log::inventory_log(Customer::info()->account_id,$key,0 - $value['qty'],"Bought a product/s, using GC");
+                        Log::inventory_log(Customer::info()->account_id,$key,0 - $value['qty'],"Bought a product/s, using GC",$value['total'],1);
 
                         $total = $total + $value['total'];
                         $voucher_has_product = new Tbl_voucher_has_product($insert_prod);
@@ -347,7 +347,7 @@ class MemberCheckoutController extends Controller
 
                     $owned_stocks = $prod_pts->stock_qty - $value['qty'];
                     Tbl_product::where('product_id',$key)->update(['stock_qty'=>$owned_stocks]);
-                    Log::inventory_log(Customer::info()->account_id,$key,0 - $value['qty'],"Bought a product/s.");
+                    Log::inventory_log(Customer::info()->account_id,$key,0 - $value['qty'],"Bought a product/s.",$value['total'],1);
 
                     /*FOR TRANSACTION LOG UPDATE TOTAL*/
                     $total = $total + $value['total'];

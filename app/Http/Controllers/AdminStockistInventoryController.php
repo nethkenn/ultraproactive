@@ -78,7 +78,7 @@ class AdminStockistInventoryController extends AdminController
 				{
 					if($update_prod['stock_qty'] >= 0)
 					{
-						Log::inventory_log(Admin::info()->admin_id,$key,0 - $value,"Transferred a ".$value." to "." a stockies.");
+						Log::inventory_log(Admin::info()->admin_id,$key,0 - $value,"Transferred a ".$value." to "." a stockies.",$prod_qty->price - (($data['discount']/100)*$prod_qty->price),1);
 						Tbl_stockist_inventory::where('stockist_id',$id)->where('product_id',$key)->update($update);
 						Tbl_product::where('product_id',$key)->update($update_prod);                    
 
@@ -164,6 +164,7 @@ class AdminStockistInventoryController extends AdminController
 					$past_Quantity[$key] = $prod->stock_qty;
 					$multiplier[$key] = $prod->quantity;
 					$price = $price + $prod->price; 
+					$divided[$key] = $prod->price;
 				}
 
 				foreach($container as $key => $cont)
@@ -190,7 +191,7 @@ class AdminStockistInventoryController extends AdminController
 					{	
 						$new['stock_qty'] = $container[$key];
 						Tbl_product::where('product_id',$prod->product_id)->update($new);
-						Log::inventory_log(Admin::info()->admin_id,$prod->product_id,0 - $value*$multiplier[$key],"Transferred a ".$value." to "." a stockies (Package #".$package_id.").");
+						Log::inventory_log(Admin::info()->admin_id,$prod->product_id,0 - $value*$multiplier[$key],"Transferred a ".$value." to "." a stockies (Package #".$package_id.").",$divided[$key] - (($data['discount']/100)*$divided[$key]),1);
 					}
 
 						$package = Tbl_stockist_package_inventory::where('stockist_id',$id)->where('product_package_id',$package_id)->first();

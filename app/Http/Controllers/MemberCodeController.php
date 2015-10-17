@@ -117,16 +117,15 @@ class MemberCodeController extends MemberController
 
 		if(isset($_POST['sbmitbuy']))
 		{
-			// $check = $this->check_additional_package(Request::input('package'));
+			$check = $this->check_additional_package(Request::input('package'));
+			if($check == "Yes")
+			{
 
-			// if($check == "yes")
-			// {
-
-			// }
-			// else
-			// {
-			// 	return Redirect::to('member/code_vault')->with('message',"Included package doesn't have enough stocks.");
-			// }
+			}
+			else
+			{
+				return Redirect::to('member/code_vault')->with('message',"Included package doesn't have enough stocks.");
+			}
 			
 			if( Request::input('memid'))
 			{
@@ -999,7 +998,7 @@ class MemberCodeController extends MemberController
 										$insert2['code_pin'] = $membership_code->code_pin;
 										$insert2['product_package_id'] =  $x['package'];
 										Rel_membership_code::insert($insert2);
-										$this->additional($x['package'],Session::get('currentslot'),$check->membership_price);										
+										$this->additional($x['package'],Session::get('currentslot'),$check->membership_price,$check->membership_name);										
 									}
 
 									$negative_amount = ($check->membership_price) * (-1);
@@ -1029,7 +1028,7 @@ class MemberCodeController extends MemberController
 			{	
 				$get = DB::table('tbl_product')->where('product_id',$d->product_id)->first();
 				$stocks = $get->stock_qty - $d->quantity;
-
+	
 				if($stocks < 0)
 				{
 					$status = "No";
@@ -1040,15 +1039,16 @@ class MemberCodeController extends MemberController
 		return $status;
 	}
 
-	public function additional($pid,$slotid,$price)
+	public function additional($pid,$slotid,$price,$membership_name)
 	{
 						$total = 0;
 						$datapackage = DB::table('tbl_product_package_has')->where('product_package_id',$pid)->get();
-						
+						$divider = 0;
 						foreach($datapackage as $d)
 						{	
 							$dtotal = DB::table('tbl_product')->where('product_id',$d->product_id)->first();
 							$total = $total + ($dtotal->price * $d->quantity);
+							$divider = $divider + 1;
 						}
 
 						$customer = Customer::info();
@@ -1089,6 +1089,10 @@ class MemberCodeController extends MemberController
 				                    $insert_prod_code['used'] = 1;
 				                    $product_code = new Tbl_product_code($insert_prod_code);
 				                    $product_code->save();
+
+                                    $owned_stocks = $prod_pts->stock_qty - $dt->quantity;
+			                        Tbl_product::where('product_id',$dt->product_id)->update(['stock_qty'=>$owned_stocks]);
+			                        Log::inventory_log(Customer::info()->account_id,$dt->product_id,0 - $dt->quantity,"Bought a membership (".$membership_name.")with included product.",$price/$divider,1);
 								}           
 	}
 	

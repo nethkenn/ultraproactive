@@ -137,7 +137,7 @@
 					'<td><a style="cursor: pointer;" class="remove-added-prod" product-id = "'+$new_td[0]+'" price="'+$new_td[5]+'" qty="'+$('#pop-up-input').val()+'">REMOVE</a></td>'+
 				'</tr>';
 
- 				total = total + (parseFloat($new_td[5]) * parseInt($('#pop-up-input').val()));
+ 				total = total + (parseFloat($new_td[5]) * parseFloat($('#pop-up-input').val()));
 
 				$(".pricenopack").text("Total Price: "+total.toFixed(2));
 				// console.log($append);
@@ -147,7 +147,7 @@
 				{
 					var $input =  $('input[product-id='+$new_td[0]+']').val();
 
-					$final_input = parseInt($input) + parseInt($('#pop-up-input').val());
+					$final_input = parseFloat($input) + parseFloat($('#pop-up-input').val());
 
 
 					

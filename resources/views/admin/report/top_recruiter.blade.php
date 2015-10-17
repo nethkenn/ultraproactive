@@ -16,11 +16,10 @@
       <table id="table" class="table table-bordered">
         <thead>
           <tr class="text-center">
-            <th>Slot Id</th>      
+            <th class="option-col">Top</th> 
+            <th class="option-col">Slot Id</th>      
             <th>Slot Owner</th>
-            <th>Total Earned GC</th>
-            <th>Total Earned Wallet</th>          
-            <th>Total</th>
+            <th>Total Recruit</th>         
           </tr>
         </thead>
       </table>
@@ -32,28 +31,27 @@
 <script type="text/javascript">
 $(function() {
    $accountTable = $('#table').DataTable({
-       "order": [[ 4, "desc" ]],
+        "order": [[ 2, "desc" ]],
         processing: true,
         serverSide: true,
          ajax:{
-            url:'admin/reports/top_earner/get',
+            url:'admin/reports/top_recruiter/get',
             data:{
                 archived : "{{$archived = Request::input('archived') ? 1 : 0 }}"
                }
         },
         columns: [
+            {data: 'ctr', name: 'ctr'},
             {data: 'slot_id', name: 'slot_id'},
             {data: 'account_name', name: 'account_name'},
-            {data: 'gc_earned', name: 'gc_earned'},
-            {data: 'wallet_earned', name: 'wallet_earned'},
-            {data: 'total_earned', name: 'total_earned'},
+            {data: 'count', name: 'count'},
         ],
         "lengthMenu": [[8, 10, 25, 50, -1], [10, 25, 50, "All"]],
         "oLanguage": 
           {
             "sSearch": "",
             "sProcessing": ""
-          },
+          },            
         stateSave: true,
     });
 });
