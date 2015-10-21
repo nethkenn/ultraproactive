@@ -133,27 +133,35 @@ function genealogy_loader()
                 type:"post",
                 success: function(data)
                 {
-                    $.ajax(
+                    if(data != "")
                     {
-                        url:"admin/maintenance/slots/add_form_submit",
-                        dataType:"json",
-                        data: $(".submit-add-save").serialize(),
-                        type:"post",
-                        complete: function (asd) {
-                                $(e.currentTarget).find("button").removeAttr("disabled");
-                                if(data.message == "")
-                                {
-                                    load_downline(data.placement);
-                                    var x = $(this).attr("href");      
-                                    var url = window.location.href.split('#')[0];
-                                    window.location.href = url+"#";
-                                }
-                                else
-                                {
-                                    alert(data.message);
-                                }
-                         }
-                    });
+                        $.ajax(
+                        {
+                            url:"admin/maintenance/slots/add_form_submit",
+                            dataType:"json",
+                            data: $(".submit-add-save").serialize(),
+                            type:"post",
+                            complete: function (asd) {
+                                    $(e.currentTarget).find("button").removeAttr("disabled");
+                                    if(data.message == "")
+                                    {
+                                        load_downline(data.placement);
+                                        var x = $(this).attr("href");      
+                                        var url = window.location.href.split('#')[0];
+                                        window.location.href = url+"#";
+                                    }
+                                    else
+                                    {
+                                        alert(data.message);
+                                    }
+                             }
+                        });
+                    }
+                    else
+                    {
+                        alert(data);
+                    }
+
 
 
                 }

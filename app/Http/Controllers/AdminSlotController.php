@@ -221,10 +221,14 @@ class AdminSlotController extends AdminController
 
 		$check_placement = Tbl_slot::checkposition(Request::input("placement"), strtolower(Request::input("slot_position")))->first();
 		$check_id = Tbl_slot::id(Request::input("slot_number"))->first();
-
+		$check_username = Tbl_account::where('account_username',Request::input('un'))->first();
 		if($check_placement)
 		{
 			$return["message"] = "The position you're trying to use is already occupied";
+		}
+		elseif($check_username)
+		{
+			$return["message"] = "This username is already taken.";
 		}
 		elseif($data["message"] != "")
 		{
