@@ -82,7 +82,7 @@ class AdminSlotController extends AdminController
 		$data["position"] = Request::input("position");
 		$data["placement"] = Request::input("placement");
 		$data["_account"] = Tbl_account::get();
-		$data["_membership"] = Tbl_membership::get();
+		$data["_membership"] = Tbl_membership::where('membership_entry',1)->get();
 		$data["_rank"] = Tbl_rank::get();
 		$data["_country"] = Tbl_country::get();
 		$data["slot_number"] = Tbl_slot::max("slot_id") + 1;
@@ -127,15 +127,20 @@ class AdminSlotController extends AdminController
 			$data["message"] = "This account is already reach the max slot per account. Max slot per account is ".$limit->value.".";
 		}
 
+		$get_price = Tbl_membership::where('membership_id',Request::input("slot_membership"))->first();
+
+		$amount_of_wallet = Request::input("wallet");
+
 		if(Request::input("slot_type") == "CD")
 		{
 			if(Request::input("wallet") < 0)
 			{
-
+				$amount_of_wallet = Request::input("wallet");
 			}
 			else
 			{
-				$data["message"] = "Wallet amount should be negative";
+
+				$amount_of_wallet = 0 - $get_price->membership_price;
 			}
 		}	
 
@@ -183,7 +188,7 @@ class AdminSlotController extends AdminController
 			$slot_id = Tbl_slot::insertGetId($insert);
 
 			$logs = "Your slot #".$slot_id." is created by admin (".Admin::info()->account_name.").";
-			Log::slot($slot_id, $logs,Request::input("wallet"), "New Slot",$slot_id);
+			Log::slot($slot_id, $logs,$amount_of_wallet, "New Slot",$slot_id);
 
 			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." create new slot #".$slot_id,null,serialize($insert));
 			
@@ -313,12 +318,14 @@ class AdminSlotController extends AdminController
 
 		if($slot_info)
 		{
+			$sum_of_wallet = Tbl_wallet_logs::wallet()->where('slot_id',$slot_info->slot_id)->sum('wallet_amount');
+			
 			$return = 	'<li class="width-reference">
                             <span class="parent parent-reference ' . $slot_info->slot_type . '" placement=' . $slot_id . ' position="' . $position . '" slot_id="' . $slot_info->slot_id . '">   
                                 <div class="id">' . $slot_info->slot_id . '</div>
                                 <div class="name">' . $slot_info->account_name . '</div>
                                 <div class="membership">' . $slot_info->membership_name . ' (' . $slot_info->slot_type . ')</div>
-                                <div class="wallet">' . number_format($slot_info->slot_wallet, 2) . '</div>
+                                <div class="wallet">' . number_format($sum_of_wallet, 2) . '</div>
                                 <div class="view-downlines">&#8659;</div>
                             </span>
                             <div class="child-container"></div>
