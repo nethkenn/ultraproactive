@@ -594,7 +594,7 @@ class AdminSalesController extends AdminController
 	        {
 				$updated_stock = $product->stock_qty - $value['qty'];
 				Tbl_product::where('product_id',$key)->lockForUpdate()->update(['stock_qty'=> $updated_stock] );
-				Log::inventory_log(Admin::info()->admin_id,$key,0 - $value['qty'],"Processed a sales.");
+				Log::inventory_log(Admin::info()->admin_id,$key,0 - $value['qty'],"Processed a sales.",$value['sub_total'] - (($discount/100)*$value['sub_total']),1);
 				// dd($status);
 	        }
 

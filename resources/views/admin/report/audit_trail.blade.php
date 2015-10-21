@@ -16,6 +16,7 @@
 						<th>Admin Name</th>
 						<th>Logs</th>
 						<th>Date/Time</th>
+						<th>View</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -24,6 +25,7 @@
 						<td>{{$logs->account_name}}</td>
 						<td>{!! $logs->logs!!}</td>
 						<td>{!! $logs->created_at!!}</td>
+						<td><a href='admin/reports/audit_trail/view?id={{$logs->admin_log_id}}' target="_blank">View</a></td>
 					</tr>
 					@endforeach
 				</tbody>

@@ -82,7 +82,7 @@ class AdminSlotController extends AdminController
 		$data["position"] = Request::input("position");
 		$data["placement"] = Request::input("placement");
 		$data["_account"] = Tbl_account::get();
-		$data["_membership"] = Tbl_membership::get();
+		$data["_membership"] = Tbl_membership::where('membership_entry',1)->get();
 		$data["_rank"] = Tbl_rank::get();
 		$data["_country"] = Tbl_country::get();
 		$data["slot_number"] = Tbl_slot::max("slot_id") + 1;
@@ -126,6 +126,23 @@ class AdminSlotController extends AdminController
 		{
 			$data["message"] = "This account is already reach the max slot per account. Max slot per account is ".$limit->value.".";
 		}
+
+		$get_price = Tbl_membership::where('membership_id',Request::input("slot_membership"))->first();
+
+		$amount_of_wallet = Request::input("wallet");
+
+		if(Request::input("slot_type") == "CD")
+		{
+			if(Request::input("wallet") < 0)
+			{
+				$amount_of_wallet = Request::input("wallet");
+			}
+			else
+			{
+
+				$amount_of_wallet = 0 - $get_price->membership_price;
+			}
+		}	
 
 		if(Request::input("account_id") == 0)
 		{
@@ -171,7 +188,7 @@ class AdminSlotController extends AdminController
 			$slot_id = Tbl_slot::insertGetId($insert);
 
 			$logs = "Your slot #".$slot_id." is created by admin (".Admin::info()->account_name.").";
-			Log::slot($slot_id, $logs,Request::input("wallet"), "New Slot",$slot_id);
+			Log::slot($slot_id, $logs,$amount_of_wallet, "New Slot",$slot_id);
 
 			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." create new slot #".$slot_id,null,serialize($insert));
 			
@@ -202,10 +219,14 @@ class AdminSlotController extends AdminController
 
 		$check_placement = Tbl_slot::checkposition(Request::input("placement"), strtolower(Request::input("slot_position")))->first();
 		$check_id = Tbl_slot::id(Request::input("slot_number"))->first();
-
+		$check_username = Tbl_account::where('account_username',Request::input('un'))->first();
 		if($check_placement)
 		{
 			$return["message"] = "The position you're trying to use is already occupied";
+		}
+		elseif($check_username)
+		{
+			$return["message"] = "This username is already taken.";
 		}
 		elseif($data["message"] != "")
 		{
@@ -301,12 +322,14 @@ class AdminSlotController extends AdminController
 
 		if($slot_info)
 		{
+			$sum_of_wallet = Tbl_wallet_logs::wallet()->where('slot_id',$slot_info->slot_id)->sum('wallet_amount');
+			
 			$return = 	'<li class="width-reference">
                             <span class="parent parent-reference ' . $slot_info->slot_type . '" placement=' . $slot_id . ' position="' . $position . '" slot_id="' . $slot_info->slot_id . '">   
                                 <div class="id">' . $slot_info->slot_id . '</div>
                                 <div class="name">' . $slot_info->account_name . '</div>
                                 <div class="membership">' . $slot_info->membership_name . ' (' . $slot_info->slot_type . ')</div>
-                                <div class="wallet">' . number_format($slot_info->slot_wallet, 2) . '</div>
+                                <div class="wallet">' . number_format($sum_of_wallet, 2) . '</div>
                                 <div class="view-downlines">&#8659;</div>
                             </span>
                             <div class="child-container"></div>
@@ -341,6 +364,24 @@ class AdminSlotController extends AdminController
  		{
  			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." delete Slot #".Request::input("slot_id"),serialize($slot_info));
  			Tbl_slot::id(Request::input("slot_id"))->delete();
+ 		}
+
+		echo json_encode($return);
+	}
+
+	public function confirm_delete()
+	{
+
+
+		$password = Crypt::decrypt(Admin::info()->account_password);
+
+ 		if($password != Request::input('password'))
+ 		{
+ 			$return["message"] = "Wrong password.";
+ 		}
+ 		else
+ 		{
+ 			$return["message"] = null;
  		}
 
 		echo json_encode($return);

@@ -119,4 +119,97 @@ class AdminReportProductController extends AdminController
 
 		return $data;
 	}
+
+
+	public function product_inventory()
+	{	
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Product Sales");
+
+
+		if(Request::isMethod("post"))
+		{
+			$data["to"] = date("m/d/o", strtotime(Request::input("to")));
+			$data["from"] = date("m/d/o", strtotime(Request::input("from")));
+			$data["group"] = Request::input("group-date");
+		}
+		else
+		{
+			$data["to"] = $to = date("m/d/o", time());
+			$data["from"] = $from = date("m/d/o", time() - (60 * 60 * 24 * 30));
+			$data["group"] = "daily";
+		}
+
+		switch(Request::input("report-source"))
+		{
+			default: $data = $this->product_report($data, Request::input("report-source")); break;
+		}
+
+        return view('admin.report.prod_inventory', $data);
+	}
+
+	public function product_report($data, $filter_sales)
+	{
+		$to = $data["to"];
+		$from = $data["from"];
+		$group = $data["group"];
+
+		$column_date = 'tbl_inventory_logs.created_at_date';
+		$column_value = 'SUM(`quantity`)';
+		
+		if($group == "daily")
+		{	
+			$where = "`created_at_date` >= NOW()";
+
+			$_order = DB::table("tbl_product")
+									->select('tbl_product.product_id as id','product_name as name',DB::raw('SUM(CASE When sold="1" Then quantity Else 0 End ) as value'))
+									->groupBy('tbl_product.product_id')
+									->leftJoin('tbl_inventory_logs','tbl_product.product_id','=','tbl_inventory_logs.product_id')
+									->whereRaw(DB::raw($where))
+									->orWhere('quantity',null)
+									->where('tbl_product.archived',0)
+									->get();
+		}
+		elseif($group == "monthly")
+		{
+			$where = "`created_at_date` >= NOW() - INTERVAL 4 WEEK";
+			$select = "$column_value as 'value', $column_date as 'date',product_name as 'name' ";
+			$_order = DB::table("tbl_product")
+									->select('tbl_product.product_id as id','product_name as name',DB::raw('SUM(CASE When sold="1" Then quantity Else 0 End ) as value'))
+									->groupBy('tbl_product.product_id')
+									->leftJoin('tbl_inventory_logs','tbl_product.product_id','=','tbl_inventory_logs.product_id')
+									->whereRaw(DB::raw($where))
+									->orWhere('quantity',null)
+									->where('tbl_product.archived',0)
+									->get();
+		}
+		elseif($group == "yearly")
+		{
+			$where = "`created_at_date` >= NOW() - INTERVAL 12 MONTH";
+			$select = "$column_value as 'value', $column_date as 'date',product_name as 'name' ";
+			$_order = DB::table("tbl_product")
+									->select('tbl_product.product_id as id','product_name as name',DB::raw('SUM(CASE When sold="1" Then quantity Else 0 End ) as value'))
+									->groupBy('tbl_product.product_id')
+									->leftJoin('tbl_inventory_logs','tbl_product.product_id','=','tbl_inventory_logs.product_id')
+									->whereRaw(DB::raw($where))
+									->orWhere('quantity',null)
+									->where('tbl_product.archived',0)
+									->get();
+		}
+		else
+		{
+			$select = "$column_value as 'value', $column_date as 'date',product_name as 'name' ";
+			$_order = DB::table("tbl_product")
+									->select('tbl_product.product_id as id','product_name as name',DB::raw('SUM(CASE When sold="1" Then quantity Else 0 End ) as value'))
+									->groupBy('tbl_product.product_id')
+									->leftJoin('tbl_inventory_logs','tbl_product.product_id','=','tbl_inventory_logs.product_id')
+									->orWhere('tbl_product.archived',0)
+									->orWhere('quantity',null)
+									->get();
+		}
+
+
+		$data['_inventory'] = $_order;
+
+		return $data;
+	}
 }

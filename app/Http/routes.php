@@ -3,7 +3,7 @@
 
 /* Developer's Area*/
 Route::any('admin/developer/migration', 'AdminDevelopersController@migration');
-
+// Route::any('admin/developer/negativecd', 'AdminDevelopersController@negativecd');
 /* INCOME PROJECTION */
 Route::any('/projection', 'ProjectionController@index');
 
@@ -277,6 +277,7 @@ Route::post('admin/maintenance/slots/add_form_submit_message', 'AdminSlotControl
 Route::post('admin/maintenance/slots/add_form_submit', 'AdminSlotController@add_form_submit');
 Route::post('admin/maintenance/slots/edit_form_submit', 'AdminSlotController@edit_form_submit');
 Route::get('admin/maintenance/slots/downline', 'AdminSlotController@downline');
+Route::any('admin/maintenance/slots/confirm_delete', 'AdminSlotController@confirm_delete');
 Route::get('admin/maintenance/slots/delete', 'AdminSlotController@delete');
 Route::any('admin/maintenance/slots/view', 'AdminSlotController@info');
 
@@ -387,6 +388,8 @@ Route::any('admin/utilities/recompute', 'AdminComplanController@recompute');
 Route::any('admin/reports/product_sales', 'AdminReportProductController@product_sales');
 Route::any('admin/reports/membership_sales', 'AdminReportMembershipController@index');
 Route::any('admin/reports/audit_trail', 'AdminAuditTrailController@index');
+Route::any('admin/reports/audit_trail/view', 'AdminAuditTrailController@view');
+Route::any('admin/reports/prod_inventory', 'AdminReportProductController@product_inventory');
 
 Route::any('admin/reports/bonus_summary', 'AdminReportController@bonus_summary');
 Route::any('admin/reports/bonus_summary/get', 'AdminReportController@bonus_summary_get');
@@ -396,7 +399,9 @@ Route::any('admin/reports/gc_summary/get', 'AdminReportController@gc_summary_get
 
 Route::any('admin/reports/top_earner', 'AdminReportController@top_earner');
 Route::any('admin/reports/top_earner/get', 'AdminReportController@top_earner_get');
-// Route::any('admin/reports/top_ewallet', 'AdminReportController@top_ewallet');
+Route::any('admin/reports/top_recruiter', 'AdminReportController@top_recruiter');
+Route::any('admin/reports/top_recruiter/get', 'AdminReportController@top_recruiter_get');
+Route::any('admin/reports/other_reports', 'AdminReportController@other_reports');
 // Route::any('admin/reports/top_recruiter', 'AdminReportController@top_recruiter');
 // Route::any('admin/reports/top_earner', 'AdminReportController@index');
 

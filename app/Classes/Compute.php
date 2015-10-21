@@ -536,7 +536,7 @@ class Compute
                                                 else
                                                 {   
                                                         $log = "Im sorry! Max pairing per day already exceed your slot #" . $slot_recipient->slot_id . " flushed out <b>" . number_format($pairing_bonus, 2) . " wallet</b> from <b>MATCHING BONUS</b> due to matching combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining match points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right. This combination was caused by a repurchase of one of your downlines.";          
-                                                        Log::slot($slot_recipient->slot_id, $log, 0,"binary_repurchase",$new_slot_id); 
+                                                        Log::slot_with_flush($slot_recipient->slot_id, $log, 0,"binary_repurchase",$new_slot_id,$pairing_bonus); 
                                                         // Log::account($slot_recipient->slot_owner, $log);
                                                         $flushpoints =  $flushpoints+$pairing_bonus;
                                                 }
@@ -863,13 +863,13 @@ class Compute
     {
                     $log = "Im sorry! You have already reach the max income for today, Your slot #" . $slot_id.' flushed out '.number_format($income, 2) . " wallet.";
                     // Log::account($owner, $log);
-                    Log::slot($slot_id, $log, 0, $method,$cause);            
+                    Log::slot_with_flush($slot_id, $log,0, $method,$cause,$income);             
     }
     public static function method_reduced_flush($method,$slot_id,$income,$owner,$log,$flush,$cause)
     {
                     $log = $log." Max income is reached, wallet earned reduced to <b>".$income."</b> and flushed out <b>".$flush.'</b>.';
                     // Log::account($owner, $log);
-                    Log::slot($slot_id, $log, 0, $method,$cause);            
+                    Log::slot_with_flush($slot_id, $log, $income, $method,$cause,$flush);             
     }
     public static function put_income_summary($slot_id,$method,$amount)
     {

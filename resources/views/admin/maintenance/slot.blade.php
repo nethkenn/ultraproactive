@@ -29,6 +29,7 @@
 						<th>Sponsor</th>
 						<th>Type</th>
 						<th>Wallet</th>
+						<th>Date</th>
 						<th></th>
 						<th></th>
 					</tr>
@@ -71,6 +72,7 @@ $(function() {
             {data: 'sponsor', name: 'sponsor'},
             {data: 'slot_type', name: 'slot_type'},
             {data: 'wallet', name: 'slot_wallet'},
+            {data: 'created_at', name: 'created_at'},
             {data: 'gen', name: 'slot_id'},
             {data: 'info', name: 'slot_id'},
         ],

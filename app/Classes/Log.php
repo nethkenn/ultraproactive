@@ -112,6 +112,22 @@ class Log
 		Tbl_wallet_logs::insert($insert);	
 	}
 
+	public static function slot_with_flush($slot_id, $logs, $amt, $keycode = "OTHERS",$cause_id,$flush = 0)
+	{
+		$account_id 			 = Tbl_slot::where('slot_id',$slot_id)->first();
+		$account_id              = $account_id->slot_owner;
+		$insert["slot_id"]       = $slot_id;
+		$insert["logs"] 	     = $logs;
+		$insert["wallet_amount"] = $amt;
+		$insert["keycode"]       = $keycode;
+		$insert["cause_id"]      = $cause_id;
+		$insert["account_id"]    = $account_id;
+		$insert["created_at"]    = Carbon\Carbon::now();
+		$insert["flushed_out"]   = $flush;
+
+		Tbl_wallet_logs::insert($insert);	
+	}
+
 	// public static function wallet_slot($amount,$keycode,$slot_id,$cause_id,$account_id,$logs)
 	// {
 	// 	$insert["wallet_amount"] = $amount;
@@ -124,12 +140,15 @@ class Log
 	// 	Tbl_wallet_logs::insert($insert);		
 	// }
 
-	public static function inventory_log($account_id,$product_id,$quantity,$log)
+	public static function inventory_log($account_id,$product_id,$quantity,$log,$amount = 0,$sold = 1)
 	{
 		$insert["account_id"] = $account_id;
 		$insert["log"] = $log;
 		$insert["quantity"] = $quantity;
 		$insert["product_id"] =$product_id;
+		$insert["sold"] = $sold;
+		$insert["created_at_date"] = Carbon\Carbon::now();
+		$insert["wallet_amount"] = $amount;
 		Tbl_inventory_logs::insert($insert);
 	}
 

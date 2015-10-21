@@ -1,6 +1,6 @@
 var g_width = 0;
 var half;
-
+var delete_id = null;
 var genealogy_loader = new genealogy_loader();
 
 
@@ -56,24 +56,56 @@ function genealogy_loader()
         $(".delete-slot").unbind("click");
         $(".delete-slot").bind("click", function(e)
         {
-            $slot_id = $(e.currentTarget).attr("slot_id");
 
-            $(e.currentTarget).closest("form").find("button").attr("disabled", "disabled");
 
+            delete_id = $(e.currentTarget).attr("slot_id");
+
+            var inst = $('[data-remodal-id=confirm_delete]').remodal();
+            inst.open(); 
+
+            // $(e.currentTarget).closest("form").find("button").attr("disabled", "disabled");
+
+            
+            return false;
+        });
+
+        $("#confirm_delete_button").unbind("click");
+        $("#confirm_delete_button").bind("click", function(e)
+        {
             $.ajax(
             {
-                url:"admin/maintenance/slots/delete",
+                url:"admin/maintenance/slots/confirm_delete",
                 dataType:"json",
-                data: {"slot_id":$slot_id},
+                type: "POST",
+                data: {"password":$('#confirm_delete_form').val(),'_token':$('.token').val()},
                 success: function(data)
                 {
                     $(e.currentTarget).closest("form").find("button").removeAttr("disabled");
-                    if(data.message == "")
+                    if(data.message == null)
                     {
-                        load_downline(data.placement)
-                        var x = $(this).attr("href");      
-                        var url = window.location.href.split('#')[0];
-                        window.location.href = url+"#";
+                        $.ajax(
+                        {
+                            url:"admin/maintenance/slots/delete",
+                            dataType:"json",
+                            data: {"slot_id":delete_id},
+                            success: function(data)
+                            {
+                                $(e.currentTarget).closest("form").find("button").removeAttr("disabled");
+                                if(data.message == "")
+                                {
+                                    load_downline(data.placement)
+                                    var x = $(this).attr("href");      
+                                    var url = window.location.href.split('#')[0];
+                                    window.location.href = url+"#";
+                                    var inst = $('[data-remodal-id=confirm_delete]').remodal();
+                                    inst.close(); 
+                                }
+                                else
+                                {
+                                    alert(data.message);
+                                }
+                            }
+                        });
                     }
                     else
                     {
@@ -81,7 +113,8 @@ function genealogy_loader()
                     }
                 }
             });
-            
+
+
             return false;
         });
 
@@ -100,27 +133,35 @@ function genealogy_loader()
                 type:"post",
                 success: function(data)
                 {
-                    $.ajax(
+                    if(data != "")
                     {
-                        url:"admin/maintenance/slots/add_form_submit",
-                        dataType:"json",
-                        data: $(".submit-add-save").serialize(),
-                        type:"post",
-                        complete: function (asd) {
-                                $(e.currentTarget).find("button").removeAttr("disabled");
-                                if(data.message == "")
-                                {
-                                    load_downline(data.placement);
-                                    var x = $(this).attr("href");      
-                                    var url = window.location.href.split('#')[0];
-                                    window.location.href = url+"#";
-                                }
-                                else
-                                {
-                                    alert(data.message);
-                                }
-                         }
-                    });
+                        $.ajax(
+                        {
+                            url:"admin/maintenance/slots/add_form_submit",
+                            dataType:"json",
+                            data: $(".submit-add-save").serialize(),
+                            type:"post",
+                            complete: function (asd) {
+                                    $(e.currentTarget).find("button").removeAttr("disabled");
+                                    if(data.message == "")
+                                    {
+                                        load_downline(data.placement);
+                                        var x = $(this).attr("href");      
+                                        var url = window.location.href.split('#')[0];
+                                        window.location.href = url+"#";
+                                    }
+                                    else
+                                    {
+                                        alert(data.message);
+                                    }
+                             }
+                        });
+                    }
+                    else
+                    {
+                        alert(data);
+                    }
+
 
 
                 }
