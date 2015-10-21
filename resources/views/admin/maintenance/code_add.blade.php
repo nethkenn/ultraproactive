@@ -168,8 +168,8 @@
                             var check = request_product_package_id == val['product_package_id'] ? 'selected' : '';
 
                             $('[name="product_package_id"]').append('<option value="'+val['product_package_id']+'" '+check+'>'+val['product_package_name']+'</option>')
-                            
                         });
+                            $('[name="product_package_id"]').append("<option value='null'>No product package</option>");
                     }
                     else
                     {
