@@ -152,7 +152,7 @@ function genealogy_loader()
                                     }
                                     else
                                     {
-                                        alert(data.message);
+                                        alert(data.message); 
                                     }
                              }
                         });
