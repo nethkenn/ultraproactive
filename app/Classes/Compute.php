@@ -524,7 +524,7 @@ class Compute
                                                                 $gcbonus = $pairing_bonus;
                                                                 // Tbl_slot::where('slot_id',$slot_recipient->slot_id)->update(["slot_gc"=>$gcbonus]);
                                                                 $log = $log = "This is your ".$slot_recipient->every_gc_pair." MSB, Your ".$pairing_bonus." Income converted to GC (SLOT #".$slot_recipient->slot_id.")";
-                                                                Log::slot($slot_recipient->slot_id, $log, $gcbonus,"binary_repurchase",$new_slot_id,1);
+                                                                Log::slot($slot_recipient->slot_id, $log, $gcbonus,"binary",$new_slot_id,1);
                                                                 // Log::account($slot_recipient->slot_owner, $log);
                                                             }   
                                                                /* MATCHING SALE BONUS */
@@ -535,8 +535,8 @@ class Compute
                                                 }
                                                 else
                                                 {   
-                                                        $log = "Im sorry! Max pairing per day already exceed your slot #" . $slot_recipient->slot_id . " flushed out <b>" . number_format($pairing_bonus, 2) . " wallet</b> from <b>MATCHING BONUS</b> due to matching combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining match points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right. This combination was caused by a repurchase of one of your downlines.";          
-                                                        Log::slot_with_flush($slot_recipient->slot_id, $log, 0,"binary_repurchase",$new_slot_id,$pairing_bonus); 
+                                                        $log = "Im sorry! Max pairing per day already exceed your slot #" . $slot_recipient->slot_id . " flushed out <b>" . number_format($pairing_bonus, 2) . " wallet</b> from <b>MATCHING BONUS</b> due to matching combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining match points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right.";          
+                                                        Log::slot_with_flush($slot_recipient->slot_id, $log, 0,"binary",$new_slot_id,$pairing_bonus); 
                                                         // Log::account($slot_recipient->slot_owner, $log);
                                                         $flushpoints =  $flushpoints+$pairing_bonus;
                                                 }
