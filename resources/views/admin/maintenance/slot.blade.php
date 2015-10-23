@@ -48,13 +48,60 @@
 		<button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Change Limit</button>
     </form>
 </div>
+<div class="remodal" data-remodal-id="adjust-wallet"
+  data-remodal-options="hashTracking: false, closeOnOutsideClick: false">
+
+  <button data-remodal-action="close" class="remodal-close remodal-btn"></button>
+  <h3>Adjust Wallet</h3>
+  <form id="ajust-wallet-form">
+  		<div class="form-group">
+  			<div class="adjsut-wallet-message">
+  				
+  			</div>
+  		</div>
+	  <div class="form-group">
+	    <label for="">Slot#</label>
+	    <input name="slot_id" type="text" class="form-control" id="" placeholder="" readonly>
+	  </div>
+	  <div class="form-group">
+	    <label for="">Wallet Amount</label>
+	    <input name="wallet_amount" type="text" class="form-control" id="" placeholder="" readonly>
+	  </div>
+	  <div class="form-group">
+	    <label for="">Select Adjustment</label>
+	    <select class="form-control" name="wallet_adjustment">
+	    	<option value="add">Add</option>
+	    	<option value="deduct">Deduct</option>
+	    </select>
+	  </div>
+	  <div class="form-group">
+	    <label for="">Adjustment Amount</label>
+	    <input name="wallet_adjustment_amount" type="number" class="form-control" id="" placeholder="">
+	  </div>
+	  <div class="form-group">
+	  	<button data-remodal-action="cancel" class="remodal-cancel remodal-btn">Cancel</button>
+  		<button class="remodal-confirm remodal-btn ajust-wallet-submit-btn">OK</button>
+	  </div>
+  </form>
+</div>
+
+<div class="remodal" data-remodal-id="adjust-wallet-success-modal">
+  <button data-remodal-action="close" class="remodal-close"></button>
+  <div class="col-md-12 adjust-wallet-success-msg-box">
+
+  </div>
+  <button data-remodal-action="confirm" class="remodal-confirm">OK</button>
+</div>
+
+
+
 
 @endsection
 
 @section('script')
 <script type="text/javascript">
-$(function() {
-    $('#table').DataTable({
+
+    var $slot_table = $('#table').DataTable({
         processing: true,
         serverSide: true,
         	        ajax:{
@@ -84,6 +131,8 @@ $(function() {
          	},
         stateSave: true,
     });
+$(function() {
+
 
 
     var mem  = '{!! Request::input("memid")  !!}';
@@ -114,7 +163,7 @@ $(function() {
           	inst.open(); 
     });
 
-
 });
 </script>
+<script type="text/javascript" src="/resources/assets/admin/adjust_wallet.js"></script>
 @endsection
