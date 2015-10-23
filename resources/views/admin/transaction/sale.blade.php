@@ -64,7 +64,7 @@
 <style type="text/css">
 	
 	@media print {
-		body * {
+/*		body * {
 			visibility: hidden;
 		}
 		#voucher-prod-containert, #voucher-prod-container * {
@@ -78,14 +78,17 @@
 			bottom: 0;
 			top: 0;
 			overflow: hidden;
-	}
+	}*/
 }
 	</style>
 @endsection
 
 @section('script')
+
+<script type="text/javascript" src="/resources/assets/admin/jQuery.print.js"></script>
 <script type="text/javascript">
 $(function() {
+
    $table = $('#table').DataTable({
         processing: true,
         serverSide: true,
@@ -130,7 +133,14 @@ $(function() {
    $('.print-voucher').on('click', function(event)
    {	
    		event.preventDefault();
-   		window.print();
+   		
+      w=window.open();
+      w.document.write($('#voucher-prod-container').html());
+      w.print();
+      w.close();
+       // $("body *:not(#voucher-prod-container)").css('display', 'none');
+       // window.print(); 
+      // 
 
    });
 
