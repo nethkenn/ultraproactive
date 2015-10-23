@@ -11,7 +11,6 @@ function order()
       $(document).ready(function()
       {
          document_ready();
-
       });
    }
    function document_ready()

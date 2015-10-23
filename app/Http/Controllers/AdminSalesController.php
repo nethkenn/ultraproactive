@@ -27,6 +27,8 @@ class AdminSalesController extends AdminController
 {
 	public function index()
 	{
+
+		// dd('test');
 		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." Visits Sales");
         return view('admin.transaction.sale');
 	}

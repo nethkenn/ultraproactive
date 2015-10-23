@@ -249,8 +249,10 @@ class AdminMigrationController extends AdminController
 					}
 					if($slot_gc != 0)
 					{
+
 				        $log = "Amount of <b>".number_format($slot_gc,2)." GC </b> gained from old system.";
         				Log::slot($seed, $log, $slot_gc,"Old System GC ",$seed,1);					
+
 					}
 					Compute::tree($seed);
 				}

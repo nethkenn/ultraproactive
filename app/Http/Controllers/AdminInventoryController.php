@@ -9,6 +9,7 @@ class AdminInventoryController extends AdminController
 {
 	public function index()
 	{
+
 	    $_product = DB::table("tbl_product")   ->where('archived',0)
                                                ->get();
                                                          
@@ -20,7 +21,6 @@ class AdminInventoryController extends AdminController
          $insert = $this->getdata(Request::input('ingrid'),Request::input('amt'));
 
          
-
          return Redirect::to('admin/maintenance/inventory'); 
         }
         else
