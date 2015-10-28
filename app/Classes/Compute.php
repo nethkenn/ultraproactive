@@ -240,7 +240,8 @@ class Compute
                                                             {
                                                                 $gcbonus = $pairing_bonus;
                                                                 // Tbl_slot::where('slot_id',$slot_recipient->slot_id)->update(["slot_gc"=>$gcbonus]);
-                                                                $log = "This is your ".$slot_recipient->every_gc_pair." MSB, Your ".$pairing_bonus." Income converted to GC (SLOT #".$slot_recipient->slot_id.")";
+
+                                                                $log = "This is your ".$slot_recipient->every_gc_pair." MSB, Your ".$pairing_bonus." Income converted to GC (SLOT #".$slot_recipient->slot_id.") due to matching combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining match points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right. This combination was caused by a repurchase of one of your downlines.";
                                                                 Log::slot($slot_recipient->slot_id, $log, $gcbonus,"binary_repurchase",$buyer_slot_id,1);
                                                                 // Log::account($slot_recipient->slot_owner, $log);
                                                             }     
@@ -523,7 +524,7 @@ class Compute
                                                             {
                                                                 $gcbonus = $pairing_bonus;
                                                                 // Tbl_slot::where('slot_id',$slot_recipient->slot_id)->update(["slot_gc"=>$gcbonus]);
-                                                                $log = $log = "This is your ".$slot_recipient->every_gc_pair." MSB, Your ".$pairing_bonus." Income converted to GC (SLOT #".$slot_recipient->slot_id.")";
+                                                                $log = $log = "This is your ".$slot_recipient->every_gc_pair." MSB, Your ".$pairing_bonus." Income converted to GC (SLOT #".$slot_recipient->slot_id.") due to matching combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining match points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right.";
                                                                 Log::slot($slot_recipient->slot_id, $log, $gcbonus,"binary",$new_slot_id,1);
                                                                 // Log::account($slot_recipient->slot_owner, $log);
                                                             }   
@@ -955,5 +956,64 @@ class Compute
         $data['reward'] = $reward;
 
         return $data;
+    }
+
+    public static function delete_slot($slot_id)
+    {
+        // $delete_slot = Tbl_slot::id($slot_id)->first();
+        // $get = Tbl_wallet_logs::where('cause_id',$slot_id)->where('keycode','binary')->get();
+        // foreach($get as $g)
+        // {
+        //     $slot_info = Tbl_slot::id($g->slot_id)->first();
+        //     $get_membership = DB::table('tbl_binary_pairing')->where('membership_id',$slot_info->slot_membership)->first();
+        //     $binary_l = $get_membership->pairing_point_l;
+        //     $binary_r = $get_membership->pairing_point_r;
+            
+
+        //     $update['slot_binary_left']  = $slot_info->slot_binary_left  + $binary_l;
+        //     $update['slot_binary_right'] = $slot_info->slot_binary_right + $binary_r;
+
+        //     Tbl_slot::id($g->slot_id)->update($update);
+        // }
+
+        // $get = Tbl_wallet_logs::where('cause_id',$slot_id)->where('keycode','Binary Earn')->get();
+        // foreach($get as $g)
+        // {
+        //     $slot_info = Tbl_slot::id($g->slot_id)->first();
+        //     $get_membership = DB::table('tbl_binary_pairing')->where('membership_id',$slot_info->slot_membership)->first();
+        //     $binary_l = $get_membership->pairing_point_l;
+        //     $binary_r = $get_membership->pairing_point_r;
+            
+        //     $check = Tbl_tree_placement::where('placement_tree_parent_id',$g->slot_id)->where('placement_tree_child_id',$slot_id)->first();
+        //     if($check->placement_tree_position == 'left')
+        //     {
+        //        $update['slot_binary_left']  = $slot_info->slot_binary_left  - $binary_l; 
+        //     }
+        //     elseif($check->placement_tree_position == 'right')
+        //     {
+        //        $update['slot_binary_right'] = $slot_info->slot_binary_right - $binary_r;
+        //     } 
+
+        //     Tbl_slot::id($g->slot_id)->update($update);
+        // }
+
+        // $get = Tbl_wallet_logs::where('cause_id',$slot_id)->where('keycode','binary')->groupBy('slot_id')->get();
+        // foreach($get as $g) 
+        // {
+        //     $slot_info = Tbl_slot::id($g->slot_id)->first();
+        //     $get_membership = DB::table('tbl_binary_pairing')->where('membership_id',$delete_slot->membership_entry_id)->first();
+        //     $binary_l = $get_membership->pairing_point_l;
+        //     $binary_r = $get_membership->pairing_point_r;
+        //     $check = Tbl_tree_placement::where('placement_tree_parent_id',$g->slot_id)->where('placement_tree_child_id',$slot_id)->first();
+        //     if($check->placement_tree_position == 'left')
+        //     {
+        //        $update['slot_binary_left']  = $slot_info->slot_binary_left  - $binary_l; 
+        //     }
+        //     elseif($check->placement_tree_position == 'right')
+        //     {
+        //        $update['slot_binary_right'] = $slot_info->slot_binary_right - $binary_r;
+        //     } 
+        //     Tbl_slot::id($g->slot_id)->update($update);   
+        // }
     }
 }

@@ -72,6 +72,7 @@ function genealogy_loader()
         $("#confirm_delete_button").unbind("click");
         $("#confirm_delete_button").bind("click", function(e)
         {
+            $('#confirm_delete_button').prop("disabled", true);    
             $.ajax(
             {
                 url:"admin/maintenance/slots/confirm_delete",
@@ -99,10 +100,12 @@ function genealogy_loader()
                                     window.location.href = url+"#";
                                     var inst = $('[data-remodal-id=confirm_delete]').remodal();
                                     inst.close(); 
+                                    $('#confirm_delete_button').prop("disabled", false);   
                                 }
                                 else
                                 {
                                     alert(data.message);
+                                    $('#confirm_delete_button').prop("disabled", false);   
                                 }
                             }
                         });
@@ -110,6 +113,7 @@ function genealogy_loader()
                     else
                     {
                         alert(data.message);
+                        $('#confirm_delete_button').prop("disabled", false);   
                     }
                 }
             });
