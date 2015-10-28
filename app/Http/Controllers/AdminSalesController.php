@@ -23,12 +23,13 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Tbl_product_discount;
 use App\Tbl_transaction;
+use App\Tbl_order_form_number;
+
 class AdminSalesController extends AdminController
 {
 	public function index()
 	{
 
-		// dd('test');
 		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." Visits Sales");
         return view('admin.transaction.sale');
 	}
@@ -36,6 +37,9 @@ class AdminSalesController extends AdminController
 
 	public function process_sale()
 	{	
+
+
+
 		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." Visits Process Sales");
 		$data['_member_account'] = Tbl_account::all();
         return view('admin.transaction.sale_process', $data);
@@ -182,6 +186,9 @@ class AdminSalesController extends AdminController
 		$message["account_password.validatepass"] = "Incorrect password.";
 		$message["member_type.check_member_type"] = "Invalid Customer type.";
 
+		$request['order_form_number'] = Request::input('order_form_number');
+		$rules['order_form_number'] = 'unique:tbl_order_form_number,order_form_number';
+
 		
 
 		if($_cart_product)
@@ -278,6 +285,20 @@ class AdminSalesController extends AdminController
         $insert_voucher['or_number'] = Request::input('or_number');
     	$insert_voucher['processed_by'] = Admin::info()->admin_id; 
     	$insert_voucher['processed_by_name'] = Admin::info()->account_username ." ( " .Admin::info()->admin_position_name. " )";
+        $insertOrderFormNumber = Request::input('order_form_number');
+        if($insertOrderFormNumber)
+        {
+        	$insert_voucher['order_form_number'] = $insertOrderFormNumber;
+        	$newOFN = new Tbl_order_form_number(["order_form_number" => $insertOrderFormNumber]);
+        	$newOFN->save();
+        }
+        else
+        {
+        	$insert_voucher['order_form_number'] = Globals::saveUniqueRandomOrderFormNumber(Globals::generateRandomOrderFormNumber());
+        }
+
+
+        // $insert_voucher['order_form_number'] = 
         /**
          * CLEAR CART
          */
@@ -307,6 +328,7 @@ class AdminSalesController extends AdminController
 		$transact['earned_pv'] = 0;
 		$transact['created_at'] = Carbon::now();
 		$transact['transaction_slot_id'] = null;
+		$transact['order_form_number'] = $insert_voucher['order_form_number'];
 		$transaction_id = Log::transaction($transact);
 
          /**
@@ -403,6 +425,10 @@ class AdminSalesController extends AdminController
 		$message["account_password.validatepass"] = "Incorrect password.";
 		$message["member_type.check_member_type"] = "Invalid Customer type.";
 
+
+		$request['order_form_number'] = Request::input('order_form_number');
+		$rules['order_form_number'] = 'unique:tbl_order_form_number,order_form_number';
+
 		/**
 		 * CART PRODCT VALIDATION
 		 */
@@ -490,6 +516,18 @@ class AdminSalesController extends AdminController
         	// Tbl_slot::where('slot_id',Request::input('slot_id'))->update($updateslot);
         }
 
+        /* order_form_number */
+        $insertOrderFormNumber = Request::input('order_form_number');
+        if($insertOrderFormNumber)
+        {
+        	$insert_voucher['order_form_number'] = $insertOrderFormNumber;
+        	$newOFN = new Tbl_order_form_number(["order_form_number" => $insertOrderFormNumber]);
+        	$newOFN->save();
+        }
+        else
+        {
+        	$insert_voucher['order_form_number'] = Globals::saveUniqueRandomOrderFormNumber(Globals::generateRandomOrderFormNumber());
+        }
 
         $voucher = new Tbl_voucher($insert_voucher);
         $voucher->save();
@@ -536,6 +574,7 @@ class AdminSalesController extends AdminController
 		$transact['earned_pv'] = 0;
 		$transact['created_at'] = Carbon::now();
 		$transact['transaction_slot_id'] = Request::input('slot_id');
+		$transact['order_form_number'] = $insert_voucher['order_form_number'];
 		$transaction_id = Log::transaction($transact);
 
 

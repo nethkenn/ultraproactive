@@ -59,6 +59,7 @@ class Log
 		$insert["earned_pv"] = 						$insert['earned_pv'];
 		$insert["created_at"] = 					$insert['created_at'];
 		$insert["transaction_slot_id"] = 			$insert['transaction_slot_id'];
+		$insert["order_form_number"] = 			$insert['order_form_number'];
 
 		$id = Tbl_transaction::insertGetId($insert);
 

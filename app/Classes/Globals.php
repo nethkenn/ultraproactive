@@ -5,6 +5,8 @@ use App\Tbl_voucher;
 use App\Tbl_product_code;
 use App\Tbl_membership_code;
 use App\Tbl_membership_code_sale;
+use App\Tbl_order_form_number;
+use Carbon\Carbon; 
 class Globals
 {
     public static function view($filename, $size="150x150", $mode="crop")
@@ -740,6 +742,41 @@ class Globals
         }
         return $code;
     }
+
+    public static function generateRandomOrderFormNumber()
+    {
+        $randomNumber = rand(1,999999999);
+        $randomNumberFormatted = sprintf('%09d', $randomNumber);
+        $now = Carbon::now();
+        $year = $now->year;
+        $month = sprintf('%02d', $now->month);
+
+        $orderFormNumber = "$year$month-RND$randomNumberFormatted";
+        // $orderFormNumber = rand(1,6);
+        return $orderFormNumber;
+    }
+
+    public static function saveUniqueRandomOrderFormNumber($string)
+    {
+
+        $OFNum = Tbl_order_form_number::where('order_form_number', $string)->first();
+        if($OFNum)
+        {
+            return self::saveUniqueRandomOrderFormNumber(Globals::generateRandomOrderFormNumber());
+        }
+        else
+        {
+
+            $insert['order_form_number'] = $string;
+            $newOFNum = new Tbl_order_form_number($insert);
+            $newOFNum->save();
+            return $string;
+        }
+        
+    }
+
+
+
 
 
 

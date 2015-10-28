@@ -28,7 +28,10 @@
                 	<option value="1" {{Request::old('member_type') == 1 ? 'selected' : '' }}>Non-member</option>
                 </select>
             </div>
-
+            <div class="form-group col-md-12">
+                <label for="Order Form Number">Order Form Number</label>
+                <input type="text" name="order_form_number" class="form-control" value="{{Request::old('order_form_number')}}">
+            </div>
             <div class="form-group col-md-12 for-member-input">
                 <label for="account id">Member</label>
                 @if($errors->get('account_id'))<span style="color:red;" class="glyphicon glyphicon-remove" aria-hidden="true"></span>@endif
@@ -55,12 +58,10 @@
                 	<option value="unclaimed" {{Request::old('unclaimed') == 'unclaimed' ? 'selected' : '' }}>Unclaimed</option>
                 </select>
             </div>
-            
             <div class="form-group col-md-12 or-num">
                 <label for="or number">OR number</label>
                 <input type="text" name="or_number" class="form-control" value="{{Request::old('or_number')}}">
-            </div>   
-
+            </div>
             <div class="form-group col-md-12 payment">
                 <label for="payment-option">Payment Options</label>
                 <select id="payment-option" name="payment_option" class="form-control">
