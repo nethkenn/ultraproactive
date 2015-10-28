@@ -15,11 +15,14 @@ use App\Classes\Compute;
 use Session;
 use App\Tbl_wallet_logs;
 use App\Classes\Log;
-use App\Classes\Admin;	
+use App\Classes\Admin;
+
 class AdminSlotController extends AdminController
 {
 	public function index()
 	{
+
+		// dd("AdminSlotController");
 		$data['membership'] = Tbl_membership::where('archived',0)->get();
 		$data['slot_limit'] = DB::table('tbl_settings')->where('key','slot_limit')->first();
 		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Slot Maintenance");
@@ -44,19 +47,22 @@ class AdminSlotController extends AdminController
 
 		if($membership == "")
 		{
-	        $_account = Tbl_slot::rank()->membership()->account()->get();
+	        $_account = 		Tbl_slot::select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))
+	        						->rank()->membership()->account()->get();
 		}
 		else
 		{
-	        $_account = Tbl_slot::rank()->membership()->account()->where('slot_membership',$membership)->get();
+	        $_account = 		Tbl_slot::select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))
+	        					->rank()->membership()->account()->where('slot_membership',$membership)->get();
 		}
 		
 	        return Datatables::of($_account)->addColumn('gen','<a href="admin/maintenance/slots/add?id={{$slot_id}}">GENEALOGY</a>')
 	        								->addColumn('info','<a href="admin/maintenance/slots/view?id={{$slot_id}}">INFO</a>')
-	        								->addColumn('wallet','{{App\Tbl_wallet_logs::id("$slot_id")->wallet()->sum("wallet_amount")}}')
+	        								->addColumn('wallet','<a style="cursor:pointer;" class="adjust-slot" slot-id="{{$slot_id}}">{{App\Tbl_wallet_logs::id("$slot_id")->wallet()->sum("wallet_amount")}}</a>')
 	        								->addColumn('sponsor','{{App\Tbl_slot::id("$slot_sponsor")->account()->first() == null ? "---" : "Slot #".App\Tbl_slot::id("$slot_sponsor")->account()->first()->slot_id."(".App\Tbl_slot::id("$slot_sponsor")->account()->first()->account_name.")"}}')
 	        								->addColumn('placement','{{App\Tbl_slot::id("$slot_placement")->account()->first() == null ? "---" : "Slot #".App\Tbl_slot::id("$slot_placement")->account()->first()->slot_id."(".App\Tbl_slot::id("$slot_placement")->account()->first()->account_name.")"}}')
 	        								->addColumn('position','{{App\Tbl_slot::id("$slot_placement")->account()->first() == null ? "---" : strtoupper($slot_position)}}')
+	        								
 	        								->make(true);
 
 	}
@@ -401,5 +407,91 @@ class AdminSlotController extends AdminController
 		// $data["slot_number"] = Tbl_slot::max("slot_id") + 1;
 
 		return view('admin.maintenance.slot_info',$data);
+	}
+
+	public function computeAdjustmentAjax()
+	{
+
+		$slot_id = Request::input('slot_id');
+		$slot_adjustment = Request::input('wallet_adjustment');
+		$wallet_adjustment_amount  = Request::input('wallet_adjustment_amount');
+		
+		$data = $this->computeAdjustment($slot_id, $slot_adjustment, $wallet_adjustment_amount);
+		return json_encode($data);
+
+	}
+
+	public function adjustWallet()
+	{
+		$data['errors'] = [];
+
+		$slot_id = Request::input('slot_id');
+		$slot_adjustment = Request::input('wallet_adjustment');
+		$wallet_adjustment_amount  = (double) Request::input('wallet_adjustment_amount');
+		$wallet_adjustment_amount_formated = number_format($wallet_adjustment_amount, 2);
+		
+		$rules['slot_id'] = 'required|exists:tbl_slot,slot_id';
+		$rules['wallet_adjustment_amount'] = 'required|numeric|min:1';
+		$rules['wallet_adjustment'] = 'foo';
+		$messages['wallet_adjustment.foo'] = "Invalid wallet ajustment method.";
+		Validator::extend('foo', function($attribute, $value, $parameters, $validator) {
+            return $value == 'add' || $value == 'deduct';
+        });
+
+		$validator = validator::make(Request::input(), $rules, $messages);
+		if ($validator->fails()) {
+
+			$data['errors'] = $validator->errors()->all();
+  
+        }
+        else
+        {
+	        $data = $this->computeAdjustment($slot_id, $slot_adjustment, $wallet_adjustment_amount);
+	        $data['errors'] = [];
+	      
+			switch ($slot_adjustment)
+			{
+				case 'add':
+					$logs = "Added $wallet_adjustment_amount_formated from system adjustment.";
+					break;
+				
+				default:
+					$logs = "Deducted $wallet_adjustment_amount_formated from system adjustment.";
+					$wallet_adjustment_amount = (double) ("-".$wallet_adjustment_amount);
+					/* Deduct */
+					break;
+			}
+			
+			Log::slot($slot_id, $logs, $wallet_adjustment_amount, "System Adjusment" , Admin::info()->account_id);
+        }
+
+
+        return json_encode($data);
+	}
+
+
+	public function computeAdjustment($slot_id, $slot_adjustment, $wallet_adjustment_amount)
+	{
+		$wallet_adjustment_amount = (double) $wallet_adjustment_amount;
+		$current_wallet_amount = DB::table('tbl_wallet_logs')->where('slot_id', $slot_id)->where('wallet_type', 'Wallet')->sum('wallet_amount');
+
+		switch ($slot_adjustment)
+		{
+			case 'add':
+				$current_wallet_amount = $current_wallet_amount + $wallet_adjustment_amount;
+				break;
+			
+			default:
+				/* Deduct */
+				$current_wallet_amount = $current_wallet_amount - $wallet_adjustment_amount;
+				break;
+		}
+
+		$data['slot_id'] = $slot_id;
+		$data['slot_adjustment'] = $slot_adjustment;
+		$data['wallet_adjustment_amount'] = $wallet_adjustment_amount;
+		$data['current_wallet_amount'] = $current_wallet_amount;
+
+		return $data;
 	}
 }
