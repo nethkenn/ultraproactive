@@ -8,6 +8,7 @@ use Crypt;
 use App\Tbl_slot;
 use App\Classes\Log;
 use Carbon\Carbon;
+use App\Classes\Admin;
 class AdminDevelopersController extends Controller
 {
 	// public function migration()
@@ -233,5 +234,97 @@ class AdminDevelopersController extends Controller
 			DB::table('tbl_wallet_logs')->insert($insert);
 
 			dd("SUCCESS");
+	}
+
+	public function area_disable()
+	{
+		$rank = Admin::info()->admin_position_rank;
+
+		if($rank == 0)
+		{
+			
+		}
+		else
+		{
+			return Redirect::to('/admin');
+		}
+
+
+		$rank = Admin::info()->admin_position_rank;
+		if($rank == 0)
+		{
+			
+		}
+		else
+		{
+			return Redirect::to('/admin');
+		}
+
+        $member_area = DB::table('tbl_settings')->where('key','disable_member_area')->first();
+        if(!$member_area)
+        {
+            DB::table('tbl_settings')->insert(['key'=>'disable_member_area','value'=>'0']);
+            $member_area = DB::table('tbl_settings')->where('key','disable_member_area')->first();
+        }		
+
+        if($member_area->value == 0)
+        {
+        	echo "Status: Member's area is enabled.";
+	        echo " <form method='get'>
+	                    <button type='submit' name='disable' value='Disable Member'>Disable Member</button>
+	               </form> ";
+
+	        if(Request::input('disable'))
+	        {
+	        	$member_area = DB::table('tbl_settings')->where('key','disable_member_area')->update(['value'=>1]);
+	        	return Redirect::to('admin/migration/disable');
+	        }
+        }
+        else
+        {
+        	echo "Status: Member's area is disabled.";
+	        echo " <form method='get'>
+	                    <button type='submit' name='disable' value='Enable Member'>Enable Member</button>
+	               </form> ";
+   	        if(Request::input('disable'))
+	        {
+	        	$member_area = DB::table('tbl_settings')->where('key','disable_member_area')->update(['value'=>0]);
+	        	return Redirect::to('admin/migration/disable');
+	        }
+        }
+
+
+        $admin_area = DB::table('tbl_settings')->where('key','disable_admin_area')->first();
+        if(!$admin_area)
+        {
+            DB::table('tbl_settings')->insert(['key'=>'disable_admin_area','value'=>'0']);
+            $slot_owner_level = DB::table('tbl_settings')->where('key','disable_admin_area')->first();
+        }		
+
+        if($admin_area->value == 0)
+        {
+        	echo "Status: Admin's area is enabled.";
+	        echo " <form method='get'>
+	                    <button type='submit' name='disable_admin' value='Disable Admin'>Disable Admin</button>
+	               </form> ";
+
+	        if(Request::input('disable_admin'))
+	        {
+	        	$admin_area = DB::table('tbl_settings')->where('key','disable_admin_area')->update(['value'=>1]);
+	        	return Redirect::to('admin/migration/disable');
+	        }
+        }
+        else
+        {
+        	echo "Status: Admin's area is disabled.";
+	        echo " <form method='get'>
+	                    <button type='submit' name='disable_admin' value='Enable Admin'>Enable Admin</button>
+	               </form> ";
+   	        if(Request::input('disable_admin'))
+	        {
+	        	$admin_area = DB::table('tbl_settings')->where('key','disable_admin_area')->update(['value'=>0]);
+	        	return Redirect::to('admin/migration/disable');
+	        }
+        }
 	}
 }

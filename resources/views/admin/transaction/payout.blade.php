@@ -33,6 +33,7 @@
 				<thead>
 					<tr class="text-center">
 						<th>Request From</th>
+                        <th>Username</th>
 						<th>No. of slots</th>
 						<th>Payment</th>
 						<th>Amount</th>
@@ -47,6 +48,7 @@
                   @foreach($data as $d)
                     <tr class="text-center">
                         <td>{{$d['account_name']}}</td>
+                        <td>{{$d['account_username']}}</td>
                         <td>{{$d['count']}}</td>
                         <td>{{$d['type']}}</td>
                         <td>{{$d['sum']}}</td>

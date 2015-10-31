@@ -15,6 +15,7 @@ use App\Tbl_wallet_logs;
 use App\Tbl_travel_reward;
 use Session;
 use App\Tbl_travel_qualification;
+use DateTime;
 class Compute
 {
     public static function tree($new_slot_id)
@@ -426,7 +427,7 @@ class Compute
                     {
                         /* INSERT LOG FOR EARNED POINTS IN ACCOUNT */
                         $log = "Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($earned_points, 2) . " match points</b> on " . $tree->placement_tree_position . " when " . $new_slot_info->account_name . " with " . $new_slot_info->membership_name . " MEMBERSHIP created a new slot (#" . $new_slot_info->slot_id . ").";
-                        Log::slot($slot_recipient->slot_id, $log, 0,"Binary Earn",$slot_recipient->slot_id);
+                        Log::slot($slot_recipient->slot_id, $log, 0,"Binary Earn",$new_slot_info->slot_id);
                         // Log::account($slot_recipient->slot_owner, $log);                       
                     }
 
@@ -960,60 +961,59 @@ class Compute
 
     public static function delete_slot($slot_id)
     {
-        // $delete_slot = Tbl_slot::id($slot_id)->first();
-        // $get = Tbl_wallet_logs::where('cause_id',$slot_id)->where('keycode','binary')->get();
-        // foreach($get as $g)
-        // {
-        //     $slot_info = Tbl_slot::id($g->slot_id)->first();
-        //     $get_membership = DB::table('tbl_binary_pairing')->where('membership_id',$slot_info->slot_membership)->first();
-        //     $binary_l = $get_membership->pairing_point_l;
-        //     $binary_r = $get_membership->pairing_point_r;
-            
 
-        //     $update['slot_binary_left']  = $slot_info->slot_binary_left  + $binary_l;
-        //     $update['slot_binary_right'] = $slot_info->slot_binary_right + $binary_r;
+        $delete_slot = Tbl_slot::id($slot_id)->first();
 
-        //     Tbl_slot::id($g->slot_id)->update($update);
-        // }
+        $c = Carbon::now()->format('Y-m-d A'); 
+        $d = new DateTime($delete_slot->created_at);
+        $d = $d->format('Y-m-d A');
+        if($d == $c)
+        {
+            $condition = true;
+        }
+        else
+        {
+            $condition = false;
+        }
 
-        // $get = Tbl_wallet_logs::where('cause_id',$slot_id)->where('keycode','Binary Earn')->get();
-        // foreach($get as $g)
-        // {
-        //     $slot_info = Tbl_slot::id($g->slot_id)->first();
-        //     $get_membership = DB::table('tbl_binary_pairing')->where('membership_id',$slot_info->slot_membership)->first();
-        //     $binary_l = $get_membership->pairing_point_l;
-        //     $binary_r = $get_membership->pairing_point_r;
-            
-        //     $check = Tbl_tree_placement::where('placement_tree_parent_id',$g->slot_id)->where('placement_tree_child_id',$slot_id)->first();
-        //     if($check->placement_tree_position == 'left')
-        //     {
-        //        $update['slot_binary_left']  = $slot_info->slot_binary_left  - $binary_l; 
-        //     }
-        //     elseif($check->placement_tree_position == 'right')
-        //     {
-        //        $update['slot_binary_right'] = $slot_info->slot_binary_right - $binary_r;
-        //     } 
+        $get_membership = DB::table('tbl_binary_pairing')->where('membership_id',$delete_slot->slot_membership)->first();
+        $binary_l = $get_membership->pairing_point_l;
+        $binary_r = $get_membership->pairing_point_r;
 
-        //     Tbl_slot::id($g->slot_id)->update($update);
-        // }
+        $get = Tbl_wallet_logs::where('cause_id',$slot_id)->where('keycode','binary')->get();
 
-        // $get = Tbl_wallet_logs::where('cause_id',$slot_id)->where('keycode','binary')->groupBy('slot_id')->get();
-        // foreach($get as $g) 
-        // {
-        //     $slot_info = Tbl_slot::id($g->slot_id)->first();
-        //     $get_membership = DB::table('tbl_binary_pairing')->where('membership_id',$delete_slot->membership_entry_id)->first();
-        //     $binary_l = $get_membership->pairing_point_l;
-        //     $binary_r = $get_membership->pairing_point_r;
-        //     $check = Tbl_tree_placement::where('placement_tree_parent_id',$g->slot_id)->where('placement_tree_child_id',$slot_id)->first();
-        //     if($check->placement_tree_position == 'left')
-        //     {
-        //        $update['slot_binary_left']  = $slot_info->slot_binary_left  - $binary_l; 
-        //     }
-        //     elseif($check->placement_tree_position == 'right')
-        //     {
-        //        $update['slot_binary_right'] = $slot_info->slot_binary_right - $binary_r;
-        //     } 
-        //     Tbl_slot::id($g->slot_id)->update($update);   
-        // }
+        foreach($get as $g)
+        {
+            $slot_info = Tbl_slot::id($g->slot_id)->first();
+
+            $update['slot_binary_left']  = $slot_info->slot_binary_left  + $binary_l;
+            $update['slot_binary_right'] = $slot_info->slot_binary_right + $binary_r;
+            if($condition == true)
+            {
+                $update['pairs_today'] = $slot_info->pairs_today - 1;            
+            }
+
+            Tbl_slot::id($g->slot_id)->update($update);
+            $update = null;
+        }
+
+        $get = Tbl_tree_placement::where('placement_tree_child_id',$slot_id)->get();
+        foreach($get as $g)
+        {
+            $slot_info = Tbl_slot::id($g->placement_tree_parent_id)->first();   
+
+            if($g->placement_tree_position == "left")
+            {
+                $update['slot_binary_left']  = $slot_info->slot_binary_left  - $binary_l;
+                Tbl_slot::id($g->placement_tree_parent_id)->update($update); 
+            }
+            elseif($g->placement_tree_position =="right")
+            {
+                $update['slot_binary_right'] = $slot_info->slot_binary_right - $binary_r; 
+                Tbl_slot::id($g->placement_tree_parent_id)->update($update);               
+            }
+
+            $update = null; 
+        }
     }
 }
