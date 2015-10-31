@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateTblWalletLogsFlushout extends Migration
+class TblOrderFormNumber extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,12 @@ class UpdateTblWalletLogsFlushout extends Migration
      */
     public function up()
     {
-        Schema::table('tbl_wallet_logs', function (Blueprint $table)
+        Schema::create('tbl_order_form_number', function (Blueprint $table)
         {
-            $table->double('flushed_out')->default(0);
+
+            $table->increments('id')->unsigned();
+            $table->string('order_form_number')->unique();
+            $table->timestamps();
         });
     }
 
@@ -25,6 +28,6 @@ class UpdateTblWalletLogsFlushout extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('tbl_order_form_number');
     }
 }

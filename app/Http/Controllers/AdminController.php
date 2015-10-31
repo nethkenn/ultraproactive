@@ -16,6 +16,7 @@ class AdminController extends Controller
 {
 	public function __construct()
 	{
+
         $Tbl_module = Tbl_module::firstOrCreate(['url_segment' => 'register_url']);
         $Tbl_module->module_name = 'admin/register_url';
         $Tbl_module->save();
