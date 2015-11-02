@@ -676,8 +676,14 @@ class Globals
 
     }
 
-    public static function create_voucher_code($code)
+    public static function create_voucher_code($code = null)
     {
+
+        if(!$code)
+        {
+            $code = Globals::code_generator();
+        }
+
         $voucher_code = Tbl_voucher::where('voucher_code', $code)->first();
         if($voucher_code)
         {
@@ -708,8 +714,13 @@ class Globals
     }
 
 
-    public static function create_membership_code($code)
+    public static function create_membership_code($code = null)
     {
+
+        if(!$code)
+        {
+            $code = Globals::code_generator();
+        }
 
         $membership_code = Tbl_membership_code::where('code_activation', $code)->first();
         if($membership_code)
@@ -725,9 +736,13 @@ class Globals
     }
 
 
-    public static function create_membership_code_sale($code)
+    public static function create_membership_code_sale($code = null)
     {
 
+        if(!$code)
+        {
+            $code = Globals::code_generator();
+        }
 
         $membershipcode_or_code = Tbl_membership_code_sale::where('membershipcode_or_code', $code)->first();
         if($membershipcode_or_code)
@@ -755,8 +770,12 @@ class Globals
         return $orderFormNumber;
     }
 
-    public static function saveUniqueRandomOrderFormNumber($string)
+    public static function saveUniqueRandomOrderFormNumber($string=null)
     {
+        if(!$string)
+        {
+            $string = Globals::generateRandomOrderFormNumber();
+        }
 
         $OFNum = Tbl_order_form_number::where('order_form_number', $string)->first();
         if($OFNum)
