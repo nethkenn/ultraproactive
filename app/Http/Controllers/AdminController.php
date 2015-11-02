@@ -21,6 +21,29 @@ class AdminController extends Controller
         $Tbl_module->module_name = 'admin/register_url';
         $Tbl_module->save();
 
+        $disable_admin_area = DB::table('tbl_settings')->where('key','disable_admin_area')->first();
+        if(!$disable_admin_area)
+        {
+            DB::table('tbl_settings')->insert(['key'=>'disable_admin_area','value'=>'0']);
+            $disable_admin_area = DB::table('tbl_settings')->where('key','disable_admin_area')->first();
+        }   
+        if(Admin::info())
+        {
+            if($disable_admin_area->value == 1)
+            {
+                $rank = Admin::info()->admin_position_rank;
+                if($rank == 0)
+                {
+                    
+                }
+                else
+                {
+                    die("We're currently doing maintenance. We'll be back shortly.");           
+                }
+            }       
+        }
+
+
         $data['slot_limit'] = DB::table('tbl_settings')->where('key','slot_limit')->first();
 
         if(!$data['slot_limit'])

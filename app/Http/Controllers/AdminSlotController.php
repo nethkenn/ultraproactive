@@ -368,6 +368,7 @@ class AdminSlotController extends AdminController
  		}
  		else
  		{
+ 			Compute::delete_slot(Request::input('slot_id'));
  			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." delete Slot #".Request::input("slot_id"),serialize($slot_info));
  			Tbl_slot::id(Request::input("slot_id"))->delete();
  		}

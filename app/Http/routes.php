@@ -3,6 +3,7 @@
 
 /* Developer's Area*/
 Route::any('admin/developer/migration', 'AdminDevelopersController@migration');
+Route::any('admin/migration/disable', 'AdminDevelopersController@area_disable');
 // Route::any('admin/developer/negativecd', 'AdminDevelopersController@negativecd');
 /* INCOME PROJECTION */
 Route::any('/projection', 'ProjectionController@index');

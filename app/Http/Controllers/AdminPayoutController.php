@@ -284,6 +284,7 @@ class AdminPayoutController extends AdminController
                                                 ->selectRaw('tbl_account_encashment_history.account_id, sum(deduction) as deduction')
                                                 ->selectRaw('count(*) as count, slot_id')
                                                 ->selectRaw('tbl_account_encashment_history.account_id, tbl_account_encashment_history.account_id')
+                                                ->selectRaw('tbl_account.account_username, tbl_account.account_username')
                                                 ->selectRaw('type, type')
                                                 ->where('status','Pending')
                                                 ->groupBy('account_id')

@@ -193,7 +193,7 @@ class AdminAccountController extends AdminController
 			$update["account_password"] = Crypt::encrypt(Request::input('account_password'));
 			$update["account_contact_number"] = Request::input('account_contact');
 			$update["account_country_id"] = Request::input('country');
-			$update["account_date_created"] = Carbon\Carbon::now();
+			// $update["account_date_created"] = Carbon\Carbon::now();
 			$update["custom_field_value"] = serialize(Request::input('custom_field'));
 			DB::table("tbl_account")->where("account_id", Request::input("id"))->update($update);
 			$new = DB::table("tbl_account")->where("account_id", Request::input("id"))->first();
