@@ -28,6 +28,8 @@ Route::any('/member/genealogy/get', 'MemberGenealogyController@get');
 Route::any('/member/genealogy/downline', 'MemberGenealogyController@downline');
 
 
+
+
 /* Transfer wallet */
 Route::any('/member/transfer_wallet', 'MemberTransferWalletController@index');
 Route::any('/member/transfer_wallet/get', 'MemberTransferWalletController@get');
@@ -231,14 +233,17 @@ Route::any('admin/content/team/delete', 'AdminTeamController@delete');
  */
 Route::get('admin/maintenance/codes/load-product-package', 'AdminCodeController@load_product_package');
 Route::get('admin/maintenance/codes', 'AdminCodeController@index');
-Route::any('admin/maintenance/codes/add', 'AdminCodeController@add_code');
+Route::get('admin/maintenance/codes/add', 'AdminCodeController@add_code');
+Route::post('admin/maintenance/codes/add', 'AdminCodeController@addCodePost');
 Route::any('admin/maintenance/codes/edit', 'AdminCodeController@edit_code');
 Route::get('admin/maintenance/codes/get', 'AdminCodeController@ajax_get_membership_code');
 Route::post('admin/maintenance/codes/block', 'AdminCodeController@block');
 Route::post('admin/maintenance/codes/transfer_code', 'AdminCodeController@transfer_code');
 Route::get('admin/maintenance/codes/verify_code', 'AdminCodeController@verify_code');
 Route::any('admin/maintenance/codes/or', 'AdminCodeController@show_sale_or');
-
+Route::post('admin/maintenance/codes/add-to-cart', 'AdminCodeController@addToCart');
+Route::get('admin/maintenance/codes/show-cart', 'AdminCodeController@showCart');
+Route::post('admin/maintenance/codes/remove-from-cart', 'AdminCodeController@removeFromCart');
 
 
 

@@ -18,7 +18,7 @@ class Tbl_voucher_has_product extends Model
     	return $query->leftJoin('tbl_product','tbl_product.product_id', '=', 'tbl_voucher_has_product.product_id');
     }
 
-        public function scopeProductcode($query)
+    public function scopeProductcode($query)
     {
         return $query->Join('tbl_product_code','tbl_product.product_id', '=', 'tbl_voucher_has_product.product_id');
     }

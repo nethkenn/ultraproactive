@@ -15,6 +15,7 @@ class Tbl_membership_code_sale extends Model
 							'payment',
 							'total_amount',
 							'voucher_id',
+							'order_form_number'
 	 						];
 
 
