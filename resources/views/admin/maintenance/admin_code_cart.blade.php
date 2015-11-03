@@ -3,7 +3,6 @@
 		<tr>
 		    <td>{{$val['membership_id']}}</td>
 		    <td>{{$val['membership_name']}}</td>
-		    <td>{{$val['product_package_id']}}</td>
 		    <td>{{$val['product_package_name']}}</td>
 		    <td>{{$val['qty']}}</td>
 		    <td>{{$val['membership_price']}}</td>
@@ -12,11 +11,11 @@
 		</tr>
 	@endforeach
 	<tr>
-		<td class="text-right" colspan="7s"><strong>Total : {{$finalTotal}}</strong></td>
+		<td class="text-right" colspan="6"><strong>Total : {{$finalTotal}}</strong></td>
 		<td></td>
 	</tr>
 @else
 	<tr>
-		<td colspan="8"><strong> Cart empty</strong></td>
+		<td colspan="7"><strong> Cart empty</strong></td>
 	</tr>
 @endif

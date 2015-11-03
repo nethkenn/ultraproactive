@@ -17,13 +17,12 @@
                         <caption><h4>Cart</h4></caption>
                         <thead>
                             <tr>
-                                <th>membership_id</th>
-                                <th>membership_name</th>
-                                <th>product_package_id</th>
-                                <th>product_package_name</th>
-                                <th>qty</th>
-                                <th>membership_price</th>
-                                <th>sub_total</th>
+                                <th>Membership ID</th>
+                                <th>Membership Name</th>
+                                <th>Product Package Name</th>
+                                <th>Qty</th>
+                                <th>Membership Price</th>
+                                <th>Sub Total</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -43,14 +42,18 @@
                 @endif
                     <div class="form-group col-md-12">
                         <label for="Order Form Number">Order form Number</label>
-                        <input type="text" name="order_form_number" class="form-control" value="{{Request::input('order_form_number')}}"> 
+                        <input type="text" name="order_form_number" class="form-control" value="{{Request::old('order_form_number')}}"> 
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="Tendered Payment">Tendered Payment</label>
+                        <input type="number" name="tendered_payment" class="form-control" value="{{Request::old('tendered_payment')}}"> 
                     </div>
                     <div class="form-group col-md-12">
                 		<label for="membership">Membership</label>
                         <select name="membership_id" class="form-control selected-membership-id">
                             @if($_membership)
                                 @foreach($_membership as $membership)
-                                    <option {{Request::input('membership_id') == $membership->membership_id ? 'selected' : ''}} value="{{$membership->membership_id}}"}>{{$membership->membership_name}}</option>
+                                    <option {{Request::old('membership_id') == $membership->membership_id ? 'selected' : ''}} value="{{$membership->membership_id}}"}>{{$membership->membership_name}}</option>
                                 @endforeach
                             @endif
                         </select>
@@ -69,7 +72,7 @@
                         <select name="code_type_id" class="form-control">
                             @if($_code_type)
                             @foreach($_code_type as $code_type)
-                                <option value="{{$code_type->code_type_id}}" {{Request::input('code_type_id') == $code_type->code_type_id ? 'selected' : ''}}>{{$code_type->code_type_name}}</option>
+                                <option value="{{$code_type->code_type_id}}" {{Request::old('code_type_id') == $code_type->code_type_id ? 'selected' : ''}}>{{$code_type->code_type_name}}</option>
                             @endforeach
                             @endif
                         </select>
@@ -80,7 +83,7 @@
                             <option value=""></option>
                             @if($_account)
                             @foreach($_account as $account)
-                                <option value="{{$account->account_id}}" {{Request::input('account_id') == $account->account_id ? 'selected' : ''}}>{{$account->account_name}} ({{$account->account_username}})</option>
+                                <option value="{{$account->account_id}}" {{Request::old('account_id') == $account->account_id ? 'selected' : ''}}>{{$account->account_name}} ({{$account->account_username}})</option>
                             @endforeach
                             @endif()
                         </select>
@@ -92,7 +95,7 @@
                         <select name="inventory_update_type_id" class="form-control">
                             @if($_inventory_update_type)
                             @foreach($_inventory_update_type as $inventory_update_type)
-                                <option value="{{$inventory_update_type->inventory_update_type_id}}" {{Request::input('inventory_update_type_id') == $inventory_update_type->inventory_update_type_id ? 'selected' : '' }}>{{$inventory_update_type->inventory_update_type_name}}</option>
+                                <option value="{{$inventory_update_type->inventory_update_type_id}}" {{Request::old('inventory_update_type_id') == $inventory_update_type->inventory_update_type_id ? 'selected' : '' }}>{{$inventory_update_type->inventory_update_type_name}}</option>
                             @endforeach
                             @endif
                         </select>

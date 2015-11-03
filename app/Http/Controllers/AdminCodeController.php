@@ -28,6 +28,7 @@ use App\Tbl_voucher_has_product;
 use App\Classes\Log;
 use Carbon\Carbon;
 use Mail;
+use PDF;
 
 
 class AdminCodeController extends AdminController {
@@ -107,18 +108,20 @@ class AdminCodeController extends AdminController {
 
 	public function addCodePost()
 	{
-
+		$messages = [];
 		$requests['membership_id'] = Request::input('membership_id');
 		$requests['product_package_id'] = Request::input('product_package_id');
 		$requests['code_type_id'] = Request::input('code_type_id');
 		$requests['account_id'] = Request::input('account_id');
 		$requests['inventory_update_type_id'] = Request::input('inventory_update_type_id');
 		$requests['order_form_number'] = Request::input('order_form_number');
-
+		$requests['tendered_payment'] = Request::input('tendered_payment');
+		
 		$cart_count = count((array)Session::get('processCodeCart'));
 
 		$requests['cart'] = $cart_count;
 		$_prodCart = (array)Session::get('processCodeCart');
+		$cartTotalAmount = 0; 
 		foreach ($_prodCart as $prodCartKey => $prodCartValue)
 		{
 
@@ -132,7 +135,10 @@ class AdminCodeController extends AdminController {
     			$messages["product_id_".$productValue->product_id.".foo"] = "Product ID #".$productValue->product_id. " - ". $productValue->product_name." has unsufficient stock.";
     		}
 
+    		$cartTotalAmount = $cartTotalAmount + $prodCartValue['sub_total'];
+
 		}
+
 
 
 		
@@ -144,7 +150,7 @@ class AdminCodeController extends AdminController {
 		$rules['account_id'] = 'required|exists:tbl_account,account_id';
 		$rules['inventory_update_type_id'] = 'required|exists:tbl_inventory_update_type,inventory_update_type_id';
 		$rules['cart'] = 'required|integer|min:1';
-
+		$rules['tendered_payment'] = 'required|integer|min:'.$cartTotalAmount;
 
 
 
@@ -167,7 +173,7 @@ class AdminCodeController extends AdminController {
                         ->withInput();
         }
 
-        dd($requests);
+        // dd($requests);
 
 
 
@@ -182,18 +188,24 @@ class AdminCodeController extends AdminController {
 		$insertMembershipCodeSale['sold_to'] = Request::input('account_id');
 		$insertMembershipCodeSale['generated_by'] = Admin::info()->account_id;
 		$insertMembershipCodeSale['generated_by_name'] = Admin::info()->account_name;
-		switch (Request::input('code_type_id'))
-		{
-			case '1':
-				$insertMembershipCodeSale['payment'] = 1;
-				break;
-			case '3':
-				$insertMembershipCodeSale['payment'] = -1;
-				break;
-			default:
-				break;
-		}
+		$insertMembershipCodeSale['code_type_id'] = Request::input('code_type_id');
+		$insertMembershipCodeSale['payment'] = 1;
+		$insertMembershipCodeSale['shipping_type'] = 1; 
+		$insertMembershipCodeSale['tendered_payment'] = Request::input('tendered_payment');
+		$insertMembershipCodeSale['change'] = (double) Request::input('tendered_payment') - (double) $cartTotalAmount;
 
+		// dd(Request::input('tendered_payment'));
+		// switch (Request::input('code_type_id'))
+		// {
+		// 	case '1':
+		// 		$insertMembershipCodeSale['payment'] = 1;
+		// 		break;
+		// 	case '3':
+		// 		$insertMembershipCodeSale['payment'] = -1;
+		// 		break;
+		// 	default:
+		// 		break;
+		// }
 		$membershipCodeSale = new Tbl_membership_code_sale($insertMembershipCodeSale);
 		$membershipCodeSale->save();
 
@@ -322,13 +334,13 @@ class AdminCodeController extends AdminController {
 
 
 		/* UPDATE THE CODE SALE FOR THE TOTAL SALE */
-		$totalCodeSale = Tbl_membership_code_sale_has_code::where('membershipcode_or_num', 151)->sum('sold_price');
+		$totalCodeSale = Tbl_membership_code_sale_has_code::where('membershipcode_or_num', $membershipCodeSale->membershipcode_or_num)->sum('sold_price');
 		Tbl_membership_code_sale::where('membershipcode_or_num', $membershipCodeSale->membershipcode_or_num)->update(['total_amount' => $totalCodeSale]);
 		/* ADMIN LOG */ 
 		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." Generated membership code/s with Order Form Number : ".$OrderFormNum.".");
 		Session::forget('processCodeCart');
 
-		return redirect('/admin/maintenance/codes');
+		return redirect('/admin/maintenance/codes/or?order_form_number='.$OrderFormNum);
 	}
 
 	public static function code_generator()
@@ -424,7 +436,6 @@ class AdminCodeController extends AdminController {
 	{
 
 
-		// dd();
 
 		$or_num = Request::input('membershipcode_or_num');
 
@@ -436,7 +447,7 @@ class AdminCodeController extends AdminController {
 		$sold_to = Tbl_account::find($membership_code_sale->sold_to);
 		$membership_code_sale->sold_to = $generated_by->account_name;
 		// $membership_code_sale->created_at = Carbon::createFromTimeStamp($membership_code_sale->created_at->toFormattedDateString())->toFormattedDateString();
-		// dd()
+		
 
 		$data['membership_code_sale'] = $membership_code_sale;
 
@@ -479,9 +490,6 @@ class AdminCodeController extends AdminController {
 
 			return json_encode($sold_to->account_email);
 		}
-	
-		// dd($data['_product']);
-
 
 		return view('admin/maintenance/code_or', $data);
 	}
@@ -580,7 +588,32 @@ class AdminCodeController extends AdminController {
 
 	}
 
+	public function membershipSales()
+	{
 
+		// dd();
+		$order_form_number = Request::input('order_form_number');
+		$codeSale = Tbl_membership_code_sale::select('tbl_membership_code_sale.*', 'sold_to_account.account_name as sold_to_name', 'sold_to_account.account_username as sold_to_username', 'generated_by_account.account_name as generated_by_name','generated_by_account.account_username as generated_by_username', 'payment_type.code_type_name as payment_type')
+												->where('tbl_membership_code_sale.order_form_number', $order_form_number)
+												->leftJoin('tbl_account as sold_to_account', 'sold_to_account.account_id' ,'=', 'tbl_membership_code_sale.sold_to')
+												->leftJoin('tbl_account as generated_by_account', 'generated_by_account.account_id' ,'=', 'tbl_membership_code_sale.generated_by')
+												->leftJoin('tbl_code_type as payment_type', 'payment_type.code_type_id','=','tbl_membership_code_sale.code_type_id')
+												->first();
+
+		$data['codeSale'] = $codeSale;
+		$codes = Tbl_membership_code_sale_has_code::where('tbl_membership_code_sale_has_code.membershipcode_or_num', $codeSale->membershipcode_or_num)
+													->leftJoin('tbl_membership_code','tbl_membership_code.code_pin', '=', 'tbl_membership_code_sale_has_code.code_pin')
+													->leftJoin('tbl_membership', 'tbl_membership.membership_id', '=', 'tbl_membership_code.membership_id')
+													->leftJoin('tbl_product_package', 'tbl_product_package.product_package_id', '=', 'tbl_membership_code.product_package_id')
+													->get();
+
+		$data['codes'] = $codes;
+		// return view('admin.maintenance.code_sale_print_or_pdf',$data);
+		$pdf = PDF::loadView('admin.maintenance.code_sale_print_or_pdf', $data);
+		return $pdf->stream('invoice.pdf');
+
+
+	}
 
 
 	

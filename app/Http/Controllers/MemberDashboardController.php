@@ -15,6 +15,7 @@ class MemberDashboardController extends MemberController
 {
 	public function index()
 	{
+		
 		$data["_notification"] = $this->get_notifications(false);
 		$data["total_wallet"] = Tbl_wallet_logs::id(Session::get('currentslot'))->wallet()->sum('wallet_amount');
 		$data["total_count"] = Tbl_slot::where("slot_owner", Customer::id())->count();

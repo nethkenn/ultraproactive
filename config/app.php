@@ -156,6 +156,7 @@ return [
 		'Spatie\LaravelAnalytics\LaravelAnalyticsServiceProvider',
 		'Skovmand\Mailchimp\MailchimpServiceProvider',
 		'yajra\Datatables\DatatablesServiceProvider',
+		Barryvdh\DomPDF\ServiceProvider::class,
 	],
 
 	/*
@@ -209,6 +210,7 @@ return [
 		'Html' 		=> 'Illuminate\Html\HtmlFacade',
 		'MailchimpWrapper' => 'Hugofirth\Mailchimp\Facades\MailchimpWrapper',
 		'Datatables' => yajra\Datatables\Facades\Datatables::class,
+		'PDF'       => Barryvdh\DomPDF\Facade::class,
 
 	],
 

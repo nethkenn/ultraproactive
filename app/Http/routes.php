@@ -245,8 +245,7 @@ Route::any('admin/maintenance/codes/or', 'AdminCodeController@show_sale_or');
 Route::post('admin/maintenance/codes/add-to-cart', 'AdminCodeController@addToCart');
 Route::get('admin/maintenance/codes/show-cart', 'AdminCodeController@showCart');
 Route::post('admin/maintenance/codes/remove-from-cart', 'AdminCodeController@removeFromCart');
-
-
+Route::get('admin/maintenance/codes/or2', 'AdminCodeController@membershipSales');
 
 Route::get('admin/maintenance/product', 'AdminProductController@index');
 Route::any('admin/maintenance/product/add', 'AdminProductController@add_product');

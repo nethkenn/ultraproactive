@@ -13,8 +13,8 @@
 		"illuminate/html": "^5.0",
 		"skovmand/mailchimp-laravel": "1.*",
 		"yajra/laravel-datatables-oracle": "~5.0",
-		"doctrine/dbal": "^2.5"
-		
+		"doctrine/dbal": "^2.5",
+		"barryvdh/laravel-dompdf": "0.6.*"
 			},
 
 	"repositories": [

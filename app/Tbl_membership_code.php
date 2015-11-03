@@ -60,4 +60,7 @@ class Tbl_membership_code extends Model
         return $this->hasOne('App\Tbl_code_type');
     }
 
+
+    
+
 }
