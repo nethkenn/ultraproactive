@@ -340,7 +340,7 @@ class AdminCodeController extends AdminController {
 		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." Generated membership code/s with Order Form Number : ".$OrderFormNum.".");
 		Session::forget('processCodeCart');
 
-		return redirect('/admin/maintenance/codes/or?order_form_number='.$OrderFormNum);
+		return redirect('/admin/maintenance/codes/or2?order_form_number='.$OrderFormNum);
 	}
 
 	public static function code_generator()
