@@ -15,7 +15,7 @@
         </div>
     </div>
     <div class="para epal">
-        <div class="title">Ref. No. {{$voucher->voucher_id}}</div>
+        <div class="title">Ref. No. {{$voucher->voucher_id}} (Order Form Num : {{$voucher->order_form_number}} )</div>
         <div class="sub para">
             <div class="tudaleft col-md-6 siyet">Code ( {{$voucher->voucher_code}} )</div>
             <div class="tudaright col-md-6 siyet">{{$voucher->created_at}}</div>

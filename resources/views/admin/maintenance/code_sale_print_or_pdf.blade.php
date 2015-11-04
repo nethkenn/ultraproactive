@@ -6,62 +6,41 @@
 	</head>
 	<body>
 		<style type="text/css">
-/*	table {
-  		border-spacing: 0.5rem;
-  		width: 100%;
-	}*/
+			td {
+				border:1px solid black;
+				padding: 5px;
+			}
 
-/*	table {
-  		border-collapse: collapse;
-	}
-*/
-	td {
-		border:1px solid black;
-		padding: 5px;
-	}
-
-	table tr td
-	{
-		border: none;
-	}
+			table tr td
+			{
+				border: none;
+			}
 
 
-	table
-	{
-		width: 100%;
-		border-spacing: 0.5rem;
-	}
+			table
+			{
+				width: 100%;
+				border-spacing: 0.5rem;
+			}
 
-	.text-right{
-		text-align: right;
-	}
+			.text-right{
+				text-align: right;
+			}
 
-		.text-left{
-		text-align: left;
-	}
+				.text-left{
+				text-align: left;
+			}
 
-	table.codes{
-		border-collapse: collapse;
-	}
-	
-	table.codes tr td
-	{
-		border: 1px solid black;
-	}
-
-
-
-
-
-</style>
+			table.codes{
+				border-collapse: collapse;
+			}
+			
+			table.codes tr td
+			{
+				border: 1px solid black;
+			}
+		</style>
 		<div class="col-12">
-{{-- 			<div class="col-md-6 text-left">
-				
-				<strong>SALES ORDER</strong>
-			</div>
-			<div class="col-md-6 text-right">
-				{{$codeSale->created_at}}
-			</div> --}}
 			<table class="or_title">
 				<tr>
 					<td><strong>SALES ORDER</strong></td>
@@ -85,39 +64,39 @@
 			</div>
 		</div>
 		<div>
-				<table class="codes">
-			<thead>
-				<tr>
-					<th>Code Pin</th>
-					<th>Code Activation</th>
-					<th>Membership - Product Package</th>
-					<th>Price</th>
-					<th>Quantity</th>
-					<th>Sub Total</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach($codes as $code)
+			<table class="codes">
+				<thead>
 					<tr>
-						<td>{{$code->code_pin}}</td>
-						<td>{{$code->code_activation}}</td>
-						<td>{{$code->membership_name}} - {{$code->product_package_name}}</td>
-						<td>{{$code->sold_price}}</td>
-						<td>1</td>
-						<td>{{$code->sold_price}}</td>
+						<th>Code Pin</th>
+						<th>Code Activation</th>
+						<th>Membership - Product Package</th>
+						<th>Price</th>
+						<th>Quantity</th>
+						<th>Sub Total</th>
 					</tr>
-				@endforeach
-				<tr>
-					<td class="text-right" colspan="6"><strong>Final Total : {{number_format($codeSale->total_amount,2)}} PHP</strong></td>
-				</tr>
-				<tr>
-					<td class="text-right" colspan="6"><strong>Payment : {{number_format($codeSale->tendered_payment,2)}} PHP</strong></td>
-				</tr>
-				<tr>
-					<td class="text-right" colspan="6"><strong>Change : {{number_format($codeSale->change, 2)}} PHP</strong></td>
-				</tr>
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					@foreach($codes as $code)
+						<tr>
+							<td>{{$code->code_pin}}</td>
+							<td>{{$code->code_activation}}</td>
+							<td>{{$code->membership_name}} - {{$code->product_package_name}}</td>
+							<td>{{$code->sold_price}}</td>
+							<td>1</td>
+							<td>{{$code->sold_price}}</td>
+						</tr>
+					@endforeach
+					<tr>
+						<td class="text-right" colspan="6"><strong>Final Total : {{number_format($codeSale->total_amount,2)}} PHP</strong></td>
+					</tr>
+					<tr>
+						<td class="text-right" colspan="6"><strong>Payment : {{number_format($codeSale->tendered_payment,2)}} PHP</strong></td>
+					</tr>
+					<tr>
+						<td class="text-right" colspan="6"><strong>Change : {{number_format($codeSale->change, 2)}} PHP</strong></td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</body>
 </html>

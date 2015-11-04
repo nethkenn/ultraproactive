@@ -572,7 +572,6 @@ Route::any('admin/migration/rematrix', 'AdminMigrationController@rematrix');
 Route::any('admin/migration/start_recompute', 'AdminMigrationController@start_recompute');
 Route::any('admin/migration/recompute', 'AdminMigrationController@recompute');
 
-
 Route::get('member/e-payment/transaction-log', 'MemberEpaymentLogController@index');
 Route::post('member/e-payment/transaction-log', 'MemberEpaymentLogController@convert_slot_to_ewallet');
 Route::get('member/e-payment/transaction-log/e-wallet-to-currency', 'MemberEpaymentLogController@slot_wallet_to_currency');

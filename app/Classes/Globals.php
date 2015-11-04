@@ -732,7 +732,6 @@ class Globals
             return $code;
         }
 
-        return $code;
     }
 
 
@@ -766,7 +765,6 @@ class Globals
         $year = $now->year;
         $month = sprintf('%02d', $now->month);
         $orderFormNumber = "$year$month-RND$randomNumberFormatted";
-        // $orderFormNumber = rand(1,6);
         return $orderFormNumber;
     }
 

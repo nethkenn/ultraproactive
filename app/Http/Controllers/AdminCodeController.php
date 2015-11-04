@@ -173,12 +173,6 @@ class AdminCodeController extends AdminController {
                         ->withInput();
         }
 
-        // dd($requests);
-
-
-
-
-
 		/* GENERATE ORDER FORM NUMBER */
 		$OrderFormNum = Request::input('order_form_number') != null || Request::input('order_form_number') != "" ? Request::input('order_form_number'): Globals::saveUniqueRandomOrderFormNumber(Globals::generateRandomOrderFormNumber());
 
@@ -193,19 +187,6 @@ class AdminCodeController extends AdminController {
 		$insertMembershipCodeSale['shipping_type'] = 1; 
 		$insertMembershipCodeSale['tendered_payment'] = Request::input('tendered_payment');
 		$insertMembershipCodeSale['change'] = (double) Request::input('tendered_payment') - (double) $cartTotalAmount;
-
-		// dd(Request::input('tendered_payment'));
-		// switch (Request::input('code_type_id'))
-		// {
-		// 	case '1':
-		// 		$insertMembershipCodeSale['payment'] = 1;
-		// 		break;
-		// 	case '3':
-		// 		$insertMembershipCodeSale['payment'] = -1;
-		// 		break;
-		// 	default:
-		// 		break;
-		// }
 		$membershipCodeSale = new Tbl_membership_code_sale($insertMembershipCodeSale);
 		$membershipCodeSale->save();
 
@@ -591,7 +572,6 @@ class AdminCodeController extends AdminController {
 	public function membershipSales()
 	{
 
-		// dd();
 		$order_form_number = Request::input('order_form_number');
 		$codeSale = Tbl_membership_code_sale::select('tbl_membership_code_sale.*', 'sold_to_account.account_name as sold_to_name', 'sold_to_account.account_username as sold_to_username', 'generated_by_account.account_name as generated_by_name','generated_by_account.account_username as generated_by_username', 'payment_type.code_type_name as payment_type')
 												->where('tbl_membership_code_sale.order_form_number', $order_form_number)
