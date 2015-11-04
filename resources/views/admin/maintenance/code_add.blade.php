@@ -6,7 +6,7 @@
 	    </div>
 	    <div class="buttons col-md-4 text-right">
 	        <button onclick="location.href='admin/maintenance/codes'" type="button" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back</button>
-	        <button onclick="$('#code-add-form').submit();" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Generate</button>
+	        <button type="button" class="btn btn-primary generate-code-btn"><i class="fa fa-save"></i> Generate</button>
 	    </div>
     </div>
     <div class="col-md-12 form-group-container">
@@ -100,9 +100,6 @@
                             @endif
                         </select>
                     </div>
-               
-
-
         </form> 
     </div>
 <div class="remodal loader-container" data-remodal-id="code-modal-qty" data-remodal-options="">
@@ -156,7 +153,15 @@
 
         jQuery(document).ready(function($){
 
-            
+            $('.generate-code-btn').prop('disabled',false);
+
+            $('.generate-code-btn').on('click', function(event){
+
+                event.preventDefault();    
+                $(this).prop('disabled', true);
+                $('#code-add-form').submit();
+            });
+
             $('.selected-membership-id').on('change', function(event)
             {
 
