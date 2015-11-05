@@ -60,9 +60,7 @@ class Compute
         {
             $unilevel_level[$level->membership_id][$level->level] =  $level->value;
         }
-        /* CHECK IF NOT FREE SLOT */
-        if($buyer_slot_info->slot_type != "FS")
-        {
+
             /* CHECK IF LEVEL EXISTS */
             if($unilevel_level)
             {
@@ -109,7 +107,7 @@ class Compute
                     }
                 }
             }            
-        }
+
     }
 
     public static function binary_repurchase($buyer_slot_id, $binary_pts, $method)
@@ -275,10 +273,8 @@ class Compute
                         $update_recipient["pair_flush_out_wallet"] = $flushpoints;
                         $check_wallet = Tbl_wallet_logs::id($new_slot_info->slot_id)->wallet()->sum('wallet_amount');
                         /* CHECK IF NOT FREE SLOT */
-                        if($new_slot_info->slot_type != "FS" && $check_wallet >= 0)
-                        {
-                             Tbl_slot::id($tree->placement_tree_parent_id)->update($update_recipient);                           
-                        }
+                        Tbl_slot::id($tree->placement_tree_parent_id)->update($update_recipient);                           
+
                         /* UPDATE SLOT CHANGES TO DATABASE */
 
                         $update_recipient = null;

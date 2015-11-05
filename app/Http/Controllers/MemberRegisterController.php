@@ -55,19 +55,24 @@ class MemberRegisterController extends Controller
 						$data =	$this->checkifvalidate2(Request::input(),$email);
 						if($data == "Success")
 						{
-							return Redirect::to('member');
+							$customer_info = Customer::info();
+					        if($customer_info)
+					        {
+							  	$message = 'Successfully added to your leads.';
+					 		  	return Redirect::to('member/leads')->with('success',$message);
+						    }    
+						    else
+						    {
+		    					$data2 = "Successfully become a lead of ".$email->account_name;
+								return Redirect::to('member/login')->with('greened',$data2);
+						    }
 						}
-						return Redirect::to('lead/'.$slug)->with('message',$data);
+							return Redirect::to('member/register')->with('message',$data)
+				                       		 ->withInput(Request::input());
 					}
 
 					//Auto Redirect if login already... or after registration success
-					$customer_info = Customer::info();
-			        if($customer_info)
-			        {
 
-					  	$message = 'Please logout first.';
-			 		  	return Redirect::to('member/leads')->with('message',$message);
-				    }    
 
 				    $data['_beneficiary_rel'] = Tbl_beneficiary_rel::all();
 					$data['country'] = DB::table('tbl_country')->where('archived',0)->get();
@@ -231,7 +236,7 @@ class MemberRegisterController extends Controller
 					$insert['account_expired']   	  = 0;
 					$insert['account_approved']  	  = 0;
 					$info = DB::table('tbl_account')->insertGetId($insert);
-					Customer::login($info,$insert['account_password']);
+					// Customer::login($info,$insert['account_password']);
 					$data2 = true;
 					$x['lead_account_id'] = $email->account_id;
 					$x['account_id'] = $info;

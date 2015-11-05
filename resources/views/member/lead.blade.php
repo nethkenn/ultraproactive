@@ -97,7 +97,7 @@
     <div style="color: #77818e; font-size: 12p.5x;">You might invite people using this link. </br>People who gives their information using your link become your Leads</div>
     <div>
         @if($acc->account_email)
-             <input style="color: #f47265; font-size: 12.5px; width: 80%; margin: 20px auto; padding: 10px; text-align: center; border: 1px solid #eeeeee;" type="text" value="{{$_SERVER['SERVER_NAME']}}/lead/{{$acc->account_username}}"></div>
+            <a style="color: #f47265; font-size: 12.5px; width: 80%;  padding: 10px; text-align: center; " target="_blank" href="/lead/{{$acc->account_username}}">{{$_SERVER['SERVER_NAME']}}/lead/{{$acc->account_username}}</a></div>
         @else
              <input style="color: #f47265; font-size: 12.5px; width: 80%; margin: 20px auto; padding: 10px; text-align: center; border: 1px solid #eeeeee;" type="text" value="Please add your email first in your account settings."></div>
         @endif
