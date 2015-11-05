@@ -6,131 +6,144 @@
 	    </div>
 	    <div class="buttons col-md-4 text-right">
 	        <button onclick="location.href='admin/maintenance/codes'" type="button" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back</button>
-	        <button onclick="$('#code-add-form').submit();" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Generate</button>
+	        <button type="button" class="btn btn-primary generate-code-btn"><i class="fa fa-save"></i> Generate</button>
 	    </div>
     </div>
-
     <div class="col-md-12 form-group-container">
         <form id="code-add-form" method="post">
                 <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
-                <div class="form-group col-md-6">
-            		<label for="membership">Membership</label>
-                    @if($_error['membership_id'])
-                        <div class="col-md-12 alert alert-danger form-errors">
-                            <ul>
-                                @foreach($_error['membership_id'] as $error)
-                                    <li>{{$error}}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                    <select name="membership_id" class="form-control">
-                        @if($_membership)
-                            @foreach($_membership as $membership)
-                                <option value="{{$membership->membership_id}}" {{Request::input('membership_id') == $membership->membership_id ? 'selected' : ''}}>{{$membership->membership_name}}</option>
+                <div class="col-md-12">
+                    <table class="tbl-code-cart table table-bordered">
+                        <caption><h4>Cart</h4></caption>
+                        <thead>
+                            <tr>
+                                <th>Membership ID</th>
+                                <th>Membership Name</th>
+                                <th>Product Package Name</th>
+                                <th>Qty</th>
+                                <th>Membership Price</th>
+                                <th>Sub Total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        
+                        </tbody>
+                    </table>
+                </div>
+                @if($errors->all())
+                    <div class="form-group col-md-12">
+                        <ul class="text-danger">
+                            @foreach($errors->all() as $err)
+                                <li>{{$err}}</li>
                             @endforeach
-                        @endif
-                    </select>
-            	</div>
-                <div class="form-group col-md-6">
-                    <label for="code_type">Code Type</label>
-                    @if($_error['code_type_id'])
-                        <div class="col-md-12 alert alert-danger form-errors">
-                            <ul>
-                                @foreach($_error['code_type_id'] as $error)
-                                    <li>{{$error}}</li>
+                        </ul>
+                    </div>
+                @endif
+                    <div class="form-group col-md-12">
+                        <label for="Order Form Number">Order form Number</label>
+                        <input type="text" name="order_form_number" class="form-control" value="{{Request::old('order_form_number')}}"> 
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="Tendered Payment">Tendered Payment</label>
+                        <input type="number" name="tendered_payment" class="form-control" value="{{Request::old('tendered_payment')}}"> 
+                    </div>
+                    <div class="form-group col-md-12">
+                		<label for="membership">Membership</label>
+                        <select name="membership_id" class="form-control selected-membership-id">
+                            @if($_membership)
+                                @foreach($_membership as $membership)
+                                    <option {{Request::old('membership_id') == $membership->membership_id ? 'selected' : ''}} value="{{$membership->membership_id}}"}>{{$membership->membership_name}}</option>
                                 @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                    <select name="code_type_id" class="form-control">
-                        @if($_code_type)
-                        @foreach($_code_type as $code_type)
-                            <option value="{{$code_type->code_type_id}}" {{Request::input('code_type_id') == $code_type->code_type_id ? 'selected' : ''}}>{{$code_type->code_type_name}}</option>
-                        @endforeach
-                        @endif
-                    </select>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="Product Inclusion">Package Inclusion</label>
-                    @if($_error['product_package_id'])
-                        <div class="col-md-12 alert alert-danger form-errors">
-                            <ul>
-                                @foreach($_error['product_package_id'] as $error)
-                                    <li>{{$error}}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                    <select name="product_package_id" class="form-control select-product_package" request-product-package-id = {{Request::input('product_package_id')}}>
-                        <option value="">Select Product Package</option>
-<!--                          @if($_prod_package)
-                        @foreach($_prod_package as $prod_package)
-                            <option value="{{$prod_package->product_package_id}}">{{$prod_package->product_package_name}}</option>
-                        @endforeach
-                        @endif -->
-                    </select>
-                </div>
+                            @endif
+                        </select>
+                	</div>
+                    <div class="form-group col-md-12">
+                        <label for="Product Inclusion">Package Inclusion</label>
+                        <select name="product_package_id" class="form-control selected-product_package_id">
+                        </select>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <button class="btn btn-default add-to-cart-btn">Add to Cart</button>
 
-                <div class="form-group col-md-6">
-                    <label for="Recipient">Recipient</label>
-                    @if($_error['account_id'])
-                        <div class="col-md-12 alert alert-danger form-errors">
-                            <ul>
-                                @foreach($_error['account_id'] as $error)
-                                    <li>{{$error}}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                    <select data-placeholder="Select member"  name="account_id" class="form-control chosen-select" placeholder="Select Members">    
-                        <option value=""></option>
-                        @if($_account)
-                        @foreach($_account as $account)
-                            <option value="{{$account->account_id}}" {{Request::input('account_id') == $account->account_id ? 'selected' : ''}}>{{$account->account_name}} ({{$account->account_username}})</option>
-                        @endforeach
-                        @endif()
-                    </select>
-                </div>
-                <div class="form-group col-md-12">
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="Recipient">Code multiplier</label>
-                    @if($_error['code_multiplier'])
-                        <div class="col-md-12 alert alert-danger form-errors">
-                            <ul>
-                                @foreach($_error['code_multiplier'] as $error)
-                                    <li>{{$error}}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                    <input class="form-control" type="number" value="{{Request::input('code_multiplier')  ? Request::input('code_multiplier') : '1'}}" name="code_multiplier"/>
-                </div>  
-                                <div class="form-group col-md-6">
-                    <label for="Inventory Update">Inventory Update</label>
-                    @if($_error['inventory_update_type_id'])
-                        <div class="col-md-12 alert alert-danger form-errors">
-                            <ul>
-                                @foreach($_error['inventory_update_type_id'] as $error)
-                                    <li>{{$error}}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                    <select name="inventory_update_type_id" class="form-control">
-                        @if($_inventory_update_type)
-                        @foreach($_inventory_update_type as $inventory_update_type)
-                            <option value="{{$inventory_update_type->inventory_update_type_id}}" {{Request::input('inventory_update_type_id') == $inventory_update_type->inventory_update_type_id ? 'selected' : '' }}>{{$inventory_update_type->inventory_update_type_name}}</option>
-                        @endforeach
-                        @endif
-                    </select>
-                </div>      
-        </form>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="code_type">Code Type</label>
+                        <select name="code_type_id" class="form-control">
+                            @if($_code_type)
+                            @foreach($_code_type as $code_type)
+                                <option value="{{$code_type->code_type_id}}" {{Request::old('code_type_id') == $code_type->code_type_id ? 'selected' : ''}}>{{$code_type->code_type_name}}</option>
+                            @endforeach
+                            @endif
+                        </select>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="Recipient">Recipient</label>
+                        <select data-placeholder="Select member"  name="account_id" class="form-control chosen-select" placeholder="Select Members">    
+                            <option value=""></option>
+                            @if($_account)
+                            @foreach($_account as $account)
+                                <option value="{{$account->account_id}}" {{Request::old('account_id') == $account->account_id ? 'selected' : ''}}>{{$account->account_name}} ({{$account->account_username}})</option>
+                            @endforeach
+                            @endif()
+                        </select>
+                    </div>
+                    <div class="form-group col-md-12">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="Inventory Update">Inventory Update</label>
+                        <select name="inventory_update_type_id" class="form-control">
+                            @if($_inventory_update_type)
+                            @foreach($_inventory_update_type as $inventory_update_type)
+                                <option value="{{$inventory_update_type->inventory_update_type_id}}" {{Request::old('inventory_update_type_id') == $inventory_update_type->inventory_update_type_id ? 'selected' : '' }}>{{$inventory_update_type->inventory_update_type_name}}</option>
+                            @endforeach
+                            @endif
+                        </select>
+                    </div>
+        </form> 
     </div>
+<div class="remodal loader-container" data-remodal-id="code-modal-qty" data-remodal-options="">
+  <button data-remodal-action="close" class="remodal-close modal-btn"></button>
+    <form class="form-code-qty">
+        <img class="loader" src="/resources/assets/img/floating _arrays.GIF" style="display:none;">
+        <div class="form-code-qty-msg">
+        </div>
+        <div class="form-group">
+            <label>Enter Quantity</label>
+            <input type="number" name="qty" class="form-control">
+            <input type="hidden" name="product_package_id">
+        </div>
+        <button data-remodal-action="cancel" class="remodal-cancel modal-btn">Cancel</button>
+        <button class="remodal-confirm add-to-cart-submit modal-btn">OK</button>
+    <form>
+</div>
 @endsection
 @section('css')
 <link rel="stylesheet" type="text/css" href="/resources/assets/chosen_v1.4.2/chosen.min.css">
+    <style type="text/css">
+    .loader-container{
+        position: relative;
+    }
+
+    .loader{
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+        z-index: 99;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        -moz-transform: translateY(-50%);
+          -o-transform: translateY(-50%);
+             transform: translateY(-50%);
+
+    }
+
+    .load_opacity{
+        opacity: .5;
+    }
+    </style>
 @endsection
 @section('script')
     <script type="text/javascript" src="/resources/assets/chosen_v1.4.2/chosen.jquery.min.js"></script>
@@ -138,11 +151,18 @@
     <script type="text/javascript">
         
 
-        $(document).ready(function()
-        {
+        jQuery(document).ready(function($){
 
-            
-            $('[name="membership_id"]').on('change', function(event)
+            $('.generate-code-btn').prop('disabled',false);
+
+            $('.generate-code-btn').on('click', function(event){
+
+                event.preventDefault();    
+                $(this).prop('disabled', true);
+                $('#code-add-form').submit();
+            });
+
+            $('.selected-membership-id').on('change', function(event)
             {
 
 
@@ -156,38 +176,32 @@
                     data: {membership_id: membership_id},
                 })
                 .done(function(data) {
-       
-                    $('[name="product_package_id"] option:not([value=""])').remove();
 
-
-
+                    var selectedPackageID =  $('.selected-product_package_id');
+                    selectedPackageID.empty();
                     if(data.length != 0)
                     {
+                        var append = "";
+                        var oldRequestPackageId = "{{Request::old('product_package_id')}}";
+                        
                         $.each(data, function(index, val)
                         {
-                            var check = request_product_package_id == val['product_package_id'] ? 'selected' : '';
+                            var selected = oldRequestPackageId == val.product_package_id ? 'selected' : '' ;
+                            append  += '<option value="'+ val.product_package_id +'" '+ selected +' >'+ val.product_package_name  +'</option>';
 
-                            $('[name="product_package_id"]').append('<option value="'+val['product_package_id']+'" '+check+'>'+val['product_package_name']+'</option>')
                         });
-                            $('[name="product_package_id"]').append("<option value='null'>No product package</option>");
-                    }
-                    else
-                    {
-                         $('[name="product_package_id"]').append("<option>No product package</option>");
+                        selectedPackageID.append(append);
                     }
                    
                 })
                 .fail(function() {
-                    // console.log("error");
                     alert('Something went wrong on loading product package/s.');
                 })
-                .always(function() {
-                    // console.log("complete");
+                .always(function(){
                 });
             });
 
-             $('[name="membership_id"]').trigger('change');
-
+            $('.selected-membership-id').trigger('change');
 
 
 
@@ -197,4 +211,5 @@
     <script type="text/javascript">
         $(".chosen-select").chosen({disable_search_threshold: 10});
     </script>
+    <script type="text/javascript" src="/resources/assets/admin/code_add.js"></script>
 @endsection

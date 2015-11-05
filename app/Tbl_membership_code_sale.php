@@ -15,8 +15,12 @@ class Tbl_membership_code_sale extends Model
 							'payment',
 							'total_amount',
 							'voucher_id',
+							'order_form_number',
+							'code_type_id',
+							'shipping_type',
+							'tendered_payment',
+							'change'
 	 						];
-
 
 	public function getCreatedAtAttribute($value)
 	{	

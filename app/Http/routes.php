@@ -29,6 +29,8 @@ Route::any('/member/genealogy/get', 'MemberGenealogyController@get');
 Route::any('/member/genealogy/downline', 'MemberGenealogyController@downline');
 
 
+
+
 /* Transfer wallet */
 Route::any('/member/transfer_wallet', 'MemberTransferWalletController@index');
 Route::any('/member/transfer_wallet/get', 'MemberTransferWalletController@get');
@@ -232,16 +234,18 @@ Route::any('admin/content/team/delete', 'AdminTeamController@delete');
  */
 Route::get('admin/maintenance/codes/load-product-package', 'AdminCodeController@load_product_package');
 Route::get('admin/maintenance/codes', 'AdminCodeController@index');
-Route::any('admin/maintenance/codes/add', 'AdminCodeController@add_code');
+Route::get('admin/maintenance/codes/add', 'AdminCodeController@add_code');
+Route::post('admin/maintenance/codes/add', 'AdminCodeController@addCodePost');
 Route::any('admin/maintenance/codes/edit', 'AdminCodeController@edit_code');
 Route::get('admin/maintenance/codes/get', 'AdminCodeController@ajax_get_membership_code');
 Route::post('admin/maintenance/codes/block', 'AdminCodeController@block');
 Route::post('admin/maintenance/codes/transfer_code', 'AdminCodeController@transfer_code');
 Route::get('admin/maintenance/codes/verify_code', 'AdminCodeController@verify_code');
 Route::any('admin/maintenance/codes/or', 'AdminCodeController@show_sale_or');
-
-
-
+Route::post('admin/maintenance/codes/add-to-cart', 'AdminCodeController@addToCart');
+Route::get('admin/maintenance/codes/show-cart', 'AdminCodeController@showCart');
+Route::post('admin/maintenance/codes/remove-from-cart', 'AdminCodeController@removeFromCart');
+Route::get('admin/maintenance/codes/or2', 'AdminCodeController@membershipSales');
 
 Route::get('admin/maintenance/product', 'AdminProductController@index');
 Route::any('admin/maintenance/product/add', 'AdminProductController@add_product');
@@ -567,7 +571,6 @@ Route::any('admin/migration/start_rematrix', 'AdminMigrationController@start_rem
 Route::any('admin/migration/rematrix', 'AdminMigrationController@rematrix');
 Route::any('admin/migration/start_recompute', 'AdminMigrationController@start_recompute');
 Route::any('admin/migration/recompute', 'AdminMigrationController@recompute');
-
 
 Route::get('member/e-payment/transaction-log', 'MemberEpaymentLogController@index');
 Route::post('member/e-payment/transaction-log', 'MemberEpaymentLogController@convert_slot_to_ewallet');

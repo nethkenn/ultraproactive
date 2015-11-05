@@ -132,7 +132,8 @@ class MemberCheckoutController extends Controller
                    
 
 
-
+                    $orderFormNumber = Globals::saveUniqueRandomOrderFormNumber();
+                    $insert['order_form_number'] = $orderFormNumber;
                     $voucher = new Tbl_voucher($insert);
                     $voucher->save();
                     
@@ -284,7 +285,8 @@ class MemberCheckoutController extends Controller
                 
 
 
-
+                $orderFormNumber = Globals::saveUniqueRandomOrderFormNumber();
+                $insert['order_form_number'] = $orderFormNumber;
                 $voucher = new Tbl_voucher($insert);
                 $voucher->save();
 
@@ -307,6 +309,7 @@ class MemberCheckoutController extends Controller
                 $transact['earned_pv'] = 0;
                 $transact['created_at'] = Carbon::now();
                 $transact['transaction_slot_id'] = Request::input('slot_id');
+                $transact['order_form_number'] = $orderFormNumber;
                 $transaction_id = Log::transaction($transact);
 
 
@@ -368,7 +371,8 @@ class MemberCheckoutController extends Controller
                     $prod_transact['product_discount_amount'] =  $discount_amount;
                     $prod_transact['transaction_total'] = $value['total'];   
                     $prod_transact['rel_transaction_log'] = $prod_pts->product_name; 
-                    $prod_transact['sub_earned_pv'] = $prod_pts->unilevel_pts * $value['qty'];   
+                    $prod_transact['sub_earned_pv'] = $prod_pts->unilevel_pts * $value['qty']; 
+                      
                     Log::transaction_product($prod_transact);
 
                     /*TOTAL EARNED PV*/

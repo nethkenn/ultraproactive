@@ -28,6 +28,7 @@ use App\Tbl_voucher_has_product;
 use App\Classes\Log;
 use Carbon\Carbon;
 use Mail;
+use PDF;
 
 
 class AdminCodeController extends AdminController {
@@ -39,6 +40,8 @@ class AdminCodeController extends AdminController {
 	 */
 	public function index()
 	{
+
+
 		$data['_account'] = Tbl_account::all();
 		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Membership Code");
 		return view('admin.maintenance.code', $data);
@@ -93,286 +96,232 @@ class AdminCodeController extends AdminController {
 	 */
 	public function add_code()
 	{
-		$data['_error'] = null;
+
 		$data['_membership'] = Tbl_membership::where('membership_entry', 1)->where("archived", 0)->get();
 		$data['_code_type'] = Tbl_code_type::all();
-		$data['_prod_package'] = Tbl_product_package::where('archived', 0)->get();
+		// $data['_prod_package'] = Tbl_product_package::where('archived', 0)->get();
 		$data['_account'] = Tbl_account::all();
 		$data['_inventory_update_type'] = Tbl_inventory_update_type::all();
-		$put['membership_id'] = Request::input('membership_id');
-		$put['code_type_id'] = Request::input('code_type_id');
-		$put['product_package_id'] = Request::input('product_package_id');
-		$put['account_id'] = Request::input('account_id');
-		$put['code_multiplier'] = Request::input('code_multiplier');
-		$put['inventory_update_type_id'] = Request::input('inventory_update_type_id');
-
-		if($put['product_package_id'] == "null")
-		{
-			$put['product_package_id'] = null;
-		}
-
-		if(isset($_POST['membership_id']))
-		{
-
-			$rules['code_type_id'] = 'required|exists:tbl_code_type,code_type_id';
-			if(Request::input('product_package_id') == "")
-			{
-				$rules['product_package_id'] = 'required|exists:tbl_product_package,product_package_id,membership_id,'.Request::input('membership_id').'|foo:'.Request::input('inventory_update_type_id');
-			}
-			$rules['inventory_update_type_id'] = 'required|exists:tbl_inventory_update_type,inventory_update_type_id';
-			$rules['account_id'] = 'required|exists:tbl_account,account_id';
-			$rules['code_multiplier'] = 'min:1|integer';
-			$rules['membership_id'] = 'required|exists:tbl_membership,membership_id|check_member';
-
-			$message['product_package_id.foo'] = "One or more included product might be out of stock";
-			$message['product_package_id.check_member'] = "This membership is not for Member entry";
-
-
-			Validator::extend('check_member', function($attribute, $value, $parameters)
-			{
-	
-				$membership = Tbl_membership::find($value);
-				if($membership)
-				{
-					return true;
-				}
-				else
-				{
-					return $membership->membership_entry == 1;
-				}
-
-			});
-
-			/**
-			 * CHECK PRODUCT INVENTORY
-			 */
-			Validator::extend('foo', function($attribute, $value, $parameters)
-			{
-				$prod = Tbl_product_package_has::where('product_package_id', $value )->get();
-           		//IF inventory_update_type_id VALUE IS "DEDUCT RIGHT AWAY / 2" CHECK FOR INVENTORY
-           		if($parameters[0] == 2)
-           		{
-           			foreach ($prod as $key => $value)
-           			{
-           				$prodpack = Tbl_product::find($value->product_id);
-
-
-			            $deducted = $prodpack->stock_qty - $value->quantity; 
-						// die(var_dump($prodpack->stock_qty, $value->quantity, $deducted,  , ));
-	
-						if($prodpack->stock_qty >= $value->quantity && $deducted >= 0)
-						{
-							return true;
-						}
-
-						else
-						{
-							return false;
-						}	
-	       			}
-           		}
-           		else
-           		{
-           			return true;
-           		}      	        	
-       	 	});
-
-			
-
-			$validator = Validator::make(Request::input(),$rules, $message);
-			
-			if (!$validator->fails())
-			{
-
-				$selected_membership = Tbl_membership::find(Request::input('membership_id'));
-				$membership_total_amount = 0;
-				
-
-				for ($i=0; $i < Request::input('code_multiplier'); $i++)
-				{ 	
-
-					/**
-					* INSERT TO Tbl_membership_code
-					*/
-					$name =DB::table('tbl_account')->where('account_username',Session::get('admin')['username'])->first();
-					$membership_code = new Tbl_membership_code($put);
-					$membership_code->code_activation = Globals::create_membership_code();
-					//IF code_type_id IS FREE SLOT / 2 SET PRODUCT PACKAGE TO NULL
-					// if(Request::input('code_type_id')==2 || Request::input('inventory_update_type_id') == 3)
-					if(Request::input('code_type_id')==2)
-					{
-						$membership_code->product_package_id = null;
-					}
-					$membership_code->generated_by = Admin::info()->account_id;
-					$membership_code->account_id =  Request::input('account_id') ?: null;
-					$membership_code->created_at = Carbon::now();
-					$membership_code->save();
-
-					Log::Admin(Admin::info()->account_id,Admin::info()->account_username." create Membership Code Pin #".$membership_code->code_pin);
-					/**
-					* INSERT TO Rel_membership_code history
-					*/
-					$insert['code_pin'] = $membership_code->code_pin;
-					$insert['by_account_id'] = $name->account_id;
-					$insert['to_account_id'] = $membership_code->account_id;
-					$insert['updated_at'] = $membership_code->created_at;
-					$insert['description'] = "Created by ".$name->account_name;
-					DB::table("tbl_member_code_history")->insert($insert);
-
-					if($put['product_package_id'] != null)
-					{
-						/**
-						 * INSERT TO Rel_membership_code
-						 */
-						$insert2['code_pin'] = $membership_code->code_pin;
-						$insert2['product_package_id'] = Request::input('product_package_id');
-						Rel_membership_code::insert($insert2);
-					}
-
-
-
-					$membership_total_amount = $membership_total_amount + $selected_membership->membership_price; 
-					$sale[] = $membership_code->code_pin;
-
-
-
-
-						/**
-						 * INSERT TO MEMBERSHIP SALE
-						 * 
-						 */
-						if(Request::input('code_type_id') == 1  || Request::input('code_type_id') == 3)
-						{
-							$insert_membership_code_sale['membershipcode_or_code'] = Globals::create_membership_code_sale();
-							$insert_membership_code_sale['sold_to'] = Request::input('account_id');
-							$insert_membership_code_sale['generated_by'] = Admin::info()->account_id;
-							$insert_membership_code_sale['total_amount'] = $membership_total_amount;
-							$insert_membership_code_sale['payment'] = 1;
-							$tbl_membership_code_sale = new Tbl_membership_code_sale($insert_membership_code_sale);
-							$tbl_membership_code_sale->save($insert_membership_code_sale);
-						}
-
-
-						$new_voucher = null;
-						//IF "CLAIMABLE" CREATE PRODUCT VOUCHER 
-						if(Request::input('inventory_update_type_id') == 1 &&  Request::input('code_type_id') != 2 && $put['product_package_id'] != null)
-						{
-							$insert_voucher['account_id'] = Request::input('account_id');
-							$insert_voucher['or_number'] = "(MEMBERSHIPCODE PURCHASE) #".$tbl_membership_code_sale->membershipcode_or_num. ' CODE : '.$tbl_membership_code_sale->membershipcode_or_code;
-							$insert_voucher['voucher_code'] = Globals::create_voucher_code();
-							
-							if(Request::input('code_type_id') == 3)
-							{
-								$insert_voucher['status'] = 'delayed';
-							}
-							else
-							{
-								$insert_voucher['status'] = 'unclaimed';						
-							}
-
-
-							$insert_voucher['discount'] = 0;
-							$insert_voucher_membership = Tbl_membership::find(Request::input('membership_id'));
-							$insert_voucher['total_amount']= $insert_voucher_membership->membership_price;
-							$insert_voucher['payment_mode'] = 1;
-							$insert_voucher['membership_code'] = 1;
-							$insert_voucher['processed_by_name'] = Admin::info()->account_name .' ('.Admin::info()->admin_position_name.')';
-							$insert_voucher['admin_id'] = Admin::info()->admin_id;
-
-							$new_voucher = new Tbl_voucher($insert_voucher);
-							$new_voucher->save();
-
-							$prod = Tbl_product_package_has::where('product_package_id', Request::input('product_package_id'))->product()->get();
-							foreach ($prod as $key => $value)
-							{
-								$prodpack = Tbl_product::find($value->product_id);
-								$insert_voucher_item['voucher_id'] = $new_voucher->voucher_id;
-								$insert_voucher_item['product_id'] = $value->product_id;
-								$insert_voucher_item['price'] = $value->price;
-								$insert_voucher_item['sub_total'] = 0;
-								$insert_voucher_item['unilevel_pts'] = $prodpack->unilevel_pts * (Integer)Request::input('code_multiplier');
-								$insert_voucher_item['binary_pts'] = $prodpack->binary_pts * (Integer)Request::input('code_multiplier');
-								$insert_voucher_item['qty'] = $value->quantity;
-								$new_tbl_voucher_has_product = new Tbl_voucher_has_product($insert_voucher_item);
-								$new_tbl_voucher_has_product->save();
-							}
-
-						}
-
-						/**
-						 *UPDATE THE VOUCHER ID IF ANY 
-						 */
-						if(isset($new_voucher))
-						{
-							$tbl_membership_code_sale_2 = Tbl_membership_code_sale::find($tbl_membership_code_sale->membershipcode_or_num);
-							$tbl_membership_code_sale_2->voucher_id = $new_voucher->voucher_id;
-							$tbl_membership_code_sale_2->save();
-						}
-						
-
-
-
-						//"Deduct Right Away" DEDUCT THE PRODUCT INVENTORY
-						if(Request::input('inventory_update_type_id') == 2 && Request::input('code_type_id') != 2 && $put['product_package_id'] != null)
-						{
-							$prod = Tbl_product_package_has::where('product_package_id', Request::input('product_package_id'))->get();
-							foreach ($prod as $key => $value)
-							{
-								$prodpack = Tbl_product::find($value->product_id);
-								$updated_stock = $prodpack->stock_qty - ($value->quantity * (Integer)Request::input('code_multiplier'));
-								Tbl_product::where('product_id',$value->product_id)->lockForUpdate()->update(['stock_qty' => $updated_stock]);
-							}
-			           		
-						}
-
-
-						/**
-						 * INSERT TO MEMBERSHIP SALE PRODUCT
-						 * IF CODE TYPE IS NOT FREE SLOT
-						 */
-						if(Request::input('code_type_id') == 1 || Request::input('code_type_id') == 3 )
-						{
-							foreach ( (array)$sale as $key => $value)
-							{
-								$insert_membership_code_sale_has_code['code_pin'] = $value;
-								$insert_membership_code_sale_has_code['sold_price'] = Tbl_membership::find(Request::input('membership_id'))->membership_price;
-								$insert_membership_code_sale_has_code['membershipcode_or_num'] = $tbl_membership_code_sale->membershipcode_or_num;
-								$tbl_membership_code_sale_has_code = new Tbl_membership_code_sale_has_code($insert_membership_code_sale_has_code);
-								$tbl_membership_code_sale_has_code->save();
-							}
-							$sold_to = Tbl_account::find(Request::input('account_id'));
-							$account_name = $sold_to->account_name . " (".$sold_to->account_username.')';
-							$log = "Sold membership_code to " .$account_name. 'as '. Admin::info()->admin_position_name .' with membership sale OR#'.$tbl_membership_code_sale->membershipcode_or_num . '.';
-							Log::account(Admin::info()->account_id, $log);
-							// return Redirect('admin/maintenance/codes/or?membershipcode_or_num='.$tbl_membership_code_sale->membershipcode_or_num);
-						}
-
-				}
-				
-
-
-
-
-				return Redirect('admin/maintenance/codes');
-
-			}
-			else
-			{
-				$error =  $validator->errors();
-
-				$data['_error']['code_type_id'] = $error->get('code_type_id');
-				$data['_error']['membership_id'] = $error->get('membership_id');
-				$data['_error']['product_package_id'] = $error->get('product_package_id');
-				$data['_error']['inventory_update_type_id'] = $error->get('inventory_update_type_id');
-				$data['_error']['account_id'] = $error->get('account_id');
-				$data['_error']['code_multiplier'] = $error->get('code_multiplier');
-
-			}
-
-			
-		}
 
 		return view('admin.maintenance.code_add',$data);
+	}
+
+	public function addCodePost()
+	{
+		$messages = [];
+		$requests['membership_id'] = Request::input('membership_id');
+		$requests['product_package_id'] = Request::input('product_package_id');
+		$requests['code_type_id'] = Request::input('code_type_id');
+		$requests['account_id'] = Request::input('account_id');
+		$requests['inventory_update_type_id'] = Request::input('inventory_update_type_id');
+		$requests['order_form_number'] = Request::input('order_form_number');
+		$requests['tendered_payment'] = Request::input('tendered_payment');
+		
+		$cart_count = count((array)Session::get('processCodeCart'));
+
+		$requests['cart'] = $cart_count;
+		$_prodCart = (array)Session::get('processCodeCart');
+		$cartTotalAmount = 0; 
+		foreach ($_prodCart as $prodCartKey => $prodCartValue)
+		{
+
+    		$_product = DB::table('tbl_product_package_has')->leftJoin('tbl_product','tbl_product.product_id','=','tbl_product_package_has.product_id')->where('tbl_product_package_has.product_package_id', $prodCartValue['product_package_id'])->get();
+    		foreach ($_product as $productKey => $productValue)
+    		{
+    			$requests["product_id_".$productValue->product_id] = $productValue->product_id;
+    			$pcs = $prodCartValue['qty'] * $productValue->quantity;
+    			$stock = $productValue->stock_qty;
+    			$rules["product_id_".$productValue->product_id] = "foo:$stock,$pcs";
+    			$messages["product_id_".$productValue->product_id.".foo"] = "Product ID #".$productValue->product_id. " - ". $productValue->product_name." has unsufficient stock.";
+    		}
+
+    		$cartTotalAmount = $cartTotalAmount + $prodCartValue['sub_total'];
+
+		}
+
+
+
+		
+
+		$rules['membership_id'] = 'required|exists:tbl_membership,membership_id,membership_entry,1,archived,0';
+		$rules['order_form_number'] = 'unique:tbl_order_form_number,order_form_number';
+		$rules['product_package_id'] = 'required|exists:tbl_product_package,product_package_id,archived,0,membership_id,'.Request::input('membership_id');
+		$rules['code_type_id'] = 'required|exists:tbl_code_type,code_type_id';
+		$rules['account_id'] = 'required|exists:tbl_account,account_id';
+		$rules['inventory_update_type_id'] = 'required|exists:tbl_inventory_update_type,inventory_update_type_id';
+		$rules['cart'] = 'required|integer|min:1';
+		$rules['tendered_payment'] = 'required|integer|min:'.$cartTotalAmount;
+
+
+
+		/* CHECK PROD INVENTORY */
+		Validator::extend('foo', function($attribute, $value, $parameters, $validator) {
+
+            $current_stock = $parameters[0];
+            $cartProdCount = $parameters[1];
+
+            $stockLessProdCount = $current_stock - $cartProdCount;
+            return $stockLessProdCount >= 0;
+        });
+
+		$validator = Validator::make($requests, $rules, $messages);
+
+        if ($validator->fails())
+        {
+            return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+		/* GENERATE ORDER FORM NUMBER */
+		$OrderFormNum = Request::input('order_form_number') != null || Request::input('order_form_number') != "" ? Request::input('order_form_number'): Globals::saveUniqueRandomOrderFormNumber(Globals::generateRandomOrderFormNumber());
+
+		/* GENERATE CODE SALE */
+		$insertMembershipCodeSale['order_form_number'] = $OrderFormNum;
+		$insertMembershipCodeSale['membershipcode_or_code'] = Globals::create_membership_code_sale(Globals::code_generator());
+		$insertMembershipCodeSale['sold_to'] = Request::input('account_id');
+		$insertMembershipCodeSale['generated_by'] = Admin::info()->account_id;
+		$insertMembershipCodeSale['generated_by_name'] = Admin::info()->account_name;
+		$insertMembershipCodeSale['code_type_id'] = Request::input('code_type_id');
+		$insertMembershipCodeSale['payment'] = 1;
+		$insertMembershipCodeSale['shipping_type'] = 1; 
+		$insertMembershipCodeSale['tendered_payment'] = Request::input('tendered_payment');
+		$insertMembershipCodeSale['change'] = (double) Request::input('tendered_payment') - (double) $cartTotalAmount;
+		$membershipCodeSale = new Tbl_membership_code_sale($insertMembershipCodeSale);
+		$membershipCodeSale->save();
+
+		/* CART */
+		$_cart = (array) Session::get('processCodeCart');
+
+		$requests['cart'] = count($_cart);
+
+		$totalSaleArray = []; 
+		
+		foreach ($_cart as $key => $value)
+		{
+
+
+
+			$cartMembership = Tbl_membership::find($value['membership_id']);
+			/* FOREACH CART QTY */
+
+			for ($i=0; $i < $value['qty']; $i++)
+			{
+
+				$insert_membership_code['code_activation'] = Globals::create_membership_code(Globals::code_generator());
+				$insert_membership_code['code_type_id'] = Request::input('code_type_id');
+				$insert_membership_code['membership_id'] = Request::input('membership_id');
+				$insert_membership_code['product_package_id'] = Request::input('code_type_id')== 2 ? null : Request::input('code_type_id');
+				$insert_membership_code['generated_by'] =  Admin::info()->account_id;
+				$insert_membership_code['inventory_update_type_id'] = Request::input('inventory_update_type_id');
+				$insert_membership_code['account_id'] = Request::input('account_id');
+				$insert_membership_code['order_form_number'] = $OrderFormNum;
+				
+				$membership_code = new Tbl_membership_code($insert_membership_code);
+				$membership_code->save();
+
+				$insertMemberSaleHasCode['membershipcode_or_num'] = $membershipCodeSale->membershipcode_or_num;
+				$insertMemberSaleHasCode['code_pin'] = $membership_code->code_pin;
+				$insertMemberSaleHasCode['sold_price'] = $cartMembership->membership_price;
+				Tbl_membership_code_sale_has_code::insert($insertMemberSaleHasCode);
+
+				/**
+				* INSERT TO Rel_membership_code history
+				*/
+				$insert_member_code_history['code_pin'] = $membership_code->code_pin;
+				$insert_member_code_history['by_account_id'] = Admin::info()->account_id;
+				$insert_member_code_history['to_account_id'] = $membership_code->account_id;
+				$insert_member_code_history['updated_at'] = $membership_code->created_at;
+				$insert_member_code_history['description'] = "Created by " .Admin::info()->account_name;
+				DB::table("tbl_member_code_history")->insert($insert_member_code_history);
+
+
+				if(Request::input('product_package_id') != null)
+				{
+					/**
+					 * INSERT TO Rel_membership_code
+					 */
+					$insert_rel_membership_code['code_pin'] = $membership_code->code_pin;
+					$insert_rel_membership_code['product_package_id'] = Request::input('product_package_id');
+					Rel_membership_code::insert($insert_rel_membership_code);
+
+				}
+				
+				// IF "CLAIMABLE" CREATE PRODUCT VOUCHER
+				$new_voucher = null;
+				if(Request::input('inventory_update_type_id') == 1 &&  Request::input('code_type_id') != 2 && Request::input('product_package_id') != null)
+				{
+					$insert_voucher['account_id'] = Request::input('account_id');
+					// $insert_voucher['or_number'] = "(MEMBERSHIPCODE PURCHASE) #".$tbl_membership_code_sale->membershipcode_or_num. ' CODE : '.$tbl_membership_code_sale->membershipcode_or_code;
+					$insert_voucher['or_number'] = "ORDER FORM NUMBER $OrderFormNum";
+					$insert_voucher['order_form_number'] = $OrderFormNum;;
+					$insert_voucher['voucher_code'] = Globals::create_voucher_code(Globals::code_generator());
+					
+					if(Request::input('code_type_id') == 3)
+					{
+						$insert_voucher['status'] = 'delayed';
+					}
+					else
+					{
+						$insert_voucher['status'] = 'unclaimed';						
+					}
+
+					$insert_voucher['discount'] = 0;
+					$insert_voucher['total_amount']= $cartMembership->membership_price;
+					$insert_voucher['payment_mode'] = 1;
+					$insert_voucher['membership_code'] = $membership_code->code_pin;
+					$insert_voucher['processed_by_name'] = Admin::info()->account_name .' ('.Admin::info()->admin_position_name.')';
+					$insert_voucher['admin_id'] = Admin::info()->admin_id;
+
+
+					$new_voucher = new Tbl_voucher($insert_voucher);
+					$new_voucher->save();
+
+					$prod = Tbl_product_package_has::where('product_package_id', Request::input('product_package_id'))->product()->get();
+					
+					foreach ($prod as $prod_key => $prod_val)
+					{
+						$prodpack = Tbl_product::find($prod_val->product_id);
+						$insert_voucher_item['voucher_id'] = $new_voucher->voucher_id;
+						$insert_voucher_item['product_id'] = $prod_val->product_id;
+						$insert_voucher_item['price'] = $prod_val->price;
+						$insert_voucher_item['sub_total'] = 0;
+						$insert_voucher_item['unilevel_pts'] = $prodpack->unilevel_pts;
+						$insert_voucher_item['binary_pts'] = $prodpack->binary_pts;
+						$insert_voucher_item['qty'] = $prod_val->quantity;
+						$new_tbl_voucher_has_product = new Tbl_voucher_has_product($insert_voucher_item);
+						$new_tbl_voucher_has_product->save();
+						Tbl_voucher_has_product::insert($insert_voucher_item);
+					}
+
+				}
+
+			} // end forloop
+
+			//"Deduct Right Away" DEDUCT THE PRODUCT INVENTORY
+			if(Request::input('inventory_update_type_id') == 2 && Request::input('code_type_id') != 2 && Request::input('product_package_id') != null)
+			{
+				$prod2 = Tbl_product_package_has::where('product_package_id', Request::input('product_package_id'))->get();
+				foreach ($prod2 as $key2 => $value2)
+				{
+					$prodpack = Tbl_product::find($value2->product_id);
+					$updated_stock = $prodpack->stock_qty - ($value2->quantity * (Integer)$_cart[$key2]['qty']);
+					Tbl_product::where('product_id',$value2->product_id)->lockForUpdate()->update(['stock_qty' => $updated_stock]);
+				}
+           		
+			}
+
+		} // end foreach
+
+
+		/* UPDATE THE CODE SALE FOR THE TOTAL SALE */
+		$totalCodeSale = Tbl_membership_code_sale_has_code::where('membershipcode_or_num', $membershipCodeSale->membershipcode_or_num)->sum('sold_price');
+		Tbl_membership_code_sale::where('membershipcode_or_num', $membershipCodeSale->membershipcode_or_num)->update(['total_amount' => $totalCodeSale]);
+		/* ADMIN LOG */ 
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." Generated membership code/s with Order Form Number : ".$OrderFormNum.".");
+		Session::forget('processCodeCart');
+
+		return redirect('/admin/maintenance/codes/or2?order_form_number='.$OrderFormNum);
 	}
 
 	public static function code_generator()
@@ -468,7 +417,6 @@ class AdminCodeController extends AdminController {
 	{
 
 
-		// dd();
 
 		$or_num = Request::input('membershipcode_or_num');
 
@@ -480,7 +428,7 @@ class AdminCodeController extends AdminController {
 		$sold_to = Tbl_account::find($membership_code_sale->sold_to);
 		$membership_code_sale->sold_to = $generated_by->account_name;
 		// $membership_code_sale->created_at = Carbon::createFromTimeStamp($membership_code_sale->created_at->toFormattedDateString())->toFormattedDateString();
-		// dd()
+		
 
 		$data['membership_code_sale'] = $membership_code_sale;
 
@@ -523,9 +471,6 @@ class AdminCodeController extends AdminController {
 
 			return json_encode($sold_to->account_email);
 		}
-	
-		// dd($data['_product']);
-
 
 		return view('admin/maintenance/code_or', $data);
 	}
@@ -538,6 +483,114 @@ class AdminCodeController extends AdminController {
 		$prodpack = Tbl_product_package::where('membership_id', Request::input('membership_id'))->get();
 
 		return $prodpack;
+
+
+	}
+
+	public function addToCart()
+	{
+
+		$packageId = Request::input('product_package_id');
+		$qty = (integer) Request::input('qty') <= 0 ? 1 : Request::input('qty');
+		$package = Tbl_product_package::leftJoin('tbl_membership', 'tbl_membership.membership_id','=','tbl_product_package.membership_id')
+										->where('tbl_product_package.product_package_id', $packageId)
+										->first();
+        if($package)
+        {
+        	$processCodeCart = (array) Session::get('processCodeCart');
+
+        	$inCart = false;
+    		foreach ($processCodeCart as $key => $value)
+    		{
+
+    			if($value['membership_id'] == $package->membership_id && $value['product_package_id'] == $package->product_package_id)
+    			{	
+    				/* IF ITEM IS IN THE CART ADD THE QTY */ 
+    				$inCart = true;
+    				$processCodeCart[$key]['qty'] = $processCodeCart[$key]['qty'] + $qty;
+    				$processCodeCart[$key]['membership_price'] = $package->membership_price;
+    				$processCodeCart[$key]['sub_total'] = (integer) $processCodeCart[$key]['qty'] * (double)$processCodeCart[$key]['membership_price'];
+    			}
+
+
+    		}
+    		/* IF ITEM IS NOT IN THE CART ADD THE ARRAY TO CART */ 
+    		if($inCart == false)
+    		{
+	    		$arrayCart['membership_id'] = $package->membership_id;
+	        	$arrayCart['membership_name'] = $package->membership_name;
+	        	$arrayCart['membership_price'] = $package->membership_price;
+	        	$arrayCart['qty'] = $qty;
+	        	$arrayCart['product_package_id'] = $package->product_package_id;
+	        	$arrayCart['product_package_name'] = $package->product_package_name;
+	        	$arrayCart['sub_total'] = (double) $arrayCart['membership_price'] * $qty;
+	        	$processCodeCart[] = $arrayCart;
+    		}
+
+    		/* SAVE THE SESSION */ 
+       		Session::put('processCodeCart', $processCodeCart);
+       		// Session::forget('processCodeCart');
+       		$data = Session::get('processCodeCart');
+        }
+        else
+        {
+        	$data = false;
+        }
+
+        return json_encode($data);
+
+	}
+
+	public function showCart()
+	{
+
+		$finalTotal = 0;
+		$data['cart'] = (array) Session::get('processCodeCart');
+		foreach ($data['cart'] as $key => $value)
+		{	
+			$finalTotal = $finalTotal + $value['sub_total'];
+		}
+
+		$data['finalTotal'] = $finalTotal;
+		return view('admin.maintenance.admin_code_cart', $data);
+	}
+
+	public function removeFromCart()
+	{
+		$cartIndex = Request::input('cartIndex');
+		$processCodeCart = (array) Session::get('processCodeCart');
+		if(array_key_exists($cartIndex, $processCodeCart))
+		{
+			unset($processCodeCart[$cartIndex]);
+			Session::put('processCodeCart', $processCodeCart);
+		}
+		return $cartIndex;
+
+
+	}
+
+	public function membershipSales()
+	{
+
+		$order_form_number = Request::input('order_form_number');
+		$codeSale = Tbl_membership_code_sale::select('tbl_membership_code_sale.*', 'sold_to_account.account_name as sold_to_name', 'sold_to_account.account_username as sold_to_username', 'generated_by_account.account_name as generated_by_name','generated_by_account.account_username as generated_by_username', 'payment_type.code_type_name as payment_type')
+												->where('tbl_membership_code_sale.order_form_number', $order_form_number)
+												->leftJoin('tbl_account as sold_to_account', 'sold_to_account.account_id' ,'=', 'tbl_membership_code_sale.sold_to')
+												->leftJoin('tbl_account as generated_by_account', 'generated_by_account.account_id' ,'=', 'tbl_membership_code_sale.generated_by')
+												->leftJoin('tbl_code_type as payment_type', 'payment_type.code_type_id','=','tbl_membership_code_sale.code_type_id')
+												->first();
+
+		$data['codeSale'] = $codeSale;
+		$codes = Tbl_membership_code_sale_has_code::where('tbl_membership_code_sale_has_code.membershipcode_or_num', $codeSale->membershipcode_or_num)
+													->leftJoin('tbl_membership_code','tbl_membership_code.code_pin', '=', 'tbl_membership_code_sale_has_code.code_pin')
+													->leftJoin('tbl_membership', 'tbl_membership.membership_id', '=', 'tbl_membership_code.membership_id')
+													->leftJoin('tbl_product_package', 'tbl_product_package.product_package_id', '=', 'tbl_membership_code.product_package_id')
+													->get();
+
+		$data['codes'] = $codes;
+		// return view('admin.maintenance.code_sale_print_or_pdf',$data);
+		$pdf = PDF::loadView('admin.maintenance.code_sale_print_or_pdf', $data);
+		return $pdf->stream('invoice.pdf');
 
 
 	}

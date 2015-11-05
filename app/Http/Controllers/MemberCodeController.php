@@ -914,6 +914,8 @@ class MemberCodeController extends MemberController
 	 */
 	public function add_code($x)
 	{
+
+
 			$rules['code_type_id'] = 'required|exists:tbl_code_type,code_type_id';
 			$rules['membership_id'] = 'required|exists:tbl_membership,membership_id';
 			// $rules['product_package_id'] = 'required|exists:tbl_product_package,product_package_id';
@@ -973,9 +975,13 @@ class MemberCodeController extends MemberController
 						{
 							if (!$validator->fails())
 							{
+
+								$orderFormNum = Globals::saveUniqueRandomOrderFormNumber();
 								for ($i=0; $i < 1; $i++)
 								{ 
+									$d['order_form_number'] = $orderFormNum;
 									$membership_code = new Tbl_membership_code($d);
+									$membership_code->order_form_number = $orderFormNum;
 									$membership_code->code_activation = Globals::create_membership_code();
 									$membership_code->account_id =  Customer::id() ?: null;
 									$membership_code->created_at = Carbon::now();
@@ -984,13 +990,13 @@ class MemberCodeController extends MemberController
 									$insert['by_account_id'] = Customer::id();
 									$insert['to_account_id'] = Customer::id();
 									$insert['updated_at'] = $membership_code->created_at;
-									$insert['description'] = "Bought by $n->account_name";
+									$insert['description'] = "Bought by ".$n->account_name;
 									DB::table("tbl_member_code_history")->insert($insert);
 									// Tbl_slot::where('slot_id',Session::get('currentslot'))->update(['slot_wallet'=>$total,'slot_total_withrawal'=>$withrawal]);
 									$message['success'] = "Successfully bought.";
-									Log::account(Customer::id(),"You bought a membership code (Pin #$membership_code->code_pin)");
+									Log::account(Customer::id(),"You bought a membership code (Pin #$membership_code->code_pin) / Order Form Number : $orderFormNum");
 									$c = Tbl_membership_code::where('code_pin',$membership_code->code_pin)->getmembership()->first();
-									$or_code = DB::table('tbl_membership_code_sale')->insertGetId(['membershipcode_or_code'=>Globals::create_membership_code_sale(),'total_amount'=>($c->membership_price),'created_at'=>Carbon::now(),'sold_to'=>Customer::id()]);
+									$or_code = DB::table('tbl_membership_code_sale')->insertGetId(['order_form_number'=>$orderFormNum,'membershipcode_or_code'=>Globals::create_membership_code_sale(),'total_amount'=>($c->membership_price),'created_at'=>Carbon::now(),'sold_to'=>Customer::id()]);
 									DB::table('tbl_membership_code_sale_has_code')->insert(['code_pin'=>$c->code_pin,'membershipcode_or_num'=>$or_code]);
 									
 									if($checking6 == true)
@@ -998,7 +1004,7 @@ class MemberCodeController extends MemberController
 										$insert2['code_pin'] = $membership_code->code_pin;
 										$insert2['product_package_id'] =  $x['package'];
 										Rel_membership_code::insert($insert2);
-										$this->additional($x['package'],Session::get('currentslot'),$check->membership_price,$check->membership_name);										
+										$this->additional($x['package'],Session::get('currentslot'),$check->membership_price,$check->membership_name, $orderFormNum);										
 									}
 
 									$negative_amount = ($check->membership_price) * (-1);
@@ -1039,7 +1045,7 @@ class MemberCodeController extends MemberController
 		return $status;
 	}
 
-	public function additional($pid,$slotid,$price,$membership_name)
+	public function additional($pid,$slotid,$price,$membership_name, $orderFormNum)
 	{
 						$total = 0;
 						$datapackage = DB::table('tbl_product_package_has')->where('product_package_id',$pid)->get();
@@ -1064,6 +1070,7 @@ class MemberCodeController extends MemberController
 				                $insert['total_amount'] = $price; //
 				                $insert['account_id'] = $customer->account_id;
 				                $insert['membership_code'] = 1;
+				                $insert['order_form_number'] = $orderFormNum;
 				                $voucher = new Tbl_voucher($insert);
 				                $voucher->save();
 				                // $log = "Upgrade member include product worth ".Product::return_format_num($insert['total_amount']). " with Voucher Num: ".$voucher->voucher_id." , Voucher Code: ".$voucher->voucher_code.".";
@@ -1083,6 +1090,7 @@ class MemberCodeController extends MemberController
 				                    );
 				                    $voucher_has_product = new Tbl_voucher_has_product($insert_prod);
 				                    $voucher_has_product->save();
+
 				                    $query = Tbl_product_code::where('code_activation', Globals::code_generator())->first();
 				                    $insert_prod_code['code_activation'] = Globals::create_product_code();
 				                    $insert_prod_code['voucher_item_id'] = $voucher_has_product->voucher_item_id;

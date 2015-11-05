@@ -7,8 +7,8 @@ class Tbl_membership_code extends Model
 {
 	protected $table = 'tbl_membership_code';
 	protected $primaryKey = 'code_pin';
-	public $timestamps = false;
-	protected $fillable = ['code_activation', 'code_type_id','membership_id', 'product_package_id', 'admin_id', 'inventory_update_type_id', 'account_id','created_at','used','blocked'];
+	// public $timestamps = false;
+	protected $fillable = ['order_form_number','code_activation', 'generated_by','code_type_id','membership_id', 'product_package_id', 'admin_id', 'inventory_update_type_id', 'account_id','created_at','used','blocked'];
 	protected $guarded = ['code_pin'];
 	
 
@@ -59,5 +59,8 @@ class Tbl_membership_code extends Model
     {
         return $this->hasOne('App\Tbl_code_type');
     }
+
+
+    
 
 }

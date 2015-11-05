@@ -11,7 +11,7 @@ class Tbl_membership_code_sale_has_code extends Model
 							'code_pin',
 							'sold_price',
 	 						];
-
+	 						
 
 	public $timestamps = false;
 }
