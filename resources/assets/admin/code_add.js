@@ -7,15 +7,35 @@ var loader = $('.loader');
 
 var selectedMembershipId = $('.selected-membership-id');
 var selectedProductPackageId = $('.selected-product_package_id');
+var selectedCodeType = $('.select-code-type');
 var modalBtn = $('.modal-btn');
 
 function showCart()
 {
-	$('.tbl-code-cart tbody').load('/admin/maintenance/codes/show-cart');
+	// $('.tbl-code-cart tbody').load('/admin/maintenance/codes/show-cart');
+	if_code_type_cd();
+}
+
+function if_code_type_cd()
+{
+	if(selectedCodeType.val() == 3)
+	{
+		$('.for-tendered').hide();	
+		$('.tbl-code-cart tbody').load('/admin/maintenance/codes/show-cart?code_type_id=3');
+	}
+	else
+	{
+		$('.for-tendered').show();
+		$('.tbl-code-cart tbody').load('/admin/maintenance/codes/show-cart');	
+	}
 }
 
 jQuery(document).ready(function($)
 {
+	selectedCodeType.change(function()
+	{
+		if_code_type_cd();
+	});
 
 	showCart();
 	$(document).on('closed', '.remodal', function (e)
@@ -31,7 +51,6 @@ jQuery(document).ready(function($)
 		$('.form-code-qty input[name="membership_to_id"]').val(membership_to_id);
 		codeQtyModal.open();
 		$('.form-code-qty input[name="qty"]').focus();
-
 	});
 
 	$('.add-to-cart-submit').on('click', function(event){

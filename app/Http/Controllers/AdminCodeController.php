@@ -147,7 +147,11 @@ class AdminCodeController extends AdminController {
 		$rules['account_id'] = 'required|exists:tbl_account,account_id';
 		$rules['inventory_update_type_id'] = 'required|exists:tbl_inventory_update_type,inventory_update_type_id';
 		$rules['cart'] = 'required|integer|min:1';
-		$rules['tendered_payment'] = 'required|integer|min:'.$cartTotalAmount;
+		if(Request::input('code_type_id') != 3)
+		{
+			$rules['tendered_payment'] = 'required|integer|min:'.$cartTotalAmount;
+		}
+
 
 		/* CHECK PROD INVENTORY */
 		Validator::extend('foo', function($attribute, $value, $parameters, $validator) {
@@ -171,6 +175,8 @@ class AdminCodeController extends AdminController {
 		/* GENERATE ORDER FORM NUMBER */
 		$OrderFormNum = Request::input('order_form_number') != null || Request::input('order_form_number') != "" ? Request::input('order_form_number'): Globals::saveUniqueRandomOrderFormNumber(Globals::generateRandomOrderFormNumber());
 
+
+
 		/* GENERATE CODE SALE */
 		$insertMembershipCodeSale['order_form_number'] = $OrderFormNum;
 		$insertMembershipCodeSale['membershipcode_or_code'] = Globals::create_membership_code_sale(Globals::code_generator());
@@ -181,7 +187,16 @@ class AdminCodeController extends AdminController {
 		$insertMembershipCodeSale['payment'] = 1;
 		$insertMembershipCodeSale['shipping_type'] = 1; 
 		$insertMembershipCodeSale['tendered_payment'] = Request::input('tendered_payment');
-		$insertMembershipCodeSale['change'] = (double) Request::input('tendered_payment') - (double) $cartTotalAmount;
+
+		if(Request::input('code_type_id') == 3)
+		{
+			$insertMembershipCodeSale['change'] = 0;
+		}
+		else
+		{
+			$insertMembershipCodeSale['change'] = (double) Request::input('tendered_payment') - (double) $cartTotalAmount;
+		}	
+
 		$membershipCodeSale = new Tbl_membership_code_sale($insertMembershipCodeSale);
 		$membershipCodeSale->save();
 
@@ -220,6 +235,10 @@ class AdminCodeController extends AdminController {
 
 				$insertMemberSaleHasCode['membershipcode_or_num'] = $membershipCodeSale->membershipcode_or_num;
 				$insertMemberSaleHasCode['code_pin'] = $membership_code->code_pin;
+				if(Request::input('code_type_id') == 3)
+				{
+					$cartMembership->membership_price = 0;
+				}
 				$insertMemberSaleHasCode['sold_price'] = $cartMembership->membership_price;
 				Tbl_membership_code_sale_has_code::insert($insertMemberSaleHasCode);
 
@@ -233,14 +252,14 @@ class AdminCodeController extends AdminController {
 				$insert_member_code_history['description'] = "Created by " .Admin::info()->account_name;
 				DB::table("tbl_member_code_history")->insert($insert_member_code_history);
 
-
+				
 				if($value['product_package_id'] != null && $value['product_package_id'] != 'NO PACKAGE')
 				{
 					/**
 					 * INSERT TO Rel_membership_code
 					 */
 					$insert_rel_membership_code['code_pin'] = $membership_code->code_pin;
-					$insert_rel_membership_code['product_package_id'] = Request::input('product_package_id');
+					$insert_rel_membership_code['product_package_id'] = $value['product_package_id'];
 					Rel_membership_code::insert($insert_rel_membership_code);
 
 				}
@@ -256,15 +275,17 @@ class AdminCodeController extends AdminController {
 					
 					if(Request::input('code_type_id') == 3)
 					{
+						$insert_voucher['total_amount']= 0;
 						$insert_voucher['status'] = 'delayed';
 					}
 					else
 					{
-						$insert_voucher['status'] = 'unclaimed';						
+						$insert_voucher['status'] = 'unclaimed';
+						$insert_voucher['total_amount']= $cartMembership->membership_price;						
 					}
 
 					$insert_voucher['discount'] = 0;
-					$insert_voucher['total_amount']= $cartMembership->membership_price;
+					
 					$insert_voucher['payment_mode'] = 1;
 					$insert_voucher['membership_code'] = $membership_code->code_pin;
 					$insert_voucher['processed_by_name'] = Admin::info()->account_name .' ('.Admin::info()->admin_position_name.')';
@@ -574,7 +595,15 @@ class AdminCodeController extends AdminController {
 		$data['cart'] = (array) Session::get('processCodeCart');
 		foreach ($data['cart'] as $key => $value)
 		{	
-			$finalTotal = $finalTotal + $value['sub_total'];
+			if(Request::input('code_type_id') == 3)
+			{
+				$finalTotal = 0;
+			}
+			else
+			{
+				$finalTotal = $finalTotal + $value['sub_total'];
+			}
+
 		}
 
 		$data['finalTotal'] = $finalTotal;

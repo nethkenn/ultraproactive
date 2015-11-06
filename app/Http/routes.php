@@ -540,28 +540,28 @@ Route::any('stockist/membership_code/or', 'StockistCodeController@show_sale_or')
 //STOCKIST ACCOUNT SETTINGS
 Route::any('stockist/settings', 'StockistAccountSettingsController@changepass');
 
-Route::get('member/e-payment/','EPayController@index');
+// Route::get('member/e-payment/','EPayController@index');
 // Route::post('member/e-payment/save_code','EPayController@save_code');
-Route::get('member/e-payment/break_down','EPayController@break_down');
-Route::post('member/e-payment/','EPayController@process');
-Route::get('member/e-payment/test','EPayController@index');
-Route::get('member/e-payment/outlet-balance','EPayController@outlet_balance');
+// Route::get('member/e-payment/break_down','EPayController@break_down');
+// Route::post('member/e-payment/','EPayController@process');
+// Route::get('member/e-payment/test','EPayController@index');
+// Route::get('member/e-payment/outlet-balance','EPayController@outlet_balance');
 
 
-Route::get('admin/e-payment-settings', 'AdminEPaymentSettingsController@index');
-Route::post('admin/e-payment-settings', 'AdminEPaymentSettingsController@update');
+// Route::get('admin/e-payment-settings', 'AdminEPaymentSettingsController@index');
+// Route::post('admin/e-payment-settings', 'AdminEPaymentSettingsController@update');
 
 
 /*E-PAYMENT TRANSACTION FORM PAYMENT*/
-Route::get('admin/e-payment-profile-form-settings', 'AdminProfileFormSettingController@index');
-Route::post('admin/e-payment-profile-form-settings', 'AdminProfileFormSettingController@save');
-Route::get('member/e-payment/recipient', 'MemberEpaymentRecipientController@index');
-Route::get('member/e-payment/recipient/get_data', 'MemberEpaymentRecipientController@get_data');
-Route::get('member/e-payment/recipient/add', 'MemberEpaymentRecipientController@add');
-Route::post('member/e-payment/recipient/add', 'MemberEpaymentRecipientController@save');
-Route::get('member/e-payment/recipient/edit', 'MemberEpaymentRecipientController@edit');
-Route::post('member/e-payment/recipient/edit', 'MemberEpaymentRecipientController@update');
-Route::post('member/e-payment/recipient/delete', 'MemberEpaymentRecipientController@delete');
+// Route::get('admin/e-payment-profile-form-settings', 'AdminProfileFormSettingController@index');
+// Route::post('admin/e-payment-profile-form-settings', 'AdminProfileFormSettingController@save');
+// Route::get('member/e-payment/recipient', 'MemberEpaymentRecipientController@index');
+// Route::get('member/e-payment/recipient/get_data', 'MemberEpaymentRecipientController@get_data');
+// Route::get('member/e-payment/recipient/add', 'MemberEpaymentRecipientController@add');
+// Route::post('member/e-payment/recipient/add', 'MemberEpaymentRecipientController@save');
+// Route::get('member/e-payment/recipient/edit', 'MemberEpaymentRecipientController@edit');
+// Route::post('member/e-payment/recipient/edit', 'MemberEpaymentRecipientController@update');
+// Route::post('member/e-payment/recipient/delete', 'MemberEpaymentRecipientController@delete');
 
 
 Route::any('admin/migration', 'AdminMigrationController@index');
@@ -572,11 +572,11 @@ Route::any('admin/migration/rematrix', 'AdminMigrationController@rematrix');
 Route::any('admin/migration/start_recompute', 'AdminMigrationController@start_recompute');
 Route::any('admin/migration/recompute', 'AdminMigrationController@recompute');
 
-Route::get('member/e-payment/transaction-log', 'MemberEpaymentLogController@index');
-Route::post('member/e-payment/transaction-log', 'MemberEpaymentLogController@convert_slot_to_ewallet');
-Route::get('member/e-payment/transaction-log/e-wallet-to-currency', 'MemberEpaymentLogController@slot_wallet_to_currency');
-Route::get('member/e-payment/transaction-log/get_data', 'MemberEpaymentLogController@get_data');
-Route::get('member/e-payment/transaction-log/show_details', 'MemberEpaymentLogController@show_details');
+// Route::get('member/e-payment/transaction-log', 'MemberEpaymentLogController@index');
+// Route::post('member/e-payment/transaction-log', 'MemberEpaymentLogController@convert_slot_to_ewallet');
+// Route::get('member/e-payment/transaction-log/e-wallet-to-currency', 'MemberEpaymentLogController@slot_wallet_to_currency');
+// Route::get('member/e-payment/transaction-log/get_data', 'MemberEpaymentLogController@get_data');
+// Route::get('member/e-payment/transaction-log/show_details', 'MemberEpaymentLogController@show_details');
 
 
 
