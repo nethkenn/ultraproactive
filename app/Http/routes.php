@@ -27,8 +27,8 @@ Route::any('/member/genealogy/tree', 'MemberGenealogyController@tree');
 Route::any('/member/genealogy/get', 'MemberGenealogyController@get');
 // Route::any('/member/genealogy/getsponsor', 'MemberGenealogyController@getsponsor');
 Route::any('/member/genealogy/downline', 'MemberGenealogyController@downline');
-
-
+Route::any('/member/reports/income_breakdown', 'MemberReportController@breakdown');
+Route::any('/member/reports/income_summary', 'MemberReportController@summary');
 
 
 /* Transfer wallet */
