@@ -34,24 +34,24 @@
 			</div>
 			<div class="text">
 				<div class="name">Match Sale Bonus (MSB)</div>
-				<div class="description">PHP 300.00 for every 100MP on the left & right group.</div>
+				<div class="description">PHP 500.00 for every 150MP on the left & right group.</div>
 				<div class="tables">
 					<table>
 						<tr>
 							<td>Entry : Entry</td>
-							<td>1 Account = 16 MSB/day</td>
+							<!-- <td>1 Account = 16 MSB/day</td> -->
 						</tr>
 						<tr>
 							<td>Entry : Product</td>
-							<td>3 Account = 20 MSB/day</td>
+							<!-- <td>3 Account = 20 MSB/day</td> -->
 						</tr>
 						<tr>
 							<td>Product: Product</td>
-							<td>7 Account = 30 MSB/day</td>
+							<!-- <td>7 Account = 30 MSB/day</td> -->
 						</tr>
 						<tr>
 							<td>5th MSB converted to GC</td>
-							<td></td>
+							<!-- <td></td> -->
 						</tr>
 					</table>
 				</div>
@@ -75,7 +75,7 @@
 				</div>
 			</div>
 			<div class="text" style="vertical-align: top;">
-				<div class="name">Retail Profit</div>
+				<div class="name">Unilevel Bonus</div>
 				<div class="description">Percentage income on your total group PV with Dynamic PV Compression</div>
 				<div class="tables">
 					<table class="text-center">
@@ -86,43 +86,43 @@
 						<tbody>
 							<tr>
 								<td>1</td>
-								<td>3.5%</td>
+								<td>5%</td>
 							</tr>
 							<tr>
 								<td>2</td>
-								<td>3.5%</td>
+								<td>5%</td>
 							</tr>
 							<tr>
 								<td>3</td>
-								<td>3.5%</td>
+								<td>5%</td>
 							</tr>
 							<tr>
 								<td>4</td>
-								<td>3.5%</td>
+								<td>5%</td>
 							</tr>
 							<tr>
 								<td>5</td>
-								<td>3.5%</td>
+								<td>5%</td>
 							</tr>
 							<tr>
 								<td>6</td>
-								<td>3.5%</td>
+								<td>2%</td>
 							</tr>
 							<tr>
 								<td>7</td>
-								<td>3.5%</td>
+								<td>2%</td>
 							</tr>
 							<tr>
 								<td>8</td>
-								<td>3.5%</td>
+								<td>2%</td>
 							</tr>
 							<tr>
 								<td>9</td>
-								<td>3.5%</td>
+								<td>2%</td>
 							</tr>
 							<tr>
 								<td>10</td>
-								<td>3.5%</td>
+								<td>2%</td>
 							</tr>
 						</tbody>
 					</table>
