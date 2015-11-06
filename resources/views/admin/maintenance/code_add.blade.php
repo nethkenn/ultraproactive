@@ -112,6 +112,7 @@
             <label>Enter Quantity</label>
             <input type="number" name="qty" class="form-control">
             <input type="hidden" name="product_package_id">
+            <input type="hidden" name="membership_to_id">
         </div>
         <button data-remodal-action="cancel" class="remodal-cancel modal-btn">Cancel</button>
         <button class="remodal-confirm add-to-cart-submit modal-btn">OK</button>
@@ -188,8 +189,8 @@
                         {
                             var selected = oldRequestPackageId == val.product_package_id ? 'selected' : '' ;
                             append  += '<option value="'+ val.product_package_id +'" '+ selected +' >'+ val.product_package_name  +'</option>';
-
                         });
+                        append  += '<option value="NO PACKAGE"> No package included </option>';
                         selectedPackageID.append(append);
                     }
                    

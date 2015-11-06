@@ -26,7 +26,9 @@ jQuery(document).ready(function($)
 	$('.add-to-cart-btn').on("click", function(event){
 		event.preventDefault();
 		var productPackageId = selectedProductPackageId.val();
+		var membership_to_id = selectedMembershipId.val();
 		$('.form-code-qty input[name="product_package_id"]').val(productPackageId);
+		$('.form-code-qty input[name="membership_to_id"]').val(membership_to_id);
 		codeQtyModal.open();
 		$('.form-code-qty input[name="qty"]').focus();
 

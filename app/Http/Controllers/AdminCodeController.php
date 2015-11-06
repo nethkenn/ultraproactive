@@ -125,6 +125,7 @@ class AdminCodeController extends AdminController {
 		foreach ($_prodCart as $prodCartKey => $prodCartValue)
 		{
 
+
     		$_product = DB::table('tbl_product_package_has')->leftJoin('tbl_product','tbl_product.product_id','=','tbl_product_package_has.product_id')->where('tbl_product_package_has.product_package_id', $prodCartValue['product_package_id'])->get();
     		foreach ($_product as $productKey => $productValue)
     		{
@@ -140,19 +141,13 @@ class AdminCodeController extends AdminController {
 		}
 
 
-
-		
-
 		$rules['membership_id'] = 'required|exists:tbl_membership,membership_id,membership_entry,1,archived,0';
-		$rules['order_form_number'] = 'unique:tbl_order_form_number,order_form_number';
-		$rules['product_package_id'] = 'required|exists:tbl_product_package,product_package_id,archived,0,membership_id,'.Request::input('membership_id');
+		$rules['order_form_number'] = 'unique:tbl_order_form_number,order_form_number';	
 		$rules['code_type_id'] = 'required|exists:tbl_code_type,code_type_id';
 		$rules['account_id'] = 'required|exists:tbl_account,account_id';
 		$rules['inventory_update_type_id'] = 'required|exists:tbl_inventory_update_type,inventory_update_type_id';
 		$rules['cart'] = 'required|integer|min:1';
 		$rules['tendered_payment'] = 'required|integer|min:'.$cartTotalAmount;
-
-
 
 		/* CHECK PROD INVENTORY */
 		Validator::extend('foo', function($attribute, $value, $parameters, $validator) {
@@ -196,22 +191,25 @@ class AdminCodeController extends AdminController {
 		$requests['cart'] = count($_cart);
 
 		$totalSaleArray = []; 
-		
 		foreach ($_cart as $key => $value)
 		{
-
-
-
 			$cartMembership = Tbl_membership::find($value['membership_id']);
-			/* FOREACH CART QTY */
-
+			/* FOREACH CART QTY */		
 			for ($i=0; $i < $value['qty']; $i++)
 			{
-
 				$insert_membership_code['code_activation'] = Globals::create_membership_code(Globals::code_generator());
 				$insert_membership_code['code_type_id'] = Request::input('code_type_id');
 				$insert_membership_code['membership_id'] = Request::input('membership_id');
-				$insert_membership_code['product_package_id'] = Request::input('code_type_id')== 2 ? null : Request::input('code_type_id');
+
+				if($value['product_package_id'] == 'NO PACKAGE')
+				{
+					$insert_membership_code['product_package_id'] = null;
+				}
+				else
+				{
+					$insert_membership_code['product_package_id'] = $value['product_package_id'];
+				}
+
 				$insert_membership_code['generated_by'] =  Admin::info()->account_id;
 				$insert_membership_code['inventory_update_type_id'] = Request::input('inventory_update_type_id');
 				$insert_membership_code['account_id'] = Request::input('account_id');
@@ -236,7 +234,7 @@ class AdminCodeController extends AdminController {
 				DB::table("tbl_member_code_history")->insert($insert_member_code_history);
 
 
-				if(Request::input('product_package_id') != null)
+				if($value['product_package_id'] != null && $value['product_package_id'] != 'NO PACKAGE')
 				{
 					/**
 					 * INSERT TO Rel_membership_code
@@ -246,10 +244,9 @@ class AdminCodeController extends AdminController {
 					Rel_membership_code::insert($insert_rel_membership_code);
 
 				}
-				
 				// IF "CLAIMABLE" CREATE PRODUCT VOUCHER
 				$new_voucher = null;
-				if(Request::input('inventory_update_type_id') == 1 &&  Request::input('code_type_id') != 2 && Request::input('product_package_id') != null)
+				if(Request::input('inventory_update_type_id') == 1 &&  Request::input('code_type_id') != 2 && $value['product_package_id'] != null && $value['product_package_id'] != 'NO PACKAGE')
 				{
 					$insert_voucher['account_id'] = Request::input('account_id');
 					// $insert_voucher['or_number'] = "(MEMBERSHIPCODE PURCHASE) #".$tbl_membership_code_sale->membershipcode_or_num. ' CODE : '.$tbl_membership_code_sale->membershipcode_or_code;
@@ -273,11 +270,10 @@ class AdminCodeController extends AdminController {
 					$insert_voucher['processed_by_name'] = Admin::info()->account_name .' ('.Admin::info()->admin_position_name.')';
 					$insert_voucher['admin_id'] = Admin::info()->admin_id;
 
-
 					$new_voucher = new Tbl_voucher($insert_voucher);
 					$new_voucher->save();
 
-					$prod = Tbl_product_package_has::where('product_package_id', Request::input('product_package_id'))->product()->get();
+					$prod = Tbl_product_package_has::where('product_package_id', $value['product_package_id'])->product()->get();
 					
 					foreach ($prod as $prod_key => $prod_val)
 					{
@@ -293,15 +289,13 @@ class AdminCodeController extends AdminController {
 						$new_tbl_voucher_has_product->save();
 						Tbl_voucher_has_product::insert($insert_voucher_item);
 					}
-
 				}
-
 			} // end forloop
 
 			//"Deduct Right Away" DEDUCT THE PRODUCT INVENTORY
-			if(Request::input('inventory_update_type_id') == 2 && Request::input('code_type_id') != 2 && Request::input('product_package_id') != null)
+			if(Request::input('inventory_update_type_id') == 2 && Request::input('code_type_id') != 2 && $value['product_package_id'] != null && $value['product_package_id'] == 'NO PACKAGE')
 			{
-				$prod2 = Tbl_product_package_has::where('product_package_id', Request::input('product_package_id'))->get();
+				$prod2 = Tbl_product_package_has::where('product_package_id', $value['product_package_id'])->get();
 				foreach ($prod2 as $key2 => $value2)
 				{
 					$prodpack = Tbl_product::find($value2->product_id);
@@ -494,37 +488,69 @@ class AdminCodeController extends AdminController {
 		$qty = (integer) Request::input('qty') <= 0 ? 1 : Request::input('qty');
 		$package = Tbl_product_package::leftJoin('tbl_membership', 'tbl_membership.membership_id','=','tbl_product_package.membership_id')
 										->where('tbl_product_package.product_package_id', $packageId)
-										->first();
-        if($package)
+										->first();	
+
+		$membership_id = Request::input('membership_to_id');
+		$membership_data = Tbl_membership::where('membership_id',$membership_id)->first();	
+
+        if($package || $packageId == 'NO PACKAGE')
         {
         	$processCodeCart = (array) Session::get('processCodeCart');
 
         	$inCart = false;
     		foreach ($processCodeCart as $key => $value)
     		{
+  				if($packageId == 'NO PACKAGE')
+				{
+	    			if($value['membership_id'] == $membership_id && $value['product_package_id'] == 'NO PACKAGE')
+	    			{	
+	    				/* IF ITEM IS IN THE CART ADD THE QTY */ 
+	    				$inCart = true;
+	    				$processCodeCart[$key]['qty'] = $processCodeCart[$key]['qty'] + $qty;
+	    				$processCodeCart[$key]['membership_price'] = $membership_data->membership_price;
+	    				$processCodeCart[$key]['sub_total'] = (integer) $processCodeCart[$key]['qty'] * (double)$processCodeCart[$key]['membership_price'];
+	    			}
+				}
+				else
+				{
+	    			if($value['membership_id'] == $package->membership_id && $value['product_package_id'] == $package->product_package_id)
+	    			{	
+	    				/* IF ITEM IS IN THE CART ADD THE QTY */ 
+	    				$inCart = true;
+	    				$processCodeCart[$key]['qty'] = $processCodeCart[$key]['qty'] + $qty;
+	    				$processCodeCart[$key]['membership_price'] = $package->membership_price;
+	    				$processCodeCart[$key]['sub_total'] = (integer) $processCodeCart[$key]['qty'] * (double)$processCodeCart[$key]['membership_price'];
+	    			}					
+				}
 
-    			if($value['membership_id'] == $package->membership_id && $value['product_package_id'] == $package->product_package_id)
-    			{	
-    				/* IF ITEM IS IN THE CART ADD THE QTY */ 
-    				$inCart = true;
-    				$processCodeCart[$key]['qty'] = $processCodeCart[$key]['qty'] + $qty;
-    				$processCodeCart[$key]['membership_price'] = $package->membership_price;
-    				$processCodeCart[$key]['sub_total'] = (integer) $processCodeCart[$key]['qty'] * (double)$processCodeCart[$key]['membership_price'];
-    			}
 
 
     		}
     		/* IF ITEM IS NOT IN THE CART ADD THE ARRAY TO CART */ 
     		if($inCart == false)
     		{
-	    		$arrayCart['membership_id'] = $package->membership_id;
-	        	$arrayCart['membership_name'] = $package->membership_name;
-	        	$arrayCart['membership_price'] = $package->membership_price;
-	        	$arrayCart['qty'] = $qty;
-	        	$arrayCart['product_package_id'] = $package->product_package_id;
-	        	$arrayCart['product_package_name'] = $package->product_package_name;
-	        	$arrayCart['sub_total'] = (double) $arrayCart['membership_price'] * $qty;
-	        	$processCodeCart[] = $arrayCart;
+    			if($packageId == 'NO PACKAGE')
+    			{
+		    		$arrayCart['membership_id'] = $membership_id;
+		        	$arrayCart['membership_name'] = $membership_data->membership_name;
+		        	$arrayCart['membership_price'] = $membership_data->membership_price;
+		        	$arrayCart['qty'] = $qty;
+		        	$arrayCart['product_package_id'] = 'NO PACKAGE';
+		        	$arrayCart['product_package_name'] = 'NO PACKAGE';
+		        	$arrayCart['sub_total'] = (double) $arrayCart['membership_price'] * $qty;
+		        	$processCodeCart[] = $arrayCart;
+    			}
+    			else
+    			{
+		    		$arrayCart['membership_id'] = $package->membership_id;
+		        	$arrayCart['membership_name'] = $package->membership_name;
+		        	$arrayCart['membership_price'] = $package->membership_price;
+		        	$arrayCart['qty'] = $qty;
+		        	$arrayCart['product_package_id'] = $package->product_package_id;
+		        	$arrayCart['product_package_name'] = $package->product_package_name;
+		        	$arrayCart['sub_total'] = (double) $arrayCart['membership_price'] * $qty;
+		        	$processCodeCart[] = $arrayCart;
+    			}
     		}
 
     		/* SAVE THE SESSION */ 

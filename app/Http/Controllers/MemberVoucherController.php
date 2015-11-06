@@ -25,7 +25,7 @@ class MemberVoucherController extends MemberController
 
 		$customer_id = Customer::info()->account_id;
 		$discount = 0;
-
+		$discount_amount = [];
 		$voucher_id = Request::input('voucher_id');
 		$voucher = Tbl_voucher::where('voucher_id',$voucher_id)->first();
 		if($customer_id != $voucher->account_id)
