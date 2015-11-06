@@ -84,7 +84,7 @@
 	         <ul class="nav navbar-nav">
 	            <li class="nav-inside active"><a href="/">HOME</a></li>
 	            <li class="nav-inside dropdown">
-	               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">PRODUCT</span></a>
+	               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">PRODUCTS</span></a>
 	               <ul class="dropdown-menu">
 	                  <li><a href="/product">PRODUCTS</a></li>
 	                  <li><a href="/foodcart">FOOD CART</a></li>
@@ -93,7 +93,7 @@
 	            <li class="nav-inside active"><a href="/mindsync">MIND SYNC</a></li>
 	            <li class="nav-inside"><a href="/stories">STORIES</a></li>
 	            <li class="nav-inside logo-holder"><img class="logo" src="/resources/assets/frontend/img/logo.png"></li>
-	            <li class="nav-inside"><a href="/about">ABOUT</a></li>
+	            <li class="nav-inside"><a href="/about">ABOUT US</a></li>
 	            <li class="nav-inside"><a href="/opportunity">OPPORTUNITY</a></li>
 	            <li class="nav-inside dropdown">
 	               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">FAQs</span></a>
