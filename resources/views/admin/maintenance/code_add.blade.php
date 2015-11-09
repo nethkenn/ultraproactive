@@ -44,7 +44,7 @@
                         <label for="Order Form Number">Order form Number</label>
                         <input type="text" name="order_form_number" class="form-control" value="{{Request::old('order_form_number')}}"> 
                     </div>
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-12 for-tendered">
                         <label for="Tendered Payment">Tendered Payment</label>
                         <input type="number" name="tendered_payment" class="form-control" value="{{Request::old('tendered_payment')}}"> 
                     </div>
@@ -69,7 +69,7 @@
                     </div>
                     <div class="form-group col-md-12">
                         <label for="code_type">Code Type</label>
-                        <select name="code_type_id" class="form-control">
+                        <select name="code_type_id" class="form-control select-code-type">
                             @if($_code_type)
                             @foreach($_code_type as $code_type)
                                 <option value="{{$code_type->code_type_id}}" {{Request::old('code_type_id') == $code_type->code_type_id ? 'selected' : ''}}>{{$code_type->code_type_name}}</option>
@@ -112,6 +112,7 @@
             <label>Enter Quantity</label>
             <input type="number" name="qty" class="form-control">
             <input type="hidden" name="product_package_id">
+            <input type="hidden" name="membership_to_id">
         </div>
         <button data-remodal-action="cancel" class="remodal-cancel modal-btn">Cancel</button>
         <button class="remodal-confirm add-to-cart-submit modal-btn">OK</button>
@@ -188,8 +189,8 @@
                         {
                             var selected = oldRequestPackageId == val.product_package_id ? 'selected' : '' ;
                             append  += '<option value="'+ val.product_package_id +'" '+ selected +' >'+ val.product_package_name  +'</option>';
-
                         });
+                        append  += '<option value="NO PACKAGE"> No package included </option>';
                         selectedPackageID.append(append);
                     }
                    

@@ -14,6 +14,7 @@ class MemberLoginController extends Controller
 	public function index()
 	{	
 		$data['error'] = Session::get('errored');
+		$data['success'] = Session::get('greened');
 		$member_id = Customer::id();
 		if(Request::isMethod("post"))
 		{

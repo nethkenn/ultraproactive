@@ -37,6 +37,13 @@
                         </ul>
                     </div>
                  @endif
+                 @if(Session::has('greened'))
+                    <div class="alert alert-success">
+                        <ul>
+                            {{ $success }}
+                        </ul>
+                    </div>
+                 @endif
                 <div style="font-size: 14px; text-align: left;">Username</div>
                 <div class="input">
                     <input type="text" name="user">

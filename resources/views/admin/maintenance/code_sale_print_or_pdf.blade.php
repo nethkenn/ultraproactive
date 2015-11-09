@@ -80,7 +80,11 @@
 						<tr>
 							<td>{{$code->code_pin}}</td>
 							<td>{{$code->code_activation}}</td>
+							@if($code->product_package_name != null)
 							<td>{{$code->membership_name}} - {{$code->product_package_name}}</td>
+							@else
+							<td>{{$code->membership_name}} - NO PACKAGE</td>
+							@endif
 							<td>{{$code->sold_price}}</td>
 							<td>1</td>
 							<td>{{$code->sold_price}}</td>

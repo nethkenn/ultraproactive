@@ -80,7 +80,7 @@ class AdminController extends Controller
                 DB::table('tbl_settings')->insert(['key'=>'global_pv_sharing_percentage','value'=>3]);
             }
 
-            Log::AdminUrl(Admin::info()->account_id,Admin::info()->account_username." visits url: ".$_SERVER['REQUEST_URI']);
+            // Log::AdminUrl(Admin::info()->account_id,Admin::info()->account_username." visits url: ".$_SERVER['REQUEST_URI']);
 
             $_admin_module[] = "admin";  
             $_admin_module[] = "account";
