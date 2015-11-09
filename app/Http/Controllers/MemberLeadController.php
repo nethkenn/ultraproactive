@@ -7,6 +7,9 @@ use App\Classes\Customer;
 use Redirect;
 use Session;
 use App\Classes\Log;
+use Validator;
+use Crypt;
+use DB;
 
 class MemberLeadController extends MemberController
 {
@@ -34,6 +37,54 @@ class MemberLeadController extends MemberController
 			
 		}
         return view('member.lead',$data);
+	}
+
+	public function saveLeadManual()
+	{
+
+		$rules['first_name'] = 'required';
+		$rules['middle_name'] = 'required';
+		$rules['last_name'] = 'required';
+		$rules['gender'] = 'required';
+		$rules['email'] = 'required|email|unique:tbl_account,account_email';
+		$rules['cellphone_number'] = 'required';
+		$rules['telephone_number'] = 'required';
+		$rules['birthday'] = 'required:date';
+		$rules['country'] = 'required';
+		$rules['username'] = 'required|unique:tbl_account,account_username';
+		$rules['password'] = 'required|min:8';
+		$rules['confirm_password'] = 'required|same:password';
+
+		$validator = Validator::make(Request::input(), $rules);
+        if ($validator->fails()) {
+            return redirect('/member/leads#add-leads-manual-modal')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $now = Carbon::now();
+
+        $insertAccount['account_name'] = Request::input('first_name') ." ". Request::input('middle_name') ." ". Request::input('last_name');
+        $insertAccount['account_email'] = Request::input('email');
+        $insertAccount['account_username'] = Request::input('username');
+        $insertAccount['account_contact_number'] = Request::input('cellphone_number');
+        $insertAccount['account_country_id'] = 2;
+        $insertAccount['account_date_created'] = $now;
+        $insertAccount['birthday'] = Request::input('birthday');
+        $insertAccount['telephone'] = Request::input('telephone_number');
+        $insertAccount['gender'] = Request::input('gender');
+        $insertAccount['address'] = Request::input('address');
+        $insertAccount['account_password'] =  Crypt::encrypt(Request::input('password'));
+
+        $accountId = Tbl_account::insertGetId($insertAccount);
+
+        $insertLead['lead_account_id'] = Customer::info()->account_id;;
+        $insertLead['account_id'] = $accountId;
+        $insertLead['join_date'] = $now;
+        DB::table('tbl_lead')->insert($insertLead);
+
+        return redirect()->back();
+
 	}
 	// public function addlead($d)
 	// {
