@@ -214,7 +214,7 @@ class AdminCodeController extends AdminController {
 			{
 				$insert_membership_code['code_activation'] = Globals::create_membership_code(Globals::code_generator());
 				$insert_membership_code['code_type_id'] = Request::input('code_type_id');
-				$insert_membership_code['membership_id'] = Request::input('membership_id');
+				$insert_membership_code['membership_id'] = $value['membership_id'];
 
 				if($value['product_package_id'] == 'NO PACKAGE')
 				{
