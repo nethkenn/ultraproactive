@@ -33,6 +33,20 @@ function lead()
 			var inst = $('[data-remodal-id=add_lead]').remodal();
           	inst.close(); 
 		});
+
+		addLeadsManualInit();
+
+	}
+
+	function addLeadsManualInit()
+	{	
+
+		var addLeadModal = $('[data-remodal-id="add-leads-manual-modal"]').remodal();
+		$('.manual-add-btn').on('click', function(){
+			addLeadModal.open();
+			return false;
+
+		})
 	}
 }
 

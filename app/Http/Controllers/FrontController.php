@@ -85,7 +85,9 @@ class FrontController extends Controller
 			$litrato = Image::view($kuha, "468x467");
 			$data["_team"][$susi]->image = $litrato;
 		}
-
+		$data["mission"] = DB::table("tbl_about")->where("about_name", "Mission")->first();
+		$data["vision"] = DB::table("tbl_about")->where("about_name", "Vision")->first();
+		$data["about"] = DB::table("tbl_about")->where("about_name", "About")->first();
         return view('front.about', $data);
 	}
 	public function stories()

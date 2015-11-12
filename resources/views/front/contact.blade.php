@@ -69,7 +69,7 @@
 					<span>Stay social</span>
 				</h3>
 				<div class="dzen_follow_us">
-					<a title="Follow us on Facebook" class="dzen_socialicon_facebook dzen_tooltip" data-gravity="s" href="https://www.facebook.com/UltraNutrifitMeal?ref=ts&fref=ts" target="_blank"><i class="ABdev_icon-facebook"></i></a>
+					<a title="Follow us on Facebook" class="dzen_socialicon_facebook dzen_tooltip" data-gravity="s" href="https://www.facebook.com/upmi2014/?fref=ts" target="_blank"><i class="ABdev_icon-facebook"></i></a>
 					<a title="Follow us on Twitter" class="dzen_socialicon_twitter dzen_tooltip" data-gravity="s" href="https://twitter.com/NutrifitMeal" target="_blank"><i class="ABdev_icon-twitter"></i></a>
 					{{-- <a title="Follow us on Google+" class="dzen_socialicon_googleplus dzen_tooltip" data-gravity="s" href="#" target="_blank"><i class="ABdev_icon-googleplus"></i></a>
 					<a title="Follow us on Linkedin" class="dzen_socialicon_linkedin dzen_tooltip" data-gravity="s" href="#" target="_blank"><i class="ABdev_icon-linkedin"></i></a>

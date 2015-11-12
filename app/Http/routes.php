@@ -44,6 +44,7 @@ Route::any('/member/settings', 'MemberAccountSettingsController@index');
 Route::any('/member/settings/upload', 'MemberAccountSettingsController@upload');
 
 Route::any('/member/leads', 'MemberLeadController@index');
+Route::post('/member/leads/manual-add', 'MemberLeadController@saveLeadManual');
 // Route::any('/member/leads/', 'MemberLeadController@link');
 Route::any('/member/product', 'MemberProductController@index');
 Route::any('/member/login', 'MemberLoginController@index');
