@@ -21,7 +21,7 @@
 						<div class="margin_bottom rb">
 							<div>
 								<span>
-									ULTRA PROACTIVE MARKETING INC. believes in creating sustainable livelihood for people who need them most through the creation of economic opportunities that empower them. The company also believes in making available to ordinary people the opportunity to become millionaires through the commercialization of unique products and services that benefit end-users and buyers.
+									{{ $mission->about_description }}
 								</span>
 							</div>
 						</div>
@@ -33,7 +33,7 @@
 						<div class="margin_bottom rb">
 							<div>
 								<span>
-									ULTRA PROACTIVE MARKETING INC. envisions itself to be a household name by becoming the top and most trusted company in the industry of personal care, health & wellness, unique & beneficial services, as well as to be one of the top companies in the multi-level-marketing business, not only in the Philippines, but also in the whole world
+									{{ $vision->about_description }}
 								</span>
 							</div>
 						</div>
@@ -71,7 +71,7 @@
 						<div class="margin_bottom rb">
 							<div>
 								<span>
-									Ultra Proactive Marketing Inc. was incorporated in 2014. The company made its mark in the MLM industry by introducing unique high quality products and services in the market. By now, the company is making a serious and aggresive bid to be one of the best MLM companies in the country. The management team is composed of professionals and experts from various fields, with a combined experienced of more than 30 years in corporate management, direct selling and network marketing industry.
+									{{ $about->about_description }}
 								</span>
 							</div>
 						</div>

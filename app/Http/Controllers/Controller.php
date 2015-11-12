@@ -53,6 +53,9 @@ abstract class Controller extends BaseController
 
 		// $data["settings"] = $set;
 
+		$_aboutus = DB::table("tbl_about")->where("about_name", "About")->first();
+		
+		View()->share("_aboutus", $_aboutus);
 		View()->share("_newsfooter", $_newsfooter);
 		View()->share("_productfooter", $_productfooter);
 		View()->share("_setting", $set);
