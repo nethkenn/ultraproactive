@@ -40,28 +40,28 @@
 					</div>
 				</div>
 				<div style="overflow: auto; clear: both; margin-top: 30px;">
-					<div class="dzen_column_DD_span6 ">
-						<!-- START REVOLUTION SLIDER 4.6.0 fullwidth mode -->
+					<!-- <div class="dzen_column_DD_span6 ">
+					
 						<div id="rev_slider_2_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container" style="margin:0px auto;background-color:#E9E9E9;padding:0px;margin-top:0px;margin-bottom:0px;max-height:300px;">
 							<div id="rev_slider_2_1" class="rev_slider fullwidthabanner" style="display:none;max-height:300px;height:300px;">
-								<ul>	<!-- SLIDE  -->
+								<ul>	
 									<li data-transition="random" data-slotamount="7" data-masterspeed="300"  data-saveperformance="off" >
-										<!-- MAIN IMAGE -->
+									
 										<img src="/resources/assets/path/images/photodune-1860048-professional-team-xs.jpg"  alt="photodune-1860048-professional-team-xs"  data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
-										<!-- LAYERS -->
+								
 									</li>
-									<!-- SLIDE  -->
+							
 									<li data-transition="random" data-slotamount="7"  data-saveperformance="off" >
-										<!-- MAIN IMAGE -->
+									
 										<img src="/resources/assets/path/images/photodune-358775-team-xs.jpg"  alt="photodune-358775-team-xs"  data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
-										<!-- LAYERS -->
+									
 									</li>
 								</ul>
 								<div class="tp-bannertimer"></div>	
 							</div>
-						</div><!-- END REVOLUTION SLIDER -->
-					</div>
-					<div class="dzen_column_DD_span6 about_us_introducton">
+						</div>
+					</div> -->
+					<div class="dzen_column_DD_span12 about_us_introducton">
 						<h3 class="rw bold">
 							<span>The People Behind</span>
 						</h3>
