@@ -20,9 +20,7 @@
 						</h3>
 						<div class="margin_bottom rb">
 							<div>
-								<span>
-									{{ $mission->about_description }}
-								</span>
+								<span>{{ $mission->about_description }}</span>
 							</div>
 						</div>
 					</div>
@@ -32,9 +30,7 @@
 						</h3>
 						<div class="margin_bottom rb">
 							<div>
-								<span>
-									{{ $vision->about_description }}
-								</span>
+								<span>{{ $vision->about_description }}</span>
 							</div>
 						</div>
 					</div>
@@ -49,9 +45,22 @@
 						</h5>
 						<div class="margin_bottom rb">
 							<div>
-								<span>
-									{{ $about->about_description }}
-								</span>
+								<span>{{ $about->about_description }}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div style="overflow: auto; clear: both; margin-top: 30px;">
+					<div class="dzen_column_DD_span12 about_us_introducton">
+						<h3 class="rw bold">
+							<span>Corporate Brief</span>
+						</h3>
+						<div class="margin_bottom rb">
+							<div>
+								<span style="white-space: pre-wrap;">This burgeoning marketing company was borne out of an initiative by a band of entrepreneurs cut from another cloth. Their collective desire to reach out to the most Filipinos with the least start up amount possible, who want to make their lives better by being businessmen, is what drove them to establish this enterprise.
+With varied commercial backgrounds, the group scoured the global market for products that are unique by nature, ground breaking and brands that would start a sustained demand once it reaches general public acceptance. Having a full rack of brands to pitch, UPMI sets forth its quest to fulfill the dream of a seeing a thriving and vibrant market to its fruition.
+Registered under Philippine trade laws, with corporate headquarters located at the strategic Metrowalk Complex along Meralco Avenue, Ortigas Center, Pasig City. UPMI sets its sights not only in the whole world archipelago, but in places where health and wellness are placed at a premium, the world over.
+Right off the bat, everyone's UP for it.</span>
 							</div>
 						</div>
 					</div>
@@ -181,13 +190,13 @@ Product costs are proportionate to the suggested retail value and purpose it was
 					<div class="dzen_team_member">
 						<div class="dzen_overlayed">
 							<img src="{{ $team->image }}" alt="Johny Knoxville">
-							<div class="dzen_overlay">
+							<!-- <div class="dzen_overlay">
 								<p>
 									<a href="#" target="_self"><i class="ABdev_icon-twitter"></i></a>
 									<a href="#" target="_self"><i class="ABdev_icon-linkedin"></i></a>
 									<a href="#" target="_self"><i class="ABdev_icon-facebook"></i></a>
 								</p>
-							</div>
+							</div> -->
 						</div>
 						<a class="dzen_team_member_link dzen_team_member_modal_link" href="#">
 							<span class="dzen_team_member_name">{{ $team->team_title }}</span>
