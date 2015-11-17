@@ -40,27 +40,6 @@
 					</div>
 				</div>
 				<div style="overflow: auto; clear: both; margin-top: 30px;">
-					<!-- <div class="dzen_column_DD_span6 ">
-					
-						<div id="rev_slider_2_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container" style="margin:0px auto;background-color:#E9E9E9;padding:0px;margin-top:0px;margin-bottom:0px;max-height:300px;">
-							<div id="rev_slider_2_1" class="rev_slider fullwidthabanner" style="display:none;max-height:300px;height:300px;">
-								<ul>	
-									<li data-transition="random" data-slotamount="7" data-masterspeed="300"  data-saveperformance="off" >
-									
-										<img src="/resources/assets/path/images/photodune-1860048-professional-team-xs.jpg"  alt="photodune-1860048-professional-team-xs"  data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
-								
-									</li>
-							
-									<li data-transition="random" data-slotamount="7"  data-saveperformance="off" >
-									
-										<img src="/resources/assets/path/images/photodune-358775-team-xs.jpg"  alt="photodune-358775-team-xs"  data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
-									
-									</li>
-								</ul>
-								<div class="tp-bannertimer"></div>	
-							</div>
-						</div>
-					</div> -->
 					<div class="dzen_column_DD_span12 about_us_introducton">
 						<h3 class="rw bold">
 							<span>The People Behind</span>
@@ -73,6 +52,49 @@
 								<span>
 									{{ $about->about_description }}
 								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div style="overflow: auto; clear: both; margin-top: 30px;">
+					<div class="dzen_column_DD_span12 about_us_introducton">
+						<h3 class="rw bold">
+							<span>Company Core Values</span>
+						</h3>
+						<h4 class="rw bold" style="margin-top: 25px;">
+							<span>Distinction</span>
+						</h4>
+						<div class="margin_bottom rb">
+							<div>
+								<span style="white-space: pre-wrap;">A cut from a different cloth, UPMI offers what the competition can only dream of. Premium quality products & service you can exclusively purchase and avail of from the company.</span>
+							</div>
+						</div>
+						</h3>
+						<h4 class="rw bold" style="margin-top: 25px;">
+							<span>Integrity</span>
+						</h4>
+						<div class="margin_bottom rb">
+							<div>
+								<span style="white-space: pre-wrap;">Offer honest to goodness products which work and does what it's specified to do.
+Best value for Money
+Product costs are proportionate to the suggested retail value and purpose it was created for.</span>
+							</div>
+						</div>
+						</h3>
+						<h4 class="rw bold" style="margin-top: 25px;">
+							<span>Sharing</span>
+						</h4>
+						<div class="margin_bottom rb">
+							<div>
+								<span style="white-space: pre-wrap;">A world of wealth is out for everyone. UPMI being a firm believer of this mantra, shares its means and methods that is not limited to acquiring affluence, but from a wholistic standpoint. Comapny equips those in its sphere of influence to pursue health, wellness, knowledge, sense of community and ultimately financial independence.</span>
+							</div>
+						</div>
+						<h4 class="rw bold" style="margin-top: 25px;">
+							<span>Filipino Ingenuity</span>
+						</h4>
+						<div class="margin_bottom rb">
+							<div>
+								<span style="white-space: pre-wrap;">Strategies and products pay tribute to the Filipino business acumen, conceptualized by Filipinos, made by Filipinos to serve a thriving Filipino market, together with the global audience.</span>
 							</div>
 						</div>
 					</div>

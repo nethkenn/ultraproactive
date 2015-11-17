@@ -31,9 +31,7 @@
                             <!-- <p class="post_meta_comments"><i class="ABdev_icon-comment"></i>3</p> -->
                         </div>
                         <h2 class="rw bold">{{ $news->news_title }}</h2>                               
-                        <p class="op">
-                            {{ $news->news_description }}
-                        </p>    
+                        <p class="op" style="white-space: pre-wrap;">{{ $news->news_description }}</p>    
                     </div>
                 </div>
             </div>
