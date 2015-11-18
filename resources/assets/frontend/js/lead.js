@@ -44,6 +44,8 @@ function lead()
 		var addLeadModal = $('[data-remodal-id="add-leads-manual-modal"]').remodal();
 		$('.manual-add-btn').on('click', function(){
 			addLeadModal.open();
+			
+			
 			return false;
 
 		})
