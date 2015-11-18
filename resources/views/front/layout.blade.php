@@ -147,7 +147,7 @@
 						<div class="widget">
 							<h3 class="rw">About us</h3>			
 							<div class="textwidget op">
-								Ultra Proactive Marketing Inc. was incorporated in 2014. The company made its mark in the MLM industry by introducing unique high quality products and services in the market. By now, the company is making a serious and aggresive bid to be one of the best MLM companies in the country. 
+								{{ substr($_aboutus->about_description, 0, 300) }}...
 							</div>
 						</div>						
 					</div>
@@ -207,7 +207,7 @@
 					</div>
 					<div class="span5 footer_social">
 						<!-- <a href="/resources/assets/path/#" target="_self"><i class="ABdev_icon-linkedin"></i></a> -->
-						<a href="https://www.facebook.com/UltraNutrifitMeal?ref=ts&fref=ts" target="_blank"><i class="ABdev_icon-facebook"></i></a>
+						<a href="https://www.facebook.com/upmi2014/?fref=ts" target="_blank"><i class="ABdev_icon-facebook"></i></a>
 						<!-- <a href="/resources/assets/path/#" target="_self"><i class="ABdev_icon-skype"></i></a>
 						<a href="/resources/assets/path/#" target="_self"><i class="ABdev_icon-googleplus"></i></a> -->
 						<a href="https://twitter.com/NutrifitMeal" target="_self"><i class="ABdev_icon-twitter"></i></a>

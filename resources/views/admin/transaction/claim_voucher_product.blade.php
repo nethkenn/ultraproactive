@@ -20,7 +20,7 @@
 	                <td>{{$voucher_product->unilevel_pts}}</td>
 	                <td>{{$voucher_product->binary_pts}}</td>
 	                <td>{{$voucher_product->qty}}</td>
-	                <td>{{number_format($voucher_product->sub_total,2)}}</td>
+	                <td>{{$voucher_product->sub_total}}</td>
 	            </tr>
 	        @endforeach
 
