@@ -4,6 +4,7 @@
 /storage/framework/views/*
 /storage/framework/sessions/*
 /storage/framework/cache/*
+/resources/assets/uploads_profile_pic/*
 /public/images/*
 composer.phar
 composer.lock
