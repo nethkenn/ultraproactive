@@ -97,7 +97,7 @@
 								<h5 style="font-family: 'Raleway', sans-serif; font-size: 18px; font-weight: bold; margin: 0;">
 									<a style="color: #fff;" href="/news_content?id={{ $news->news_id }}">{{ $news->news_title }}</a>
 								</h5>
-								<div style="font-family: 'Raleway', sans-serif; font-size: 12px; font-weight: 300; color: #80aef1; margin-bottom: 5px;">{{ $news->month }} {{ $news->day }}, {{ $news->year }} (2 Minutes Ago)</div>
+								<div style="font-family: 'Raleway', sans-serif; font-size: 12px; font-weight: 300; color: #80aef1; margin-bottom: 5px;">{{ $news->month }} {{ $news->day }}, {{ $news->year }}</div>
 								<p style="font-family: 'Raleway', sans-serif; font-size: 14px; font-weight: 400; color: #aacfff;">
 									{{ substr($news->news_description, 0, 195) . "..." }}
 								</p>

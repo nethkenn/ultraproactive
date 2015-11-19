@@ -147,7 +147,7 @@
 						<div class="widget">
 							<h3 class="rw">About us</h3>			
 							<div class="textwidget op">
-								{{ $_aboutus->about_description }}
+								{{ substr($_aboutus->about_description, 0, 300) }}...
 							</div>
 						</div>						
 					</div>
