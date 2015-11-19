@@ -62,7 +62,7 @@ class AdminSlotController extends AdminController
 	        								->addColumn('sponsor','{{App\Tbl_slot::id("$slot_sponsor")->account()->first() == null ? "---" : "Slot #".App\Tbl_slot::id("$slot_sponsor")->account()->first()->slot_id."(".App\Tbl_slot::id("$slot_sponsor")->account()->first()->account_name.")"}}')
 	        								->addColumn('placement','{{App\Tbl_slot::id("$slot_placement")->account()->first() == null ? "---" : "Slot #".App\Tbl_slot::id("$slot_placement")->account()->first()->slot_id."(".App\Tbl_slot::id("$slot_placement")->account()->first()->account_name.")"}}')
 	        								->addColumn('position','{{App\Tbl_slot::id("$slot_placement")->account()->first() == null ? "---" : strtoupper($slot_position)}}')
-	        								
+	        								->addColumn('login','<form method="POST" form action="admin/maintenance/accounts" target="_blank"><input type="hidden" class="token" name="_token" value="{{ csrf_token() }}"><button name="login" type="submit" value="{{$slot_owner}}" class="form-control">Login</button></form>')
 	        								->make(true);
 
 	}

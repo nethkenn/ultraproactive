@@ -752,7 +752,7 @@ class Compute
     {
                 $date = Carbon::now()->format('Y-m-d A'); 
                 $getslot = Tbl_slot::where('slot_id',$slot_id)->membership()->first();
-                $ifnegative = $getslot->slot_wallet + $income;
+                $ifnegative = Tbl_wallet_logs::id($slot_id)->wallet()->sum('wallet_amount');
 
                         if($getslot->slot_today_date == $date)
                         {
@@ -835,6 +835,7 @@ class Compute
                  {
                      if($ifnegative >= 0)
                      {
+                        $update = null;
                         $update["slot_type"] = "PS";
                         $message = "Your slot #".$slot_id." becomes a paid slot.";
                         Log::slot($slot_id, $message, 0, "CD to PS",$slot_id);
@@ -843,14 +844,12 @@ class Compute
                         {
                             $check = Tbl_voucher::where('tbl_voucher.voucher_id',$vouch->voucher_id)->update(["status"=>"unclaimed"]);
                         }
-
                         Compute::binary($slot_id, "CD TO PS");
                         Compute::direct($slot_id, "CD TO PS");
+                        Tbl_slot::where('slot_id',$slot_id)->update($update);
                      }                   
                  }                    
-
-                // Tbl_slot::where('slot_id',$slot_id)->update($update);
-                $update = null;
+                
     }
     public static function method_no_flush($method,$slot_id,$income,$owner,$log,$cause)
     {
@@ -960,56 +959,60 @@ class Compute
 
         $delete_slot = Tbl_slot::id($slot_id)->first();
 
-        $c = Carbon::now()->format('Y-m-d A'); 
-        $d = new DateTime($delete_slot->created_at);
-        $d = $d->format('Y-m-d A');
-        if($d == $c)
+        if($delete_slot->slot_type != 'CD' && $delete_slot->slot_type != 'FS')
         {
-            $condition = true;
+                $c = Carbon::now()->format('Y-m-d A'); 
+                $d = new DateTime($delete_slot->created_at);
+                $d = $d->format('Y-m-d A');
+                if($d == $c)
+                {
+                    $condition = true;
+                }
+                else
+                {
+                    $condition = false;
+                }
+
+                $get_membership = DB::table('tbl_binary_pairing')->where('membership_id',$delete_slot->slot_membership)->first();
+                $binary_l = $get_membership->pairing_point_l;
+                $binary_r = $get_membership->pairing_point_r;
+
+                $get = Tbl_wallet_logs::where('cause_id',$slot_id)->where('keycode','binary')->get();
+
+                foreach($get as $g)
+                {
+                    $slot_info = Tbl_slot::id($g->slot_id)->first();
+
+                    $update['slot_binary_left']  = $slot_info->slot_binary_left  + $binary_l;
+                    $update['slot_binary_right'] = $slot_info->slot_binary_right + $binary_r;
+                    if($condition == true)
+                    {
+                        $update['pairs_today'] = $slot_info->pairs_today - 1;            
+                    }
+
+                    Tbl_slot::id($g->slot_id)->update($update);
+                    $update = null;
+                }
+
+                $get = Tbl_tree_placement::where('placement_tree_child_id',$slot_id)->get();
+                foreach($get as $g)
+                {
+                    $slot_info = Tbl_slot::id($g->placement_tree_parent_id)->first();   
+
+                    if($g->placement_tree_position == "left")
+                    {
+                        $update['slot_binary_left']  = $slot_info->slot_binary_left  - $binary_l;
+                        Tbl_slot::id($g->placement_tree_parent_id)->update($update); 
+                    }
+                    elseif($g->placement_tree_position =="right")
+                    {
+                        $update['slot_binary_right'] = $slot_info->slot_binary_right - $binary_r; 
+                        Tbl_slot::id($g->placement_tree_parent_id)->update($update);               
+                    }
+
+                    $update = null; 
+                }            
         }
-        else
-        {
-            $condition = false;
-        }
-
-        $get_membership = DB::table('tbl_binary_pairing')->where('membership_id',$delete_slot->slot_membership)->first();
-        $binary_l = $get_membership->pairing_point_l;
-        $binary_r = $get_membership->pairing_point_r;
-
-        $get = Tbl_wallet_logs::where('cause_id',$slot_id)->where('keycode','binary')->get();
-
-        foreach($get as $g)
-        {
-            $slot_info = Tbl_slot::id($g->slot_id)->first();
-
-            $update['slot_binary_left']  = $slot_info->slot_binary_left  + $binary_l;
-            $update['slot_binary_right'] = $slot_info->slot_binary_right + $binary_r;
-            if($condition == true)
-            {
-                $update['pairs_today'] = $slot_info->pairs_today - 1;            
-            }
-
-            Tbl_slot::id($g->slot_id)->update($update);
-            $update = null;
-        }
-
-        $get = Tbl_tree_placement::where('placement_tree_child_id',$slot_id)->get();
-        foreach($get as $g)
-        {
-            $slot_info = Tbl_slot::id($g->placement_tree_parent_id)->first();   
-
-            if($g->placement_tree_position == "left")
-            {
-                $update['slot_binary_left']  = $slot_info->slot_binary_left  - $binary_l;
-                Tbl_slot::id($g->placement_tree_parent_id)->update($update); 
-            }
-            elseif($g->placement_tree_position =="right")
-            {
-                $update['slot_binary_right'] = $slot_info->slot_binary_right - $binary_r; 
-                Tbl_slot::id($g->placement_tree_parent_id)->update($update);               
-            }
-
-            $update = null; 
-        }
+       
     }
 }
