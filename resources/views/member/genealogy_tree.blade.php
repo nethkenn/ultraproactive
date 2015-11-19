@@ -8,7 +8,7 @@
         <script type="text/javascript" src="resources/assets/genealogy/drag.js"></script>
         <link rel="stylesheet" type="text/css" href="/resources/assets/remodal/src/jquery.remodal.css">
         <link rel="stylesheet" type="text/css" href="/resources/assets/remodal/src/remodal-default-theme.css">
-        <link rel="stylesheet" type="text/css" href="resources/assets/member/css/genealogy.css" />
+        <link rel="stylesheet" type="text/css" href="resources/assets/member/css/genealogy.css?version=2" />
         <title>Genealogy</title>
     </head>
     <body id="body" class="body" style="height: 100%">

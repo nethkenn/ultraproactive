@@ -123,13 +123,12 @@
 .tree li span
 {
     background-color: #519FCD;
-    color: #fff;
     position: relative;
     -webkit-transition: background-color ease-out 0.5s;
        -moz-transition: background-color ease-out 0.5s;
          -o-transition: background-color ease-out 0.5s;
             transition: background-color ease-out 0.5s;  
-    background-image: url("/resources/assets/frontend/img/logo.png");
+    background-image: url("/resources/assets/frontend/img/nouplogo.png");
     background-position: center;
     -moz-background-size: cover;
       -o-background-size: cover;
@@ -137,7 +136,8 @@
 }
 .tree li span .id
 {
-    text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+    /*text-shadow: -1px 0 #0059ff, 0 1px #0059ff, 1px 0 #0059ff, 0 -1px #0059ff;*/
+    color: #056efc;
 }
 .tree li span:hover
 {
