@@ -29,6 +29,7 @@
 						<th>Sponsor</th>
 						<th>Type</th>
 						<th>Wallet</th>
+						<th></th>
 						<th>Date</th>
 						<th></th>
 						<th></th>
@@ -119,6 +120,7 @@
             {data: 'sponsor', name: 'sponsor'},
             {data: 'slot_type', name: 'slot_type'},
             {data: 'wallet', name: 'slot_wallet'},
+            {data: 'login', name: 'slot_id'},
             {data: 'created_at', name: 'created_at'},
             {data: 'gen', name: 'slot_id'},
             {data: 'info', name: 'slot_id'},

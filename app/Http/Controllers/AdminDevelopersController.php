@@ -9,6 +9,19 @@ use App\Tbl_slot;
 use App\Classes\Log;
 use Carbon\Carbon;
 use App\Classes\Admin;
+use App\Tbl_tree_placement;
+use App\Tbl_tree_sponsor;
+use App\Tbl_binary_pairing;
+use App\Tbl_indirect_setting;
+use App\Tbl_unilevel_setting;
+use App\Tbl_membership;
+use App\Tbl_matching_bonus;
+use App\Tbl_voucher;
+use App\Tbl_wallet_logs;
+use App\Tbl_travel_reward;
+use Session;
+use App\Tbl_travel_qualification;
+use DateTime;
 class AdminDevelopersController extends Controller
 {
 	// public function migration()
@@ -327,4 +340,167 @@ class AdminDevelopersController extends Controller
 	        }
         }
 	}
+
+	public function re_entry()
+	{
+		$audit = DB::table('tbl_admin_log')->where('created_at','LIKE','%2015-11%')->where('logs','LIKE','%delete Slot #%')->where('used',0)->get();
+		$container = null;
+		$ctr2 = 0;
+		foreach($audit as $data)
+		{
+			$unserialize = unserialize($data->old_data);
+
+			if($unserialize->slot_type == 'CD' || $unserialize->slot_type == 'FS')
+			{	
+					$slot_to_get = $unserialize->slot_placement;
+					$ctr = 0;
+					$condition = false;
+					while($condition == false)
+					{
+						$check_slot = Tbl_slot::id($slot_to_get)->first();
+						if($check_slot)
+						{
+							$condition = true;
+						}
+						else
+						{
+							foreach($audit as $data2)
+							{
+								$unserialize2 = unserialize($data2->old_data);
+								if($unserialize2->slot_id == $slot_to_get)
+								{
+									$slot_to_get = $unserialize2->slot_placement;
+									break;
+								}
+							}
+						}
+					}
+
+                    $get_membership = DB::table('tbl_binary_pairing')->where('membership_id',$unserialize->slot_membership)->first();
+	                $binary_l = $get_membership->pairing_point_l;
+	                $binary_r = $get_membership->pairing_point_r;
+	                $get = Tbl_tree_placement::where('placement_tree_child_id',$slot_to_get)->get();
+
+	                $slot_info = Tbl_slot::id($slot_to_get)->first(); 
+                    if(strtolower($unserialize->slot_position) == "left")
+                    {
+                        $update['slot_binary_left']  = $slot_info->slot_binary_left  + $binary_l;
+                        Tbl_slot::id($slot_to_get)->update($update); 
+                    }
+                    elseif(strtolower($unserialize->slot_position) =="right")
+                    {
+                        $update['slot_binary_right'] = $slot_info->slot_binary_right + $binary_r; 
+                        Tbl_slot::id($slot_to_get)->update($update);     
+                    }
+                    $this->re_check($slot_info->slot_id);
+                    $update = null;
+
+	                foreach($get as $g)
+	                {
+	                    $slot_info = Tbl_slot::id($g->placement_tree_parent_id)->first();   
+
+	                    if($g->placement_tree_position == "left")
+	                    {
+	                        $update['slot_binary_left']  = $slot_info->slot_binary_left  + $binary_l;
+	                        Tbl_slot::id($g->placement_tree_parent_id)->update($update); 	            
+	                    }
+	                    elseif($g->placement_tree_position =="right")
+	                    {
+	                        $update['slot_binary_right'] = $slot_info->slot_binary_right + $binary_r; 
+	                        Tbl_slot::id($g->placement_tree_parent_id)->update($update);  
+	                    }
+	                    $this->re_check($slot_info->slot_id);
+	                    $update = null; 
+	                }            
+
+			}
+
+			DB::table('tbl_admin_log')->where('admin_log_id',$data->admin_log_id)->update(['used'=>1]);
+		}
+		dd('finish');
+	}
+
+	public function re_check($slot_id)
+	{
+		    $_pairing = Tbl_binary_pairing::orderBy("pairing_point_l", "desc")->get();
+			$slot_recipient = Tbl_slot::id($slot_id)->membership()->first();
+			$method = "SLOT CREATION";
+            /* RETRIEVE LEFT & RIGHT POINTS */
+            $binary["left"] = $slot_recipient->slot_binary_left;
+            $binary["right"] = $slot_recipient->slot_binary_right; 
+
+            /* CHECK PAIRING */
+            foreach($_pairing as $pairing)
+            {   
+                if($pairing->membership_id == $slot_recipient->slot_membership)
+                {
+                        while($binary["left"] >= $pairing->pairing_point_l && $binary["right"] >= $pairing->pairing_point_r)
+                        {
+                                    $binary["left"] = $binary["left"] - $pairing->pairing_point_l;
+                                    $binary["right"] = $binary["right"] - $pairing->pairing_point_r;
+                                    
+                                    /* GET PAIRING BONUS */
+                                    $pairing_bonus = $pairing->pairing_income;
+
+                                    /* CHECK IF PAIRING BONUS IS ZERO */
+                                    if($pairing_bonus != 0)
+                                    {
+
+                                        /* Check if entry per day is exceeded already */
+                                        $count =  Tbl_slot::id($slot_id)->first();
+                                        $member = Tbl_membership::where('membership_id',$slot_recipient->slot_membership)->first();
+                                        $count = $count->pairs_today;
+                                        $date = Carbon::now()->format('Y-m-d A'); 
+                                        $condition = null;
+                                        $gc = false;
+
+
+                                        /* Do this when date is new */
+                                        $update['pairs_per_day_date'] = $date;
+                                        $count = 1;
+                                        $update['pairs_today'] = $count;
+                                        $condition = true;
+
+	                                        if($slot_recipient->every_gc_pair != 0)
+	                                        {
+	                                            /* CHECK IF GC */
+	                                            if($count%$slot_recipient->every_gc_pair == 0)
+	                                            {
+	                                                $gc = true;
+	                                            }                                                        
+	                                        }
+
+                                        	/* Insert Count */
+                                        	Tbl_slot::where('slot_id',$slot_recipient->slot_id)->update($update);
+
+                                            $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($pairing_bonus, 2) . " wallet</b> from <b>MATCHING BONUS</b> due to matching combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining match points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right.";
+											if($gc == false)
+											{
+											     Compute::income_per_day($slot_recipient->slot_id,$pairing_bonus,'binary',$slot_recipient->slot_owner,$log,$slot_recipient->slot_id); 
+											}
+											elseif($gc == true)
+											{
+											    $gcbonus = $pairing_bonus;
+											    // Tbl_slot::where('slot_id',$slot_recipient->slot_id)->update(["slot_gc"=>$gcbonus]);
+											    $log = $log = "This is your ".$slot_recipient->every_gc_pair." MSB, Your ".$pairing_bonus." Income converted to GC (SLOT #".$slot_recipient->slot_id.") due to matching combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining match points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right.";
+											    Log::slot($slot_recipient->slot_id, $log, $gcbonus,"binary",$slot_recipient->slot_id,1);
+											    // Log::account($slot_recipient->slot_owner, $log);
+											} 
+
+											/* MATCHING SALE BONUS */
+											Compute::matching($slot_recipient->slot_id, $method, $slot_recipient, $pairing_bonus);  
+                                    }                                                      
+                        }                                
+      
+                }
+            } 
+
+    	/* UPDATE POINTS */
+		$update_recipient["slot_binary_left"] = $binary["left"];
+		$update_recipient["slot_binary_right"] = $binary["right"];
+		Tbl_slot::id($slot_id)->update($update_recipient);
+		$update_recipient = null;
+	}
 }
+
+       

@@ -375,7 +375,7 @@ class AdminCodeController extends AdminController {
 
 		$query = Tbl_membership_code::where('code_pin', Request::input('code_pin'))
 										->where('used', 0)
-										->where('blocked', 0)
+										// ->where('blocked', 0)
 										->firstOrFail();
 									
 		if(!empty($account_id))

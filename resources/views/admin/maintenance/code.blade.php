@@ -151,7 +151,7 @@ $(function()
 
 	$membershipCodeTable.on( 'draw.dt', function ()
 	{
-
+				$('.block-membership-code').unbind("click");
 				$('.block-membership-code').on('click', function(event)
 				{
 					event.preventDefault();
@@ -191,7 +191,7 @@ $(function()
 					
 				});
 
-
+				
 				$('.transfer-membership-code').on('click',function(event)
 				{
 					event.preventDefault();
@@ -234,7 +234,7 @@ $(function()
 					
 				});
 
-
+				$('#transfer-code-submit').unbind("click");
 				$('#transfer-code-submit').on('click',function(event) {
 					/* Act on the event */
 					event.preventDefault();
