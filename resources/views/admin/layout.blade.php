@@ -68,6 +68,7 @@
 									<li><a href="admin/transaction/sales">Process Sales</a></li>
 									<li><a href="admin/transaction/claims">Process Claims</a></li>
 									<li><a href="admin/transaction/payout">Process Payout</a></li>
+									<li><a href="admin/transaction/view_voucher_codes">Code Transactions</a></li>
 									<!--<li><a href="admin/transaction/unilevel-distribution">Unilevel Distribution</a></li> -->
 									<li><a href="admin/transaction/unilevel-distribution/dynamic">Dynamic Compression</a></li>
 									<li><a href="admin/transaction/global_pool_sharing">Global Pool Sharing</a></li>

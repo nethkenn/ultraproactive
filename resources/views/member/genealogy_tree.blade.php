@@ -6,74 +6,116 @@
         <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
         <link rel="stylesheet" type="text/css" href="/resources/assets/members/css/member.css">
         <script type="text/javascript" src="resources/assets/genealogy/drag.js"></script>
+        <link rel="stylesheet" type="text/css" href="/resources/assets/genealogy_tree/bootstrap/css/bootstrap.css">
+        <script type="text/javascript" src="/resources/assets/genealogy_tree/bootstrap/js/bootstrap.js"></script>
         <link rel="stylesheet" type="text/css" href="/resources/assets/remodal/src/jquery.remodal.css">
         <link rel="stylesheet" type="text/css" href="/resources/assets/remodal/src/remodal-default-theme.css">
         <link rel="stylesheet" type="text/css" href="resources/assets/member/css/genealogy.css?version=2" />
         <title>Genealogy</title>
+        <link rel="stylesheet" type="text/css" href="/resources/assets/members/css/member.css">
     </head>
     <body id="body" class="body" style="height: 100%">
+            <nav class="navbar navbar-default">
+              <div>
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                </div>
+
+                <!-- NAVIGATION -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="overflow: hidden;">
+                  <ul class="nav navbar-nav">
+                    <li class="{{ Request::segment(2) == '' ? 'active' : '' }}"><a href="/member">Dashboard</a></li>
+                    <li class="{{ Request::segment(2) == 'slot' ? 'active' : '' }}"><a href="/member/slot">My Slots</a></li>
+                    <li class="{{ Request::segment(2) == 'code_vault' ? 'active' : '' }}"><a href="/member/code_vault">Code Vault</a></li>
+                    <li class="{{ Request::segment(2) == 'genealogy' ? 'active' : '' }} dropdown">
+                        <a href="javascript:">Genealogy</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/member/genealogy/tree?mode=binary">Binary Genealogy</a></li>
+                            <li><a href="/member/genealogy/tree?mode=sponsor">Sponsor Genealogy</a></li>
+                        </ul>
+                    </li>
+                    <li class="{{ Request::segment(2) == 'encashment' ? 'active' : '' }} {{ Request::segment(2) == 'transfer_wallet' ? 'active' : '' }} dropdown">
+                        <a href="javascript:">Wallet</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/member/encashment">Encashment</a></li>
+                            <!-- <li><a href="/member/transfer_wallet">Transfer Wallet</a></li> -->
+                        </ul>
+                    </li>
+                    <li class="{{ Request::segment(2) == 'product' ? 'active' : '' }}"><a href="/member/product">Product</a></li>
+                    <li class="{{ Request::segment(2) == 'voucher' ? 'active' : '' }}"><a href="/member/voucher">Voucher</a></li>
+                    <li class="{{ Request::segment(2) == 'leads' ? 'active' : '' }}"><a href="/member/leads">Leads</a></li>
+                    <li class="{{ Request::segment(2) == 'reports' ? 'active' : '' }} dropdown">
+                        <a href="javascript:">Reports</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/member/reports/income_summary">Income Summary</a></li>
+                        </ul>
+                    </li>
+                   <li class="{{ Request::segment(2) == 'genealogy' ? 'active' : '' }} dropdown hide">
+                        <!--<a href="/member/genealogy?mode=binary">E-payment</a>-->
+                        <a href="member/e-payment/">E-payment</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="member/e-payment/recipient">E-payment Recipient</a></li>
+                            <li><a href="member/e-payment/transaction-log">E-payment Transaction</a></li>
+
+                        </ul>
+                    </li>
+                  </ul>
+                  <ul class="nav navbar-nav navbar-right" style="margin-right: 0;">
+                     <li>
+                        @if($slotnow)
+                        <a href="javascript:" class="dropdown-toggle hidden-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SLOT #{{$slotnow->slot_id}} <span>{{ number_format($current_wallet, 2)}}</span> | GC <span>{{ number_format($current_gc, 2)}}</span>  <b class="caret"></b></a>
+                        @else
+                        <a href="javascript:" class="dropdown-toggle hidden-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">NO SLOTS<b class="caret"></b></a>
+                        @endif
+                        <ul class="dropdown-menu scrollable-menu hidden-sm" style="text-transform: normal">
+                            @if($slot)                                                    
+                                @foreach($slot as $slots)
+                                       <li><a class="forslotchanging" slotid='{{$slots->slot_id}}' href="javascript:">SLOT #{{$slots->slot_id}} <span>{{ number_format($slots->total_wallet, 2)}}</span> |  GC <span>{{ number_format($slots->total_gc, 2)}}</span></a></li> 
+                                @endforeach
+                            @endif      
+                            <li><a href="/member/settings">Account Settings</a></li>
+                            <li><a href="/member/settings#cpass">Change Password</a></li>
+                            <li><a href="/member/logout">Sign out</a></li>
+                        </ul>
+                     </li>
+                  </ul>
+                </div>
+              </div><!-- /.container-fluid -->
+            </nav>
         <div class="overscroll" style="width: 100%; height: inherit; overflow: auto;">
             <div class="tree-container" style="width: 5000%; padding: 20px; height: 5000%;">
                 <div class="tree">
                     <ul>
                         <li class="width-reference">
-                            <span class="downline parent parent-reference PS" x="{{ $slot->slot_id }}">   
+                            <span class="downline parent parent-reference PS" x="{{ $slot_tree->slot_id }}">   
                                 <div id="info">
                                     <div id="photo">
                                         @if($member->image != "")
-                                        <img src="{{$slot->image}}">
+                                        <img src="{{$slot_tree->image}}">
                                         @else
                                         <img src="/resources/assets/img/default-image.jpg">
                                         @endif
                                     </div>
                                     <div id="cont">
-                                        <div style="font-weight: 700;">{{ strtoupper($slot->account_username) }}</div>
-                                        <div>{{ strtoupper($slot->account_name) }}</div>
-                                        <b>{{ $slot->membership_name }}</b>
+                                        <div style="font-weight: 700;">{{ strtoupper($slot_tree->account_username) }}</div>
+                                        <div>{{ strtoupper($slot_tree->account_name) }}</div>
+                                        <b>{{ $slot_tree->membership_name }}</b>
                                     </div>
-                                    <div>{{ $slot->slot_type }}</div>
+                                    <div>{{ $slot_tree->slot_type }}</div>
                                     <div>L:{{$l}} / R:{{$r}}</div>
-                                    <div>Left Points:{{$slot->slot_binary_left}} / Right Points:{{$slot->slot_binary_right}}</div>
+                                    <div>Left Points:{{$slot_tree->slot_binary_left}} / Right Points:{{$slot_tree->slot_binary_right}}</div>
                                 </div>
-                                <div class="id">{{ $slot->slot_id }}</div>
+                                <div class="id">{{ $slot_tree->slot_id }}</div>
                             </span> 
                             <i class="downline-container">
                                 {!! $downline !!}
                             </i>                  
-                            <!--
-                            <ul>
-                                
-                                <li class="width-reference">
-                                    <span class="downline parent parent-reference  PS SILVER" x="2">
-                                        <div id="info">
-                                            <div id="cont">
-                                                <div>{{ $slot->membership_type }} </div>
-                                                <b>{{ $slot->membership_name }} </b>
-                                            </div>
-                                            <div>{{ $slot->account_name }} </div>
-                                            <div>
-                                            </div>
-                                        </div>
-                                        <div class="id">2</div>
-                                    </span>
-                                    <i class="downline-container"></i>
-                                </li>
-                                <li class="width-reference">
-                                    <span class="downline parent parent-reference  PS SILVER" x="3">
-                                        <div id="info">
-                                            <div id="cont">
-                                                <div>PS</div>
-                                                <b>SILVER</b>
-                                            </div>
-                                            <div>P5</div>
-                                            <div>July 06, 2015 - 01:31 AM</div>
-                                        </div>
-                                        <div class="id">3</div>
-                                    </span>
-                                    <i class="downline-container"></i>
-                                </li>
-                            </ul>
-                            -->
                         </li>
                     </ul>       
                 </div>
@@ -509,6 +551,28 @@ var forthis = null
                     });
 
         }); 
+
+       $('.forslotchanging').click(function()
+       {
+                $.ajax(
+                {
+                            url:"member/slot/changeslot",
+                            dataType:"json",
+                            data: {'changeslot':$(this).attr('slotid'),'_token':$("#token").val()},
+                            type:"post",
+                            success: function(data)
+                            {
+                                if(mode != null)
+                                {
+                                    window.location.href = window.location.pathname+"?mode="+mode;
+                                }
+                                else
+                                {
+                                    window.location.href = window.location.pathname;    
+                                }   
+                            }
+                });      
+       });
 
 
 </script>

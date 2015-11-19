@@ -249,6 +249,10 @@ Route::get('admin/maintenance/codes/show-cart', 'AdminCodeController@showCart');
 Route::post('admin/maintenance/codes/remove-from-cart', 'AdminCodeController@removeFromCart');
 Route::get('admin/maintenance/codes/or2', 'AdminCodeController@membershipSales');
 
+Route::get('admin/transaction/view_voucher_codes', 'AdminCodeController@get_voucher_codes');
+Route::get('admin/transaction/view_voucher_codes/get', 'AdminCodeController@ajax_get_voucher_codes');
+Route::get('admin/transaction/view_voucher_codes/code_transactions', 'AdminCodeController@membershipViewVoucherCode');
+
 Route::get('admin/maintenance/product', 'AdminProductController@index');
 Route::any('admin/maintenance/product/add', 'AdminProductController@add_product');
 Route::any('admin/maintenance/product/edit', 'AdminProductController@edit_product');
