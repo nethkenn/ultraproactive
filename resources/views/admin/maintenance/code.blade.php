@@ -4,7 +4,7 @@
 		<div class="header">
 			<input type="hidden" name="_token" value="{{ csrf_token() }}">
 			<div class="title col-md-8">
-				<h2><i class="fa fa-users"></i> MEMBERSHIP CODES</h2>
+				<h2><i class="fa fa-users"></i> MEMBERSHIP CODES (Total Codes:{{$total_code}})</h2>
 			</div>
 			<div class="buttons col-md-4 text-right">
 				<button type="button" class="btn btn-default" id="check-code-btn"><i class="fa fa-pencil"></i> CHECK CODE</button>

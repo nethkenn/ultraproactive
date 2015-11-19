@@ -43,6 +43,7 @@ class AdminCodeController extends AdminController {
 
 
 		$data['_account'] = Tbl_account::all();
+		$data['total_code'] = Tbl_membership_code::count();
 		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Membership Code");
 		return view('admin.maintenance.code', $data);
 	}
