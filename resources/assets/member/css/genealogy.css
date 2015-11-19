@@ -147,18 +147,22 @@
 .tree li span.PS
 {
     background-color: #519FCD;
+    border: 5px solid #519FCD;
 }
 .tree li span.FS
 {
     background-color: #CC5351;
+    border: 5px solid #CC5351;
 }
 .tree li span.VC
 {
     background-color: #86CC51;
+    border: 5px solid #86CC51;
 }
 .tree li span.SS
 {
     background-color: #851CB2;
+    border: 5px solid #851CB2;
 }
 .tree li span #paid-slot-seal
 {
