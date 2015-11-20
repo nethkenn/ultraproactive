@@ -18,7 +18,7 @@
 				<li><a href="javascript:" data-option-value=".category{{ $category->product_category_id }}">{{ $category->product_category_name }}</a></li>
 			@endforeach
 		</ul>
-		<div id="dz_latest_portfolio" class="portfolio_items clearfix isotope">
+		<div id="dz_latest_portfolio" class="portfolio_items clearfix isotope" style="height: auto !important;">
 			@foreach($_product as $product)
 			<div class="portfolio_item portfolio_item_4 category{{ $product->product_category_id }} isotope-item">
 				<div class="wowe"></div>
