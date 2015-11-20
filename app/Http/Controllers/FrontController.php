@@ -118,7 +118,8 @@ class FrontController extends Controller
 		foreach ($data["_product"] as $key => $value) 
 		{
 			$get = $value->image_file;
-			$imagee = Image::view($get, "770x619");
+			// $imagee = Image::view($get, "770x619");
+			$imagee = Image::view_main($get);
 			$data["_product"][$key]->image = $imagee;
 		}
 
