@@ -131,7 +131,7 @@ class FrontController extends Controller
 		$id = Request::input("id");
 		$data["product"] = DB::table("tbl_product")->where("product_id", $id)->first();
 		$get = $data["product"]->image_file;
-		$imagee = Image::view($get, "770x619");
+		$imagee = Image::view_main($get);
 		$data["product"]->image = $imagee;
 	
 		$date = $data["product"]->created_at;
@@ -188,7 +188,7 @@ class FrontController extends Controller
 		foreach ($data["_product"] as $key => $value) 
 		{
 			$image =  $value->image_file;
-			$view = Image::view_main($image);
+			$view = Image::view($image, "770x619");
 			$data["_product"][$key]->image = $view;
 		}
 		return view('front.product_content', $data);
