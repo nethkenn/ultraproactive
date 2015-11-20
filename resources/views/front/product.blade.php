@@ -34,3 +34,24 @@
 	</div>
 </section>
 @endsection
+@section("script")
+{{-- <script type="text/javascript" src="/resources/assets/equal-height/equal-height.js"></script> --}}
+<script type="text/javascript">
+// jQuery(function ($) 
+// {
+//   $('.equal-height').matchHeight(
+//   	{
+//   		byRow: false,
+//   	}
+//   );
+// });
+</script>
+@endsection
+@section("css")
+<style type="text/css">
+.portfolio_item img
+{
+	max-height: 250px;
+}
+</style>
+@endsection
