@@ -20,8 +20,8 @@
 		</ul>
 		<div id="dz_latest_portfolio" class="portfolio_items clearfix isotope">
 			@foreach($_product as $product)
-			<div class="portfolio_item portfolio_item_4 category{{ $product->product_category_id }} isotope-item">
-				<div class="overlayed">
+			<div class="portfolio_item portfolio_item_4 category{{ $product->product_category_id }} isotope-item equal-height">
+				<div class="overlayed equal-height">
 					<img src="{{ $product->image }}" alt="">
 					<a class="overlay" href="/product_content?id={{ $product->product_id }}">
 						<p class="overlay_title">{{ $product->product_name }}</p>
@@ -33,4 +33,25 @@
 		</div>
 	</div>
 </section>
+@endsection
+@section("script")
+<script type="text/javascript" src="/resources/assets/equal-height/equal-height.js"></script>
+<script type="text/javascript">
+jQuery(function ($) 
+{
+  $('.equal-height').matchHeight(
+  	{
+  		byRow: false,
+  	}
+  );
+});
+</script>
+@endsection
+@section("css")
+<style type="text/css">
+.portfolio_item img
+{
+	max-height: 250px;
+}
+</style>
 @endsection
