@@ -14,7 +14,7 @@
         <div class="container">
             <div class="row">
                 <div class="span8 content_with_right_sidebar">
-                    <img src="{{ $product->image }}" class="portfolio_item_image" alt="">                
+                    <img src="{{ $product->image }}" class="portfolio_item_image" alt="" style="max-height: 500px; margin: auto;">                
                 </div>
                 <div id="portfolio_item_meta" class="span4">
                     <h2 class="column_title_left">Description</h2>
@@ -44,9 +44,9 @@
             <h3 class="column_title_left">Similar Products</h3>
             <div class="row">
                 @foreach($_product as $products)
-                <div class="portfolio_item portfolio_item_4 identity illustrations">
-                    <div class="overlayed">
-                        <img src="{{ $products->image }}" alt="">
+                <div class="portfolio_item portfolio_item_4 identity illustrations" style="height: 250px;">
+                    <div class="overlayed" style="height: 250px;">
+                        <img src="{{ $products->image }}" alt="" style="max-height: 250px;">
                         <a class="overlay" href="/product_content?id={{ $products->product_id }}">
                             <p class="overlay_title">{{ $products->product_name }}</p>
                             <p class="portfolio_item_tags"></p>
