@@ -18,15 +18,18 @@
 				<li><a href="javascript:" data-option-value=".category{{ $category->product_category_id }}">{{ $category->product_category_name }}</a></li>
 			@endforeach
 		</ul>
-		<div id="dz_latest_portfolio" class="portfolio_items clearfix isotope" style="height: auto;">
+		<div id="dz_latest_portfolio" class="portfolio_items clearfix isotope">
 			@foreach($_product as $product)
-			<div class="portfolio_item portfolio_item_4 category{{ $product->product_category_id }} isotope-item" style="height: 250px;">
-				<div class="overlayed" style="height: 250px;">
-					<img src="{{ $product->image }}" alt="">
-					<a class="overlay" href="/product_content?id={{ $product->product_id }}">
-						<p class="overlay_title">{{ $product->product_name }}</p>
-						<p class="portfolio_item_tags">&#8369; {{ $product->price }}</p>
-					</a>
+			<div class="portfolio_item portfolio_item_4 category{{ $product->product_category_id }} isotope-item">
+				<div class="wowe"></div>
+				<div class="lalagyanan">
+					<div class="overlayed">
+						<img src="{{ $product->image }}" alt="">
+						<a class="overlay" href="/product_content?id={{ $product->product_id }}">
+							<p class="overlay_title">{{ $product->product_name }}</p>
+							<p class="portfolio_item_tags">&#8369; {{ $product->price }}</p>
+						</a>
+					</div>
 				</div>
 			</div>
 			@endforeach
@@ -49,9 +52,30 @@
 @endsection
 @section("css")
 <style type="text/css">
+.portfolio_item
+{
+	position: relative;
+}
+.portfolio_item .wowe
+{
+	padding-top: 100%;
+}
+.portfolio_item .lalagyanan
+{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top: 0;
+}
+.portfolio_item .overlayed
+{
+	width: 100%;
+	height: 100%;
+}
 .portfolio_item img
 {
-	max-height: 250px;
+	height: 100%;
+	width: 100%;
 }
 </style>
 @endsection
