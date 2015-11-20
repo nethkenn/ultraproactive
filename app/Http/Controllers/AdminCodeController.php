@@ -43,6 +43,7 @@ class AdminCodeController extends AdminController {
 
 
 		$data['_account'] = Tbl_account::all();
+		$data['total_code'] = Tbl_membership_code::count();
 		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Membership Code");
 		return view('admin.maintenance.code', $data);
 	}
@@ -651,9 +652,53 @@ class AdminCodeController extends AdminController {
 	}
 
 
-	
+	public function membershipViewVoucherCode()
+	{
+
+		$order_form_number = Request::input('order_form_number');
+		$codeSale = Tbl_membership_code_sale::select('tbl_membership_code_sale.*', 'sold_to_account.account_name as sold_to_name', 'sold_to_account.account_username as sold_to_username', 'generated_by_account.account_name as generated_by_name','generated_by_account.account_username as generated_by_username', 'payment_type.code_type_name as payment_type')
+												->where('tbl_membership_code_sale.membershipcode_or_num', $order_form_number)
+												->leftJoin('tbl_account as sold_to_account', 'sold_to_account.account_id' ,'=', 'tbl_membership_code_sale.sold_to')
+												->leftJoin('tbl_account as generated_by_account', 'generated_by_account.account_id' ,'=', 'tbl_membership_code_sale.generated_by')
+												->leftJoin('tbl_code_type as payment_type', 'payment_type.code_type_id','=','tbl_membership_code_sale.code_type_id')
+												->first();
+
+		$data['codeSale'] = $codeSale;
+		$codes = Tbl_membership_code_sale_has_code::where('tbl_membership_code_sale_has_code.membershipcode_or_num', $codeSale->membershipcode_or_num)
+													->leftJoin('tbl_membership_code','tbl_membership_code.code_pin', '=', 'tbl_membership_code_sale_has_code.code_pin')
+													->leftJoin('tbl_membership', 'tbl_membership.membership_id', '=', 'tbl_membership_code.membership_id')
+													->leftJoin('tbl_product_package', 'tbl_product_package.product_package_id', '=', 'tbl_membership_code.product_package_id')
+													->get();
+		$data['codes'] = $codes;
+		// return view('admin.maintenance.code_sale_print_or_pdf',$data);
+		// $pdf = PDF::loadView('admin.maintenance.code_sale_print_or_pdf', $data);
+		return view('admin.maintenance.code_sale_print_or_pdf', $data);
+
+
+	}
+
+
+	public function get_voucher_codes()
+	{
+
+
+		$data['_account'] = Tbl_account::all();
+		$data['total_code'] = Tbl_membership_code::count();
+		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Code Transactions");
+		return view('admin.transaction.code_transactions', $data);
+	}
 
 
 
+	public function ajax_get_voucher_codes()
+    {
+
+    	$stat = Request::input('status');
+        $membership_code = Tbl_membership_code_sale_has_code::groupBy('tbl_membership_code_sale_has_code.membershipcode_or_num')->join('tbl_membership_code_sale','tbl_membership_code_sale.membershipcode_or_num','=','tbl_membership_code_sale_has_code.membershipcode_or_num')->get();
+
+        return Datatables::of($membership_code)	
+        ->addColumn('view_voucher','<a target="_blank" href="/admin/transaction/view_voucher_codes/code_transactions?order_form_number={{$membershipcode_or_num}}"> View Voucher</a>')
+		->make(true);
+    }
 
 }

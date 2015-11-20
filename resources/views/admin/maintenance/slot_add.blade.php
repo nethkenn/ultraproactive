@@ -24,7 +24,7 @@
                                 <div class="id">{{ $slot->slot_id }}</div>
                                 <div class="name">{{ $slot->account_name }}</div>
                                 <div class="membership">{{ $slot->membership_name }} ({{ $slot->slot_type }})</div>
-                                <div class="wallet">{{ number_format($slot->slot_wallet, 2) }}</div>
+                                <div class="wallet">{{ number_format(App\Tbl_wallet_logs::wallet()->where('slot_id',$slot->slot_id)->sum('wallet_amount'), 2) }}</div>
                                 <div class="view-downlines">&#8659;</div>
                             </span>
                             <div class="child-container"></div>
