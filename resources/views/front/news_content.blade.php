@@ -16,11 +16,11 @@
             <div class="span12 content_with_right_sidebar">
                 <div class="post_content">
                     <div class="post post_main" style="border-bottom: 0;">
-                        <img src="{{ $news->image }}" alt="">                               
+                        <img src="{{ $news->image }}" alt="" style="max-width: 100% !important;">                               
                         <div class="postmeta-above clearfix">
                             <p class="post_meta_date"><i class="ABdev_icon-time"></i>{{ $news->month }} {{ $news->day }}, {{ $news->year }}</p>
                             <p class="post_meta_author"><i class="ABdev_icon-user"></i>
-                                <a href="right_sidebar_blog.html" title="Posts by Connell Zane" rel="author">UltraProactive</a>
+                                <a href="javascript:" title="Posts by Connell Zane" rel="author">UltraProactive</a>
                             </p>
                             <!-- <p class="post_meta_category"><i class="ABdev_icon-pen"></i>
                                 <a href="fullwidth_blog.html" title="View all posts in Fullwidth Blog" rel="category">Fullwidth Blog</a>, 
