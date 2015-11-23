@@ -118,7 +118,8 @@ class FrontController extends Controller
 		foreach ($data["_product"] as $key => $value) 
 		{
 			$get = $value->image_file;
-			$imagee = Image::view($get, "770x619");
+			// $imagee = Image::view($get, "770x619");
+			$imagee = Image::view_main($get);
 			$data["_product"][$key]->image = $imagee;
 		}
 
@@ -131,7 +132,7 @@ class FrontController extends Controller
 		$id = Request::input("id");
 		$data["product"] = DB::table("tbl_product")->where("product_id", $id)->first();
 		$get = $data["product"]->image_file;
-		$imagee = Image::view($get, "770x619");
+		$imagee = Image::view_main($get);
 		$data["product"]->image = $imagee;
 	
 		$date = $data["product"]->created_at;
@@ -188,7 +189,8 @@ class FrontController extends Controller
 		foreach ($data["_product"] as $key => $value) 
 		{
 			$image =  $value->image_file;
-			$view = Image::view($image, "770x619");
+			// $view = Image::view($image, "770x619");
+			$view = Image::view_main($image);
 			$data["_product"][$key]->image = $view;
 		}
 		return view('front.product_content', $data);
@@ -218,7 +220,7 @@ class FrontController extends Controller
 		$id = Request::input("id");
 		$data["news"] = DB::table("tbl_news")->where("news_id", $id)->first();
 		// $imagee = Image::view($data["news"]->news_image, "1100x473");
-		$imagee = Image::view($data["news"]->news_image, "1170x500");
+		$imagee = Image::view_main($data["news"]->news_image);
 		$data["news"]->image = $imagee;
 
 		$datee = $data["news"]->news_date;

@@ -14,7 +14,7 @@
         <div class="container">
             <div class="row">
                 <div class="span8 content_with_right_sidebar">
-                    <img src="{{ $product->image }}" class="portfolio_item_image" alt="">                
+                    <img src="{{ $product->image }}" class="portfolio_item_image" alt="" style="max-height: 500px; margin: auto;">                
                 </div>
                 <div id="portfolio_item_meta" class="span4">
                     <h2 class="column_title_left">Description</h2>
@@ -45,12 +45,15 @@
             <div class="row">
                 @foreach($_product as $products)
                 <div class="portfolio_item portfolio_item_4 identity illustrations">
-                    <div class="overlayed">
-                        <img src="{{ $products->image }}" alt="">
-                        <a class="overlay" href="/product_content?id={{ $products->product_id }}">
-                            <p class="overlay_title">{{ $products->product_name }}</p>
-                            <p class="portfolio_item_tags"></p>
-                        </a>
+                    <div class="wowe"></div>
+                    <div class="lalagyanan">
+                        <div class="overlayed">
+                            <img src="{{ $products->image }}" alt="">
+                            <a class="overlay" href="/product_content?id={{ $products->product_id }}">
+                                <p class="overlay_title">{{ $products->product_name }}</p>
+                                <p class="portfolio_item_tags"></p>
+                            </a>
+                        </div>
                     </div>
                 </div>  
                 @endforeach    
@@ -65,4 +68,33 @@
             </div>
         </div>
     </section>
+@endsection
+@section("css")
+<style type="text/css">
+.portfolio_item
+{
+    position: relative;
+}
+.portfolio_item .wowe
+{
+    padding-top: 100%;
+}
+.portfolio_item .lalagyanan
+{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+}
+.portfolio_item .overlayed
+{
+    width: 100%;
+    height: 100%;
+}
+.portfolio_item img
+{
+    height: 100%;
+    width: 100%;
+}
+</style>
 @endsection
