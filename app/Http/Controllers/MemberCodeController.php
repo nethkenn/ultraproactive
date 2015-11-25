@@ -259,7 +259,7 @@ class MemberCodeController extends MemberController
 				$check_id = Tbl_slot::id(Request::input("slot_number"))->first();
 				$checkifowned = Tbl_account::where('tbl_account.account_id',Customer::id())->belongstothis()->get();
 				$ifused = Tbl_membership_code::where('code_pin',$data['code_number'])->where('used',1)->first();
-				$checkslot = Tbl_slot::get();
+				$checkslot = Tbl_slot::where('slot_id',$data['sponsor'])->get();
 				$checking = false;
 				$checking2 = false;
 				foreach($checkifowned as $c)
@@ -503,7 +503,7 @@ class MemberCodeController extends MemberController
 				$check_id = Tbl_slot::id(Request::input("slot_number"))->first();
 				$checkifowned = Tbl_account::where('tbl_account.account_id',Customer::id())->belongstothis()->get();
 				$ifused = Tbl_membership_code::where('code_pin',$data['code_number'])->where('used',1)->first();
-				$checkslot = Tbl_slot::get();
+				$checkslot = Tbl_slot::where('slot_id',$data['sponsor'])->get();
 				$checking = false;
 				$checking2 = false;
 
