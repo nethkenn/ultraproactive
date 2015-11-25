@@ -18,16 +18,15 @@ class AdminReportController extends AdminController
 		$data['ctr']     = 1;
 		$data['title']   = 'Bonus summary';
 
-
-
 		return view('admin.report.other_report', $data);
 	}
 
 	public function bonus_summary_get()
     {
 		$summary = Tbl_slot::select('tbl_slot.slot_id','account_name',DB::raw('SUM(CASE When keycode="Old System Wallet" And wallet_type="Wallet" Then wallet_amount Else 0 End ) as old'),
-														   DB::raw('SUM(CASE When keycode="Dynamic Compression" And wallet_type="Wallet" Then wallet_amount Else 0 End ) as dynamic'),
+														   DB::raw('SUM(CASE When keycode="Dynamic Compression" or keycode="Breakaway Bonus" or keycode="Unilevel Check Match" or keycode="Leadership Bonus" And wallet_type="Wallet" Then wallet_amount Else 0 End ) as dynamic'),
 														   DB::raw('SUM(CASE When keycode="binary" And wallet_type="Wallet" Then wallet_amount Else 0 End ) as matching'),
+														   DB::raw('SUM(CASE When keycode="Global Pool Sharing" And wallet_type="Wallet" Then wallet_amount Else 0 End ) as gps'),
 														   DB::raw('SUM(CASE When keycode="direct" And wallet_type="Wallet" Then wallet_amount Else 0 End ) as sponsor'),
 														   DB::raw('SUM(CASE When keycode="matching" And wallet_type="Wallet" Then wallet_amount Else 0 End ) as mentor'),
 														   DB::raw('SUM(CASE When keycode="matching" or keycode="Dynamic Compression" or keycode="Old System Wallet" or keycode="direct" or keycode="binary" And wallet_type="Wallet" Then wallet_amount Else 0 End ) as subtotal'),
@@ -46,6 +45,7 @@ class AdminReportController extends AdminController
 									   ->editColumn('subtotal','{{number_format($subtotal,2)}}')
 									   ->editColumn('encash','{{number_format($encash,2)}}')
 									   ->editColumn('total','{{number_format($total,2)}}')
+									   ->editColumn('gps','{{number_format($gps,2)}}')
         							   ->make(true);
 
 
@@ -68,18 +68,21 @@ class AdminReportController extends AdminController
 		$data['ps'] = Tbl_slot::where('slot_type','PS')->count();
 		$data['cd'] = Tbl_slot::where('slot_type','CD')->count();
 		$data['fs'] = Tbl_slot::where('slot_type','FS')->count();
-		$data['total_slot'] = Tbl_slot::count();
+		$data['total_slot']  = Tbl_slot::count();
 
-		$data['matching_gc']	 = Tbl_wallet_logs::where('keycode','=','binary')->where('wallet_type','GC')->sum('wallet_amount');
+		$data['matching_gc'] = Tbl_wallet_logs::where('keycode','=','binary')->where('wallet_type','GC')->sum('wallet_amount');
 		$data['sponsor_gc']  = Tbl_wallet_logs::where('keycode','=','direct')->where('wallet_type','GC')->sum('wallet_amount');
-
-		$data['old_wallet'] = Tbl_wallet_logs::where('keycode','=','Old System Wallet')->sum('wallet_amount');
-		$data['mentor']   = Tbl_wallet_logs::where('keycode','=','matching')->wallet()->sum('wallet_amount');
+		$data['old_wallet']  = Tbl_wallet_logs::where('keycode','=','Old System Wallet')->sum('wallet_amount');
+		$data['mentor']   	 = Tbl_wallet_logs::where('keycode','=','matching')->wallet()->sum('wallet_amount');
 		$data['matching']	 = Tbl_wallet_logs::where('keycode','=','binary')->wallet()->sum('wallet_amount');
-		$data['sponsor']  = Tbl_wallet_logs::where('keycode','=','direct')->wallet()->sum('wallet_amount');
-		$data['dynamic'] = Tbl_wallet_logs::where('keycode','=','Dynamic Compression')->sum('wallet_amount');
+		$data['sponsor']  	 = Tbl_wallet_logs::where('keycode','=','direct')->wallet()->sum('wallet_amount');
+		$data['dynamic'] 	 = Tbl_wallet_logs::where('keycode','=','Dynamic Compression')->sum('wallet_amount');
+		$data['checkmatch']  = Tbl_wallet_logs::where('keycode','=','Unilevel Check Match')->sum('wallet_amount');
+		$data['leadership']  = Tbl_wallet_logs::where('keycode','=','Leadership Bonus')->sum('wallet_amount');
+		$data['breakaway']   = Tbl_wallet_logs::where('keycode','=','Breakaway Bonus')->sum('wallet_amount');
+		$data['gps']         = Tbl_wallet_logs::where('keycode','=','Global Pool Sharing')->wallet()->sum('wallet_amount');
 		// $data['binary_repurchase'] = Tbl_wallet_logs::where('keycode','=','binary_repurchase')->sum('wallet_amount');
-		$data['total']   = $data['old_wallet']+$data['mentor']  +$data['matching']+$data['sponsor'] +$data['dynamic'];
+		$data['total']   = $data['old_wallet'] + $data['mentor']  + $data['gps'] + $data['matching']+$data['sponsor'] +$data['dynamic'] + $data['checkmatch'] + $data['leadership']+ $data['breakaway'];
 		 
 		$data['total_encashment'] = Tbl_wallet_logs::where('keycode','=','Encashment')->sum('wallet_amount');
 		$data['count_encash'] = DB::table('tbl_account_encashment_history')->count();

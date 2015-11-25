@@ -89,9 +89,25 @@
 						<td>{{number_format($matching_gc,2)}}</td>
 					</tr>
 					<tr>
-						<td>Dynamic Compression</td>
+						<td>Unilevel Bonus</td>
 						<td>{{number_format($dynamic,2)}}</td>
-					</tr>							
+					</tr>		
+					<tr>
+						<td>Unilevel Check Match</td>
+						<td>{{number_format($checkmatch,2)}}</td>
+					</tr>	
+					<tr>
+						<td>Leadership Bonus</td>
+						<td>{{number_format($leadership,2)}}</td>
+					</tr>	
+					<tr>
+						<td>Breakaway Bonus</td>
+						<td>{{number_format($breakaway,2)}}</td>
+					</tr>	
+					<tr>
+						<td>Global Pool Sharing</td>
+						<td>{{number_format($gps,2)}}</td>
+					</tr>				
 					<tr>
 						<td>Sponsor Bonus</td>
 						<td>{{number_format($sponsor,2)}}</td>
