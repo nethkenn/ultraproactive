@@ -43,9 +43,14 @@
                         <td><a href="/member/reports/income_breakdown?breakdown_name=binary&type=2">Breakdown</a></td>
                     </tr>
                     <tr>
-                        <td>Dynamic Compression </td>
+                        <td>Unilevel Commissions </td>
                         <td>{{number_format($dynamic,2)}} </td>
                         <td><a href="/member/reports/income_breakdown?breakdown_name=Dynamic Compression&type=1">Breakdown</a></td>
+                    </tr>  
+                    <tr>
+                        <td>Global Pool Sharing</td>
+                        <td>{{number_format($gps,2)}} </td>
+                        <td><a href="/member/reports/income_breakdown?breakdown_name=Global Pool Sharing&type=1">Breakdown</a></td>
                     </tr>                           
                     <tr>
                         <td>Sponsor Bonus</td>

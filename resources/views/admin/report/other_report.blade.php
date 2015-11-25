@@ -22,7 +22,8 @@
             <th>Sponsor</th>
             <th>Match</th>
             <th>Mentors</th>
-            <th>Bonus from Dynamic Compression</th>
+            <th>Unilevel Commissions</th>
+            <th>Global Pool Sharing</th>
             <th>Total Earned</th>
             <th>Total Encashed</th>          
             <th>Total Wallet</th>
@@ -53,6 +54,7 @@ $(function() {
             {data: 'matching', name: 'sponsor'},
             {data: 'mentor', name: 'mentor'},
             {data: 'dynamic', name: 'dynamic'},
+            {data: 'gps', name: 'gps'},
             {data: 'subtotal', name: 'subtotal'},
             {data: 'encash', name: 'encash'},
             {data: 'total', name: 'total'},

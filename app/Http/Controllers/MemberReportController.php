@@ -65,9 +65,31 @@ class MemberReportController extends MemberController
 			{
 				$name = "Dynamic Compression";
 			}
-			$data['logs'] = Tbl_wallet_logs::where('keycode','=',$keycode)->where('slot_id',Session::get('currentslot'))->where('wallet_type',$type)->where('wallet_amount','>',0)->get();
-			$data['total'] = Tbl_wallet_logs::where('keycode','=',$keycode)->where('slot_id',Session::get('currentslot'))->where('wallet_type',$type)->sum('wallet_amount');
-			$data['name'] = $name;
+			elseif($keycode == 'Global Pool Sharing' && $name_type == 1)
+			{
+				$name = "Global Pool Sharing";
+			}
+
+			if($keycode == 'Dynamic Compression')
+			{
+				$data['logs']['dynamic']     = Tbl_wallet_logs::where('keycode','=',$keycode)->where('slot_id',Session::get('currentslot'))->where('wallet_type',$type)->where('wallet_amount','>',0)->get();
+				$data['total']['dynamic']    = Tbl_wallet_logs::where('keycode','=',$keycode)->where('slot_id',Session::get('currentslot'))->where('wallet_type',$type)->sum('wallet_amount');
+				
+				$data['logs']['checkmatch']  = Tbl_wallet_logs::where('keycode','=','Unilevel Check Match')->where('slot_id',Session::get('currentslot'))->where('wallet_type',$type)->where('wallet_amount','>',0)->get();
+				$data['total']['checkmatch'] = Tbl_wallet_logs::where('keycode','=','Unilevel Check Match')->where('slot_id',Session::get('currentslot'))->where('wallet_type',$type)->sum('wallet_amount');
+				
+				$data['logs']['breakaway']   = Tbl_wallet_logs::where('keycode','=','Breakaway Bonus')->where('slot_id',Session::get('currentslot'))->where('wallet_type',$type)->where('wallet_amount','>',0)->get();
+				$data['total']['breakaway']  = Tbl_wallet_logs::where('keycode','=','Breakaway Bonus')->where('slot_id',Session::get('currentslot'))->where('wallet_type',$type)->sum('wallet_amount');
+	
+				$data['logs']['leadership']  = Tbl_wallet_logs::where('keycode','=','Leadership Bonus')->where('slot_id',Session::get('currentslot'))->where('wallet_type',$type)->where('wallet_amount','>',0)->get();
+				$data['total']['leadership'] = Tbl_wallet_logs::where('keycode','=','Leadership Bonus')->where('slot_id',Session::get('currentslot'))->where('wallet_type',$type)->sum('wallet_amount');
+			}
+			else
+			{
+				$data['logs'] = Tbl_wallet_logs::where('keycode','=',$keycode)->where('slot_id',Session::get('currentslot'))->where('wallet_type',$type)->where('wallet_amount','>',0)->get();
+				$data['total'] = Tbl_wallet_logs::where('keycode','=',$keycode)->where('slot_id',Session::get('currentslot'))->where('wallet_type',$type)->sum('wallet_amount');
+			}
+			$data['name'] = $name;				
 		}
 		else
 		{
@@ -80,17 +102,16 @@ class MemberReportController extends MemberController
 	public function summary()
 	{
 		
-		$data['matching_gc']	 = Tbl_wallet_logs::where('keycode','=','binary')->where('slot_id',Session::get('currentslot'))->where('wallet_type','GC')->sum('wallet_amount');
+		$data['matching_gc'] = Tbl_wallet_logs::where('keycode','=','binary')->where('slot_id',Session::get('currentslot'))->where('wallet_type','GC')->sum('wallet_amount');
 		$data['sponsor_gc']  = Tbl_wallet_logs::where('keycode','=','direct')->where('slot_id',Session::get('currentslot'))->where('wallet_type','GC')->sum('wallet_amount');
-
-		$data['old_wallet'] = Tbl_wallet_logs::where('keycode','=','Old System Wallet')->where('slot_id',Session::get('currentslot'))->sum('wallet_amount');
-		$data['old_gc'] = Tbl_wallet_logs::where('keycode','=','Old System GC')->where('slot_id',Session::get('currentslot'))->sum('wallet_amount');
-		$data['mentor']   = Tbl_wallet_logs::where('keycode','=','matching')->wallet()->where('slot_id',Session::get('currentslot'))->sum('wallet_amount');
-		$data['matching']	 = Tbl_wallet_logs::where('keycode','=','binary')->wallet()->where('slot_id',Session::get('currentslot'))->sum('wallet_amount');
-		$data['sponsor']  = Tbl_wallet_logs::where('keycode','=','direct')->wallet()->where('slot_id',Session::get('currentslot'))->sum('wallet_amount');
-		$data['dynamic'] = Tbl_wallet_logs::where('keycode','=','Dynamic Compression')->where('slot_id',Session::get('currentslot'))->sum('wallet_amount');
-		// $data['binary_repurchase'] = Tbl_wallet_logs::where('keycode','=','binary_repurchase')->sum('wallet_amount');
-		$data['total']   = $data['old_wallet']+$data['mentor']  + $data['matching']+$data['sponsor'] +$data['dynamic'];
+		$data['old_wallet']  = Tbl_wallet_logs::where('keycode','=','Old System Wallet')->where('slot_id',Session::get('currentslot'))->sum('wallet_amount');
+		$data['old_gc']      = Tbl_wallet_logs::where('keycode','=','Old System GC')->where('slot_id',Session::get('currentslot'))->sum('wallet_amount');
+		$data['mentor']      = Tbl_wallet_logs::where('keycode','=','matching')->wallet()->where('slot_id',Session::get('currentslot'))->sum('wallet_amount');
+		$data['matching']    = Tbl_wallet_logs::where('keycode','=','binary')->wallet()->where('slot_id',Session::get('currentslot'))->sum('wallet_amount');
+		$data['sponsor']     = Tbl_wallet_logs::where('keycode','=','direct')->wallet()->where('slot_id',Session::get('currentslot'))->sum('wallet_amount');
+		$data['dynamic']     = Tbl_wallet_logs::where('keycode','=','Dynamic Compression')->where('slot_id',Session::get('currentslot'))->orWhere('keycode','Breakaway Bonus')->orWhere('keycode','Unilevel Check Match')->orWhere('keycode','Leadership Bonus')->sum('wallet_amount');
+		$data['gps']	     = Tbl_wallet_logs::where('keycode','=','Global Pool Sharing')->wallet()->where('slot_id',Session::get('currentslot'))->sum('wallet_amount');
+		$data['total']       = $data['old_wallet']+$data['mentor']  + $data['matching']+$data['sponsor'] +$data['dynamic'];
 		 
 
 
