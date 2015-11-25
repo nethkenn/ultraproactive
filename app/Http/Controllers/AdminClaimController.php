@@ -374,7 +374,7 @@ class AdminClaimController extends AdminController
 			{
 				$voucher_slot = Tbl_slot::find($voucher_query->slot_id);
 				$updated_wallet = $voucher_slot->slot_wallet + $voucher_query->total_amount;
-				Tbl_slot::where('slot_id', $voucher_slot->slot_id)->lockForUpdate()->update(['slot_wallet'=>$updated_wallet]);
+				// Tbl_slot::where('slot_id', $voucher_slot->slot_id)->lockForUpdate()->update(['slot_wallet'=>$updated_wallet]);
 			}
 			/**
 			 * IF THE VOUCHER STATUS IS "PROCESSED" RETURN THE DEDUCTED INVENTORY
@@ -408,7 +408,7 @@ class AdminClaimController extends AdminController
 			if($voucher_query->slot_id != 0)
 			{
 				$log = "Voucher no. ".Request::input('voucher_id')." has been voided by ".Admin::info()->account_username." (".Admin::info()->admin_position_name ."). ".  Product::return_format_num($voucher_query->total_amount)." slot wallet return." ;
-	            Log::slot($voucher_slot->slot_id, $log, $updated_wallet);
+	            // Log::slot($voucher_slot->slot_id, $log, $updated_wallet);
             }
 			/**
 			 * UPDATE ACCOUNT/ADMIN LOG
