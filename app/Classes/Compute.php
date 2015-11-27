@@ -490,7 +490,7 @@ class Compute
                                                     if($slot_recipient->every_gc_pair != 0)
                                                     {
                                                         /* CHECK IF GC */
-                                                        if($count%$slot_recipient->every_gc_pair == 0)
+                                                        if($count%$slot_recipient->every_gc_pair == 0 && $count != 0)
                                                         {
                                                             $gc = true;
                                                         }                                                        
@@ -519,11 +519,19 @@ class Compute
                                                             }
                                                             elseif($gc == true)
                                                             {
-                                                                $gcbonus = $pairing_bonus;
-                                                                // Tbl_slot::where('slot_id',$slot_recipient->slot_id)->update(["slot_gc"=>$gcbonus]);
-                                                                $log = $log = "This is your ".$slot_recipient->every_gc_pair." MSB, Your ".$pairing_bonus." Income converted to GC (SLOT #".$slot_recipient->slot_id.") due to matching combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining match points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right.";
-                                                                Log::slot($slot_recipient->slot_id, $log, $gcbonus,"binary",$new_slot_id,1);
-                                                                // Log::account($slot_recipient->slot_owner, $log);
+                                                                if(Tbl_wallet_logs::id($slot_recipient->slot_id)->wallet()->sum('wallet_amount') >= 0)
+                                                                {
+                                                                    $gcbonus = $pairing_bonus;
+                                                                    // Tbl_slot::where('slot_id',$slot_recipient->slot_id)->update(["slot_gc"=>$gcbonus]);
+                                                                    $log = $log = "This is your ".$slot_recipient->every_gc_pair." MSB, Your ".$pairing_bonus." Income converted to GC (SLOT #".$slot_recipient->slot_id.") due to matching combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining match points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right.";
+                                                                    Log::slot($slot_recipient->slot_id, $log, $gcbonus,"binary",$new_slot_id,1);
+                                                                    // Log::account($slot_recipient->slot_owner, $log);       
+                                                                }
+                                                                else
+                                                                {
+                                                                    Compute::income_per_day($slot_recipient->slot_id,$pairing_bonus,'binary',$slot_recipient->slot_owner,$log,$new_slot_id); 
+                                                                }
+
                                                             }   
                                                                /* MATCHING SALE BONUS */
                                                               Compute::matching($new_slot_id, $method, $slot_recipient, $pairing_bonus);  
