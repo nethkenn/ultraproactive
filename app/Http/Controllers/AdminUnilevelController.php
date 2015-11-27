@@ -282,10 +282,8 @@ class AdminUnilevelController extends AdminController
 							break;
 						}
 				}				
-			}
-		
+			}	
 		}
-		
 	}
 
 	public function breakaway_bonus($slot,$tree,$breakaway,$bonus,$oneslot)

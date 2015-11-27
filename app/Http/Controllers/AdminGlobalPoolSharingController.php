@@ -110,7 +110,7 @@ class AdminGlobalPoolSharingController extends AdminController
 	        	{
 		            /* INSERT LOG */
 		            $log = "Your slot #".$s->slot_id." gain an amount of <b>".number_format($divided_amount,2)." wallet </b> you earned from Global Pool Sharing. (".$data['gps']."% of ".$data['total_pv']." equal to ".number_format($shared,2)." and shared to all ".$count." ".$m->membership_name.", ".number_format($divided_amount,2)." each).";
-		            Log::slot($s->slot_id, $log, $divided_amount, "Global Pool Sharing",$s->slot_id);
+		            Log::slot($s->slot_id, $log, $divided_amount,"Global Pool Sharing",$s->slot_id);
 	        	}	
     		}
         }

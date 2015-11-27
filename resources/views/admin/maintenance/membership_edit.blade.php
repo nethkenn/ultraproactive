@@ -41,6 +41,20 @@
             	</div>
 
                 <div class="form-group col-md-6">
+                    <label for="max_group_pv">Max Group PV for sharing</label>
+                    @if($_error['max_group_pv'])
+                        <div class="col-md-12 alert alert-danger form-errors">
+                            <ul>
+                                @foreach($_error['max_group_pv'] as $error)
+                                    <li>{{$error}}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <input name="max_group_pv" value="{{$membership->max_group_pv}}" required="required" class="form-control" id="" placeholder="" type="number">
+                </div>
+
+                <div class="form-group col-md-6">
                     <label for="global_pool_sharing">Global Pool Sharing</label>
                     @if($_error['global_pool_sharing'])
                         <div class="col-md-12 alert alert-danger form-errors">

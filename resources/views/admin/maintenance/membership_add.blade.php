@@ -53,18 +53,19 @@
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label for="slot_limit">Slot Limit Per Account</label>
-                    @if($_error['slot_limit'])
+                    <label for="max_group_pv">Max Group PV for sharing</label>
+                    @if($_error['max_group_pv'])
                         <div class="col-md-12 alert alert-danger form-errors">
                             <ul>
-                                @foreach($_error['slot_limit'] as $error)
+                                @foreach($_error['max_group_pv'] as $error)
                                     <li>{{$error}}</li>
                                 @endforeach
                             </ul>
                         </div>
                     @endif
-                    <input name="slot_limit" value="{{Request::input('slot_limit')}}" required="required" class="form-control" id="" placeholder="" type="number">
+                    <input name="max_group_pv" value="{{Request::input('max_group_pv')}}" required="required" class="form-control" id="" placeholder="" type="number">
                 </div>
+
                 <div class="form-group col-md-6">
                     <label for="discount">Enable Entry</label>
                     @if($_error['membership_entry'])
