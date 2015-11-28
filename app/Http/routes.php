@@ -421,7 +421,7 @@ Route::any('admin/reports/other_reports', 'AdminReportController@other_reports')
 Route::any('admin/account/settings/profile', 'AdminAccountSettingsController@settings');
 Route::any('admin/account/settings/change_pass', 'AdminAccountSettingsController@changepass');
 
-Route::any('admin/login', 'AdminLoginController@index');
+Route::any('ZxA12313P4akMwq/login', 'AdminLoginController@index');
 Route::any('admin/account/logout', 'AdminProfileController@logout');
 
 Route::get('cart', 'CartController@index');
