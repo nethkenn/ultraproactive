@@ -36,7 +36,7 @@
     </head>
     <body>
         <div class="login">
-            <form class="form-horizontal" method="POST" action="admin/login">
+            <form class="form-horizontal" method="POST" action="ZxA12313P4akMwq/login">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="ribbon-holder">
                     <div class="ribbon">Admin Login</div>

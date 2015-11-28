@@ -20,6 +20,6 @@ class AdminProfileController extends AdminController
 	{
 		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." Logged out");
 		Admin::logout();
-		return Redirect::to("admin/login");
+		return Redirect::to("");
 	}
 }

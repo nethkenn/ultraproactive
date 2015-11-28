@@ -103,7 +103,7 @@ class AdminController extends Controller
         }
         else
         {
-            return Redirect::to("admin/login")->send();
+            return Redirect::to("")->send();
         }
 
 

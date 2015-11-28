@@ -13,7 +13,6 @@ class AdminLoginController extends Controller
         
         if(isset($_POST['username']))
         {
-
             $admin = Admin::authenticate(Request::input('username'), Request::input('password'));
             if($admin)
             {
