@@ -547,8 +547,6 @@ jQuery(document).ready(function($) {
 
         Timeline_Classes();
 
-        sticky_header();
-
         $(".dzen_knob_wrapper").each(function(){
             var $number_sign = $(this).find(".dzen_knob_number_sign");
             var canvas_width = $(this).find("canvas").width();

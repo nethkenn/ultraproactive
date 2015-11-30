@@ -10,7 +10,7 @@
         <script type="text/javascript" src="/resources/assets/genealogy_tree/bootstrap/js/bootstrap.js"></script>
         <link rel="stylesheet" type="text/css" href="/resources/assets/remodal/src/jquery.remodal.css">
         <link rel="stylesheet" type="text/css" href="/resources/assets/remodal/src/remodal-default-theme.css">
-        <link rel="stylesheet" type="text/css" href="resources/assets/member/css/genealogy.css?version=2" />
+        <link rel="stylesheet" type="text/css" href="resources/assets/member/css/genealogy.css?version=3" />
         <title>Genealogy</title>
         <link rel="stylesheet" type="text/css" href="/resources/assets/members/css/member.css">
         <style type="text/css">
