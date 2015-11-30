@@ -225,18 +225,6 @@
 	<script type="text/javascript" src="/resources/assets/snow/snow.js"></script>
 	@yield('script')
 	<script type="text/javascript">
-	// ;(function($){
- //        $("img").load(function(){
-        
-	//     })
-	//     .error(function(){
-	//         // in this case you must reload image with jQuery
-	//         var imgSrc = $(this).attr('src');
-	//         $(this).attr('src',imgSrc);
-	// 	});
- //    })(jQuery);
-	</script>
-	<script type="text/javascript">
 	;(function($){
 		var $document = $(document),
         $element = $('.navbar'),
