@@ -224,6 +224,7 @@
 	<script type="text/javascript" src="/resources/assets/path/js/scripts.js"></script>
 	<script type="text/javascript" src="/resources/assets/path/js/custom.js"></script>
 	<script type="text/javascript" src="/resources/assets/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/resources/assets/snow/snow.js"></script>
 	@yield('script')
 	<script type="text/javascript">
 	// ;(function($){
@@ -257,6 +258,10 @@
            	$("#wazzup").removeClass("mtop");
           }
         });
+
+
+		$.fn.snow();
+
 	})(jQuery);
 	</script>
 </body>

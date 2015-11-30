@@ -13,9 +13,20 @@
         <link rel="stylesheet" type="text/css" href="resources/assets/member/css/genealogy.css?version=2" />
         <title>Genealogy</title>
         <link rel="stylesheet" type="text/css" href="/resources/assets/members/css/member.css">
+        <style type="text/css">
+        .navbar-nav > li > a
+        {
+            color: #1767D2 !important;
+            font-weight: 700;
+        }
+        .navbar
+        {
+            background-color: #F1CB40;
+        }
+        </style>
     </head>
     <body id="body" class="body" style="height: 100%">
-            <nav class="navbar navbar-default">
+            <nav class="navbar navbar-default" style="margin: 0;">
               <div>
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
