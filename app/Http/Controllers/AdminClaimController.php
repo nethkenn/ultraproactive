@@ -443,7 +443,7 @@ class AdminClaimController extends AdminController
 				{
 					foreach ($data['_voucher_product'] as $key => $value)
 					{
-						$total_product[] =  $value->sub_total + $value->product_discount_amount;
+						$total_product[] =  $value->product_discount_amount;
 						$discount[] = $value->product_discount_amount;
 					}
 				}else
