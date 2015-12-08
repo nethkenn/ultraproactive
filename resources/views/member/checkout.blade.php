@@ -35,19 +35,25 @@
                 </div>
             </div>
             <div class="form-group para">
+                <label for="a2" class="col-sm-3 control-label">Total Amount For GC</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="a2" value="{{number_format($final_total_for_gc,2)}}" readonly>
+                </div>
+            </div>
+            <div class="form-group para">
                 <label for="a3" class="col-sm-3 control-label">Remaining GC after use</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control" id="a3" value="{{number_format($remaining_bal_gc,2)}}" readonly>
                 </div>
             </div>
             <div class="form-group para">
-                <label for="a4" class="col-sm-3 control-label">Total Unilevel Points</label>
+                <label for="a4" class="col-sm-3 control-label">Total Unilevel Points(Not for GC)</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control" id="a4" value="{{$pts['unilevel']}}" readonly>
                 </div>
             </div>
             <div class="form-group para">
-                <label for="a5" class="col-sm-3 control-label">Total Binary Points</label>
+                <label for="a5" class="col-sm-3 control-label">Total Binary Points (Not for GC)</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control" id="a5" value="{{$pts['binary']}}" readonly>
                 </div>

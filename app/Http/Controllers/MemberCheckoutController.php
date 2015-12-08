@@ -44,20 +44,21 @@ class MemberCheckoutController extends Controller
         $sum_cart = $this->get_final_total($cart,$slot);
         $data['final_total'] = $sum_cart;
         $data['remaining_bal'] = $wallet - $data['final_total'];
-        $data['remaining_bal_gc'] = $gc - $data['final_total'];
+        $data['final_total_for_gc'] = $this->get_final_total_no_discount($cart,$slot);
+        $data['remaining_bal_gc'] = $gc - $data['final_total_for_gc'];
         $data['pts'] = $this->get_product_point($cart);
         $amt = 0 - $data['final_total'];
-
+        $amt2 = 0 - $data['final_total_for_gc'];
         if(isset($_POST['slot_id']) && isset($_POST['gc']))
         {
-                $validate_slot_gc = $slot->slot_gc >= $data['final_total'];
+                $validate_slot_gc = $slot->slot_gc >= $data['final_total_for_gc'];
                 $cart_count = count($cart) >= 1;
 
                 $request['slot_id'] = Request::input('slot_id');
                 $rules['slot_id'] = 'required|exists:tbl_slot,slot_id,slot_owner,'.$customer->account_id;
 
                 $request['slot_gc'] = $gc;
-                $rules['slot_gc'] = 'check_wallet:'.$data['final_total'];
+                $rules['slot_gc'] = 'check_wallet:'.$data['final_total_for_gc'];
 
                 $request['cart'] = $cart_count;
                 $rules['cart'] = 'Integer|min:1';
@@ -125,7 +126,7 @@ class MemberCheckoutController extends Controller
                     $insert['voucher_code'] = Globals::create_voucher_code();
 
                     $insert ['discount'] = 0;
-                    $insert['total_amount'] = 0;
+                    $insert['total_amount'] = $data['final_total_for_gc'];
                     $insert['account_id'] = $customer->account_id;
                     // Tbl_slot::where('slot_id',Request::input('slot_id') )->lockForUpdate()->update(['slot_gc'=>$data['remaining_bal_gc']]);             
                     
@@ -137,43 +138,34 @@ class MemberCheckoutController extends Controller
                     $voucher = new Tbl_voucher($insert);
                     $voucher->save();
                     
-                    $log = "Purchase Product worth ".Product::return_format_num($insert['total_amount']). " with Voucher Num: ".$voucher->voucher_id." , Voucher Code: ".$voucher->voucher_code.", using GC";
-                    Log::slot(Request::input('slot_id'), $log, $amt,"Purchase Product",Request::input('slot_id'),1);
+                    $log = "Purchase Product worth ".Product::return_format_num($data['final_total_for_gc']). " with Voucher Num: ".$voucher->voucher_id." , Voucher Code: ".$voucher->voucher_code.", using GC";
+                    Log::slot(Request::input('slot_id'), $log, $amt2,"Purchase Product",Request::input('slot_id'),1);
                     Log::account($customer->account_id, $log);
                     $total = 0;
                     foreach ((array)$cart as $key => $value)
                     {
-                        $discount = Tbl_product_discount::where('membership_id',$slot->slot_membership)->where('product_id',$key)->first();
-                        if($discount)
-                        {
-                            $discount = $discount->discount;
-                        }
-                        else
-                        {
-                            $discount = 0;
-                        }
-
+                        $discount = 0;
                         $prod_pts = Tbl_product::find($key);
                         $value['total'] = $prod_pts->price *$value['qty'];
-                        $discount_amount = ($discount/100)*$value['total'];
-                        $value['total'] = $value['total'] + (($discount/100)*$value['total']);
+                        $discount_amount = $data['final_total_for_gc'];
+                        $value['total'] = $data['final_total_for_gc'];
                         $insert_prod =  array(
                             'product_id' =>  $key,
                             'voucher_id'=> $voucher->voucher_id,
-                            'product_discount'=> $discount,
+                            'product_discount'=> 0,
                             'price' => $value['price'],
                             'qty'=> $value['qty'],
                             'sub_total' => $value['total'],
-                            'binary_pts' => $prod_pts->binary_pts * $value['qty'],
-                            'unilevel_pts' => $prod_pts->unilevel_pts * $value['qty'],
-                            'product_discount' => $discount,
+                            'binary_pts' => 0,
+                            'unilevel_pts' => 0,
+                            'product_discount' => 0,
                             'product_discount_amount' => $discount_amount,
                             'gc'=>1
                         );
 
                         $owned_stocks = $prod_pts->stock_qty - $value['qty'];
                         Tbl_product::where('product_id',$key)->update(['stock_qty'=>$owned_stocks]);
-                        Log::inventory_log(Customer::info()->account_id,$key,0 - $value['qty'],"Bought a product/s, using GC",$value['total'],1);
+                        Log::inventory_log(Customer::info()->account_id,$key,0 - $value['qty'],"Bought a product/s, using GC",$data['final_total_for_gc'],1);
 
                         $total = $total + $value['total'];
                         $voucher_has_product = new Tbl_voucher_has_product($insert_prod);
@@ -483,7 +475,23 @@ class MemberCheckoutController extends Controller
         return $total;
     }
 
+    public function get_final_total_no_discount($cart,$slot)
+    {
+        $total = 0;
+        if($cart)
+        {
+            foreach ($cart as $key => $value)
+            {
 
+                $discount = 0;
+
+                $sub_total =   $value['total'] - (($discount/100)*$value['total']);
+                $total = $total + $sub_total;
+            }          
+        }
+
+        return $total;
+    }
 
     
 }
