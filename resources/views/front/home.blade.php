@@ -415,13 +415,6 @@
     });
 })(jQuery);
 </script>
-<script type="text/javascript">
-;(function($){
-	BackgroundCheck.init({
-	  targets: '.slick-next'
-	});
-})(jQuery);
-</script>
 @endsection
 @section('css')
 <link rel="stylesheet" type="text/css" href="/resources/assets/frontend/css/home.css">

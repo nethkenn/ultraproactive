@@ -218,25 +218,12 @@
 	</footer>
 	<script type="text/javascript" src="/resources/assets/path/js/jquery.js"></script>
 	<script type="text/javascript" src="/resources/assets/path/js/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="/resources/assets/path/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
-	<script type="text/javascript" src="/resources/assets/path/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&amp;ver=4.0.1"></script>
 	<script type="text/javascript" src="/resources/assets/path/js/scripts.js"></script>
 	<script type="text/javascript" src="/resources/assets/path/js/custom.js"></script>
 	<script type="text/javascript" src="/resources/assets/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/resources/assets/snow/snow.js"></script>
 	@yield('script')
-	<script type="text/javascript">
-	// ;(function($){
- //        $("img").load(function(){
-        
-	//     })
-	//     .error(function(){
-	//         // in this case you must reload image with jQuery
-	//         var imgSrc = $(this).attr('src');
-	//         $(this).attr('src',imgSrc);
-	// 	});
- //    })(jQuery);
-	</script>
 	<script type="text/javascript">
 	;(function($){
 		var $document = $(document),
@@ -257,6 +244,10 @@
            	$("#wazzup").removeClass("mtop");
           }
         });
+
+
+		$.fn.snow();
+
 	})(jQuery);
 	</script>
 </body>
