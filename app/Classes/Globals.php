@@ -7,6 +7,7 @@ use App\Tbl_membership_code;
 use App\Tbl_membership_code_sale;
 use App\Tbl_order_form_number;
 use Carbon\Carbon; 
+use App\Tbl_slot;
 class Globals
 {
     public static function view($filename, $size="150x150", $mode="crop")
@@ -790,7 +791,43 @@ class Globals
         }
         
     }
+    public static function get_string_between($string, $start, $end)
+    {
+            $string = ' ' . $string;
+            $ini = strpos($string, $start);
+            if ($ini == 0) return '';
+            $ini += strlen($start);
+            $len = strpos($string, $end, $ini) - $ini;
+            return substr($string, $ini, $len);
+    }
+    public static function get_string_between_for_used_codes($string, $start, $end)
+    {
+        if($string)
+        {   
+            $string = $string->logs;
+            $string = ' ' . $string;
+            $ini = strpos($string, $start);
+            if ($ini == 0) return '';
+            $ini += strlen($start);
+            $len = strpos($string, $end, $ini) - $ini;
+            $word = substr($string, $ini, $len);   
+            $owner = Tbl_slot::id($word)->account()->first();
+            if($owner)
+            {
+                $word = "Slot #" . $word . " (".$owner->account_name.")";
+            }   
+            else
+            {
+                $word = "Slot #" . $word;
+            }
+            return $word;
+        }
+        else
+        {
+            return "----";
+        }
 
+    }
 
 
 

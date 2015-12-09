@@ -32,6 +32,7 @@
 						<th>Code Type</th>
 						<th>Product</th>
 						<th>Owner</th>
+						@if(Request::input('status') == 'used')<th>Registered Slot</th>@endif
 						<th>Voucher</th>
 						<th>Date</th>
 						<th class="option-col"></th>
@@ -111,42 +112,82 @@ $(function()
 
 
 
-
+   var status = "{{Request::input('status')}}";
    var $transfer_code_popup = $('[data-remodal-id=transfer_code_modal]').remodal();
    var $check_code_popup = $('[data-remodal-id=check_code_modal]').remodal();
 
-   var $membershipCodeTable = $('#table').DataTable(
+   if(status != "used")
    {
-        processing: true,
-        serverSide: true,
-         ajax:{
-	        	url:'admin/maintenance/codes/get',
-	        	data:{
-	        	   	status : '{{Request::input("status")}}',
-	        	   }
-	    	},
-        columns: [
-        	 // {data: 'code_pin', name: 'code_pin'},
-            {data: 'code_pin', name: 'code_pin'},
-            {data: 'code_activation', name: 'code_activation'},
-            {data: 'membership_name', name: 'membership_name'},
-            {data: 'code_type_name', name: 'code_type_name'},
-            {data: 'product_package_name', name: 'product_package_name'},
-            {data: 'account_name', name: 'account_name'},
-            {data: 'inventory_update_type_id', name: 'inventory_update_type_id'},
-            {data: 'created_at', name: 'created_at'},
-            {data: 'delete', name: 'code_pin'},
-            {data: 'transfer', name: 'code_pin'},
-        
-        ],
-        "lengthMenu": [[8, 10, 25, 50, -1], [10, 25, 50, "All"]],
-        "oLanguage": 
-        	{
-        		"sSearch": "",
-        		"sProcessing": ""
-         	},
-        stateSave: true,
-    });
+	   var $membershipCodeTable = $('#table').DataTable(
+	   {
+	        processing: true,
+	        serverSide: true,
+	         ajax:{
+		        	url:'admin/maintenance/codes/get',
+		        	data:{
+		        	   	status : '{{Request::input("status")}}',
+		        	   }
+		    	},
+	        columns: [
+	        	 // {data: 'code_pin', name: 'code_pin'},
+	            {data: 'code_pin', name: 'code_pin'},
+	            {data: 'code_activation', name: 'code_activation'},
+	            {data: 'membership_name', name: 'membership_name'},
+	            {data: 'code_type_name', name: 'code_type_name'},
+	            {data: 'product_package_name', name: 'product_package_name'},
+	            {data: 'account_name', name: 'account_name'},
+	            {data: 'inventory_update_type_id', name: 'inventory_update_type_id'},
+	            {data: 'created_at', name: 'created_at'},
+	            {data: 'delete', name: 'code_pin'},
+	            {data: 'transfer', name: 'code_pin'},
+	        
+	        ],
+	        "lengthMenu": [[8, 10, 25, 50, -1], [10, 25, 50, "All"]],
+	        "oLanguage": 
+	        	{
+	        		"sSearch": "",
+	        		"sProcessing": ""
+	         	},
+	        stateSave: true,
+	    });
+   }
+   else
+   {
+ 		var $membershipCodeTable = $('#table').DataTable(
+	   {
+	        processing: true,
+	        serverSide: true,
+	         ajax:{
+		        	url:'admin/maintenance/codes/get',
+		        	data:{
+		        	   	status : '{{Request::input("status")}}',
+		        	   }
+		    	},
+	        columns: [
+	        	 // {data: 'code_pin', name: 'code_pin'},
+	            {data: 'code_pin', name: 'code_pin'},
+	            {data: 'code_activation', name: 'code_activation'},
+	            {data: 'membership_name', name: 'membership_name'},
+	            {data: 'code_type_name', name: 'code_type_name'},
+	            {data: 'product_package_name', name: 'product_package_name'},
+	            {data: 'account_name', name: 'account_name'},
+	            {data: 'slot_used', name: 'slot_used'},
+	            {data: 'inventory_update_type_id', name: 'inventory_update_type_id'},
+	            {data: 'created_at', name: 'created_at'},
+	            {data: 'delete', name: 'code_pin'},
+	            {data: 'transfer', name: 'code_pin'},
+	        
+	        ],
+	        "lengthMenu": [[8, 10, 25, 50, -1], [10, 25, 50, "All"]],
+	        "oLanguage": 
+	        	{
+	        		"sSearch": "",
+	        		"sProcessing": ""
+	         	},
+	        stateSave: true,
+	    });   	
+   }
+
 
 
 	$membershipCodeTable.on( 'draw.dt', function ()
