@@ -16,7 +16,7 @@ use Validator;
 use Session;
 use App\Classes\Globals;
 use App\Rel_membership_code;
-
+use App\Tbl_wallet_logs;
 use App\Tbl_membership_code_sale;
 use App\Tbl_membership_code_sale_has_code;
 use App\Classes\Admin;
@@ -40,8 +40,6 @@ class AdminCodeController extends AdminController {
 	 */
 	public function index()
 	{
-
-
 		$data['_account'] = Tbl_account::all();
 		$data['total_code'] = Tbl_membership_code::count();
 		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Membership Code");
@@ -78,8 +76,7 @@ class AdminCodeController extends AdminController {
         	}
 
 
-        })->get();
-
+        })->select('tbl_membership_code.code_pin','tbl_membership_code.code_activation','tbl_membership.membership_name','tbl_code_type.code_type_name','product_package_name','tbl_account.account_id','account_name','tbl_inventory_update_type.inventory_update_type_id','tbl_membership_code.created_at')->get();
         return Datatables::of($membership_code)	
 
         ->addColumn('delete','<a href="#" class="block-membership-code" membership-code-id ="{{$code_pin}}">BLOCK</a>')
@@ -87,6 +84,7 @@ class AdminCodeController extends AdminController {
         								// ->editColumn('created_at','{{$created_at->format("F d, Y g:ia")}}')
         								->editColumn('inventory_update_type_id','<input type="checkbox" {{$inventory_update_type_id == 1 ? \'checked="checked"\' : \'\'}} name="" value="" readonly disabled>')
         								->editColumn('account_name','{{$account_name or "No owner"}}')
+        								->addColumn('slot_used','{{App\Classes\Globals::get_string_between_for_used_codes(App\Tbl_wallet_logs::where("logs","LIKE","%using membership code #$code_pin%")->first(),"create slot #"," using")}}')
         								->make(true);
     }
 
