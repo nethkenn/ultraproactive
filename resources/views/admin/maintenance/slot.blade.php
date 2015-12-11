@@ -119,7 +119,7 @@
             {data: 'position', name: 'position'},
             {data: 'sponsor', name: 'sponsor'},
             {data: 'slot_type', name: 'slot_type'},
-            {data: 'wallet', name: 'slot_wallet'},
+            {data: 'wallet', name: 'wallet'},
             {data: 'login', name: 'slot_id'},
             {data: 'created_at', name: 'created_at'},
             {data: 'gen', name: 'slot_id'},

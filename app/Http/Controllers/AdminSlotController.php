@@ -7,6 +7,7 @@ use Datatables;
 use App\Tbl_slot;
 use App\Tbl_account;
 use App\Tbl_membership;
+use App\Tbl_voucher;
 use App\Tbl_country;
 use App\Tbl_rank;
 use Crypt;
@@ -398,6 +399,41 @@ class AdminSlotController extends AdminController
 	{
 		$data["page"] = "Slot";
 		$data["slot"] = Tbl_slot::rank()->membership()->account()->id(Request::input("id"))->first();
+		$data["slot"]->slot_wallet = Tbl_wallet_logs::id(Request::input('id'))->wallet()->sum('wallet_amount');
+
+		if(isset($_POST['slot_id']))
+		{
+			$slot = Tbl_slot::rank()->membership()->account()->id(Request::input("id"))->first();
+			if($slot->slot_type == "CD")
+			{
+				$wallet = Tbl_wallet_logs::id(Request::input('id'))->wallet()->sum('wallet_amount');
+				$slot_id = Request::input('id');
+				$wallet = -1 * $wallet;
+                $update["slot_type"] = "PS";
+                $message = "Your slot #".$slot_id." becomes a paid slot.";
+
+                Log::slot($slot_id, $message, $wallet, "CD to PS",$slot_id);
+
+                $vouch = DB::table('tbl_voucher')->where('slot_id',$slot_id)->first();
+                if($vouch)
+                {
+                    $check = Tbl_voucher::where('tbl_voucher.voucher_id',$vouch->voucher_id)->update(["status"=>"unclaimed"]);
+                }
+
+                Compute::binary($slot_id, "CD TO PS");
+                Compute::direct($slot_id, "CD TO PS");
+                Tbl_slot::where('slot_id',$slot_id)->update($update);
+                $new_slot = Tbl_slot::rank()->membership()->account()->id(Request::input("id"))->first();
+				Log::Admin(Admin::info()->account_id,Admin::info()->account_username." used the Convert to PS on slot #".Request::input('id'),serialize($slot),serialize($new_slot));
+                
+
+                return Redirect::to('/admin/maintenance/slots');
+			}
+			else
+			{
+				dd("This slot is not a CD.");
+			}
+		}
 		// $data["position"] = Request::input("position");
 		// $data["placement"] = Request::input("placement");
 		// $data["_account"] = Tbl_account::get();
