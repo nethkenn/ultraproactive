@@ -146,8 +146,8 @@ class MemberController extends Controller
 		   	$data['earnings']['mentor'] = Tbl_wallet_logs::id(Session::get('currentslot'))->wallet()->where('keycode','matching')->sum('wallet_amount');
 		   	$data['earnings']['direct'] = Tbl_wallet_logs::id(Session::get('currentslot'))->wallet()->where('keycode','direct')->sum('wallet_amount');
 		   	$data['earnings']['indirect'] = Tbl_wallet_logs::id(Session::get('currentslot'))->wallet()->where('keycode','indirect')->sum('wallet_amount');
-		    $data['earnings']['total_income'] = Tbl_wallet_logs::id(Session::get('currentslot'))->wallet()->where('wallet_amount','>=',0)->sum('wallet_amount');
-		    $data['earnings']['total_withdrawal'] = Tbl_wallet_logs::id(Session::get('currentslot'))->wallet()->where('wallet_amount','<=',0)->sum('wallet_amount');
+		    $data['earnings']['total_income'] = Tbl_wallet_logs::id(Session::get('currentslot'))->wallet()->where('wallet_amount','>=',0)->where('keycode','!=','CD to PS')->sum('wallet_amount');
+		    $data['earnings']['total_withdrawal'] = Tbl_wallet_logs::id(Session::get('currentslot'))->wallet()->where('wallet_amount','<=',0)->where('keycode','!=','CD Slot')->sum('wallet_amount');
 		    $data['earnings']['total_withdrawal'] = ($data['earnings']['total_withdrawal']) * (-1);
 		    return $data;
 	}
