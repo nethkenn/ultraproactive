@@ -159,7 +159,7 @@ class MemberCheckoutController extends Controller
                             'binary_pts' => 0,
                             'unilevel_pts' => 0,
                             'product_discount' => 0,
-                            'product_discount_amount' => $discount_amount,
+                            'product_discount_amount' => 0,
                             'gc'=>1
                         );
 
