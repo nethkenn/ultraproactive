@@ -168,13 +168,13 @@ class Compute
                                                 $count =  Tbl_slot::id($slot_recipient->slot_id)->first();
                                                 $member = Tbl_membership::where('membership_id',$slot_recipient->slot_membership)->first();
                                                 $count = $count->pairs_today;
-                                                $date = Carbon::now()->format('Y-m-d A'); 
+                                                $date = Carbon::now()->toDateString(); 
                                                 $condition = null;
                                                 $gc = false;
                                                 /* Check if date is equal today's date*/
                                                 if($slot_recipient->pairs_per_day_date == $date)
                                                 {
-                                                    if($member->max_pairs_per_day == $count)
+                                                    if($member->max_pairs_per_day < $count)
                                                     {
                                                         /* Already exceeded */
                                                         $update['pairs_today'] = $count;
@@ -449,14 +449,14 @@ class Compute
                                                 $count =  Tbl_slot::id($tree->placement_tree_parent_id)->first();
                                                 $member = Tbl_membership::where('membership_id',$slot_recipient->slot_membership)->first();
                                                 $count = $count->pairs_today;
-                                                $date = Carbon::now()->format('Y-m-d A'); 
+                                                $date = Carbon::now()->toDateString();
                                                 $condition = null;
                                                 $gc = false;
-
+                                                $slot_recipient_gc = Tbl_slot::id($tree->placement_tree_parent_id)->membership()->first();
                                                   /* Check if date is equal today's date*/
-                                                if($slot_recipient->pairs_per_day_date == $date)
+                                                if($slot_recipient_gc->pairs_per_day_date == $date)
                                                 {
-                                                    if($member->max_pairs_per_day == $count)
+                                                    if($member->max_pairs_per_day < $count)
                                                     {
                                                         /* Already exceeded */
                                                         $update['pairs_today'] = $count;
@@ -469,10 +469,10 @@ class Compute
                                                         $update['pairs_today'] = $count;
                                                         $condition = true;
 
-                                                        if($slot_recipient->every_gc_pair != 0)
+                                                        if($slot_recipient_gc->every_gc_pair != 0)
                                                         {
                                                             /* CHECK IF GC */
-                                                            if($count%$slot_recipient->every_gc_pair == 0)
+                                                            if($count%$slot_recipient_gc->every_gc_pair == 0)
                                                             {
                                                                 $gc = true;
                                                             }                                                        
@@ -487,17 +487,17 @@ class Compute
                                                     $update['pairs_today'] = $count;
                                                     $condition = true;
 
-                                                    if($slot_recipient->every_gc_pair != 0)
+                                                    if($slot_recipient_gc->every_gc_pair != 0)
                                                     {
                                                         /* CHECK IF GC */
-                                                        if($count%$slot_recipient->every_gc_pair == 0 && $count != 0)
+                                                        if($count%$slot_recipient_gc->every_gc_pair == 0 && $count != 0)
                                                         {
                                                             $gc = true;
                                                         }                                                        
                                                     }
                                                 }
                                                 /* Insert Count */
-                                                Tbl_slot::where('slot_id',$slot_recipient->slot_id)->update($update);
+                                                Tbl_slot::where('slot_id',$slot_recipient_gc->slot_id)->update($update);
 
                                                 /* Proceed when entry is okay */
                                                 if($condition == true)
@@ -758,7 +758,7 @@ class Compute
     }
     public static function income_per_day($slot_id,$income,$method,$owner,$log,$cause)
     {
-                $date = Carbon::now()->format('Y-m-d A'); 
+                $date = Carbon::now()->toDateString();
                 $getslot = Tbl_slot::where('slot_id',$slot_id)->membership()->first();
                 $ifnegative = Tbl_wallet_logs::id($slot_id)->wallet()->sum('wallet_amount');
 
@@ -969,9 +969,9 @@ class Compute
 
         if($delete_slot->slot_type != 'CD' && $delete_slot->slot_type != 'FS')
         {
-                $c = Carbon::now()->format('Y-m-d A'); 
+                $c = Carbon::now()->toDateString();
                 $d = new DateTime($delete_slot->created_at);
-                $d = $d->format('Y-m-d A');
+                $d = $d->toDateString();
                 if($d == $c)
                 {
                     $condition = true;

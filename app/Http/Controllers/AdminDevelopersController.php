@@ -450,7 +450,7 @@ class AdminDevelopersController extends Controller
                                         $count =  Tbl_slot::id($slot_id)->first();
                                         $member = Tbl_membership::where('membership_id',$slot_recipient->slot_membership)->first();
                                         $count = $count->pairs_today;
-                                        $date = Carbon::now()->format('Y-m-d A'); 
+                                        $date = Carbon::now()->toDateString(); 
                                         $condition = null;
                                         $gc = false;
 
