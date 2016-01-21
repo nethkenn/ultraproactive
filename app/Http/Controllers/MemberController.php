@@ -154,7 +154,7 @@ class MemberController extends Controller
 
 	public function check_daily($data3)
 	{
-		$date =  Carbon::now()->format('Y-m-d A'); 
+		$date =  Carbon::now()->toDateString();
 		$checktime = Carbon::now();
 		if($data3->slot_today_date != $date)
 		{
