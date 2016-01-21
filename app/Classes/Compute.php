@@ -171,8 +171,9 @@ class Compute
                                                 $date = Carbon::now()->toDateString(); 
                                                 $condition = null;
                                                 $gc = false;
+                                                $slot_recipient_gc = Tbl_slot::id($tree->placement_tree_parent_id)->membership()->first();
                                                 /* Check if date is equal today's date*/
-                                                if($slot_recipient->pairs_per_day_date == $date)
+                                                if($slot_recipient_gc->pairs_per_day_date == $date)
                                                 {
                                                     if($member->max_pairs_per_day < $count)
                                                     {
@@ -187,9 +188,9 @@ class Compute
                                                         $update['pairs_today'] = $count;
                                                         $condition = true;
 
-                                                        if($slot_recipient->every_gc_pair != 0)
+                                                        if($slot_recipient_gc->every_gc_pair != 0)
                                                         {
-                                                            if($count%$slot_recipient->every_gc_pair == 0)
+                                                            if($count%$slot_recipient_gc->every_gc_pair == 0)
                                                             {
                                                                 $gc = true;
                                                             }                                                        
@@ -206,10 +207,10 @@ class Compute
                                                     $condition = true;
 
                                                     //IF GC EVERY PAIR IS IS NOT EQuAL TO 0  
-                                                    if($slot_recipient->every_gc_pair != 0)
+                                                    if($slot_recipient_gc->every_gc_pair != 0)
                                                     {
                                                         /* CHECK IF GC */
-                                                        if($count%$slot_recipient->every_gc_pair == 0)
+                                                        if($count%$slot_recipient_gc->every_gc_pair == 0)
                                                         {
                                                             $gc = true;
                                                         }                                                        
@@ -217,7 +218,7 @@ class Compute
 
                                                 }
                                                 /* Insert Count */
-                                                Tbl_slot::where('slot_id',$slot_recipient->slot_id)->update($update);
+                                                Tbl_slot::where('slot_id',$slot_recipient_gc->slot_id)->update($update);
 
                                                 /* Proceed when entry is okay */
                                                 if($condition == true)
