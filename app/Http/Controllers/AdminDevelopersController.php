@@ -343,81 +343,187 @@ class AdminDevelopersController extends Controller
 
 	public function re_entry()
 	{
-		$audit = DB::table('tbl_admin_log')->where('created_at','LIKE','%2015-11%')->where('logs','LIKE','%delete Slot #%')->where('used',0)->get();
-		$container = null;
-		$ctr2 = 0;
-		foreach($audit as $data)
+
+		$rank = Admin::info()->admin_position_rank;
+		$data['entry'] = DB::table('tbl_re_entry')->get();
+		$access_entry_level = DB::table('tbl_settings')->where('key','access_entry_level')->first();
+
+		if($rank == 0)
 		{
-			$unserialize = unserialize($data->old_data);
+			
+		}
+		else
+		{
+			return Redirect::to('/admin');
+		}
+		if(Request::input('message'))
+		{
+			echo '<b>SUCCESS</b></br>';
+		}
+		if(Request::input('slot'))
+		{
+         	$data['info'] = Admin::info();
+			$admin_id = $data['info']->account_id;
+			$password = $data['info']->account_password;
+			$password = Crypt::decrypt($password);
 
-			if($unserialize->slot_type == 'CD' || $unserialize->slot_type == 'FS')
-			{	
-					$slot_to_get = $unserialize->slot_placement;
-					$ctr = 0;
-					$condition = false;
-					while($condition == false)
-					{
-						$check_slot = Tbl_slot::id($slot_to_get)->first();
-						if($check_slot)
-						{
-							$condition = true;
-						}
-						else
-						{
-							foreach($audit as $data2)
-							{
-								$unserialize2 = unserialize($data2->old_data);
-								if($unserialize2->slot_id == $slot_to_get)
-								{
-									$slot_to_get = $unserialize2->slot_placement;
-									break;
-								}
-							}
-						}
-					}
-
-                    $get_membership = DB::table('tbl_binary_pairing')->where('membership_id',$unserialize->slot_membership)->first();
-	                $binary_l = $get_membership->pairing_point_l;
-	                $binary_r = $get_membership->pairing_point_r;
-	                $get = Tbl_tree_placement::where('placement_tree_child_id',$slot_to_get)->get();
-
-	                $slot_info = Tbl_slot::id($slot_to_get)->first(); 
-                    if(strtolower($unserialize->slot_position) == "left")
-                    {
-                        $update['slot_binary_left']  = $slot_info->slot_binary_left  + $binary_l;
-                        Tbl_slot::id($slot_to_get)->update($update); 
-                    }
-                    elseif(strtolower($unserialize->slot_position) =="right")
-                    {
-                        $update['slot_binary_right'] = $slot_info->slot_binary_right + $binary_r; 
-                        Tbl_slot::id($slot_to_get)->update($update);     
-                    }
-                    $this->re_check($slot_info->slot_id);
-                    $update = null;
-
-	                foreach($get as $g)
-	                {
-	                    $slot_info = Tbl_slot::id($g->placement_tree_parent_id)->first();   
-
-	                    if($g->placement_tree_position == "left")
-	                    {
-	                        $update['slot_binary_left']  = $slot_info->slot_binary_left  + $binary_l;
-	                        Tbl_slot::id($g->placement_tree_parent_id)->update($update); 	            
-	                    }
-	                    elseif($g->placement_tree_position =="right")
-	                    {
-	                        $update['slot_binary_right'] = $slot_info->slot_binary_right + $binary_r; 
-	                        Tbl_slot::id($g->placement_tree_parent_id)->update($update);  
-	                    }
-	                    $this->re_check($slot_info->slot_id);
-	                    $update = null; 
-	                }            
+			if($password == Request::input('password'))
+			{
 
 			}
+			else
+			{
+				die('Wrong password');	
+			}
 
-			DB::table('tbl_admin_log')->where('admin_log_id',$data->admin_log_id)->update(['used'=>1]);
+
+			$check = Tbl_slot::where('slot_id',Request::input('slot'))->first();
+
+			if(Request::input('slot') == 1)
+			{
+				die("Can't use re entry for slot #1");
+			}
+			else
+			{
+
+
+				if($check)
+				{
+
+					if($check->slot_type != "CD")
+					{
+						dd("This slot is not a CD");
+					}
+					else
+					{
+						$owned_wallet = Tbl_wallet_logs::id(Request::input('slot'))->wallet()->sum('wallet_amount');
+
+						$owned_wallet = -1 * $owned_wallet;
+						$log = "Readjust wallet for CD to PS";
+						Log::slot(Request::input('slot'), $log, $owned_wallet,'CD Slot',Request::input('slot'));
+						Tbl_slot::where('slot_id',Request::input('slot'))->update(['slot_type'=>"PS"]);
+					}
+
+
+					$strURL = "/admin/developer/re_entry?message=Success";
+					header("Location: $strURL", true);
+					header("Location: $strURL", true);
+					header("Connection: close", true);
+					header("Content-Encoding: none\r\n");
+					header("Content-Length: 0", true);
+
+
+					flush();
+					ob_flush();
+					
+					DB::table('tbl_re_entry')->insert(["slot_id"=>Request::input('slot'),'created_at'=>Carbon::now()]);
+					Compute::entry(Request::input('slot'));
+
+					$log = 'Slot #'.Request::input('slot').' was re-entry (CD to PS) by admin '.' by '.Admin::info()->account_name. '('.Admin::info()->admin_position_name.').';
+					Log::Admin(Admin::info()->account_id,$log);
+
+					session_write_close();
+					sleep(5);
+					exit;	
+					// return Redirect::to('/admin/developer/entry?message=Success');
+				}	
+				else
+				{
+					die("Slot doesn't exist.");
+				}
+
+		
+			}						
 		}
-		dd('finish');
+
+        return view('admin.developer.for_entry',$data);
+
+
+
+
+
+
+
+
+
+
+
+
+		// $audit = DB::table('tbl_admin_log')->where('created_at','LIKE','%2015-11%')->where('logs','LIKE','%delete Slot #%')->where('used',0)->get();
+		// $container = null;
+		// $ctr2 = 0;
+		// foreach($audit as $data)
+		// {
+		// 	$unserialize = unserialize($data->old_data);
+
+		// 	if($unserialize->slot_type == 'CD' || $unserialize->slot_type == 'FS')
+		// 	{	
+		// 			$slot_to_get = $unserialize->slot_placement;
+		// 			$ctr = 0;
+		// 			$condition = false;
+		// 			while($condition == false)
+		// 			{
+		// 				$check_slot = Tbl_slot::id($slot_to_get)->first();
+		// 				if($check_slot)
+		// 				{
+		// 					$condition = true;
+		// 				}
+		// 				else
+		// 				{
+		// 					foreach($audit as $data2)
+		// 					{
+		// 						$unserialize2 = unserialize($data2->old_data);
+		// 						if($unserialize2->slot_id == $slot_to_get)
+		// 						{
+		// 							$slot_to_get = $unserialize2->slot_placement;
+		// 							break;
+		// 						}
+		// 					}
+		// 				}
+		// 			}
+
+  //                   $get_membership = DB::table('tbl_binary_pairing')->where('membership_id',$unserialize->slot_membership)->first();
+	 //                $binary_l = $get_membership->pairing_point_l;
+	 //                $binary_r = $get_membership->pairing_point_r;
+	 //                $get = Tbl_tree_placement::where('placement_tree_child_id',$slot_to_get)->get();
+
+	 //                $slot_info = Tbl_slot::id($slot_to_get)->first(); 
+  //                   if(strtolower($unserialize->slot_position) == "left")
+  //                   {
+  //                       $update['slot_binary_left']  = $slot_info->slot_binary_left  + $binary_l;
+  //                       Tbl_slot::id($slot_to_get)->update($update); 
+  //                   }
+  //                   elseif(strtolower($unserialize->slot_position) =="right")
+  //                   {
+  //                       $update['slot_binary_right'] = $slot_info->slot_binary_right + $binary_r; 
+  //                       Tbl_slot::id($slot_to_get)->update($update);     
+  //                   }
+  //                   $this->re_check($slot_info->slot_id);
+  //                   $update = null;
+
+	 //                foreach($get as $g)
+	 //                {
+	 //                    $slot_info = Tbl_slot::id($g->placement_tree_parent_id)->first();   
+
+	 //                    if($g->placement_tree_position == "left")
+	 //                    {
+	 //                        $update['slot_binary_left']  = $slot_info->slot_binary_left  + $binary_l;
+	 //                        Tbl_slot::id($g->placement_tree_parent_id)->update($update); 	            
+	 //                    }
+	 //                    elseif($g->placement_tree_position =="right")
+	 //                    {
+	 //                        $update['slot_binary_right'] = $slot_info->slot_binary_right + $binary_r; 
+	 //                        Tbl_slot::id($g->placement_tree_parent_id)->update($update);  
+	 //                    }
+	 //                    $this->re_check($slot_info->slot_id);
+	 //                    $update = null; 
+	 //                }            
+
+		// 	}
+
+		// 	DB::table('tbl_admin_log')->where('admin_log_id',$data->admin_log_id)->update(['used'=>1]);
+		// }
+		// dd('finish');
 	}
 
 	public function re_check($slot_id)
