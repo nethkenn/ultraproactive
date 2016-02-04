@@ -229,8 +229,7 @@ class Compute
                                                         $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b>" . number_format($pairing_bonus, 2) . " wallet</b> from <b>MATCHING BONUS</b> due to matching combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining match points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right. This combination was caused by a repurchase of one of your downlines."; 
                                                         /* CHECK IF NOT FREE SLOT */
                                                         $check_wallet = Tbl_wallet_logs::id($new_slot_info->slot_id)->wallet()->sum('wallet_amount');
-                                                        if($new_slot_info->slot_type != "FS" && $check_wallet >= 0)
-                                                        {
+
                                                             //CHECK IF CONVERT TO GC OR NOT
                                                             if($gc == false)
                                                             {
@@ -248,7 +247,7 @@ class Compute
 
                                                               /* MATCHING SALE BONUS */
                                                               Compute::matching($buyer_slot_id, "REPURCHASE", $slot_recipient, $pairing_bonus);                                           
-                                                        }
+
 
                                                         /* INSERT LOG */
                                                         // Log::account($slot_recipient->slot_owner, $log);
@@ -971,8 +970,9 @@ class Compute
         if($delete_slot->slot_type != 'CD' && $delete_slot->slot_type != 'FS')
         {
                 $c = Carbon::now()->toDateString();
-                $d = new DateTime($delete_slot->created_at);
-                $d = $d->toDateString();
+
+                $d = Carbon::parse($delete_slot->created_at)->toDateString();
+
                 if($d == $c)
                 {
                     $condition = true;
@@ -987,7 +987,7 @@ class Compute
                 $binary_r = $get_membership->pairing_point_r;
 
                 $get = Tbl_wallet_logs::where('cause_id',$slot_id)->where('keycode','binary')->get();
-
+  
                 foreach($get as $g)
                 {
                     $slot_info = Tbl_slot::id($g->slot_id)->first();
