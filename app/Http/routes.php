@@ -505,6 +505,8 @@ Route::get('stockist/process_sales/sales/get_slots', 'StockistProcessSales@get_s
 Route::any('stockist/process_sales/sales/sale_or', 'StockistProcessSales@sale_or' );
 Route::get('stockist/process_sales/sales/get_product', 'StockistProcessSales@ajax_get_product');
 
+//STOCKIST INVENTORY VIEW
+Route::any('stockist/inventory', 'StockistOrderStocksController@view_inventory');
 
 //STOCKIST ORDER STOCKS
 Route::any('stockist/order_stocks', 'StockistOrderStocksController@index');

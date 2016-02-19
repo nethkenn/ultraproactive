@@ -83,7 +83,8 @@
 									<ul class="dropdown-menu" role="menu">
 										<li class=""><a href="stockist/issue_stocks">Issue Stocks</a></li>
 										<li class=""><a href="/stockist/order_stocks">Order Stocks</a></li>		
-										<li class=""><a href="/stockist/accept_stocks">Accept Order Request</a></li>																
+										<li class=""><a href="/stockist/accept_stocks">Accept Order Request</a></li>	
+										<li class=""><a href="/stockist/inventory">Inventory</a></li>																	
 									</ul>
 							</li>
 						</ul>

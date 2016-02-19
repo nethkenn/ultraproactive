@@ -44,27 +44,7 @@
 						<th class="option-col"></th>
 					</tr>
 				</thead>
-                <tbody>
-                  @foreach($data as $d)
-                    <tr class="text-center">
-                        <td>{{$d['account_name']}}</td>
-                        <td>{{$d['account_username']}}</td>
-                        <td>{{$d['count']}}</td>
-                        <td>{{$d['type']}}</td>
-                        <td>{{$d['sum']}}</td>
-                        <td>{{$d['deduction']}}</td>
-                        <td>{{$d['total']}}</td>
-                        <td>{{$d['date']}}</td>
-                       @if(Request::input('processed') == 1)
-                        <td></td>
-                        <td></td>
-                       @else
-                        <td><a class="showmodal-b" json="{{$d['json']}}" style="cursor:pointer;">Breakdown</a></td>
-                        <td><a class="showmodal-p" style="cursor:pointer;" accid="{{$d['account_id']}}"  accnm="{{$d['account_name']}}" total="{{$d['total']}}" deduction="{{$d['deduction']}}" sum="{{$d['sum']}}" type="{{$d['type']}}">Proccess</a></td>
-                       @endif
-                    </tr>
-                  @endforeach 
-                </tbody>
+
 			</table>
 	</div>
 
@@ -187,5 +167,78 @@
 
 
 @section('script')
+<script type="text/javascript">
+if("{{Request::input('processed')}}" == 1)
+{
+      $(function() {
+       $accountTable = $('#table').DataTable({
+            order: [[ 8, "desc" ]],
+            processing: true,
+            serverSide: true,
+             ajax:{
+                    url:'admin/transaction/payout/data',
+                    data:{
+                        processed : "{{$processed = Request::input('processed') ? 1 : 0 }}"
+                       }
+                },
+            columns: [
+                {data: 'account_name', name: 'account_name'},
+                {data: 'account_username', name: 'account_username'},
+                {data: 'count', name: 'count'},
+                {data: 'type', name: 'type'},
+                {data: 'sum', name: 'sum'},
+                {data: 'deduction', name: 'deduction'},
+                {data: 'total', name: 'total'},
+                {data: 'date', name: 'date'},
+                {data: 'json', name: 'processed_no'},
+
+            ],
+            "lengthMenu": [[8, 10, 25, 50, -1], [10, 25, 50, "All"]],
+            "oLanguage": 
+                {
+                    "sSearch": "",
+                    "sProcessing": ""
+                },
+            stateSave: true,
+        });
+    });  
+}
+else
+{
+     $(function() {
+       $accountTable = $('#table').DataTable({
+            processing: true,
+            serverSide: true,
+             ajax:{
+                    url:'admin/transaction/payout/data',
+                    data:{
+                        archived : "{{$processed = Request::input('processed') ? 1 : 0 }}"
+                       }
+                },
+            columns: [
+                {data: 'account_name', name: 'account_name'},
+                {data: 'account_username', name: 'account_username'},
+                {data: 'count', name: 'count'},
+                {data: 'type', name: 'type'},
+                {data: 'sum', name: 'sum'},
+                {data: 'deduction', name: 'deduction'},
+                {data: 'total', name: 'total'},
+                {data: 'date', name: 'date'},
+                {data: 'json', name: 'json'},
+                {data: 'process', name: 'process'},
+                
+            ],
+            "lengthMenu": [[8, 10, 25, 50, -1], [10, 25, 50, "All"]],
+            "oLanguage": 
+                {
+                    "sSearch": "",
+                    "sProcessing": ""
+                },
+            stateSave: true,
+        });
+    });   
+}
+
+</script>
 <script type="text/javascript" src="/resources/assets/admin/payout.js"></script>
 @endsection
