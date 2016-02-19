@@ -692,7 +692,7 @@ class AdminCodeController extends AdminController {
     {
 
     	$stat = Request::input('status');
-        $membership_code = Tbl_membership_code_sale_has_code::groupBy('tbl_membership_code_sale_has_code.membershipcode_or_num')->join('tbl_membership_code_sale','tbl_membership_code_sale.membershipcode_or_num','=','tbl_membership_code_sale_has_code.membershipcode_or_num')->get();
+        $membership_code = Tbl_membership_code_sale_has_code::join('tbl_membership_code_sale','tbl_membership_code_sale.membershipcode_or_num','=','tbl_membership_code_sale_has_code.membershipcode_or_num')->join('tbl_account','tbl_account.account_id','=','tbl_membership_code_sale.sold_to')->groupBy('tbl_membership_code_sale_has_code.membershipcode_or_num')->get();
 
         return Datatables::of($membership_code)	
         ->addColumn('view_voucher','<a target="_blank" href="/admin/transaction/view_voucher_codes/code_transactions?order_form_number={{$membershipcode_or_num}}"> View Voucher</a>')

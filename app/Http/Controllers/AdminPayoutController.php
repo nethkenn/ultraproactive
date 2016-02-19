@@ -37,16 +37,16 @@ class AdminPayoutController extends AdminController
         }
 
 
-        if(Request::input('processed') == 1)
-        {
-            $request = 'Processed';
-            $account = $this->processed();
-        }
-        else
-        {
-            $request = 'Pending';
-            $account = $this->pending();
-        }
+        // if(Request::input('processed') == 1)
+        // {
+        //     $request = 'Processed';
+        //     $account = $this->processed();
+        // }
+        // else
+        // {
+        //     $request = 'Pending';
+        //     $account = $this->pending();
+        // }
 
         if(isset($_POST['encashall']))
         {
@@ -102,7 +102,7 @@ class AdminPayoutController extends AdminController
         }
 
 
-        $data['data'] = $account;   
+        // $data['data'] = $account;   
         return view('admin.transaction.payout',$data);
 	}
 
@@ -320,6 +320,7 @@ class AdminPayoutController extends AdminController
                                                 ->selectRaw('count(*) as count, slot_id')
                                                 ->selectRaw('tbl_account_encashment_history.account_id, tbl_account_encashment_history.account_id')
                                                 ->selectRaw('type, type')
+                                                ->selectRaw('processed_no, processed_no')
                                                 ->where('status','Processed')
                                                 ->groupBy('processed_no')
                                                 ->groupBy('type')
@@ -337,11 +338,89 @@ class AdminPayoutController extends AdminController
                 }
                 $account[$key]->sum =  $this->currency_format($a->sum);
                 $account[$key]->deduction = $this->currency_format($a->deduction);
-                $account[$key]->json = json_encode(Tbl_account_encashment_history::where('account_id',$a->account_id)->where('status','Processed')->where('type',$a->type)->get());
+                $account[$key]->json = json_encode(Tbl_account_encashment_history::where('account_id',$a->account_id)->where('processed_no',$a->processed_no)->where('status','Processed')->where('type',$a->type)->get());
                 $d  = Tbl_account_encashment_history::where('account_id',$a->account_id)->orderBy('encashment_date','DESC')->where('status','Processed')->where('type',$a->type)->first();
+               dd($d);
                 $account[$key]->date = $d->encashment_date;   
             }
 
             return $account; 
+    }
+
+    public function data()
+    {
+
+            if(Request::input('processed') == 1)
+            {
+                $account = Tbl_account_encashment_history::selectRaw('tbl_account_encashment_history.account_id, sum(amount) as sum')
+                                                    ->account()
+                                                    ->selectRaw('tbl_account.account_name, tbl_account.account_name')
+                                                    ->selectRaw('tbl_account_encashment_history.account_id, sum(deduction) as deduction')
+                                                    ->selectRaw('count(*) as count, slot_id')
+                                                    ->selectRaw('tbl_account_encashment_history.account_id, tbl_account_encashment_history.account_id')
+                                                    ->selectRaw('type, type')
+                                                    ->selectRaw('processed_no, processed_no')
+                                                    ->selectRaw('tbl_account.account_username, tbl_account.account_username')
+                                                    ->where('status','Processed')
+                                                    ->groupBy('processed_no')
+                                                    ->groupBy('type')
+                                                    ->orderBy('processed_no','ASC')
+                                                    ->get();  
+
+                foreach($account as $key => $a)
+                {
+                    if(!isset($account[$key]->total))
+                    {
+                        $account[$key]->total = $this->currency_format(($a->sum - $a->deduction)); 
+                    }
+                    else
+                    {
+                        $account[$key]->total =  $this->currency_format(($account[$key]->total + $a->sum) - $a->deduction); 
+                    }
+                    $account[$key]->sum =  $this->currency_format($a->sum);
+                    $account[$key]->deduction = $this->currency_format($a->deduction);
+                    $account[$key]->json = json_encode(Tbl_account_encashment_history::where('account_id',$a->account_id)->where('processed_no',$a->processed_no)->where('status','Processed')->where('type',$a->type)->get());
+                    $d  = Tbl_account_encashment_history::where('account_id',$a->account_id)->orderBy('encashment_date','DESC')->where('status','Processed')->where('type',$a->type)->first();
+                    $account[$key]->date = $d->encashment_date;   
+                }
+            }
+            else
+            {
+                    $account = Tbl_account_encashment_history::selectRaw('tbl_account_encashment_history.account_id, sum(amount) as sum')
+                                                        ->account()
+                                                        ->selectRaw('tbl_account.account_name, tbl_account.account_name')
+                                                        ->selectRaw('tbl_account_encashment_history.account_id, sum(deduction) as deduction')
+                                                        ->selectRaw('count(*) as count, slot_id')
+                                                        ->selectRaw('tbl_account_encashment_history.account_id, tbl_account_encashment_history.account_id')
+                                                        ->selectRaw('tbl_account.account_username, tbl_account.account_username')
+                                                        ->selectRaw('type, type')
+                                                        ->where('status','Pending')
+                                                        ->groupBy('account_id')
+                                                        ->groupBy('type')
+                                                        ->get();  
+
+                    foreach($account as $key => $a)
+                    {
+                        if(!isset($account[$key]->total))
+                        {
+                            $account[$key]->total = $this->currency_format(($a->sum - $a->deduction)); 
+                        }
+                        else
+                        {
+                            $account[$key]->total =  $this->currency_format(($account[$key]->total + $a->sum) - $a->deduction); 
+                        }
+                         $account[$key]->sum =  $this->currency_format($a->sum);
+                         $account[$key]->deduction = $this->currency_format($a->deduction);
+                         $account[$key]->json = json_encode(Tbl_account_encashment_history::where('account_id',$a->account_id)->where('status','Pending')->where('type',$a->type)->get());
+                         $d  = Tbl_account_encashment_history::where('account_id',$a->account_id)->orderBy('encashment_date','DESC')->where('status','Pending')->where('type',$a->type)->first();
+                         $account[$key]->date = $d->encashment_date;   
+                    }
+
+            }
+
+
+             return Datatables::of($account) ->addColumn('json','<a class="showmodal-b" json="{{$json}}" style="cursor:pointer;">Breakdown</a>')
+                                             ->addColumn('process','<a class="showmodal-p" style="cursor:pointer;" accid="{{$account_id}}"  accnm="{{$account_name}}" total="{{$total}}" deduction="{{$deduction}}" sum="{{$sum}}" type="{{$type}}">Proccess</a>')
+                                             ->make(true);
     }
 }

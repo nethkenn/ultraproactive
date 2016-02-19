@@ -110,7 +110,7 @@ class AdminStockistInventoryController extends AdminController
 			}
 
 			DB::table('tbl_transaction')->where('transaction_id',$trans_id)->update(['transaction_amount'=>$prod_subtotal_amt,'transaction_discount_amount'=>$prod_disc_amt,'transaction_total_amount'=>$prod_total_amt]);
-
+			return Redirect::to('/admin/stockist_inventory');
 		}
 
 
@@ -219,7 +219,7 @@ class AdminStockistInventoryController extends AdminController
 			}
 
 			DB::table('tbl_transaction')->where('transaction_id',$trans_id)->update(['transaction_amount'=>$prod_subtotal_amt,'transaction_discount_amount'=>$prod_disc_amt,'transaction_total_amount'=>$prod_total_amt]);
-
+			return Redirect::to('/admin/stockist_inventory');
 		}
 
 		return view('admin.maintenance.stockist_inventory_package', $data);

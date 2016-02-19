@@ -17,6 +17,7 @@
 						<th>OR Number</th>
 						<th>OR Code</th>
 						<th>Form Number</th>
+						<th>Owner</th>
 						<th>Date</th>
 						<th class="option-col"></th>
 					</tr>
@@ -52,6 +53,7 @@ $(function()
             {data: 'membershipcode_or_num', name: 'membershipcode_or_num'},
             {data: 'membershipcode_or_code', name: 'membershipcode_or_code'},
             {data: 'order_form_number', name: 'order_form_number'},
+            {data: 'account_name', name: 'account_name'},
             {data: 'created_at', name: 'created_at'},
             {data: 'view_voucher', name: 'code_pin'},
         
