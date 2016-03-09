@@ -64,6 +64,6 @@ class AdminAccountBlockController extends AdminController
 
     	Log::Admin(Admin::info()->account_id,Admin::info()->account_username." unblocked Account #". $id);
 
-    	return Redirect::to("/admin/maintenance/account_block");
+    	return Redirect::to("/admin/maintenance/account_block/blocked?blocked=1");
     }
 }
