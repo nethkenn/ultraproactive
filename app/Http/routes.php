@@ -117,6 +117,12 @@ Route::post('admin/maintenance/accounts/restore', 'AdminAccountController@restor
 Route::any('admin/maintenance/accounts/field', 'AdminAccountController@field');
 Route::get('admin/maintenance/accounts/field/delete', 'AdminAccountController@field_delete');
 
+Route::any('admin/maintenance/account_block', 'AdminAccountBlockController@index');
+Route::any('admin/maintenance/account_block/blocked', 'AdminAccountBlockController@index');
+Route::any('admin/maintenance/account_block/data', 'AdminAccountBlockController@data');
+Route::any('admin/maintenance/account_block/block', 'AdminAccountBlockController@block');
+Route::any('admin/maintenance/account_block/unblock', 'AdminAccountBlockController@unblock');
+
 /* FOODCART */
 Route::get('admin/content/foodcart', 'AdminFoodCartController@index');
 Route::get('admin/content/foodcart/add', 'AdminFoodCartController@add');
