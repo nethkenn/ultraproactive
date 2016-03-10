@@ -246,7 +246,7 @@
         });
 
 
-		$.fn.snow();
+		// $.fn.snow();
 
 	})(jQuery);
 	</script>

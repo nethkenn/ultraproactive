@@ -80,6 +80,7 @@
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="admin/maintenance/accounts">Account</a></li>
 									<li><a href="admin/maintenance/slots">Account Slots</a></li>
+									<li><a href="admin/maintenance/account_block">Account Block</a></li>
 									<li class="divider" role="separator"></li>
 									<li><a href="admin/maintenance/product">Product</a></li>
 									<li><a href="admin/maintenance/product_package">Product Package</a></li>

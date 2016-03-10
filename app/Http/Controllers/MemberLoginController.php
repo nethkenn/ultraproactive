@@ -27,9 +27,16 @@ class MemberLoginController extends Controller
 	            {	
 	            	if($member->account_approved == 1)
 	            	{
-			            	$pass =	Crypt::encrypt($pass);
+	            		if ($member->blocked == 0) 
+	            		{
+	            			$pass =	Crypt::encrypt($pass);
 			                Customer::login($member->account_id,$pass);
 			                return Redirect::to("member");
+	            		}
+			            else
+			            {
+			            	return Redirect::to("member/login")->with("errored","Invalid Account.");
+			            }
 	            	}
 	            	else if($member->account_expired == 1)
 	            	{
