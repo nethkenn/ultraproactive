@@ -147,4 +147,3 @@
 		});
 	</script>
 @endsection
-@endsection
