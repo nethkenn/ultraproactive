@@ -264,6 +264,7 @@ class AdminMigrationController extends AdminController
 	// }
 	public function start_rematrix()
 	{
+		dd(123);
 		$data["_slots"] = Tbl_slot::get();
 		DB::table("tbl_tree_placement")->truncate();
 		DB::table("tbl_tree_sponsor")->truncate();
@@ -282,6 +283,7 @@ class AdminMigrationController extends AdminController
 	// }
 	public function rematrix()
 	{
+		dd(123);
 		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Start Rematrix");
 		$slot_id = Request::input("slot_id");
 		Compute::tree($slot_id);
