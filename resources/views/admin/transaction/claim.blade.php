@@ -24,6 +24,7 @@
 					<tr class="text-center">
 
 						<th style="width:100px;">ID</th>
+						<th>Customer Name</th>
 						<th>Voucher Code</th>
 						<th>Total Amount</th>
 						<th>Status</th>
@@ -58,6 +59,7 @@ $(function() {
 	    	},
         columns: [
             {data: 'voucher_id', name: 'voucher_id'},
+            {data: 'account_name', name: 'account_name'},
             {data: 'voucher_code', name: 'voucher_code'},
             {data: 'total_amount', name: 'total_amount'},
             {data: 'status', name: 'claimed'},

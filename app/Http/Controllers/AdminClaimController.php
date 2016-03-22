@@ -10,6 +10,7 @@ use Validator;
 use App\Classes\Admin;
 use App\Classes\Product;
 use App\Classes\Log;
+use App\Tbl_account;
 use Crypt;
 use Carbon\Carbon;
 use DB;
@@ -48,6 +49,7 @@ class AdminClaimController extends AdminController
 		})->get();
 
 		return Datatables::of($voucher)	->editColumn('status','{{$status}}')
+										->addColumn('account_name','{{App\Tbl_account::where("account_id",$account_id)->first()->account_name}}')
 										->addColumn('cancel_or_view_voucher','<a style="cursor: pointer;" class="view-voucher" voucher-id="{{$voucher_id}}">View Voucher</a>')
 			                            ->make(true);
 
@@ -454,7 +456,7 @@ class AdminClaimController extends AdminController
 				$data['product_total'] = array_sum($total_product);
 				$data['discount_pts'] =	 array_sum($discount);
 
-
+				$data['account']	=  Tbl_account::where('account_id',$data['voucher']->account_id)->first();
 		
 
 
