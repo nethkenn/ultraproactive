@@ -1,3 +1,7 @@
+<div>Owner: {{$account->account_name}}</div>
+<div>Contact # {{$account->account_contact_number}}</div>
+<div>Account Email : {{$account->account_email}}</div>
+
 <table class="table table-boreded table-striped">
 	<thead>
 	    <tr>
