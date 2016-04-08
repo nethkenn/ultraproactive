@@ -78,7 +78,7 @@
 
 
 						<ul class="nav navbar-nav">
-							<li class="dropdown {{ Request::segment(2) == 'issue_stocks' ||  Request::segment(2) == 'order_stocks' ? 'active' : 'inactive' ||  Request::segment(2) == 'accept_stocks' ? 'active' : 'inactive' }}">
+							<li class="dropdown {{ Request::segment(2) == 'issue_stocks' ||  Request::segment(2) == 'order_stocks' ||  Request::segment(2) == 'accept_stocks' ? 'active' : 'inactive' }}">
 									<a href="admin/utilities" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Stocks  <span class="caret"></span></a>
 									<ul class="dropdown-menu" role="menu">
 										<li class=""><a href="stockist/issue_stocks">Issue Stocks</a></li>

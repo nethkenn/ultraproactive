@@ -60,6 +60,7 @@ class StockistIssueController extends StockistController
                         $data['inventory'] = Tbl_stockist_inventory::where('stockist_id',$id)
                                                                     ->orderBy('tbl_stockist_inventory.product_id','asc')
                                                                     ->where('tbl_stockist_inventory.archived',0)
+                                                                    ->where('tbl_product.archived',0)
                                                                     ->join('tbl_product','tbl_product.product_id','=','tbl_stockist_inventory.product_id')
                                                                     ->get();
 
@@ -287,6 +288,7 @@ class StockistIssueController extends StockistController
             $product = Tbl_stockist_inventory::where('stockist_id',$id)
                                                         ->orderBy('tbl_stockist_inventory.product_id','asc')
                                                         ->where('tbl_stockist_inventory.archived',0)
+                                                        ->where('tbl_product.archived',0)
                                                         ->join('tbl_product','tbl_product.product_id','=','tbl_stockist_inventory.product_id')
                                                         ->get();
             foreach($product as $key => $prod)
@@ -302,6 +304,7 @@ class StockistIssueController extends StockistController
             $product = Tbl_stockist_inventory::where('stockist_id',$id)
                                                         ->orderBy('tbl_stockist_inventory.product_id','asc')
                                                         ->where('tbl_stockist_inventory.archived',0)
+                                                        ->where('tbl_product.archived',0)
                                                         ->join('tbl_product','tbl_product.product_id','=','tbl_stockist_inventory.product_id')
                                                         ->get();
             foreach($product as $key => $prod)
@@ -323,6 +326,7 @@ class StockistIssueController extends StockistController
         if($discount)
         {
             $product = Tbl_stockist_package_inventory::where('stockist_id',$id)
+                                                        ->where('tbl_product_package.archived',0)
                                                         ->join('tbl_product_package','tbl_product_package.product_package_id','=','tbl_stockist_package_inventory.product_package_id')
                                                         ->get();
 
@@ -346,6 +350,7 @@ class StockistIssueController extends StockistController
         else
         {
             $product = Tbl_stockist_package_inventory::where('stockist_id',$id)
+                                            ->where('tbl_product_package.archived',0)
                                             ->join('tbl_product_package','tbl_product_package.product_package_id','=','tbl_stockist_package_inventory.product_package_id')
                                             ->get();
             foreach($product as $key => $prod)
