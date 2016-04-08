@@ -59,6 +59,7 @@ class StockistOrderStocksController extends StockistController
                                     $data['inventory'] = Tbl_stockist_inventory::where('stockist_id',$id)
                                                                                 ->orderBy('tbl_stockist_inventory.product_id','asc')
                                                                                 ->where('tbl_stockist_inventory.archived',0)
+                                                                                ->where('tbl_product.archived',0)
                                                                                 ->join('tbl_product','tbl_product.product_id','=','tbl_stockist_inventory.product_id')
                                                                                 ->get();
 
@@ -109,8 +110,8 @@ class StockistOrderStocksController extends StockistController
     public function ajax_get()
     {
         $id = Request::input('id');                          
-        $data['product'] = Rel_order_stocks::where('order_stocks_id',$id)->join('tbl_product','tbl_product.product_id','=','rel_order_stocks.product_id')->select('product_name','quantity','tbl_product.product_id')->get();
-        $data['package'] = Rel_order_stocks_package::where('order_stocks_id',$id)->join('tbl_product_package','tbl_product_package.product_package_id','=','rel_order_stocks_package.product_package_id')->select('product_package_name','quantity','tbl_product_package.product_package_id')->get();
+        $data['product'] = Rel_order_stocks::where('order_stocks_id',$id)->join('tbl_product','tbl_product.product_id','=','rel_order_stocks.product_id')->where('tbl_product.archived',0)->select('product_name','quantity','tbl_product.product_id')->get();
+        $data['package'] = Rel_order_stocks_package::where('order_stocks_id',$id)->join('tbl_product_package','tbl_product_package.product_package_id','=','rel_order_stocks_package.product_package_id')->where('tbl_product_package.archived',0)->select('product_package_name','quantity','tbl_product_package.product_package_id')->get();
        
         return json_encode($data);
     }

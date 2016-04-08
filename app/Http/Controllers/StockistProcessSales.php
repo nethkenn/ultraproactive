@@ -45,6 +45,7 @@ class StockistProcessSales extends StockistController
         $product = Tbl_stockist_inventory::where('stockist_id',Stockist::info()->stockist_id)
                                                     ->orderBy('tbl_stockist_inventory.product_id','asc')
                                                     ->where('tbl_stockist_inventory.archived',0)
+                                                    ->where('tbl_product.archived',0)
                                                     ->join('tbl_product','tbl_product.product_id','=','tbl_stockist_inventory.product_id')
                                                     ->get();
 
