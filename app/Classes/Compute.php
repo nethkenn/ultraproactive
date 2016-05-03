@@ -217,8 +217,12 @@ class Compute
                                                     }
 
                                                 }
-                                                /* Insert Count */
-                                                Tbl_slot::where('slot_id',$slot_recipient_gc->slot_id)->update($update);
+                                                $check_wallet = Tbl_wallet_logs::id($new_slot_info->slot_id)->wallet()->sum('wallet_amount');
+                                                if($new_slot_info->slot_type != "FS" && $check_wallet >= 0)
+                                                {                                        
+                                                    /* Insert Count */
+                                                    Tbl_slot::where('slot_id',$slot_recipient_gc->slot_id)->update($update);
+                                                }
 
                                                 /* Proceed when entry is okay */
                                                 if($condition == true)
