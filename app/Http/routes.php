@@ -5,6 +5,7 @@
 Route::any('admin/developer/migration', 'AdminDevelopersController@migration');
 Route::any('admin/migration/disable', 'AdminDevelopersController@area_disable');
 Route::any('admin/developer/re_entry', 'AdminDevelopersController@re_entry');
+Route::any('admin/developer/adjust_gc', 'AdminDevelopersController@adjust_gc');
 // Route::any('admin/developer/negativecd', 'AdminDevelopersController@negativecd');
 /* INCOME PROJECTION */
 Route::any('/projection', 'ProjectionController@index');
@@ -297,8 +298,12 @@ Route::get('admin/maintenance/slots/downline', 'AdminSlotController@downline');
 Route::any('admin/maintenance/slots/confirm_delete', 'AdminSlotController@confirm_delete');
 Route::get('admin/maintenance/slots/delete', 'AdminSlotController@delete');
 Route::any('admin/maintenance/slots/view', 'AdminSlotController@info');
+
 Route::get('admin/maintenance/slots/computeAdjustment', 'AdminSlotController@computeAdjustmentAjax');
 Route::post('admin/maintenance/slots/adjustWallet', 'AdminSlotController@adjustWallet');
+
+Route::get('admin/maintenance/slots/computeAdjustmentGC', 'AdminSlotController@computeAdjustmentAjaxGC');
+Route::post('admin/maintenance/slots/adjustWalletGC', 'AdminSlotController@adjustWalletGC');
 
 Route::get('admin/maintenance/country', 'AdminCountryController@index');
 Route::any('admin/maintenance/country/add', 'AdminCountryController@add_country');

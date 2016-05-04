@@ -60,6 +60,7 @@ class AdminSlotController extends AdminController
 	        return Datatables::of($_account)->addColumn('gen','<a href="admin/maintenance/slots/add?id={{$slot_id}}">GENEALOGY</a>')
 	        								->addColumn('info','<a href="admin/maintenance/slots/view?id={{$slot_id}}">INFO</a>')
 	        								->addColumn('wallet','<a style="cursor:pointer;" class="adjust-slot" slot-id="{{$slot_id}}">{{App\Tbl_wallet_logs::id("$slot_id")->wallet()->sum("wallet_amount")}}</a>')
+	        								->addColumn('slot_wallet_gc','<a style="cursor:pointer;" class="adjust-slot-gc" slot-id="{{$slot_id}}">{{App\Tbl_wallet_logs::id("$slot_id")->GC()->sum("wallet_amount")}}</a>')
 	        								->addColumn('sponsor','{{App\Tbl_slot::id("$slot_sponsor")->account()->first() == null ? "---" : "Slot #".App\Tbl_slot::id("$slot_sponsor")->account()->first()->slot_id."(".App\Tbl_slot::id("$slot_sponsor")->account()->first()->account_name.")"}}')
 	        								->addColumn('placement','{{App\Tbl_slot::id("$slot_placement")->account()->first() == null ? "---" : "Slot #".App\Tbl_slot::id("$slot_placement")->account()->first()->slot_id."(".App\Tbl_slot::id("$slot_placement")->account()->first()->account_name.")"}}')
 	        								->addColumn('position','{{App\Tbl_slot::id("$slot_placement")->account()->first() == null ? "---" : strtoupper($slot_position)}}')
@@ -527,6 +528,92 @@ class AdminSlotController extends AdminController
 		$data['slot_adjustment'] = $slot_adjustment;
 		$data['wallet_adjustment_amount'] = $wallet_adjustment_amount;
 		$data['current_wallet_amount'] = $current_wallet_amount;
+
+		return $data;
+	}
+
+	public function computeAdjustmentAjaxGC()
+	{
+
+		$slot_id = Request::input('slot_id');
+		$slot_adjustment = Request::input('wallet_adjustment_gc');
+		$wallet_adjustment_amount  = Request::input('wallet_adjustment_amount_gc');
+		
+		$data = $this->computeAdjustmentGC($slot_id, $slot_adjustment, $wallet_adjustment_amount);
+		return json_encode($data);
+
+	}
+
+	public function adjustWalletGC()
+	{
+		$data['errors'] = [];
+
+		$slot_id = Request::input('slot_id');
+		$slot_adjustment = Request::input('wallet_adjustment_gc');
+		$wallet_adjustment_amount  = (double) Request::input('wallet_adjustment_amount_gc');
+		$wallet_adjustment_amount_formated = number_format($wallet_adjustment_amount, 2);
+		
+		$rules['slot_id'] = 'required|exists:tbl_slot,slot_id';
+		$rules['wallet_adjustment_amount_gc'] = 'required|numeric|min:1';
+		$rules['wallet_adjustment_gc'] = 'foo';
+		$messages['wallet_adjustment_gc.foo'] = "Invalid wallet ajustment method.";
+		Validator::extend('foo', function($attribute, $value, $parameters, $validator) {
+            return $value == 'add' || $value == 'deduct';
+        });
+
+		$validator = validator::make(Request::input(), $rules, $messages);
+		if ($validator->fails()) {
+
+			$data['errors'] = $validator->errors()->all();
+  
+        }
+        else
+        {
+	        $data = $this->computeAdjustment($slot_id, $slot_adjustment, $wallet_adjustment_amount);
+	        $data['errors'] = [];
+	      
+			switch ($slot_adjustment)
+			{
+				case 'add':
+					$logs = "Added $wallet_adjustment_amount_formated GC from system adjustment.";
+					break;
+				
+				default:
+					$logs = "Deducted $wallet_adjustment_amount_formated GC from system adjustment.";
+					$wallet_adjustment_amount = (double) ("-".$wallet_adjustment_amount);
+					/* Deduct */
+					break;
+			}
+			
+			Log::slot($slot_id, $logs, $wallet_adjustment_amount, "System Adjusment" , Admin::info()->account_id,1);
+        }
+
+
+        return json_encode($data);
+	}
+
+
+	public function computeAdjustmentGC($slot_id, $slot_adjustment, $wallet_adjustment_amount)
+	{
+		$wallet_adjustment_amount = (double) $wallet_adjustment_amount;
+		$current_wallet_amount = DB::table('tbl_wallet_logs')->where('slot_id', $slot_id)->where('wallet_type', 'GC')->sum('wallet_amount');
+
+		switch ($slot_adjustment)
+		{
+			case 'add':
+				$current_wallet_amount = $current_wallet_amount + $wallet_adjustment_amount;
+				break;
+			
+			default:
+				/* Deduct */
+				$current_wallet_amount = $current_wallet_amount - $wallet_adjustment_amount;
+				break;
+		}
+
+		$data['slot_id'] = $slot_id;
+		$data['slot_adjustment_gc'] = $slot_adjustment;
+		$data['wallet_adjustment_amount_gc'] = $wallet_adjustment_amount;
+		$data['current_wallet_amount_gc'] = $current_wallet_amount;
 
 		return $data;
 	}
