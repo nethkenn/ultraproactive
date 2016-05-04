@@ -232,7 +232,47 @@ $(function()
 					
 				});
 
-				
+				$('.unblock-membership-code').unbind("click");
+				$('.unblock-membership-code').on('click', function(event)
+				{
+					event.preventDefault();
+
+					var $code_pin = $(this).attr('membership-code-id');
+					var $token = $('meta[name=_token]').attr('content');
+
+
+					$.ajax(
+					{
+						url: 'admin/maintenance/codes/unblock',
+						type: 'POST',
+						dataType: 'json',
+						data: {code_pin: $code_pin,
+								_token: $token
+							},
+					})
+
+					.done(function(data)
+					{
+
+						// console.log(data);
+						if(data)
+						{
+							$membershipCodeTable.draw();
+						}
+					})
+					.fail(function()
+					{
+						console.log("Error while unblocking membership code.");
+						alert("Error while unblocking membership code.")
+					})
+					.always(function()
+					{
+						// console.log("complete");
+					});
+					
+				});
+
+
 				$('.transfer-membership-code').on('click',function(event)
 				{
 					event.preventDefault();

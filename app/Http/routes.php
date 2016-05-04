@@ -248,6 +248,7 @@ Route::post('admin/maintenance/codes/add', 'AdminCodeController@addCodePost');
 Route::any('admin/maintenance/codes/edit', 'AdminCodeController@edit_code');
 Route::get('admin/maintenance/codes/get', 'AdminCodeController@ajax_get_membership_code');
 Route::post('admin/maintenance/codes/block', 'AdminCodeController@block');
+Route::post('admin/maintenance/codes/unblock', 'AdminCodeController@unblock');
 Route::post('admin/maintenance/codes/transfer_code', 'AdminCodeController@transfer_code');
 Route::get('admin/maintenance/codes/verify_code', 'AdminCodeController@verify_code');
 Route::any('admin/maintenance/codes/or', 'AdminCodeController@show_sale_or');

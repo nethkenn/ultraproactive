@@ -40,8 +40,8 @@ class StockistOrderStocksController extends StockistController
     public function view_inventory()
     {
         $id = Stockist::info()->stockist_id;
-        $data['_product'] = Tbl_stockist_inventory::where('stockist_id',$id)->join('tbl_product','tbl_product.product_id','=','tbl_stockist_inventory.product_id')->get();
-        $data['_package'] = Tbl_stockist_package_inventory::where('stockist_id',$id)->join('tbl_product_package','tbl_product_package.product_package_id','=','tbl_stockist_package_inventory.product_package_id')->get();
+        $data['_product'] = Tbl_stockist_inventory::where('stockist_id',$id)->join('tbl_product','tbl_product.product_id','=','tbl_stockist_inventory.product_id')->where('tbl_product.archived',0)->get();
+        $data['_package'] = Tbl_stockist_package_inventory::where('stockist_id',$id)->join('tbl_product_package','tbl_product_package.product_package_id','=','tbl_stockist_package_inventory.product_package_id')->where('tbl_product_package.archived',0)->get();
 
         return view('stockist.order.view_inventory',$data);
     }
