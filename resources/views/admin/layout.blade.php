@@ -169,9 +169,12 @@
 								<li class="dropdown {{ Request::segment(2) == 'developer' ? 'active' : 'inactive' }}">
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Developer<span class="caret"></span></a>
 									<ul class="dropdown-menu" role="menu">
-										<li><a href="admin/migration">Migrations</a></li>
-										<li><a href="admin/migration/disable">Disable Area</a></li>
-										<li><a href="admin/developer/re_entry">Re Entry (CD to PS)</a></li>
+										@if(App\Classes\Admin::info()->admin_rank_position != 0)
+											<li><a href="admin/migration">Migrations</a></li>
+											<li><a href="admin/migration/disable">Disable Area</a></li>
+											<li><a href="admin/developer/re_entry">Re Entry (CD to PS)</a></li>
+										@endif
+											<li><a href="admin/developer/adjust_gc">Adjust GC</a></li>
 									</ul>
 								</li>
 								@endif

@@ -29,6 +29,7 @@
 						<th>Sponsor</th>
 						<th>Type</th>
 						<th>Wallet</th>
+						<th>GC</th>
 						<th></th>
 						<th>Date</th>
 						<th></th>
@@ -94,7 +95,42 @@
   <button data-remodal-action="confirm" class="remodal-confirm">OK</button>
 </div>
 
+<div class="remodal" data-remodal-id="adjust-gc"
+  data-remodal-options="hashTracking: false, closeOnOutsideClick: false">
 
+  <button data-remodal-action="close" class="remodal-close remodal-btn"></button>
+  <h3>Adjust GC</h3>
+  <form id="ajust-wallet-form-gc">
+  		<div class="form-group">
+  			<div class="adjsut-wallet-message-gc">
+  				
+  			</div>
+  		</div>
+	  <div class="form-group">
+	    <label for="">Slot#</label>
+	    <input name="slot_id" type="text" class="form-control" id="" placeholder="" readonly>
+	  </div>
+	  <div class="form-group">
+	    <label for="">GC Wallet</label>
+	    <input name="wallet_amount_gc" type="text" class="form-control" id="" placeholder="" readonly>
+	  </div>
+	  <div class="form-group">
+	    <label for="">Select Adjustment</label>
+	    <select class="form-control" name="wallet_adjustment_gc">
+	    	<option value="add">Add</option>
+	    	<option value="deduct">Deduct</option>
+	    </select>
+	  </div>
+	  <div class="form-group">
+	    <label for="">Adjustment GC Amount</label>
+	    <input name="wallet_adjustment_amount_gc" type="number" class="form-control" id="" placeholder="">
+	  </div>
+	  <div class="form-group">
+	  	<button data-remodal-action="cancel" class="remodal-cancel remodal-btn-gc">Cancel</button>
+  		<button class="remodal-confirm remodal-btn-gc ajust-wallet-submit-btn-gc">OK</button>
+	  </div>
+  </form>
+</div>
 
 
 @endsection
@@ -120,6 +156,7 @@
             {data: 'sponsor', name: 'sponsor'},
             {data: 'slot_type', name: 'slot_type'},
             {data: 'wallet', name: 'wallet'},
+            {data: 'slot_wallet_gc', name: 'slot_wallet_gc'},
             {data: 'login', name: 'slot_id'},
             {data: 'created_at', name: 'created_at'},
             {data: 'gen', name: 'slot_id'},
