@@ -77,15 +77,29 @@ class AdminCodeController extends AdminController {
 
 
         })->select('tbl_membership_code.code_pin','tbl_membership_code.code_activation','tbl_membership.membership_name','tbl_code_type.code_type_name','product_package_name','tbl_account.account_id','account_name','tbl_inventory_update_type.inventory_update_type_id','tbl_membership_code.created_at')->get();
-        return Datatables::of($membership_code)	
-
-        ->addColumn('delete','<a href="#" class="block-membership-code" membership-code-id ="{{$code_pin}}">BLOCK</a>')
-        								->addColumn('transfer','<a class="transfer-membership-code"  href="#" membership-code-id="{{$code_pin}}" account-id="{{$account_id}}">TRANSFER</a>')
-        								// ->editColumn('created_at','{{$created_at->format("F d, Y g:ia")}}')
-        								->editColumn('inventory_update_type_id','<input type="checkbox" {{$inventory_update_type_id == 1 ? \'checked="checked"\' : \'\'}} name="" value="" readonly disabled>')
-        								->editColumn('account_name','{{$account_name or "No owner"}}')
-        								->addColumn('slot_used','{{App\Classes\Globals::get_string_between_for_used_codes(App\Tbl_wallet_logs::where("logs","LIKE","%using membership code #$code_pin%")->first(),"create slot #"," using")}}')
-        								->make(true);
+      
+        								if($stat == "blocked")
+        								{
+        									return Datatables::of($membership_code)	
+	        								->addColumn('delete','<a href="#" class="unblock-membership-code" membership-code-id ="{{$code_pin}}">UNBLOCK</a>')
+	    									->addColumn('transfer','<a class="transfer-membership-code"  href="#" membership-code-id="{{$code_pin}}" account-id="{{$account_id}}">TRANSFER</a>')
+	        								// ->editColumn('created_at','{{$created_at->format("F d, Y g:ia")}}')
+	        								->editColumn('inventory_update_type_id','<input type="checkbox" {{$inventory_update_type_id == 1 ? \'checked="checked"\' : \'\'}} name="" value="" readonly disabled>')
+	        								->editColumn('account_name','{{$account_name or "No owner"}}')
+	        								->addColumn('slot_used','{{App\Classes\Globals::get_string_between_for_used_codes(App\Tbl_wallet_logs::where("logs","LIKE","%using membership code #$code_pin%")->first(),"create slot #"," using")}}')
+	        								->make(true);
+        								}
+        								else
+        								{
+        									 return Datatables::of($membership_code)	
+	        								->addColumn('delete','<a href="#" class="block-membership-code" membership-code-id ="{{$code_pin}}">BLOCK</a>')
+	        								->addColumn('transfer','<a class="transfer-membership-code"  href="#" membership-code-id="{{$code_pin}}" account-id="{{$account_id}}">TRANSFER</a>')
+	        								// ->editColumn('created_at','{{$created_at->format("F d, Y g:ia")}}')
+	        								->editColumn('inventory_update_type_id','<input type="checkbox" {{$inventory_update_type_id == 1 ? \'checked="checked"\' : \'\'}} name="" value="" readonly disabled>')
+	        								->editColumn('account_name','{{$account_name or "No owner"}}')
+	        								->addColumn('slot_used','{{App\Classes\Globals::get_string_between_for_used_codes(App\Tbl_wallet_logs::where("logs","LIKE","%using membership code #$code_pin%")->first(),"create slot #"," using")}}')
+	        								->make(true);        								
+        								}
     }
 
 	/**
@@ -361,6 +375,18 @@ class AdminCodeController extends AdminController {
 										->where('used', 0)
 										->firstOrFail();
 		$query->update(['blocked'=>1]);
+
+		return json_encode($query);
+	}	
+
+	public function unblock()
+	{	
+
+
+		$query = Tbl_membership_code::where('code_pin', Request::input('code_pin'))
+										->where('used', 0)
+										->firstOrFail();
+		$query->update(['blocked'=>0]);
 
 		return json_encode($query);
 	}
