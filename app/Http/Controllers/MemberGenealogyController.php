@@ -46,7 +46,23 @@ class MemberGenealogyController extends MemberController
 
 		if($data["slot_tree"])
 		{
-			$data["downline"] = $this->downline(Customer::slot_id());			
+			if(Request::input("view_id"))
+			{
+				$check_the_tree = Tbl_tree_placement::where("placement_tree_parent_id",CUstomer::slot_id())->where("placement_tree_child_id",Request::input("view_id"))->first();
+				if($check_the_tree)
+				{
+					$data["downline"] = $this->downline(Request::input("view_id"));
+					$data["slot_tree"] = Tbl_slot::rank()->membership()->account()->id(Request::input("view_id"))->first();
+				}
+				else
+				{
+					$data["downline"] = $this->downline(Customer::slot_id());		
+				}
+			}
+			else
+			{
+				$data["downline"] 	  = $this->downline(Customer::slot_id());			
+			}
 		}
 
 		$data['code'] = DB::table('tbl_membership_code')  ->where('tbl_membership_code.archived',0)

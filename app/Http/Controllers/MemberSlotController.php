@@ -5,6 +5,7 @@ use Request;
 use Crypt;
 use Redirect;
 use Session;
+use Carbon\Carbon;
 use App\Tbl_slot;
 use App\Tbl_lead;
 use App\Tbl_account;
@@ -18,6 +19,7 @@ use App\Tbl_product;
 use App\Tbl_product_code;
 use App\Tbl_tree_placement;
 use App\Tbl_wallet_logs;
+use App\Tbl_request_transfer_slot;
 
 class MemberSlotController extends MemberController
 {
@@ -195,11 +197,26 @@ class MemberSlotController extends MemberController
 				else
 				{
 					if($rpass == $data['pass'])
-					{	
-						Tbl_slot::where('slot_id',$data['slot'])->update(['slot_owner'=>$data['acct']]);
-						Session::forget('currentslot');
-						Tbl_account::where('account_id',$data['acct'])->update(['account_approved'=>1]);
-						$info['success'] = "Success";
+					{		
+						$insert['owner_account_id']			= Customer::id();			
+						$insert['owner_slot_id']			= $data['slot'];			
+						$insert['transfer_to_account_id']	= $data['acct'];					
+						$insert['transfer_status']			= 0;			
+						$insert['archived']					= 0;
+						$insert['transfer_date']			= Carbon::now();
+						$check                              = Tbl_request_transfer_slot::where("owner_account_id",Customer::id())->where("owner_slot_id",$data['slot'])->where('transfer_status',0)->where('archived',0)->first();
+						if($check)
+						{
+							$info['error'] = "This slot is already in pending status.";	
+						}
+						else
+						{
+							Tbl_request_transfer_slot::insert($insert);
+							$info['success'] = "Wait for the approval of the admin to complete the transferring.";
+						}
+						// Tbl_slot::where('slot_id',$data['slot'])->update(['slot_owner'=>$data['acct']]);
+						// Session::forget('currentslot');
+						// Tbl_account::where('account_id',$data['acct'])->update(['account_approved'=>1]);
 					}
 					else
 					{

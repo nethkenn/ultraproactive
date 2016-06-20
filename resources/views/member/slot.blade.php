@@ -37,12 +37,18 @@
                             <div class="labels">Membership</div>
                             <div class="labels">Rank</div>
                             <div class="labels">Downlines</div>
+                            @if(App\Tbl_request_transfer_slot::where("owner_account_id",$s->slot_owner)->where("owner_slot_id",$s->slot_id)->where('transfer_status',0)->where('archived',0)->first())
+                            <div class="labels">Transfer:</div>
+                            @endif
                         </div>
                         <div class="col-xs-6 labels-container">
                             <div class="values">{{number_format($s->total_wallet, 2)}}</div>
                             <div class="values">{{$s->membership_name}}</div>
                             <div class="values">{{$s->rank_name}}</div>
                             <div class="values">{{$s->downline}}</div>
+                            @if(App\Tbl_request_transfer_slot::where("owner_account_id",$s->slot_owner)->where("owner_slot_id",$s->slot_id)->where('transfer_status',0)->where('archived',0)->first())
+                            <div class="values">Pending</div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-3 top-container">
@@ -147,7 +153,7 @@
     </div>
     <br>
     <button class="button" type="button" data-remodal-action="cancel">Cancel</button>
-    <button class="button" type="submit" name="initsbmt">Initiate Transfer</button>
+    <button class="button" type="submit" name="initsbmt">Request Transfer</button>
     </form>
 </div>
 

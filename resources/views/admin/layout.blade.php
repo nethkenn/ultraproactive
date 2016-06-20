@@ -72,6 +72,7 @@
 									<!--<li><a href="admin/transaction/unilevel-distribution">Unilevel Distribution</a></li> -->
 									<li><a href="admin/transaction/unilevel-distribution/dynamic">Dynamic Compression</a></li>
 									<li><a href="admin/transaction/global_pool_sharing">Global Pool Sharing</a></li>
+									<li><a href="admin/transaction/sales/transfer_slot_request">Transfer Request Slot</a></li>
 								</ul>
 							</li> 
 							<!-- MAINTENANCE -->

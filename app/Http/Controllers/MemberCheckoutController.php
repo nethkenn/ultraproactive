@@ -118,6 +118,10 @@ class MemberCheckoutController extends Controller
                 {
                     $data['_error'] = $validator->errors()->all();
                 }
+                else if($data['current_wallet'] < 0)
+                {
+                    $data['_error'][0] = "Purchase using GC is not allowed for CD Slot.";
+                }
                 else
                 {
 

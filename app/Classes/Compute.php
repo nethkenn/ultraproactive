@@ -175,7 +175,7 @@ class Compute
                                                 /* Check if date is equal today's date*/
                                                 if($slot_recipient_gc->pairs_per_day_date == $date)
                                                 {
-                                                    if($member->max_pairs_per_day < $count)
+                                                    if($member->max_pairs_per_day <= $count)
                                                     {
                                                         /* Already exceeded */
                                                         $update['pairs_today'] = $count;
@@ -248,9 +248,12 @@ class Compute
                                                                 Log::slot($slot_recipient->slot_id, $log, $gcbonus,"binary_repurchase",$buyer_slot_id,1);
                                                                 // Log::account($slot_recipient->slot_owner, $log);
                                                             }     
-
-                                                              /* MATCHING SALE BONUS */
-                                                              Compute::matching($buyer_slot_id, "REPURCHASE", $slot_recipient, $pairing_bonus);                                           
+                                                            
+                                                            if($new_slot_info->slot_type != "FS" && $check_wallet >= 0)
+                                                            {
+                                                                  /* MATCHING SALE BONUS */
+                                                                  Compute::matching($buyer_slot_id, "REPURCHASE", $slot_recipient, $pairing_bonus);                                           
+                                                            }  
 
 
                                                         /* INSERT LOG */
@@ -261,6 +264,8 @@ class Compute
                                                 }
                                                 else
                                                 {   
+                                                        $binary["left"]   = 0;
+                                                        $binary["right"]  = 0;
                                                         $log = "Im sorry! Max matching per day already exceed your slot #" . $slot_recipient->slot_id . " flushed out <b>" . number_format($pairing_bonus, 2) . " wallet</b> from <b>MATCHING BONUS</b> due to matching combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining match points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right. This combination was caused by a repurchase of one of your downlines.";          
                                                         // Log::account($slot_recipient->slot_owner, $log);
                                                         Log::slot($slot_recipient->slot_id, $log, 0,$method,$buyer_slot_id);
@@ -460,7 +465,7 @@ class Compute
                                                   /* Check if date is equal today's date*/
                                                 if($slot_recipient_gc->pairs_per_day_date == $date)
                                                 {
-                                                    if($member->max_pairs_per_day < $count)
+                                                    if($member->max_pairs_per_day <= $count)
                                                     {
                                                         /* Already exceeded */
                                                         $update['pairs_today'] = $count;
@@ -519,8 +524,6 @@ class Compute
                                                     // Log::account($slot_recipient->slot_owner, $log);
                                                     // Log::slot($slot_recipient->slot_id, $log, $pairing_bonus, "BINARY PAIRING");
                                                     $check_wallet = Tbl_wallet_logs::id($new_slot_info->slot_id)->wallet()->sum('wallet_amount');
-                                                    if($new_slot_info->slot_type != "FS" && $check_wallet >= 0)
-                                                    {
                                                             if($gc == false)
                                                             {
                                                                  Compute::income_per_day($slot_recipient->slot_id,$pairing_bonus,'binary',$slot_recipient->slot_owner,$log,$new_slot_id); 
@@ -532,15 +535,18 @@ class Compute
                                                                     $log = $log = "This is your ".$slot_recipient->every_gc_pair." MSB, Your ".$pairing_bonus." Income converted to GC (SLOT #".$slot_recipient->slot_id.") due to matching combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining match points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right.";
                                                                     Log::slot($slot_recipient->slot_id, $log, $gcbonus,"binary",$new_slot_id,1);
                                                                     // Log::account($slot_recipient->slot_owner, $log);       
-                                                            }   
-                                                               /* MATCHING SALE BONUS */
-                                                              Compute::matching($new_slot_id, $method, $slot_recipient, $pairing_bonus);  
-                                                    } 
-                                                 
-                                                
+                                                            } 
+
+                                                            if($new_slot_info->slot_type != "FS" && $check_wallet >= 0)
+                                                            {
+                                                                       /* MATCHING SALE BONUS */
+                                                                      Compute::matching($new_slot_id, $method, $slot_recipient, $pairing_bonus);  
+                                                            }                                          
                                                 }
                                                 else
                                                 {   
+                                                        $binary["left"]   = 0;
+                                                        $binary["right"]  = 0;
                                                         $log = "Im sorry! Max pairing per day already exceed your slot #" . $slot_recipient->slot_id . " flushed out <b>" . number_format($pairing_bonus, 2) . " wallet</b> from <b>MATCHING BONUS</b> due to matching combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining match points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right.";          
                                                         Log::slot_with_flush($slot_recipient->slot_id, $log, 0,"binary",$new_slot_id,$pairing_bonus); 
                                                         // Log::account($slot_recipient->slot_owner, $log);

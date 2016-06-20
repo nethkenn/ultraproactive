@@ -287,6 +287,20 @@
     @endif -->
 
     <!-- REAL NOTIFICATION :: NOTIFICATION IN TOP IS FAKE I PROMISE-->
+    <div class="holder">
+        <div class="header notif" style="background-color: #e67e22; border-bottom: 3px solid #d35400;">IMPORTANT ANNOUNCEMENT!</div>
+            <div class="holders">
+                <div class="text" style="white-space: pre-wrap;">
+In compliance with the National Internal Revenue Code (R.A. 8424,9337,9442,9504 Sections 57-58 and 78-83), all Income, Commissions and incentives of UPMI Distributors are subject to <b>Ten Percent (10%)</b> withholding Tax deductions. Therefore, distributors should expect that commissions reflected in their online account are NET OF TAX.
+
+Should you have any questions and feedback, feel free to contact us at 234-1993 / 0927 7447286
+
+Thank you!
+
+UPMI Management
+                </div>
+            </div>
+    </div>
     @if($_notification)
     <div class="holder">
         <div class="header notif">LATEST NOTIFICATION</div>

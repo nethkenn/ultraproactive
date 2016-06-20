@@ -31,6 +31,8 @@ Route::any('/member/genealogy/get', 'MemberGenealogyController@get');
 Route::any('/member/genealogy/downline', 'MemberGenealogyController@downline');
 Route::any('/member/reports/income_breakdown', 'MemberReportController@breakdown');
 Route::any('/member/reports/income_summary', 'MemberReportController@summary');
+Route::any('/member/reports/genealogy_list', 'MemberReportController@genealogy_list');
+Route::any('/member/reports/encashment_history', 'MemberReportController@encashment_history');
 
 
 /* Transfer wallet */
@@ -81,6 +83,12 @@ Route::post('admin/transaction/sales/process/member', 'AdminSalesController@proc
 Route::post('admin/transaction/sales/process/non-member', 'AdminSalesController@process_nonMember');
 Route::get('admin/transaction/sales/process/get_slots', 'AdminSalesController@get_slot');
 Route::any('admin/transaction/sales/process/sale_or', 'AdminSalesController@sale_or' );
+
+/* ADMIN TRANSFER REQUEST SLOT */
+Route::any('admin/transaction/sales/transfer_slot_request', 'AdminTransferRequestSlotController@index');
+Route::any('admin/transaction/sales/transfer_slot_request/transfer', 'AdminTransferRequestSlotController@transfer_get');
+Route::any('admin/transaction/sales/transfer_slot_request/transfer_decline', 'AdminTransferRequestSlotController@transfer_get_decline');
+
 /**
  * ADMIN TRANSACTION CLAIMS
  */
