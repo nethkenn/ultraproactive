@@ -9,6 +9,7 @@ use DB;
 use App\Tbl_product_code;
 use App\Tbl_tree_placement;
 use App\Tbl_wallet_logs;
+use App\Tbl_account_encashment_history;
 use Session;
 use Request;
 use Redirect;
@@ -116,5 +117,28 @@ class MemberReportController extends MemberController
 
 
         return view('member.income_summary', $data);
+	}
+
+	public function genealogy_list()
+	{
+		$id 		   = Session::get('currentslot');
+
+		$tree 		   = Tbl_tree_placement::where("placement_tree_parent_id",$id)->orderBy('placement_tree_level','ASC')
+									->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_placement.placement_tree_child_id")
+									->join("tbl_account","tbl_account.account_id","=","tbl_slot.slot_owner")
+									->select("placement_tree_level","tbl_slot.slot_id","tbl_tree_placement.placement_tree_child_id","account_id","slot_owner","account_name","slot_personal_points","placement_tree_position","slot_type")
+									->get();
+		$data["_tree"] = $tree;
+		return view('member.genealogy_list', $data);
+	}
+
+	public function encashment_history()
+	{
+		$id 		     = Session::get('currentslot');
+
+		$encash 		 = Tbl_account_encashment_history::where("slot_id",$id)->get();
+		$data["_encash"] = $encash;
+
+		return view('member.encashment_history', $data);
 	}
 }
