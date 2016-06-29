@@ -265,7 +265,10 @@ class Compute
                                                 else
                                                 {   
                                                         $binary["left"]   = 0;
-                                                        $binary["right"]  = 0;
+                                                        $binary["right"]  = 0;          
+                                                        $make_it_zero["slot_binary_left"]  = $binary["left"];
+                                                        $make_it_zero["slot_binary_right"] = $binary["right"];
+                                                        Tbl_slot::id($tree->placement_tree_parent_id)->update($make_it_zero);
                                                         $log = "Im sorry! Max matching per day already exceed your slot #" . $slot_recipient->slot_id . " flushed out <b>" . number_format($pairing_bonus, 2) . " wallet</b> from <b>MATCHING BONUS</b> due to matching combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining match points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right. This combination was caused by a repurchase of one of your downlines.";          
                                                         // Log::account($slot_recipient->slot_owner, $log);
                                                         Log::slot($slot_recipient->slot_id, $log, 0,$method,$buyer_slot_id);
@@ -547,6 +550,9 @@ class Compute
                                                 {   
                                                         $binary["left"]   = 0;
                                                         $binary["right"]  = 0;
+                                                        $make_it_zero["slot_binary_left"]  = $binary["left"];
+                                                        $make_it_zero["slot_binary_right"] = $binary["right"];
+                                                        Tbl_slot::id($tree->placement_tree_parent_id)->update($make_it_zero);
                                                         $log = "Im sorry! Max pairing per day already exceed your slot #" . $slot_recipient->slot_id . " flushed out <b>" . number_format($pairing_bonus, 2) . " wallet</b> from <b>MATCHING BONUS</b> due to matching combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining match points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right.";          
                                                         Log::slot_with_flush($slot_recipient->slot_id, $log, 0,"binary",$new_slot_id,$pairing_bonus); 
                                                         // Log::account($slot_recipient->slot_owner, $log);
