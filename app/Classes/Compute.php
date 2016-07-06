@@ -527,11 +527,11 @@ class Compute
                                                     // Log::account($slot_recipient->slot_owner, $log);
                                                     // Log::slot($slot_recipient->slot_id, $log, $pairing_bonus, "BINARY PAIRING");
                                                     $check_wallet = Tbl_wallet_logs::id($new_slot_info->slot_id)->wallet()->sum('wallet_amount');
-                                                            if($gc == false)
+                                                            if($gc == false && $new_slot_info->slot_type != "FS" && $check_wallet >= 0)
                                                             {
                                                                  Compute::income_per_day($slot_recipient->slot_id,$pairing_bonus,'binary',$slot_recipient->slot_owner,$log,$new_slot_id); 
                                                             }
-                                                            elseif($gc == true)
+                                                            elseif($gc == true && $new_slot_info->slot_type != "FS" && $check_wallet >= 0)
                                                             {
                                                                     $gcbonus = $pairing_bonus;
                                                                     // Tbl_slot::where('slot_id',$slot_recipient->slot_id)->update(["slot_gc"=>$gcbonus]);
