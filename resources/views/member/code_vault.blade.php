@@ -22,7 +22,7 @@
                 Unused Membership Codes ({{$count}})
             </div>
             <div class="col-md-6 ew">
-                <a style="cursor: pointer;">
+                <a style="cursor: pointer;" class="hidden">
                     <div class="button" id="buymember">Buy Membership Codes</div>
                 </a>
                 <a style="cursor: pointer;" class="claim_code">

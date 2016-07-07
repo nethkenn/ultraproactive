@@ -426,6 +426,7 @@ Route::any('admin/reports/prod_inventory', 'AdminReportProductController@product
 
 Route::any('admin/reports/bonus_summary', 'AdminReportController@bonus_summary');
 Route::any('admin/reports/bonus_summary/get', 'AdminReportController@bonus_summary_get');
+Route::any('admin/reports/check_gc', 'AdminReportController@check_gc');
 
 Route::any('admin/reports/gc_summary', 'AdminReportController@gc_summary');
 Route::any('admin/reports/gc_summary/get', 'AdminReportController@gc_summary_get');

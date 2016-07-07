@@ -172,6 +172,8 @@ class Compute
                                                 $condition = null;
                                                 $gc = false;
                                                 $slot_recipient_gc = Tbl_slot::id($tree->placement_tree_parent_id)->membership()->first();
+                                                $count_gc_times    = Tbl_wallet_logs::id($slot_recipient->slot_id)->where("keycode","binary")->where("logs","!=","%Im sorry! Max pairing per day already exceed your%")->where("flushed_out",0)->count() + 1; 
+
                                                 /* Check if date is equal today's date*/
                                                 if($slot_recipient_gc->pairs_per_day_date == $date)
                                                 {
@@ -190,12 +192,11 @@ class Compute
 
                                                         if($slot_recipient_gc->every_gc_pair != 0)
                                                         {
-                                                            if($count%$slot_recipient_gc->every_gc_pair == 0)
+                                                            if($count_gc_times%$slot_recipient_gc->every_gc_pair == 0)
                                                             {
                                                                 $gc = true;
                                                             }                                                        
                                                         }
-
                                                     }
                                                 }
                                                 else
@@ -210,7 +211,7 @@ class Compute
                                                     if($slot_recipient_gc->every_gc_pair != 0)
                                                     {
                                                         /* CHECK IF GC */
-                                                        if($count%$slot_recipient_gc->every_gc_pair == 0)
+                                                        if($count_gc_times%$slot_recipient_gc->every_gc_pair == 0)
                                                         {
                                                             $gc = true;
                                                         }                                                        
@@ -265,7 +266,10 @@ class Compute
                                                 else
                                                 {   
                                                         $binary["left"]   = 0;
-                                                        $binary["right"]  = 0;
+                                                        $binary["right"]  = 0;          
+                                                        $make_it_zero["slot_binary_left"]  = $binary["left"];
+                                                        $make_it_zero["slot_binary_right"] = $binary["right"];
+                                                        Tbl_slot::id($tree->placement_tree_parent_id)->update($make_it_zero);
                                                         $log = "Im sorry! Max matching per day already exceed your slot #" . $slot_recipient->slot_id . " flushed out <b>" . number_format($pairing_bonus, 2) . " wallet</b> from <b>MATCHING BONUS</b> due to matching combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining match points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right. This combination was caused by a repurchase of one of your downlines.";          
                                                         // Log::account($slot_recipient->slot_owner, $log);
                                                         Log::slot($slot_recipient->slot_id, $log, 0,$method,$buyer_slot_id);
@@ -462,6 +466,8 @@ class Compute
                                                 $condition = null;
                                                 $gc = false;
                                                 $slot_recipient_gc = Tbl_slot::id($tree->placement_tree_parent_id)->membership()->first();
+                                                $count_gc_times    = Tbl_wallet_logs::id($slot_recipient->slot_id)->where("keycode","binary")->where("logs","!=","%Im sorry! Max pairing per day already exceed your%")->where("flushed_out",0)->count() + 1; 
+
                                                   /* Check if date is equal today's date*/
                                                 if($slot_recipient_gc->pairs_per_day_date == $date)
                                                 {
@@ -481,7 +487,7 @@ class Compute
                                                         if($slot_recipient_gc->every_gc_pair != 0)
                                                         {
                                                             /* CHECK IF GC */
-                                                            if($count%$slot_recipient_gc->every_gc_pair == 0)
+                                                            if($count_gc_times%$slot_recipient_gc->every_gc_pair == 0)
                                                             {
                                                                 $gc = true;
                                                             }                                                        
@@ -499,7 +505,7 @@ class Compute
                                                     if($slot_recipient_gc->every_gc_pair != 0)
                                                     {
                                                         /* CHECK IF GC */
-                                                        if($count%$slot_recipient_gc->every_gc_pair == 0 && $count != 0)
+                                                        if($count_gc_times%$slot_recipient_gc->every_gc_pair == 0 && $count != 0)
                                                         {
                                                             $gc = true;
                                                         }                                                        
@@ -524,11 +530,11 @@ class Compute
                                                     // Log::account($slot_recipient->slot_owner, $log);
                                                     // Log::slot($slot_recipient->slot_id, $log, $pairing_bonus, "BINARY PAIRING");
                                                     $check_wallet = Tbl_wallet_logs::id($new_slot_info->slot_id)->wallet()->sum('wallet_amount');
-                                                            if($gc == false)
+                                                            if($gc == false && $new_slot_info->slot_type != "FS" && $check_wallet >= 0)
                                                             {
                                                                  Compute::income_per_day($slot_recipient->slot_id,$pairing_bonus,'binary',$slot_recipient->slot_owner,$log,$new_slot_id); 
                                                             }
-                                                            elseif($gc == true)
+                                                            elseif($gc == true && $new_slot_info->slot_type != "FS" && $check_wallet >= 0)
                                                             {
                                                                     $gcbonus = $pairing_bonus;
                                                                     // Tbl_slot::where('slot_id',$slot_recipient->slot_id)->update(["slot_gc"=>$gcbonus]);
@@ -547,6 +553,9 @@ class Compute
                                                 {   
                                                         $binary["left"]   = 0;
                                                         $binary["right"]  = 0;
+                                                        $make_it_zero["slot_binary_left"]  = $binary["left"];
+                                                        $make_it_zero["slot_binary_right"] = $binary["right"];
+                                                        Tbl_slot::id($tree->placement_tree_parent_id)->update($make_it_zero);
                                                         $log = "Im sorry! Max pairing per day already exceed your slot #" . $slot_recipient->slot_id . " flushed out <b>" . number_format($pairing_bonus, 2) . " wallet</b> from <b>MATCHING BONUS</b> due to matching combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining match points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right.";          
                                                         Log::slot_with_flush($slot_recipient->slot_id, $log, 0,"binary",$new_slot_id,$pairing_bonus); 
                                                         // Log::account($slot_recipient->slot_owner, $log);
