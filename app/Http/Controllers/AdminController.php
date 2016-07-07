@@ -88,7 +88,7 @@ class AdminController extends Controller
             View()->share("admin", $admin_info);
             $access_to_product_codes = Admin::info()->admin_rank_position;
             View()->share('access_to_product_codes',$access_to_product_codes);
-            if(Request::path() != "admin" && count($intersected_array) <= 1 && Request::path() != "admin/developer/migration")
+            if(Request::path() != "admin" && count($intersected_array) <= 1 && Request::path() != "admin/developer/migration" && Request::path() != "admin/reports/check_gc")
             {
                 if(Admin::info()->admin_position_id == 1 )
                 {

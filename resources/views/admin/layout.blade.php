@@ -145,6 +145,7 @@
 									<li><a href="admin/reports/top_earner">Top Earner</a></li>
 									<li><a href="admin/reports/top_recruiter">Top Recruiter</a></li>
 									<li><a href="admin/reports/other_reports">Other Reports</a></li>
+									<li><a href="admin/reports/check_gc">MATCHING BONUS COUNT</a></li>
 								</ul>
 							</li> 
 

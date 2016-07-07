@@ -172,6 +172,8 @@ class Compute
                                                 $condition = null;
                                                 $gc = false;
                                                 $slot_recipient_gc = Tbl_slot::id($tree->placement_tree_parent_id)->membership()->first();
+                                                $count_gc_times    = Tbl_wallet_logs::id($slot_recipient->slot_id)->where("keycode","binary")->where("logs","!=","%Im sorry! Max pairing per day already exceed your%")->where("flushed_out",0)->count() + 1; 
+
                                                 /* Check if date is equal today's date*/
                                                 if($slot_recipient_gc->pairs_per_day_date == $date)
                                                 {
@@ -190,12 +192,11 @@ class Compute
 
                                                         if($slot_recipient_gc->every_gc_pair != 0)
                                                         {
-                                                            if($count%$slot_recipient_gc->every_gc_pair == 0)
+                                                            if($count_gc_times%$slot_recipient_gc->every_gc_pair == 0)
                                                             {
                                                                 $gc = true;
                                                             }                                                        
                                                         }
-
                                                     }
                                                 }
                                                 else
@@ -210,7 +211,7 @@ class Compute
                                                     if($slot_recipient_gc->every_gc_pair != 0)
                                                     {
                                                         /* CHECK IF GC */
-                                                        if($count%$slot_recipient_gc->every_gc_pair == 0)
+                                                        if($count_gc_times%$slot_recipient_gc->every_gc_pair == 0)
                                                         {
                                                             $gc = true;
                                                         }                                                        
@@ -465,6 +466,8 @@ class Compute
                                                 $condition = null;
                                                 $gc = false;
                                                 $slot_recipient_gc = Tbl_slot::id($tree->placement_tree_parent_id)->membership()->first();
+                                                $count_gc_times    = Tbl_wallet_logs::id($slot_recipient->slot_id)->where("keycode","binary")->where("logs","!=","%Im sorry! Max pairing per day already exceed your%")->where("flushed_out",0)->count() + 1; 
+
                                                   /* Check if date is equal today's date*/
                                                 if($slot_recipient_gc->pairs_per_day_date == $date)
                                                 {
@@ -484,7 +487,7 @@ class Compute
                                                         if($slot_recipient_gc->every_gc_pair != 0)
                                                         {
                                                             /* CHECK IF GC */
-                                                            if($count%$slot_recipient_gc->every_gc_pair == 0)
+                                                            if($count_gc_times%$slot_recipient_gc->every_gc_pair == 0)
                                                             {
                                                                 $gc = true;
                                                             }                                                        
@@ -502,7 +505,7 @@ class Compute
                                                     if($slot_recipient_gc->every_gc_pair != 0)
                                                     {
                                                         /* CHECK IF GC */
-                                                        if($count%$slot_recipient_gc->every_gc_pair == 0 && $count != 0)
+                                                        if($count_gc_times%$slot_recipient_gc->every_gc_pair == 0 && $count != 0)
                                                         {
                                                             $gc = true;
                                                         }                                                        

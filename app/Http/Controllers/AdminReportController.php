@@ -59,6 +59,25 @@ class AdminReportController extends AdminController
 
 
 		return view('admin.report.gc_summary', $data);
+    }	
+
+    public function check_gc()
+    {
+        	echo "Enter a slot #";
+	        echo " <form method='get'>
+	                    <input type='text' name='id_to_check'>
+	               </form> ";
+
+   	        if(Request::input('id_to_check'))
+	        {
+	        	
+	        	$times_pair = Tbl_wallet_logs::id(Request::input('id_to_check'))->where("keycode","binary")->where("logs","!=","%Im sorry! Max pairing per day already exceed your%")->where("flushed_out",0)->count();
+	        	$times_gced = Tbl_wallet_logs::id(Request::input('id_to_check'))->where("keycode","binary")->where("logs","!=","%Im sorry! Max pairing per day already exceed your%")->where("wallet_type","GC")->where("flushed_out",0)->count();
+	       		echo "MATCHING BONUS OCCURRED : ".$times_pair;
+	       		echo "</br>";
+	       		echo "GC OCCURRED : ".$times_gced;
+	       		echo "</br>";
+	        }
     }
 
 	public function other_reports()
