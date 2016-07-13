@@ -142,10 +142,28 @@ class Compute
                     {
                         $binary[$tree->placement_tree_position] = $binary[$tree->placement_tree_position] + $earned_points; 
                         
+                        $slot_recipient_gc = Tbl_slot::id($tree->placement_tree_parent_id)->membership()->first();
+                        $member            = Tbl_membership::where('membership_id',$slot_recipient->slot_membership)->first();
+                        $date              = Carbon::now()->toDateString();
+                        $count             = Tbl_slot::id($tree->placement_tree_parent_id)->first();
+                        $count             = $count->pairs_today;
+                        $points_to_earned  = $earned_points;
+                        /* Check if date is equal today's date*/
+                        if($slot_recipient_gc->pairs_per_day_date == $date)
+                        {
+                            if($member->max_pairs_per_day < $count)
+                            {
+                                /* Already exceeded */
+                                $binary["left"]   = 0;
+                                $binary["right"]  = 0;
+                                $points_to_earned = 0;
+                            }
+                        }
+
                         /* INSERT LOG FOR EARNED POINTS IN ACCOUNT */
-                        $log = "Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($earned_points, 2) . " match points</b> on " . $tree->placement_tree_position . " when " . $new_slot_info->account_name . " used one if his/her product code.";
-                        Log::slot($slot_recipient->slot_id, $log, 0,$method,$buyer_slot_id);
-                        // Log::account($slot_recipient->slot_owner, $log);
+                        $log = "Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($points_to_earned, 2) . " match points</b> on " . $tree->placement_tree_position . " when " . $new_slot_info->account_name . " with " . $new_slot_info->membership_name . " MEMBERSHIP created a new slot (#" . $new_slot_info->slot_id . ").";
+                        Log::slot($slot_recipient->slot_id, $log, 0,"Binary Earn",$buyer_slot_id);
+                        // Log::account($slot_recipient->slot_owner, $log);    
 
                         /* CHECK PAIRING */
                         foreach($_pairing as $pairing)
@@ -180,7 +198,7 @@ class Compute
                                                     if($member->max_pairs_per_day <= $count)
                                                     {
                                                         /* Already exceeded */
-                                                        $update['pairs_today'] = $count;
+                                                        $update['pairs_today'] = $count + 1;
                                                         $condition = false;
                                                     }
                                                     else
@@ -434,10 +452,29 @@ class Compute
                     $check_wallet = Tbl_wallet_logs::id($new_slot_info->slot_id)->wallet()->sum('wallet_amount');
                     if($new_slot_info->slot_type != "FS" && $check_wallet >= 0)
                     {
+                        $slot_recipient_gc = Tbl_slot::id($tree->placement_tree_parent_id)->membership()->first();
+                        $member            = Tbl_membership::where('membership_id',$slot_recipient->slot_membership)->first();
+                        $date              = Carbon::now()->toDateString();
+                        $count             = Tbl_slot::id($tree->placement_tree_parent_id)->first();
+                        $count             = $count->pairs_today;
+                        $points_to_earned  = $earned_points;
+                        /* Check if date is equal today's date*/
+                        if($slot_recipient_gc->pairs_per_day_date == $date)
+                        {
+                            if($member->max_pairs_per_day < $count)
+                            {
+                                /* Already exceeded */
+                                $binary["left"]   = 0;
+                                $binary["right"]  = 0;
+                                $points_to_earned = 0;
+                            }
+                        }
+
                         /* INSERT LOG FOR EARNED POINTS IN ACCOUNT */
-                        $log = "Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($earned_points, 2) . " match points</b> on " . $tree->placement_tree_position . " when " . $new_slot_info->account_name . " with " . $new_slot_info->membership_name . " MEMBERSHIP created a new slot (#" . $new_slot_info->slot_id . ").";
+                        $log = "Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($points_to_earned, 2) . " match points</b> on " . $tree->placement_tree_position . " when " . $new_slot_info->account_name . " with " . $new_slot_info->membership_name . " MEMBERSHIP created a new slot (#" . $new_slot_info->slot_id . ").";
                         Log::slot($slot_recipient->slot_id, $log, 0,"Binary Earn",$new_slot_info->slot_id);
-                        // Log::account($slot_recipient->slot_owner, $log);                       
+                        // Log::account($slot_recipient->slot_owner, $log);        
+               
                     }
 
 
@@ -474,7 +511,7 @@ class Compute
                                                     if($member->max_pairs_per_day <= $count)
                                                     {
                                                         /* Already exceeded */
-                                                        $update['pairs_today'] = $count;
+                                                        $update['pairs_today'] = $count + 1;
                                                         $condition = false;
                                                     }
                                                     else

@@ -74,8 +74,8 @@
     </div>
     <br>
     <button id="cancel-checkout" class="button">Cancel</button>
-    <button type="submit" class="checkawt button hidden" id="submit-checkout">Submit Checkout</button>
-    <button type="submit" class="checkawt button hidden" id="submit-checkout-gc">Submit Checkout Using GC</button>
+    <button type="submit" class="checkawt button {{$customer_stats->disable_product == 1 ? 'hidden' : ''}}" id="submit-checkout">Submit Checkout</button>
+    <button type="submit" class="checkawt button {{$customer_stats->disable_product == 1 ? 'hidden' : ''}}" id="submit-checkout-gc">Submit Checkout Using GC</button>
 </form>
 
 
