@@ -110,6 +110,18 @@
                 <input name="custom_field[{{ $field->account_field_label }}]" value="{{Request::old('custom_field')[$field->account_field_label] ? Request::old('custom_field')[$field->account_field_label]:  $_account_custom[$field->account_field_label]}}" required="required" class="form-control" id="" placeholder="" type="text">
             </div>  
             @endforeach
+            <div class="col-md-12">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="disable_product" {{$account->disable_product == 1 ? 'checked' : '' }}>Disable the Product Purchase
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="disable_membership" {{$account->disable_membership == 1 ? 'checked' : '' }}>Disable the Membership Purchase
+                    </label>
+                </div>
+            </div>
         </form>
     </div>
 @endsection

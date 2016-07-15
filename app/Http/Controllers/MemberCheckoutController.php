@@ -32,6 +32,7 @@ class MemberCheckoutController extends Controller
     {
         $data['_error'] = null;
         $customer = Customer::info();
+        $data['customer_stats'] = Customer::info();
         $slot = Tbl_slot::select('tbl_slot.*', 'tbl_membership.discount')->leftJoin('tbl_membership', 'tbl_membership.membership_id','=','tbl_slot.slot_membership')
                                                                         ->where('slot_id', Request::input('slot_id'))
                                                                         ->where('slot_owner', $customer->account_id)

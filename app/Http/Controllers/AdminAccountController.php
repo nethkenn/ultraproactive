@@ -187,12 +187,14 @@ class AdminAccountController extends AdminController
 	                        ->withInput(Request::input());
 	        }
 	        $old = DB::table("tbl_account")->where("account_id", Request::input("id"))->first();
-			$update["account_name"] = Request::input('account_name');
-			$update["account_email"] = Request::input('account_meail');
-			$update["account_username"] = Request::input('account_username');
-			$update["account_password"] = Crypt::encrypt(Request::input('account_password'));
+			$update["account_name"] 		  = Request::input('account_name');
+			$update["account_email"]		  = Request::input('account_meail');
+			$update["account_username"] 	  = Request::input('account_username');
+			$update["account_password"]       = Crypt::encrypt(Request::input('account_password'));
 			$update["account_contact_number"] = Request::input('account_contact');
-			$update["account_country_id"] = Request::input('country');
+			$update["account_country_id"]     = Request::input('country');
+	        $update["disable_product"] 	      = Request::input('disable_product') ? 1 : 0 ;
+	        $update["disable_membership"]     = Request::input('disable_membership') ? 1 : 0 ;
 			// $update["account_date_created"] = Carbon\Carbon::now();
 			$update["custom_field_value"] = serialize(Request::input('custom_field'));
 			DB::table("tbl_account")->where("account_id", Request::input("id"))->update($update);
