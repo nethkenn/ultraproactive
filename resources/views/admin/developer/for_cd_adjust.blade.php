@@ -54,33 +54,13 @@
 
 
 
-Input slot number to re entry.
+Input the amount.
 <form class="form-horizontal" method="POST">
 	<input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
-	<input type="number" name="slot" placeholder="slot #">
+	<input type="number" name="amount" placeholder="Amount">
 	<input type="password" name="password" placeholder="Password">
 	<button type="submit" id="submit"> Submit </button>
 </form>
-
-
-	<div class="processor col-md-12">
-			<table id="table" class="table table-bordered">
-				<thead>
-					<tr class="text-center">
-						<th>Slot #</th>
-						<th>Date Re-entry</th>
-					</tr>
-				</thead>
-                <tbody>
-                  @foreach($entry as $d)
-                    <tr class="text-center">
-                        <td>{{$d->slot_id}}</td>
-                        <td>{{$d->created_at}}</td>
-                    </tr>
-                  @endforeach 
-                </tbody>
-			</table>
-	</div>
 
 
 

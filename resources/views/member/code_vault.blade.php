@@ -148,7 +148,7 @@
                     <th>Pin</th>
                     <th data-hide="phone">Code</th>
                     <th data-hide="phone">Product</th>
-                    <th data-hide="phone,phonie">Unilevel Points</th>
+                    <th data-hide="phone,phonie">UPcoins</th>
                     <th data-hide="phone,phonie">Binary Points</th>
                     <th data-hide="phone,phonie,tablet"></th>
                     <!--<th data-hide="phone,phonie,tablet"></th>-->

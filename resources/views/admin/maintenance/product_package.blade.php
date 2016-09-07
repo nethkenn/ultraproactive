@@ -24,6 +24,7 @@
 					<th>ID</th>
 					<th>Name</th>
 					<th>Membership</th>
+					<th>UPcoins</th>
 					<th></th>
 					<th></th>
 				</tr>
@@ -66,6 +67,7 @@
 	            {data: 'product_package_id', name: 'product_package_id'},
 	            {data: 'linked', name: 'product_package_name'},
 	            {data: 'membership', name: 'membership_id'},
+	            {data: 'product_package_upcoin', name: 'v'},
 	           	{data: 'edit' ,name: 'product_id'},
 	            {data: 'archive' ,name: 'product_id'},
 	            

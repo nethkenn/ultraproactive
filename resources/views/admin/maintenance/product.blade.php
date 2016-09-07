@@ -27,6 +27,7 @@
 					<th>Category</th>
 					<th>Price</th>
 					<th>Promotion PTS</th>
+					<th>UPCOIN</th>
 					<th class="option-col"></th>
 					<th class="option-col"></th>
 				</tr>
@@ -57,6 +58,7 @@
 	            {data: 'product_category_name', name: 'product_category_name'},
 	            {data: 'price' ,name: 'price'},
 	            {data: 'upgrade_pts' ,name: 'upgrade_pts'},
+	            {data: 'unilevel_pts' ,name: 'unilevel_pts'},
 	           	{data: 'edit' ,name: 'product_id'},
 	            {data: 'archive' ,name: 'product_id'},
 	            

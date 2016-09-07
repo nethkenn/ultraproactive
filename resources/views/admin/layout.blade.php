@@ -65,12 +65,13 @@
 							<li class="dropdown {{ Request::segment(2) == 'transaction' ? 'active' : 'inactive' }}">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Transaction <span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
+									<li><a href="admin/transaction/redeem">Redeems</a></li>
 									<li><a href="admin/transaction/sales">Process Sales</a></li>
 									<li><a href="admin/transaction/claims">Process Claims</a></li>
 									<li><a href="admin/transaction/payout">Process Payout</a></li>
 									<li><a href="admin/transaction/view_voucher_codes">Code Transactions</a></li>
 									<!--<li><a href="admin/transaction/unilevel-distribution">Unilevel Distribution</a></li> -->
-									<li><a href="admin/transaction/unilevel-distribution/dynamic">Dynamic Compression</a></li>
+									<!-- <li><a href="admin/transaction/unilevel-distribution/dynamic">Dynamic Compression</a></li> -->
 									<li><a href="admin/transaction/global_pool_sharing">Global Pool Sharing</a></li>
 									<li><a href="admin/transaction/sales/transfer_slot_request">Transfer Request Slot</a></li>
 								</ul>
@@ -174,6 +175,7 @@
 											<li><a href="admin/migration">Migrations</a></li>
 											<li><a href="admin/migration/disable">Disable Area</a></li>
 											<li><a href="admin/developer/re_entry">Re Entry (CD to PS)</a></li>
+											<li><a href="admin/developer/re_adjust_cd">Re Adjust CD</a></li>
 									</ul>
 								</li>
 								@endif

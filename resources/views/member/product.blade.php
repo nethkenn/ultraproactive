@@ -49,7 +49,7 @@
                     <div class="text">
                         <div class="name">{{$product->product_name}}</div>
                         <div class="price">Wallet Price {{$product->price}}</div>
-                        <div class="description">Unilevel Points : {{$product->unilevel_pts}}</div>
+                        <div class="description">UPcoins : {{$product->unilevel_pts}}</div>
                         <div class="description">Binary Points : {{$product->binary_pts}}</div>
                         <div class="description">{{$product->product_info}}</div>
 

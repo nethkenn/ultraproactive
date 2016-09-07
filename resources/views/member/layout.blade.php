@@ -89,6 +89,7 @@
                         <a href="javascript:">Wallet</a>
                         <ul class="dropdown-menu">
                             <li><a href="/member/encashment">Encashment</a></li>
+                            <li><a href="/member/redeem">Redeem Personal UPcoins</a></li>
                             <!-- <li><a href="/member/transfer_wallet">Transfer Wallet</a></li> -->
                         </ul>
                     </li>

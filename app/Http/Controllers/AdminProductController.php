@@ -18,13 +18,14 @@ use App\Tbl_stockist;
 use App\Tbl_stockist_package_inventory;
 use App\Classes\Log;
 use App\Classes\Admin;
+use Carbon\Carbon;
 class AdminProductController extends AdminController
 {
 	public function index()
 	{
 		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Product");
 		$data["page"] = "Product Maintenance";
-		
+		// 
         return view('admin.maintenance.product');
 	}
 

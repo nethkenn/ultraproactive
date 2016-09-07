@@ -55,7 +55,7 @@
 
 
             	<div class="form-group col-md-12">
-            		<label for="unilevel_pts">Unilevel PTS</label>
+            		<label for="unilevel_pts">UPCOIN</label>
             		<input name="unilevel_pts" value="{{Request::input('unilevel_pts') ? Request::input('unilevel_pts') : $product->unilevel_pts}}" required="required" class="form-control" id="" placeholder="" type="number">
             	</div>
             	<div class="form-group col-md-12">
