@@ -32,6 +32,7 @@ class Compute
     }
     public static function repurchase($buyer_slot_id, $binary_pts, $unilevel_pts,$upgrade_pts ,$method = "REPURCHASE")
     {
+        $upgrade_pts = 0;
         Compute::unilevel_repurchase($buyer_slot_id, $unilevel_pts, $method, $upgrade_pts);
         Compute::binary_repurchase($buyer_slot_id, $binary_pts, $method);
     }
@@ -52,7 +53,7 @@ class Compute
         $insert_personal["date_created"]    = Carbon::now();
         $insert_personal["type"]            = "PPV";
         DB::table("tbl_pv_logs")->insert($insert_personal);
-        
+        Compute::check_compensation_rank($buyer_slot_info->slot_id);
         /* UPDATE SLOT CHANGES TO DATABASE */
         Tbl_slot::id($buyer_slot_info->slot_id)->update($update_recipient);
         $update_recipient = null;
@@ -104,7 +105,7 @@ class Compute
                         //     $update_recipient["slot_highest_pv"] = $update_recipient["slot_group_points"];
                         // }
                         /* INSERT LOG */
-                        $log = "Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($unilevel_bonus, 2) . " group UPcoins and ". $upgrade_bonus ." promotion points</b>. You earned it when slot #" . $buyer_slot_id . " uses a code worth " . number_format($unilevel_pts, 2) . " PV. That slot is located on the Level " . $tree->sponsor_tree_level . " of your sponsor genealogy. Your current membership is " . $slot_recipient->membership_name . " MEMBERSHIP.";
+                        $log = "Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($unilevel_bonus, 2) . " group UPcoins </b>. You earned it when slot #" . $buyer_slot_id . " uses a code worth " . number_format($unilevel_pts, 2) . " PV. That slot is located on the Level " . $tree->sponsor_tree_level . " of your sponsor genealogy. Your current membership is " . $slot_recipient->membership_name . " MEMBERSHIP.";
                        
                         $insert_personal["owner_slot_id"]   = $slot_recipient->slot_id;
                         $insert_personal["amount"]          = $unilevel_bonus;
@@ -112,7 +113,7 @@ class Compute
                         $insert_personal["date_created"]    = Carbon::now();
                         $insert_personal["type"]            = "GPV";
                         DB::table("tbl_pv_logs")->insert($insert_personal);
-                        
+                        Compute::check_compensation_rank($slot_recipient->slot_id);
                         
                         // Log::account($slot_recipient->slot_owner, $log);
                         Log::slot($slot_recipient->slot_id, $log, 0,$method,$buyer_slot_id);
@@ -1141,8 +1142,6 @@ class Compute
     
     public static function check_compensation_rank($slot_id)
     {
-        $_ranks             = DB::table("tbl_compensation_rank")->orderBy("compensation_rank_id","DESC")->get();
-        
         $slot               = Tbl_slot::where("slot_id",$slot_id)->first();
         $group_pv           = DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_id)->where("amount",">",0)->where("type","GPV")->sum("amount");
         $personal_pv        = DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_id)->where("amount",">",0)->where("type","PPV")->sum("amount");
@@ -1151,6 +1150,7 @@ class Compute
         
         if($slot)
         {
+            $_ranks             = DB::table("tbl_compensation_rank")->where("compensation_rank_id",">",$slot->next_month_rank)->orderBy("compensation_rank_id","DESC")->get();
             foreach($_ranks as $rank)
             {
                 if($month_personal_pv >= $rank->required_personal_pv_maintenance)

@@ -24,6 +24,7 @@ use App\Tbl_travel_qualification;
 use DateTime;
 class AdminDevelopersController extends Controller
 {
+
 	// public function migration()
 	// {
 	// 	$id_code = 'ultratop';
@@ -610,7 +611,6 @@ class AdminDevelopersController extends Controller
 	
 	public function re_adjust_cd()
 	{
-
 		$rank = Admin::info()->admin_position_rank;
 		$data['entry'] = DB::table('tbl_re_entry')->get();
 		$access_entry_level = DB::table('tbl_settings')->where('key','access_entry_level')->first();
