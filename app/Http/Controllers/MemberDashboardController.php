@@ -45,6 +45,7 @@ class MemberDashboardController extends MemberController
 			$data["total_group_upcoins"]		= DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_info->slot_id)->where("amount",">",0)->where("type","GPV")->sum("amount");
 			$data["reedemed_upcoins"]			= DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_info->slot_id)->where("amount","<",0)->where("type","PPV")->sum("amount");
 			$data["total_personal_upcoins"]		= DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_info->slot_id)->where("amount",">",0)->where("type","PPV")->sum("amount");
+			$data["current_rank"]				= DB::table("tbl_compensation_rank")->where("compensation_rank_id",$slot_info->current_rank)->first()->compensation_rank_name;
 			$travel = Compute::compute_travel($slot_info);
 			$data['points'] = $travel['points'];
 			$data['reward'] = $travel['reward'];

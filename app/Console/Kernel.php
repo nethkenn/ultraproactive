@@ -12,6 +12,7 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected $commands = [
 		'App\Console\Commands\Inspire',
+		'App\Console\Commands\Monthly',
 	];
 
 	/**
@@ -25,8 +26,8 @@ class Kernel extends ConsoleKernel {
 		$schedule->command('inspire')
 				 ->hourly();		
 				 
-		$schedule->command('MonthlyChron')
-				 ->monthlyOn(1, '00:00');
+		$schedule->command('monthly')
+				 ->monthly();	
 	}
 
 }
