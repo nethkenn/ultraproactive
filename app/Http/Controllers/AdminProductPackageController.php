@@ -154,6 +154,7 @@ class AdminProductPackageController extends AdminController
 		$product_package =  new Tbl_product_package;
 		$product_package->product_package_name = Request::input('product_package_name');
 		$product_package->membership_id = Request::input('membership_id');
+		$product_package->product_package_upcoin = Request::input('product_package_upcoin');
 		$product_package->save();
 		$id = $product_package->product_package_id;
 		$this->save_product_package($id, Request::input('product'),"Add");
@@ -279,6 +280,7 @@ class AdminProductPackageController extends AdminController
 		$product_package = Tbl_product_package::find(Request::input('product_package_id'));
 		$product_package->product_package_name = Request::input('product_package_name');
 		$product_package->membership_id = Request::input('membership_id');
+		$product_package->product_package_upcoin = Request::input('product_package_upcoin');
 		$product_package->save();
 		$this->save_product_package(Request::input('product_package_id'), Request::input('product'),"Edit");
 		return Redirect('admin/maintenance/product_package');

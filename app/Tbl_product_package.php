@@ -10,7 +10,7 @@ class Tbl_product_package extends Model implements SluggableInterface
 	protected $table = 'tbl_product_package';
 	protected $primaryKey = 'product_package_id';
 	public $timestamps = false;
-	protected $fillable = ['product_package_name', 'archived'];
+	protected $fillable = ['product_package_name', 'archived','product_package_upcoin'];
 	protected $guarded = ['product_package_id'];
 	
 
