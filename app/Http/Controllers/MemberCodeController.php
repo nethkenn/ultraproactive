@@ -402,7 +402,7 @@ class MemberCodeController extends MemberController
 								Log::slot($slot_id, $logs, $amount, "New slot",$slot_id);
 
 								Compute::tree($slot_id);
-								Compute::entry($slot_id);
+								Compute::entry($slot_id,"SLOT CREATION",$data['code_number']);
 								$return["placement"] = Request::input("placement");
 								$message['success'] = "Slot Created.";
 
@@ -459,7 +459,7 @@ class MemberCodeController extends MemberController
 								Log::slot($slot_id, $logs, $amount, "New slot",$slot_id);
 
 								Compute::tree($slot_id);
-								Compute::entry($slot_id);
+								Compute::entry($slot_id,"SLOT CREATION",$data['code_number']);
 								$return["placement"] = Request::input("placement");
 								$message['success'] = "Slot Created.";
 								$get = Rel_membership_code::where('code_pin',$data['code_number'])->first();

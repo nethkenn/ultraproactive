@@ -28,6 +28,8 @@ class ProjectionController extends Controller
                                                                 $data["_projection"][$level]["direct_referral"];
 
 
+                $data["_projection"][$level]["first_member_income"] = (($data["_projection"][$level]["total_slot_count"] - 1) / 2) * $data["per_pair"];
+
                 if($data["_projection"][$level]["total_payin"] > $data["_projection"][$level]["total_payout"])
                 {
                     $data["_projection"][$level]["status"] = "<span style='color:green'>GOOD</span>";    
