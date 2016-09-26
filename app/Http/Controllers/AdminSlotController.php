@@ -201,7 +201,7 @@ class AdminSlotController extends AdminController
 			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." create new slot #".$slot_id,null,serialize($insert));
 			
 			Compute::tree($slot_id);
-			Compute::entry($slot_id);
+			Compute::entry($slot_id,"SLOT CREATION");
 
 			Tbl_slot::where('slot_id',$slot_id)->update(['distributed'=>1]);
 			$return["placement"] = Request::input("placement");

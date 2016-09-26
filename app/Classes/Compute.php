@@ -24,7 +24,7 @@ class Compute
     	Compute::insert_tree_placement($slot_info, $new_slot_id, 1); /* TREE RECORD FOR BINARY GENEALOGY */
     	Compute::insert_tree_sponsor($slot_info, $new_slot_id, 1); /* TREE RECORD FOR SPONSORSHIP GENEALOGY */
     }
-    public static function entry($new_slot_id, $method = "SLOT CREATION",$code_pin)
+    public static function entry($new_slot_id, $method = "SLOT CREATION",$code_pin = null)
     {
         Compute::binary($new_slot_id, $method);
         Compute::direct($new_slot_id, $method);
