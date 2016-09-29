@@ -6,6 +6,7 @@ use App\Tbl_binary_pairing;
 use App\Tbl_indirect_setting;
 use App\Tbl_unilevel_setting;
 use App\Tbl_membership;
+use App\Tbl_membership_code;
 use App\Classes\Log;
 use Carbon\Carbon;
 use App\Tbl_matching_bonus;
@@ -13,6 +14,8 @@ use DB;
 use App\Tbl_voucher;
 use App\Tbl_wallet_logs;
 use App\Tbl_travel_reward;
+use App\Tbl_pv_logs;
+use App\Tbl_product_package;
 use Session;
 use App\Tbl_travel_qualification;
 use DateTime;
@@ -26,7 +29,7 @@ class Compute
     }
     public static function entry($new_slot_id, $method = "SLOT CREATION",$code_pin = null)
     {
-        Compute::binary($new_slot_id, $method);
+        Compute::binary($new_slot_id, $method,$code_pin);
         Compute::direct($new_slot_id, $method);
         Compute::indirect($new_slot_id, $method);
     }
@@ -105,15 +108,15 @@ class Compute
                         //     $update_recipient["slot_highest_pv"] = $update_recipient["slot_group_points"];
                         // }
                         /* INSERT LOG */
-                        $log = "Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($unilevel_bonus, 2) . " group UPcoins </b>. You earned it when slot #" . $buyer_slot_id . " uses a code worth " . number_format($unilevel_pts, 2) . " PV. That slot is located on the Level " . $tree->sponsor_tree_level . " of your sponsor genealogy. Your current membership is " . $slot_recipient->membership_name . " MEMBERSHIP.";
+                        $log = "Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($unilevel_bonus, 2) . " group UPcoins </b>. You earned it when slot #" . $buyer_slot_id . " uses a code worth " . number_format($unilevel_pts, 2) . " UPcoins. That slot is located on the Level " . $tree->sponsor_tree_level . " of your sponsor genealogy. Your current membership is " . $slot_recipient->membership_name . " MEMBERSHIP.";
                        
-                        $insert_personal["owner_slot_id"]   = $slot_recipient->slot_id;
-                        $insert_personal["amount"]          = $unilevel_bonus;
-                        $insert_personal["detail"]          = $log;
-                        $insert_personal["date_created"]    = Carbon::now();
-                        $insert_personal["type"]            = "GPV";
-                        DB::table("tbl_pv_logs")->insert($insert_personal);
-                        Compute::check_compensation_rank($slot_recipient->slot_id);
+                        // $insert_personal["owner_slot_id"]   = $slot_recipient->slot_id;
+                        // $insert_personal["amount"]          = $unilevel_bonus;
+                        // $insert_personal["detail"]          = $log;
+                        // $insert_personal["date_created"]    = Carbon::now();
+                        // $insert_personal["type"]            = "GPV";
+                        // DB::table("tbl_pv_logs")->insert($insert_personal);
+                        // Compute::check_compensation_rank($slot_recipient->slot_id);
                         
                         // Log::account($slot_recipient->slot_owner, $log);
                         Log::slot($slot_recipient->slot_id, $log, 0,$method,$buyer_slot_id);
@@ -439,15 +442,22 @@ class Compute
         }
     }
 
-    public static function binary($new_slot_id, $method = "SLOT CREATION", $code_pin = null)
+    public static function binary($new_slot_id, $method = "SLOT CREATION", $pins = null)
     {
-        
-        if(isset($membership_code))
+        if(isset($pins))
         {
-            $code_pin = Tbl_membership_code::where("code_pin",$code_pin)->leftJoin('tbl_product_package','tbl_product_package.product_package_id','=','tbl_membership_code.product_package_id')->first();
+            $code_pin = Tbl_membership_code::where("code_pin",$pins)->leftJoin('tbl_product_package','tbl_product_package.product_package_id','=','tbl_membership_code.product_package_id')->first();
             if($code_pin)
             {
-                $upcoin = $code->product_package_upcoin;
+                $pack_up = Tbl_product_package::where("product_package_id",$code_pin->product_package_id)->first();                  
+                if($pack_up)
+                {
+                    $upcoin  = $pack_up->product_package_upcoin;
+                }
+                else
+                {
+                    $upcoin = 0;
+                }
             }
             else
             {
@@ -459,9 +469,9 @@ class Compute
             $upcoin = 0;
         }
         
-        
         $new_slot_info = Tbl_slot::id($new_slot_id)->account()->membership()->first();
         $_pairing = Tbl_binary_pairing::orderBy("pairing_point_l", "desc")->get();
+
         
         
         
@@ -1143,14 +1153,14 @@ class Compute
     public static function check_compensation_rank($slot_id)
     {
         $slot               = Tbl_slot::where("slot_id",$slot_id)->first();
-        $group_pv           = DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_id)->where("amount",">",0)->where("type","GPV")->sum("amount");
+        $group_pv           = Compute::count_gpv($slot_id);
         $personal_pv        = DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_id)->where("amount",">",0)->where("type","PPV")->sum("amount");
         $month_personal_pv  = DB::table("tbl_pv_logs")->where("owner_slot_id",1)->where("amount",">",0)->where("type","PPV")->where("date_created","LIKE","%".Carbon::now()->format("Y-m")."%")->sum("amount");
 
         
         if($slot)
         {
-            $_ranks             = DB::table("tbl_compensation_rank")->where("compensation_rank_id",">",$slot->next_month_rank)->orderBy("compensation_rank_id","DESC")->get();
+            $_ranks             = DB::table("tbl_compensation_rank")->where("compensation_rank_id",">",$slot->next_month_rank)->orderBy("compensation_rank_id","ASC")->get();
             foreach($_ranks as $rank)
             {
                 if($month_personal_pv >= $rank->required_personal_pv_maintenance)
@@ -1214,5 +1224,93 @@ class Compute
                 }
             }
         }
+    }
+    
+    public static function check_compensation_rank_manual($slot_id)
+    {
+        $slot               = Tbl_slot::where("slot_id",$slot_id)->first();
+        $group_pv           = Compute::count_gpv($slot_id);
+        $personal_pv        = DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_id)->where("amount",">",0)->where("type","PPV")->sum("amount");
+        $month_personal_pv  = DB::table("tbl_pv_logs")->where("owner_slot_id",1)->where("amount",">",0)->where("type","PPV")->where("date_created","LIKE","%".Carbon::now()->format("Y-m")."%")->sum("amount");
+
+        
+        if($slot)
+        {
+            $_ranks         = DB::table("tbl_compensation_rank")->orderBy("compensation_rank_id","ASC")->get();
+            foreach($_ranks as $rank)
+            {
+                if($month_personal_pv >= $rank->required_personal_pv_maintenance)
+                {
+                    if($group_pv >= $rank->required_group_pv)
+                    {
+                            $update["next_month_rank"] = $rank->compensation_rank_id;
+                            Tbl_slot::where("slot_id",$slot_id)->update($update);
+                            
+                            $_tree      = Tbl_tree_sponsor::where("sponsor_tree_child_id",$slot_id)
+                                                          ->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_sponsor.sponsor_tree_parent_id")
+                                                          ->join("tbl_compensation_rank","tbl_compensation_rank.compensation_rank_id","=","tbl_slot.next_month_rank")
+                                                          ->where("next_month_rank","<",$rank->compensation_rank_id)
+                                                          ->get();
+                                                          
+                                                    
+                            foreach($_tree as $tree)
+                            {
+                                $update["next_month_rank"] = $rank->compensation_rank_id;
+                                Tbl_slot::where("slot_id",$tree->sponsor_tree_parent_id)->update($update);
+                            }
+                    }
+                    else if($personal_pv >= $rank->required_personal_pv)
+                    {
+                            $update["next_month_rank"] = $rank->compensation_rank_id;
+                            Tbl_slot::where("slot_id",$slot_id)->update($update);
+                            
+                            
+                            $_tree      = Tbl_tree_sponsor::where("sponsor_tree_child_id",$slot_id)
+                                                      ->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_sponsor.sponsor_tree_parent_id")
+                                                      ->join("tbl_compensation_rank","tbl_compensation_rank.compensation_rank_id","=","tbl_slot.next_month_rank")
+                                                      ->where("next_month_rank","<",$rank->compensation_rank_id)
+                                                      ->get();
+                                                      
+                                                    
+                            foreach($_tree as $tree)
+                            {
+                                $update["next_month_rank"] = $rank->compensation_rank_id;
+                                Tbl_slot::where("slot_id",$tree->sponsor_tree_parent_id)->update($update);
+                            }
+                            
+                    }
+                    else
+                    {
+                        $_tree      = Tbl_tree_sponsor::where("sponsor_tree_parent_id",$slot_id)
+                                                      ->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_sponsor.sponsor_tree_child_id")
+                                                      ->join("tbl_compensation_rank","tbl_compensation_rank.compensation_rank_id","=","tbl_slot.next_month_rank")
+                                                      ->where("next_month_rank",$rank->required_compensation_rank_id)
+                                                      ->first();
+                        if($_tree)
+                        {
+                            $update["next_month_rank"] = $rank->compensation_rank_id;
+                            Tbl_slot::where("slot_id",$slot_id)->update($update);
+                        }
+                    }
+                }
+                else if($rank->compensation_rank_id == 1)
+                {
+                    $update["next_month_rank"] = 1;
+                    Tbl_slot::where("slot_id",$slot_id)->update($update);
+                }
+            }
+        }
+    }
+    
+    
+    public static function count_gpv($slot_id)
+    {
+        $your_slot = Tbl_slot::where("slot_id",$slot_id)->first();
+        
+        $sum       = Tbl_pv_logs::where("owner_slot_id",$slot_id)->sum("amount");
+        
+        $sum       = $sum + Tbl_tree_sponsor::where("sponsor_tree_parent_id",$slot_id)->join("tbl_pv_logs","tbl_pv_logs.owner_slot_id","=","sponsor_tree_child_id")->sum("amount");
+        
+        return $sum;
     }
 }

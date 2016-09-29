@@ -232,16 +232,19 @@ class AdminCodeController extends AdminController {
 				if($value['product_package_id'] == 'NO PACKAGE')
 				{
 					$insert_membership_code['product_package_id'] = null;
+					$upcoin_to_give = 0;
 				}
 				else
 				{
 					$insert_membership_code['product_package_id'] = $value['product_package_id'];
+					$upcoin_to_give = Tbl_product_package::where("product_package_id",$value['product_package_id'])->first()->product_package_upcoin;
 				}
 
 				$insert_membership_code['generated_by'] =  Admin::info()->account_id;
 				$insert_membership_code['inventory_update_type_id'] = Request::input('inventory_update_type_id');
 				$insert_membership_code['account_id'] = Request::input('account_id');
 				$insert_membership_code['order_form_number'] = $OrderFormNum;
+				$insert_membership_code['membership_code_upcoin'] = $upcoin_to_give;
 				
 				$membership_code = new Tbl_membership_code($insert_membership_code);
 				$membership_code->save();

@@ -125,7 +125,8 @@
 									<li><a href="admin/utilities/travel_qualification">Travel And Car Bonus Qualification</a></li>
 									<li><a href="admin/utilities/travel_reward">Travel And Car Bonus Reward</a></li>
 									<li class="divider" role="separator"></li>
-									<li><a href="admin/utilities/rank">Promotion Settings</a></li>
+									<!--<li><a href="admin/utilities/rank">Promotion Settings</a></li>-->
+									<li><a href="admin/utilities/rank/compensation">Compensation Rank Settings</a></li>
 									<!--<li class="divider" role="separator"></li>
 									<li><a href="admin/utilities/recompute">Recomputation</a></li>
 									<li class="divider" role="separator"></li>

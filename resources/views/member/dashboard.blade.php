@@ -142,15 +142,11 @@
                 </div>   
                 <div class="holders">
                     <div class="leybel">TOTAL GROUP UPCOINS</div>
-                    <div class="balyu">{{ number_format($total_group_upcoins, 2) }} UPcoins</div>
+                    <div class="balyu">{{ number_format($group_upcoins, 2) }} UPcoins</div>
                 </div>
                 <div class="holders">
-                    <div class="leybel">REDEEMED PERSONAL UPCOINS</div>
-                    <div class="balyu">{{ number_format(-1 * ($reedemed_upcoins), 2) }} UPcoins</div>
-                </div>                
-                <div class="holders">
                     <div class="leybel">TOTAL EARN PERSONAL UPCOINS</div>
-                    <div class="balyu">{{ number_format($total_personal_upcoins, 2) }} UPcoins</div>
+                    <div class="balyu">{{ number_format($personal_upcoins, 2) }} UPcoins</div>
                 </div>
                 <!--
                 <div class="holders">

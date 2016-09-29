@@ -43,7 +43,6 @@ class MemberCodeController extends MemberController
 	    												 ->orderBy('membership_price','ASC')
 	    												 ->where('membership_entry',1)
 	    												 ->get();
-					
   		$data['exist_lead'] = null;
 	 	$check_date = Tbl_lead::where('account_id',$id)->where('tbl_lead.used',0)->first();
 

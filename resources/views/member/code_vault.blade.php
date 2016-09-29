@@ -196,7 +196,7 @@
                 </div>
             </div>
             <div class="form-group para">
-                <label for="222" class="col-sm-3 control-label">Unilevel Points</label>
+                <label for="222" class="col-sm-3 control-label">UPcoins</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control unilevel_pts_container" disabled>
                 </div>

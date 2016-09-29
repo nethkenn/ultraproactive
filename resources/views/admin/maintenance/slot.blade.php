@@ -2,12 +2,15 @@
 @section('content')
 	<div class="row">
 		<div class="header">
-			<div class="title col-md-8">
+			<div class="title col-md-6">
 				<h2><i class="fa fa-share-alt"></i> SLOTS</h2>
 			</div>
 			<div class="buttons col-md-2 text-right">
 				<button class="slot_limit btn btn-primary" type="button" style="width: 100%;"><i></i>Slot Limit ({{$slot_limit->value}})</button>
-			</div>
+			</div>			
+			<!--<div class="buttons col-md-2 text-right">-->
+			<!--	<button class="compensation_check btn btn-primary" type="button" style="width: 100%;"><i></i>Compensation Check</button>-->
+			<!--</div>-->
 			<div class="buttons col-md-2 text-right">
 				<button onclick="location.href='admin/maintenance/slots/add'" style="width: 100%;" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> GENERATE SLOTS</button>
 			</div>
@@ -30,10 +33,13 @@
 						<th>Type</th>
 						<th>Wallet</th>
 						<th>GC</th>
+						<th>P UP</th>
+						<th>G UP</th>
+						<th>Rank</th>
 						<th></th>
 						<th>Date</th>
 						<th></th>
-						<th></th>
+						<!--<th></th>-->
 					</tr>
 				</thead>
 			</table>
@@ -50,6 +56,19 @@
 		<button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Change Limit</button>
     </form>
 </div>
+
+<div class="remodal create-slot" data-remodal-id="compensation_check" data-remodal-options="hashTracking: false">
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <div class="header">
+        What slot to check the compensation rank?
+    </div>
+    <form class="form-horizontal" method="POST">
+	    <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
+	    <input type="number" class="form-control" value="" name="slot_number" style="text-align: center;">
+		<button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i>Confirm</button>
+    </form>
+</div>
+
 <div class="remodal" data-remodal-id="adjust-wallet"
   data-remodal-options="hashTracking: false, closeOnOutsideClick: false">
 
@@ -133,6 +152,80 @@
 </div>
 
 
+<div class="remodal" data-remodal-id="adjust-PUP"
+  data-remodal-options="hashTracking: false, closeOnOutsideClick: false">
+
+  <button data-remodal-action="close" class="remodal-close remodal-btn"></button>
+  <h3>Adjust Personal UPcoins</h3>
+  <form id="ajust-wallet-form-PUP">
+  		<div class="form-group">
+  			<div class="adjsut-wallet-message-PUP">
+  				
+  			</div>
+  		</div>
+	  <div class="form-group">
+	    <label for="">Slot#</label>
+	    <input name="slot_id" type="text" class="form-control" id="" placeholder="" readonly>
+	  </div>
+	  <div class="form-group">
+	    <label for="">Personal UPcoins</label>
+	    <input name="wallet_amount_PUP" type="text" class="form-control" id="" placeholder="" readonly>
+	  </div>
+	  <div class="form-group">
+	    <label for="">Select Adjustment</label>
+	    <select class="form-control" name="wallet_adjustment_PUP">
+	    	<option value="add">Add</option>
+	    	<option value="deduct">Deduct</option>
+	    </select>
+	  </div>
+	  <div class="form-group">
+	    <label for="">Adjustment Amount</label>
+	    <input name="wallet_adjustment_amount_PUP" type="number" class="form-control" id="" placeholder="">
+	  </div>
+	  <div class="form-group">
+	  	<button data-remodal-action="cancel" class="remodal-cancel remodal-btn-PUP">Cancel</button>
+  		<button class="remodal-confirm remodal-btn-PUP ajust-wallet-submit-btn-PUP">OK</button>
+	  </div>
+  </form>
+</div>
+
+<div class="remodal" data-remodal-id="adjust-GUP"
+  data-remodal-options="hashTracking: false, closeOnOutsideClick: false">
+
+  <button data-remodal-action="close" class="remodal-close remodal-btn"></button>
+  <h3>Adjust Group UPcoins</h3>
+  <form id="ajust-wallet-form-GUP">
+  		<div class="form-group">
+  			<div class="adjsut-wallet-message-GUP">
+  				
+  			</div>
+  		</div>
+	  <div class="form-group">
+	    <label for="">Slot#</label>
+	    <input name="slot_id" type="text" class="form-control" id="" placeholder="" readonly>
+	  </div>
+	  <div class="form-group">
+	    <label for="">Personal UPcoins</label>
+	    <input name="wallet_amount_GUP" type="text" class="form-control" id="" placeholder="" readonly>
+	  </div>
+	  <div class="form-group">
+	    <label for="">Select Adjustment</label>
+	    <select class="form-control" name="wallet_adjustment_GUP">
+	    	<option value="add">Add</option>
+	    	<option value="deduct">Deduct</option>
+	    </select>
+	  </div>
+	  <div class="form-group">
+	    <label for="">Adjustment Amount</label>
+	    <input name="wallet_adjustment_amount_GUP" type="number" class="form-control" id="" placeholder="">
+	  </div>
+	  <div class="form-group">
+	  	<button data-remodal-action="cancel" class="remodal-cancel remodal-btn-GUP">Cancel</button>
+  		<button class="remodal-confirm remodal-btn-GUP ajust-wallet-submit-btn-GUP">OK</button>
+	  </div>
+  </form>
+</div>
+
 @endsection
 
 @section('script')
@@ -156,11 +249,14 @@
             {data: 'sponsor', name: 'sponsor'},
             {data: 'slot_type', name: 'slot_type'},
             {data: 'wallet', name: 'wallet'},
-            {data: 'slot_wallet_gc', name: 'slot_wallet_gc'},
+            {data: 'slot_wallet_gc', name: 'slot_wallet_gc'},            
+            {data: 'pup', name: 'pup'},            
+            {data: 'gup', name: 'gup'},
+            {data: 'rank', name: 'rank'},
             {data: 'login', name: 'slot_id'},
             {data: 'created_at', name: 'created_at'},
             {data: 'gen', name: 'slot_id'},
-            {data: 'info', name: 'slot_id'},
+            // {data: 'info', name: 'slot_id'},
         ],
         "lengthMenu": [[8, 10, 25, 50, -1], [10, 25, 50, "All"]],
         "oLanguage": 
@@ -199,6 +295,12 @@ $(function() {
     $(".slot_limit").click(function()
     {
 			var inst = $('[data-remodal-id=slot_limit]').remodal();
+          	inst.open(); 
+    });   
+    
+    $(".compensation_check").click(function()
+    {
+			var inst = $('[data-remodal-id=compensation_check]').remodal();
           	inst.open(); 
     });
 

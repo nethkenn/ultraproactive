@@ -30,10 +30,13 @@ class Monthly extends Command {
 		$_slot = Tbl_slot::whereRaw('current_rank != next_month_rank')->get();
 		foreach($_slot as $slot)
 		{
-			$update["current_rank"] = $slot->next_month_rank;
-			$update["next_month_rank"] = 1;
-			
-			Tbl_slot::where("slot_id",$slot->slot_id)->update($update);
+			if($slot->slot_type != "CD")
+			{
+				$update["current_rank"] = $slot->next_month_rank;
+				$update["next_month_rank"] = 1;
+				
+				Tbl_slot::where("slot_id",$slot->slot_id)->update($update);
+			}
 		}
 
 	}

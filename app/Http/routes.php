@@ -322,6 +322,12 @@ Route::post('admin/maintenance/slots/adjustWallet', 'AdminSlotController@adjustW
 Route::get('admin/maintenance/slots/computeAdjustmentGC', 'AdminSlotController@computeAdjustmentAjaxGC');
 Route::post('admin/maintenance/slots/adjustWalletGC', 'AdminSlotController@adjustWalletGC');
 
+Route::get('admin/maintenance/slots/computeAdjustmentPUP', 'AdminSlotController@computeAdjustmentAjaxPUP');
+Route::post('admin/maintenance/slots/adjustWalletPUP', 'AdminSlotController@adjustWalletPUP');
+
+Route::get('admin/maintenance/slots/computeAdjustmentGUP', 'AdminSlotController@computeAdjustmentAjaxGUP');
+Route::post('admin/maintenance/slots/adjustWalletGUP', 'AdminSlotController@adjustWalletGUP');
+
 Route::get('admin/maintenance/country', 'AdminCountryController@index');
 Route::any('admin/maintenance/country/add', 'AdminCountryController@add_country');
 Route::any('admin/maintenance/country/edit', 'AdminCountryController@edit_country');
@@ -423,6 +429,9 @@ Route::any('admin/utilities/breakaway_bonus/edit', 'AdminComplanController@break
 
 Route::any('admin/utilities/rank', 'AdminComplanController@rank');
 Route::any('admin/utilities/rank/edit', 'AdminComplanController@rank_edit');
+
+Route::any('admin/utilities/rank/compensation', 'AdminComplanController@compensation_rank');
+Route::any('admin/utilities/rank/compensation/edit', 'AdminComplanController@compensation_rank_edit');
 Route::any('admin/utilities/recompute', 'AdminComplanController@recompute');
 
 /* ADMIN / REPORTS */
