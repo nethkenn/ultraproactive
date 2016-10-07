@@ -550,3 +550,20 @@ jQuery(document).ready(function($)
 	});
 
 });
+
+
+jQuery(document).ready(function($)
+{	
+	var adjustRank = $('[data-remodal-id=adjustRank]').remodal();
+	var adjustRankSuccess = $('[data-remodal-id=adjustRankSuccess]').remodal();
+
+	$('#table tbody').on('click', 'tr td a.adjust-rank', function(){
+		var current_rank = $(this).attr("rank_id");
+		var slot_id = $(this).attr("slot-id");
+		$(".rank_adjustment").val(current_rank);
+		$(".rank_slot_id").val(slot_id);
+		adjustRank.open();
+		
+		$()
+	});
+});

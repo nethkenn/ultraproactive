@@ -8,6 +8,7 @@ use App\Tbl_slot;
 use App\Tbl_account;
 use App\Tbl_membership;
 use App\Tbl_voucher;
+use App\Tbl_compensation_rank;
 use App\Tbl_pv_logs;
 use App\Tbl_country;
 use App\Tbl_rank;
@@ -27,6 +28,7 @@ class AdminSlotController extends AdminController
 		// dd("AdminSlotController");
 		$data['membership'] = Tbl_membership::where('archived',0)->get();
 		$data['slot_limit'] = DB::table('tbl_settings')->where('key','slot_limit')->first();
+		$data["_compensation_rank"] =Tbl_compensation_rank::get();
 		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Slot Maintenance");
 		if(!$data['slot_limit'])
 		{
@@ -41,21 +43,15 @@ class AdminSlotController extends AdminController
 		    return Redirect::to('admin/maintenance/slots');
 		}
 
-		// if(isset($_POST['slot_number']))
-		// {
-		// 	$_slot = Tbl_slot::whereRaw('current_rank != next_month_rank')->get();
-		// 	foreach($_slot as $slot)
-		// 	{
-		// 		if($slot->slot_type != "CD")
-		// 		{
-		// 			$update["current_rank"] = $slot->next_month_rank;
-		// 			$update["next_month_rank"] = 1;
-					
-		// 			Tbl_slot::where("slot_id",$slot->slot_id)->update($update);
-		// 		}
-		// 	}
-		//     return Redirect::to('admin/maintenance/slots');
-		// }
+		if(isset($_POST['rank_adjustment']))
+		{
+			$update["current_rank"] = $_POST["rank_adjustment"];
+			$slot_id                = $_POST["slot_id"];
+			$slot_inf				= Tbl_slot::where("slot_id",$slot_id)->first();
+			Tbl_slot::where("slot_id",$slot_id)->update($update);
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." update Slot ID".$slot_id." from rank id ".$slot_inf->current_rank." to ". $update["current_rank"]);
+		    return Redirect::to('admin/maintenance/slots');
+		}
 
         return view('admin.maintenance.slot',$data);
 	}
@@ -83,7 +79,7 @@ class AdminSlotController extends AdminController
 	        								->addColumn('sponsor','{{App\Tbl_slot::id("$slot_sponsor")->account()->first() == null ? "---" : "Slot #".App\Tbl_slot::id("$slot_sponsor")->account()->first()->slot_id."(".App\Tbl_slot::id("$slot_sponsor")->account()->first()->account_name.")"}}')
 	        								->addColumn('placement','{{App\Tbl_slot::id("$slot_placement")->account()->first() == null ? "---" : "Slot #".App\Tbl_slot::id("$slot_placement")->account()->first()->slot_id."(".App\Tbl_slot::id("$slot_placement")->account()->first()->account_name.")"}}')
 	        								->addColumn('position','{{App\Tbl_slot::id("$slot_placement")->account()->first() == null ? "---" : strtoupper($slot_position)}}')
-	        								->addColumn('rank','{{App\Tbl_compensation_rank::where("compensation_rank_id","$current_rank")->first()->compensation_rank_name}}')
+	        								->addColumn('rank','<a style="cursor:pointer;" class="adjust-rank" slot-id="{{$slot_id}}" rank_id="{{$current_rank}}">{{App\Tbl_compensation_rank::where("compensation_rank_id","$current_rank")->first()->compensation_rank_name}}</a>')
 	        								->addColumn('login','<form method="POST" form action="admin/maintenance/accounts" target="_blank"><input type="hidden" class="token" name="_token" value="{{ csrf_token() }}"><button name="login" type="submit" value="{{$slot_owner}}" class="form-control">Login</button></form>')
 	        								->make(true);
 

@@ -226,6 +226,31 @@
   </form>
 </div>
 
+
+<div class="remodal" data-remodal-id="adjustRank"
+  data-remodal-options="hashTracking: false, closeOnOutsideClick: false">
+
+  <button data-remodal-action="close" class="remodal-close remodal-btn"></button>
+  <h3>Adjust Rank</h3>
+  <form id="ajust-rank-form" method="POST">
+  		<div class="form-group">
+  			<div class="adjsut-rank-message">
+  				
+  			</div>
+  		</div>
+	
+	    <label for="">Select Rank</label>
+	    <select class="form-control rank_adjustment" name="rank_adjustment">
+			@foreach($_compensation_rank as $compensation_rank)
+				<option	value="{{$compensation_rank->compensation_rank_id}}">{{$compensation_rank->compensation_rank_name}}</option>
+			@endforeach
+	    </select>
+	    <input type="hidden" name="slot_id" class="rank_slot_id">
+	    <button type="submit" class="btn btn-primary">Change Rank</button>
+	    <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
+  </form>
+</div>
+
 @endsection
 
 @section('script')

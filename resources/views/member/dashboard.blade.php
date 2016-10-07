@@ -127,7 +127,7 @@
                 </div> -->
                 <div class="holders">
                     <div class="leybel">MAX PAIRS PER DAY</div>
-                    <div class="balyu">{{$slotnow->pairs_today}}/{{$slotnow->max_pairs_per_day}}</div>
+                    <div class="balyu">{{$slotnow->pairs_today}}/{{$maxpairing}}</div>
                 </div>
             </div>
         </div>

@@ -1183,7 +1183,7 @@ class Compute
                                 Tbl_slot::where("slot_id",$tree->sponsor_tree_parent_id)->update($update);
                             }
                     }
-                    else if($personal_pv >= required_personal_pv)
+                    else if($personal_pv >= $rank->required_personal_pv)
                     {
                             $update["next_month_rank"] = $rank->compensation_rank_id;
                             Tbl_slot::where("slot_id",$slot_id)->update($update);
@@ -1221,6 +1221,62 @@ class Compute
                 {
                     $update["next_month_rank"] = 1;
                     Tbl_slot::where("slot_id",$slot_id)->update($update);
+                }
+                
+                $update = null;
+                if($rank->compensation_rank_id > $slot->permanent_rank_id)
+                {
+                    if($group_pv >= $rank->required_group_pv)
+                    {
+                            $update["permanent_rank_id"] = $rank->compensation_rank_id;
+                            Tbl_slot::where("slot_id",$slot_id)->update($update);
+                            
+                            $_tree      = Tbl_tree_sponsor::where("sponsor_tree_child_id",$slot_id)
+                                                          ->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_sponsor.sponsor_tree_parent_id")
+                                                          ->join("tbl_compensation_rank","tbl_compensation_rank.compensation_rank_id","=","tbl_slot.next_month_rank")
+                                                          ->where("next_month_rank","<",$rank->compensation_rank_id)
+                                                          ->get();
+                                                          
+                                                    
+                            foreach($_tree as $tree)
+                            {
+                                $update["permanent_rank_id"] = $rank->compensation_rank_id;
+                                Tbl_slot::where("slot_id",$tree->sponsor_tree_parent_id)->update($update);
+                            }
+                    }
+                    else if($personal_pv >= $rank->required_personal_pv)
+                    {
+                            $update["permanent_rank_id"] = $rank->compensation_rank_id;
+                            Tbl_slot::where("slot_id",$slot_id)->update($update);
+                            
+                            
+                            $_tree      = Tbl_tree_sponsor::where("sponsor_tree_child_id",$slot_id)
+                                                      ->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_sponsor.sponsor_tree_parent_id")
+                                                      ->join("tbl_compensation_rank","tbl_compensation_rank.compensation_rank_id","=","tbl_slot.next_month_rank")
+                                                      ->where("next_month_rank","<",$rank->compensation_rank_id)
+                                                      ->get();
+                                                      
+                                                    
+                            foreach($_tree as $tree)
+                            {
+                                $update["permanent_rank_id"] = $rank->compensation_rank_id;
+                                Tbl_slot::where("slot_id",$tree->sponsor_tree_parent_id)->update($update);
+                            }
+                            
+                    }
+                    else
+                    {
+                        $_tree      = Tbl_tree_sponsor::where("sponsor_tree_parent_id",$slot_id)
+                                                      ->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_sponsor.sponsor_tree_child_id")
+                                                      ->join("tbl_compensation_rank","tbl_compensation_rank.compensation_rank_id","=","tbl_slot.next_month_rank")
+                                                      ->where("next_month_rank",$rank->required_compensation_rank_id)
+                                                      ->first();
+                        if($_tree)
+                        {
+                            $update["permanent_rank_id"] = $rank->compensation_rank_id;
+                            Tbl_slot::where("slot_id",$slot_id)->update($update);
+                        }
+                    }  
                 }
             }
         }
@@ -1305,12 +1361,19 @@ class Compute
     
     public static function count_gpv($slot_id)
     {
+        
         $your_slot = Tbl_slot::where("slot_id",$slot_id)->first();
-        
-        $sum       = Tbl_pv_logs::where("owner_slot_id",$slot_id)->sum("amount");
-        
-        $sum       = $sum + Tbl_tree_sponsor::where("sponsor_tree_parent_id",$slot_id)->join("tbl_pv_logs","tbl_pv_logs.owner_slot_id","=","sponsor_tree_child_id")->sum("amount");
-        
-        return $sum;
+        $sum       = 0;
+        if($your_slot)
+        {
+            if($your_slot->slot_type != "CD")
+            {
+                $sum       = Tbl_pv_logs::where("owner_slot_id",$slot_id)->where("amount",">=",0)->sum("amount");
+                
+                $sum       = $sum + Tbl_tree_sponsor::where("sponsor_tree_parent_id",$slot_id)->join("tbl_pv_logs","tbl_pv_logs.owner_slot_id","=","sponsor_tree_child_id")->where("amount",">=",0)->sum("amount");
+                
+            }
+        }
+            return $sum;
     }
 }

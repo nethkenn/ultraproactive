@@ -31,8 +31,14 @@
             Choose amount for Redeeming Personal UPcoins.
         </div>
         <div class="ui-sliders">
-          <div class="max col-xs-6 text-right">Personal UPcoins : {{$total_personal_upcoins}}</div>
-          <div class="max col-xs-6 text-right">Redeemed UPcoins : {{-1 * $reedemed_upcoins}}</div>
+          <div class="col-md-12">
+              <div class="col-md-6 text-right"><b>Personal UPcoins</b> : {{$total_personal_upcoins}}</div>
+              <div class="col-md-6 text-right"><b>Redeemed UPcoins</b> : {{-1 * $reedemed_upcoins}}</div>
+          </div>
+          
+          <div class="col-md-12">
+              <div class="col-md-6 text-right"><b>Remaining UPcoins</b> : {{$total_personal_upcoins - (-1 * $reedemed_upcoins)}}</div>
+          </div>
          
           <select id="typeencashment" name="requested_amount">
             <option>250</option>

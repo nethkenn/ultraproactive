@@ -27,9 +27,9 @@
 				<table id="table" class="table table-bordered">
 					<thead>
 						<tr class="text-center">
-							<th>Global PV Sharing %</th>
-							<th>Total PV</th>
-							<th>Total Shared PV</th>
+							<th>Global UPcoins Sharing %</th>
+							<th>Total UPcoins</th>
+							<th>Total Shared UPcoins</th>
 						</tr>
 					</thead>
 					<tbody>

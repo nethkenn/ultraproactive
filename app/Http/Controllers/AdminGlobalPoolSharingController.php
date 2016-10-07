@@ -121,11 +121,14 @@ class AdminGlobalPoolSharingController extends AdminController
 		$last_date = DB::table('tbl_global_pv_done')->orderBy('global_pv_done_id','DESC')->first();
 		if($last_date)
 		{	
-			return Tbl_transaction::where('created_at','>',$last_date->last_date)->sum('earned_pv');
+			
+			// return Tbl_transaction::where('created_at','>',$last_date->last_date)->sum('earned_pv');
+			return Tbl_pv_logs::where("amount",">=",0)->where("date_created",'>',$last_date->last_date)->sum("amount");
 		}
 		else
 		{
-			return Tbl_transaction::sum('earned_pv');
+			// return Tbl_transaction::sum('earned_pv');
+			return Tbl_pv_logs::where("amount",">=",0)->sum("amount");
 		}
 	}
 

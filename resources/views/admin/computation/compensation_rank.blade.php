@@ -15,7 +15,7 @@
 				<th>Compensation Rank</th>
 				<th>Required Group UPcoins</th>
 				<th>Required Personal UPcoins</th>
-				<th>Required Personal PV Maintenance</th>
+				<th>Required Personal UPcoins Maintenance</th>
 				<th>Max Pairing</th>
 				<th></th>
 			</tr>
