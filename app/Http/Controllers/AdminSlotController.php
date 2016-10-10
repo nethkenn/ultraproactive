@@ -45,11 +45,12 @@ class AdminSlotController extends AdminController
 
 		if(isset($_POST['rank_adjustment']))
 		{
-			$update["current_rank"] = $_POST["rank_adjustment"];
+			$update["permanent_rank_id"] = $_POST["rank_adjustment"];
 			$slot_id                = $_POST["slot_id"];
 			$slot_inf				= Tbl_slot::where("slot_id",$slot_id)->first();
 			Tbl_slot::where("slot_id",$slot_id)->update($update);
-			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." update Slot ID".$slot_id." from rank id ".$slot_inf->current_rank." to ". $update["current_rank"]);
+			Compute::check_compensation_rank_manual($slot_id);
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." update Slot ID".$slot_id." from rank id ".$slot_inf->current_rank." to ". $update["permanent_rank_id"]);
 		    return Redirect::to('admin/maintenance/slots');
 		}
 
@@ -79,7 +80,7 @@ class AdminSlotController extends AdminController
 	        								->addColumn('sponsor','{{App\Tbl_slot::id("$slot_sponsor")->account()->first() == null ? "---" : "Slot #".App\Tbl_slot::id("$slot_sponsor")->account()->first()->slot_id."(".App\Tbl_slot::id("$slot_sponsor")->account()->first()->account_name.")"}}')
 	        								->addColumn('placement','{{App\Tbl_slot::id("$slot_placement")->account()->first() == null ? "---" : "Slot #".App\Tbl_slot::id("$slot_placement")->account()->first()->slot_id."(".App\Tbl_slot::id("$slot_placement")->account()->first()->account_name.")"}}')
 	        								->addColumn('position','{{App\Tbl_slot::id("$slot_placement")->account()->first() == null ? "---" : strtoupper($slot_position)}}')
-	        								->addColumn('rank','<a style="cursor:pointer;" class="adjust-rank" slot-id="{{$slot_id}}" rank_id="{{$current_rank}}">{{App\Tbl_compensation_rank::where("compensation_rank_id","$current_rank")->first()->compensation_rank_name}}</a>')
+	        								->addColumn('rank','<a style="cursor:pointer;" class="adjust-rank" slot-id="{{$slot_id}}" rank_id="{{$permanent_rank_id}}">{{App\Tbl_compensation_rank::where("compensation_rank_id","$permanent_rank_id")->first()->compensation_rank_name}}</a>')
 	        								->addColumn('login','<form method="POST" form action="admin/maintenance/accounts" target="_blank"><input type="hidden" class="token" name="_token" value="{{ csrf_token() }}"><button name="login" type="submit" value="{{$slot_owner}}" class="form-control">Login</button></form>')
 	        								->make(true);
 

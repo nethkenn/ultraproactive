@@ -11,6 +11,7 @@ use App\Classes\Admin;
 use App\Classes\Log;
 use Carbon\Carbon;
 use App\Tbl_membership;
+use App\Tbl_pv_logs;
 use App\Tbl_transaction;
 use Redirect;
 class AdminGlobalPoolSharingController extends AdminController
@@ -68,22 +69,24 @@ class AdminGlobalPoolSharingController extends AdminController
 			$last_date = DB::table('tbl_global_pv_done')->orderBy('global_pv_done_id','DESC')->first();
 			if($last_date)
 			{
-				$insert['start_date'] = Tbl_transaction::where('created_at','>',$last_date->last_date)->orderBy('transaction_id','ASC')->first();
-				$insert['start_date'] = $insert['start_date']->created_at;
-				$insert['last_date']  = Tbl_transaction::where('created_at','>',$last_date->last_date)->orderBy('transaction_id','DESC')->first();
-				$insert['last_date']  = $insert['last_date']->created_at;
+				$insert['start_date'] = Tbl_pv_logs::where('date_created','>',$last_date->last_date)->orderBy('personal_pv_logs_id','ASC')->first();
+				$insert['start_date'] = $insert['start_date']->date_created;
+				$insert['last_date']  = Tbl_pv_logs::where('date_created','>',$last_date->last_date)->orderBy('personal_pv_logs_id','DESC')->first();
+				$insert['last_date']  = $insert['last_date']->date_created;
 				DB::table('tbl_global_pv_done')->insert($insert);			
 			}
 			else
 			{
-				$insert['start_date'] = Tbl_transaction::orderBy('transaction_id','ASC')->first();
-				$insert['start_date'] = $insert['start_date']->created_at;
-				$insert['last_date']  = Tbl_transaction::orderBy('transaction_id','DESC')->first();
-				$insert['last_date']  = $insert['last_date']->created_at;
-				DB::table('tbl_global_pv_done')->insert($insert);	
+				if(Tbl_pv_logs::orderBy('personal_pv_logs_id','ASC')->first())
+				{
+					$insert['start_date'] = Tbl_pv_logs::orderBy('personal_pv_logs_id','ASC')->first();
+					$insert['start_date'] = $insert['start_date']->date_created;
+					$insert['last_date']  = Tbl_pv_logs::orderBy('personal_pv_logs_id','DESC')->first();
+					$insert['last_date']  = $insert['last_date']->date_created;
+					DB::table('tbl_global_pv_done')->insert($insert);	
+				}
 			}
 			DB::table('tbl_settings')->where('key','global_enable')->update(['value'=>0]);
-				
 			sleep(5);
 			exit;
 		}
@@ -96,23 +99,26 @@ class AdminGlobalPoolSharingController extends AdminController
 		$data['gps'] = DB::table('tbl_settings')->where('key','=','global_pv_sharing_percentage')->first()->value;
         $data['total_pv'] = $this->compute_gained_pv();
         $shared = ($data['gps']/100 )* $data['total_pv'];	
-
+	
         $membership = Tbl_membership::where('archived',0)->where('global_pool_sharing','!=',0)->get();
         foreach($membership as $key => $m)
         {
         	$amount_to_shared = ($m->global_pool_sharing/100)*$shared;
         	$slot = Tbl_slot::where('slot_membership',$m->membership_id)->membership()->get();
         	$count = Tbl_slot::where('slot_membership',$m->membership_id)->count();
-        	$divided_amount = $amount_to_shared / $count;
-    		if($divided_amount != 0)
-    		{
-	        	foreach($slot as $keys => $s)
-	        	{
-		            /* INSERT LOG */
-		            $log = "Your slot #".$s->slot_id." gain an amount of <b>".number_format($divided_amount,2)." wallet </b> you earned from Global Pool Sharing. (".$data['gps']."% of ".$data['total_pv']." equal to ".number_format($shared,2)." and shared to all ".$count." ".$m->membership_name.", ".number_format($divided_amount,2)." each).";
-		            Log::slot($s->slot_id, $log, $divided_amount,"Global Pool Sharing",$s->slot_id);
-	        	}	
-    		}
+        	if($count != 0	)
+        	{
+	        	$divided_amount = $amount_to_shared / $count;
+	    		if($divided_amount != 0)
+	    		{
+		        	foreach($slot as $keys => $s)
+		        	{
+			            /* INSERT LOG */
+			            $log = "Your slot #".$s->slot_id." gain an amount of <b>".number_format($divided_amount,2)." wallet </b> you earned from Global Pool Sharing. (".$data['gps']."% of ".$data['total_pv']." equal to ".number_format($shared,2)." and shared to all ".$count." ".$m->membership_name.", ".number_format($divided_amount,2)." each).";
+			            Log::slot($s->slot_id, $log, $divided_amount,"Global Pool Sharing",$s->slot_id);
+		        	}	
+	    		}
+        	}
         }
 	}
 
@@ -121,7 +127,6 @@ class AdminGlobalPoolSharingController extends AdminController
 		$last_date = DB::table('tbl_global_pv_done')->orderBy('global_pv_done_id','DESC')->first();
 		if($last_date)
 		{	
-			
 			// return Tbl_transaction::where('created_at','>',$last_date->last_date)->sum('earned_pv');
 			return Tbl_pv_logs::where("amount",">=",0)->where("date_created",'>',$last_date->last_date)->sum("amount");
 		}
