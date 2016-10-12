@@ -132,6 +132,7 @@ class AdminGlobalPoolSharingController extends AdminController
 		}
 		else
 		{
+			
 			// return Tbl_transaction::sum('earned_pv');
 			return Tbl_pv_logs::where("amount",">=",0)->sum("amount");
 		}
