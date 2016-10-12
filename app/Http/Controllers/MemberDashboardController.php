@@ -42,7 +42,7 @@ class MemberDashboardController extends MemberController
 		if($slot_info)
 		{
 			$data["group_upcoins"]				= Compute::count_gpv($slot_info->slot_id);
-			$data["personal_upcoins"]	     	= DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_info->slot_id)->where("type","PPV")->sum("amount");
+			$data["personal_upcoins"]	     	= DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_info->slot_id)->where("used_for_redeem",0)->where("type","PPV")->sum("amount");
 			if($slot_info->slot_type == "CD")
 			{
 				$data["personal_upcoins"]	    = 0;	

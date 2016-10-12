@@ -84,8 +84,8 @@ class MemberEncashmentController extends MemberController
 	public function redeem()
 	{	
 		$id = Session::get('currentslot');
-		$data["reedemed_upcoins"]			= DB::table("tbl_pv_logs")->where("owner_slot_id",$id)->where("amount","<",0)->where("type","PPV")->sum("amount");
-		$data["total_personal_upcoins"]		= DB::table("tbl_pv_logs")->where("owner_slot_id",$id)->where("amount",">",0)->where("type","PPV")->sum("amount");
+		$data["reedemed_upcoins"]			= DB::table("tbl_pv_logs")->where("owner_slot_id",$id)->where("used_for_redeem",1)->sum("amount");
+		$data["total_personal_upcoins"]		= DB::table("tbl_pv_logs")->where("owner_slot_id",$id)->where("used_for_redeem",0)->sum("amount");
 		$data["request"]                    = DB::table("tbl_redeem_request")->where("slot_id",$id)->get();
 
 		if(isset($_POST['requested_amount']))
@@ -118,6 +118,7 @@ class MemberEncashmentController extends MemberController
 	                $insert_pv["detail"]          = $log;
 	                $insert_pv["date_created"]    = Carbon::now();
 	                $insert_pv["type"]            = "PPV";
+	                $insert_pv["used_for_redeem"] = 1;
 	                DB::table("tbl_pv_logs")->insert($insert_pv);
 	                
 	                
@@ -131,8 +132,8 @@ class MemberEncashmentController extends MemberController
 					DB::table("tbl_redeem_request")->insert($insert);
 					
 					
-					$data["reedemed_upcoins"]			= DB::table("tbl_pv_logs")->where("owner_slot_id",$id)->where("amount","<",0)->where("type","PPV")->sum("amount");
-					$data["total_personal_upcoins"]		= DB::table("tbl_pv_logs")->where("owner_slot_id",$id)->where("amount",">",0)->where("type","PPV")->sum("amount");
+					$data["reedemed_upcoins"]			= DB::table("tbl_pv_logs")->where("owner_slot_id",$id)->where("used_for_redeem",1)->where("type","PPV")->sum("amount");
+					$data["total_personal_upcoins"]		= DB::table("tbl_pv_logs")->where("owner_slot_id",$id)->where("used_for_redeem",0)->where("type","PPV")->sum("amount");
 					$data["request"]                    = DB::table("tbl_redeem_request")->where("slot_id",$id)->get();
 					$data["sucess"] 					= "Successfully requested";
 

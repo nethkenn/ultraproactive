@@ -75,7 +75,7 @@ class AdminSlotController extends AdminController
 	        								->addColumn('info','<a href="admin/maintenance/slots/view?id={{$slot_id}}">INFO</a>')
 	        								->addColumn('wallet','<a style="cursor:pointer;" class="adjust-slot" slot-id="{{$slot_id}}">{{App\Tbl_wallet_logs::id("$slot_id")->wallet()->sum("wallet_amount")}}</a>')
 	        								->addColumn('slot_wallet_gc','<a style="cursor:pointer;" class="adjust-slot-gc" slot-id="{{$slot_id}}">{{App\Tbl_wallet_logs::id("$slot_id")->GC()->sum("wallet_amount")}}</a>')
-	        								->addColumn('pup','<a style="cursor:pointer;" class="adjust-slot-PUP" slot-id="{{$slot_id}}">{{App\Tbl_pv_logs::where("owner_slot_id","$slot_id")->where("type","PPV")->sum("amount") != 0 && $slot_type != "CD" ? App\Tbl_pv_logs::where("owner_slot_id","$slot_id")->where("type","PPV")->sum("amount") : 0}}</a>')
+	        								->addColumn('pup','<a style="cursor:pointer;" class="adjust-slot-PUP" slot-id="{{$slot_id}}">{{App\Tbl_pv_logs::where("owner_slot_id","$slot_id")->where("used_for_redeem",0)->where("type","PPV")->sum("amount") != 0 && $slot_type != "CD" ? App\Tbl_pv_logs::where("owner_slot_id","$slot_id")->where("used_for_redeem",0)->where("type","PPV")->sum("amount") : 0}}</a>')
 	        								->addColumn('gup','{{App\Classes\Compute::count_gpv($slot_id)}}')
 	        								->addColumn('sponsor','{{App\Tbl_slot::id("$slot_sponsor")->account()->first() == null ? "---" : "Slot #".App\Tbl_slot::id("$slot_sponsor")->account()->first()->slot_id."(".App\Tbl_slot::id("$slot_sponsor")->account()->first()->account_name.")"}}')
 	        								->addColumn('placement','{{App\Tbl_slot::id("$slot_placement")->account()->first() == null ? "---" : "Slot #".App\Tbl_slot::id("$slot_placement")->account()->first()->slot_id."(".App\Tbl_slot::id("$slot_placement")->account()->first()->account_name.")"}}')
@@ -709,7 +709,7 @@ class AdminSlotController extends AdminController
 	        {
 	    	   DB::table("tbl_pv_logs")->insert($insert_personal);
 	        }
-	        Compute::check_compensation_rank_manual($slot_id);
+	        Compute::check_compensation_rank($slot_id);
         }
         
         return json_encode($data);
@@ -718,7 +718,7 @@ class AdminSlotController extends AdminController
 	public function computeAdjustmentPUP($slot_id, $slot_adjustment, $wallet_adjustment_amount)
 	{
 		$wallet_adjustment_amount = (double) $wallet_adjustment_amount;
-		$current_wallet_amount = DB::table('tbl_pv_logs')->where('owner_slot_id', $slot_id)->where('type', 'PPV')->sum('amount');
+		$current_wallet_amount = DB::table('tbl_pv_logs')->where('owner_slot_id', $slot_id)->where("used_for_redeem",0)->where('type', 'PPV')->sum('amount');
 
 		switch ($slot_adjustment)
 		{

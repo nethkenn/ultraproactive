@@ -1154,12 +1154,13 @@ class Compute
     {
         $slot               = Tbl_slot::where("slot_id",$slot_id)->first();
         $group_pv           = Compute::count_gpv($slot_id);
-        $personal_pv        = DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_id)->where("amount",">",0)->where("type","PPV")->sum("amount");
-        $month_personal_pv  = DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_id)->where("amount",">",0)->where("type","PPV")->where("date_created","LIKE","%".Carbon::now()->format("Y-m")."%")->sum("amount");
-       if($slot->slot_type == "CD")
+        $personal_pv        = DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_id)->where("used_for_redeem",0)->where("type","PPV")->sum("amount");
+        $month_personal_pv  = DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_id)->where("used_for_redeem",0)->where("type","PPV")->where("date_created","LIKE","%".Carbon::now()->format("Y-m")."%")->sum("amount");
+        if($slot->slot_type == "CD")
         {
            $personal_pv = 0; 
         }
+
         // dd($month_personal_pv,Carbon::now()->format("Y-m"));sl
         if($slot)
         {
@@ -1256,8 +1257,8 @@ class Compute
     {
         $slot               = Tbl_slot::where("slot_id",$slot_id)->first();
         $group_pv           = Compute::count_gpv($slot_id);
-        $personal_pv        = DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_id)->where("amount",">",0)->where("type","PPV")->sum("amount");
-        $month_personal_pv  = DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_id)->where("amount",">",0)->where("type","PPV")->where("date_created","LIKE","%".Carbon::now()->format("Y-m")."%")->sum("amount");
+        $personal_pv        = DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_id)->where("used_for_redeem",0)->where("type","PPV")->sum("amount");
+        $month_personal_pv  = DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_id)->where("used_for_redeem",0)->where("type","PPV")->where("date_created","LIKE","%".Carbon::now()->format("Y-m")."%")->sum("amount");
 
         if($slot->slot_type == "CD")
         {
@@ -1323,9 +1324,9 @@ class Compute
         {
             if($your_slot->slot_type != "CD")
             {
-                $sum       = Tbl_pv_logs::where("owner_slot_id",$slot_id)->where("amount",">=",0)->sum("amount");
+                $sum       = Tbl_pv_logs::where("owner_slot_id",$slot_id)->where("used_for_redeem",0)->sum("amount");
                 
-                $sum       = $sum + Tbl_tree_sponsor::where("sponsor_tree_parent_id",$slot_id)->join("tbl_pv_logs","tbl_pv_logs.owner_slot_id","=","sponsor_tree_child_id")->where("amount",">=",0)->sum("amount");
+                $sum       = $sum + Tbl_tree_sponsor::where("sponsor_tree_parent_id",$slot_id)->join("tbl_pv_logs","tbl_pv_logs.owner_slot_id","=","sponsor_tree_child_id")->where("used_for_redeem",0)->sum("amount");
                 
             }
         }
