@@ -10,6 +10,7 @@ use App\Tbl_product_code;
 use App\Tbl_tree_placement;
 use App\Tbl_wallet_logs;
 use App\Tbl_account_encashment_history;
+use App\Tbl_pv_logs;
 use Session;
 use Request;
 use Redirect;
@@ -140,5 +141,18 @@ class MemberReportController extends MemberController
 		$data["_encash"] = $encash;
 
 		return view('member.encashment_history', $data);
+	}
+	
+	public function upcoin_report()
+	{
+		$id 		      = Session::get('currentslot');
+		$data["_logs"]	  = Tbl_pv_logs::where("owner_slot_id",$id)->get();
+		$data["subtotal"] = Tbl_pv_logs::where("owner_slot_id",$id)->where("used_for_redeem",0)->sum("amount");
+		$data["redeem"]   = Tbl_pv_logs::where("owner_slot_id",$id)->where("used_for_redeem",1)->sum("amount");
+		
+		$data["total"]    = $data["subtotal"] - (-1 * $data["redeem"]);
+		
+		return view('member.upcoin_report',$data);
+		
 	}
 }

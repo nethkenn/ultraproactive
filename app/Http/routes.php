@@ -35,6 +35,7 @@ Route::any('/member/reports/income_breakdown', 'MemberReportController@breakdown
 Route::any('/member/reports/income_summary', 'MemberReportController@summary');
 Route::any('/member/reports/genealogy_list', 'MemberReportController@genealogy_list');
 Route::any('/member/reports/encashment_history', 'MemberReportController@encashment_history');
+Route::any('/member/reports/upcoin_report', 'MemberReportController@upcoin_report');
 
 
 /* Transfer wallet */

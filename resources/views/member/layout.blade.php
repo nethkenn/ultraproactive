@@ -102,6 +102,7 @@
                             <li><a href="/member/reports/income_summary">Income Summary</a></li>
                             <li><a href="/member/reports/genealogy_list">Genealogy List</a></li>
                             <li><a href="/member/reports/encashment_history">Encashment History</a></li>
+                            <li><a href="/member/reports/upcoin_report">Upcoins</a></li>
                         </ul>
                     </li>
                    <li class="{{ Request::segment(2) == 'genealogy' ? 'active' : '' }} dropdown hide">
