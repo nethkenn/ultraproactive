@@ -1441,8 +1441,16 @@ class Compute
             if($your_slot->slot_type != "CD")
             {
                 $sum       = Tbl_pv_logs::where("owner_slot_id",$slot_id)->where("used_for_redeem",0)->sum("amount");
-                
-                $sum       = $sum + Tbl_tree_sponsor::where("sponsor_tree_parent_id",$slot_id)->join("tbl_pv_logs","tbl_pv_logs.owner_slot_id","=","sponsor_tree_child_id")->where("used_for_redeem",0)->sum("amount");
+                if($sum == null)
+                {
+                    $sum = 0;
+                }
+                $tree_sum  = Tbl_tree_sponsor::where("sponsor_tree_parent_id",$slot_id)->join("tbl_pv_logs","tbl_pv_logs.owner_slot_id","=","sponsor_tree_child_id")->where("used_for_redeem",0)->sum("amount");
+                if($tree_sum == null)
+                {
+                    $tree_sum = 0;
+                }
+                $sum       = $sum + $tree_sum;
                 
             }
         }
