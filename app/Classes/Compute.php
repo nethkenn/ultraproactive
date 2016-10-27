@@ -1200,6 +1200,7 @@ class Compute
                                                           ->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_sponsor.sponsor_tree_parent_id")
                                                           ->join("tbl_compensation_rank","tbl_compensation_rank.compensation_rank_id","=","tbl_slot.next_month_rank")
                                                           ->where("next_month_rank","<",$rank->compensation_rank_id)
+                                                          ->where("slot_type","!=","CD")
                                                           ->get();
                                                           
                                                         
@@ -1216,6 +1217,7 @@ class Compute
                                                           ->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_sponsor.sponsor_tree_child_id")
                                                           ->join("tbl_compensation_rank","tbl_compensation_rank.compensation_rank_id","=","tbl_slot.next_month_rank")
                                                           ->where("next_month_rank",$rank->required_compensation_rank_id)
+                                                          ->where("slot_type","!=","CD")
                                                           ->first();
                             if($_tree)
                             {
@@ -1374,6 +1376,7 @@ class Compute
                                                           ->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_sponsor.sponsor_tree_parent_id")
                                                           ->join("tbl_compensation_rank","tbl_compensation_rank.compensation_rank_id","=","tbl_slot.next_month_rank")
                                                           ->where("next_month_rank","<",$rank->compensation_rank_id)
+                                                          ->where("slot_type","!=","CD")
                                                           ->get();
                                                           
                                                         
@@ -1390,6 +1393,7 @@ class Compute
                                                           ->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_sponsor.sponsor_tree_child_id")
                                                           ->join("tbl_compensation_rank","tbl_compensation_rank.compensation_rank_id","=","tbl_slot.next_month_rank")
                                                           ->where("next_month_rank",$rank->required_compensation_rank_id)
+                                                          ->where("slot_type","!=","CD")
                                                           ->first();
                             if($_tree)
                             {
