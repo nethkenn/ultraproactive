@@ -8,6 +8,8 @@ use App\Tbl_slot;
 use App\Tbl_account;
 use App\Tbl_membership;
 use App\Tbl_voucher;
+use App\Tbl_compensation_rank;
+use App\Tbl_pv_logs;
 use App\Tbl_country;
 use App\Tbl_rank;
 use Crypt;
@@ -26,6 +28,7 @@ class AdminSlotController extends AdminController
 		// dd("AdminSlotController");
 		$data['membership'] = Tbl_membership::where('archived',0)->get();
 		$data['slot_limit'] = DB::table('tbl_settings')->where('key','slot_limit')->first();
+		$data["_compensation_rank"] =Tbl_compensation_rank::get();
 		Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Slot Maintenance");
 		if(!$data['slot_limit'])
 		{
@@ -37,6 +40,17 @@ class AdminSlotController extends AdminController
 			$old = DB::table('tbl_settings')->where('key','slot_limit')->first();
 			DB::table('tbl_settings')->where('key','slot_limit')->update(['key'=>'slot_limit','value'=>Request::input('slot_limit')]);
 			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." change slot limit ".$old->value.' to '.Request::input('slot_limit'));
+		    return Redirect::to('admin/maintenance/slots');
+		}
+
+		if(isset($_POST['rank_adjustment']))
+		{
+			$update["permanent_rank_id"] = $_POST["rank_adjustment"];
+			$slot_id                = $_POST["slot_id"];
+			$slot_inf				= Tbl_slot::where("slot_id",$slot_id)->first();
+			Tbl_slot::where("slot_id",$slot_id)->update($update);
+			Compute::check_compensation_rank_manual($slot_id);
+			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." update Slot ID".$slot_id." from rank id ".$slot_inf->current_rank." to ". $update["permanent_rank_id"]);
 		    return Redirect::to('admin/maintenance/slots');
 		}
 
@@ -57,13 +71,16 @@ class AdminSlotController extends AdminController
 	        					->rank()->membership()->account()->where('slot_membership',$membership)->get();
 		}
 		
-	        return Datatables::of($_account)->addColumn('gen','<a href="admin/maintenance/slots/add?id={{$slot_id}}">GENEALOGY</a>')
+	        return Datatables::of($_account)->addColumn('gen','<a href="admin/maintenance/slots/add?id={{$slot_id}}">GENE</a>/</br><a href="admin/maintenance/slots/view?id={{$slot_id}}">INFO</a>')
 	        								->addColumn('info','<a href="admin/maintenance/slots/view?id={{$slot_id}}">INFO</a>')
 	        								->addColumn('wallet','<a style="cursor:pointer;" class="adjust-slot" slot-id="{{$slot_id}}">{{App\Tbl_wallet_logs::id("$slot_id")->wallet()->sum("wallet_amount")}}</a>')
 	        								->addColumn('slot_wallet_gc','<a style="cursor:pointer;" class="adjust-slot-gc" slot-id="{{$slot_id}}">{{App\Tbl_wallet_logs::id("$slot_id")->GC()->sum("wallet_amount")}}</a>')
+	        								->addColumn('pup','<a style="cursor:pointer;" class="adjust-slot-PUP" slot-id="{{$slot_id}}">{{App\Tbl_pv_logs::where("owner_slot_id","$slot_id")->where("used_for_redeem",0)->where("type","PPV")->sum("amount") != 0 && $slot_type != "CD" ? App\Tbl_pv_logs::where("owner_slot_id","$slot_id")->where("used_for_redeem",0)->where("type","PPV")->sum("amount") : 0}}</a>')
+	        								->addColumn('gup','{{App\Classes\Compute::count_gpv($slot_id)}}')
 	        								->addColumn('sponsor','{{App\Tbl_slot::id("$slot_sponsor")->account()->first() == null ? "---" : "Slot #".App\Tbl_slot::id("$slot_sponsor")->account()->first()->slot_id."(".App\Tbl_slot::id("$slot_sponsor")->account()->first()->account_name.")"}}')
 	        								->addColumn('placement','{{App\Tbl_slot::id("$slot_placement")->account()->first() == null ? "---" : "Slot #".App\Tbl_slot::id("$slot_placement")->account()->first()->slot_id."(".App\Tbl_slot::id("$slot_placement")->account()->first()->account_name.")"}}')
 	        								->addColumn('position','{{App\Tbl_slot::id("$slot_placement")->account()->first() == null ? "---" : strtoupper($slot_position)}}')
+	        								->addColumn('rank','<a style="cursor:pointer;" class="adjust-rank" slot-id="{{$slot_id}}" rank_id="{{$permanent_rank_id}}">{{App\Tbl_compensation_rank::where("compensation_rank_id","$permanent_rank_id")->first()->compensation_rank_name}}</a>')
 	        								->addColumn('login','<form method="POST" form action="admin/maintenance/accounts" target="_blank"><input type="hidden" class="token" name="_token" value="{{ csrf_token() }}"><button name="login" type="submit" value="{{$slot_owner}}" class="form-control">Login</button></form>')
 	        								->make(true);
 
@@ -201,7 +218,7 @@ class AdminSlotController extends AdminController
 			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." create new slot #".$slot_id,null,serialize($insert));
 			
 			Compute::tree($slot_id);
-			Compute::entry($slot_id);
+			Compute::entry($slot_id,"SLOT CREATION");
 
 			Tbl_slot::where('slot_id',$slot_id)->update(['distributed'=>1]);
 			$return["placement"] = Request::input("placement");
@@ -499,7 +516,7 @@ class AdminSlotController extends AdminController
 					break;
 			}
 			
-			Log::slot($slot_id, $logs, $wallet_adjustment_amount, "System Adjusment" , Admin::info()->account_id);
+			Log::slot($slot_id, $logs, $wallet_adjustment_amount, "System Adjusment" , 1);
         }
 
 
@@ -531,6 +548,8 @@ class AdminSlotController extends AdminController
 
 		return $data;
 	}
+
+
 
 	public function computeAdjustmentAjaxGC()
 	{
@@ -585,7 +604,7 @@ class AdminSlotController extends AdminController
 					break;
 			}
 			
-			Log::slot($slot_id, $logs, $wallet_adjustment_amount, "System Adjusment" , Admin::info()->account_id,1);
+			Log::slot($slot_id, $logs, $wallet_adjustment_amount, "System Adjusment" , 1,1);
         }
 
 
@@ -614,6 +633,109 @@ class AdminSlotController extends AdminController
 		$data['slot_adjustment_gc'] = $slot_adjustment;
 		$data['wallet_adjustment_amount_gc'] = $wallet_adjustment_amount;
 		$data['current_wallet_amount_gc'] = $current_wallet_amount;
+
+		return $data;
+	}
+
+
+
+
+
+
+
+	public function computeAdjustmentAjaxPUP()
+	{
+
+		$slot_id = Request::input('slot_id');
+		$slot_adjustment = Request::input('wallet_adjustment_PUP');
+		$wallet_adjustment_amount  = Request::input('wallet_adjustment_amount_PUP');
+		
+		$data = $this->computeAdjustmentPUP($slot_id, $slot_adjustment, $wallet_adjustment_amount);
+		return json_encode($data);
+
+	}
+
+	public function adjustWalletPUP()
+	{
+		$data['errors'] = [];
+
+		$slot_id = Request::input('slot_id');
+		$slot_adjustment = Request::input('wallet_adjustment_PUP');
+		$wallet_adjustment_amount  = (double) Request::input('wallet_adjustment_amount_PUP');
+		$wallet_adjustment_amount_formated = number_format($wallet_adjustment_amount, 2);
+		
+		$rules['slot_id'] = 'required|exists:tbl_slot,slot_id';
+		$rules['wallet_adjustment_amount_PUP'] = 'required|numeric|min:1';
+		$rules['wallet_adjustment_PUP'] = 'foo';
+		$messages['wallet_adjustment_PUP.foo'] = "Invalid wallet personal UPcoins method.";
+		Validator::extend('foo', function($attribute, $value, $parameters, $validator) {
+            return $value == 'add' || $value == 'deduct';
+        });
+
+		$validator = validator::make(Request::input(), $rules, $messages);
+		if ($validator->fails()) {
+
+			$data['errors'] = $validator->errors()->all();
+  
+        }
+        else
+        {
+	        $data = $this->computeAdjustmentPUP($slot_id, $slot_adjustment, $wallet_adjustment_amount);
+	        $data['errors'] = [];
+	      
+			switch ($slot_adjustment)
+			{
+				case 'add':
+					$logs = "Added $wallet_adjustment_amount_formated Personal UPcoins from system adjustment.";
+					break;
+				
+				default:
+					$logs = "Deducted $wallet_adjustment_amount_formated Personal UPcoins from system adjustment.";
+					$wallet_adjustment_amount = (double) ("-".$wallet_adjustment_amount);
+					/* Deduct */
+					break;
+			}
+
+			Log::slot($slot_id, $logs, 0, "System Adjusment" , 1);
+				        
+	        $insert_personal["owner_slot_id"]   = $slot_id;
+	        $insert_personal["amount"]          = $wallet_adjustment_amount;
+	        $insert_personal["detail"]          = $logs;
+	        $insert_personal["date_created"]    = Carbon\Carbon::now();
+	        $insert_personal["type"]            = "PPV";
+	        
+	        $slot_info = Tbl_slot::where("slot_id",$slot_id)->first();
+	        if($slot_info->slot_type != "CD")
+	        {
+	    	   DB::table("tbl_pv_logs")->insert($insert_personal);
+	        }
+	        Compute::check_compensation_rank_manual_by_adjust($slot_id);
+        }
+        
+        return json_encode($data);
+	}
+
+	public function computeAdjustmentPUP($slot_id, $slot_adjustment, $wallet_adjustment_amount)
+	{
+		$wallet_adjustment_amount = (double) $wallet_adjustment_amount;
+		$current_wallet_amount = DB::table('tbl_pv_logs')->where('owner_slot_id', $slot_id)->where("used_for_redeem",0)->where('type', 'PPV')->sum('amount');
+
+		switch ($slot_adjustment)
+		{
+			case 'add':
+				$current_wallet_amount = $current_wallet_amount + $wallet_adjustment_amount;
+				break;
+			
+			default:
+				/* Deduct */
+				$current_wallet_amount = $current_wallet_amount - $wallet_adjustment_amount;
+				break;
+		}
+
+		$data['slot_id'] = $slot_id;
+		$data['slot_adjustment_PUP'] = $slot_adjustment;
+		$data['wallet_adjustment_amount_PUP'] = $wallet_adjustment_amount;
+		$data['current_wallet_amount_PUP'] = $current_wallet_amount;
 
 		return $data;
 	}

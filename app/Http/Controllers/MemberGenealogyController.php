@@ -481,7 +481,7 @@ class MemberGenealogyController extends MemberController
 							Log::slot($slot_id, $logs, $amount, "New slot",$slot_id);
 
 							Compute::tree($slot_id);
-							Compute::entry($slot_id);
+							Compute::entry($slot_id,"SLOT CREATION",$code->code_pin);
 
 							if($c == "CD")
 							{

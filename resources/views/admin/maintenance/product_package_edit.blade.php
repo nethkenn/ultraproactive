@@ -25,6 +25,8 @@
                 <div class="form-group col-md-12">
                     <label for="product-package_name">Product Package Name</label>
             		<input name="product_package_name" value="{{Request::input('product_package_name') ? Request::input('product_package_name') : $prod_package->product_package_name}}" required="required" class="form-control" id="" placeholder="" type="text">
+                    <label for="product-package_name">Product Package UPCOIN</label>
+            		<input name="product_package_upcoin" value="{{Request::input('product_package_upcoin') ? Request::input('product_package_upcoin') : $prod_package->product_package_upcoin}}" required="required" class="form-control" id="" placeholder="" type="text">
             		<label for="mem">Membership</label>
             		<select name="membership_id" id="mem" class="form-control">
             			@if($membership)

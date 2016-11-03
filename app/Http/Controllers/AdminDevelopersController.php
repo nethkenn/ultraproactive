@@ -24,6 +24,7 @@ use App\Tbl_travel_qualification;
 use DateTime;
 class AdminDevelopersController extends Controller
 {
+
 	// public function migration()
 	// {
 	// 	$id_code = 'ultratop';
@@ -228,118 +229,118 @@ class AdminDevelopersController extends Controller
 
  //        return view('admin.developer.migration');
 	// }
-	public function negativecd()
-	{
-		$get_cd = Tbl_slot::where('slot_type','CD')->get();
+	// public function negativecd()
+	// {
+	// 	$get_cd = Tbl_slot::where('slot_type','CD')->get();
 
-		foreach($get_cd as $key => $slot)
-		{
-			$insert[$key]['wallet_amount'] = -3000;
-			$insert[$key]['keycode'] 	   = "CD Slot";     
-			$insert[$key]['slot_id']       = $slot->slot_id; 
-			$insert[$key]['cause_id']	   = $slot->slot_id;
-			$insert[$key]['account_id']    = $slot->slot_owner;
-			$insert[$key]['created_at']    = Carbon::now();
-			$insert[$key]['logs']   	   = "Negative CD Slot";
-			$insert[$key]['wallet_type']   = "Wallet";
-		}
+	// 	foreach($get_cd as $key => $slot)
+	// 	{
+	// 		$insert[$key]['wallet_amount'] = -3000;
+	// 		$insert[$key]['keycode'] 	   = "CD Slot";     
+	// 		$insert[$key]['slot_id']       = $slot->slot_id; 
+	// 		$insert[$key]['cause_id']	   = $slot->slot_id;
+	// 		$insert[$key]['account_id']    = $slot->slot_owner;
+	// 		$insert[$key]['created_at']    = Carbon::now();
+	// 		$insert[$key]['logs']   	   = "Negative CD Slot";
+	// 		$insert[$key]['wallet_type']   = "Wallet";
+	// 	}
 
-			DB::table('tbl_wallet_logs')->insert($insert);
+	// 		DB::table('tbl_wallet_logs')->insert($insert);
 
-			dd("SUCCESS");
-	}
+	// 		dd("SUCCESS");
+	// }
 
-	public function area_disable()
-	{
-		$rank = Admin::info()->admin_position_rank;
+	// public function area_disable()
+	// {
+	// 	$rank = Admin::info()->admin_position_rank;
 
-		if($rank == 0)
-		{
+	// 	if($rank == 0)
+	// 	{
 			
-		}
-		else
-		{
-			return Redirect::to('/admin');
-		}
+	// 	}
+	// 	else
+	// 	{
+	// 		return Redirect::to('/admin');
+	// 	}
 
 
-		$rank = Admin::info()->admin_position_rank;
-		if($rank == 0)
-		{
+	// 	$rank = Admin::info()->admin_position_rank;
+	// 	if($rank == 0)
+	// 	{
 			
-		}
-		else
-		{
-			return Redirect::to('/admin');
-		}
+	// 	}
+	// 	else
+	// 	{
+	// 		return Redirect::to('/admin');
+	// 	}
 
-        $member_area = DB::table('tbl_settings')->where('key','disable_member_area')->first();
-        if(!$member_area)
-        {
-            DB::table('tbl_settings')->insert(['key'=>'disable_member_area','value'=>'0']);
-            $member_area = DB::table('tbl_settings')->where('key','disable_member_area')->first();
-        }		
+ //       $member_area = DB::table('tbl_settings')->where('key','disable_member_area')->first();
+ //       if(!$member_area)
+ //       {
+ //           DB::table('tbl_settings')->insert(['key'=>'disable_member_area','value'=>'0']);
+ //           $member_area = DB::table('tbl_settings')->where('key','disable_member_area')->first();
+ //       }		
 
-        if($member_area->value == 0)
-        {
-        	echo "Status: Member's area is enabled.";
-	        echo " <form method='get'>
-	                    <button type='submit' name='disable' value='Disable Member'>Disable Member</button>
-	               </form> ";
+ //       if($member_area->value == 0)
+ //       {
+ //       	echo "Status: Member's area is enabled.";
+	//         echo " <form method='get'>
+	//                     <button type='submit' name='disable' value='Disable Member'>Disable Member</button>
+	//               </form> ";
 
-	        if(Request::input('disable'))
-	        {
-	        	$member_area = DB::table('tbl_settings')->where('key','disable_member_area')->update(['value'=>1]);
-	        	return Redirect::to('admin/migration/disable');
-	        }
-        }
-        else
-        {
-        	echo "Status: Member's area is disabled.";
-	        echo " <form method='get'>
-	                    <button type='submit' name='disable' value='Enable Member'>Enable Member</button>
-	               </form> ";
-   	        if(Request::input('disable'))
-	        {
-	        	$member_area = DB::table('tbl_settings')->where('key','disable_member_area')->update(['value'=>0]);
-	        	return Redirect::to('admin/migration/disable');
-	        }
-        }
+	//         if(Request::input('disable'))
+	//         {
+	//         	$member_area = DB::table('tbl_settings')->where('key','disable_member_area')->update(['value'=>1]);
+	//         	return Redirect::to('admin/migration/disable');
+	//         }
+ //       }
+ //       else
+ //       {
+ //       	echo "Status: Member's area is disabled.";
+	//         echo " <form method='get'>
+	//                     <button type='submit' name='disable' value='Enable Member'>Enable Member</button>
+	//               </form> ";
+ //  	        if(Request::input('disable'))
+	//         {
+	//         	$member_area = DB::table('tbl_settings')->where('key','disable_member_area')->update(['value'=>0]);
+	//         	return Redirect::to('admin/migration/disable');
+	//         }
+ //       }
 
 
-        $admin_area = DB::table('tbl_settings')->where('key','disable_admin_area')->first();
-        if(!$admin_area)
-        {
-            DB::table('tbl_settings')->insert(['key'=>'disable_admin_area','value'=>'0']);
-            $slot_owner_level = DB::table('tbl_settings')->where('key','disable_admin_area')->first();
-        }		
+ //       $admin_area = DB::table('tbl_settings')->where('key','disable_admin_area')->first();
+ //       if(!$admin_area)
+ //       {
+ //           DB::table('tbl_settings')->insert(['key'=>'disable_admin_area','value'=>'0']);
+ //           $slot_owner_level = DB::table('tbl_settings')->where('key','disable_admin_area')->first();
+ //       }		
 
-        if($admin_area->value == 0)
-        {
-        	echo "Status: Admin's area is enabled.";
-	        echo " <form method='get'>
-	                    <button type='submit' name='disable_admin' value='Disable Admin'>Disable Admin</button>
-	               </form> ";
+ //       if($admin_area->value == 0)
+ //       {
+ //       	echo "Status: Admin's area is enabled.";
+	//         echo " <form method='get'>
+	//                     <button type='submit' name='disable_admin' value='Disable Admin'>Disable Admin</button>
+	//               </form> ";
 
-	        if(Request::input('disable_admin'))
-	        {
-	        	$admin_area = DB::table('tbl_settings')->where('key','disable_admin_area')->update(['value'=>1]);
-	        	return Redirect::to('admin/migration/disable');
-	        }
-        }
-        else
-        {
-        	echo "Status: Admin's area is disabled.";
-	        echo " <form method='get'>
-	                    <button type='submit' name='disable_admin' value='Enable Admin'>Enable Admin</button>
-	               </form> ";
-   	        if(Request::input('disable_admin'))
-	        {
-	        	$admin_area = DB::table('tbl_settings')->where('key','disable_admin_area')->update(['value'=>0]);
-	        	return Redirect::to('admin/migration/disable');
-	        }
-        }
-	}
+	//         if(Request::input('disable_admin'))
+	//         {
+	//         	$admin_area = DB::table('tbl_settings')->where('key','disable_admin_area')->update(['value'=>1]);
+	//         	return Redirect::to('admin/migration/disable');
+	//         }
+ //       }
+ //       else
+ //       {
+ //       	echo "Status: Admin's area is disabled.";
+	//         echo " <form method='get'>
+	//                     <button type='submit' name='disable_admin' value='Enable Admin'>Enable Admin</button>
+	//               </form> ";
+ //  	        if(Request::input('disable_admin'))
+	//         {
+	//         	$admin_area = DB::table('tbl_settings')->where('key','disable_admin_area')->update(['value'=>0]);
+	//         	return Redirect::to('admin/migration/disable');
+	//         }
+ //       }
+	// }
 
 	public function re_entry()
 	{
@@ -526,86 +527,149 @@ class AdminDevelopersController extends Controller
 		// dd('finish');
 	}
 
-	public function re_check($slot_id)
-	{
-		    $_pairing = Tbl_binary_pairing::orderBy("pairing_point_l", "desc")->get();
-			$slot_recipient = Tbl_slot::id($slot_id)->membership()->first();
-			$method = "SLOT CREATION";
-            /* RETRIEVE LEFT & RIGHT POINTS */
-            $binary["left"] = $slot_recipient->slot_binary_left;
-            $binary["right"] = $slot_recipient->slot_binary_right; 
+	// public function re_check($slot_id)
+	// {
+	// 	    $_pairing = Tbl_binary_pairing::orderBy("pairing_point_l", "desc")->get();
+	// 		$slot_recipient = Tbl_slot::id($slot_id)->membership()->first();
+	// 		$method = "SLOT CREATION";
+ //           /* RETRIEVE LEFT & RIGHT POINTS */
+ //           $binary["left"] = $slot_recipient->slot_binary_left;
+ //           $binary["right"] = $slot_recipient->slot_binary_right; 
 
-            /* CHECK PAIRING */
-            foreach($_pairing as $pairing)
-            {   
-                if($pairing->membership_id == $slot_recipient->slot_membership)
-                {
-                        while($binary["left"] >= $pairing->pairing_point_l && $binary["right"] >= $pairing->pairing_point_r)
-                        {
-                                    $binary["left"] = $binary["left"] - $pairing->pairing_point_l;
-                                    $binary["right"] = $binary["right"] - $pairing->pairing_point_r;
+ //           /* CHECK PAIRING */
+ //           foreach($_pairing as $pairing)
+ //           {   
+ //               if($pairing->membership_id == $slot_recipient->slot_membership)
+ //               {
+ //                       while($binary["left"] >= $pairing->pairing_point_l && $binary["right"] >= $pairing->pairing_point_r)
+ //                       {
+ //                                   $binary["left"] = $binary["left"] - $pairing->pairing_point_l;
+ //                                   $binary["right"] = $binary["right"] - $pairing->pairing_point_r;
                                     
-                                    /* GET PAIRING BONUS */
-                                    $pairing_bonus = $pairing->pairing_income;
+ //                                   /* GET PAIRING BONUS */
+ //                                   $pairing_bonus = $pairing->pairing_income;
 
-                                    /* CHECK IF PAIRING BONUS IS ZERO */
-                                    if($pairing_bonus != 0)
-                                    {
+ //                                   /* CHECK IF PAIRING BONUS IS ZERO */
+ //                                   if($pairing_bonus != 0)
+ //                                   {
 
-                                        /* Check if entry per day is exceeded already */
-                                        $count =  Tbl_slot::id($slot_id)->first();
-                                        $member = Tbl_membership::where('membership_id',$slot_recipient->slot_membership)->first();
-                                        $count = $count->pairs_today;
-                                        $date = Carbon::now()->toDateString(); 
-                                        $condition = null;
-                                        $gc = false;
+ //                                       /* Check if entry per day is exceeded already */
+ //                                       $count =  Tbl_slot::id($slot_id)->first();
+ //                                       $member = Tbl_membership::where('membership_id',$slot_recipient->slot_membership)->first();
+ //                                       $count = $count->pairs_today;
+ //                                       $date = Carbon::now()->toDateString(); 
+ //                                       $condition = null;
+ //                                       $gc = false;
 
 
-                                        /* Do this when date is new */
-                                        $update['pairs_per_day_date'] = $date;
-                                        $count = 1;
-                                        $update['pairs_today'] = $count;
-                                        $condition = true;
+ //                                       /* Do this when date is new */
+ //                                       $update['pairs_per_day_date'] = $date;
+ //                                       $count = 1;
+ //                                       $update['pairs_today'] = $count;
+ //                                       $condition = true;
 
-	                                        if($slot_recipient->every_gc_pair != 0)
-	                                        {
-	                                            /* CHECK IF GC */
-	                                            if($count%$slot_recipient->every_gc_pair == 0)
-	                                            {
-	                                                $gc = true;
-	                                            }                                                        
-	                                        }
+	//                                         if($slot_recipient->every_gc_pair != 0)
+	//                                         {
+	//                                             /* CHECK IF GC */
+	//                                             if($count%$slot_recipient->every_gc_pair == 0)
+	//                                             {
+	//                                                 $gc = true;
+	//                                             }                                                        
+	//                                         }
 
-                                        	/* Insert Count */
-                                        	Tbl_slot::where('slot_id',$slot_recipient->slot_id)->update($update);
+ //                                       	/* Insert Count */
+ //                                       	Tbl_slot::where('slot_id',$slot_recipient->slot_id)->update($update);
 
-                                            $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($pairing_bonus, 2) . " wallet</b> from <b>MATCHING BONUS</b> due to matching combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining match points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right.";
-											if($gc == false)
-											{
-											     Compute::income_per_day($slot_recipient->slot_id,$pairing_bonus,'binary',$slot_recipient->slot_owner,$log,$slot_recipient->slot_id); 
-											}
-											elseif($gc == true)
-											{
-											    $gcbonus = $pairing_bonus;
-											    // Tbl_slot::where('slot_id',$slot_recipient->slot_id)->update(["slot_gc"=>$gcbonus]);
-											    $log = $log = "This is your ".$slot_recipient->every_gc_pair." MSB, Your ".$pairing_bonus." Income converted to GC (SLOT #".$slot_recipient->slot_id.") due to matching combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining match points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right.";
-											    Log::slot($slot_recipient->slot_id, $log, $gcbonus,"binary",$slot_recipient->slot_id,1);
-											    // Log::account($slot_recipient->slot_owner, $log);
-											} 
+ //                                           $log = "Congratulations! Your slot #" . $slot_recipient->slot_id . " earned <b> " . number_format($pairing_bonus, 2) . " wallet</b> from <b>MATCHING BONUS</b> due to matching combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining match points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right.";
+	// 										if($gc == false)
+	// 										{
+	// 										     Compute::income_per_day($slot_recipient->slot_id,$pairing_bonus,'binary',$slot_recipient->slot_owner,$log,$slot_recipient->slot_id); 
+	// 										}
+	// 										elseif($gc == true)
+	// 										{
+	// 										    $gcbonus = $pairing_bonus;
+	// 										    // Tbl_slot::where('slot_id',$slot_recipient->slot_id)->update(["slot_gc"=>$gcbonus]);
+	// 										    $log = $log = "This is your ".$slot_recipient->every_gc_pair." MSB, Your ".$pairing_bonus." Income converted to GC (SLOT #".$slot_recipient->slot_id.") due to matching combination (" . $pairing->pairing_point_l .  ":" . $pairing->pairing_point_r . "). Your slot's remaining match points is " . $binary["left"] . " point(s) on left and " . $binary["right"] . " point(s) on right.";
+	// 										    Log::slot($slot_recipient->slot_id, $log, $gcbonus,"binary",$slot_recipient->slot_id,1);
+	// 										    // Log::account($slot_recipient->slot_owner, $log);
+	// 										} 
 
-											/* MATCHING SALE BONUS */
-											Compute::matching($slot_recipient->slot_id, $method, $slot_recipient, $pairing_bonus);  
-                                    }                                                      
-                        }                                
+	// 										/* MATCHING SALE BONUS */
+	// 										Compute::matching($slot_recipient->slot_id, $method, $slot_recipient, $pairing_bonus);  
+ //                                   }                                                      
+ //                       }                                
       
-                }
-            } 
+ //               }
+ //           } 
 
-    	/* UPDATE POINTS */
-		$update_recipient["slot_binary_left"] = $binary["left"];
-		$update_recipient["slot_binary_right"] = $binary["right"];
-		Tbl_slot::id($slot_id)->update($update_recipient);
-		$update_recipient = null;
+ //   	/* UPDATE POINTS */
+	// 	$update_recipient["slot_binary_left"] = $binary["left"];
+	// 	$update_recipient["slot_binary_right"] = $binary["right"];
+	// 	Tbl_slot::id($slot_id)->update($update_recipient);
+	// 	$update_recipient = null;
+	// }
+	
+	public function re_adjust_cd()
+	{
+		$rank = Admin::info()->admin_position_rank;
+		$data['entry'] = DB::table('tbl_re_entry')->get();
+		$access_entry_level = DB::table('tbl_settings')->where('key','access_entry_level')->first();
+
+		if($rank == 0)
+		{
+			
+		}
+		else
+		{
+			return Redirect::to('/admin');
+		}
+		
+		if(Request::input('message'))
+		{
+			echo '<b>SUCCESS</b></br>';
+		}
+		
+		
+		if(Request::input('amount'))
+		{
+         	$data['info'] = Admin::info();
+			$admin_id = $data['info']->account_id;
+			$password = $data['info']->account_password;
+			$password = Crypt::decrypt($password);
+
+			if($password == Request::input('password'))
+			{
+				$strURL = "/admin/developer/re_adjust_cd?message=Success";
+				header("Location: $strURL", true);
+				header("Location: $strURL", true);
+				header("Connection: close", true);
+				header("Content-Encoding: none\r\n");
+				header("Content-Length: 0", true);
+	
+	
+				flush();
+				ob_flush();
+				
+					$get = Tbl_slot::where("slot_type","CD")->get();
+					
+					foreach($get as $g)
+					{
+						$amount = -1 * Request::input("amount");
+						$log    = "CD Adjustment (Additional: ".number_format($amount).")";
+						Log::slot($g->slot_id, $log, $amount,"CD Adjustment",$g->slot_id);
+					}
+	
+				session_write_close();
+				sleep(5);
+				exit;
+			}
+			else
+			{
+				die('Wrong password');	
+			}
+		}
+
+        return view('admin.developer.for_cd_adjust',$data);
 	}
 }
 

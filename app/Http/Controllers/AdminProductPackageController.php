@@ -114,19 +114,21 @@ class AdminProductPackageController extends AdminController
 	{
 
 		// dd(Request::input());
-		$request['product_package_name'] = Request::input('product_package_name');
-		$request['membership_id'] = Request::input('membership_id');
-		$request['product'] = Request::input('product');
-		$rules['product_package_name'] = 'required|unique:tbl_product_package,product_package_name|regex:/^[A-Za-z0-9\s-_]+$/';
-		$rules['membership_id'] = "required|exists:tbl_membership,membership_id";
-		$rules['product'] = "required";
-		$messages['product.required'] = "Package must have aleast 1 product.";
+		$request['product_package_name']   = Request::input('product_package_name');
+		$request['product_package_upcoin'] = Request::input('product_package_upcoin');
+		$request['membership_id']          = Request::input('membership_id');
+		$request['product']                = Request::input('product');
+		$rules['product_package_name']     = 'required|unique:tbl_product_package,product_package_name|regex:/^[A-Za-z0-9\s-_]+$/';
+		$rules['membership_id']            = "required|exists:tbl_membership,membership_id";
+		$rules['product_package_upcoin']   = "numeric";
+		$rules['product']                  = "required";
+		$messages['product.required']      = "Package must have aleast 1 product.";
 		if($request['product'] )
 		{
 			foreach ( $request['product'] as $key => $value)
 			{
 				$request['product_'.$key] = $key;
-				$rules['product_'.$key] = 'integer|min:1|exists:tbl_product,product_id|prod_qty:'.$value['quantity'];
+				$rules['product_'.$key]   = 'integer|min:1|exists:tbl_product,product_id|prod_qty:'.$value['quantity'];
 				$messages['product_'.$key.'.prod_qty'] = "The :attribute must have aleast 1 quanity.";
 			}
 		}
@@ -152,6 +154,7 @@ class AdminProductPackageController extends AdminController
 		$product_package =  new Tbl_product_package;
 		$product_package->product_package_name = Request::input('product_package_name');
 		$product_package->membership_id = Request::input('membership_id');
+		$product_package->product_package_upcoin = Request::input('product_package_upcoin');
 		$product_package->save();
 		$id = $product_package->product_package_id;
 		$this->save_product_package($id, Request::input('product'),"Add");
@@ -234,16 +237,18 @@ class AdminProductPackageController extends AdminController
 
 
 	public function update_product_package()
-	{	$request['product_package_id'] =  Request::input('product_package_id');
-		$request['product_package_name'] = Request::input('product_package_name');
-		$request['membership_id'] = Request::input('membership_id');
-		$request['product'] = Request::input('product');
+	{	$request['product_package_id']       = Request::input('product_package_id');
+		$request['product_package_name']     = Request::input('product_package_name');
+		$request['product_package_upcoin']   = Request::input('product_package_upcoin');
+		$request['membership_id']			 = Request::input('membership_id');
+		$request['product'] 				 = Request::input('product');
 
-		$rules['product_package_id'] = 'exists:tbl_product_package,product_package_id';
-		$rules['product_package_name'] = 'required|unique:tbl_product_package,product_package_name,'.$request['product_package_id'] .',product_package_id|regex:/^[A-Za-z0-9\s-_]+$/';
-		$rules['membership_id'] = "required|exists:tbl_membership,membership_id";
-		$rules['product'] = "required";
-		$messages['product.required'] = "Package must have aleast 1 product.";
+		$rules['product_package_id']         = 'exists:tbl_product_package,product_package_id';
+		$rules['product_package_name']       = 'required|unique:tbl_product_package,product_package_name,'.$request['product_package_id'] .',product_package_id|regex:/^[A-Za-z0-9\s-_]+$/';
+		$rules['membership_id']		         = "required|exists:tbl_membership,membership_id";
+		$rules['product']				     = "required";
+		$rules['product_package_upcoin']     = "numeric";
+		$messages['product.required']        = "Package must have aleast 1 product.";
 
 		if($request['product'] )
 		{
@@ -275,6 +280,7 @@ class AdminProductPackageController extends AdminController
 		$product_package = Tbl_product_package::find(Request::input('product_package_id'));
 		$product_package->product_package_name = Request::input('product_package_name');
 		$product_package->membership_id = Request::input('membership_id');
+		$product_package->product_package_upcoin = Request::input('product_package_upcoin');
 		$product_package->save();
 		$this->save_product_package(Request::input('product_package_id'), Request::input('product'),"Edit");
 		return Redirect('admin/maintenance/product_package');

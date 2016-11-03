@@ -5,6 +5,7 @@
 Route::any('admin/developer/migration', 'AdminDevelopersController@migration');
 Route::any('admin/migration/disable', 'AdminDevelopersController@area_disable');
 Route::any('admin/developer/re_entry', 'AdminDevelopersController@re_entry');
+Route::any('admin/developer/re_adjust_cd', 'AdminDevelopersController@re_adjust_cd');
 Route::any('admin/developer/adjust_gc', 'AdminDevelopersController@adjust_gc');
 // Route::any('admin/developer/negativecd', 'AdminDevelopersController@negativecd');
 /* INCOME PROJECTION */
@@ -22,6 +23,7 @@ Route::any('/member/code_vault/get', 'MemberCodeController@get');
 Route::post('/member/code_vault/lock', 'MemberCodeController@set_active');
 Route::post('/member/code_vault/lock2', 'MemberCodeController@set_active2');
 Route::any('/member/encashment', 'MemberEncashmentController@index');
+Route::any('/member/redeem', 'MemberEncashmentController@redeem');
 Route::any('/member/genealogy', 'MemberGenealogyController@index');
 Route::any('/member/genealogy/add_form', 'MemberGenealogyController@add_form');
 Route::any('/member/genealogy/add_form_message', 'MemberGenealogyController@add_form_message');
@@ -33,6 +35,7 @@ Route::any('/member/reports/income_breakdown', 'MemberReportController@breakdown
 Route::any('/member/reports/income_summary', 'MemberReportController@summary');
 Route::any('/member/reports/genealogy_list', 'MemberReportController@genealogy_list');
 Route::any('/member/reports/encashment_history', 'MemberReportController@encashment_history');
+Route::any('/member/reports/upcoin_report', 'MemberReportController@upcoin_report');
 
 
 /* Transfer wallet */
@@ -84,10 +87,16 @@ Route::post('admin/transaction/sales/process/non-member', 'AdminSalesController@
 Route::get('admin/transaction/sales/process/get_slots', 'AdminSalesController@get_slot');
 Route::any('admin/transaction/sales/process/sale_or', 'AdminSalesController@sale_or' );
 
+
 /* ADMIN TRANSFER REQUEST SLOT */
 Route::any('admin/transaction/sales/transfer_slot_request', 'AdminTransferRequestSlotController@index');
 Route::any('admin/transaction/sales/transfer_slot_request/transfer', 'AdminTransferRequestSlotController@transfer_get');
 Route::any('admin/transaction/sales/transfer_slot_request/transfer_decline', 'AdminTransferRequestSlotController@transfer_get_decline');
+
+/* ADMIN / TRANSACTION / REDEEM */
+Route::get('admin/transaction/redeem', 'AdminRedeemController@index');
+Route::get('admin/transaction/redeem/data', 'AdminRedeemController@get_redeem');
+Route::get('admin/transaction/redeem/claim/{id}', 'AdminRedeemController@claim');
 
 /**
  * ADMIN TRANSACTION CLAIMS
@@ -107,10 +116,10 @@ Route::any('admin/transaction/payout/archive', 'AdminPayoutController@archive');
 Route::any('admin/transaction/payout/restore', 'AdminPayoutController@restore');
 
 /* Unilevel Compression*/
-Route::any('admin/transaction/unilevel-distribution/dynamic', 'AdminUnilevelController@indexs');
-// Route::any('admin/transaction/unilevel-distribution/dynamic/setting', 'AdminUnilevelController@setting');
-Route::any('admin/transaction/unilevel-distribution', 'AdminUnilevelController@index');
+// Route::any('admin/transaction/unilevel-distribution/dynamic', 'AdminUnilevelController@indexs');
+// Route::any('admin/transaction/unilevel-distribution', 'AdminUnilevelController@index');
 
+// Route::any('admin/transaction/unilevel-distribution/dynamic/setting', 'AdminUnilevelController@setting');
 /* Global Pool Sharing - Admin */
 Route::any('admin/transaction/global_pool_sharing', 'AdminGlobalPoolSharingController@index');
 
@@ -314,6 +323,12 @@ Route::post('admin/maintenance/slots/adjustWallet', 'AdminSlotController@adjustW
 Route::get('admin/maintenance/slots/computeAdjustmentGC', 'AdminSlotController@computeAdjustmentAjaxGC');
 Route::post('admin/maintenance/slots/adjustWalletGC', 'AdminSlotController@adjustWalletGC');
 
+Route::get('admin/maintenance/slots/computeAdjustmentPUP', 'AdminSlotController@computeAdjustmentAjaxPUP');
+Route::post('admin/maintenance/slots/adjustWalletPUP', 'AdminSlotController@adjustWalletPUP');
+
+Route::get('admin/maintenance/slots/computeAdjustmentGUP', 'AdminSlotController@computeAdjustmentAjaxGUP');
+Route::post('admin/maintenance/slots/adjustWalletGUP', 'AdminSlotController@adjustWalletGUP');
+
 Route::get('admin/maintenance/country', 'AdminCountryController@index');
 Route::any('admin/maintenance/country/add', 'AdminCountryController@add_country');
 Route::any('admin/maintenance/country/edit', 'AdminCountryController@edit_country');
@@ -415,6 +430,9 @@ Route::any('admin/utilities/breakaway_bonus/edit', 'AdminComplanController@break
 
 Route::any('admin/utilities/rank', 'AdminComplanController@rank');
 Route::any('admin/utilities/rank/edit', 'AdminComplanController@rank_edit');
+
+Route::any('admin/utilities/rank/compensation', 'AdminComplanController@compensation_rank');
+Route::any('admin/utilities/rank/compensation/edit', 'AdminComplanController@compensation_rank_edit');
 Route::any('admin/utilities/recompute', 'AdminComplanController@recompute');
 
 /* ADMIN / REPORTS */

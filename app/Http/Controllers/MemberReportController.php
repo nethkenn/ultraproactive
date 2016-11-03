@@ -4,15 +4,19 @@ use App\Tbl_slot;
 use App\Tbl_slot_log;
 use App\Tbl_lead;
 use App\Tbl_membership;
+use App\Tbl_compensation_rank;
 use App\Classes\Customer;
+use App\Classes\Compute;
 use DB;
 use App\Tbl_product_code;
 use App\Tbl_tree_placement;
 use App\Tbl_wallet_logs;
 use App\Tbl_account_encashment_history;
+use App\Tbl_pv_logs;
 use Session;
 use Request;
 use Redirect;
+use Carbon\Carbon;
 class MemberReportController extends MemberController
 {
 	public function breakdown()
@@ -140,5 +144,38 @@ class MemberReportController extends MemberController
 		$data["_encash"] = $encash;
 
 		return view('member.encashment_history', $data);
+	}
+	
+	public function upcoin_report()
+	{
+		$id 		      = Session::get('currentslot');
+		$slot_info 		  = Tbl_slot::where("slot_id",$id)->first();
+		$current_year     = date("Y-", strtotime(Carbon::now()));
+		
+		
+		$data["_logs"]	  = Tbl_pv_logs::where("owner_slot_id",$id)->get();
+		
+		
+		$data["january"]		= Tbl_pv_logs::where("owner_slot_id",$id)->where("date_created","LIKE",$current_year."01")->where("used_for_redeem",0)->sum("amount") != null ? bl_pv_logs::where("owner_slot_id",$id)->where("date_created","LIKE",$current_year."01")->where("used_for_redeem",0)->sum("amount") : 0;	
+		$data["february"]		= Tbl_pv_logs::where("owner_slot_id",$id)->where("date_created","LIKE",$current_year."02")->where("used_for_redeem",0)->sum("amount") != null ? bl_pv_logs::where("owner_slot_id",$id)->where("date_created","LIKE",$current_year."02")->where("used_for_redeem",0)->sum("amount") : 0;	
+		$data["march"]			= Tbl_pv_logs::where("owner_slot_id",$id)->where("date_created","LIKE",$current_year."03")->where("used_for_redeem",0)->sum("amount") != null ? bl_pv_logs::where("owner_slot_id",$id)->where("date_created","LIKE",$current_year."03")->where("used_for_redeem",0)->sum("amount") : 0;	
+		$data["april"]			= Tbl_pv_logs::where("owner_slot_id",$id)->where("date_created","LIKE",$current_year."04")->where("used_for_redeem",0)->sum("amount") != null ? bl_pv_logs::where("owner_slot_id",$id)->where("date_created","LIKE",$current_year."04")->where("used_for_redeem",0)->sum("amount") : 0;	
+		$data["may"]			= Tbl_pv_logs::where("owner_slot_id",$id)->where("date_created","LIKE",$current_year."05")->where("used_for_redeem",0)->sum("amount") != null ? bl_pv_logs::where("owner_slot_id",$id)->where("date_created","LIKE",$current_year."05")->where("used_for_redeem",0)->sum("amount") : 0;	
+		$data["june"]			= Tbl_pv_logs::where("owner_slot_id",$id)->where("date_created","LIKE",$current_year."06")->where("used_for_redeem",0)->sum("amount") != null ? bl_pv_logs::where("owner_slot_id",$id)->where("date_created","LIKE",$current_year."06")->where("used_for_redeem",0)->sum("amount") : 0;	
+		$data["july"]			= Tbl_pv_logs::where("owner_slot_id",$id)->where("date_created","LIKE",$current_year."07")->where("used_for_redeem",0)->sum("amount") != null ? bl_pv_logs::where("owner_slot_id",$id)->where("date_created","LIKE",$current_year."07")->where("used_for_redeem",0)->sum("amount") : 0;	
+		$data["august"]			= Tbl_pv_logs::where("owner_slot_id",$id)->where("date_created","LIKE",$current_year."08")->where("used_for_redeem",0)->sum("amount") != null ? bl_pv_logs::where("owner_slot_id",$id)->where("date_created","LIKE",$current_year."08")->where("used_for_redeem",0)->sum("amount") : 0;	
+		$data["september"]		= Tbl_pv_logs::where("owner_slot_id",$id)->where("date_created","LIKE",$current_year."09")->where("used_for_redeem",0)->sum("amount") != null ? bl_pv_logs::where("owner_slot_id",$id)->where("date_created","LIKE",$current_year."09")->where("used_for_redeem",0)->sum("amount") : 0;	
+		$data["october"]		= Tbl_pv_logs::where("owner_slot_id",$id)->where("date_created","LIKE",$current_year."10")->where("used_for_redeem",0)->sum("amount") != null ? bl_pv_logs::where("owner_slot_id",$id)->where("date_created","LIKE",$current_year."10")->where("used_for_redeem",0)->sum("amount") : 0;	
+		$data["november"]		= Tbl_pv_logs::where("owner_slot_id",$id)->where("date_created","LIKE",$current_year."11")->where("used_for_redeem",0)->sum("amount") != null ? bl_pv_logs::where("owner_slot_id",$id)->where("date_created","LIKE",$current_year."11")->where("used_for_redeem",0)->sum("amount") : 0;	
+		$data["december"]		= Tbl_pv_logs::where("owner_slot_id",$id)->where("date_created","LIKE",$current_year."12")->where("used_for_redeem",0)->sum("amount") != null ? bl_pv_logs::where("owner_slot_id",$id)->where("date_created","LIKE",$current_year."12")->where("used_for_redeem",0)->sum("amount") : 0;	
+		
+		$data["subtotal"] = Tbl_pv_logs::where("owner_slot_id",$id)->where("used_for_redeem",0)->sum("amount") != null ? Tbl_pv_logs::where("owner_slot_id",$id)->where("used_for_redeem",0)->sum("amount") : 0;
+		$data["redeem"]   = Tbl_pv_logs::where("owner_slot_id",$id)->where("used_for_redeem",1)->sum("amount") != null ? Tbl_pv_logs::where("owner_slot_id",$id)->where("used_for_redeem",1)->sum("amount") : 0;
+		$data["gpv"]      = Compute::count_gpv($id);
+		$data["total"]    = $data["subtotal"] - (-1 * $data["redeem"]);
+		
+		$data["match"]    = Tbl_compensation_rank::where("compensation_rank_id",$slot_info->current_rank)->first()->rank_max_pairing;
+		return view('member.upcoin_report',$data);
+		
 	}
 }

@@ -148,7 +148,7 @@
                     <th>Pin</th>
                     <th data-hide="phone">Code</th>
                     <th data-hide="phone">Product</th>
-                    <th data-hide="phone,phonie">Unilevel Points</th>
+                    <th data-hide="phone,phonie">UPcoins</th>
                     <th data-hide="phone,phonie">Binary Points</th>
                     <th data-hide="phone,phonie,tablet"></th>
                     <!--<th data-hide="phone,phonie,tablet"></th>-->
@@ -196,7 +196,7 @@
                 </div>
             </div>
             <div class="form-group para">
-                <label for="222" class="col-sm-3 control-label">Unilevel Points</label>
+                <label for="222" class="col-sm-3 control-label">UPcoins</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control unilevel_pts_container" disabled>
                 </div>

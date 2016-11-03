@@ -16,6 +16,7 @@ use App\Tbl_tree_sponsor;
 use App\Tbl_travel_reward;
 use Validator;
 use App\Tbl_travel_qualification;
+use App\Tbl_compensation_rank;
 use App\Classes\Admin;
 
 class AdminComplanController extends AdminController
@@ -739,5 +740,53 @@ class AdminComplanController extends AdminController
 		}
 		
 		return view('admin.computation.binary_entry', $data);	
+	}
+	
+	
+	public function compensation_rank()
+	{
+		$data["_compensation"] = Tbl_compensation_rank::get();
+
+		return view('admin.computation.compensation_rank', $data);
+	}
+
+	public function compensation_rank_edit()
+	{
+		$rank_id = Request::input("id");
+		if(Request::isMethod("post"))
+		{
+
+			$request['compensation_rank_name']			 = Request::input("compensation_rank_name");			
+			$request['required_group_pv']				 = Request::input("required_group_pv");		
+			$request['required_personal_pv']			 = Request::input("required_personal_pv");			
+			$request['required_personal_pv_maintenance'] = Request::input("required_personal_pv_maintenance");						
+			$request['rank_max_pairing']				 = Request::input("rank_max_pairing");		
+			
+			$rules['compensation_rank_name']			 = "required";
+			$rules['required_group_pv'] 				 = "required|numeric";
+			$rules['required_personal_pv']				 = "required|numeric";
+			$rules['required_personal_pv_maintenance']	 = "required|numeric";
+			$rules['rank_max_pairing']					 = "required|numeric";
+			
+			$validator = Validator::make($request, $rules);
+
+	        if ($validator->fails())
+	        {
+	            return redirect("admin/utilities/rank/compensation/edit?id=".$rank_id)
+	                        ->withErrors($validator)
+	                        ->withInput(Request::input());
+	        }
+	        else
+	        {
+	        	Tbl_compensation_rank::where("compensation_rank_id",$rank_id)->update($request);
+	        	return redirect("admin/utilities/rank/compensation/");
+	        }
+
+		}
+		else
+		{
+			$data["rank"] = Tbl_compensation_rank::where("compensation_rank_id",$rank_id)->first();
+			return view('admin.computation.compensation_rank_edit', $data);	
+		}
 	}
 }

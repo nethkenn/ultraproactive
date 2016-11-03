@@ -14,6 +14,7 @@
 			<td>Pay-In</td>
 			<td>Binary Payout</td>
 			<td>Direct Referral Payout</td>
+			<td>First Member Income (Binary)</td>
 			<td>Total Payout</td>
 			<td>Status</td>
 		</tr>
@@ -27,6 +28,7 @@
 			<td style="color: green;">{{ "" . number_format($project["total_payin"], 2) }}</td>
 			<td style="color: #000;">{{ "" . number_format($project["binary_payout"], 2) }}</td>
 			<td style="color: #000;">{{ "" . number_format($project["direct_referral"], 2) }}</td>
+			<td style="color: blue;">{{ "" . number_format($project["first_member_income"], 2) }}</td>
 			<td style="color: red;">{{ "" . number_format($project["total_payout"], 2) }}</td>
 			<td>{!! $project["status"] !!}</td>
 

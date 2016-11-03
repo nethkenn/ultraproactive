@@ -43,7 +43,6 @@ class MemberCodeController extends MemberController
 	    												 ->orderBy('membership_price','ASC')
 	    												 ->where('membership_entry',1)
 	    												 ->get();
-					
   		$data['exist_lead'] = null;
 	 	$check_date = Tbl_lead::where('account_id',$id)->where('tbl_lead.used',0)->first();
 
@@ -341,7 +340,7 @@ class MemberCodeController extends MemberController
 								Log::slot($slot_id, $logs, $amount, "New slot",$slot_id);
 
 								Compute::tree($slot_id);
-								Compute::entry($slot_id);
+								Compute::entry($slot_id,"SLOT CREATION",$data['code_number']);
 								$return["placement"] = Request::input("placement");
 								$message['success'] = "Slot Created.";
 								$get = Rel_membership_code::where('code_pin',$data['code_number'])->first();
@@ -402,7 +401,7 @@ class MemberCodeController extends MemberController
 								Log::slot($slot_id, $logs, $amount, "New slot",$slot_id);
 
 								Compute::tree($slot_id);
-								Compute::entry($slot_id);
+								Compute::entry($slot_id,"SLOT CREATION",$data['code_number']);
 								$return["placement"] = Request::input("placement");
 								$message['success'] = "Slot Created.";
 
@@ -459,7 +458,7 @@ class MemberCodeController extends MemberController
 								Log::slot($slot_id, $logs, $amount, "New slot",$slot_id);
 
 								Compute::tree($slot_id);
-								Compute::entry($slot_id);
+								Compute::entry($slot_id,"SLOT CREATION",$data['code_number']);
 								$return["placement"] = Request::input("placement");
 								$message['success'] = "Slot Created.";
 								$get = Rel_membership_code::where('code_pin',$data['code_number'])->first();

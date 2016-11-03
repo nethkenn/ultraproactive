@@ -127,23 +127,28 @@
                 </div> -->
                 <div class="holders">
                     <div class="leybel">MAX PAIRS PER DAY</div>
-                    <div class="balyu">{{$slotnow->pairs_today}}/{{$slotnow->max_pairs_per_day}}</div>
+                    <div class="balyu">{{$slotnow->pairs_today}}/{{$maxpairing}}</div>
                 </div>
             </div>
         </div>
         <div class="holder">
             <div class="title">
-                <span>UNILEVEL</span></br> INFORMATION
+                <span>UPCOINS</span></br> INFORMATION
             </div>
             <div class="info">
                 <div class="holders">
-                    <div class="leybel">GROUP PV</div>
-                    <div class="balyu">{{ number_format($slotnow->slot_group_points, 2) }} PV</div>
+                    <div class="leybel">CURRENT RANK</div>
+                    <div class="balyu">{{ $current_rank }}</div>
+                </div>   
+                <div class="holders">
+                    <div class="leybel">TOTAL GROUP UPCOINS</div>
+                    <div class="balyu">{{ number_format($group_upcoins, 2) }} UPcoins</div>
                 </div>
                 <div class="holders">
-                    <div class="leybel">PERSONAL PV</div>
-                    <div class="balyu">{{ number_format($slotnow->slot_personal_points, 2) }} PV</div>
+                    <div class="leybel">TOTAL EARN PERSONAL UPCOINS</div>
+                    <div class="balyu">{{ number_format($personal_upcoins, 2) }} UPcoins</div>
                 </div>
+                <!--
                 <div class="holders">
                     <div class="leybel">REQUIRED PV</div>
                     <div class="balyu">{{ number_format($slotnow->membership_required_pv, 2) }} PV</div>
@@ -151,7 +156,7 @@
                 <div class="holders">
                     <div class="leybel">UNILEVEL STATUS</div>
                     <div class="balyu">{{ $slotnow->slot_personal_points >= $slotnow->membership_required_pv ? 'Qualified for Unilevel' : 'Not Yet Qualified' }}</div>
-                </div>
+                </div> -->
             </div>
         </div>
         @endif

@@ -47,7 +47,7 @@
                 </div>
             </div>
             <div class="form-group para">
-                <label for="a4" class="col-sm-3 control-label">Total Unilevel Points(Not for GC)</label>
+                <label for="a4" class="col-sm-3 control-label">Total UPCoins(Not for GC)</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control" id="a4" value="{{$pts['unilevel']}}" readonly>
                 </div>

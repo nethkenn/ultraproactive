@@ -80,4 +80,89 @@ class MemberEncashmentController extends MemberController
 
 		return $total;
 	}
+	
+	public function redeem()
+	{	
+		$id = Session::get('currentslot');
+		$data["reedemed_upcoins"]			= DB::table("tbl_pv_logs")->where("owner_slot_id",$id)->where("used_for_redeem",1)->sum("amount");
+		$data["total_personal_upcoins"]		= DB::table("tbl_pv_logs")->where("owner_slot_id",$id)->where("used_for_redeem",0)->sum("amount");
+		$data["request"]                    = DB::table("tbl_redeem_request")->where("slot_id",$id)->get();
+
+		if(isset($_POST['requested_amount']))
+		{	
+			$amount 	  = $_POST['requested_amount'];
+			$total_up	  = $data["total_personal_upcoins"];
+			$total_redeem = -1 * $data["reedemed_upcoins"];
+			$remaining    = $total_up - $total_redeem;
+			if($amount == 250 || $amount == 500 || $amount == 1000  || $amount == 10000 || $amount == 20000 || $amount == 30000 )
+			{
+				if($remaining >= $amount)
+				{
+					$condition              = false;
+					while($condition == false)
+					{
+						$random_code            = $this->code_generator();
+						$check				    = DB::table("tbl_redeem_request")->where("request_code",$random_code)->first();
+						if(!$check)
+						{
+							$condition          = true;
+						}
+					}
+					
+					
+	                $log = "Your slot #" . $id. " redeemed <b> " . number_format($amount, 2) . " Personal UPcoins</b> ";
+	                Log::slot($id, $log, 0,"Redeem Personal UPcoins",$id);
+	                
+	                $insert_pv["owner_slot_id"]   = $id;
+	                $insert_pv["amount"]          = -1 * $amount;
+	                $insert_pv["detail"]          = $log;
+	                $insert_pv["date_created"]    = Carbon::now();
+	                $insert_pv["type"]            = "PPV";
+	                $insert_pv["used_for_redeem"] = 1;
+	                DB::table("tbl_pv_logs")->insert($insert_pv);
+	                
+	                
+	                
+					$insert["request_code"] = $random_code;
+					$insert["amount"]		= $amount;
+					$insert["status"]		= "Unclaimed";
+					$insert["archived"]		= 0;
+					$insert["slot_id"]		= $id;
+					$insert["request_date"]	= Carbon::now();
+					DB::table("tbl_redeem_request")->insert($insert);
+					
+					
+					$data["reedemed_upcoins"]			= DB::table("tbl_pv_logs")->where("owner_slot_id",$id)->where("used_for_redeem",1)->where("type","PPV")->sum("amount");
+					$data["total_personal_upcoins"]		= DB::table("tbl_pv_logs")->where("owner_slot_id",$id)->where("used_for_redeem",0)->where("type","PPV")->sum("amount");
+					$data["request"]                    = DB::table("tbl_redeem_request")->where("slot_id",$id)->get();
+					$data["sucess"] 					= "Successfully requested";
+
+				}
+				else
+				{
+				   $data["error"] = "Not enough UPcoins";
+				}
+			}
+			else
+			{
+				$data["error"] = "Invalid amount";
+			}
+
+		}
+
+        return view('member.redeem',$data);
+	}
+
+	public function code_generator()
+	{
+		
+		$chars="0123456789";
+		$res = "";
+		for ($i = 0; $i < 8; $i++) {
+		    $res .= $chars[mt_rand(0, strlen($chars)-1)];
+		}
+
+		return $res;
+
+	}
 }

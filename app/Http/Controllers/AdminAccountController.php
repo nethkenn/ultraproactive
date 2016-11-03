@@ -11,11 +11,11 @@ use App\Classes\Admin;
 use Validator;
 use App\Classes\Customer;
 use App\Classes\Log;
+use App\Classes\Compute;
 class AdminAccountController extends AdminController
 {
 	public function index()
 	{
-
 		$data["page"] = "Account Maintenance";
 		
 		if(isset($_POST['login']))
