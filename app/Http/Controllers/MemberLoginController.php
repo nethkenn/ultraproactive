@@ -8,11 +8,28 @@ use DateTime;
 use App\Tbl_slot;
 use Carbon\Carbon;
 use App\Tbl_account;
+use App\Tbl_admin;
 use DB;
 class MemberLoginController extends Controller
 {
 	public function index()
 	{	
+        $disable_member_area = DB::table('tbl_settings')->where('key','disable_member_area')->first();
+        if(!$disable_member_area)
+        {
+            DB::table('tbl_settings')->insert(['key'=>'disable_member_area','value'=>'0']);
+            $disable_member_area = DB::table('tbl_settings')->where('key','disable_member_area')->first();
+        }	
+
+        if($disable_member_area->value == 1)
+        {
+
+ 	        	die("We're currently doing maintenance. We'll be back shortly.");   		
+
+        }      	
+
+        
+        
 		$data['error'] = Session::get('errored');
 		$data['success'] = Session::get('greened');
 		$member_id = Customer::id();

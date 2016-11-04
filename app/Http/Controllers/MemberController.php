@@ -23,26 +23,26 @@ class MemberController extends Controller
 		$earnings = null;
 		$current_gc = null;
 
-        $disable_member_area = DB::table('tbl_settings')->where('key','disable_member_area')->first();
-        if(!$disable_member_area)
-        {
-            DB::table('tbl_settings')->insert(['key'=>'disable_member_area','value'=>'0']);
-            $disable_member_area = DB::table('tbl_settings')->where('key','disable_member_area')->first();
-        }	
-        if($customer_info)
-        {
-            if($disable_member_area->value == 1)
-	        {
-	        	if(Tbl_admin::where('account_id',Customer::info()->account_id)->join('tbl_admin_position','tbl_admin_position.admin_position_id','=','tbl_admin.admin_position_id')->where('admin_position_rank',0)->first())
-	        	{
+        // $disable_member_area = DB::table('tbl_settings')->where('key','disable_member_area')->first();
+        // if(!$disable_member_area)
+        // {
+        //     DB::table('tbl_settings')->insert(['key'=>'disable_member_area','value'=>'0']);
+        //     $disable_member_area = DB::table('tbl_settings')->where('key','disable_member_area')->first();
+        // }	
+        // if($customer_info)
+        // {
+        //     if($disable_member_area->value == 1)
+	       // {
+	       // 	if(Tbl_admin::where('account_id',Customer::info()->account_id)->join('tbl_admin_position','tbl_admin_position.admin_position_id','=','tbl_admin.admin_position_id')->where('admin_position_rank',0)->first())
+	       // 	{
 	        		
-	        	}
-	        	else
-	        	{
-	 	        	die("We're currently doing maintenance. We'll be back shortly.");   		
-	        	}
-	        }      	
-        }
+	       // 	}
+	       // 	else
+	       // 	{
+	 	     //   	die("We're currently doing maintenance. We'll be back shortly.");   		
+	       // 	}
+	       // }      	
+        // }
 
 
 		if(!$data['slot_limit'])
