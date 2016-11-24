@@ -41,7 +41,35 @@
 					</tbody>
 				</table>
 		</div>
-
+		<div class="col-md-12">
+				<table id="table" class="table table-bordered">
+					<thead>
+						<tr class="text-center">
+							<th>Slot #</th>
+							<th>Name</th>
+							<th>Rank</th>
+							<th>Personal UPcoins</th>
+							<th>Months Maintained</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach($_slot as $slot)
+							<tr>
+								<td>{{$slot->slot_id}}</td>
+								<td>{{$slot->account_name}}</td>
+								<td>{{$slot->compensation_rank_name}}</td>
+								<td>{{number_format($slot->personal_upcoins)}}</td>
+								<td>{{$slot->months_maintained}}</td>
+								<td><a href="javascript:" class="details" slot_id="{{$slot->slot_id}}">Details</a> | <a href="/admin/transaction/global_pool_sharing/delete/{{$slot->slot_id}}">Delete</a></td>
+							</tr>
+						@endforeach
+					</tbody>
+				</table>
+		</div>
+		<div class="col-md-12 month_container">
+		</div>	
+		
 <div class="remodal create-slot" data-remodal-id="slot_limit" data-remodal-options="hashTracking: false">
 	    <button data-remodal-action="close" class="remodal-close"></button>
 	    <div class="header">
@@ -64,5 +92,10 @@
 	       		var inst = $('[data-remodal-id=slot_limit]').remodal();
 	          	inst.open(); 
 	       });
+	       
+  $(".details").click(function()
+  {
+		$(".month_container").load("admin/transaction/global_pool_sharing/details/"+$(this).attr("slot_id"));
+  });       
 </script>
 @endsection

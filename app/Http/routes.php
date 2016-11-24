@@ -122,6 +122,8 @@ Route::any('admin/transaction/payout/restore', 'AdminPayoutController@restore');
 // Route::any('admin/transaction/unilevel-distribution/dynamic/setting', 'AdminUnilevelController@setting');
 /* Global Pool Sharing - Admin */
 Route::any('admin/transaction/global_pool_sharing', 'AdminGlobalPoolSharingController@index');
+Route::any('admin/transaction/global_pool_sharing/delete/{id}', 'AdminGlobalPoolSharingController@delete_gps');
+Route::any('admin/transaction/global_pool_sharing/details/{id}', 'AdminGlobalPoolSharingController@details');
 
 /* ADMIN / MAINTENANCE */
 Route::any('admin/maintenance/accounts', 'AdminAccountController@index');

@@ -1226,6 +1226,22 @@ class Compute
                             }
                         }  
                     }
+                    else
+                    {
+                            $_tree      = Tbl_tree_sponsor::where("sponsor_tree_child_id",$slot_id)
+                                                          ->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_sponsor.sponsor_tree_parent_id")
+                                                          ->join("tbl_compensation_rank","tbl_compensation_rank.compensation_rank_id","=","tbl_slot.next_month_rank")
+                                                          ->where("next_month_rank","<",$rank->compensation_rank_id)
+                                                          ->where("slot_type","!=","CD")
+                                                          ->get();
+                                                          
+                                                    
+                            foreach($_tree as $tree)
+                            {
+                                $update["permanent_rank_id"] = $rank->compensation_rank_id;
+                                Tbl_slot::where("slot_id",$tree->sponsor_tree_parent_id)->update($update);
+                            }
+                    }
                     
                     $slot               = Tbl_slot::where("slot_id",$slot_id)->first();
                     
@@ -1319,6 +1335,12 @@ class Compute
                     {
                         $update["next_month_rank"] = 1;
                         Tbl_slot::where("slot_id",$slot_id)->update($update);
+                    }
+                                            
+                    foreach($_tree as $tree)
+                    {
+                        $update["permanent_rank_id"] = $rank->compensation_rank_id;
+                        Tbl_slot::where("slot_id",$tree->sponsor_tree_parent_id)->update($update);
                     }
                     
                 }
@@ -1429,6 +1451,20 @@ class Compute
                         $update["next_month_rank"] = 1;
                         Tbl_slot::where("slot_id",$slot_id)->update($update);
                     }
+                    
+                    $_tree      = Tbl_tree_sponsor::where("sponsor_tree_child_id",$slot_id)
+                                              ->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_sponsor.sponsor_tree_parent_id")
+                                              ->join("tbl_compensation_rank","tbl_compensation_rank.compensation_rank_id","=","tbl_slot.next_month_rank")
+                                              ->where("next_month_rank","<",$rank->compensation_rank_id)
+                                              ->where("slot_type","!=","CD")
+                                              ->get();
+                                            
+                    foreach($_tree as $tree)
+                    {
+                        $update["permanent_rank_id"] = $rank->compensation_rank_id;
+                        Tbl_slot::where("slot_id",$tree->sponsor_tree_parent_id)->update($update);
+                    }         
+                    
                 }
             }
         }
