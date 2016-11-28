@@ -1467,9 +1467,38 @@ class Compute
                     
                 }
             }
+            
+            $list_of_sponsor = Tbl_tree_sponsor::where("sponsor_tree_child_id",$slot_id)->get();
+            foreach($list_of_sponsor as $sponsor_id)
+            {
+              $sponsor_id = $sponsor_id->sponsor_tree_parent_id;
+              Compute::rank_checker($sponsor_id);
+            }
         }
     }
     
+    public static function rank_checker($slot_id)
+    {
+        $slot               = Tbl_slot::where("slot_id",$slot_id)->first();
+        if($slot)
+        {
+                $_ranks             = DB::table("tbl_compensation_rank")->orderBy("compensation_rank_id","ASC")->where("compensation_rank_id",">",$slot->permanent_rank_id)->get();
+                foreach($_ranks as $rank)
+                {
+                    if($rank->compensation_rank_id > $slot->permanent_rank_id)
+                    {
+                        if($group_pv >= $rank->required_group_pv)
+                        {
+                            Compute::check_compensation_rank_manual_by_adjust($slot_id);    
+                        }
+                        else if($personal_pv >= $rank->required_personal_pv)
+                        {
+                            Compute::check_compensation_rank_manual_by_adjust($slot_id);       
+                        }
+                    }
+                }
+        }
+    }
        
     public static function count_gpv($slot_id)
     {
