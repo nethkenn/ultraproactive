@@ -1270,6 +1270,13 @@ class Compute
                         Tbl_slot::where("slot_id",$slot_id)->update($update);
                     }
                 }
+                
+                $list_of_sponsor = Tbl_tree_sponsor::where("sponsor_tree_child_id",$slot_id)->get();
+                foreach($list_of_sponsor as $sponsor_id)
+                {
+                  $sponsor_id = $sponsor_id->sponsor_tree_parent_id;
+                  Compute::rank_checker($sponsor_id);
+                }
             }
         }
     }
@@ -1480,6 +1487,8 @@ class Compute
     public static function rank_checker($slot_id)
     {
         $slot               = Tbl_slot::where("slot_id",$slot_id)->first();
+        $group_pv           = Compute::count_gpv($slot_id);
+        $personal_pv        = DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_id)->where("used_for_redeem",0)->where("type","PPV")->sum("amount");
         if($slot)
         {
                 $_ranks             = DB::table("tbl_compensation_rank")->orderBy("compensation_rank_id","ASC")->where("compensation_rank_id",">",$slot->permanent_rank_id)->get();
