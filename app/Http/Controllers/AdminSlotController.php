@@ -709,7 +709,7 @@ class AdminSlotController extends AdminController
 	        {
 	    	   DB::table("tbl_pv_logs")->insert($insert_personal);
 	        }
-	        Compute::check_compensation_rank_manual_by_adjust($slot_id);
+	        Compute::compensation_rank($slot_id);
 	        // Compute::check_compensation_rank($slot_id);
         }
         

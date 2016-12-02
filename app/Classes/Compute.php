@@ -56,7 +56,7 @@ class Compute
         $insert_personal["date_created"]    = Carbon::now();
         $insert_personal["type"]            = "PPV";
         DB::table("tbl_pv_logs")->insert($insert_personal);
-        Compute::check_compensation_rank($buyer_slot_info->slot_id);
+        Compute::compensation_rank($buyer_slot_info->slot_id);
         /* UPDATE SLOT CHANGES TO DATABASE */
         Tbl_slot::id($buyer_slot_info->slot_id)->update($update_recipient);
         $update_recipient = null;
@@ -1150,129 +1150,136 @@ class Compute
        
     }
     
-    public static function check_compensation_rank($slot_id)
-    {
-        $slot               = Tbl_slot::where("slot_id",$slot_id)->first();
-        $group_pv           = Compute::count_gpv($slot_id);
-        $personal_pv        = DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_id)->where("used_for_redeem",0)->where("type","PPV")->sum("amount");
-        $month_personal_pv  = DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_id)->where("used_for_redeem",0)->where("type","PPV")->where("date_created","LIKE","%".Carbon::now()->format("Y-m")."%")->sum("amount");
-        if($slot->slot_type == "CD")
-        {
-           $personal_pv = 0; 
-        }
+    // public static function check_compensation_rank($slot_id)
+    // {
+    //     $slot               = Tbl_slot::where("slot_id",$slot_id)->first();
+    //     $group_pv           = Compute::count_gpv($slot_id);
+    //     $personal_pv        = DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_id)->where("used_for_redeem",0)->where("type","PPV")->sum("amount");
+    //     $month_personal_pv  = DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_id)->where("used_for_redeem",0)->where("type","PPV")->where("date_created","LIKE","%".Carbon::now()->format("Y-m")."%")->sum("amount");
+    //     if($slot->slot_type == "CD")
+    //     {
+    //       $personal_pv = 0; 
+    //     }
 
-        // dd($month_personal_pv,Carbon::now()->format("Y-m"));sl
-        if($slot)
-        {
-            if($slot->slot_type != "CD")
-            {
-                $_ranks             = DB::table("tbl_compensation_rank")->where("compensation_rank_id",">",$slot->next_month_rank)->orderBy("compensation_rank_id","ASC")->get();
-                foreach($_ranks as $rank)
-                {
-                    if($rank->compensation_rank_id > $slot->permanent_rank_id)
-                    {
-                        if($group_pv >= $rank->required_group_pv)
-                        {
-                                $update["permanent_rank_id"] = $rank->compensation_rank_id;
-                                Tbl_slot::where("slot_id",$slot_id)->update($update);
+    //     // dd($month_personal_pv,Carbon::now()->format("Y-m"));sl
+    //     if($slot)
+    //     {
+    //         if($slot->slot_type != "CD")
+    //         {
+    //             $_ranks             = DB::table("tbl_compensation_rank")->where("compensation_rank_id",">",$slot->next_month_rank)->orderBy("compensation_rank_id","ASC")->get();
+    //             foreach($_ranks as $rank)
+    //             {
+    //                 if($rank->compensation_rank_id > $slot->permanent_rank_id)
+    //                 {
+    //                     if($group_pv >= $rank->required_group_pv)
+    //                     {
+    //                             $update["permanent_rank_id"] = $rank->compensation_rank_id;
+    //                             Tbl_slot::where("slot_id",$slot_id)->update($update);
                                 
-                                $_tree      = Tbl_tree_sponsor::where("sponsor_tree_child_id",$slot_id)
-                                                              ->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_sponsor.sponsor_tree_parent_id")
-                                                              ->join("tbl_compensation_rank","tbl_compensation_rank.compensation_rank_id","=","tbl_slot.next_month_rank")
-                                                              ->where("next_month_rank","<",$rank->compensation_rank_id)
-                                                              ->where("slot_type","!=","CD")
-                                                              ->get();
+    //                             $_tree      = Tbl_tree_sponsor::where("sponsor_tree_child_id",$slot_id)
+    //                                                           ->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_sponsor.sponsor_tree_parent_id")
+    //                                                           ->join("tbl_compensation_rank","tbl_compensation_rank.compensation_rank_id","=","tbl_slot.next_month_rank")
+    //                                                           ->where("next_month_rank","<",$rank->compensation_rank_id)
+    //                                                           ->where("slot_type","!=","CD")
+    //                                                           ->get();
                                                               
                                                         
-                                foreach($_tree as $tree)
-                                {
-                                    $update["permanent_rank_id"] = $rank->compensation_rank_id;
-                                    Tbl_slot::where("slot_id",$tree->sponsor_tree_parent_id)->update($update);
-                                }
-                        }
-                        else if($personal_pv >= $rank->required_personal_pv)
-                        {
-                                $update["permanent_rank_id"] = $rank->compensation_rank_id;
-                                Tbl_slot::where("slot_id",$slot_id)->update($update);
+    //                             foreach($_tree as $tree)
+    //                             {
+    //                                 $update["permanent_rank_id"] = $rank->compensation_rank_id;
+    //                                 Tbl_slot::where("slot_id",$tree->sponsor_tree_parent_id)->update($update);
+    //                             }
+    //                     }
+    //                     else if($personal_pv >= $rank->required_personal_pv)
+    //                     {
+    //                             $update["permanent_rank_id"] = $rank->compensation_rank_id;
+    //                             Tbl_slot::where("slot_id",$slot_id)->update($update);
                                 
                                 
-                                $_tree      = Tbl_tree_sponsor::where("sponsor_tree_child_id",$slot_id)
-                                                          ->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_sponsor.sponsor_tree_parent_id")
-                                                          ->join("tbl_compensation_rank","tbl_compensation_rank.compensation_rank_id","=","tbl_slot.next_month_rank")
-                                                          ->where("next_month_rank","<",$rank->compensation_rank_id)
-                                                          ->where("slot_type","!=","CD")
-                                                          ->get();
+    //                             $_tree      = Tbl_tree_sponsor::where("sponsor_tree_child_id",$slot_id)
+    //                                                       ->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_sponsor.sponsor_tree_parent_id")
+    //                                                       ->join("tbl_compensation_rank","tbl_compensation_rank.compensation_rank_id","=","tbl_slot.next_month_rank")
+    //                                                       ->where("next_month_rank","<",$rank->compensation_rank_id)
+    //                                                       ->where("slot_type","!=","CD")
+    //                                                       ->get();
                                                           
                                                         
-                                foreach($_tree as $tree)
-                                {
-                                    $update["permanent_rank_id"] = $rank->compensation_rank_id;
-                                    Tbl_slot::where("slot_id",$tree->sponsor_tree_parent_id)->update($update);
-                                }
+    //                             foreach($_tree as $tree)
+    //                             {
+    //                                 $update["permanent_rank_id"] = $rank->compensation_rank_id;
+    //                                 Tbl_slot::where("slot_id",$tree->sponsor_tree_parent_id)->update($update);
+    //                             }
                                 
-                        }
-                        else
-                        {
-                            $_tree      = Tbl_tree_sponsor::where("sponsor_tree_parent_id",$slot_id)
-                                                          ->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_sponsor.sponsor_tree_child_id")
-                                                          ->join("tbl_compensation_rank","tbl_compensation_rank.compensation_rank_id","=","tbl_slot.next_month_rank")
-                                                          ->where("next_month_rank",$rank->required_compensation_rank_id)
-                                                          ->where("slot_type","!=","CD")
-                                                          ->first();
-                            if($_tree)
-                            {
-                                $update["permanent_rank_id"] = $rank->compensation_rank_id;
-                                Tbl_slot::where("slot_id",$slot_id)->update($update);
-                            }
-                        }  
-                    }
-                    else
-                    {
-                            $_tree      = Tbl_tree_sponsor::where("sponsor_tree_child_id",$slot_id)
-                                                          ->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_sponsor.sponsor_tree_parent_id")
-                                                          ->join("tbl_compensation_rank","tbl_compensation_rank.compensation_rank_id","=","tbl_slot.next_month_rank")
-                                                          ->where("next_month_rank","<",$rank->compensation_rank_id)
-                                                          ->where("slot_type","!=","CD")
-                                                          ->get();
+    //                     }
+    //                     else
+    //                     {
+    //                         $_tree      = Tbl_tree_sponsor::where("sponsor_tree_parent_id",$slot_id)
+    //                                                       ->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_sponsor.sponsor_tree_child_id")
+    //                                                       ->join("tbl_compensation_rank","tbl_compensation_rank.compensation_rank_id","=","tbl_slot.next_month_rank")
+    //                                                       ->where("next_month_rank",$rank->required_compensation_rank_id)
+    //                                                       ->where("slot_type","!=","CD")
+    //                                                       ->first();
+    //                         if($_tree)
+    //                         {
+    //                             $update["permanent_rank_id"] = $rank->compensation_rank_id;
+    //                             Tbl_slot::where("slot_id",$slot_id)->update($update);
+    //                         }
+    //                     }  
+    //                 }
+    //                 else
+    //                 {
+    //                         $_tree      = Tbl_tree_sponsor::where("sponsor_tree_child_id",$slot_id)
+    //                                                       ->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_sponsor.sponsor_tree_parent_id")
+    //                                                       ->join("tbl_compensation_rank","tbl_compensation_rank.compensation_rank_id","=","tbl_slot.next_month_rank")
+    //                                                       ->where("next_month_rank","<",$rank->compensation_rank_id)
+    //                                                       ->where("slot_type","!=","CD")
+    //                                                       ->get();
                                                           
                                                     
-                            foreach($_tree as $tree)
-                            {
-                                $update["permanent_rank_id"] = $rank->compensation_rank_id;
-                                Tbl_slot::where("slot_id",$tree->sponsor_tree_parent_id)->update($update);
-                            }
-                    }
+    //                         foreach($_tree as $tree)
+    //                         {
+    //                             $update["permanent_rank_id"] = $rank->compensation_rank_id;
+    //                             Tbl_slot::where("slot_id",$tree->sponsor_tree_parent_id)->update($update);
+    //                         }
+    //                 }
                     
-                    $slot               = Tbl_slot::where("slot_id",$slot_id)->first();
+    //                 $slot               = Tbl_slot::where("slot_id",$slot_id)->first();
                     
-                    $update = null;
-                    if($month_personal_pv >= $rank->required_personal_pv_maintenance)
-                    {
-                        if($group_pv >= $rank->required_group_pv)
-                        {
-                                $update["next_month_rank"] = $rank->compensation_rank_id;
-                                Tbl_slot::where("slot_id",$slot_id)->update($update);
-                        }
-                        else if($personal_pv >= $rank->required_personal_pv)
-                        {
-                                $update["next_month_rank"] = $rank->compensation_rank_id;
-                                Tbl_slot::where("slot_id",$slot_id)->update($update);
-                        }
-                        else if($rank->compensation_rank_id <= $slot->permanent_rank_id)
-                        {
-                                $update["next_month_rank"] = $rank->compensation_rank_id;
-                                Tbl_slot::where("slot_id",$slot_id)->update($update);
-                        }
-                    }
-                    else if($rank->compensation_rank_id == 1)
-                    {
-                        $update["next_month_rank"] = 1;
-                        Tbl_slot::where("slot_id",$slot_id)->update($update);
-                    }
-                }
-            }
-        }
-    }
+    //                 $update = null;
+    //                 if($month_personal_pv >= $rank->required_personal_pv_maintenance)
+    //                 {
+    //                     if($group_pv >= $rank->required_group_pv)
+    //                     {
+    //                             $update["next_month_rank"] = $rank->compensation_rank_id;
+    //                             Tbl_slot::where("slot_id",$slot_id)->update($update);
+    //                     }
+    //                     else if($personal_pv >= $rank->required_personal_pv)
+    //                     {
+    //                             $update["next_month_rank"] = $rank->compensation_rank_id;
+    //                             Tbl_slot::where("slot_id",$slot_id)->update($update);
+    //                     }
+    //                     else if($rank->compensation_rank_id <= $slot->permanent_rank_id)
+    //                     {
+    //                             $update["next_month_rank"] = $rank->compensation_rank_id;
+    //                             Tbl_slot::where("slot_id",$slot_id)->update($update);
+    //                     }
+    //                 }
+    //                 else if($rank->compensation_rank_id == 1)
+    //                 {
+    //                     $update["next_month_rank"] = 1;
+    //                     Tbl_slot::where("slot_id",$slot_id)->update($update);
+    //                 }
+    //             }
+                
+    //             $list_of_sponsor = Tbl_tree_sponsor::where("sponsor_tree_child_id",$slot_id)->get();
+    //             foreach($list_of_sponsor as $sponsor_id)
+    //             {
+    //               $sponsor_id = $sponsor_id->sponsor_tree_parent_id;
+    //               Compute::rank_checker($sponsor_id);
+    //             }
+    //         }
+    //     }
+    // }
     
     public static function check_compensation_rank_manual($slot_id)
     {
@@ -1348,156 +1355,245 @@ class Compute
         }
     }
     
-    public static function check_compensation_rank_manual_by_adjust($slot_id)
+    // public static function check_compensation_rank_manual_by_adjust($slot_id)
+    // {
+    //     $slot               = Tbl_slot::where("slot_id",$slot_id)->first();
+    //     $group_pv           = Compute::count_gpv($slot_id);
+    //     $personal_pv        = DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_id)->where("used_for_redeem",0)->where("type","PPV")->sum("amount");
+    //     $month_personal_pv  = DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_id)->where("used_for_redeem",0)->where("type","PPV")->where("date_created","LIKE","%".Carbon::now()->format("Y-m")."%")->sum("amount");
+    //     if($slot->slot_type == "CD")
+    //     {
+    //       $personal_pv = 0; 
+    //     }
+
+    //     // dd($month_personal_pv,Carbon::now()->format("Y-m"));sl
+    //     if($slot)
+    //     {
+    //         if($slot->slot_type != "CD")
+    //         {
+    //             $_ranks             = DB::table("tbl_compensation_rank")->orderBy("compensation_rank_id","ASC")->get();
+    //             foreach($_ranks as $rank)
+    //             {
+    //                 if($rank->compensation_rank_id > $slot->permanent_rank_id)
+    //                 {
+    //                     if($group_pv >= $rank->required_group_pv)
+    //                     {
+    //                             $update["permanent_rank_id"] = $rank->compensation_rank_id;
+    //                             Tbl_slot::where("slot_id",$slot_id)->update($update);
+                                
+    //                             $_tree      = Tbl_tree_sponsor::where("sponsor_tree_child_id",$slot_id)
+    //                                                           ->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_sponsor.sponsor_tree_parent_id")
+    //                                                           ->join("tbl_compensation_rank","tbl_compensation_rank.compensation_rank_id","=","tbl_slot.next_month_rank")
+    //                                                           ->where("next_month_rank","<",$rank->compensation_rank_id)
+    //                                                           ->where("slot_type","!=","CD")
+    //                                                           ->get();
+                                                              
+                                                        
+    //                             foreach($_tree as $tree)
+    //                             {
+    //                                 $update["permanent_rank_id"] = $rank->compensation_rank_id;
+    //                                 Tbl_slot::where("slot_id",$tree->sponsor_tree_parent_id)->update($update);
+    //                             }
+    //                     }
+    //                     else if($personal_pv >= $rank->required_personal_pv)
+    //                     {
+    //                             $update["permanent_rank_id"] = $rank->compensation_rank_id;
+    //                             Tbl_slot::where("slot_id",$slot_id)->update($update);
+                                
+                                
+    //                             $_tree      = Tbl_tree_sponsor::where("sponsor_tree_child_id",$slot_id)
+    //                                                       ->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_sponsor.sponsor_tree_parent_id")
+    //                                                       ->join("tbl_compensation_rank","tbl_compensation_rank.compensation_rank_id","=","tbl_slot.next_month_rank")
+    //                                                       ->where("next_month_rank","<",$rank->compensation_rank_id)
+    //                                                       ->where("slot_type","!=","CD")
+    //                                                       ->get();
+                                                          
+                                                        
+    //                             foreach($_tree as $tree)
+    //                             {
+    //                                 $update["permanent_rank_id"] = $rank->compensation_rank_id;
+    //                                 Tbl_slot::where("slot_id",$tree->sponsor_tree_parent_id)->update($update);
+    //                             }
+                                
+    //                     }
+    //                     else
+    //                     {
+    //                         $_tree      = Tbl_tree_sponsor::where("sponsor_tree_parent_id",$slot_id)
+    //                                                       ->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_sponsor.sponsor_tree_child_id")
+    //                                                       ->join("tbl_compensation_rank","tbl_compensation_rank.compensation_rank_id","=","tbl_slot.next_month_rank")
+    //                                                       ->where("next_month_rank",$rank->required_compensation_rank_id)
+    //                                                       ->where("slot_type","!=","CD")
+    //                                                       ->first();
+    //                         if($_tree)
+    //                         {
+    //                             $update["permanent_rank_id"] = $rank->compensation_rank_id;
+    //                             Tbl_slot::where("slot_id",$slot_id)->update($update);
+    //                         }
+    //                     }  
+    //                 }
+                    
+    //                 $slot               = Tbl_slot::where("slot_id",$slot_id)->first();
+                    
+    //                 $update = null;
+    //                 if($month_personal_pv >= $rank->required_personal_pv_maintenance)
+    //                 {
+    //                     if($group_pv >= $rank->required_group_pv)
+    //                     {
+    //                             $update["next_month_rank"] = $rank->compensation_rank_id;
+    //                             Tbl_slot::where("slot_id",$slot_id)->update($update);
+    //                     }
+    //                     else if($personal_pv >= $rank->required_personal_pv)
+    //                     {
+    //                             $update["next_month_rank"] = $rank->compensation_rank_id;
+    //                             Tbl_slot::where("slot_id",$slot_id)->update($update);
+    //                     }
+    //                     else if($rank->compensation_rank_id <= $slot->permanent_rank_id)
+    //                     {
+    //                             $update["next_month_rank"] = $rank->compensation_rank_id;
+    //                             Tbl_slot::where("slot_id",$slot_id)->update($update);
+    //                     }
+    //                 }
+    //                 else if($rank->compensation_rank_id == 1)
+    //                 {
+    //                     $update["next_month_rank"] = 1;
+    //                     Tbl_slot::where("slot_id",$slot_id)->update($update);
+    //                 }
+                    
+    //                 $_tree      = Tbl_tree_sponsor::where("sponsor_tree_child_id",$slot_id)
+    //                                           ->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_sponsor.sponsor_tree_parent_id")
+    //                                           ->join("tbl_compensation_rank","tbl_compensation_rank.compensation_rank_id","=","tbl_slot.next_month_rank")
+    //                                           ->where("next_month_rank","<",$rank->compensation_rank_id)
+    //                                           ->where("slot_type","!=","CD")
+    //                                           ->get();
+                                            
+    //                 foreach($_tree as $tree)
+    //                 {
+    //                     $update["permanent_rank_id"] = $rank->compensation_rank_id;
+    //                     Tbl_slot::where("slot_id",$tree->sponsor_tree_parent_id)->update($update);
+    //                 }         
+                    
+    //             }
+    //         }
+            
+    //         $list_of_sponsor = Tbl_tree_sponsor::where("sponsor_tree_child_id",$slot_id)->get();
+    //         foreach($list_of_sponsor as $sponsor_id)
+    //         {
+    //           $sponsor_id = $sponsor_id->sponsor_tree_parent_id;
+    //           Compute::rank_checker($sponsor_id);
+    //         }
+    //     }
+    // }
+    
+    // public static function rank_checker($slot_id)
+    // {
+    //     $slot               = Tbl_slot::where("slot_id",$slot_id)->first();
+    //     $group_pv           = Compute::count_gpv($slot_id);
+    //     $personal_pv        = DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_id)->where("used_for_redeem",0)->where("type","PPV")->sum("amount");
+    //     if($slot)
+    //     {
+    //             $_ranks             = DB::table("tbl_compensation_rank")->orderBy("compensation_rank_id","ASC")->where("compensation_rank_id",">",$slot->permanent_rank_id)->get();
+    //             foreach($_ranks as $rank)
+    //             {
+    //                 if($rank->compensation_rank_id > $slot->permanent_rank_id)
+    //                 {
+    //                     if($group_pv >= $rank->required_group_pv)
+    //                     {
+    //                         Compute::check_compensation_rank_manual_by_adjust($slot_id);    
+    //                     }
+    //                     else if($personal_pv >= $rank->required_personal_pv)
+    //                     {
+    //                         Compute::check_compensation_rank_manual_by_adjust($slot_id);       
+    //                     }
+    //                 }
+    //             }
+    //     }
+    // }
+       
+    public static function compensation_rank($slot_id)
     {
         $slot               = Tbl_slot::where("slot_id",$slot_id)->first();
-        $group_pv           = Compute::count_gpv($slot_id);
-        $personal_pv        = DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_id)->where("used_for_redeem",0)->where("type","PPV")->sum("amount");
-        $month_personal_pv  = DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_id)->where("used_for_redeem",0)->where("type","PPV")->where("date_created","LIKE","%".Carbon::now()->format("Y-m")."%")->sum("amount");
-        if($slot->slot_type == "CD")
-        {
-           $personal_pv = 0; 
-        }
 
-        // dd($month_personal_pv,Carbon::now()->format("Y-m"));sl
         if($slot)
         {
             if($slot->slot_type != "CD")
             {
-                $_ranks             = DB::table("tbl_compensation_rank")->orderBy("compensation_rank_id","ASC")->get();
-                foreach($_ranks as $rank)
+                $group_pv           = Compute::count_gpv($slot_id);
+                $personal_pv        = DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_id)->where("used_for_redeem",0)->where("type","PPV")->sum("amount");
+                $month_personal_pv  = DB::table("tbl_pv_logs")->where("owner_slot_id",$slot_id)->where("used_for_redeem",0)->where("type","PPV")->where("date_created","LIKE","%".Carbon::now()->format("Y-m")."%")->sum("amount");
+    
+                $_ranks             = DB::table("tbl_compensation_rank")->orderBy("compensation_rank_id","ASC")->where("compensation_rank_id",">",$slot->permanent_rank_id)->get();
+                $rank_id            = $slot->permanent_rank_id;
+                $next_month_rank    = $slot->next_month_rank;
+                
+                if($_ranks)
                 {
-                    if($rank->compensation_rank_id > $slot->permanent_rank_id)
+                    foreach($_ranks as $rank)
                     {
-                        if($group_pv >= $rank->required_group_pv)
+                        if($personal_pv >= $rank->required_personal_pv)
                         {
-                                $update["permanent_rank_id"] = $rank->compensation_rank_id;
-                                Tbl_slot::where("slot_id",$slot_id)->update($update);
-                                
-                                $_tree      = Tbl_tree_sponsor::where("sponsor_tree_child_id",$slot_id)
-                                                              ->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_sponsor.sponsor_tree_parent_id")
-                                                              ->join("tbl_compensation_rank","tbl_compensation_rank.compensation_rank_id","=","tbl_slot.next_month_rank")
-                                                              ->where("next_month_rank","<",$rank->compensation_rank_id)
-                                                              ->where("slot_type","!=","CD")
-                                                              ->get();
-                                                              
-                                                        
-                                foreach($_tree as $tree)
-                                {
-                                    $update["permanent_rank_id"] = $rank->compensation_rank_id;
-                                    Tbl_slot::where("slot_id",$tree->sponsor_tree_parent_id)->update($update);
-                                }
+                            $rank_id = $rank->compensation_rank_id;
                         }
-                        else if($personal_pv >= $rank->required_personal_pv)
+                        else if($group_pv >= $rank->required_group_pv)
                         {
-                                $update["permanent_rank_id"] = $rank->compensation_rank_id;
-                                Tbl_slot::where("slot_id",$slot_id)->update($update);
-                                
-                                
-                                $_tree      = Tbl_tree_sponsor::where("sponsor_tree_child_id",$slot_id)
-                                                          ->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_sponsor.sponsor_tree_parent_id")
-                                                          ->join("tbl_compensation_rank","tbl_compensation_rank.compensation_rank_id","=","tbl_slot.next_month_rank")
-                                                          ->where("next_month_rank","<",$rank->compensation_rank_id)
-                                                          ->where("slot_type","!=","CD")
-                                                          ->get();
-                                                          
-                                                        
-                                foreach($_tree as $tree)
-                                {
-                                    $update["permanent_rank_id"] = $rank->compensation_rank_id;
-                                    Tbl_slot::where("slot_id",$tree->sponsor_tree_parent_id)->update($update);
-                                }
-                                
-                        }
-                        else
-                        {
-                            $_tree      = Tbl_tree_sponsor::where("sponsor_tree_parent_id",$slot_id)
-                                                          ->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_sponsor.sponsor_tree_child_id")
-                                                          ->join("tbl_compensation_rank","tbl_compensation_rank.compensation_rank_id","=","tbl_slot.next_month_rank")
-                                                          ->where("next_month_rank",$rank->required_compensation_rank_id)
-                                                          ->where("slot_type","!=","CD")
-                                                          ->first();
-                            if($_tree)
-                            {
-                                $update["permanent_rank_id"] = $rank->compensation_rank_id;
-                                Tbl_slot::where("slot_id",$slot_id)->update($update);
-                            }
-                        }  
-                    }
-                    
-                    $slot               = Tbl_slot::where("slot_id",$slot_id)->first();
-                    
-                    $update = null;
-                    if($month_personal_pv >= $rank->required_personal_pv_maintenance)
-                    {
-                        if($group_pv >= $rank->required_group_pv)
-                        {
-                                $update["next_month_rank"] = $rank->compensation_rank_id;
-                                Tbl_slot::where("slot_id",$slot_id)->update($update);
-                        }
-                        else if($personal_pv >= $rank->required_personal_pv)
-                        {
-                                $update["next_month_rank"] = $rank->compensation_rank_id;
-                                Tbl_slot::where("slot_id",$slot_id)->update($update);
-                        }
-                        else if($rank->compensation_rank_id <= $slot->permanent_rank_id)
-                        {
-                                $update["next_month_rank"] = $rank->compensation_rank_id;
-                                Tbl_slot::where("slot_id",$slot_id)->update($update);
+                            $rank_id = $rank->compensation_rank_id;
                         }
                     }
-                    else if($rank->compensation_rank_id == 1)
-                    {
-                        $update["next_month_rank"] = 1;
-                        Tbl_slot::where("slot_id",$slot_id)->update($update);
-                    }
-                    
-                    $_tree      = Tbl_tree_sponsor::where("sponsor_tree_child_id",$slot_id)
-                                              ->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_sponsor.sponsor_tree_parent_id")
-                                              ->join("tbl_compensation_rank","tbl_compensation_rank.compensation_rank_id","=","tbl_slot.next_month_rank")
-                                              ->where("next_month_rank","<",$rank->compensation_rank_id)
-                                              ->where("slot_type","!=","CD")
-                                              ->get();
-                                            
-                    foreach($_tree as $tree)
-                    {
-                        $update["permanent_rank_id"] = $rank->compensation_rank_id;
-                        Tbl_slot::where("slot_id",$tree->sponsor_tree_parent_id)->update($update);
-                    }         
-                    
                 }
+                
+    
+                
+                
+                
+                $child              = Tbl_tree_sponsor::where("sponsor_tree_parent_id",$slot_id)
+                                                      ->join("tbl_slot","tbl_slot.slot_id","=","tbl_tree_sponsor.sponsor_tree_child_id")
+                                                      ->join("tbl_compensation_rank","tbl_compensation_rank.compensation_rank_id","=","tbl_slot.permanent_rank_id")
+                                                      ->where("slot_type","!=","CD")
+                                                      ->orderBy("permanent_rank_id","DESC")
+                                                      ->first();
+                if($child)
+                {
+                    if($child->permanent_rank_id > $rank_id)
+                    {
+                        $rank_id = $child->permanent_rank_id;
+                    }
+                }
+                
+                $_ranks             = DB::table("tbl_compensation_rank")->orderBy("compensation_rank_id","ASC")->where("compensation_rank_id",">",$slot->next_month_rank)->get();
+                if($_ranks)
+                {
+                    foreach($_ranks as $rank)
+                    {
+                        if($month_personal_pv >= $rank->required_personal_pv_maintenance)
+                        {
+                            if($group_pv >= $rank->required_group_pv)
+                            {
+                                $next_month_rank = $rank->compensation_rank_id;
+                            }
+                            else if($personal_pv >= $rank->required_personal_pv)
+                            {
+                                $next_month_rank = $rank->compensation_rank_id;
+                            }
+                        }
+                    }
+                }
+                
+                if($rank_id > $slot->permanent_rank_id)
+                {
+                    $update["permanent_rank_id"] = $rank_id;
+                    Tbl_slot::where("slot_id",$slot_id)->update($update);
+                    $update = null;
+                }
+                
+                if($next_month_rank > $slot->next_month_rank)
+                {
+                    $update["next_month_rank"] = $next_month_rank;
+                    Tbl_slot::where("slot_id",$slot_id)->update($update);  
+                    $update = null;
+                }                
             }
             
-            $list_of_sponsor = Tbl_tree_sponsor::where("sponsor_tree_child_id",$slot_id)->get();
-            foreach($list_of_sponsor as $sponsor_id)
-            {
-              $sponsor_id = $sponsor_id->sponsor_tree_parent_id;
-              Compute::rank_checker($sponsor_id);
-            }
-        }
-    }
-    
-    public static function rank_checker($slot_id)
-    {
-        $slot               = Tbl_slot::where("slot_id",$slot_id)->first();
-        if($slot)
-        {
-                $_ranks             = DB::table("tbl_compensation_rank")->orderBy("compensation_rank_id","ASC")->where("compensation_rank_id",">",$slot->permanent_rank_id)->get();
-                foreach($_ranks as $rank)
-                {
-                    if($rank->compensation_rank_id > $slot->permanent_rank_id)
-                    {
-                        if($group_pv >= $rank->required_group_pv)
-                        {
-                            Compute::check_compensation_rank_manual_by_adjust($slot_id);    
-                        }
-                        else if($personal_pv >= $rank->required_personal_pv)
-                        {
-                            Compute::check_compensation_rank_manual_by_adjust($slot_id);       
-                        }
-                    }
-                }
-        }
+            Compute::compensation_rank($slot->slot_sponsor);
+        }   
     }
        
     public static function count_gpv($slot_id)

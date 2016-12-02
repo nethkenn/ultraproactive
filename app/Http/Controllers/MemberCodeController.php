@@ -153,7 +153,7 @@ class MemberCodeController extends MemberController
 	{
 		ignore_user_abort(true);
 		set_time_limit(0);
-		$strURL = "/member/code_vault?wait=5";
+		$strURL = "/member/code_vault?wait=2";
 		header("Location: $strURL", true);
 		header("Connection: close", true);
 		header("Content-Encoding: none\r\n");
@@ -219,7 +219,7 @@ class MemberCodeController extends MemberController
 
 		}
 		
-		sleep(5);
+		sleep(2);
 		exit;
 	}
 	
