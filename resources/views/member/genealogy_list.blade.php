@@ -17,7 +17,7 @@
                         <th class="text-center">Slot</th>   
                         <th class="text-center">Group</th>   
                         <th class="text-center">Status</th>   
-                        <th class="text-center">PV</th>   
+                        <th class="text-center">Personal UPcoins</th>   
                         <th class="text-center">Genealogy</th>   
                     </tr>
                 </thead>
@@ -29,7 +29,7 @@
                             <td>{{$tree->slot_id}}</td>
                             <td>{{strtoupper($tree->placement_tree_position)}}</td>
                             <td>{{$tree->slot_type}}</td>
-                            <td>{{$tree->slot_personal_points}}</td>
+                            <td>{{number_format(DB::table("tbl_pv_logs")->where("owner_slot_id",$tree->slot_id)->where("used_for_redeem",0)->where("type","PPV")->sum("amount"),2)}}</td>
                             <td><a href="/member/genealogy/tree?mode=binary&view_id={{$tree->slot_id}}">Genealogy</a></td>
                         </tr>
                     @endforeach

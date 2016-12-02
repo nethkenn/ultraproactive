@@ -132,6 +132,7 @@ class MemberReportController extends MemberController
 									->join("tbl_account","tbl_account.account_id","=","tbl_slot.slot_owner")
 									->select("placement_tree_level","tbl_slot.slot_id","tbl_tree_placement.placement_tree_child_id","account_id","slot_owner","account_name","slot_personal_points","placement_tree_position","slot_type")
 									->get();
+
 		$data["_tree"] = $tree;
 		return view('member.genealogy_list', $data);
 	}
