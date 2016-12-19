@@ -111,6 +111,9 @@
 <div class="remodal" data-remodal-id="add-leads-manual-modal"
   data-remodal-options="hashTracking: true, closeOnOutsideClick: false, closeOnEscape: false">
   <button data-remodal-action="close" class="remodal-close btn-remodal"></button>
+   @if(Session::has('name_error'))
+        <p class="text-danger text-left">*{{Session::get('name_error')}}</p>
+    @endif
   <h3>Add Lead Manually</h3>
 <form class="form-horizontal" action="/member/leads/manual-add/" method="POST">
     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">

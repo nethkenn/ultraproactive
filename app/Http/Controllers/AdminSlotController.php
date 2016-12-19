@@ -53,6 +53,14 @@ class AdminSlotController extends AdminController
 			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." update Slot ID".$slot_id." from rank id ".$slot_inf->current_rank." to ". $update["permanent_rank_id"]);
 		    return Redirect::to('admin/maintenance/slots');
 		}
+		
+		if(isset($_POST['slot_id_to_fs']))
+		{
+			$message = $this->change_cd_to_fs($_POST['slot_id_to_fs']);
+
+			$data["name_message"] = $message;
+
+		}
 
         return view('admin.maintenance.slot',$data);
 	}
@@ -739,5 +747,32 @@ class AdminSlotController extends AdminController
 		$data['current_wallet_amount_PUP'] = $current_wallet_amount;
 
 		return $data;
+	}
+	
+	public function change_cd_to_fs($id)
+	{
+		$message = "";
+		$check	 = Tbl_slot::where("slot_id",$id)->first();
+		if($check)
+		{
+			if($check->slot_type == "CD")
+			{
+				$update["slot_type"] = "FS";
+									   Tbl_slot::where("slot_id",$id)->update($update);
+				$new_check			 = Tbl_slot::where("slot_id",$id)->first();
+				Log::Admin(Admin::info()->account_id,Admin::info()->account_username." converted slot #".$id." to FS",serialize($check),serialize($new_check));
+				
+				$message = "Success";
+			}
+			else
+			{
+				$message = "This slot cannot be converted to FS";
+			}
+		}
+		else
+		{
+			$message = "Slot doesn't exists";
+		}
+		return $message;
 	}
 }

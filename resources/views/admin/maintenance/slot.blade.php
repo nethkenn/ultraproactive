@@ -7,6 +7,9 @@
 			</div>
 			<div class="buttons col-md-2 text-right">
 				<button class="slot_limit btn btn-primary" type="button" style="width: 100%;"><i></i>Slot Limit ({{$slot_limit->value}})</button>
+			</div>				
+			<div class="buttons col-md-2 text-right">
+				<button class="convert_to_fs btn btn-primary" type="button" style="width: 100%;"><i></i>Convert a CD</button>
 			</div>			
 			<!--<div class="buttons col-md-2 text-right">-->
 			<!--	<button class="compensation_check btn btn-primary" type="button" style="width: 100%;"><i></i>Compensation Check</button>-->
@@ -20,6 +23,17 @@
  			</div>
 		</div>
 	</div>
+		@if(isset($name_message))
+			  	@if($name_message == "Success")
+			 		<div class="alert alert-success">
+					  	Successfully converted.
+					</div>
+				@else 
+					<div class="alert alert-danger">
+					  	{{$name_message}}
+					</div>	
+				@endif
+		@endif
 	<div class="col-md-12">
 			<table id="table" class="table table-bordered">
 				<thead>
@@ -251,6 +265,18 @@
   </form>
 </div>
 
+
+<div class="remodal" data-remodal-id="cd_to_fs" data-remodal-options="hashTracking: false, closeOnOutsideClick: false">
+
+  <button data-remodal-action="close" class="remodal-close remodal-btn"></button>
+  <h3>CD to FS</h3>
+  <form class="cd_to_fs" method="POST">
+        <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
+		Slot #:<input type="number" name="slot_id_to_fs" value="">
+		<button type="submit"> Confirm </button>
+  </form>
+</div>
+
 @endsection
 
 @section('script')
@@ -328,6 +354,12 @@ $(function() {
 			var inst = $('[data-remodal-id=compensation_check]').remodal();
           	inst.open(); 
     });
+    
+	$(".convert_to_fs").click(function()
+	{
+			var inst = $('[data-remodal-id=cd_to_fs]').remodal();
+          	inst.open(); 
+	});
 
 });
 </script>
