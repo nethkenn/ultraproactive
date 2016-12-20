@@ -15,8 +15,9 @@
 	</div>
 		<div class="filters ">
 			<div class="col-md-8">
-				<a class="{{$active = Request::input('archived') ? '' : 'active' }}" href="admin/maintenance/accounts/">ACTIVE</a>
+				<a class="{{$active = Request::input('archived') || Request::input('noslot') ? '' : 'active' }}" href="admin/maintenance/accounts/">ACTIVE</a>
 				<a class="{{$active = Request::input('archived') ? 'active' : '' }}" href="admin/maintenance/accounts/?archived=1">ARCHIVED</a>
+				<a class="{{$active = Request::input('noslot') ? 'active' : '' }}" href="admin/maintenance/accounts/?noslot=noslot">NO SLOTS</a>
 			</div>
 		</div>
 	<form method="POST" form action="admin/maintenance/accounts" target="_blank">
@@ -49,7 +50,8 @@ $(function() {
          ajax:{
 	        	url:'admin/maintenance/accounts/data',
 	        	data:{
-	        	   	archived : "{{$archived = Request::input('archived') ? 1 : 0 }}"
+	        	   	archived : "{{$archived = Request::input('archived') ? 1 : 0 }}",
+	        	   	noslot : "{{$noslot = Request::input('noslot') ? 1 : 0 }}"
 	        	   }
 	    	},
         columns: [

@@ -62,6 +62,18 @@ class MemberLeadController extends MemberController
                         ->withInput();
         }
 
+
+
+		$checked_name  = Tbl_account::where("account_name","LIKE",Request::input('first_name') ." ". Request::input('middle_name') ." ". Request::input('last_name'))->where("archived",0)->first();
+		if($checked_name)
+		{
+			$message      = 'The name "'.Request::input('first_name') ." ". Request::input('middle_name') ." ". Request::input('last_name').'"'.' is already registered. Only 1 account(that may composed with 7slots) is allowed. You may contact UPMI Admin for your concern on this matter.';
+            return redirect('/member/leads#add-leads-manual-modal')
+                        ->with('name_error',$message)
+                        ->withInput();
+		}
+		
+		dd(123);
         $now = Carbon::now();
 
         $insertAccount['account_name'] = Request::input('first_name') ." ". Request::input('middle_name') ." ". Request::input('last_name');

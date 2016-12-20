@@ -78,11 +78,12 @@
 			        <li class="{{ Request::segment(2) == '' ? 'active' : '' }}"><a href="/member">Dashboard</a></li>
 			        <li class="{{ Request::segment(2) == 'slot' ? 'active' : '' }}"><a href="/member/slot">My Slots</a></li>
 			        <li class="{{ Request::segment(2) == 'code_vault' ? 'active' : '' }}"><a href="/member/code_vault">Code Vault</a></li>
-			        <li class="{{ Request::segment(2) == 'genealogy' ? 'active' : '' }} dropdown">
+			        <li class="{{ Request::segment(2) == 'genealogy' || Request::segment(2) == 'gene' ? 'active' : '' }} dropdown">
                         <a href="javascript:">Genealogy</a>
                         <ul class="dropdown-menu">
                             <li><a href="/member/genealogy/tree?mode=binary">Binary Genealogy</a></li>
                             <li><a href="/member/genealogy/tree?mode=sponsor">Sponsor Genealogy</a></li>
+                            <li><a href="/member/gene/genealogy_list">Genealogy List</a></li>
                         </ul>
                     </li>
                     <li class="{{ Request::segment(2) == 'encashment' ? 'active' : '' }} {{ Request::segment(2) == 'transfer_wallet' ? 'active' : '' }} dropdown">
@@ -100,7 +101,6 @@
                         <a href="javascript:">Reports</a>
                         <ul class="dropdown-menu">
                             <li><a href="/member/reports/income_summary">Income Summary</a></li>
-                            <li><a href="/member/reports/genealogy_list">Genealogy List</a></li>
                             <li><a href="/member/reports/encashment_history">Encashment History</a></li>
                             <li><a href="/member/reports/upcoin_report">Upcoins</a></li>
                         </ul>

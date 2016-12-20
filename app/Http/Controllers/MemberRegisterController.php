@@ -17,9 +17,7 @@ class MemberRegisterController extends Controller
 {
 	public function index()
 	{
-
 		$data = Session::get('message');
-
 
 		if(Request::input('submit'))
 		{	
@@ -140,46 +138,54 @@ class MemberRegisterController extends Controller
 
 			if(!$validator->fails())
 			{		
-
-					$b_rel = Tbl_beneficiary_rel::firstOrCreate(['relation'=>$data['beneficiary_rel']]);
-
-					$insert_beneficiary['l_name'] = $data['l_name'];
-					$insert_beneficiary['m_name'] = $data['m_name'];
-					$insert_beneficiary['f_name'] = $data['f_name'];
-					$insert_beneficiary['whole_name'] = $data['f_name']. " " .$data['m_name']. " " .$data['l_name'];
-					$insert_beneficiary['beneficiary_gender']  =  $data['beneficiary_gender'];
-					$insert_beneficiary['beneficiary_rel_id']  =  $b_rel->beneficiary_rel_id;
-
-					$Tbl_beneficiary = new Tbl_beneficiary($insert_beneficiary);
-					$Tbl_beneficiary->save();
-
-
-					$insert['beneficiary_id']		  = $Tbl_beneficiary->beneficiary_id;
-					$insert['account_username'] 	  = $data['user'];
-					$insert['account_email']		  = $data['email'];
-					$insert['account_contact_number'] = $data['cp'];
-					$insert['account_country_id']	  = $data['country'];
-					$insert['account_password']		  = Crypt::encrypt($data['pass']);
-					$insert['account_name']	 		  = $data['fname']." ".$data['mname']." ".$data['lname'];
-					$insert['account_date_created']   = date('Y-m-d H:i:s');
-					$insert['account_created_from']   = "Front Register";
-					$insert['account_expired']   	  = 0;
-					$insert['account_approved']  	  = 0;
-					$insert['birthday'] = $birthday;
-					$insert['gender']   =  $data['gender'];
-					$insert['telephone']   = $data['tp'];
-					$insert['address']   = $data['address'];
-					
-
-					
-					$info = DB::table('tbl_account')->insertGetId($insert);
-
-					Customer::login($info,$insert['account_password']);
-					$data2 = true;
+					$checked_name  = Tbl_account::where("account_name","LIKE",$data['fname']." ".$data['mname']." ".$data['lname'])->where("archived",0)->first();
+					if($checked_name)
+					{
+						$message[0]      = 'The name "'.$data['fname']." ".$data['mname']." ".$data['lname'].'"'.' is already registered. Only 1 account(that may composed with 7slots) is allowed. You may contact UPMI Admin for your concern on this matter.';
+						$data2['_error'] = $message; 
+					}
+					else
+					{
+						$b_rel = Tbl_beneficiary_rel::firstOrCreate(['relation'=>$data['beneficiary_rel']]);
+	
+						$insert_beneficiary['l_name'] = $data['l_name'];
+						$insert_beneficiary['m_name'] = $data['m_name'];
+						$insert_beneficiary['f_name'] = $data['f_name'];
+						$insert_beneficiary['whole_name'] = $data['f_name']. " " .$data['m_name']. " " .$data['l_name'];
+						$insert_beneficiary['beneficiary_gender']  =  $data['beneficiary_gender'];
+						$insert_beneficiary['beneficiary_rel_id']  =  $b_rel->beneficiary_rel_id;
+	
+						$Tbl_beneficiary = new Tbl_beneficiary($insert_beneficiary);
+						$Tbl_beneficiary->save();
+	
+	
+						$insert['beneficiary_id']		  = $Tbl_beneficiary->beneficiary_id;
+						$insert['account_username'] 	  = $data['user'];
+						$insert['account_email']		  = $data['email'];
+						$insert['account_contact_number'] = $data['cp'];
+						$insert['account_country_id']	  = $data['country'];
+						$insert['account_password']		  = Crypt::encrypt($data['pass']);
+						$insert['account_name']	 		  = $data['fname']." ".$data['mname']." ".$data['lname'];
+						$insert['account_date_created']   = date('Y-m-d H:i:s');
+						$insert['account_created_from']   = "Front Register";
+						$insert['account_expired']   	  = 0;
+						$insert['account_approved']  	  = 0;
+						$insert['birthday'] = $birthday;
+						$insert['gender']   =  $data['gender'];
+						$insert['telephone']   = $data['tp'];
+						$insert['address']   = $data['address'];
+						
+	
+						
+						$info = DB::table('tbl_account')->insertGetId($insert);
+	
+						Customer::login($info,$insert['account_password']);
+						$data2 = true;
+					}
 			}
 			else
 			{
-					$data2['error'] = $validator->messages();
+					$data2['_error'] = $validator->messages()->all();
 			}		
 
 		return $data2;
@@ -221,45 +227,56 @@ class MemberRegisterController extends Controller
 
 			if(!$validator->fails())
 			{	
-					$insert['account_username'] 	  = $data['user'];
-					$insert['account_email']		  = $data['email'];
-					$insert['account_contact_number'] = $data['cp'];
-					$insert['account_country_id']	  = $data['country'];
-					$insert['account_password']		  = Crypt::encrypt($data['pass']);
-					$insert['account_name']	 		  = $data['fname']." ".$data['mname']." ".$data['lname'];
-					$insert['account_date_created']   = date('Y-m-d H:i:s');
-					$insert['account_created_from']   = "Front Register";
-					$insert['birthday'] 			  = $birthday;
-					$insert['gender']   =  $data['gender'];
-					$insert['telephone']   = $data['tp'];
-					$insert['address']   = $data['address'];
-					$insert['account_expired']   	  = 0;
-					$insert['account_approved']  	  = 0;
-					$info = DB::table('tbl_account')->insertGetId($insert);
-					// Customer::login($info,$insert['account_password']);
-					$data2 = true;
-					$x['lead_account_id'] = $email->account_id;
-					$x['account_id'] = $info;
-					$x['join_date'] = Carbon::now();
-					Tbl_lead::insert($x);
-					Log::account($email->account_id,$insert['account_name'].' successfully added as your lead through link');
-					if($email->gender == "Male")
+			
+					$checked_name  = Tbl_account::where("account_name","LIKE",$data['fname']." ".$data['mname']." ".$data['lname'])->where("archived",0)->first();
+					if($checked_name)
 					{
-						Log::account($info,'Successfully become a lead of '.$email->account_name.' through his link');
-					}
-					else if ($email->gender == "Female")
-					{
-						Log::account($info,'Successfully become a lead of '.$email->account_name.' through her link');
+						$message[0]      = 'The name "'.$data['fname']." ".$data['mname']." ".$data['lname'].'"'.' is already registered. Only 1 account(that may composed with 7slots) is allowed. You may contact UPMI Admin for your concern on this matter.';
+						$data2['_error'] = $message; 
+						return $data2;
 					}
 					else
 					{
-						Log::account($info,'Successfully become a lead of '.$email->account_name.' through his/her link');
+						$insert['account_username'] 	  = $data['user'];
+						$insert['account_email']		  = $data['email'];
+						$insert['account_contact_number'] = $data['cp'];
+						$insert['account_country_id']	  = $data['country'];
+						$insert['account_password']		  = Crypt::encrypt($data['pass']);
+						$insert['account_name']	 		  = $data['fname']." ".$data['mname']." ".$data['lname'];
+						$insert['account_date_created']   = date('Y-m-d H:i:s');
+						$insert['account_created_from']   = "Front Register";
+						$insert['birthday'] 			  = $birthday;
+						$insert['gender']   =  $data['gender'];
+						$insert['telephone']   = $data['tp'];
+						$insert['address']   = $data['address'];
+						$insert['account_expired']   	  = 0;
+						$insert['account_approved']  	  = 0;
+						$info = DB::table('tbl_account')->insertGetId($insert);
+						// Customer::login($info,$insert['account_password']);
+						$data2 = true;
+						$x['lead_account_id'] = $email->account_id;
+						$x['account_id'] = $info;
+						$x['join_date'] = Carbon::now();
+						Tbl_lead::insert($x);
+						Log::account($email->account_id,$insert['account_name'].' successfully added as your lead through link');
+						if($email->gender == "Male")
+						{
+							Log::account($info,'Successfully become a lead of '.$email->account_name.' through his link');
+						}
+						else if ($email->gender == "Female")
+						{
+							Log::account($info,'Successfully become a lead of '.$email->account_name.' through her link');
+						}
+						else
+						{
+							Log::account($info,'Successfully become a lead of '.$email->account_name.' through his/her link');
+						}
+						return "Success";
 					}
-					return "Success";
 			}
 			else
 			{
-					$data2['error'] = $validator->messages();
+					$data2['_error'] = $validator->messages()->all();
 					return $data2;
 			}		
 

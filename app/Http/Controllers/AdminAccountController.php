@@ -17,7 +17,6 @@ class AdminAccountController extends AdminController
 	public function index()
 	{
 		$data["page"] = "Account Maintenance";
-		
 		if(isset($_POST['login']))
 		{
 			$login = Tbl_account::where('account_id',Request::input('login'))->first();
@@ -39,15 +38,31 @@ class AdminAccountController extends AdminController
     public function data()
     {
 
-
+	
 		$admin_rank = Admin::info()->admin_position_rank;
-    	$account = Tbl_account::select('tbl_account.*','tbl_admin_position.admin_position_rank','tbl_country.country_name')->where('tbl_account.archived', Request::input('archived'))
-    										->where('tbl_admin_position.admin_position_rank', '>=',$admin_rank)
-    										->OrWhereNull('tbl_admin_position.admin_position_rank')
-    										->position()
-    										->country()
-    										->where('tbl_account.archived',Request::input('archived'))
-    										->get();
+		$check_slot = Request::input('noslot') ? 'noslot' : 'all';
+		
+		if($check_slot == "all")
+		{
+	    	$account = Tbl_account::select('tbl_account.*','tbl_admin_position.admin_position_rank','tbl_country.country_name')
+	    										->where('tbl_account.archived', Request::input('archived'))
+												->where(function ($query) use ($admin_rank) {$query->where('tbl_admin_position.admin_position_rank', '>=',$admin_rank)->orWhereNull('tbl_admin_position.admin_position_rank');})
+	    										->position()
+	    										->country()
+	    										->where('tbl_account.archived',Request::input('archived'))
+	    										->get();			
+		}
+		else
+		{
+	    	$account = Tbl_account::select('tbl_account.*',"tbl_slot.slot_id",'tbl_admin_position.admin_position_rank','tbl_country.country_name')->where('tbl_account.archived',0)
+												->where(function ($query) use ($admin_rank) {$query->where('tbl_admin_position.admin_position_rank', '>=',$admin_rank)->orWhereNull('tbl_admin_position.admin_position_rank');})
+	    										->leftJoin("tbl_slot","tbl_slot.slot_owner","=","account_id")
+	    										->position()
+	    										->country()
+	    										->whereNull("slot_id")
+	    										->get();	
+		}
+
 
         // $account = Tbl_account::select('*')->where('tbl_account.archived', Request::input('archived'))->leftJoin("tbl_country","tbl_account.account_country_id", "=", "tbl_country.country_id");
         $text = Request::input('archived') ? 'RESTORE' : 'ARCHIVE';

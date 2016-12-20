@@ -231,10 +231,7 @@
                     <div class="leybel">DIRECT SPONSORSHIP BONUS</div>
                     <div class="balyu">{{ number_format($earnings['direct'], 2) }}</div>
                 </div>
-                <div class="holders">
-                    <div class="leybel">INDIRECT LEVEL BONUS</div>
-                    <div class="balyu">{{ number_format($earnings['indirect'], 2) }}</div>
-                </div>
+
                 @if($oldwallet != 0)
                     <div class="holders">
                         <div class="leybel">WALLET FROM OLD SYSTEM</div>

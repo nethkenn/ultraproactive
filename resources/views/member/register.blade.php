@@ -6,7 +6,7 @@
 	@if(Session::has('message'))
 		<div class="alert alert-danger">
 			<ul>
-				@foreach ($error->all() as $error)
+				@foreach ($_error as $error)
 					<li>{{ $error }}</li>
 				@endforeach
 			</ul>

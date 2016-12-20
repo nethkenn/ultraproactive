@@ -32,6 +32,7 @@
 			<table id="table" class="table table-bordered">
 				<thead>
 					<tr class="text-center">
+						<th></th>
 						<th>Request From</th>
                         <th>Username</th>
 						<th>No. of slots</th>
@@ -163,7 +164,14 @@
 
 
 @endsection
-
+@section('css')
+<style type="text/css">
+    input[type=checkbox] 
+    {
+      transform: scale(2);
+    }
+</style>
+@endsection
 
 
 @section('script')
@@ -172,6 +180,7 @@ if("{{Request::input('processed')}}" == 1)
 {
       $(function() {
        $accountTable = $('#table').DataTable({
+           
             order: [[ 8, "desc" ]],
             processing: true,
             serverSide: true,
@@ -182,6 +191,7 @@ if("{{Request::input('processed')}}" == 1)
                        }
                 },
             columns: [
+                {data: 'checked', name: 'checked'},
                 {data: 'account_name', name: 'account_name'},
                 {data: 'account_username', name: 'account_username'},
                 {data: 'count', name: 'count'},
@@ -199,6 +209,10 @@ if("{{Request::input('processed')}}" == 1)
                     "sSearch": "",
                     "sProcessing": ""
                 },
+            "initComplete": function(settings, json) 
+            {
+                alert( 'DataTables has finished its initialisation.' );
+            },
             stateSave: true,
         });
     });  
@@ -216,6 +230,7 @@ else
                        }
                 },
             columns: [
+                {data: 'checked', name: 'checked'},
                 {data: 'account_name', name: 'account_name'},
                 {data: 'account_username', name: 'account_username'},
                 {data: 'count', name: 'count'},
@@ -234,10 +249,41 @@ else
                     "sSearch": "",
                     "sProcessing": ""
                 },
+            "drawCallback": function( settings ) 
+            {
+
+            },
             stateSave: true,
         });
     });   
 }
+// $(".processor").on("click","tr td:first-child",function()
+// {
+//     var checked_container  = $(this).find(".checked_container");
+    
+//     if(checked_container.is(':checked'))
+//     {
+//         checked_container.removeAttr("checked","checked"); 
+//     }
+//     else
+//     {
+//         checked_container.attr("checked","checked");
+//     }
+// });
+
+$(".processor").on("click",".checked_container",function(e)
+{
+    	$.ajax({
+			url: 'admin/transaction/payout/checked',
+			type: 'GET',
+			dataType: 'json',
+			data: {id: $(this).attr("request_id")},
+		})
+// 		.done(function() 
+// 		{
+//           alert("Success");
+//         });
+});
 
 </script>
 <script type="text/javascript" src="/resources/assets/admin/payout.js"></script>

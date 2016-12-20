@@ -359,8 +359,10 @@ class AdminPayoutController extends AdminController
                                                     ->selectRaw('count(*) as count, slot_id')
                                                     ->selectRaw('tbl_account_encashment_history.account_id, tbl_account_encashment_history.account_id')
                                                     ->selectRaw('type, type')
+                                                    ->selectRaw('request_id, request_id')
                                                     ->selectRaw('processed_no, processed_no')
                                                     ->selectRaw('tbl_account.account_username, tbl_account.account_username')
+                                                    ->selectRaw('checked, checked')
                                                     ->where('status','Processed')
                                                     ->groupBy('processed_no')
                                                     ->groupBy('type')
@@ -388,6 +390,8 @@ class AdminPayoutController extends AdminController
             {
                     $account = Tbl_account_encashment_history::selectRaw('tbl_account_encashment_history.account_id, sum(amount) as sum')
                                                         ->account()
+                                                        ->selectRaw('request_id, request_id')
+                                                        ->selectRaw('checked, checked')
                                                         ->selectRaw('tbl_account.account_name, tbl_account.account_name')
                                                         ->selectRaw('tbl_account_encashment_history.account_id, sum(deduction) as deduction')
                                                         ->selectRaw('count(*) as count, slot_id')
@@ -420,7 +424,32 @@ class AdminPayoutController extends AdminController
 
 
              return Datatables::of($account) ->addColumn('json','<a class="showmodal-b" json="{{$json}}" style="cursor:pointer;">Breakdown</a>')
+                                             ->addColumn('checked','<input type="checkbox" {{$checked == 0 ?  "" : "checked"}} type="form-control" class="checked_container" request_id="{{$request_id}}">')
                                              ->addColumn('process','<a class="showmodal-p" style="cursor:pointer;" accid="{{$account_id}}"  accnm="{{$account_name}}" total="{{$total}}" deduction="{{$deduction}}" sum="{{$sum}}" type="{{$type}}">Proccess</a>')
                                              ->make(true);
+    }
+    
+    public function checked()
+    {
+        $id     = Request::input("id");
+        
+        $payout = Tbl_account_encashment_history::where("request_id",$id)->first();
+        
+        if($payout)
+        {
+            if($payout->checked == 0)
+            {
+                $update["checked"] = 1;
+            }
+            else
+            {
+                $update["checked"] = 0;
+            }
+            
+            Tbl_account_encashment_history::where("request_id",$id)->update($update);
+        }    
+            
+        
+        return json_encode("Success");
     }
 }

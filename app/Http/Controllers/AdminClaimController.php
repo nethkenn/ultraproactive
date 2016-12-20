@@ -46,10 +46,9 @@ class AdminClaimController extends AdminController
 					break;
 					
 			}
-		})->get();
+		})->join("tbl_account","tbl_account.account_id","=","tbl_voucher.account_id")->get();
 
 		return Datatables::of($voucher)	->editColumn('status','{{$status}}')
-										->addColumn('account_name','{{App\Tbl_account::where("account_id",$account_id)->first()->account_name}}')
 										->addColumn('cancel_or_view_voucher','<a style="cursor: pointer;" class="view-voucher" voucher-id="{{$voucher_id}}">View Voucher</a>')
 			                            ->make(true);
 

@@ -34,6 +34,7 @@ Route::any('/member/genealogy/downline', 'MemberGenealogyController@downline');
 Route::any('/member/reports/income_breakdown', 'MemberReportController@breakdown');
 Route::any('/member/reports/income_summary', 'MemberReportController@summary');
 Route::any('/member/reports/genealogy_list', 'MemberReportController@genealogy_list');
+Route::any('/member/gene/genealogy_list', 'MemberReportController@genealogy_list');
 Route::any('/member/reports/encashment_history', 'MemberReportController@encashment_history');
 Route::any('/member/reports/upcoin_report', 'MemberReportController@upcoin_report');
 
@@ -114,6 +115,7 @@ Route::any('admin/transaction/payout/edit', 'AdminPayoutController@edit');
 Route::any('admin/transaction/payout/add', 'AdminPayoutController@add');
 Route::any('admin/transaction/payout/archive', 'AdminPayoutController@archive');
 Route::any('admin/transaction/payout/restore', 'AdminPayoutController@restore');
+Route::any('admin/transaction/payout/checked', 'AdminPayoutController@checked');
 
 /* Unilevel Compression*/
 // Route::any('admin/transaction/unilevel-distribution/dynamic', 'AdminUnilevelController@indexs');
