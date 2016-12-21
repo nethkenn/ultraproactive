@@ -40,6 +40,10 @@ class MemberCheckoutController extends Controller
         $data['slot'] = $slot;
         $data['current_wallet'] = Tbl_wallet_logs::id(Request::input('slot_id'))->wallet()->sum('wallet_amount');
         $gc =  Tbl_wallet_logs::id(Request::input('slot_id'))->gc()->sum('wallet_amount');
+        if(!$gc)
+        {
+            $gc = 0;
+        }
         $wallet = $data['current_wallet'];
         $cart = Session::get('cart');
         $sum_cart = $this->get_final_total($cart,$slot);
@@ -47,6 +51,7 @@ class MemberCheckoutController extends Controller
         $data['remaining_bal'] = $wallet - $data['final_total'];
         $data['final_total_for_gc'] = $this->get_final_total_no_discount($cart,$slot);
         $data['remaining_bal_gc'] = $gc - $data['final_total_for_gc'];
+
         $data['pts'] = $this->get_product_point($cart);
         $amt = 0 - $data['final_total'];
         $amt2 = 0 - $data['final_total_for_gc'];
