@@ -120,7 +120,7 @@ body
                 top: -15px;
                 width: 100%;
                 text-align: center;
-                @media screen and (max-width: 500px)
+                @media screen and (min-width: 500px)
                 {
                     .one
                     {
@@ -180,7 +180,7 @@ body
                 {
                     .logo
                     {
-                        top: -60px;
+                        top: -65px;
                     }
                 }
             }
