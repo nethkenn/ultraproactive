@@ -105,6 +105,42 @@ body
         top: 0px;
         z-index: 999;
         width: 100%;
+        //CHRISTMAS
+        .snowy
+        {
+            display: none;
+        }
+        &.christmas
+        {
+            position: relative;
+            .snowy
+            {
+                display: block;
+                position: absolute;
+                top: -15px;
+                width: 100%;
+                text-align: center;
+                @media screen and (max-width: 500px)
+                {
+                    .one
+                    {
+                        float: left;
+                    }
+                    .two
+                    {
+                        margin-right: 25px;
+                    }
+                    .three
+                    {
+                        margin-left: 25px;
+                    }
+                    .four
+                    {
+                        float: right;
+                    }
+                }
+            }
+        }
         .navbar-nav
         {
             width: 100%;
@@ -139,6 +175,13 @@ body
                     margin: auto;
                     top: -60px;
                     z-index: 999;
+                }
+                &.christmas
+                {
+                    .logo
+                    {
+                        top: -60px;
+                    }
                 }
             }
             .nav-inside
