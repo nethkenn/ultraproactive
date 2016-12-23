@@ -73,7 +73,7 @@ class MemberLeadController extends MemberController
                         ->withInput();
 		}
 		
-		dd(123);
+		// dd(123);
         $now = Carbon::now();
 
         $insertAccount['account_name'] = Request::input('first_name') ." ". Request::input('middle_name') ." ". Request::input('last_name');

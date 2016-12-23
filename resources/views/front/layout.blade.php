@@ -67,7 +67,13 @@
 		<span>|</span>
 		<a href="/member/register"><div class="text">REGISTER</div></a>
 	</div>
-	<nav class="navbar navbar-default">
+	<nav class="navbar navbar-default christmas">
+		<div class="snowy clearfix">
+			<img class="one" src="/resources/assets/frontend/img/snow-wut.png">
+			<img class="two" src="/resources/assets/frontend/img/snow-wat.png">
+			<img class="three" src="/resources/assets/frontend/img/snow-wat.png">
+			<img class="four" src="/resources/assets/frontend/img/snow-wut.png">
+		</div>
 	   <div>
 	      <!-- Brand and toggle get grouped for better mobile display -->
 	      <div class="navbar-header">
@@ -92,7 +98,8 @@
 	            </li>
 	            <li class="nav-inside active"><a href="/mindsync">MIND SYNC</a></li>
 	            <li class="nav-inside"><a href="/stories">STORIES</a></li>
-	            <li class="nav-inside logo-holder"><img class="logo" src="/resources/assets/frontend/img/logo.png"></li>
+	            <!--<li class="nav-inside logo-holder"><img class="logo" src="/resources/assets/frontend/img/logo.png"></li>-->
+	            <li class="nav-inside logo-holder christmas"><img class="logo" src="/resources/assets/frontend/img/christmas-logo.png"></li>
 	            <li class="nav-inside"><a href="/about">ABOUT US</a></li>
 	            <li class="nav-inside"><a href="/opportunity">OPPORTUNITY</a></li>
 	            <li class="nav-inside dropdown">
@@ -203,7 +210,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="span7 footer_copyright">
-						© 2015, UltraProactive, All Rights Reserved<a href="http://www.ultraproactive.net"></a>
+						© {{ date("Y") }}, UltraProactive, All Rights Reserved<a href="http://www.ultraproactive.net"></a>
 					</div>
 					<div class="span5 footer_social">
 						<!-- <a href="/resources/assets/path/#" target="_self"><i class="ABdev_icon-linkedin"></i></a> -->
