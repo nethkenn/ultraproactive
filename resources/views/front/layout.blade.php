@@ -18,7 +18,7 @@
 	<link rel="stylesheet" type="text/css" href="/resources/assets/slick/slick.css">
 	<link rel="stylesheet" type="text/css" href="/resources/assets/slick/slick-theme.css">
 	<link rel="stylesheet" type="text/css" href="/resources/assets/bootstrap/css/bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="/resources/assets/frontend/css/global.css">
+	<link rel="stylesheet" type="text/css" href="/resources/assets/frontend/css/global.css?version=2">
 	@yield('css')
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
