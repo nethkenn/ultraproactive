@@ -199,7 +199,7 @@ if("{{Request::input('processed')}}" == 1)
                 {data: 'sum', name: 'sum'},
                 {data: 'deduction', name: 'deduction'},
                 {data: 'total', name: 'total'},
-                {data: 'date', name: 'date'},
+                {data: 'encashment_date', name: 'encashment_date'},
                 {data: 'json', name: 'processed_no'},
 
             ],
@@ -211,7 +211,7 @@ if("{{Request::input('processed')}}" == 1)
                 },
             "initComplete": function(settings, json) 
             {
-                alert( 'DataTables has finished its initialisation.' );
+                // alert( 'DataTables has finished its initialisation.' );
             },
             stateSave: true,
         });

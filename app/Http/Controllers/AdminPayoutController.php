@@ -340,7 +340,6 @@ class AdminPayoutController extends AdminController
                 $account[$key]->deduction = $this->currency_format($a->deduction);
                 $account[$key]->json = json_encode(Tbl_account_encashment_history::where('account_id',$a->account_id)->where('processed_no',$a->processed_no)->where('status','Processed')->where('type',$a->type)->get());
                 $d  = Tbl_account_encashment_history::where('account_id',$a->account_id)->orderBy('encashment_date','DESC')->where('status','Processed')->where('type',$a->type)->first();
-               dd($d);
                 $account[$key]->date = $d->encashment_date;   
             }
 
@@ -363,6 +362,7 @@ class AdminPayoutController extends AdminController
                                                     ->selectRaw('processed_no, processed_no')
                                                     ->selectRaw('tbl_account.account_username, tbl_account.account_username')
                                                     ->selectRaw('checked, checked')
+                                                    ->selectRaw('encashment_date, encashment_date')
                                                     ->where('status','Processed')
                                                     ->groupBy('processed_no')
                                                     ->groupBy('type')
