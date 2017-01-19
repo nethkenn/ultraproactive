@@ -32,7 +32,7 @@
             <div class="form-group col-md-12 for-member-input">
                 <label for="account id">Member</label>
                 @if($errors->get('account_id'))<span style="color:red;" class="glyphicon glyphicon-remove" aria-hidden="true"></span>@endif
-                <select id="select-member" name="account_id" class="form-control">
+                <select id="select-member" name="account_id" class="form-control chosen-select">
                   <option value="">Select Member</option>
                   @foreach ($_member_account as $member_account)
             <option value="{{$member_account->account_id}}" {{Request::old('account_id') == $member_account->account_id ? 'selected' : '' }}>{{$member_account->account_name}} ( {{$member_account->account_username}} )</option>
@@ -161,6 +161,9 @@
   <button  class="remodal-confirm" id="edit-submit-product">OK</button>
 </div>
 @endsection
+@section('css')
+<link rel="stylesheet" type="text/css" href="/resources/assets/chosen_v1.4.2/chosen.min.css">
+@endsection
 @section('script')
   <script type="text/javascript">
 
@@ -203,4 +206,8 @@
   });
   </script>
   <script type="text/javascript" src="resources/assets/admin/process_stockist_sale.js"></script>
+    <script type="text/javascript" src="/resources/assets/chosen_v1.4.2/chosen.jquery.min.js"></script>
+    <script type="text/javascript">
+    $(".chosen-select").chosen({disable_search_threshold: 10});
+  </script>
 @endsection

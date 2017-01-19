@@ -101,7 +101,7 @@
                 </div>
                 <div class="form-group col-md-12">
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-6 hide">
                     <label for="Recipient">Code multiplier</label>
                     @if($_error['code_multiplier'])
                         <div class="col-md-12 alert alert-danger form-errors">
@@ -112,7 +112,7 @@
                             </ul>
                         </div>
                     @endif
-                    <input class="form-control" type="number" value="{{Request::old('code_multiplier')  ? Request::old('code_multiplier') : '1'}}" name="code_multiplier"/>
+                    <input class="form-control" type="number" value="1" name="code_multiplier"/>
                 </div>  
 
                     <div class="form-group col-md-6">

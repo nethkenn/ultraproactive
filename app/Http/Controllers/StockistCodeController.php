@@ -50,35 +50,17 @@ class StockistCodeController extends StockistController
     {
 
         $stat = Request::input('status');
-        $membership_code = Tbl_membership_code::byStockist(Stockist::info()->stockist_id)->getMembership()->getCodeType()->getPackage()->getInventoryType()->getUsedBy()->where(function ($query) use ($stat) {
-
-            switch ($stat)
-            {
-
-                case 'used':
-                    $query->where('tbl_membership_code.blocked',0)->where('tbl_membership_code.used',1)->where('origin',Stockist::info()->stockist_id)->whereNotNull('tbl_account.account_id');
-                    break;
-
-                case 'blocked':
-                    $query->where('tbl_membership_code.blocked',1);
-                    break;
-                    
-                default:
-                     $query->where('tbl_membership_code.blocked',0)->where('tbl_membership_code.used',0)->where('origin',Stockist::info()->stockist_id)->whereNotNull('tbl_account.account_id');
-      
-            }
-
-
-        })->get();
-
+        $membership_code =         Tbl_membership_code_sale_has_code::join("tbl_membership_code_sale","tbl_membership_code_sale.membershipcode_or_num","=","tbl_membership_code_sale_has_code.membershipcode_or_num")
+                                         ->join("tbl_membership_code","tbl_membership_code.code_pin","=","tbl_membership_code_sale_has_code.code_pin")
+                                         ->where('tbl_membership_code.origin',Stockist::info()->stockist_id)
+                                         ->orWhere("tbl_membership_code_sale.origin",Stockist::info()->stockist_id)
+                                         ->get();
+    
         return Datatables::of($membership_code) 
-
-        ->addColumn('delete','<a href="#" class="block-membership-code" membership-code-id ="{{$code_pin}}">BLOCK</a>')
-                                        ->addColumn('transfer','<a class="transfer-membership-code"  href="#" membership-code-id="{{$code_pin}}" account-id="{{$account_id}}">TRANSFER</a>')
-                                        ->editColumn('created_at','{{$created_at->format("F d, Y g:ia")}}')
-                                        ->editColumn('inventory_update_type_id','<input type="checkbox" {{$inventory_update_type_id == 1 ? \'checked="checked"\' : \'\'}} name="" value="" readonly disabled>')
-                                        ->editColumn('account_name','{{$account_name or "No owner"}}')
-                                        ->make(true);
+                        //  ->editColumn('created_at','{{$created_at->format("F d, Y g:ia")}}')
+                         ->editColumn('account_name','{{$account_name or "No owner"}}')
+                         ->addColumn('view_voucher','<a style="cursor: pointer;" class="view-voucher" voucher-id="{{$voucher_id}}">View Voucher</a>') 
+                         ->make(true);
     }
 
     public function add_code()

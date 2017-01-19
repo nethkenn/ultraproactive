@@ -12,31 +12,39 @@
 			</div>
 		</div>
 
-		<div class="filters ">
-			<div class="col-md-8">
-				<a class="{{$active = Request::input('status') == null ? 'active' : ''}}" href="stockist/membership_code?status=unused">Unused Member Codes</a>
-				<a class="{{$active = Request::input('status') == 'used' ? 'active' : ''}}" href="stockist/membership_code?status=used">Used Member Codes</a>
-				<a class="{{$active = Request::input('status') == 'blocked' ? 'active' : ''}}" href="stockist/membership_code?status=blocked">Block</a>
-			</div>
-		</div>
+		<!--<div class="filters ">-->
+		<!--	<div class="col-md-8">-->
+		<!--		<a class="{{$active = Request::input('status') == null ? 'active' : ''}}" href="stockist/membership_code?status=unused">Unused Member Codes</a>-->
+		<!--		<a class="{{$active = Request::input('status') == 'used' ? 'active' : ''}}" href="stockist/membership_code?status=used">Used Member Codes</a>-->
+		<!--		<a class="{{$active = Request::input('status') == 'blocked' ? 'active' : ''}}" href="stockist/membership_code?status=blocked">Block</a>-->
+		<!--	</div>-->
+		<!--</div>-->
 	<div class="col-md-12">
 			<table id="table" class="table table-bordered">
 				<thead>
 					<tr class="text-center">
-						<th>Pin</th>
-						<th>Activation</th>
-						<th>Membership</th>
-						<th>Code Type</th>
-						<th>Product</th>
+						<th>OR Number</th>
+						<th>OR Code</th>
+						<th>Form Number</th>
 						<th>Owner</th>
-						<th>Voucher</th>
 						<th>Date</th>
-						<th class="option-col"></th>
-						<th class="option-col"></th>
+						<th class="option-col">View Voucher</th>
 					</tr>
 				</thead>
 			</table>
 	</div>
+</div>
+
+<div class="remodal" data-remodal-id="view_prod_modal"
+  data-remodal-options="hashTracking: false, closeOnOutsideClick: true">
+  <button data-remodal-action="close" class="remodal-close"></button>
+  <div id="voucher-prod-container">
+
+  </div>
+  <div style="display:none;" id="email-message"></div>
+  <button  data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
+ <!-- <button  class="email-voucher remodal-confirm">Email</button> -->
+  <img class="loading" style="display: none;" src="/resources/assets/img/small-loading.GIF" alt="">
 </div>
 @endsection
 @section('script')
@@ -53,16 +61,12 @@
 				},
 			columns: [
 				 // {data: 'code_pin', name: 'code_pin'},
-			    {data: 'code_pin', name: 'code_pin'},
-			    {data: 'code_activation', name: 'code_activation'},
-			    {data: 'membership_name', name: 'membership_name'},
-			    {data: 'code_type_name', name: 'code_type_name'},
-			    {data: 'product_package_name', name: 'product_package_name'},
+			    {data: 'membershipcode_or_num', name: 'membershipcode_or_num'},
+			    {data: 'membershipcode_or_code', name: 'membershipcode_or_code'},
+			    {data: 'order_form_number', name: 'order_form_number'},
 			    {data: 'account_name', name: 'account_name'},
-			    {data: 'inventory_update_type_id', name: 'inventory_update_type_id'},
 			    {data: 'created_at', name: 'created_at'},
-			    {data: 'delete', name: 'code_pin'},
-			    {data: 'transfer', name: 'code_pin'},
+			    {data: 'view_voucher', name: 'view_voucher'},
 
 			],
 			"lengthMenu": [[8, 10, 25, 50, -1], [10, 25, 50, "All"]],
@@ -73,5 +77,14 @@
 			 	},
 			stateSave: true,
 		});
+		
+	   $('#table').on('click', '.view-voucher', function(event) {
+	   		event.preventDefault();
+	   		var v_id = $(this).attr('voucher-id');
+	   		$('.email-voucher').attr('voucher-id', v_id);
+	   		$('#voucher-prod-container').load('stockist/process_sales/sales/sale_or?voucher_id='+v_id);
+	   		modal.open();
+	   });
+
 	</script>
 @endsection

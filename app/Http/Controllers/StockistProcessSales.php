@@ -428,7 +428,7 @@ class StockistProcessSales extends StockistController
                                     ->where('stockist_id',Stockist::info()->stockist_id)
                                     ->find($val['product_id']);
 
-                $rules['product_'.$key] = 'exists:Tbl_stockist_inventory,product_id,stockist_id,'.Stockist::info()->stockist_id.'|check_stockist_quantity:'.$val['qty'].','.$prod->stockist_quantity.',processed';
+                $rules['product_'.$key] = 'exists:tbl_stockist_inventory,product_id,stockist_id,'.Stockist::info()->stockist_id.'|check_stockist_quantity:'.$val['qty'].','.$prod->stockist_quantity.',processed';
             }
 
             foreach($_cart_product as $key => $val)
@@ -452,7 +452,6 @@ class StockistProcessSales extends StockistController
                         ->withInput(Request::input());
 
         }
-
 
         $_cart = Session::get('admin_cart');
         $get_total = $this->get_cart_total($_cart,Request::input('slot_id'));
