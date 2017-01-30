@@ -61,18 +61,18 @@
 					<div id="navbar" class="navbar-collapse collapse">
 						<ul class="nav navbar-nav">
 							<li class="{{ Request::segment(2) == '' ? 'active' : 'inactive' }}"><a href="stockist/">Dashboard</a></li>
-							<li class="{{ Request::segment(2) == 'membership_code' ? 'active' : 'inactive' }}"><a href="/stockist/membership_code/">Code</a></li>
 							<!--<li class="{{ Request::segment(2) == 'transfer_wallet' ? 'active' : 'inactive' }}"><a href="/stockist/transfer_wallet">Transfer Wallet</a></li>-->
 						</ul>
 
 
 							
 						<ul class="nav navbar-nav">
-							<li class="dropdown {{ Request::segment(2) == 'process_sales' ||  Request::segment(2) == 'voucher' ? 'active' : 'inactive' }}">
+							<li class="dropdown {{ Request::segment(2) == 'process_sales' ||  Request::segment(2) == 'voucher' || Request::segment(2) == 'membership_code' ? 'active' : 'inactive' }}">
 									<a href="admin/utilities" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Process  <span class="caret"></span></a>
 									<ul class="dropdown-menu" role="menu">
 											<li class=""><a href="/stockist/process_sales">Process Sales</a></li>
-											<li class=""><a href="/stockist/voucher/">Process Claim</a></li>							
+											<li class=""><a href="/stockist/voucher/">Process Claim</a></li>
+											<li class=""><a href="/stockist/membership_code/">Process Code</a></li>
 									</ul>
 							</li>
 						</ul>

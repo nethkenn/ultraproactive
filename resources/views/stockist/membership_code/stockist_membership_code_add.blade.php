@@ -115,7 +115,7 @@
                     <input class="form-control" type="number" value="1" name="code_multiplier"/>
                 </div>  
 
-                    <div class="form-group col-md-6">
+                <div class="form-group col-md-6 hide">
                     <label for="Inventory Update">Inventory Update</label>
                     @if($errors->get('inventory_update_type_id'))
                         <div class="col-md-12 alert alert-danger form-errors">
@@ -133,11 +133,32 @@
                         @endforeach
                         @endif
                     </select>
+                </div>    
+                <div class="form-group col-md-6">
+                    <label for="Inventory Update">Order Form Number</label>
+                    @if($errors->get('order_form_number'))
+                        <div class="col-md-12 alert alert-danger form-errors">
+                            <ul>
+                                @foreach($errors->get('order_form_number') as $error)
+                                    <li>{{$error}}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <input name="order_form_number" class="form-control" type="text">
                 </div>      
         </form>
     </div>
 @endsection
+@section('css')
+<link rel="stylesheet" type="text/css" href="/resources/assets/chosen_v1.4.2/chosen.min.css">
+@endsection
 @section('script')
+    <script type="text/javascript" src="resources/assets/admin/process_stockist_sale.js"></script>
+      <script type="text/javascript" src="/resources/assets/chosen_v1.4.2/chosen.jquery.min.js"></script>
+      <script type="text/javascript">
+      $(".chosen-select").chosen({disable_search_threshold: 10});
+    </script>
     <script type="text/javascript" src="resources/assets/chosen_v1.4.2/chosen.jquery.min.js"></script>
     <link rel="stylesheet" href="resources/assets/chosen_v1.4.2/chosen.css">
     <script type="text/javascript">

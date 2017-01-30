@@ -67,7 +67,7 @@ class StockistCodeController extends StockistController
     {
         $data['_error'] = null;
         $data['_membership'] = Tbl_membership::where('membership_entry', 1)->where('archived', 0)->get();
-        $data['_code_type'] = Tbl_code_type::where('code_type_id', '!=' , 2)->get();
+        $data['_code_type'] = Tbl_code_type::where('code_type_id', '=' , 1)->get();
         $data['_prod_package'] = Tbl_product_package::where('archived', 0)->get();
         $data['_account'] = Tbl_account::all();
         $data['_inventory_update_type'] = Tbl_inventory_update_type::where('inventory_update_type_id','=',1)->get();
@@ -84,6 +84,7 @@ class StockistCodeController extends StockistController
         $request_account_id = Request::input('account_id');
         $request_code_multiplier = Request::input('code_multiplier');
         $request_inventory_update_type_id = Request::input('inventory_update_type_id');
+        $request_order_form_number = Request::input('order_form_number');
 
         $rules['code_type_id'] = 'required|exists:tbl_code_type,code_type_id';
         $rules['product_package_id'] = 'required|exists:tbl_product_package,product_package_id,membership_id,'.Request::input('membership_id').'|foo:'.Request::input('inventory_update_type_id');
@@ -91,6 +92,7 @@ class StockistCodeController extends StockistController
         $rules['account_id'] = 'required|exists:tbl_account,account_id';
         $rules['code_multiplier'] = 'min:1|integer';
         $rules['membership_id'] = 'required|exists:tbl_membership,membership_id|check_member';
+        $rules['order_form_number'] = 'unique:tbl_membership_code_sale,order_form_number';
 
         $message['product_package_id.foo'] = "One or more included product might be out of stock".
         $message['product_package_id.check_member'] = "This membership is not for Member entry".
@@ -173,6 +175,7 @@ class StockistCodeController extends StockistController
                     // $insert_membership_code_sale['generated_by'] = Admin::info()->account_id;
                     $insert_membership_code_sale['total_amount'] = $membership_total_amount;
                     $insert_membership_code_sale['payment'] = 1;
+                    $insert_membership_code_sale['order_form_number'] = $request_order_form_number;
                     $tbl_membership_code_sale = new Tbl_membership_code_sale($insert_membership_code_sale);
                     $tbl_membership_code_sale->save($insert_membership_code_sale);
                 }
@@ -374,7 +377,7 @@ class StockistCodeController extends StockistController
     {
 
 
-        $prodpack = Tbl_product_package::where('membership_id', Request::input('membership_id'))->get();
+        $prodpack = Tbl_product_package::where('membership_id', Request::input('membership_id'))->where("archived",0)->get();
 
         return $prodpack;
 
