@@ -40,8 +40,8 @@ Route::any('/member/reports/upcoin_report', 'MemberReportController@upcoin_repor
 
 
 /* Transfer wallet */
-Route::any('/member/transfer_wallet', 'MemberTransferWalletController@index');
-Route::any('/member/transfer_wallet/get', 'MemberTransferWalletController@get');
+// Route::any('/member/transfer_wallet', 'MemberTransferWalletController@index');
+// Route::any('/member/transfer_wallet/get', 'MemberTransferWalletController@get');
 
 /* Voucher */
 Route::any('/member/voucher', 'MemberVoucherController@index');
@@ -529,10 +529,10 @@ Route::any('admin/stockist_wallet', 'AdminStockistWalletController@index');
 Route::any('stockist', 'StockistDashboardController@index');
 
 //STOCKIST PAGE ISSUE
-Route::any('stockist/issue_stocks', 'StockistIssueController@index');
-Route::any('stockist/issue_stocks/issue', 'StockistIssueController@issue');
-Route::get('stockist/issue_stocks/issue/product', 'StockistIssueController@ajax_get_product');
-Route::get('stockist/issue_stocks/issue/product/package', 'StockistIssueController@ajax_get_product_package');
+// Route::any('stockist/issue_stocks', 'StockistIssueController@index');
+// Route::any('stockist/issue_stocks/issue', 'StockistIssueController@issue');
+// Route::get('stockist/issue_stocks/issue/product', 'StockistIssueController@ajax_get_product');
+// Route::get('stockist/issue_stocks/issue/product/package', 'StockistIssueController@ajax_get_product_package');
 
 //STOCKIST PAGE PROCESS
 Route::any('stockist/process_sales', 'StockistProcessSales@index');
@@ -555,8 +555,8 @@ Route::any('stockist/inventory', 'StockistOrderStocksController@view_inventory')
 Route::any('stockist/order_stocks', 'StockistOrderStocksController@index');
 Route::any('stockist/order_stocks/order', 'StockistOrderStocksController@order');
 Route::any('stockist/order_stocks/get', 'StockistOrderStocksController@ajax_get');
-Route::any('stockist/accept_stocks', 'StockistOrderStocksController@check_rank');
-Route::any('stockist/accept_stocks/accept', 'StockistOrderStocksController@accept');
+// Route::any('stockist/accept_stocks', 'StockistOrderStocksController@check_rank');
+// Route::any('stockist/accept_stocks/accept', 'StockistOrderStocksController@accept');
 
 //STOCKIST REPORTS PAGE
 Route::any('stockist/reports/sales', 'StockistReportsController@sales');

@@ -938,12 +938,15 @@ class AdminSalesController extends AdminController
 
 		$data['voucher'] = 	$voucher;
 		$data['_voucher_product']  = Tbl_voucher_has_product::where('voucher_id', $voucher_id)->product()->get();
-		
+
 		if($data['_voucher_product'])
 		{
 			foreach ($data['_voucher_product'] as $key => $value)
 			{
-				$total_product[] =  $value->sub_total + $voucher->product_discount_amount;
+				
+				$data['_voucher_product'][$key]->price = Tbl_voucher_has_product::where("voucher_item_id",$value->voucher_item_id)->first()->price;
+				// $total_product[] =  $value->sub_total + $voucher->product_discount_amount;
+				$total_product[] =  Tbl_voucher_has_product::where("voucher_item_id",$value->voucher_item_id)->first()->price * $value->qty;
 				$discount[] = $value->product_discount_amount;
 			}
 		}
@@ -951,11 +954,14 @@ class AdminSalesController extends AdminController
 		{
 			$total_product = [];
 		}
-
 		$data['product_total'] = array_sum($total_product);
 		$data['discount_pts'] =	 array_sum($discount);
 
 
+		if($voucher->membership_code != null)
+		{
+			$data['product_total'] = 0;
+		}
 
 		if(Request::isMethod('post'))
 		{

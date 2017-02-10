@@ -50,42 +50,25 @@ class StockistCodeController extends StockistController
     {
 
         $stat = Request::input('status');
-        $membership_code = Tbl_membership_code::byStockist(Stockist::info()->stockist_id)->getMembership()->getCodeType()->getPackage()->getInventoryType()->getUsedBy()->where(function ($query) use ($stat) {
-
-            switch ($stat)
-            {
-
-                case 'used':
-                    $query->where('tbl_membership_code.blocked',0)->where('tbl_membership_code.used',1)->where('origin',Stockist::info()->stockist_id)->whereNotNull('tbl_account.account_id');
-                    break;
-
-                case 'blocked':
-                    $query->where('tbl_membership_code.blocked',1);
-                    break;
-                    
-                default:
-                     $query->where('tbl_membership_code.blocked',0)->where('tbl_membership_code.used',0)->where('origin',Stockist::info()->stockist_id)->whereNotNull('tbl_account.account_id');
-      
-            }
-
-
-        })->get();
-
+        $membership_code =         Tbl_membership_code_sale_has_code::join("tbl_membership_code_sale","tbl_membership_code_sale.membershipcode_or_num","=","tbl_membership_code_sale_has_code.membershipcode_or_num")
+                                         ->join("tbl_membership_code","tbl_membership_code.code_pin","=","tbl_membership_code_sale_has_code.code_pin")
+                                         ->join("tbl_account","tbl_membership_code.account_id","=","tbl_account.account_id")
+                                         ->where('tbl_membership_code.origin',Stockist::info()->stockist_id)
+                                         ->orWhere("tbl_membership_code_sale.origin",Stockist::info()->stockist_id)
+                                         ->get();
+    
         return Datatables::of($membership_code) 
-
-        ->addColumn('delete','<a href="#" class="block-membership-code" membership-code-id ="{{$code_pin}}">BLOCK</a>')
-                                        ->addColumn('transfer','<a class="transfer-membership-code"  href="#" membership-code-id="{{$code_pin}}" account-id="{{$account_id}}">TRANSFER</a>')
-                                        ->editColumn('created_at','{{$created_at->format("F d, Y g:ia")}}')
-                                        ->editColumn('inventory_update_type_id','<input type="checkbox" {{$inventory_update_type_id == 1 ? \'checked="checked"\' : \'\'}} name="" value="" readonly disabled>')
-                                        ->editColumn('account_name','{{$account_name or "No owner"}}')
-                                        ->make(true);
+                        //  ->editColumn('created_at','{{$created_at->format("F d, Y g:ia")}}')
+                         ->editColumn('account_name','{{$account_name or "No owner"}}')
+                         ->addColumn('view_voucher','<a style="cursor: pointer;" class="view-voucher" voucher-id="{{$voucher_id}}">View Voucher</a>') 
+                         ->make(true);
     }
 
     public function add_code()
     {
         $data['_error'] = null;
         $data['_membership'] = Tbl_membership::where('membership_entry', 1)->where('archived', 0)->get();
-        $data['_code_type'] = Tbl_code_type::where('code_type_id', '!=' , 2)->get();
+        $data['_code_type'] = Tbl_code_type::where('code_type_id', '=' , 1)->get();
         $data['_prod_package'] = Tbl_product_package::where('archived', 0)->get();
         $data['_account'] = Tbl_account::all();
         $data['_inventory_update_type'] = Tbl_inventory_update_type::where('inventory_update_type_id','=',1)->get();
@@ -102,6 +85,7 @@ class StockistCodeController extends StockistController
         $request_account_id = Request::input('account_id');
         $request_code_multiplier = Request::input('code_multiplier');
         $request_inventory_update_type_id = Request::input('inventory_update_type_id');
+        $request_order_form_number = Request::input('order_form_number');
 
         $rules['code_type_id'] = 'required|exists:tbl_code_type,code_type_id';
         $rules['product_package_id'] = 'required|exists:tbl_product_package,product_package_id,membership_id,'.Request::input('membership_id').'|foo:'.Request::input('inventory_update_type_id');
@@ -109,6 +93,7 @@ class StockistCodeController extends StockistController
         $rules['account_id'] = 'required|exists:tbl_account,account_id';
         $rules['code_multiplier'] = 'min:1|integer';
         $rules['membership_id'] = 'required|exists:tbl_membership,membership_id|check_member';
+        $rules['order_form_number'] = 'unique:tbl_membership_code_sale,order_form_number';
 
         $message['product_package_id.foo'] = "One or more included product might be out of stock".
         $message['product_package_id.check_member'] = "This membership is not for Member entry".
@@ -191,6 +176,7 @@ class StockistCodeController extends StockistController
                     // $insert_membership_code_sale['generated_by'] = Admin::info()->account_id;
                     $insert_membership_code_sale['total_amount'] = $membership_total_amount;
                     $insert_membership_code_sale['payment'] = 1;
+                    $insert_membership_code_sale['order_form_number'] = $request_order_form_number;
                     $tbl_membership_code_sale = new Tbl_membership_code_sale($insert_membership_code_sale);
                     $tbl_membership_code_sale->save($insert_membership_code_sale);
                 }
@@ -392,7 +378,7 @@ class StockistCodeController extends StockistController
     {
 
 
-        $prodpack = Tbl_product_package::where('membership_id', Request::input('membership_id'))->get();
+        $prodpack = Tbl_product_package::where('membership_id', Request::input('membership_id'))->where("archived",0)->get();
 
         return $prodpack;
 

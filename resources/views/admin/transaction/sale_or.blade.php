@@ -31,7 +31,7 @@
 	                <td>{{number_format($voucher_product->price * $voucher_product->qty,2)}}</td>
 	            </tr>
 	        @endforeach
-	        <tr><td class="text-right" colspan="7"><strong>Item total Price : {{number_format($product_total + $discount_pts,2)}}</strong></td></tr>
+	        <tr><td class="text-right" colspan="7"><strong>Item total Price : {{number_format($product_total)}}</strong></td></tr>
 	         <tr><td class="text-right" colspan="7"><strong>Discount :  {{number_format($discount_pts,2)}}</strong></td></tr>
 	          <tr><td class="text-right" colspan="7"><strong>Additional : {{number_format($voucher->other_charge,2)}} ({{(($voucher->other_charge/100)*$product_total)}})</strong></td></tr>
 	        <tr><td class="text-right" colspan="7"><strong>Grand Total : {{$voucher->total_amount}}</strong></td></tr>

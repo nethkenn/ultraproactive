@@ -44,6 +44,7 @@
 		  ga('send', 'pageview');
 
 		</script>
+		@yield("css")
 	</head>
 	<body style="overflow-y: scroll">
 		<div class="container">
@@ -60,18 +61,18 @@
 					<div id="navbar" class="navbar-collapse collapse">
 						<ul class="nav navbar-nav">
 							<li class="{{ Request::segment(2) == '' ? 'active' : 'inactive' }}"><a href="stockist/">Dashboard</a></li>
-							<li class="{{ Request::segment(2) == 'membership_code' ? 'active' : 'inactive' }}"><a href="/stockist/membership_code/">Code</a></li>
-							<li class="{{ Request::segment(2) == 'transfer_wallet' ? 'active' : 'inactive' }}"><a href="/stockist/transfer_wallet">Transfer Wallet</a></li>
+							<!--<li class="{{ Request::segment(2) == 'transfer_wallet' ? 'active' : 'inactive' }}"><a href="/stockist/transfer_wallet">Transfer Wallet</a></li>-->
 						</ul>
 
 
 							
 						<ul class="nav navbar-nav">
-							<li class="dropdown {{ Request::segment(2) == 'process_sales' ||  Request::segment(2) == 'voucher' ? 'active' : 'inactive' }}">
+							<li class="dropdown {{ Request::segment(2) == 'process_sales' ||  Request::segment(2) == 'voucher' || Request::segment(2) == 'membership_code' ? 'active' : 'inactive' }}">
 									<a href="admin/utilities" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Process  <span class="caret"></span></a>
 									<ul class="dropdown-menu" role="menu">
 											<li class=""><a href="/stockist/process_sales">Process Sales</a></li>
-											<li class=""><a href="/stockist/voucher/">Process Claim</a></li>							
+											<li class=""><a href="/stockist/voucher/">Process Claim</a></li>
+											<li class=""><a href="/stockist/membership_code/">Process Code</a></li>
 									</ul>
 							</li>
 						</ul>
@@ -81,9 +82,9 @@
 							<li class="dropdown {{ Request::segment(2) == 'issue_stocks' ||  Request::segment(2) == 'order_stocks' ||  Request::segment(2) == 'accept_stocks' ? 'active' : 'inactive' }}">
 									<a href="admin/utilities" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Stocks  <span class="caret"></span></a>
 									<ul class="dropdown-menu" role="menu">
-										<li class=""><a href="stockist/issue_stocks">Issue Stocks</a></li>
+										<!--<li class=""><a href="stockist/issue_stocks">Issue Stocks</a></li>-->
 										<li class=""><a href="/stockist/order_stocks">Order Stocks</a></li>		
-										<li class=""><a href="/stockist/accept_stocks">Accept Order Request</a></li>	
+										<!--<li class=""><a href="/stockist/accept_stocks">Accept Order Request</a></li>	-->
 										<li class=""><a href="/stockist/inventory">Inventory</a></li>																	
 									</ul>
 							</li>
@@ -98,7 +99,7 @@
 							</li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
-							<li><a href="javascript:">Wallet: {{number_format($wallet,2)}}</a></li>
+							<!--<li><a href="javascript:">Wallet: {{number_format($wallet,2)}}</a></li>-->
 
 							<li class="dropdown {{ Request::segment(2) == 'account' ? 'active' : 'inactive' }}">
 								<a href="admin/utilities" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> {{$user->stockist_un}}  <span class="caret"></span></a>

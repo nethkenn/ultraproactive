@@ -20,11 +20,11 @@
 	            <tr>
 	                <td>{{$voucher_product->product_id}}</td>
 	                <td>{{$voucher_product->product_name}}</td>
-	                <td>{{$voucher_product->product_price}}</td>
+	                <td>{{$voucher_product->price}}</td>
 	                <td>{{$voucher_product->unilevel_pts}}</td>
 	                <td>{{$voucher_product->binary_pts}}</td>
 	                <td>{{$voucher_product->qty}}</td>
-	                <td>{{$voucher_product->sub_total}}</td>
+	                <td>{{$voucher_product->price * $voucher_product->qty}}</td>
 	            </tr>
 	        @endforeach
 

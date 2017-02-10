@@ -428,7 +428,7 @@ class StockistProcessSales extends StockistController
                                     ->where('stockist_id',Stockist::info()->stockist_id)
                                     ->find($val['product_id']);
 
-                $rules['product_'.$key] = 'exists:Tbl_stockist_inventory,product_id,stockist_id,'.Stockist::info()->stockist_id.'|check_stockist_quantity:'.$val['qty'].','.$prod->stockist_quantity.',processed';
+                $rules['product_'.$key] = 'exists:tbl_stockist_inventory,product_id,stockist_id,'.Stockist::info()->stockist_id.'|check_stockist_quantity:'.$val['qty'].','.$prod->stockist_quantity.',processed';
             }
 
             foreach($_cart_product as $key => $val)
@@ -452,7 +452,6 @@ class StockistProcessSales extends StockistController
                         ->withInput(Request::input());
 
         }
-
 
         $_cart = Session::get('admin_cart');
         $get_total = $this->get_cart_total($_cart,Request::input('slot_id'));
@@ -878,20 +877,29 @@ class StockistProcessSales extends StockistController
         $data['voucher'] =  $voucher;
         $data['_voucher_product']  = Tbl_voucher_has_product::where('voucher_id', $voucher_id)->product()->get();
         
-        if($data['_voucher_product'])
-        {
-            foreach ($data['_voucher_product'] as $key => $value)
-            {
-                $total_product[] =  $value->sub_total;
-            }
-        }else
-        {
-            $total_product = [];
-        }
+		if($data['_voucher_product'])
+		{
+			foreach ($data['_voucher_product'] as $key => $value)
+			{
+				
+				$data['_voucher_product'][$key]->price = Tbl_voucher_has_product::where("voucher_item_id",$value->voucher_item_id)->first()->price;
+				// $total_product[] =  $value->sub_total + $voucher->product_discount_amount;
+				$total_product[] =  Tbl_voucher_has_product::where("voucher_item_id",$value->voucher_item_id)->first()->price * $value->qty;
+				$discount[] = $value->product_discount_amount;
+			}
+		}
+		else
+		{
+			$total_product = [];
+		}
+		$data['product_total'] = array_sum($total_product);
+		$data['discount_pts'] =	 array_sum($discount);
 
-        $data['product_total'] = array_sum($total_product);
-        $data['discount_pts'] = ($data['voucher']->discount / 100) * $data['product_total'] ;
 
+		if($voucher->membership_code != null)
+		{
+			$data['product_total'] = 0;
+		}
 
 
         if(Request::isMethod('post'))
