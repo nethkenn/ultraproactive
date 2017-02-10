@@ -81,7 +81,7 @@ class AdminCodeController extends AdminController {
         								if($stat == "blocked")
         								{
         									return Datatables::of($membership_code)	
-	        								->addColumn('delete','<a href="#" class="unblock-membership-code" membership-code-id ="{{$code_pin}}">UNBLOCK</a>')
+	        								->addColumn('deleter','<a href="#" class="unblock-membership-code" membership-code-id ="{{$code_pin}}">UNBLOCK</a>')
 	    									->addColumn('transfer','<a class="transfer-membership-code"  href="#" membership-code-id="{{$code_pin}}" account-id="{{$account_id}}">TRANSFER</a>')
 	        								// ->editColumn('created_at','{{$created_at->format("F d, Y g:ia")}}')
 	        								->editColumn('inventory_update_type_id','<input type="checkbox" {{$inventory_update_type_id == 1 ? \'checked="checked"\' : \'\'}} name="" value="" readonly disabled>')
@@ -92,7 +92,7 @@ class AdminCodeController extends AdminController {
         								else
         								{
         									 return Datatables::of($membership_code)	
-	        								->addColumn('delete','<a href="#" class="block-membership-code" membership-code-id ="{{$code_pin}}">BLOCK</a>')
+	        								->addColumn('deleter','<a href="#" class="block-membership-code" membership-code-id ="{{$code_pin}}">BLOCK</a>')
 	        								->addColumn('transfer','<a class="transfer-membership-code"  href="#" membership-code-id="{{$code_pin}}" account-id="{{$account_id}}">TRANSFER</a>')
 	        								// ->editColumn('created_at','{{$created_at->format("F d, Y g:ia")}}')
 	        								->editColumn('inventory_update_type_id','<input type="checkbox" {{$inventory_update_type_id == 1 ? \'checked="checked"\' : \'\'}} name="" value="" readonly disabled>')

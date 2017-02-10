@@ -52,6 +52,7 @@ class StockistCodeController extends StockistController
         $stat = Request::input('status');
         $membership_code =         Tbl_membership_code_sale_has_code::join("tbl_membership_code_sale","tbl_membership_code_sale.membershipcode_or_num","=","tbl_membership_code_sale_has_code.membershipcode_or_num")
                                          ->join("tbl_membership_code","tbl_membership_code.code_pin","=","tbl_membership_code_sale_has_code.code_pin")
+                                         ->join("tbl_account","tbl_membership_code.account_id","=","tbl_account.account_id")
                                          ->where('tbl_membership_code.origin',Stockist::info()->stockist_id)
                                          ->orWhere("tbl_membership_code_sale.origin",Stockist::info()->stockist_id)
                                          ->get();

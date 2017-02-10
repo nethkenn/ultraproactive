@@ -17,6 +17,7 @@ use App\Classes\Stockist;
 use App\Tbl_stockist_package_inventory;
 use App\Tbl_stockist_inventory;
 use App\Tbl_transaction;
+use App\Tbl_account;
 class StockistclaimController extends StockistController
 {
 	public function index()
@@ -457,19 +458,28 @@ class StockistclaimController extends StockistController
 				{
 					foreach ($data['_voucher_product'] as $key => $value)
 					{
-						$total_product[] =  $value->sub_total;
+						
+						$data['_voucher_product'][$key]->price = Tbl_voucher_has_product::where("voucher_item_id",$value->voucher_item_id)->first()->price;
+						// $total_product[] =  $value->sub_total + $voucher->product_discount_amount;
+						$total_product[] =  Tbl_voucher_has_product::where("voucher_item_id",$value->voucher_item_id)->first()->price * $value->qty;
+						$discount[] = $value->product_discount_amount;
 					}
-				}else
+				}
+				else
 				{
 					$total_product = [];
 				}
-
 				$data['product_total'] = array_sum($total_product);
-				$data['discount_pts'] = ($data['voucher']->discount / 100) * $data['product_total'] ;
+				$data['discount_pts'] =	 array_sum($discount);
+
+				if($data['voucher']->membership_code != null)
+				{
+					$data['product_total'] = 0;
+				}
 
 
 
-
+				$data['account']	=  Tbl_account::where('account_id',$data['voucher']->account_id)->first();
 
 
 				return view('admin.transaction.claim_voucher_product', $data);

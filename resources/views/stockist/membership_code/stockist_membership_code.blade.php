@@ -83,6 +83,7 @@
 	   		var v_id = $(this).attr('voucher-id');
 	   		$('.email-voucher').attr('voucher-id', v_id);
 	   		$('#voucher-prod-container').load('stockist/process_sales/sales/sale_or?voucher_id='+v_id);
+	   		var modal = $('[data-remodal-id=view_prod_modal]').remodal();
 	   		modal.open();
 	   });
 

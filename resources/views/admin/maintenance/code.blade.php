@@ -138,7 +138,7 @@ $(function()
 	            {data: 'account_name', name: 'account_name'},
 	            {data: 'inventory_update_type_id', name: 'inventory_update_type_id'},
 	            {data: 'created_at', name: 'created_at'},
-	            {data: 'delete', name: 'code_pin'},
+	            {data: 'deleter', name: 'code_pin'},
 	            {data: 'transfer', name: 'code_pin'},
 	        
 	        ],
@@ -174,7 +174,7 @@ $(function()
 	            {data: 'slot_used', name: 'slot_used'},
 	            {data: 'inventory_update_type_id', name: 'inventory_update_type_id'},
 	            {data: 'created_at', name: 'created_at'},
-	            {data: 'delete', name: 'code_pin'},
+	            {data: 'deleter', name: 'code_pin'},
 	            {data: 'transfer', name: 'code_pin'},
 	        
 	        ],
