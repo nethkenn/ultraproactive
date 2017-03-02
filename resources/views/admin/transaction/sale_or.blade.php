@@ -28,7 +28,7 @@
 	                <td>{{$voucher_product->unilevel_pts}}</td>
 	                <td>{{$voucher_product->binary_pts}}</td>
 	                <td>{{$voucher_product->qty}}</td>
-	                <td>{{number_format($voucher_product->price * $voucher_product->qty,2)}}</td>
+	                <td>{{$voucher_product->price * $voucher_product->qty}}</td>
 	            </tr>
 	        @endforeach
 	        <tr><td class="text-right" colspan="7"><strong>Item total Price : {{number_format($product_total)}}</strong></td></tr>
