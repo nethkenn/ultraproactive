@@ -946,7 +946,7 @@ class AdminSalesController extends AdminController
 				
 				$data['_voucher_product'][$key]->price = Tbl_voucher_has_product::where("voucher_item_id",$value->voucher_item_id)->first()->price;
 				// $total_product[] =  $value->sub_total + $voucher->product_discount_amount;
-				$total_product[] =  Tbl_voucher_has_product::where("voucher_item_id",$value->voucher_item_id)->first()->price * $value->qty;
+				$total_product[] =  str_replace( ',', '',Tbl_voucher_has_product::where("voucher_item_id",$value->voucher_item_id)->first()->price) * $value->qty;
 				$discount[] = $value->product_discount_amount;
 			}
 		}

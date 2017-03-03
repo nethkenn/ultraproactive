@@ -277,7 +277,7 @@ class StockistProcessSales extends StockistController
 
         $_slot_discount = 0;
         $insert_voucher['discount'] = $_slot_discount;
-        $insert_voucher['total_amount'] = $cart_total - (($_slot_discount / 100) * $cart_total) + (($additional/100) * $cart_total);
+        $insert_voucher['total_amount'] = $cart_total + (($additional/100) * $cart_total);
         /**
          * PAYMENT MODE IS ALWAYS CASH IN PROCESS SALES
          */
@@ -477,8 +477,8 @@ class StockistProcessSales extends StockistController
         $_slot = Tbl_slot::select('tbl_slot.*', 'tbl_membership.discount')->leftJoin('tbl_membership', 'tbl_membership.membership_id','=','tbl_slot.slot_membership')
                                                         ->where('slot_owner', Request::input('account_id'))
                                                         ->first();
-        $insert_voucher['discount'] = $_slot->discount;
-        $insert_voucher['total_amount'] = $cart_total - (($_slot->discount / 100) * $cart_total) + (($additional/100) * $cart_total);
+        $insert_voucher['discount']     = $_slot->discount;
+        $insert_voucher['total_amount'] = $cart_total + (($additional/100) * $cart_total);
         /**
          * PAYMENT MODE IS ALWAYS CASH IN PROCESS SALES
          */
@@ -864,19 +864,19 @@ class StockistProcessSales extends StockistController
 
     public function sale_or()
     {
+    
+
+		$voucher_id = Request::input('voucher_id');
+		$voucher = Tbl_voucher::leftJoin('tbl_account', 'tbl_account.account_id'  ,'=',  'tbl_voucher.account_id')->where('voucher_id', $voucher_id)->first();
+		$voucher->formatted_date_created = $voucher->created_at->toFormattedDateString();
 
 
-        $voucher_id = Request::input('voucher_id');
-        $voucher = Tbl_voucher::leftJoin('tbl_account', 'tbl_account.account_id'  ,'=',  'tbl_voucher.account_id')->where('voucher_id', $voucher_id)->first();
-        $voucher->formatted_date_created = $voucher->created_at->toFormattedDateString();
+		$total_product = [];
+		$discount = [];
 
+		$data['voucher'] = 	$voucher;
+		$data['_voucher_product']  = Tbl_voucher_has_product::where('voucher_id', $voucher_id)->product()->get();
 
-
-        
-
-        $data['voucher'] =  $voucher;
-        $data['_voucher_product']  = Tbl_voucher_has_product::where('voucher_id', $voucher_id)->product()->get();
-        
 		if($data['_voucher_product'])
 		{
 			foreach ($data['_voucher_product'] as $key => $value)
@@ -884,7 +884,7 @@ class StockistProcessSales extends StockistController
 				
 				$data['_voucher_product'][$key]->price = Tbl_voucher_has_product::where("voucher_item_id",$value->voucher_item_id)->first()->price;
 				// $total_product[] =  $value->sub_total + $voucher->product_discount_amount;
-				$total_product[] =  Tbl_voucher_has_product::where("voucher_item_id",$value->voucher_item_id)->first()->price * $value->qty;
+				$total_product[] =  str_replace( ',', '',Tbl_voucher_has_product::where("voucher_item_id",$value->voucher_item_id)->first()->price) * $value->qty;
 				$discount[] = $value->product_discount_amount;
 			}
 		}
@@ -892,6 +892,7 @@ class StockistProcessSales extends StockistController
 		{
 			$total_product = [];
 		}
+
 		$data['product_total'] = array_sum($total_product);
 		$data['discount_pts'] =	 array_sum($discount);
 
