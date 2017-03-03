@@ -26,7 +26,14 @@ class Tbl_voucher_has_product extends Model
 
     public function getPriceAttribute($value)
     {
-        return number_format($value, '2','.',',');
+        if (is_numeric($value)) 
+        {
+            return number_format($value, '2','.',',');
+        }
+        else
+        {
+            return $value;
+        }
     }
 
     public function getSubTotalAttribute($value)
