@@ -320,6 +320,7 @@ Route::get('admin/maintenance/slots/downline', 'AdminSlotController@downline');
 Route::any('admin/maintenance/slots/confirm_delete', 'AdminSlotController@confirm_delete');
 Route::get('admin/maintenance/slots/delete', 'AdminSlotController@delete');
 Route::any('admin/maintenance/slots/view', 'AdminSlotController@info');
+Route::any('admin/maintenance/slots/dl_member', 'AdminSlotController@dl_member');
 
 Route::get('admin/maintenance/slots/computeAdjustment', 'AdminSlotController@computeAdjustmentAjax');
 Route::post('admin/maintenance/slots/adjustWallet', 'AdminSlotController@adjustWallet');
@@ -529,10 +530,10 @@ Route::any('admin/stockist_wallet', 'AdminStockistWalletController@index');
 Route::any('stockist', 'StockistDashboardController@index');
 
 //STOCKIST PAGE ISSUE
-// Route::any('stockist/issue_stocks', 'StockistIssueController@index');
-// Route::any('stockist/issue_stocks/issue', 'StockistIssueController@issue');
-// Route::get('stockist/issue_stocks/issue/product', 'StockistIssueController@ajax_get_product');
-// Route::get('stockist/issue_stocks/issue/product/package', 'StockistIssueController@ajax_get_product_package');
+Route::any('stockist/issue_stocks', 'StockistIssueController@index');
+Route::any('stockist/issue_stocks/issue', 'StockistIssueController@issue');
+Route::get('stockist/issue_stocks/issue/product', 'StockistIssueController@ajax_get_product');
+Route::get('stockist/issue_stocks/issue/product/package', 'StockistIssueController@ajax_get_product_package');
 
 //STOCKIST PAGE PROCESS
 Route::any('stockist/process_sales', 'StockistProcessSales@index');

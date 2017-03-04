@@ -13,6 +13,7 @@ use App\Tbl_pv_logs;
 use App\Tbl_country;
 use App\Tbl_rank;
 use Crypt;
+use Excel;
 use Validator;
 use App\Classes\Compute;
 use Session;
@@ -774,5 +775,44 @@ class AdminSlotController extends AdminController
 			$message = "Slot doesn't exists";
 		}
 		return $message;
+	}	
+	
+	public function dl_member()
+	{
+		/* COUNT */
+		 $current_number    = 0;
+		 $divided           = ceil(Tbl_slot::select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))->rank()->membership()->account()->count() / 1000);
+		 $_slot             = null;
+		 
+		 for($x = 1;$x<$divided; $x++)
+		 {
+		 	
+		 }
+		 
+		 
+         $_slot = 		    Tbl_slot::select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))
+        							->rank()->membership()->account()->take(1000)->get();   
+        							
+        							
+		 $_slot2 = 		    Tbl_slot::select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))
+        							->rank()->membership()->account()->take(1000)->get();
+
+		// ->addColumn('wallet','<a style="cursor:pointer;" class="adjust-slot" slot-id="{{$slot_id}}">{{App\Tbl_wallet_logs::id("$slot_id")->wallet()->sum("wallet_amount")}}</a>')
+		// ->addColumn('slot_wallet_gc','<a style="cursor:pointer;" class="adjust-slot-gc" slot-id="{{$slot_id}}">{{App\Tbl_wallet_logs::id("$slot_id")->GC()->sum("wallet_amount")}}</a>')
+		// ->addColumn('pup','<a style="cursor:pointer;" class="adjust-slot-PUP" slot-id="{{$slot_id}}">{{App\Tbl_pv_logs::where("owner_slot_id","$slot_id")->where("used_for_redeem",0)->where("type","PPV")->sum("amount") != 0 && $slot_type != "CD" ? App\Tbl_pv_logs::where("owner_slot_id","$slot_id")->where("used_for_redeem",0)->where("type","PPV")->sum("amount") : 0}}</a>')
+		// ->addColumn('gup','{{App\Classes\Compute::count_gpv($slot_id)}}')
+		// ->addColumn('sponsor','{{App\Tbl_slot::id("$slot_sponsor")->account()->first() == null ? "---" : "Slot #".App\Tbl_slot::id("$slot_sponsor")->account()->first()->slot_id."(".App\Tbl_slot::id("$slot_sponsor")->account()->first()->account_name.")"}}')
+		// ->addColumn('placement','{{App\Tbl_slot::id("$slot_placement")->account()->first() == null ? "---" : "Slot #".App\Tbl_slot::id("$slot_placement")->account()->first()->slot_id."(".App\Tbl_slot::id("$slot_placement")->account()->first()->account_name.")"}}')
+		// ->addColumn('position','{{App\Tbl_slot::id("$slot_placement")->account()->first() == null ? "---" : strtoupper($slot_position)}}')
+		// ->addColumn('rank','<a style="cursor:pointer;" class="adjust-rank" slot-id="{{$slot_id}}" rank_id="{{$permanent_rank_id}}">{{App\Tbl_compensation_rank::where("compensation_rank_id","$permanent_rank_id")->first()->compensation_rank_name}}</a>')
+		// ->addColumn('login','<form method="POST" form action="admin/maintenance/accounts" target="_blank"><input type="hidden" class="token" name="_token" value="{{ csrf_token() }}"><button name="login" type="submit" value="{{$slot_owner}}" class="form-control">Login</button></form>')
+	        													
+		 Excel::create("1", function($excel) use($_slot,$_slot2)
+		 {
+             $excel->sheet('Account Slot', function($sheet) use($_slot,$_slot2)
+             {
+                  $sheet->loadView('admin.report.account_slot_report', array('pageTitle' => 'Transaction History', '_slot' =>$_slot ,'_slot2' => $_slot2));
+             });
+         })->export('xls');
 	}
 }
