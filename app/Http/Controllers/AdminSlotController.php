@@ -779,23 +779,265 @@ class AdminSlotController extends AdminController
 	
 	public function dl_member()
 	{
-		/* COUNT */
-		 $current_number    = 0;
-		 $divided           = ceil(Tbl_slot::select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))->rank()->membership()->account()->count() / 1000);
-		 $_slot             = null;
-		 
-		 for($x = 1;$x<$divided; $x++)
+		 $_slot      = Tbl_slot::select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))->rank()->membership()->account()->get();          
+
+		 Excel::create("1", function($excel) use($_slot)
 		 {
-		 	
-		 }
+             $excel->sheet('Account Slot', function($sheet) use($_slot)
+             {
+             	   $sheet->appendRow(1, array("Slot","Owner","Placement","Position","Sponsor","Type","Wallet","GC","P UP","G UP","Rank"));
+             	   $ctr = 2;
+             	   foreach($_slot as $slot)
+             	   {
+             	   	 $sheet->appendRow
+             	   	 ($ctr, 
+             	   		array(
+             	   			$slot->slot_id,
+             	   			$slot->account_name,
+             	   			Tbl_slot::id($slot->slot_placement)->account()->first() == null ? "---" : "Slot #".Tbl_slot::id($slot->slot_placement)->account()->first()->slot_id."(".Tbl_slot::id($slot->slot_placement)->account()->first()->account_name.")",
+             	   			$slot->slot_position,
+             	   			Tbl_slot::id($slot->slot_sponsor)->account()->first() == null ? "---" : "Slot #".Tbl_slot::id($slot->slot_sponsor)->account()->first()->slot_id."(".Tbl_slot::id($slot->slot_sponsor)->account()->first()->account_name.")",
+             	   			$slot->slot_type,
+             	   			Tbl_wallet_logs::id($slot->slot_id)->wallet()->sum("wallet_amount") == null ? "0" : Tbl_wallet_logs::id($slot->slot_id)->wallet()->sum("wallet_amount"),
+             	   			Tbl_wallet_logs::id($slot->slot_id)->GC()->sum("wallet_amount") == null ? "0" : Tbl_wallet_logs::id($slot->slot_id)->GC()->sum("wallet_amount"),
+             	   			Tbl_pv_logs::where("owner_slot_id",$slot->slot_id)->where("used_for_redeem",0)->where("type","PPV")->sum("amount") != 0 && $slot->slot_type != "CD" ? Tbl_pv_logs::where("owner_slot_id",$slot->slot_id)->where("used_for_redeem",0)->where("type","PPV")->sum("amount") : 0,
+             	   			Compute::count_gpv($slot->slot_id),
+             	   			Tbl_compensation_rank::where("compensation_rank_id",$slot->permanent_rank_id)->first()->compensation_rank_name
+             	   			)
+             	   	 );
+             	   	 $ctr++;
+             	   }
+             	   
+             });
+         })->export('xls');	
+		
+		
+		
+		dd("Success");
+		
+		
+		
+		/* COUNT */
+		 //$current_number    = 2;
+		 //$current_slot_id   = null;
+		 //$divided           = 13;
+		 //$_slot             = null;
+		 //$_slot2			= null;
+		 //$_slot3			= null;
+		 //$_slot4			= null;
+		 //$_slot5			= null;
+		 //$_slot6			= null;
+		 //$_slot7			= null;
+		 //$_slot8			= null;
+		 //$_slot9			= null;
+		 //$_slot10			= null;
+		 //$_slot11			= null;
+		 //$_slot12			= null;
+		 //$_slot13			= null;
+		 //$_slot14			= null;
+		 
+  	// 	 $_slot                = Tbl_slot::select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))->rank()->membership()->account()->take(1000)->get();          
+ 		
+ 		
+ 		//  $current_slot_id      = end($_slot);
+		 //if($current_slot_id)
+		 //{
+	 	//  	$current_slot_id   = end($current_slot_id);
+		 //	$current_slot_id   = $current_slot_id = $current_slot_id->slot_id;
+		 //}
+		
+		 //if($current_slot_id)
+		 //{
+			//  $_slot2               = Tbl_slot::where("slot_id",">",$current_slot_id)->select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))->rank()->membership()->account()->take(1000)->get();  
+	  //		 $current_slot_id      = end($_slot2);
+			//  if($current_slot_id)
+			//  {
+		 //	 	$current_slot_id   = end($current_slot_id);
+			//  	$current_slot_id   = $current_slot_id = $current_slot_id->slot_id;
+			//  }
+		 //}
+		
+		 //if($current_slot_id)
+		 //{
+			//  $_slot3               = Tbl_slot::where("slot_id",">",$current_slot_id)->select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))->rank()->membership()->account()->take(1000)->get();  
+	  //		 $current_slot_id      = end($_slot3);
+			//  if($current_slot_id)
+			//  {
+		 //	 	$current_slot_id   = end($current_slot_id);
+			//  	$current_slot_id   = $current_slot_id = $current_slot_id->slot_id;
+			//  }
+		 //}
+		
+		 //if($current_slot_id)
+		 //{
+			//  $_slot4               = Tbl_slot::where("slot_id",">",$current_slot_id)->select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))->rank()->membership()->account()->take(1000)->get();  
+	  //		 $current_slot_id      = end($_slot4);
+			//  if($current_slot_id)
+			//  {
+		 //	 	$current_slot_id   = end($current_slot_id);
+			//  	$current_slot_id   = $current_slot_id = $current_slot_id->slot_id;
+			//  }
+		 //}
+		
+		 //if($current_slot_id)
+		 //{
+			//  $_slot5               = Tbl_slot::where("slot_id",">",$current_slot_id)->select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))->rank()->membership()->account()->take(1000)->get();  
+	  //		 $current_slot_id      = end($_slot5);
+			//  if($current_slot_id)
+			//  {
+		 //	 	$current_slot_id   = end($current_slot_id);
+			//  	$current_slot_id   = $current_slot_id = $current_slot_id->slot_id;
+			//  }
+		 //}
+		
+		 //if($current_slot_id)
+		 //{
+			//  $_slot6               = Tbl_slot::where("slot_id",">",$current_slot_id)->select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))->rank()->membership()->account()->take(1000)->get();  
+	  //		 $current_slot_id      = end($_slot6);
+			//  if($current_slot_id)
+			//  {
+		 //	 	$current_slot_id   = end($current_slot_id);
+			//  	$current_slot_id   = $current_slot_id = $current_slot_id->slot_id;
+			//  }
+		 //}
+		
+		 //if($current_slot_id)
+		 //{
+			//  $_slot7               = Tbl_slot::where("slot_id",">",$current_slot_id)->select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))->rank()->membership()->account()->take(1000)->get();  
+	  //		 $current_slot_id      = end($_slot7);
+			//  if($current_slot_id)
+			//  {
+		 //	 	$current_slot_id   = end($current_slot_id);
+			//  	$current_slot_id   = $current_slot_id = $current_slot_id->slot_id;
+			//  }
+		 //}
+		
+		 //if($current_slot_id)
+		 //{
+			//  $_slot8               = Tbl_slot::where("slot_id",">",$current_slot_id)->select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))->rank()->membership()->account()->take(1000)->get();  
+	  //		 $current_slot_id      = end($_slot8);
+			//  if($current_slot_id)
+			//  {
+		 //	 	$current_slot_id   = end($current_slot_id);
+			//  	$current_slot_id   = $current_slot_id = $current_slot_id->slot_id;
+			//  }
+		 //}
+		
+		 //if($current_slot_id)
+		 //{
+			//  $_slot9               = Tbl_slot::where("slot_id",">",$current_slot_id)->select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))->rank()->membership()->account()->take(1000)->get();  
+	  //		 $current_slot_id      = end($_slot9);
+			//  if($current_slot_id)
+			//  {
+		 //	 	$current_slot_id   = end($current_slot_id);
+			//  	$current_slot_id   = $current_slot_id = $current_slot_id->slot_id;
+			//  }
+		 //}
+		
+		 //if($current_slot_id)
+		 //{
+			//  $_slot10               = Tbl_slot::where("slot_id",">",$current_slot_id)->select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))->rank()->membership()->account()->take(1000)->get();  
+	  //		 $current_slot_id      = end($_slot10);
+			//  if($current_slot_id)
+			//  {
+		 //	 	$current_slot_id   = end($current_slot_id);
+			//  	$current_slot_id   = $current_slot_id = $current_slot_id->slot_id;
+			//  }
+		 //}
+		
+		 //if($current_slot_id)
+		 //{
+			//  $_slot11               = Tbl_slot::where("slot_id",">",$current_slot_id)->select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))->rank()->membership()->account()->take(1000)->get();  
+	  //		 $current_slot_id      = end($_slot11);
+			//  if($current_slot_id)
+			//  {
+		 //	 	$current_slot_id   = end($current_slot_id);
+			//  	$current_slot_id   = $current_slot_id = $current_slot_id->slot_id;
+			//  }
+		 //}
+		
+		 //if($current_slot_id)
+		 //{
+			//  $_slot12               = Tbl_slot::where("slot_id",">",$current_slot_id)->select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))->rank()->membership()->account()->take(1000)->get();  
+	  //		 $current_slot_id      = end($_slot12);
+			//  if($current_slot_id)
+			//  {
+		 //	 	$current_slot_id   = end($current_slot_id);
+			//  	$current_slot_id   = $current_slot_id = $current_slot_id->slot_id;
+			//  }
+		 //}
+		
+		 //if($current_slot_id)
+		 //{
+			//  $_slot13               = Tbl_slot::where("slot_id",">",$current_slot_id)->select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))->rank()->membership()->account()->take(1000)->get();  
+	  //		 $current_slot_id      = end($_slot13);
+			//  if($current_slot_id)
+			//  {
+		 //	 	$current_slot_id   = end($current_slot_id);
+			//  	$current_slot_id   = $current_slot_id = $current_slot_id->slot_id;
+			//  }
+		 //}
+		
+		 //if($current_slot_id)
+		 //{
+			//  $_slot14               = Tbl_slot::where("slot_id",">",$current_slot_id)->select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))->rank()->membership()->account()->take(1000)->get();  
+	  //		 $current_slot_id      = end($_slot14);
+			//  if($current_slot_id)
+			//  {
+		 //	 	$current_slot_id   = end($current_slot_id);
+			//  	$current_slot_id   = $current_slot_id = $current_slot_id->slot_id;
+			//  }
+		 //}
+ 	// ==================================================
+ 	
+ 	
+ 	     //dd($_slot,$_slot2,$_slot3,$_slot4,$_slot5,$_slot6,$_slot7,$_slot8,$_slot9,$_slot10,$_slot11,$_slot12,$_slot13,$_slot14);
+		 //for($x = 1;$x<$divided; $x++)
+		 //{
+		 //	if(!isset($_slot.$current_number))
+		 //	{
+			//  	if($current_slot_id != null)
+			//  	{
+	
+			//  		$_slot.$current_number = Tbl_slot::where("slot_id",">",$current_slot_id)->select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))->rank()->membership()->account()->take(1000)->get();  
+			//  		$current_slot_id        = end($_slot[$current_number]);
+				
+			// 		if($current_slot_id)
+			// 		{
+			// 	 		$current_slot_id    = end($current_slot_id);
+			// 			$current_slot_id    = $current_slot_id = $current_slot_id->slot_id;
+			// 		}
+			// 		else
+			// 		{
+			// 			break;	
+			// 		}
+			//  	}
+			//  	else
+			//  	{
+			//  		$_slot.$current_number = Tbl_slot::select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))->rank()->membership()->account()->take(1000)->get();          
+			//  		$current_slot_id        = end($_slot[$current_number]);
+				
+			// 		if($current_slot_id)
+			// 		{
+			// 	 		$current_slot_id    = end($current_slot_id);
+			// 			$current_slot_id    = $current_slot_id = $current_slot_id->slot_id;
+			// 		}
+			// 		else
+			// 		{
+			// 			break;	
+			// 		}
+			//  	}
+			//  	$current_number++;
+		 //	}
+		 //}
 		 
 		 
-         $_slot = 		    Tbl_slot::select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))
-        							->rank()->membership()->account()->take(1000)->get();   
+   //      $_slot = 		    Tbl_slot::select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))
+   //     							->rank()->membership()->account()->take(1000)->get();   
         							
         							
-		 $_slot2 = 		    Tbl_slot::select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))
-        							->rank()->membership()->account()->take(1000)->get();
+		 //$_slot2 = 		    Tbl_slot::select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))
+   //     							->rank()->membership()->account()->take(1000)->get();
 
 		// ->addColumn('wallet','<a style="cursor:pointer;" class="adjust-slot" slot-id="{{$slot_id}}">{{App\Tbl_wallet_logs::id("$slot_id")->wallet()->sum("wallet_amount")}}</a>')
 		// ->addColumn('slot_wallet_gc','<a style="cursor:pointer;" class="adjust-slot-gc" slot-id="{{$slot_id}}">{{App\Tbl_wallet_logs::id("$slot_id")->GC()->sum("wallet_amount")}}</a>')
@@ -807,12 +1049,12 @@ class AdminSlotController extends AdminController
 		// ->addColumn('rank','<a style="cursor:pointer;" class="adjust-rank" slot-id="{{$slot_id}}" rank_id="{{$permanent_rank_id}}">{{App\Tbl_compensation_rank::where("compensation_rank_id","$permanent_rank_id")->first()->compensation_rank_name}}</a>')
 		// ->addColumn('login','<form method="POST" form action="admin/maintenance/accounts" target="_blank"><input type="hidden" class="token" name="_token" value="{{ csrf_token() }}"><button name="login" type="submit" value="{{$slot_owner}}" class="form-control">Login</button></form>')
 	        													
-		 Excel::create("1", function($excel) use($_slot,$_slot2)
-		 {
-             $excel->sheet('Account Slot', function($sheet) use($_slot,$_slot2)
-             {
-                  $sheet->loadView('admin.report.account_slot_report', array('pageTitle' => 'Transaction History', '_slot' =>$_slot ,'_slot2' => $_slot2));
-             });
-         })->export('xls');
+		 //Excel::create("1", function($excel) use($_slot,$_slot2,$_slot3,$_slot4,$_slot5,$_slot6,$_slot7,$_slot8,$_slot9,$_slot10,$_slot11,$_slot12,$_slot13,$_slot14)
+		 //{
+   //          $excel->sheet('Account Slot', function($sheet) use($_slot,$_slot2,$_slot3,$_slot4,$_slot5,$_slot6,$_slot7,$_slot8,$_slot9,$_slot10,$_slot11,$_slot12,$_slot13,$_slot14)
+   //          {
+   //               $sheet->loadView('admin.report.account_slot_report', array('pageTitle' => 'Transaction History', '_slot' =>$_slot ,'_slot2' => $_slot2,'_slot3' => $_slot3,'_slot4' => $_slot4,'_slot5' => $_slot5,'_slot6' => $_slot6,'_slot7' => $_slot7,'_slot8' => $_slot8,'_slot9' => $_slot9,'_slot10' => $_slot10,'_slot11' => $_slot11,'_slot12' => $_slot12,'_slot13' => $_slot13,'_slot14' => $_slot14));
+   //          });
+   //      })->export('xls');
 	}
 }
