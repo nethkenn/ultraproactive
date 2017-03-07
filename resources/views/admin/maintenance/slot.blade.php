@@ -6,7 +6,7 @@
 				<h2><i class="fa fa-share-alt"></i> SLOTS</h2>
 			</div>
 			<div class="buttons col-md-3 text-right">
-				<button  onclick="location.href='/admin/maintenance/slots/dl_member';" class="btn btn-primary" type="button" style="width: 100%;"><i></i>Download Slot Member</button>
+				<button  onclick="location.href='/admin/maintenance/slots/dl_member';" class="btn btn-primary" type="button" style="width: 100%;"><i></i>Slot Member Report (3-5 mins)</button>
 			</div>	
 			<div class="buttons col-md-2 text-right">
 				<button class="slot_limit btn btn-primary" type="button" style="width: 100%;"><i></i>Slot Limit ({{$slot_limit->value}})</button>

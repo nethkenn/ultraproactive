@@ -781,39 +781,38 @@ class AdminSlotController extends AdminController
 	{
 		 $_slot      = Tbl_slot::select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))->rank()->membership()->account()->get();          
 
-		 Excel::create("1", function($excel) use($_slot)
-		 {
-             $excel->sheet('Account Slot', function($sheet) use($_slot)
-             {
-             	   $sheet->appendRow(1, array("Slot","Owner","Placement","Position","Sponsor","Type","Wallet","GC","P UP","G UP","Rank"));
-             	   $ctr = 2;
-             	   foreach($_slot as $slot)
-             	   {
-             	   	 $sheet->appendRow
-             	   	 ($ctr, 
-             	   		array(
-             	   			$slot->slot_id,
-             	   			$slot->account_name,
-             	   			Tbl_slot::id($slot->slot_placement)->account()->first() == null ? "---" : "Slot #".Tbl_slot::id($slot->slot_placement)->account()->first()->slot_id."(".Tbl_slot::id($slot->slot_placement)->account()->first()->account_name.")",
-             	   			$slot->slot_position,
-             	   			Tbl_slot::id($slot->slot_sponsor)->account()->first() == null ? "---" : "Slot #".Tbl_slot::id($slot->slot_sponsor)->account()->first()->slot_id."(".Tbl_slot::id($slot->slot_sponsor)->account()->first()->account_name.")",
-             	   			$slot->slot_type,
-             	   			Tbl_wallet_logs::id($slot->slot_id)->wallet()->sum("wallet_amount") == null ? "0" : Tbl_wallet_logs::id($slot->slot_id)->wallet()->sum("wallet_amount"),
-             	   			Tbl_wallet_logs::id($slot->slot_id)->GC()->sum("wallet_amount") == null ? "0" : Tbl_wallet_logs::id($slot->slot_id)->GC()->sum("wallet_amount"),
-             	   			Tbl_pv_logs::where("owner_slot_id",$slot->slot_id)->where("used_for_redeem",0)->where("type","PPV")->sum("amount") != 0 && $slot->slot_type != "CD" ? Tbl_pv_logs::where("owner_slot_id",$slot->slot_id)->where("used_for_redeem",0)->where("type","PPV")->sum("amount") : 0,
-             	   			Compute::count_gpv($slot->slot_id),
-             	   			Tbl_compensation_rank::where("compensation_rank_id",$slot->permanent_rank_id)->first()->compensation_rank_name
-             	   			)
-             	   	 );
-             	   	 $ctr++;
-             	   }
+		 //Excel::create("1", function($excel) use($_slot)
+		 //{
+   //          $excel->sheet('Account Slot', function($sheet) use($_slot)
+   //          {
+   //          	   $sheet->appendRow(1, array("Slot","Owner","Placement","Position","Sponsor","Type","Wallet","GC","P UP","G UP","Rank"));
+   //          	   $ctr = 2;
+   //          	   foreach($_slot as $slot)
+   //          	   {
+   //          	   	 $sheet->appendRow
+   //          	   	 ($ctr, 
+   //          	   		array(
+   //          	   			$slot->slot_id,
+   //          	   			$slot->account_name,
+   //          	   			Tbl_slot::id($slot->slot_placement)->account()->first() == null ? "---" : "Slot #".Tbl_slot::id($slot->slot_placement)->account()->first()->slot_id."(".Tbl_slot::id($slot->slot_placement)->account()->first()->account_name.")",
+   //          	   			$slot->slot_position,
+   //          	   			Tbl_slot::id($slot->slot_sponsor)->account()->first() == null ? "---" : "Slot #".Tbl_slot::id($slot->slot_sponsor)->account()->first()->slot_id."(".Tbl_slot::id($slot->slot_sponsor)->account()->first()->account_name.")",
+   //          	   			$slot->slot_type,
+   //          	   			Tbl_wallet_logs::id($slot->slot_id)->wallet()->sum("wallet_amount") == null ? "0" : Tbl_wallet_logs::id($slot->slot_id)->wallet()->sum("wallet_amount"),
+   //          	   			Tbl_wallet_logs::id($slot->slot_id)->GC()->sum("wallet_amount") == null ? "0" : Tbl_wallet_logs::id($slot->slot_id)->GC()->sum("wallet_amount"),
+   //          	   			Tbl_pv_logs::where("owner_slot_id",$slot->slot_id)->where("used_for_redeem",0)->where("type","PPV")->sum("amount") != 0 && $slot->slot_type != "CD" ? Tbl_pv_logs::where("owner_slot_id",$slot->slot_id)->where("used_for_redeem",0)->where("type","PPV")->sum("amount") : 0,
+   //          	   			Compute::count_gpv($slot->slot_id),
+   //          	   			Tbl_compensation_rank::where("compensation_rank_id",$slot->permanent_rank_id)->first()->compensation_rank_name
+   //          	   			)
+   //          	   	 );
+   //          	   	 $ctr++;
+   //          	   }
              	   
-             });
-         })->export('xls');	
+   //          });
+   //      })->export('xls');	
 		
-		
-		
-		dd("Success");
+		$data["_slot"]  = $_slot;
+		return view('admin.report.account_slot_report',$data);
 		
 		
 		
