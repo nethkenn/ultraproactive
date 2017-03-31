@@ -2,7 +2,7 @@
 
 return [
 
-	   'image_server' => 'http://image.primiaworks.com/',
+	   'image_server' => 'http://128.199.126.223/',
 	   'currency' => '&#8369;',
 
 	   'app_name' => 'Rutsen',
