@@ -111,8 +111,9 @@ class MemberSlotController extends MemberController
 		$datas = DB::table('tbl_slot')->leftjoin('rel_membership_product','rel_membership_product.slot_id','=','tbl_slot.slot_id')
 									  ->where('tbl_slot.slot_id','=',$id)
 									  ->leftjoin('tbl_product_package_has','tbl_product_package_has.product_package_id','=','rel_membership_product.product_package_id')
-									  ->leftJoin('tbl_product','Tbl_product.product_id','=','tbl_product_package_has.product_id')
+									  ->leftJoin('tbl_product','tbl_product.product_id','=','tbl_product_package_has.product_id')
 									  ->get();
+
 		$wallet    = Tbl_wallet_logs::where("slot_id", $id)->wallet()->sum('wallet_amount');	
 		$remaining = $wallet - $membership->membership_price;
 
