@@ -95,6 +95,7 @@
 									<ul class="dropdown-menu" role="menu">
 										<li><a href="stockist/reports/sales">Sales</a></li>
 										<li><a href="stockist/reports/transaction">Transactions</a></li>
+										<li><a href="stockist/reports/refill_logs">Refill Logs</a></li>
 									</ul>
 							</li>
 						</ul>

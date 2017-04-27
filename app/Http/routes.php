@@ -459,6 +459,10 @@ Route::any('admin/reports/top_earner/get', 'AdminReportController@top_earner_get
 Route::any('admin/reports/top_recruiter', 'AdminReportController@top_recruiter');
 Route::any('admin/reports/top_recruiter/get', 'AdminReportController@top_recruiter_get');
 Route::any('admin/reports/other_reports', 'AdminReportController@other_reports');
+
+Route::any('admin/reports/refill_logs', 'AdminReportController@refill_logs');
+Route::any('admin/reports/refill_logs/get', 'AdminReportController@refill_logs_get');
+Route::any('admin/reports/refill_logs/view', 'AdminReportController@refill_logs_view');
 // Route::any('admin/reports/top_recruiter', 'AdminReportController@top_recruiter');
 // Route::any('admin/reports/top_earner', 'AdminReportController@index');
 
@@ -502,6 +506,15 @@ Route::any('admin/stockist_request', 'AdminStockistRequestController@index');
 Route::any('admin/stockist_request/user', 'AdminStockistRequestController@request');
 Route::any('admin/stockist_request/cancel', 'AdminStockistRequestController@cancel');
 Route::any('admin/stockist_request/get', 'AdminStockistRequestController@get');
+
+
+
+
+Route::any('admin/stockist_discount', 'AdminStockistDiscountController@index');
+Route::any('admin/stockist_discount/set/{id}', 'AdminStockistDiscountController@set');
+
+Route::any('admin/stockist_discount_package', 'AdminStockistDiscountController@package_index');
+Route::any('admin/stockist_discount_package/set/{id}', 'AdminStockistDiscountController@package_set');
 
 
 //STOCKIST
@@ -564,6 +577,11 @@ Route::any('stockist/reports/sales', 'StockistReportsController@sales');
 Route::any('stockist/reports/transaction', 'StockistReportsController@transaction');
 Route::any('stockist/reports/transaction/view', 'StockistReportsController@view_transaction');
 Route::any('stockist/reports/transaction/get', 'StockistReportsController@ajax_get_trans');
+
+
+Route::any('stockist/reports/refill_logs/', 'StockistReportsController@refill_logs');
+Route::any('stockist/reports/refill_logs/get', 'StockistReportsController@refill_logs_get');
+Route::any('stockist/reports/refill_logs/view', 'StockistReportsController@refill_logs_view');
 //STOCKIST PAGE TRANSFER
 Route::any('stockist/transfer_wallet', 'StockistTransferController@index');
 

@@ -212,7 +212,7 @@ class MemberCodeController extends MemberController
 					Compute::repurchase($slot_id, $binary_pts, $unilevel_pts, $upgrade_pts);
 
 	                /* INSERT LOG FOR THAT A CODE WAS USED */
-	                $log = "You spent one of your Product Code (#" . $product_pin . ") for your slot #" . $slot_info->slot_id . " which contains <b>" . number_format($unilevel_pts, 2) . " unilevel points</b> and <b>" . number_format($binary_pts, 2) . " binary points</b>.";
+	                $log = "You spent one of your Product Code (#" . $product_pin . ") for your slot #" . $slot_info->slot_id . " which contains <b>" . number_format($unilevel_pts, 2) . " UPcoins</b> and <b>" . number_format($binary_pts, 2) . " binary points</b>.";
 	                Log::slot($slot_id, $log, 0, "Use code",$slot_id);
 				}
 			}
