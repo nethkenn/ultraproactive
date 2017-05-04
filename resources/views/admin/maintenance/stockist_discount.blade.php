@@ -38,7 +38,7 @@
 	        columns: [
 	            {data: 'stockist_id', name: 'stockist_id'},
 	            {data: 'stockist_full_name', name: 'stockist_full_name'},
-	            {data: 'set_stockist_discount', name: 'set_stockist_discount'},
+	            {data: 'set_discount_type', name: 'set_discount_type'},
 	            
 	           	
 	        ],
