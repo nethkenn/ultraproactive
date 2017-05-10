@@ -122,12 +122,73 @@ class StockistReportsController extends StockistController
 		return $data;
 	}
 
-	public function transaction()
+	public function refill_logs()
+	{
+
+
+ 		return view('stockist.report.refill_logs');
+	}
+	
+	public function refill_logs_get()
+	{
+
+		$transaction = Tbl_transaction::where('issued_stockist_id',Stockist::info()->stockist_id)
+		->where(function ($query) 
+		{
+		    $query->where("transaction_description","REFILL PRODUCT PACKAGE STOCK")
+		          ->orWhere("transaction_description","REFILL PRODUCT STOCK");
+		})->get();
+
+        return Datatables::of($transaction)	->addColumn('view','<a href="stockist/reports/refill_logs/view?id={{$transaction_id}}">View</a>')
+	        								->make(true);
+	}   
+
+	public function refill_logs_view()
+	{
+		$id = Request::input('id');
+		$data['transaction'] = Tbl_transaction::where('transaction_id',$id)->first();
+		$data['checking'] = 0;
+		if(Tbl_transaction::where('issued_stockist_id',Stockist::info()->stockist_id)->where("transaction_id",$id)->first())
+		{
+			if($data['transaction']->transaction_description != "Membership Code")
+			{
+					$data['checking'] = 1;
+					$data['product'] = Rel_transaction::where('transaction_id',$id)->where('rel_transaction.product_id','!=','NULL')
+																	   ->join('tbl_product','tbl_product.product_id','=','rel_transaction.product_id')
+																	   ->get();
+					$data['package'] = Rel_transaction::where('transaction_id',$id)->where('rel_transaction.product_package_id','!=','NULL')
+																	   ->where('rel_transaction.product_package_id','!=',0)
+																	   ->join('tbl_product_package','tbl_product_package.product_package_id','=','rel_transaction.product_package_id')
+																	   ->get();												   
+	
+			}
+			else
+			{
+					$data['code'] = Rel_transaction::where('transaction_id',$id)->where('rel_transaction.code_pin','!=','NULL')
+																				->where('rel_transaction.code_pin','!=',0)
+																	            ->get();
+	            	$data['checking'] = 2;
+			}
+	
+	
+			return view('stockist.report.refill_logs_view',$data);			
+		}
+		else
+		{
+			dd("Please try again...");
+		}
+	}
+ 
+ 
+ 
+ 	public function transaction()
 	{
 
 
  		return view('stockist.report.transaction_record');
 	}
+ 
+ 
 
 	public function ajax_get_trans()
 	{
@@ -137,6 +198,7 @@ class StockistReportsController extends StockistController
         return Datatables::of($transaction)	->addColumn('view','<a href="stockist/reports/transaction/view?id={{$transaction_id}}">View</a>')
 	        								->make(true);
 	}   
+	
 
 	public function view_transaction()
 	{

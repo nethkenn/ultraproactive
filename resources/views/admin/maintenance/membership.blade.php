@@ -30,6 +30,7 @@
 						<th>Global Pool Sharing(%)</th>
 						<th class="option-col">Entry</th>
 						<th class="option-col">Upgrade</th>
+						<th class="option-col">Direct Income Limit</th>
 						<th class="option-col">Discounted Product</th>
 						<th class="option-col"></th>
 						<th class="option-col"></th>
@@ -59,6 +60,7 @@ $(function() {
             {data: 'global_pool_sharing', name: 'global_pool_sharing'},            
             {data: 'entry', name: 'membership_id'},
             {data: 'upgrade', name: 'membership_id'},
+            {data: 'direct_income_limit', name: 'direct_income_limit'},
             {data: 'product_discount', name: 'product_discount'},
             {data: 'edit', name: 'membership_id'},
             {data: 'archive', name: 'membership_id'},

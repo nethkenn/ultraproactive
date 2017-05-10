@@ -102,6 +102,8 @@
 									<li><a href="admin/stockist_inventory">Stockist Inventory</a></li>
 									<li><a href="admin/stockist_wallet">Stockist Refill Wallet</a></li>
 									<li><a href="admin/stockist_request">Stockist Order Request</a></li>
+									<li><a href="admin/stockist_discount">Stockist Discount Product</a></li>
+									<li><a href="admin/stockist_discount_package">Stockist Discount Package</a></li>
 								</ul>
 							</li>
 							<!-- UTILITIES -->
@@ -148,6 +150,7 @@
 									<li><a href="admin/reports/top_recruiter">Top Recruiter</a></li>
 									<li><a href="admin/reports/other_reports">Other Reports</a></li>
 									<li><a href="admin/reports/check_gc">MATCHING BONUS COUNT</a></li>
+									<li><a href="admin/reports/refill_logs">Refill Logs</a></li>
 								</ul>
 							</li> 
 

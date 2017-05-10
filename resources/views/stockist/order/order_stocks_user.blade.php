@@ -28,6 +28,8 @@
 								<th>Name</th>
 								<th>Stockist Quantity</th>
 								<th>Price</th>
+								<th>Discount</th>
+								<th>Discounted Price</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -41,6 +43,7 @@
 								<th>ID</th>
 								<th>Name</th>
 								<th>Stockist Quantity</th>
+								<th>Subtotal</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -69,6 +72,8 @@
 								<th>Name</th>
 								<th>Stockist Quantity</th>
 								<th>Price</th>
+								<th>Discounted</th>
+								<th>Total Discount</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -139,6 +144,8 @@
 	            {data: 'product_name', name: 'product_name'},
 	            {data: 'stockist_quantity', name: 'stockist_quantity'},
 	            {data: 'price', name: 'price'},
+	            {data: 'discount', name: 'discount'},
+	            {data: 'discount_total', name: 'discount_total'},
 	           	{data: 'add' ,name: 'product_id'}
 	            
 	           	
@@ -182,10 +189,10 @@
 					'<td>'+$new_td[1]+'</td>'+
 					'<td>'+$new_td[2]+'</td>'+
 					'<td>'+'<input readonly product-id = "'+$new_td[0]+'" style="width:100%; text-align: center; border:0 none;" type="text" name="quantity['+$new_td[0]+']" value="'+$('#pop-up-input').val()+'" readonly></td>'+
-					'<td><a style="cursor: pointer;" class="remove-added-prod" product-id = "'+$new_td[0]+'" price="'+$new_td[3]+'" qty="'+$('#pop-up-input').val()+'">REMOVE</a></td>'+
+					'<td><a style="cursor: pointer;" class="remove-added-prod" product-id = "'+$new_td[0]+'" price="'+$new_td[5]+'" qty="'+$('#pop-up-input').val()+'">REMOVE</a></td>'+
 				'</tr>';
 
- 				total = total + (parseFloat($new_td[3]) * parseInt($('#pop-up-input').val()));
+ 				total = total + (parseFloat($new_td[5]) * parseInt($('#pop-up-input').val()));
 
 				$(".pricenopack").text("Total Price: "+total.toFixed(2));
 				// console.log($append);
@@ -258,7 +265,9 @@
 	            {data: 'product_package_name', name: 'product_package_name'},
 	            {data: 'package_quantity', name: 'package_quantity'},
 	            {data: 'price', name: 'price'},
-	           	{data: 'add' ,name: 'product_id'}
+	            {data: 'discount', name: 'discount'},
+	            {data: 'discount_total', name: 'discount_total'},
+	           	{data: 'add' ,name: 'product_package_id'}
 	            
 	           	
 	        ],
@@ -302,10 +311,10 @@
 					'<td>'+$new_td[1]+'</td>'+
 					'<td>'+$new_td[2]+'</td>'+
 					'<td>'+'<input readonly product-id2 = "'+$new_td[0]+'" style="width:100%; text-align: center; border:0 none;" type="text" name="quantitypack['+$new_td[0]+']" value="'+$('#pop-up-input2').val()+'"></td>'+
-					'<td><a style="cursor: pointer;" class="remove-added-prod-pack" product-id2 = "'+$new_td[0]+'" qty="'+$('#pop-up-input2').val()+'" price="'+$new_td[3]+'">REMOVE</a></td>'+
+					'<td><a style="cursor: pointer;" class="remove-added-prod-pack" product-id2 = "'+$new_td[0]+'" qty="'+$('#pop-up-input2').val()+'" price="'+$new_td[5]+'">REMOVE</a></td>'+
 				'</tr>';
 
- 				total2 = total2 + (parseFloat($new_td[3]) * parseInt($('#pop-up-input2').val()));
+ 				total2 = total2 + (parseFloat($new_td[5]) * parseInt($('#pop-up-input2').val()));
 
 				$(".pricepack").text("Total Price: "+total2.toFixed(2));
 				// console.log($append);

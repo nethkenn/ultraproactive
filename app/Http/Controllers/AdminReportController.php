@@ -9,6 +9,8 @@ use App\Classes\Log;
 use App\Classes\Admin;
 use App\Tbl_wallet_logs;
 use App\Tbl_tree_sponsor;
+use App\Tbl_transaction;
+use App\Rel_transaction;
 use Datatables;
 use App\Tbl_slot;
 class AdminReportController extends AdminController
@@ -223,5 +225,49 @@ class AdminReportController extends AdminController
         return Datatables::of($summary)->make(true);
 
 
+    }
+    
+    public function refill_logs()
+    {
+    	return view('admin.report.refill_logs');
+    }
+    
+	public function refill_logs_get()
+	{
+
+		$transaction = Tbl_transaction::where("transaction_description","REFILL PRODUCT STOCK")->orWhere("transaction_description","REFILL PRODUCT PACKAGE STOCK")->orWhere("transaction_description","REFILL PRODUCT/PACKAGE STOCK (ORDER REQUEST)")->get();
+
+        return Datatables::of($transaction)	->addColumn('view','<a href="admin/reports/refill_logs/view?id={{$transaction_id}}">View</a>')
+        									->addColumn('stockist_name','{{App\Tbl_stockist::where("stockist_id",$issued_stockist_id)->first()->stockist_full_name}}')
+	        								->make(true);
+	}   
+	
+    public function refill_logs_view()
+    {
+		$id = Request::input('id');
+		$data['transaction'] = Tbl_transaction::where('transaction_id',$id)->first();
+		$data['checking'] = 0;
+
+		if($data['transaction']->transaction_description != "Membership Code")
+		{
+				$data['checking'] = 1;
+				$data['product'] = Rel_transaction::where('transaction_id',$id)->where('rel_transaction.product_id','!=','NULL')
+																   ->join('tbl_product','tbl_product.product_id','=','rel_transaction.product_id')
+																   ->get();
+				$data['package'] = Rel_transaction::where('transaction_id',$id)->where('rel_transaction.product_package_id','!=','NULL')
+																   ->where('rel_transaction.product_package_id','!=',0)
+																   ->join('tbl_product_package','tbl_product_package.product_package_id','=','rel_transaction.product_package_id')
+																   ->get();												   
+
+		}
+		else
+		{
+				$data['code'] = Rel_transaction::where('transaction_id',$id)->where('rel_transaction.code_pin','!=','NULL')
+																			->where('rel_transaction.code_pin','!=',0)
+																            ->get();
+            	$data['checking'] = 2;
+		}
+
+    	return view('admin.report.refill_logs_view',$data);
     }
 }

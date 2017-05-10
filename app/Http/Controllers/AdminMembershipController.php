@@ -55,6 +55,7 @@ class AdminMembershipController extends AdminController
 			// $rules['max_income'] = 'numeric|min:1';
 			$rules['global_pool_sharing'] = 'numeric|min:0';
 			$rules['max_group_pv'] = 'numeric|min:0';
+			$rules['direct_income_limit'] = 'numeric|min:0';
 			// $rules['member_upgrade_pts'] = 'numeric|min:0';
 			$message = [
 				'product_name.regex' => 'The :attribute must only have letters , numbers, spaces, hypens ( - ) and underscores ( _ )',
@@ -69,6 +70,7 @@ class AdminMembershipController extends AdminController
 				$insert['membership_price'] = Request::input('membership_price');
 				$insert['membership_entry'] = Request::input('membership_entry');
 				$insert['membership_upgrade'] = Request::input('membership_upgrade');
+				$insert['direct_income_limit'] = Request::input('direct_income_limit');
 				$insert['max_income'] = 9999999;
 				// $insert['discount'] = Request::input('discount');
 				$insert['slot_limit'] = Request::input('slot_limit');
@@ -90,6 +92,7 @@ class AdminMembershipController extends AdminController
 				$data['_error']['membership_price'] = $errors->get('membership_price');
 				$data['_error']['membership_entry'] = $errors->get('membership_entry');
 				$data['_error']['membership_upgrade'] = $errors->get('membership_upgrade');
+				$data['_error']['direct_income_limit'] = $errors->get('direct_income_limit');
 				// $data['_error']['max_income'] = $errors->get('max_income');
 				// $data['_error']['discount'] = $errors->get('discount');
 				$data['_error']['slot_limit'] = $errors->get('slot_limit');
@@ -155,6 +158,7 @@ class AdminMembershipController extends AdminController
 			// $rules['max_income'] = 'numeric|min:1';
 			$rules['global_pool_sharing'] = 'numeric|min:0';
 			$rules['max_group_pv'] = 'numeric|min:0';
+			$rules['direct_income_limit'] = 'numeric|min:0';
 			// 	$rules['member_upgrade_pts'] = 'numeric|min:0';
 
 
@@ -174,8 +178,9 @@ class AdminMembershipController extends AdminController
 				$insert['max_group_pv'] = Request::input('max_group_pv');
 				// $insert['discount'] = Request::input('discount');
 				$insert['max_income'] = 999999;
-				$insert['slot_limit'] = Request::input('slot_limit');
+				$insert['slot_limit'] = 0;
 				$insert['global_pool_sharing'] = Request::input('global_pool_sharing');
+				$insert['direct_income_limit'] = Request::input('direct_income_limit');
 				// $insert['member_upgrade_pts'] = Request::input('member_upgrade_pts');
 				// dd($insert);
 				$membership = new Tbl_membership($insert);
@@ -196,6 +201,7 @@ class AdminMembershipController extends AdminController
 				// $data['_error']['discount'] = $errors->get('discount');
 				$data['_error']['membership_entry'] = $errors->get('membership_entry');
 				$data['_error']['membership_upgrade'] = $errors->get('membership_upgrade');
+				$data['_error']['direct_income_limit'] = $errors->get('direct_income_limit');
 				// $data['_error']['max_income'] = $errors->get('max_income');
 				$data['_error']['slot_limit'] = $errors->get('slot_limit');
 				$data['_error']['global_pool_sharing'] = $errors->get('global_pool_sharing');

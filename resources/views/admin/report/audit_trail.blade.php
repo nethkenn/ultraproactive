@@ -30,6 +30,9 @@
 					@endforeach
 				</tbody>
 			</table>
+			<div class="pull-right">
+				{!! $_logs->render() !!}
+			</div>
 	@endif	
 </div>	
 

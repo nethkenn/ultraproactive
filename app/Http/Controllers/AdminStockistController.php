@@ -48,6 +48,8 @@ class AdminStockistController extends AdminController
         return Datatables::of($stockist)
                                     ->addColumn('show_pass','<a style="cursor: pointer;" class="show-pass" stockist-id = "{{$stockist_id}}" >SHOW</a>')  
                                     ->addColumn('edit_archive','<a href="admin/admin_stockist/edit/{{$stockist_id}}">EDIT</a> | '. $btn)
+							        ->addColumn('set_discount_type','<a href="admin/stockist_discount/set/{{$stockist_id}}">SET</a>')
+							        ->addColumn('set_discount_type_two','<a href="admin/stockist_discount_package/set/{{$stockist_id}}">SET</a>')
                                     ->make(true);
     }
 

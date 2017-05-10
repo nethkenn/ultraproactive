@@ -28,7 +28,7 @@
 		var image_server = '{{ Config::get("app.image_server") }}';
 		var source = '{{ $_SERVER["SERVER_NAME"] }}';
 		</script>
-		<link rel="icon" type="image/png" href="/resources/assets/frontend/img/favicon.png">
+		<link rel="icon" type="image/png" href="/resources/assets/frontend/img/logo.png">
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -95,6 +95,7 @@
 									<ul class="dropdown-menu" role="menu">
 										<li><a href="stockist/reports/sales">Sales</a></li>
 										<li><a href="stockist/reports/transaction">Transactions</a></li>
+										<li><a href="stockist/reports/refill_logs">Refill Logs</a></li>
 									</ul>
 							</li>
 						</ul>

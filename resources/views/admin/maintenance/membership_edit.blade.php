@@ -39,7 +39,19 @@
                     @endif
             		<input name="membership_price" value="{{Request::input('membership_price') ? Request::input('membership_price') : $membership->membership_price }}" required="required" class="form-control" id="" placeholder="" type="number">
             	</div>
-
+            	<div class="form-group col-md-6">
+                    <label for="direct_income_limit">Direct Income Limit</label>
+                    @if($_error['direct_income_limit'])
+                        <div class="col-md-12 alert alert-danger form-errors">
+                            <ul>
+                                @foreach($_error['direct_income_limit'] as $error)
+                                    <li>{{$error}}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+            		<input name="direct_income_limit" value="{{Request::input('direct_income_limit') ? Request::input('direct_income_limit') : $membership->direct_income_limit }}" required="required" class="form-control" id="" placeholder="" type="number">
+            	</div>
                 <div class="form-group col-md-6">
                     <label for="max_group_pv">Max Group PV for sharing</label>
                     @if($_error['max_group_pv'])

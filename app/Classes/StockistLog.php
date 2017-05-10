@@ -7,7 +7,7 @@ use Carbon;
 
 class StockistLog
 {
-	public static function transaction($process,$amount,$discountp,$discounta,$total,$paid = 0,$claimed = 0,$transaction_by,$transaction_to,$transaction_payment_type,$transaction_by_stockist_id,$transaction_to_id,$extra,$voucher = NULL,$issue = NULL)
+	public static function transaction($process,$amount,$discountp,$discounta,$total,$paid = 0,$claimed = 0,$transaction_by,$transaction_to,$transaction_payment_type,$transaction_by_stockist_id,$transaction_to_id,$extra,$voucher = NULL,$issue = NULL,$remarks="")
 	{
 		if($voucher == NULL)
 		{
@@ -30,12 +30,13 @@ class StockistLog
 		$insert["voucher_id"] = $voucher;
 		$insert["created_at"] = Carbon\Carbon::now();
 		$insert["issued_stockist_id"] = $issue;
+		$insert["transaction_remark"] = $remarks;
 
 		$id = Tbl_transaction::insertGetId($insert);
 		return $id;
 	}
 
-	public static function relative($transaction_id,$if_product=0,$if_product_package = 0,$if_code_pin = 0,$product_id,$product_package_id,$code_pin,$transaction_amount,$log,$transaction_qty,$transaction_total)
+	public static function relative($transaction_id,$if_product=0,$if_product_package = 0,$if_code_pin = 0,$product_id,$product_package_id,$code_pin,$transaction_amount,$log,$transaction_qty,$transaction_total,$prod_discount_insert = 0,$prod_discount_insert_amount = 0)
 	{
 		$insert["transaction_id"] = $transaction_id;
 
@@ -52,6 +53,8 @@ class StockistLog
 		$insert["transaction_total"]  = $transaction_total;
 
 		$insert["rel_transaction_log"] = $log;
+		$insert["product_discount_amount"] = $prod_discount_insert_amount;
+		$insert["product_discount"] 	   = $prod_discount_insert;
 
 		$id = Rel_transaction::insertGetId($insert);
 	}

@@ -779,6 +779,7 @@ class AdminSlotController extends AdminController
 	
 	public function dl_member()
 	{
+		set_time_limit(0);
 		 $_slot      = Tbl_slot::select(array("tbl_slot.*", "tbl_account.account_name", "tbl_membership.membership_name"))->rank()->membership()->account()->get();          
 
 		 //Excel::create("1", function($excel) use($_slot)

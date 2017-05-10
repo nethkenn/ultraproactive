@@ -806,6 +806,11 @@ class Compute
 
                 if($direct_income != 0)
                 {
+                    if($direct_income > $slot_recipient->direct_income_limit)
+                    {
+                        $direct_income = $slot_recipient->direct_income_limit;
+                    }
+                    
                     /* UPDATE WALLET */
                     // $update_recipient["slot_wallet"] = $update_recipient["slot_wallet"] + $direct_income;
                     // $update_recipient["slot_total_earning"] = $update_recipient["slot_total_earning"] + $direct_income;
