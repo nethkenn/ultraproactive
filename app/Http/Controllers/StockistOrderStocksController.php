@@ -21,6 +21,8 @@ use App\Rel_order_stocks;
 use App\Rel_order_stocks_package;
 use App\Classes\StockistLog;
 use App\Tbl_product_package_has;
+use App\Tbl_product_discount_stockist;
+use App\Tbl_package_discount_stockist;
 class StockistOrderStocksController extends StockistController
 {
     public function index()
@@ -79,9 +81,22 @@ class StockistOrderStocksController extends StockistController
                                      {
                                             foreach($_POST['quantity'] as $key => $value)
                                             {
+                                                $check_requested_discount = Tbl_product_discount_stockist::where("stockist_id",Stockist::info()->stockist_id)->where("product_id",$key)->first();
+                                                if($check_requested_discount)
+                                                {
+                                                   $discount_requested = $check_requested_discount->discount; 
+                                                }
+                                                else
+                                                {
+                                                   $discount_requested = 0;        
+                                                }
+                                                
                                                 $insert_product['quantity'] = $value;
                                                 $insert_product['product_id'] = $key;
                                                 $insert_product['order_stocks_id'] = $order_id;
+                                                $check_requested_discount = Tbl_package_discount_stockist::where("stockist_id",Stockist::info()->stockist_id)->where("product_package_id",$key)->first();
+                                                $insert_product_package['discount'] = $discount_requested;
+                                                
                                                 Rel_order_stocks::insert($insert_product);
                                             }
                                      }             
@@ -90,9 +105,20 @@ class StockistOrderStocksController extends StockistController
                                      {
                                             foreach($_POST['quantitypack'] as $key => $value)
                                             {
+                                                $check_requested_discount = Tbl_package_discount_stockist::where("stockist_id",Stockist::info()->stockist_id)->where("product_package_id",$key)->first();
+                                                if($check_requested_discount)
+                                                {
+                                                   $discount_requested = $check_requested_discount->discount; 
+                                                }
+                                                else
+                                                {
+                                                   $discount_requested = 0;        
+                                                }
+                                                
                                                 $insert_product_package['quantity'] = $value;
                                                 $insert_product_package['product_package_id'] = $key;
                                                 $insert_product_package['order_stocks_id'] = $order_id;
+                                                $insert_product_package['discount'] = $discount_requested;
                                                 Rel_order_stocks_package::insert($insert_product_package);
                                             }
                                      }   
@@ -110,8 +136,8 @@ class StockistOrderStocksController extends StockistController
     public function ajax_get()
     {
         $id = Request::input('id');                          
-        $data['product'] = Rel_order_stocks::where('order_stocks_id',$id)->join('tbl_product','tbl_product.product_id','=','rel_order_stocks.product_id')->where('tbl_product.archived',0)->select('product_name','quantity','tbl_product.product_id')->get();
-        $data['package'] = Rel_order_stocks_package::where('order_stocks_id',$id)->join('tbl_product_package','tbl_product_package.product_package_id','=','rel_order_stocks_package.product_package_id')->where('tbl_product_package.archived',0)->select('product_package_name','quantity','tbl_product_package.product_package_id')->get();
+        $data['product'] = Rel_order_stocks::where('order_stocks_id',$id)->join('tbl_product','tbl_product.product_id','=','rel_order_stocks.product_id')->where('tbl_product.archived',0)->select('product_name','quantity','tbl_product.product_id','rel_order_stocks.discount')->get();
+        $data['package'] = Rel_order_stocks_package::where('order_stocks_id',$id)->join('tbl_product_package','tbl_product_package.product_package_id','=','rel_order_stocks_package.product_package_id')->where('tbl_product_package.archived',0)->select('product_package_name','quantity','tbl_product_package.product_package_id','rel_order_stocks_package.discount')->get();
        
         return json_encode($data);
     }

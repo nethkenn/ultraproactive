@@ -18,6 +18,8 @@
                 <th>ID</th>
                 <th>Product Name</th>
                 <th>Quantity</th>
+                <th>Price</th>
+                <th>Discount</th>
                 <th>Total</th>
               </tr>
             </thead>
@@ -27,7 +29,15 @@
                 <td>{{$prod->product_id}}</td>
                 <td>{{$prod->product_name}}</td>
                 <td>{{$prod->transaction_qty}}</td>
-                <td>{{$prod->transaction_total}}</td>
+                @if($prod->product_discount != 0 && $prod->transaction_amount == ($prod->transaction_total / $prod->transaction_qty))
+                  <td>{{$prod->transaction_amount + ($prod->product_discount_amount/$prod->transaction_qty)}}</td>
+                  <td>{{$prod->product_discount}}%</td>
+                  <td>{{$prod->transaction_total}}</td>
+                @else
+                  <td>{{$prod->transaction_amount}}</td>
+                  <td>{{$prod->product_discount}}%</td>
+                  <td>{{$prod->transaction_total}}</td>
+                @endif
               </tr>
               @endforeach
             </tbody>
@@ -36,13 +46,15 @@
     </div>
     @endif
     @if($package->count() != 0)
-         <div class="form-group col-md-12">
+         <div class="form-group-container col-md-12">
             <table id="product-table" class="table table-bordered table-hover">
             <thead>
               <tr>
                 <th>ID</th>
                 <th>Product Package Name</th>
                 <th>Quantity</th>
+                <th>Price</th>
+                <th>Discount</th>
                 <th>Total</th>
               </tr>
             </thead>
@@ -52,7 +64,15 @@
                 <td>{{$prod->product_package_id}}</td>
                 <td>{{$prod->product_package_name}}</td>
                 <td>{{$prod->transaction_qty}}</td>
-                <td>{{$prod->transaction_total}}</td>
+                @if($prod->product_discount != 0 && $prod->transaction_amount == ($prod->transaction_total / $prod->transaction_qty))
+                  <td>{{$prod->transaction_amount + ($prod->product_discount_amount/$prod->transaction_qty)}}</td>
+                  <td>{{$prod->product_discount}}%</td>
+                  <td>{{$prod->transaction_total}}</td>
+                @else
+                  <td>{{$prod->transaction_amount}}</td>
+                  <td>{{$prod->product_discount}}%</td>
+                  <td>{{$prod->transaction_total}}</td>
+                @endif
               </tr>
               @endforeach
             </tbody>

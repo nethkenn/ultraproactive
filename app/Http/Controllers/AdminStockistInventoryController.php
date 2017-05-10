@@ -97,10 +97,11 @@ class AdminStockistInventoryController extends AdminController
 	                    $product_id = $key;
 	                    $product_package_id = NULL;
 	                    $code_pin = NULL;
-	                    $transaction_amount = $prod_qty->price - (($data['discount']/100)*$prod_qty->price);
+	                    $transaction_amount = $prod_qty->price;
+	                    $transaction_amount_discounted = $prod_qty->price - (($data['discount']/100)*$prod_qty->price);
 	                    $log = "Product Stocks";
 	                    $transaction_qty  = $value;
-	                    $transaction_total = $value * $transaction_amount;
+	                    $transaction_total = $value * $transaction_amount_discounted;
 						$prod_discount_insert = $data['discount'];
 						$prod_discount_insert_amount = ($value*(($data['discount']/100)*$prod_qty->price));
             	        $prod_disc_amt = $prod_disc_amt + ($value*(($data['discount']/100)*$prod_qty->price));
@@ -122,7 +123,7 @@ class AdminStockistInventoryController extends AdminController
 				}
 			}
 
-			DB::table('tbl_transaction')->where('transaction_id',$trans_id)->update(['transaction_amount'=>$prod_subtotal_amt,'transaction_discount_amount'=>$prod_disc_amt,'transaction_total_amount'=>$prod_total_amt]);
+			DB::table('tbl_transaction')->where('transaction_id',$trans_id)->update(['order_form_number'=>Request::input("sales_order"),'transaction_amount'=>$prod_subtotal_amt,'transaction_discount_amount'=>$prod_disc_amt,'transaction_total_amount'=>$prod_total_amt]);
 			return Redirect::to('/admin/stockist_inventory');
 		}
 
@@ -223,10 +224,12 @@ class AdminStockistInventoryController extends AdminController
 						$product_id = NULL;
 						$product_package_id = $package_id;
 						$code_pin = NULL;
-						$transaction_amount = $price - (($data['discount']/100)*$price);
+						$transaction_amount = $price;
+						$transaction_amount_discounted =  $price - (($data['discount']/100)*$price);
+						
 						$log = "Product Package Stocks";
 						$transaction_qty  = $value;
-						$transaction_total = $value * $transaction_amount;
+						$transaction_total = $value * $transaction_amount_discounted;
 
 						$prod_disc_amt = $prod_disc_amt + ($value*(($data['discount']/100)*$price));
 						$prod_subtotal_amt = $prod_subtotal_amt + $price;
@@ -258,6 +261,7 @@ class AdminStockistInventoryController extends AdminController
 	    $product = Tbl_stockist_inventory::where('stockist_id',$id)
 	                                                ->orderBy('tbl_stockist_inventory.product_id','asc')
 	                                                ->where('tbl_stockist_inventory.archived',0)
+	                                                ->where('tbl_product.archived',0)
 	                                                ->join('tbl_product','tbl_product.product_id','=','tbl_stockist_inventory.product_id')
 	                                                ->get();
 	    foreach($product as $key => $prod)

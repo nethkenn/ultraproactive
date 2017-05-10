@@ -235,7 +235,7 @@ class AdminReportController extends AdminController
 	public function refill_logs_get()
 	{
 
-		$transaction = Tbl_transaction::where("transaction_description","REFILL PRODUCT STOCK")->orWhere("transaction_description","REFILL PRODUCT PACKAGE STOCK")->get();
+		$transaction = Tbl_transaction::where("transaction_description","REFILL PRODUCT STOCK")->orWhere("transaction_description","REFILL PRODUCT PACKAGE STOCK")->orWhere("transaction_description","REFILL PRODUCT/PACKAGE STOCK (ORDER REQUEST)")->get();
 
         return Datatables::of($transaction)	->addColumn('view','<a href="admin/reports/refill_logs/view?id={{$transaction_id}}">View</a>')
         									->addColumn('stockist_name','{{App\Tbl_stockist::where("stockist_id",$issued_stockist_id)->first()->stockist_full_name}}')

@@ -24,6 +24,7 @@
                     @endif
                 <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
                 <input type="hidden" class="transaction_remarks" name="transaction_remarks" value="">
+                <input type="hidden" class="transaction_sales_order" name="sales_order" value="">
             	<div class="form-group col-md-12">
 				    <table id="product-table" class="table table-bordered table-hover">
 						<thead>
@@ -76,11 +77,15 @@
   <button data-remodal-action="close" class="remodal-close"></button>
   <h1>Confirmation</h1>
   	<form>
-  <div class="form-group">
-    <label for="Remarks">Remarks</label>
-    <input id="remark_container" type="text" class="form-control" id="" placeholder="">
-  </div>
-</form>
+	  <div class="form-group">
+	    <label for="Remarks">Sales Order</label>
+	    <input id="sales_order_container" type="text" class="form-control" id="" placeholder="">
+	  </div>
+	  <div class="form-group">
+	    <label for="Remarks">Remarks</label>
+	    <input id="remark_container" type="text" class="form-control" id="" placeholder="">
+	  </div>
+  	</form>
   <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
   <button data-remodal-action="confirm" class="remodal-confirm confirm_remark">Confirm</button>
 </div>
@@ -204,6 +209,7 @@
 		
 		$(".confirm_remark").click(function(){
 			$(".transaction_remarks").val($("#remark_container").val());
+			$(".transaction_sales_order").val($("#sales_order_container").val());
 			$('#product-package-add-form').submit();
 		});
 		

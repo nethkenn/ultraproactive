@@ -17,6 +17,7 @@
 					<tr class="text-center">
 						<th>ID</th>
 						<th>Transaction Desription</th>
+						<th>Order Form Number</th>
 						<th>Transaction Remark</th>
 						<th>Date</th> 
 						<th class="option-col"></th>
@@ -42,6 +43,7 @@ $(function() {
         columns: [
        		{data: 'transaction_id', name: 'transaction_id'},
             {data: 'transaction_description', name: 'transaction_description'},
+            {data: 'order_form_number', name: 'order_form_number'},
             {data: 'transaction_remark', name: 'transaction_remark'},
             {data: 'created_at', name: 'created_at'},
             {data: 'view', name: 'view'},
