@@ -173,7 +173,7 @@ class Compute
                         /* Check if date is equal today's date*/
                         if($slot_recipient_gc->pairs_per_day_date == $date)
                         {
-                            if($pairs_option->rank_max_pairing < $count)
+                            if($member->max_pairs_per_day < $count)
                             {
                                 /* Already exceeded */
                                 $binary["left"]   = 0;
@@ -218,7 +218,7 @@ class Compute
                                                 /* Check if date is equal today's date*/
                                                 if($slot_recipient_gc->pairs_per_day_date == $date)
                                                 {
-                                                    if($pairs_option->rank_max_pairing <= $count)
+                                                    if($member->max_pairs_per_day <= $count)
                                                     {
                                                         /* Already exceeded */
                                                         $update['pairs_today'] = $count + 1;
@@ -534,7 +534,7 @@ class Compute
                         /* Check if date is equal today's date*/
                         if($slot_recipient_gc->pairs_per_day_date == $date)
                         {
-                            if($pairs_option->rank_max_pairing < $count)
+                            if($member->max_pairs_per_day < $count)
                             {
                                 /* Already exceeded */
                                 $binary["left"]   = 0;
@@ -581,7 +581,7 @@ class Compute
                                                   /* Check if date is equal today's date*/
                                                 if($slot_recipient_gc->pairs_per_day_date == $date)
                                                 {
-                                                    if($pairs_option->rank_max_pairing <= $count)
+                                                    if($member->max_pairs_per_day <= $count)
                                                     {
                                                         /* Already exceeded */
                                                         $update['pairs_today'] = $count + 1;
@@ -771,6 +771,7 @@ class Compute
             }            
         }
     }
+    
     public static function direct($new_slot_id, $method = "SLOT CREATION")
     {
         $new_slot_info = Tbl_slot::id($new_slot_id)->account()->membership()->first();

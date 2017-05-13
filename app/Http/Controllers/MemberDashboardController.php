@@ -48,7 +48,8 @@ class MemberDashboardController extends MemberController
 				$data["personal_upcoins"]	    = 0;	
 			}
 			$data["current_rank"]				= DB::table("tbl_compensation_rank")->where("compensation_rank_id",$slot_info->permanent_rank_id)->first()->compensation_rank_name;
-			$data["maxpairing"]			     	= DB::table("tbl_compensation_rank")->where("compensation_rank_id",$slot_info->current_rank)->first()->rank_max_pairing;
+			// $data["maxpairing"]			     	= DB::table("tbl_compensation_rank")->where("compensation_rank_id",$slot_info->current_rank)->first()->rank_max_pairing;
+			$data["maxpairing"]			     	= DB::table("tbl_membership")->where("membership_id",$slot_info->slot_membership)->first()->max_pairs_per_day;
 			$travel = Compute::compute_travel($slot_info);
 			$data['points'] = $travel['points'];
 			$data['reward'] = $travel['reward'];

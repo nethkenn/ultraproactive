@@ -65,6 +65,83 @@ class AdminSlotController extends AdminController
 
         return view('admin.maintenance.slot',$data);
 	}
+	
+	public function upgrade_slot()
+	{
+		$data["_slot"]   = Tbl_slot::get();
+		$data['message'] = Session::get('message');
+		return view('admin.maintenance.upgrade_slot',$data);
+	}
+		
+	public function upgrade_slot_submit()
+	{
+		$membership_id = Request::input("membership_id");
+		$slot_id       = Request::input("slot_id");
+		
+		$check_membership = Tbl_membership::where("membership_id",$membership_id)->where("archived",0)->where("membership_upgrade",1)->first();
+		if($check_membership)
+		{
+			$slot      = Tbl_slot::where("slot_id",$slot_id)->first();
+			if($slot)
+			{
+				$current_membership = Tbl_membership::where("membership_id",$slot->slot_membership)->first();
+				if($check_membership->membership_price > $current_membership->membership_price)
+				{
+					$update["slot_membership"] = $check_membership->membership_id;
+					Tbl_slot::where("slot_id",$slot->slot_id)->update($update);
+					Compute::binary($slot->slot_id,"SLOT UPGRADE");
+					Compute::direct($slot->slot_id,"SLOT UPGRADE");
+					$log = "Successfully upgrade your slot #".$slot_id." from ".$current_membership->membership_name." to ".$check_membership->membership_name." (Upgraded by admin)</b>";
+					Log::slot($slot_id, $log, 0 , "Upgrade Membership",$slot_id);
+					Log::Admin(Admin::info()->account_id,Admin::info()->account_username." Upgraded the slot #".$slot_id);
+					$data["message"] = "Success";
+				}
+				else
+				{
+					$data["message"] = "Membership error";
+				}
+			}
+			else
+			{
+				$data["message"] = "Slot error";
+			}
+		}
+		else
+		{
+			$data["message"] = "Current Membership error";
+		}
+		
+		return Redirect::to('admin/maintenance/slots/upgrade_slot')->with('message',$data["message"]);	
+	}
+	
+	public function get_membership($id)
+	{
+		$slot       = Tbl_slot::where("slot_id",$id)->first();	
+		$membership = null;
+		
+		if($slot)
+		{
+			$membership = Tbl_membership::where("membership_id",$slot->slot_membership)->first();
+			
+			if($membership)
+			{
+				$higher_membership = Tbl_membership::where("archived",0)->where("membership_upgrade",1)->where('membership_price',">",$membership->membership_price)->get();
+			}
+			else
+			{
+				$higher_membership = null;
+			}
+		}
+		else
+		{
+			$higher_membership = null;
+		}
+		
+		$data["membership"] = $higher_membership;
+		$data["current_membership"] = $membership;
+		return json_encode($data);
+	}
+	
 	public function data()
 	{
 		$membership = Request::input('memid');

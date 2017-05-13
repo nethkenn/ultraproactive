@@ -321,6 +321,9 @@ Route::any('admin/maintenance/slots/confirm_delete', 'AdminSlotController@confir
 Route::get('admin/maintenance/slots/delete', 'AdminSlotController@delete');
 Route::any('admin/maintenance/slots/view', 'AdminSlotController@info');
 Route::any('admin/maintenance/slots/dl_member', 'AdminSlotController@dl_member');
+Route::any('admin/maintenance/slots/upgrade_slot', 'AdminSlotController@upgrade_slot');
+Route::any('admin/maintenance/slots/upgrade_slot/submit', 'AdminSlotController@upgrade_slot_submit');
+Route::any('admin/maintenance/slots/upgrade_slot/get_membership/{id}', 'AdminSlotController@get_membership');
 
 Route::get('admin/maintenance/slots/computeAdjustment', 'AdminSlotController@computeAdjustmentAjax');
 Route::post('admin/maintenance/slots/adjustWallet', 'AdminSlotController@adjustWallet');
