@@ -59,7 +59,7 @@
 										<td>{{$package->product_package_id}}</td>
 										<td>{{$package->product_package_name}}</td>
 										<td>{{$package->price}}</td>
-										<td class="option-col text-center"><input product-id = "{{$package->product_package_id}}" style="width:80%;" type="hidden" name="product[{{$package->product_package_id}}][quantity]" value="{{$package->discount}}">{{$package->price - (($package->discount/100)*$package->price)}}({{$package->discount}}%)</td>
+										<td class="option-col text-center"><input product-id = "{{$package->product_package_id}}" style="width:80%;" type="hidden" name="product[{{$package->product_package_id}}][quantity]" value="{{$package->discount}}">{{number_format($package->price - (($package->discount/100)*$package->price),2)}}({{$package->discount}}%)</td>
 										<td class="option-col"><a style="cursor: pointer;" class="remove-added-prod" product-id = "{{$package->product_package_id}}">REMOVE</a></td>
 									</tr>
 								@endforeach
@@ -98,7 +98,7 @@
 	        columns: [
 	            {data: 'product_package_id', name: 'product_package_id'},
 	            {data: 'product_package_name', name: 'product_package_name'},
-	            {data: 'price', name: 'price'},
+	            {data: 'normal_price', name: 'normal_price'},
 	           	{data: 'add' ,name: 'product_id'}
 	            
 	           	

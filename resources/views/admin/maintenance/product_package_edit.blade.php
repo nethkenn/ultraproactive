@@ -77,8 +77,8 @@
 										<td>{{$product->product_id}}</td>
 										<!-- <td>{{$product->sku}}</td> -->
 										<td>{{$product->product_name}}</td>
-										<td>{{$product->unilevel_pts}}</td>
-										<td>{{$product->binary_pts}}</td>
+										<!--<td>{{$product->unilevel_pts}}</td>-->
+										<!--<td>{{$product->binary_pts}}</td>-->
 										<td>{{$product->price}}</td>
 										<td class="option-col text-center"><input product-id = "{{$product->product_id}}" style="width:80%;" type="number" name="product[{{$product->product_id}}][quantity]" value="{{$product->quantity}}"></td>
 										<td class="option-col"><a style="cursor: pointer;" class="remove-added-prod" product-id = "{{$product->product_id}}">REMOVE</a></td>

@@ -177,8 +177,8 @@ class AdminStockistInventoryController extends AdminController
 					$container[$key] = $prod->stock_qty;
 					$past_Quantity[$key] = $prod->stock_qty;
 					$multiplier[$key] = $prod->quantity;
-					$price = $price + $prod->price; 
-					$divided[$key] = $prod->price;
+					$price = $price + ($prod->price * $prod->quantity); 
+					$divided[$key] = ($prod->price * $prod->quantity);
 				}
 
 				foreach($container as $key => $cont)
@@ -308,7 +308,7 @@ class AdminStockistInventoryController extends AdminController
 			{
 				$stock[$keys] = $pack->stock_qty;
 				$value[$keys] = $pack->quantity;
-				$price = $price + $pack->price;
+				$price = $price + ($pack->price * $pack->quantity);
 			}
 
 			while($condition == false)
@@ -347,6 +347,7 @@ class AdminStockistInventoryController extends AdminController
 	    	
 			$product[$key]->estimated = $estimated;
 			$product[$key]->price = $price - (($discount/100)*$price);
+			$product[$key]->normal_price = $price;
 			$product[$key]->discount_container = $discount;
 		}
 

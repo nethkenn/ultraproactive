@@ -67,7 +67,7 @@
 										<td>{{$product->unilevel_pts}}</td>
 										<td>{{$product->binary_pts}}</td>
 										<td>{{$product->price}}</td>
-										<td class="option-col text-center"><input product-id = "{{$product->product_id}}" style="width:80%;" type="hidden" name="product[{{$product->product_id}}][quantity]" value="{{$product->discount}}">{{$product->price - (($product->discount/100)*$product->price)}}({{$product->discount}}%)</td>
+										<td class="option-col text-center"><input product-id = "{{$product->product_id}}" style="width:80%;" type="hidden" name="product[{{$product->product_id}}][quantity]" value="{{$product->discount}}">{{number_format($product->price - (($product->discount/100)*$product->price),2)}}({{$product->discount}}%)</td>
 										<td class="option-col"><a style="cursor: pointer;" class="remove-added-prod" product-id = "{{$product->product_id}}">REMOVE</a></td>
 									</tr>
 								@endforeach
