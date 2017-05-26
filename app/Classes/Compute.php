@@ -128,7 +128,6 @@ class Compute
                     }
                 }
             }            
-
     }
 
     public static function binary_repurchase($buyer_slot_id, $binary_pts, $method)
@@ -797,11 +796,11 @@ class Compute
                 /* Check if percentage or not */
                 if($new_slot_info->if_matching_percentage == 1)
                 {
-                   $direct_income = ($slot_recipient->membership_direct_sponsorship_bonus/100) * $new_slot_info->membership_price;                    
+                   $direct_income = ($new_slot_info->membership_direct_sponsorship_bonus/100) * $new_slot_info->membership_price;                    
                 }
                 else
                 {
-                   $direct_income = $slot_recipient->membership_direct_sponsorship_bonus;        
+                   $direct_income = $new_slot_info->membership_direct_sponsorship_bonus;        
                 }
                
 
