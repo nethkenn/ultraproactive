@@ -5,8 +5,12 @@
 	        <h2><i class="fa fa-tag"></i> STOCKIST REQUEST PRODUCT</h2>
 	    </div>
 	    <div class="buttons col-md-4 text-right">
-	       	 <button onclick="location.href='admin/stockist_request'" type="button" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back</button>
-	        <button type="button" class="btn btn-primary save_btn"><i class="fa fa-save"></i> TRANSFER</button>
+	       	 @if($cur_stats == "Pending")
+	       	 	<button onclick="location.href='admin/stockist_request'" type="button" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back</button>
+	        	<button type="button" class="btn btn-primary save_btn"><i class="fa fa-save"></i> TRANSFER</button>
+	         @else
+	         	<button onclick="location.href='admin/stockist_request?status=confirmed'" type="button" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back</button>
+	    	 @endif
 	    </div>
     </div>
     @if($error)
@@ -43,16 +47,15 @@
 									<td>{{$prod->product_id}}</td>
 									<td>{{$prod->product_name}}</td>
 									<td>{{$prod->quantity}}</td>
-									<td>{{$prod->price}}</td>
+									<td>{{number_format($prod->price,2)}}</td>
 									<td>{{$prod->discounted}}%</td>
-									<td>{{$prod->price - (($prod->discounted/100) * $prod->price) }}</td>
-									<td>{{($prod->price - (($prod->discounted/100) * $prod->price) * $prod->quantity)}}</td>
-									<?php $totality = ($prod->price - (($prod->discounted/100) * $prod->price) * $prod->quantity) + $totality ?>
+									<td>{{number_format($prod->price - (($prod->discounted/100) * $prod->price),2) }}</td>
+									<td>{{number_format(($prod->price - (($prod->discounted/100) * $prod->price)) * $prod->quantity,2)}}</td>
+									<?php $totality = (($prod->price - (($prod->discounted/100) * $prod->price)) * $prod->quantity) + $totality ?>
 								</tr>
 							@endforeach
 						</tbody>
 					</table>
-
 				</div>
 
             	<div class="form-group col-md-12">
@@ -74,10 +77,10 @@
 									<td>{{$pack->product_package_id}}</td>
 									<td>{{$pack->product_package_name}}</td>
 									<td>{{$pack->quantity}}</td>
-									<td>{{$pack->price}}</td>
+									<td>{{number_format($pack->price,2)}}</td>
 									<td>{{$pack->discounted}}%</td>
-									<td>{{$pack->price - (($pack->discounted/100) * $pack->price) }}</td>
-									<td>{{($pack->price - (($pack->discounted/100) * $pack->price) * $pack->quantity)}}</td>
+									<td>{{number_format($pack->price - (($pack->discounted/100) * $pack->price),2) }}</td>
+									<td>{{number_format(($pack->price - (($pack->discounted/100) * $pack->price)) * $pack->quantity,2)}}</td>
 									<?php $totality = ($pack->price - (($pack->discounted/100) * $pack->price) * $pack->quantity) + $totality ?>
 								</tr>
 							@endforeach
@@ -93,7 +96,7 @@
 								<th></th>
 								<th></th>
 								<th></th>
-								<th>Total: PHP {{$totality}}</th>
+								<th>Total: PHP {{number_format($totality,2)}}</th>
 							</tr>
 						</thead>
 					</table>

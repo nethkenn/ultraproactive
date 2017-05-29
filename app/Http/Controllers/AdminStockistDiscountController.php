@@ -105,7 +105,7 @@ class AdminStockistDiscountController extends AdminController
 			{
 				$stock[$keys] = $pack->stock_qty;
 				$value[$keys] = $pack->quantity;
-				$price = $price + $pack->price;
+				$price = $price + ($pack->price * $pack->quantity);
 			}
 
 			while($condition == false)
@@ -151,7 +151,7 @@ class AdminStockistDiscountController extends AdminController
 			{
 				$stock[$keys] = $pack->stock_qty;
 				$value[$keys] = $pack->quantity;
-				$price = $price + $pack->price;
+				$price = $price + ($pack->price * $pack->quantity);
 			}
 
 			while($condition == false)

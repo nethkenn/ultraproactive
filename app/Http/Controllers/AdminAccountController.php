@@ -30,7 +30,7 @@ class AdminAccountController extends AdminController
 		{
 			Log::Admin(Admin::info()->account_id,Admin::info()->account_username." visits Account Maintenance");
 		}
-
+	
 
         return view('admin.maintenance.account', $data);
 	}

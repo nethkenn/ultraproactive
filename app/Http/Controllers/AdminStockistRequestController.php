@@ -8,6 +8,7 @@ use App\Classes\CheckStockist;
 use App\Tbl_stockist_inventory;
 use App\Tbl_stockist_package_inventory;
 use Datatables;
+use App\Tbl_transaction;
 use App\Tbl_product;
 use App\Tbl_product_package;
 use App\Tbl_product_package_has;
@@ -32,18 +33,39 @@ class AdminStockistRequestController extends AdminController
             $status = "Pending";
         }
         $data['success'] = Session::get('message');
-        $data['_order'] = Tbl_order_stocks::where('status',$status)->join('tbl_stockist_user','tbl_stockist_user.stockist_user_id','=','tbl_order_stocks.stockist_user_id')
+        $data['stats']   = $status;
+        
+        
+        if($status == "confirmed")
+        {
+        	$get_zero_trans = Tbl_order_stocks::where("status",$status)->where("confirmed",0)->get();
+        	
+        	foreach($get_zero_trans as $zero_trans)
+        	{
+        		$transaction = Tbl_transaction::where("extra","LIKE","%Order Request #".$zero_trans->order_stocks_id." %")->first();
+        		if($transaction)
+        		{
+        			$update["confirmed"] = $transaction->transaction_id;
+        			Tbl_order_stocks::where("order_stocks_id",$zero_trans->order_stocks_id)->update($update);
+        		}
+        	}
+        }
+        $data['_order']  = Tbl_order_stocks::where('status',$status)->join('tbl_stockist_user','tbl_stockist_user.stockist_user_id','=','tbl_order_stocks.stockist_user_id')
+                                                                    ->leftJoin("tbl_transaction","tbl_transaction.transaction_id","=","tbl_order_stocks.confirmed")
+                                                                    ->select('*','tbl_order_stocks.created_at as order_created_id')
                                                                     ->get();
+		// dd($data);	
  	 	     
         return view('admin.maintenance.stockist_order', $data);
 	}
 	public function request()
 	{
-		$id 		 = Request::input('id');
-        $_order 	 = Tbl_order_stocks::where('order_stocks_id',$id)->first();
-        $order_id    = $id;
-        $id 		 = $_order->stockist_id;
-        $data['product'] = Rel_order_stocks::where('order_stocks_id',$order_id)->join('tbl_product','tbl_product.product_id','=','rel_order_stocks.product_id')->select('tbl_product.price','product_name','quantity','tbl_product.product_id')->get();
+		$id 		       = Request::input('id');
+        $_order 	       = Tbl_order_stocks::where('order_stocks_id',$id)->first();
+        $order_id          = $id;
+        $id 		       = $_order->stockist_id;
+        $data["cur_stats"] = $_order->status;
+        $data['product']   = Rel_order_stocks::where('order_stocks_id',$order_id)->join('tbl_product','tbl_product.product_id','=','rel_order_stocks.product_id')->select('tbl_product.price','product_name','quantity','tbl_product.product_id')->get();
     	foreach($data['product'] as $key => $product)
     	{
     		$data['product'][$key]->discounted = Tbl_product_discount_stockist::where("stockist_id",$id)->where("product_id",$product->product_id)->first() != null ? Tbl_product_discount_stockist::where("stockist_id",$id)->where("product_id",$product->product_id)->first()->discount : 0;
@@ -66,7 +88,7 @@ class AdminStockistRequestController extends AdminController
 			{
 				$stock[$keys] = $pack->stock_qty;
 				$value[$keys] = $pack->quantity;
-				$price = $price + $pack->price;
+				$price = $price + ($pack->price * $pack->quantity);
 			}
 
 			while($condition == false)
@@ -249,8 +271,8 @@ class AdminStockistRequestController extends AdminController
 							$container[$key] = $prod->stock_qty;
 							$past_Quantity[$key] = $prod->stock_qty;
 							$multiplier[$key] = $prod->quantity;
-							$price = $price + $prod->price; 
-							$divided[$key] = $prod->price;
+							$price = $price + ($prod->price * $prod->quantity); 
+							$divided[$key] = $prod->price * $prod->quantity;
 						}
 		
 						foreach($container as $key => $cont)
@@ -310,7 +332,7 @@ class AdminStockistRequestController extends AdminController
 					}
 	
 					DB::table('tbl_transaction')->where('transaction_id',$trans_id)->update(['order_form_number'=>Request::input("sales_order"),'transaction_amount'=>$prod_subtotal_amt,'transaction_discount_amount'=>$prod_disc_amt,'transaction_total_amount'=>$prod_total_amt]);
-	        		Tbl_order_stocks::where('order_stocks_id',$order_id)->update(['status'=>"Confirmed"]);
+	        		Tbl_order_stocks::where('order_stocks_id',$order_id)->update(['status'=>"Confirmed","confirmed"=>$trans_id]);
 	        		return Redirect::to('admin/stockist_request');        			
         		}
         		else

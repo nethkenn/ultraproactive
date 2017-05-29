@@ -311,7 +311,7 @@ class StockistIssueController extends StockistController
             {
                 $product[$key]["total"] = $prod->price;
             }                                           
-            return Datatables::of($product) ->addColumn('add','<a class="add-to-package" href="#" product-id="{{$product_id}}">ADD</a>')
+            return Datatables::of($product) ->addColumn('add','<a class="add-to-package" href="javascript:" product-id="{{$product_id}}">ADD</a>')
                                             ->addColumn('percent',"No Discount")
                                             ->addColumn('discount','{{App\Tbl_product_discount_stockist::where("stockist_id",'.$id.')->where("product_id",$product_id)->first() != null ? App\Tbl_product_discount_stockist::where("stockist_id",'.$id.')->where("product_id",$product_id)->first()->discount : 0 }}')
                                             ->addColumn('discount_total','{{App\Tbl_product_discount_stockist::where("stockist_id",'.$id.')->where("product_id",$product_id)->first() != null ? $price - ((App\Tbl_product_discount_stockist::where("stockist_id",'.$id.')->where("product_id",$product_id)->first()->discount / 100) * $price) : $price}}')
@@ -370,7 +370,7 @@ class StockistIssueController extends StockistController
 
             }          
 
-            return Datatables::of($product) ->addColumn('add','<a class="add-to-package-pack" href="#" product-id="{{$product_package_id}}">ADD</a>')
+            return Datatables::of($product) ->addColumn('add','<a class="add-to-package-pack" href="javascript:" product-id="{{$product_package_id}}">ADD</a>')
                                             ->addColumn('percent',"No Discount")
                                             ->addColumn('discount','{{App\Tbl_package_discount_stockist::where("stockist_id",'.$id.')->where("product_package_id",$product_package_id)->first() != null ? App\Tbl_package_discount_stockist::where("stockist_id",'.$id.')->where("product_package_id",$product_package_id)->first()->discount : 0 }}')
                                             ->addColumn('discount_total','{{App\Tbl_package_discount_stockist::where("stockist_id",'.$id.')->where("product_package_id",$product_package_id)->first() != null ? $price - ((App\Tbl_package_discount_stockist::where("stockist_id",'.$id.')->where("product_package_id",$product_package_id)->first()->discount / 100) * $price) : $price}}')

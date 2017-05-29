@@ -32,7 +32,9 @@
 						<th>Status</th>
 						<th>Ordered By</th>
 						<th>Date Ordered</th>
-						<th class="option-col"></th>
+						<th>Sales Order</th>
+						<th>Remarks</th>
+						<!--<th class="option-col"></th>-->
 						<th class="option-col"></th>
 <!--						<th class="option-col"></th> -->
 					</tr>
@@ -43,8 +45,10 @@
 						<td>{{$order->order_stocks_id}}</td>
 						<td>{{$order->status}}</td>
 						<td>{{$order->stockist_un}}</td>
-						<td>{{$order->created_at}}</td>
-						<td><a href="javascript:" class="order" order="{{$order->order_stocks_id}}">Quickview Order</a></a></td>
+						<td>{{$order->order_created_id}}</td>
+						<td>{{$order->order_form_number}}</td>
+						<td>{{$order->transaction_remark}}</td>
+						<!--<td><a href="javascript:" class="order" order="{{$order->order_stocks_id}}">Quickview Order</a></a></td>-->
 						<td><a href="admin/stockist_request/user?id={{$order->order_stocks_id}}">View</a></td>
 						<!--<td><a href="javascript:" class="cancel" link="location.href='admin/stockist_request/cancel?id={{$order->order_stocks_id}}'">Cancel</a></td> -->
 					</tr>

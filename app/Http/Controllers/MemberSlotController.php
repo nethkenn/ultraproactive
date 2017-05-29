@@ -14,6 +14,7 @@ use App\Classes\Globals;
 use App\Tbl_voucher;
 use App\Tbl_voucher_has_product;
 use App\Classes\Product;
+use App\Classes\Compute;
 use App\Classes\Log;
 use App\Tbl_product;
 use App\Tbl_product_code;
@@ -154,6 +155,8 @@ class MemberSlotController extends MemberController
 					DB::table('tbl_slot')->where('slot_id','=',$id)->update(['slot_membership'=>$membership->membership_id]);
 					$log = "Successfully upgrade your slot #".$id." from ".$current_membership->membership_name." to ".$membership->membership_name.", Costs <b>".$membership->membership_price." wallet. </b>";
 					Log::slot($id, $log, 0 - $membership->membership_price , "Upgrade Membership",$id);
+					Compute::binary($slot->slot_id,"SLOT UPGRADE");
+					Compute::direct($slot->slot_id,"SLOT UPGRADE");
 					$data = "Success";
 				}
 				else

@@ -157,11 +157,18 @@
 	        		"sProcessing": ""
 	         	},
 	        stateSave: true,
+			"initComplete": function( settings, json ) 
+			{
+			    // $('div.loading').remove();
+			 }
 	    });
 
 		$productTable.on( 'draw.dt', function ()
 		{
-
+			$('.add-to-package').unbind();
+			$('.nopack').unbind();
+			$( "#added-product-table").unbind(); 
+			
 			$('.add-to-package').on('click', function(event)
 			{
 				$selected_product = $(this);
@@ -172,7 +179,7 @@
 				$add_product_pop_up.open();
 				$('#pop-up-input').focus();
 			});
-
+			
 			$('.nopack').on('click', function(event)
 			{
 				event.preventDefault();
@@ -215,8 +222,7 @@
 				}
 								
 			});
-
-
+			
 			$( "#added-product-table" ).delegate( ".remove-added-prod", "click", function()
 			{
 				var $new_td = [];
@@ -229,20 +235,12 @@
 
 				});
 
-				var qty =  $('input[product-id='+$new_td[0]+']').val();
+				var qty =  $('input[product-id='+$prod_id+']').val();
 
 				total = total - (parseFloat(value) * qty);
 				$(".pricenopack").text("Total Price: "+ total.toFixed(2));
 				$(this).closest('tr').remove();
 			});
-
-
-
-			
-
-
-
-			
 		})
 
 	</script>
@@ -282,7 +280,11 @@
 
 		$productTable.on( 'draw.dt', function ()
 		{
-
+			$('.add-to-package-pack').unbind();
+			$('.pack').unbind();
+			$( "#added-product-table-pack" ).unbind();
+			
+			
 			$('.add-to-package-pack').on('click', function(event)
 			{
 				$selected_product2 = $(this);
@@ -354,7 +356,7 @@
 
 				});
 
-				var qty =  $('input[product-id2='+$new_td[0]+']').val();
+				var qty =  $('input[product-id2='+$prod_id+']').val();
 				total2 = total2 - (parseFloat(value) * qty);
 				$(".pricepack").text("Total Price: "+ total2.toFixed(2));
 
@@ -362,13 +364,6 @@
 
 				$(this).closest('tr').remove();
 			});
-
-
-
-			
-
-
-
 			
 		})
 
