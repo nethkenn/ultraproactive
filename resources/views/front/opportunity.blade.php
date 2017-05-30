@@ -35,7 +35,8 @@
 			<div class="slider slider-nav">
 				@foreach($opportunity as $opp)
 					<div>
-						<h3>{{$opp->opportunity_title}}</h3>
+						<a class="cursor-pointer"><h3>{{$opp->opportunity_title}}</h3></a>
+						<iframe style="width:250px;height:100px" src="https://www.youtube.com/embed/{{ $opp->opportunity_link }}" frameborder="0" allowfullscreen=""></iframe>
 					</div>
 				@endforeach
 			</div>
