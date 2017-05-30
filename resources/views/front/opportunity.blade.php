@@ -1,7 +1,33 @@
 @extends('front.layout')
 @section('content')
 
-
+<!--<div class="opportunity" style="text-align: center; background-color: #fff; margin: 0 -15px; margin-top: -70px;">-->
+<!--	<div class="container row">-->
+<!--		<div class="opportunity-holder">-->
+<!--			<div class="form-group">-->
+<!--				<div class="col-md-8">-->
+<!--					sss-->
+<!--				</div>-->
+<!--				<div class="col-md-4">-->
+<!--					@if(count($opportunity) > 0) -->
+<!--						@foreach($opportunity as $opp)-->
+<!--							<div class="col-md-4">-->
+<!--								<iframe style="width:150px;height:70px" src="https://www.youtube.com/embed/{{ $opp->opportunity_link }}" frameborder="0" allowfullscreen=""></iframe>-->
+<!--							</div>-->
+<!--							<div class="col-md-8">-->
+<!--								<strong>{{$opp->opportunity_title}}</strong><br>-->
+<!--								<div>-->
+<!--									{!! $opp->opportunity_content_2 !!}-->
+<!--								</div>-->
+<!--							</div>-->
+<!--						@endforeach-->
+<!--					@endif-->
+<!--				</div>-->
+<!--			</div>-->
+<!--		</div>-->
+<!--	</div>-->
+<!--</div>-->
+<!--<br>-->
 <div class="opportunity" style="text-align: center; background-color: #fff; margin: 0 -15px; margin-top: -70px;">
 	<div class="container text-center">
 		<div class="opportunity-holder">
@@ -30,6 +56,10 @@
 						</div>
 					</div>
 				@endforeach
+			</div>
+			@else
+			<div>
+				<h3> NO OPPORTUNITY POSTED </h3>
 			</div>
 			@endif
 		</div>

@@ -107,12 +107,12 @@ class FrontController extends Controller
 		// 	$text = $value->opportunity_content;
 		// 	if($len > 60)
 		// 	{
-		// 		 $text = (substr($text, 0, 50)."<small><a>READ MORE</a></small>");
+		// 		 $text = (substr($value->opportunity_content, 0, 50)."<small><a>READ MORE</a></small>");
 		// 	}
 			
-		// 	$data["opportunity"][$key]->opportunity_content = $text;
+		// 	$data["opportunity"][$key]->opportunity_content_2 = $text;
 		// }
-		
+		// dd($data["opportunity"]);
         return view('front.opportunity',$data);
 	}
 	public function service()
