@@ -5,6 +5,7 @@ use Request;
 use Input;
 use Mail;
 use App\Classes\Globals;
+use App\Models\Tbl_opportunity;
 use Redirect;
 
 class FrontController extends Controller
@@ -98,7 +99,21 @@ class FrontController extends Controller
 	}
 	public function opportunity()
 	{
-        return view('front.opportunity');
+		$data["opportunity"] = Tbl_opportunity::where("archived",0)->get();
+		
+		// foreach ($data["opportunity"] as $key => $value)
+		// {
+		// 	$len = strlen($value->opportunity_content);
+		// 	$text = $value->opportunity_content;
+		// 	if($len > 60)
+		// 	{
+		// 		 $text = (substr($text, 0, 50)."<small><a>READ MORE</a></small>");
+		// 	}
+			
+		// 	$data["opportunity"][$key]->opportunity_content = $text;
+		// }
+		
+        return view('front.opportunity',$data);
 	}
 	public function service()
 	{	

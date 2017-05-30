@@ -160,6 +160,7 @@
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="admin/content/news">News</a></li>
 									<li><a href="admin/content/stories">Stories</a></li>
+									<li><a href="admin/content/opportunity">Opportunity</a></li>
 									<li><a href="admin/content/slide">Slide</a></li>
 									<li><a href="admin/content/team">Team</a></li>
 									<li><a href="admin/content/faq">F.A.Q.</a></li>
