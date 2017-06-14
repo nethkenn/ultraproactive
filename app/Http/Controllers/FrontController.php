@@ -100,19 +100,11 @@ class FrontController extends Controller
 	public function opportunity()
 	{
 		$data["opportunity"] = Tbl_opportunity::where("archived",0)->get();
-		
-		// foreach ($data["opportunity"] as $key => $value)
-		// {
-		// 	$len = strlen($value->opportunity_content);
-		// 	$text = $value->opportunity_content;
-		// 	if($len > 60)
-		// 	{
-		// 		 $text = (substr($value->opportunity_content, 0, 50)."<small><a>READ MORE</a></small>");
-		// 	}
-			
-		// 	$data["opportunity"][$key]->opportunity_content_2 = $text;
-		// }
-		// dd($data["opportunity"]);
+		$data["item_packages"] = DB::table("tbl_item_packages")->where("archived",0)->get();
+		foreach($data["item_packages"] as $key => $item)
+		{
+			$data["item_packages"][$key]->item_package_image = $item->item_package_image == 'default.jpg' ? 'resources/assets/img/1428733091.jpg' : Image::view($item->item_package_image, $size="250x300");
+		}
         return view('front.opportunity',$data);
 	}
 	public function service()

@@ -225,6 +225,14 @@ Route::get('admin/content/opportunity/edit', 'AdminOppurtunityController@edit');
 Route::any('admin/content/opportunity/edit_submit', 'AdminOppurtunityController@edit_submit');
 Route::any('admin/content/opportunity/delete', 'AdminOppurtunityController@delete');
 
+/*ITEM PACKAGES*/
+Route::get('admin/content/item_packages', 'AdminItemPackagesController@index');
+Route::get('admin/content/item_packages/add', 'AdminItemPackagesController@add');
+Route::any('admin/content/item_packages/add_submit', 'AdminItemPackagesController@add_submit');
+Route::get('admin/content/item_packages/edit', 'AdminItemPackagesController@edit');
+Route::any('admin/content/item_packages/edit_submit', 'AdminItemPackagesController@edit_submit');
+Route::any('admin/content/item_packages/delete', 'AdminItemPackagesController@delete');
+
 /* TESTIMONY MANAGEMENT */
 Route::get('admin/content/testimony', 'AdminTestimonyController@index');
 Route::get('admin/content/testimony/add', 'AdminTestimonyController@add');

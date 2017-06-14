@@ -67,6 +67,23 @@
 	</div>
 </div>
 
+
+<div class="opportunity" style="text-align: center; background-color: #fff; margin: 0 -15px; margin-top: -10px;">
+	<div class="container text-left">
+		<h2>Item Packages</h2>
+		<div style="border:1px solid #000;width:100%"></div>
+	</div>
+	<div class="container text-center">
+		<div class="opportunity-holder multiple-items">
+			@foreach($item_packages as $item)
+			<div >
+				<img src="{{$item->item_package_image}}"></img>
+			</div>
+			@endforeach
+		</div>
+	</div>
+</div>
+
 <!--<div class="opportunity" style="text-align: center; background-color: #fff; margin: 0 -15px; margin-top: -70px;">-->
 <!--	<div class="container">-->
 <!--		<h3 style="margin-top: 100px; margin-bottom: 100px;">Our compensation plan is designed to reward those people who use and promote UP brand of products</h3>-->
@@ -473,6 +490,11 @@
 	  dots: true,
 	  centerMode: true,
 	  focusOnSelect: true
+	});
+	$('.multiple-items').slick({
+	  infinite: true,
+	  slidesToShow: 4,
+	  slidesToScroll: 4
 	});
 })(jQuery);
 </script>
