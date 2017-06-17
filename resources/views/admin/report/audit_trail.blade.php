@@ -16,7 +16,9 @@
 						<th>Admin Name</th>
 						<th>Logs</th>
 						<th>Date/Time</th>
+						@if($admin_rank == 0)
 						<th>View</th>
+						@endif
 					</tr>
 				</thead>
 				<tbody>
@@ -25,7 +27,9 @@
 						<td>{{$logs->account_name}}</td>
 						<td>{!! $logs->logs!!}</td>
 						<td>{!! $logs->created_at!!}</td>
+						@if($admin_rank == 0)
 						<td><a href='admin/reports/audit_trail/view?id={{$logs->admin_log_id}}' target="_blank">View</a></td>
+						@endif
 					</tr>
 					@endforeach
 				</tbody>

@@ -52,7 +52,7 @@ class AdminCodeController extends AdminController {
     {
 
     	$stat = Request::input('status');
-        $membership_code = Tbl_membership_code::byAdmin()->getMembership()->getCodeType()->getPackage()->getInventoryType()->getUsedBy()->where(function ($query) use ($stat) {
+        $membership_code = Tbl_membership_code::getMembership()->getCodeType()->getPackage()->getInventoryType()->getUsedBy()->where(function ($query) use ($stat) {
     
 
         	switch ($stat)
@@ -76,7 +76,7 @@ class AdminCodeController extends AdminController {
         	}
 
 
-        })->select('tbl_membership_code.code_pin','tbl_membership_code.code_activation','tbl_membership.membership_name','tbl_code_type.code_type_name','product_package_name','tbl_account.account_id','account_name','tbl_inventory_update_type.inventory_update_type_id','tbl_membership_code.created_at')->get();
+        })->select('tbl_membership_code.code_pin','tbl_membership_code.origin','tbl_membership_code.code_activation','tbl_membership.membership_name','tbl_code_type.code_type_name','product_package_name','tbl_account.account_id','account_name','tbl_inventory_update_type.inventory_update_type_id','tbl_membership_code.created_at')->get();
       
         								if($stat == "blocked")
         								{
@@ -87,6 +87,7 @@ class AdminCodeController extends AdminController {
 	        								->editColumn('inventory_update_type_id','<input type="checkbox" {{$inventory_update_type_id == 1 ? \'checked="checked"\' : \'\'}} name="" value="" readonly disabled>')
 	        								->editColumn('account_name','{{$account_name or "No owner"}}')
 	        								->addColumn('slot_used','{{App\Classes\Globals::get_string_between_for_used_codes(App\Tbl_wallet_logs::where("logs","LIKE","%using membership code #$code_pin%")->first(),"create slot #"," using")}}')
+	        								->addColumn('released_by','{{$origin == null ? "Admin": App\Tbl_stockist::where("stockist_id",$origin)->first()->stockist_full_name}}')
 	        								->make(true);
         								}
         								else
@@ -98,6 +99,7 @@ class AdminCodeController extends AdminController {
 	        								->editColumn('inventory_update_type_id','<input type="checkbox" {{$inventory_update_type_id == 1 ? \'checked="checked"\' : \'\'}} name="" value="" readonly disabled>')
 	        								->editColumn('account_name','{{$account_name or "No owner"}}')
 	        								->addColumn('slot_used','{{App\Classes\Globals::get_string_between_for_used_codes(App\Tbl_wallet_logs::where("logs","LIKE","%using membership code #$code_pin%")->first(),"create slot #"," using")}}')
+	        								->addColumn('released_by','{{$origin == null ? "Admin": App\Tbl_stockist::where("stockist_id",$origin)->first()->stockist_full_name}}')
 	        								->make(true);        								
         								}
     }
