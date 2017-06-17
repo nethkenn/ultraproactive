@@ -32,6 +32,7 @@
 						<th>Code Type</th>
 						<th>Product</th>
 						<th>Owner</th>
+						<th>Released By</th>
 						@if(Request::input('status') == 'used')<th>Registered Slot</th>@endif
 						<th>Voucher</th>
 						<th>Date</th>
@@ -136,6 +137,7 @@ $(function()
 	            {data: 'code_type_name', name: 'code_type_name'},
 	            {data: 'product_package_name', name: 'product_package_name'},
 	            {data: 'account_name', name: 'account_name'},
+	            {data: 'released_by', name: 'released_by'},
 	            {data: 'inventory_update_type_id', name: 'inventory_update_type_id'},
 	            {data: 'created_at', name: 'created_at'},
 	            {data: 'deleter', name: 'code_pin'},
@@ -171,6 +173,7 @@ $(function()
 	            {data: 'code_type_name', name: 'code_type_name'},
 	            {data: 'product_package_name', name: 'product_package_name'},
 	            {data: 'account_name', name: 'account_name'},
+	            {data: 'released_by', name: 'released_by'},
 	            {data: 'slot_used', name: 'slot_used'},
 	            {data: 'inventory_update_type_id', name: 'inventory_update_type_id'},
 	            {data: 'created_at', name: 'created_at'},

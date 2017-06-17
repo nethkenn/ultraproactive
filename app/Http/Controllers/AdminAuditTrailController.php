@@ -21,7 +21,8 @@ class AdminAuditTrailController extends AdminController
 	{ 
         $admin_rank = Admin::info()->admin_position_rank;
         $data['_logs'] = Tbl_admin_log::admin()->account()->position()->where('tbl_admin_position.admin_position_rank' ,'>', $admin_rank)->paginate(20);
-        // dd($data);
+        $data["admin_rank"] = $admin_rank;
+
         return view('admin.report.audit_trail',$data);
 	}
 

@@ -5,6 +5,7 @@ use Request;
 use Input;
 use Mail;
 use App\Classes\Globals;
+use App\Models\Tbl_opportunity;
 use Redirect;
 
 class FrontController extends Controller
@@ -98,7 +99,13 @@ class FrontController extends Controller
 	}
 	public function opportunity()
 	{
-        return view('front.opportunity');
+		$data["opportunity"] = Tbl_opportunity::where("archived",0)->get();
+		$data["item_packages"] = DB::table("tbl_item_packages")->where("archived",0)->get();
+		foreach($data["item_packages"] as $key => $item)
+		{
+			$data["item_packages"][$key]->item_package_image = $item->item_package_image == 'default.jpg' ? 'resources/assets/img/1428733091.jpg' : Image::view($item->item_package_image, $size="250x300");
+		}
+        return view('front.opportunity',$data);
 	}
 	public function service()
 	{	

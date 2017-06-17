@@ -25,6 +25,8 @@
 					<tr class="text-center">
 						<th>OR Number</th>
 						<th>OR Code</th>
+						<th>Pin</th>
+						<th>Activation</th>
 						<th>Form Number</th>
 						<th>Owner</th>
 						<th>Date</th>
@@ -63,6 +65,8 @@
 				 // {data: 'code_pin', name: 'code_pin'},
 			    {data: 'membershipcode_or_num', name: 'membershipcode_or_num'},
 			    {data: 'membershipcode_or_code', name: 'membershipcode_or_code'},
+			    {data: 'code_pin', name: 'code_pin'},
+			    {data: 'code_activation', name: 'code_activation'},
 			    {data: 'order_form_number', name: 'order_form_number'},
 			    {data: 'account_name', name: 'account_name'},
 			    {data: 'created_at', name: 'created_at'},
