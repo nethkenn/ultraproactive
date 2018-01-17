@@ -129,7 +129,7 @@ class StockistCodeController extends StockistController
                     $updated_stock = $prod->package_quantity - (Integer)Request::input('code_multiplier');
                     if($updated_stock >= 0)
                     {
-                         Tbl_stockist_package_inventory::where('product_package_id',Request::input('product_package_id'))->where('stockist_id',Stockist::info()->stockist_id)->update(['package_quantity' => $updated_stock]);
+                         
                     }
                     else
                     {
