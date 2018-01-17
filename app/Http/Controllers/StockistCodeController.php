@@ -124,6 +124,19 @@ class StockistCodeController extends StockistController
                     */
                     $name =DB::table('tbl_stockist_user')->where('stockist_un',Stockist::info()->stockist_un)->first();
                     $membership_code = new Tbl_membership_code(Request::input());
+                    
+                    $prod = Tbl_stockist_package_inventory::where('product_package_id', Request::input('product_package_id'))->where('stockist_id',Stockist::info()->stockist_id)->first();
+                    $updated_stock = $prod->package_quantity - (Integer)Request::input('code_multiplier');
+                    if($updated_stock >= 0)
+                    {
+                         Tbl_stockist_package_inventory::where('product_package_id',Request::input('product_package_id'))->where('stockist_id',Stockist::info()->stockist_id)->update(['package_quantity' => $updated_stock]);
+                    }
+                    else
+                    {
+                        $message = "Cannot update your package stock, amount is higher than your stocks";
+                        return Redirect::to('stockist/membership_code/add')->with('message',$message);
+                    }
+                    
                     $membership_code->code_activation = Globals::create_membership_code();
                     //IF code_type_id IS FREE SLOT / 2 SET PRODUCT PACKAGE TO NULL
                     // if(Request::input('code_type_id')==2 || Request::input('inventory_update_type_id') == 3)
