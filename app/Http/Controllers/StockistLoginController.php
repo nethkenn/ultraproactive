@@ -9,6 +9,7 @@ class StockistLoginController extends Controller
 {
     public function index()
     {
+        dd("STOCKIST UNDER MAINTENANCE");
         $data['_error'] = null;
        
         

@@ -6,6 +6,8 @@ use App\Tbl_product_code;
 use App\Tbl_membership_code;
 use App\Tbl_membership_code_sale;
 use App\Tbl_order_form_number;
+use App\Tbl_admin;
+use App\Tbl_stockist;
 use Carbon\Carbon; 
 use App\Tbl_slot;
 class Globals
@@ -15,6 +17,38 @@ class Globals
         $image_server = Config::get('app.image_server');
         $domain = $_SERVER['SERVER_NAME'];
         return $image_server . "view?source=$domain&filename=$filename&size=$size&mode=$mode";
+    }
+    public static function sold_by($voucher_id)
+    {
+      $voucher = Tbl_voucher::where("voucher_id",$voucher_id)->first();
+      $name    = "";
+      if($voucher)
+      {
+          if($voucher->processed_by)
+          {
+              $admin = Tbl_admin::where("admin_id",$voucher->processed_by)->account()->first();
+              
+              if($admin)
+              {
+                  $name = $admin->account_name;
+              }
+          }
+          else if($voucher->origin)
+          {
+              $stockist = Tbl_stockist::where("stockist_id",$voucher->origin)->first();
+              
+              if($stockist)
+              {
+                  $name = $stockist->stockist_full_name;
+              }
+          }
+          else
+          {
+            $name = "System";    
+          }
+      }
+
+      return $name;     
     }
     public static function hypenate($str)
     {

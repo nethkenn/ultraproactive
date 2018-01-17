@@ -29,6 +29,7 @@
 						<th>Total Amount</th>
 						<th>Status</th>
 						<th>Date</th>
+						<th>Sold By</th>
 						<th style="width:200px;" class="option-col"></th>
 					</tr>
 				</thead>
@@ -64,6 +65,7 @@ $(function() {
             {data: 'total_amount', name: 'total_amount'},
             {data: 'status', name: 'claimed'},
             {data: 'updated_at', name: 'updated_at'},
+            {data: 'sold_by', name: 'sold_by'},
             {data: 'cancel_or_view_voucher', name: 'account_id'},        ],
         "lengthMenu": [[8, 10, 25, 50, -1], [10, 25, 50, "All"]],
         "oLanguage": 

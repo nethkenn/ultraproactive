@@ -67,7 +67,7 @@
 		<span>|</span>
 		<a href="/member/register"><div class="text">REGISTER</div></a>
 	</div>
-	<nav class="navbar navbar-default ">
+	<nav class="navbar navbar-default christmas">
 		<div class="snowy clearfix">
 			<img class="one" src="/resources/assets/frontend/img/snow-wut.png">
 			<img class="two" src="/resources/assets/frontend/img/snow-wat.png">
@@ -99,7 +99,7 @@
 	            <li class="nav-inside active"><a href="/mindsync">MIND SYNC</a></li>
 	            <li class="nav-inside"><a href="/stories">STORIES</a></li>
 	            <!--<li class="nav-inside logo-holder"><img class="logo" src="/resources/assets/frontend/img/logo.png"></li>-->
-	            <li class="nav-inside logo-holder "><img class="logo" src="/resources/assets/frontend/img/logo.png"></li>
+	            <li class="nav-inside logo-holder christmas"><img class="logo" src="/resources/assets/frontend/img/christmas-logo.png"></li>
 	            <li class="nav-inside"><a href="/about">ABOUT US</a></li>
 	            <li class="nav-inside"><a href="/opportunity">OPPORTUNITY</a></li>
 	            <li class="nav-inside dropdown">
@@ -253,7 +253,7 @@
         });
 
 
-		// $.fn.snow();
+		$.fn.snow();
 
 	})(jQuery);
 	</script>

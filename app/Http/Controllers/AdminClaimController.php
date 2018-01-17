@@ -50,6 +50,7 @@ class AdminClaimController extends AdminController
 
 		return Datatables::of($voucher)	->editColumn('status','{{$status}}')
 										->addColumn('cancel_or_view_voucher','<a style="cursor: pointer;" class="view-voucher" voucher-id="{{$voucher_id}}">View Voucher</a>')
+										->addColumn('sold_by','{{App\Classes\Globals::sold_by($voucher_id)}}')
 			                            ->make(true);
 
 
