@@ -12,7 +12,7 @@ class StockistController extends Controller
 {
 	public function __construct()
 	{
-	    dd("STOCKIST UNDER MAINTENANCE");
+	   // dd("STOCKIST UNDER MAINTENANCE");
         $user = Stockist::info();
        
         if($user)
