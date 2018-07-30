@@ -168,6 +168,8 @@
                 @endforeach
             </tbody>
         </table>
+        
+        {!! $prodcode->appends(Request::input())->render() !!}
         @endif
     </div>
 </div>
