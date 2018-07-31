@@ -30,8 +30,8 @@
                 </a>
             </div>
         </div>
+        @if($code)
         <table class="footable">
-            @if($code)
             <thead>
                 <tr>
                     <th>Pin</th>
@@ -75,9 +75,10 @@
                     <td><a style="cursor: pointer;" class="transferer" value="{{$c->code_pin}} @ {{$c->code_activation}}" val="{{$c->code_pin}}">Transfer Code</a></td>
                 </tr>
                 @endforeach
-                @endif
             </tbody>
         </table>
+        {!! $code->appends(Request::input())->render() !!}
+        @endif
     </div>
 
     <div class="table">
@@ -94,8 +95,8 @@
                 </a>
             </div>
         </div>
+        @if($used_code)
         <table class="footable">
-            @if($used_code)
             <thead>
                 <tr>
                     <th>Pin</th>
@@ -127,9 +128,10 @@
                     <td></td>
                 </tr>
                 @endforeach
-                @endif
             </tbody>
         </table>
+        {!! $used_code->appends(Request::input())->render() !!}
+        @endif
     </div>
 
 
