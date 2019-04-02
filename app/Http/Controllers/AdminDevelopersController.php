@@ -16,14 +16,102 @@ use App\Tbl_indirect_setting;
 use App\Tbl_unilevel_setting;
 use App\Tbl_membership;
 use App\Tbl_matching_bonus;
+use App\Tbl_account;
 use App\Tbl_voucher;
 use App\Tbl_wallet_logs;
 use App\Tbl_travel_reward;
+use App\Tbl_pv_logs;
 use Session;
 use App\Tbl_travel_qualification;
 use DateTime;
 class AdminDevelopersController extends Controller
 {
+	public function migrate_get_next_slot()
+	{
+		$data["slot"]      = Tbl_slot::where("migrate_two",0)->orderBy("slot_id","ASC")->leftJoin("tbl_account", "tbl_account.account_id", "=", "tbl_slot.slot_owner")->select("slot_id","account_name","account_email")->first();
+		
+		$data["count"]     = Tbl_slot::where("migrate_two",0)->orderBy("slot_id","ASC")->count();
+		$data["processed"] = Tbl_slot::where("migrate_two",1)->orderBy("slot_id","ASC")->count();
+		
+		return json_encode($data);
+	}
+
+	public function migrate_two_process()
+	{
+		$slot_id 			   = Request::input("slot_id");
+
+		$slot    = Tbl_slot::where("slot_id",$slot_id)->first();
+		$account = Tbl_account::where("account_id",$slot->slot_owner)->first();
+
+		$positive_wallet    = Tbl_wallet_logs::where("slot_id",$slot->slot_id)->where("wallet_amount",">=",0)->where('wallet_type','Wallet')->sum("wallet_amount");
+		$negative_wallet    = Tbl_wallet_logs::where("slot_id",$slot->slot_id)->where("wallet_amount","<",0)->where('wallet_type','Wallet')->sum("wallet_amount");
+		
+		$positive_wallet_gc = Tbl_wallet_logs::where("slot_id",$slot->slot_id)->where("wallet_amount",">=",0)->where('wallet_type','GC')->sum("wallet_amount");
+		$negative_wallet_gc = Tbl_wallet_logs::where("slot_id",$slot->slot_id)->where("wallet_amount","<",0)->where('wallet_type','GC')->sum("wallet_amount");
+		
+		$positive_upcoin    = Tbl_pv_logs::where("owner_slot_id",$slot->slot_id)->where("amount",">=",0)->where('type','PPV')->sum("amount");
+		$negative_upcoin    = Tbl_pv_logs::where("owner_slot_id",$slot->slot_id)->where("amount","<",0)->where('type','PPV')->sum("amount");
+		
+		$membership_id      = $slot->slot_membership;
+
+		if($membership_id == 1)
+		{
+			$membership_id = 2;
+		}
+		else if($membership_id == 10)
+		{
+			$membership_id = 2;
+		}
+		else if($membership_id == 11)
+		{
+			$membership_id = 1;
+		} 
+
+		// set post fields
+		$post = 
+		[
+		    'slot_no'           	   => $slot->slot_id,
+		    'slot_sponsor'      	   => $slot->slot_sponsor,
+		    'slot_placement'    	   => $slot->slot_placement,
+		    'slot_position'     	   => $slot->slot_position,
+		    'slot_type' 			   => $slot->slot_type,
+		    'slot_binary_left'  	   => $slot->slot_binary_left,
+		    'slot_binary_right' 	   => $slot->slot_binary_right,
+		    'slot_membership' 	       => $membership_id,
+		    'positive_wallet' 	       => $positive_wallet,
+		    'negative_wallet' 	       => $negative_wallet,
+		    'positive_wallet_gc' 	   => $positive_wallet_gc,
+		    'negative_wallet_gc' 	   => $negative_wallet_gc,
+		    'positive_upcoin' 	       => $positive_upcoin,
+		    'negative_upcoin' 	       => $negative_upcoin,
+		    'account_name'      	   => $account->account_name,
+		    'account_username'  	   => $account->account_username,
+		    'account_password'  	   => Crypt::decrypt($account->account_password),
+		    'account_contact_number'   => $account->account_contact_number,
+		];
+
+		$ch = curl_init('http://api-ultraproactive.digimahouse.com/migrate_ultrapro');
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+
+		// execute!
+		$response = curl_exec($ch);
+
+		// close the connection, release resources used
+		curl_close($ch);
+
+		if($response == "success")
+		{
+			$update["migrate_two"] = 1;
+			Tbl_slot::where("slot_id",$slot_id)->update($update);
+		}
+		else
+		{
+			dd($response);
+		}
+
+		return json_encode($response);
+	}
 
 	// public function migration()
 	// {

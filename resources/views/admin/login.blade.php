@@ -1,7 +1,7 @@
 <html>
     <head>
         <title>Admin Panel - UltraProactive</title>
-        <base href="<?php echo "http://" . $_SERVER["SERVER_NAME"] ?>">
+        <base href="{{ URL::to('/') }}">
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,7 +36,7 @@
     </head>
     <body>
         <div class="login">
-            <form class="form-horizontal" method="POST" action="ZxA12313P4akMwq/login">
+            <form class="form-horizontal" method="POST" action="/ZxA12313P4akMwq/login">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="ribbon-holder">
                     <div class="ribbon">Admin Login</div>

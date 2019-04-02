@@ -8,7 +8,7 @@ use Redirect;
 use Session;
 use App\Tbl_admin_position_has_module;
 use App\Tbl_module;
-use gapi;
+// use gapi;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Classes\Log;
@@ -119,7 +119,7 @@ class AdminController extends Controller
 
     public function index()
     {
-        include('resources/views/sikreto/gapi.class.php');
+        // include('resources/views/sikreto/gapi.class.php');
 
         Log::Admin(Admin::info()->account_id,Admin::info()->account_username." Visits Dashboard");
         $profile_id = "107929951";
@@ -133,24 +133,24 @@ class AdminController extends Controller
         $start_index = 1;
         $max_results = 10000;
 
-        $ga = new gapi('593916331522-79d647ld3kdmqadbss30a4pads94sqlp@developer.gserviceaccount.com','ultraproactive.p12');
+        // $ga = new gapi('593916331522-79d647ld3kdmqadbss30a4pads94sqlp@developer.gserviceaccount.com','ultraproactive.p12');
 
-        $ga->requestReportData($profile_id, $dimensions, $metrics, $sort_metric, $filter, $start_date, $end_date, $start_index, $max_results);
+        // $ga->requestReportData($profile_id, $dimensions, $metrics, $sort_metric, $filter, $start_date, $end_date, $start_index, $max_results);
 
         $data['json'] = null;
 
 
-        foreach($ga->getResults() as $key =>$result)
-        {
-            $date =  strtotime($result);
-            // echo '<strong>' . date("j n", $date) . '</strong><br />';
-            // echo 'Pageviews: ' . $result->getPageviews() . ' ';
-            // echo 'Visits: ' . $result->getVisits() . '<br />';
-            $data['json'][$key]['visits']  = $result->getVisits();
-            $data['json'][$key]['day'] =date("m/d/o", $date);
-            // $data['json'][$key]['day'] = date("n", $date);
+        // foreach($ga->getResults() as $key =>$result)
+        // {
+        //     $date =  strtotime($result);
+        //     // echo '<strong>' . date("j n", $date) . '</strong><br />';
+        //     // echo 'Pageviews: ' . $result->getPageviews() . ' ';
+        //     // echo 'Visits: ' . $result->getVisits() . '<br />';
+        //     $data['json'][$key]['visits']  = $result->getVisits();
+        //     $data['json'][$key]['day'] =date("m/d/o", $date);
+        //     // $data['json'][$key]['day'] = date("n", $date);
 
-        }
+        // }
         $data['json'] = json_encode($data['json']);
  
         // echo '<p>Total pageviews: ' . $ga->getPageviews() . ' total visits: ' . $ga->getVisits() . '</p>';

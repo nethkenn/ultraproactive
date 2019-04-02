@@ -8,6 +8,11 @@ Route::any('admin/developer/re_entry', 'AdminDevelopersController@re_entry');
 Route::any('admin/developer/re_adjust_cd', 'AdminDevelopersController@re_adjust_cd');
 Route::any('admin/developer/adjust_gc', 'AdminDevelopersController@adjust_gc');
 // Route::any('admin/developer/negativecd', 'AdminDevelopersController@negativecd');
+
+Route::any('admin/developer/migrate_two', 'AdminSlotController@migrate_two');
+Route::any('admin/developer/migrate_get_next_slot', 'AdminDevelopersController@migrate_get_next_slot');
+Route::any('admin/developer/migrate_two_process', 'AdminDevelopersController@migrate_two_process');
+
 /* INCOME PROJECTION */
 Route::any('/projection', 'ProjectionController@index');
 
