@@ -1,5 +1,5 @@
 <?php
-
+//die('We are performing scheduled maintenance. We should be back online shortly.');
 /**
  * Laravel - A PHP Framework For Web Artisans
  *
