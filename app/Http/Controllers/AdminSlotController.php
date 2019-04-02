@@ -23,6 +23,14 @@ use App\Classes\Admin;
 
 class AdminSlotController extends AdminController
 {
+	
+	public function migrate_two()
+	{
+		// dd(123);
+		$data["total_slot"] = Tbl_slot::count();
+		return view('admin.developer.migrate_two',$data);
+	}
+
 	public function index()
 	{
 
