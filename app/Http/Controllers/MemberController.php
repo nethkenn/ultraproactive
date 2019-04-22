@@ -16,7 +16,6 @@ class MemberController extends Controller
 {
 	function __construct()
 	{
-		dd('Under Maintenance');
 		$customer_info = Customer::info();
 		$data['slot_limit'] = DB::table('tbl_settings')->where('key','slot_limit')->first();
 		$current_wallet = null;
