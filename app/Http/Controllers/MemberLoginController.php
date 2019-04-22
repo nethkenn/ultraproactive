@@ -14,7 +14,6 @@ class MemberLoginController extends Controller
 {
 	public function index()
 	{
-	dd('Under Maintenance');	
         $disable_member_area = DB::table('tbl_settings')->where('key','disable_member_area')->first();
         if(!$disable_member_area)
         {
