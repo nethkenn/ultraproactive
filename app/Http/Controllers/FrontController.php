@@ -13,6 +13,7 @@ class FrontController extends Controller
 
 	public function index()
 	{
+	    return Redirect::to('/member/login');
 		$data["_news"] = DB::table("tbl_news")->where("archived", 0)->orderBy('news_date', 'desc')->take(4)->get();
 		foreach ($data["_news"] as $key => $value) 
 		{

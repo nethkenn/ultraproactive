@@ -5,7 +5,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="description" content="UltraProactive">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="shortcut icon" type="image/x-icon" href="/resources/assets/frontend/img/logo.png">
+	<link rel="shortcut icon" type="image/x-icon" href="https://digima.sgp1.digitaloceanspaces.com/ultraproactive/UPMI%20New%20Logo%20Final.png">
 	<!--[if lt IE 9]>
 	<script src="/resources/assets/path///html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
@@ -98,8 +98,8 @@
 	            </li>
 	            <li class="nav-inside active"><a href="/mindsync">MIND SYNC</a></li>
 	            <li class="nav-inside"><a href="/stories">STORIES</a></li>
-	            <!--<li class="nav-inside logo-holder"><img class="logo" src="/resources/assets/frontend/img/logo.png"></li>-->
-	            <li class="nav-inside logo-holder christmas"><img class="logo" src="/resources/assets/frontend/img/logo.png"></li>
+	            <!--<li class="nav-inside logo-holder"><img class="logo" src="https://digima.sgp1.digitaloceanspaces.com/ultraproactive/UPMI%20New%20Logo%20Final.png"></li>-->
+	            <li class="nav-inside logo-holder christmas"><img class="logo" style="width: 125px;" src="https://digima.sgp1.digitaloceanspaces.com/ultraproactive/UPMI%20New%20Logo%20Final.png"></li>
 	            <li class="nav-inside"><a href="/about">ABOUT US</a></li>
 	            <li class="nav-inside"><a href="/opportunity">OPPORTUNITY</a></li>
 	            <li class="nav-inside dropdown">

@@ -25,10 +25,10 @@
 <form method="POST">
     <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
     <div class="bg">
-    	<div class="wrapper">
+    	<div class="wrapper" style="position: static; top: auto; bottom: auto; left: auto; right: auto; transform: none;">
     		<div class="content para">
                 <div class="logo">
-                    <img src="/resources/assets/frontend/img/logo.png">
+                    <img style="max-width: 400px; margin-top: 50px;" src="https://digima.sgp1.digitaloceanspaces.com/ultraproactive/UPMI%20New%20Logo%20Final%20Text.png">
                 </div>
                 @if(Session::has('errored'))
                     <div class="alert alert-danger">
@@ -46,21 +46,21 @@
                  @endif
                 <div style="font-size: 14px; text-align: left;">Username</div>
                 <div class="input">
-                    <input type="text" name="user">
+                    <input type="text" name="user" style="height: 40px;">
                 </div>
                 <div style="font-size: 14px; text-align: left;">Password</div>
                 <div class="input">
-                    <input type="password" name="pass">
+                    <input type="password" name="pass" style="height: 40px;">
                 </div>
-                <div class="forgot"><a href="javascript:">Forgot Password?</a></div>
+                {{--<div class="forgot"><a href="javascript:" style="color: #0000A7; font-style: normal; font-weight: 600;">Forgot Password?</a></div>--}}
                 <a href="javascript:">
-                    <button style="background-color: #F1CB40;" type="submit" name="login" style="margin-top: 20px;">LOGIN</button>
+                    <button style="background-color: #FFC200; margin-top: 20px; height: 40px; font-size: 18px;" type="submit" name="login">LOGIN</button>
                 </a>
-                <a href="/">
-                    <button type="button" style="margin-top: 5px; background-color: #F1CB40;">GO BACK</button>
-                </a>
+                {{--<a href="/">--}}
+                    {{--<button type="button" style="height: 40px; margin-top: 5px; background-color: #FFC200; ">GO BACK</button>--}}
+                {{--</a>--}}
                 <div class="create">
-                    <a href="register" style="color: #056EFC;">New here? Create an account.</a>
+                    <a href="register" style="color: #0000A7;">New here? Create an account.</a>
                 </div>
     		</div>
     	</div>
