@@ -2,16 +2,16 @@
 @section('content')
 <div class="encashment">
   @if($slotnow)
-    <div class="header">Encashment ( Slot #{{$slotnow->slot_id}} )</div>
-    <div class="body">
+    <div class="header" style="background-color: #0000D3; border-color: #0000A7;">Encashment ( Slot #{{$slotnow->slot_id}} )</div>
+    <div class="body" style="background: none; background-color: #FFF4B8;">
         <div class="col-md-12 header-button">
 
             <a style="cursor: pointer;" class="forhistory">
-                <button type="button">Encashment History ( {{$counth}} )</button>
+                <button type="button" style="background-color: #0000A7; border-color: #0000A7;">Encashment History ( {{$counth}} )</button>
             </a>
         </div>
         <input type="hidden" class="forhidden" value="{{$json}}">
-        <div class="title">
+        <div class="title" style="color: #000;">
             Enter the amount you'd like to encash.
         </div>
         <div class="ui-sliders">
@@ -24,7 +24,7 @@
           </select>
 
           <a style="cursor: pointer;">
-            <button type="button" id="clickencash" >Submit Encashment</button>
+            <button type="button" id="clickencash" style="background-color: #0000A7; border-color: #0000A7;">Submit Encashment</button>
           </a>
 
         </div>

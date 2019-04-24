@@ -29,7 +29,7 @@ class MemberDashboardController extends MemberController
 		$data['left_side'] = Tbl_tree_placement::where('placement_tree_parent_id',Customer::slot_id())->where('placement_tree_position','left')->count(); 												  
 		$data['right_side'] = Tbl_tree_placement::where('placement_tree_parent_id',Customer::slot_id())->where('placement_tree_position','right')->count();
 		$data['prod'] = Tbl_product_code::where("account_id", Customer::id())->where('tbl_product_code.used',0)->voucher()->product()->orderBy("product_pin", "desc")->unused()->count();													  
-		$data['count_log'] = Tbl_wallet_logs::where('slot_id',Session::get('currentslot'))->count();
+		$data['count_log'] = Tbl_wallet_logs::where('hide', 0)->where('slot_id',Session::get('currentslot'))->count();
 		$data["_slot_log"] = Tbl_slot_log::		select('tbl_slot_log.*', DB::raw('sum(slot_log_wallet_update) as total'))
 							                 	->where("slot_id", Customer::slot_id())
 							                 	->groupBy('slot_log_key')
@@ -68,7 +68,7 @@ class MemberDashboardController extends MemberController
 	}
 	public function get_notifications($all)
 	{
-		$_notification = Tbl_wallet_logs::orderBy('wallet_logs_id', 'desc');
+		$_notification = Tbl_wallet_logs::where("tbl_wallet_logs.hide", 0)->orderBy('wallet_logs_id', 'desc');
 
 		if(!$all)
 		{

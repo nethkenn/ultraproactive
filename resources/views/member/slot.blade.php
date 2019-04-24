@@ -20,51 +20,51 @@
 <div class="encashment slot">
 <form method="POST">
     <input type="hidden" class="token" name="_token" value="{{ csrf_token() }}">
-    <div class="header">My Slots ( {{$count}} )</div>
-    <div class="body para">
+    <div class="header" style="background-color: #0000D3; border-color: #0000A7;">My Slots ( {{$count}} )</div>
+    <div class="body para" style="background: none; background-color: #FFF4B8;">
         @if($slot2)
             @foreach($slot2 as $s)
                 <div class="holder para">
                     <div class="col-md-3">
-                        <div class="slot-box">
+                        <div class="slot-box" style="background-color: #0000D3;">
                             <div class="labels-slot">SLOT</div>
                             <div class="values-slot">#{{$s->slot_id}}</div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="col-xs-6 labels-container">
-                            <div class="labels">Wallet</div>
-                            <div class="labels">Membership</div>
-                            <div class="labels">Rank</div>
-                            <div class="labels">Downlines</div>
+                            <div class="labels" style="color: #000;">Wallet</div>
+                            <div class="labels" style="color: #000;">Membership</div>
+                            <div class="labels" style="color: #000;">Rank</div>
+                            <div class="labels" style="color: #000;">Downlines</div>
                             @if(App\Tbl_request_transfer_slot::where("owner_account_id",$s->slot_owner)->where("owner_slot_id",$s->slot_id)->where('transfer_status',0)->where('archived',0)->first())
-                            <div class="labels">Transfer:</div>
+                            <div class="labels" style="color: #000;">Transfer:</div>
                             @endif
                         </div>
                         <div class="col-xs-6 labels-container">
-                            <div class="values">{{number_format($s->total_wallet, 2)}}</div>
-                            <div class="values">{{$s->membership_name}}</div>
-                            <div class="values">{{$s->rank_name}}</div>
-                            <div class="values">{{$s->downline}}</div>
+                            <div class="values" style="color: #000;">{{number_format($s->total_wallet, 2)}}</div>
+                            <div class="values" style="color: #000;">{{$s->membership_name}}</div>
+                            <div class="values" style="color: #000;">{{$s->rank_name}}</div>
+                            <div class="values" style="color: #000;">{{$s->downline}}</div>
                             @if(App\Tbl_request_transfer_slot::where("owner_account_id",$s->slot_owner)->where("owner_slot_id",$s->slot_id)->where('transfer_status',0)->where('archived',0)->first())
-                            <div class="values">Pending</div>
+                            <div class="values" style="color: #000;">Pending</div>
                             @endif
                         </div>
                     </div>
                     <div class="col-md-3 top-container">
                         <div class="btn-holder">
                             <a style="cursor: pointer;">
-                                <button class="upbtn" type="button" tols="{{$s->slot_id}}" wallet="{{$s->total_wallet}}" memship="{{$s->membership_price}}">Upgrade Membership</button>
+                                <button style="background-color: #0000D3; border-color: #0000A7;" class="upbtn" type="button" tols="{{$s->slot_id}}" wallet="{{$s->total_wallet}}" memship="{{$s->membership_price}}">Upgrade Membership</button>
                             </a>
                         </div>
                         <div class="btn-holder">           
                             <a href="javascript:">
-                                <button type="submit" name="changeslot" value="{{$s->slot_id}}"{{$s->slot_id == $currentslot ? 'disabled' : ""}}>Use this Slot</button>
+                                <button style="background-color: #0000D3; border-color: #0000A7;" type="submit" name="changeslot" value="{{$s->slot_id}}"{{$s->slot_id == $currentslot ? 'disabled' : ""}}>Use this Slot</button>
                             </a>
                         </div>
                         <div class="btn-holder">
                             <a style="cursor: pointer;">
-                                <button type="button" class="trans_click" value="{{$s->slot_id}}">Transfer Slot</button>
+                                <button style="background-color: #0000D3; border-color: #0000A7;" type="button" class="trans_click" value="{{$s->slot_id}}">Transfer Slot</button>
                             </a>
                         </div>
                     </div>

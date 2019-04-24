@@ -1,5 +1,13 @@
 @extends('member.layout')
 @section('content')
+    <style>
+        .code-vault .table .table-head {
+            background-color: #0000D3;
+        }
+        .code-vault .table table thead th {
+            background-color: #0000A7;
+        }
+    </style>
 <div class="encashment voucher code-vault">
     <div class="table">
         <div class="table-head para">

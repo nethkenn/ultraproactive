@@ -1,5 +1,23 @@
 @extends('member.layout')
 @section('content')
+    <style>
+        .encashment .header {
+            background-color: #0000D3;
+            color: #fff;
+            font-size: 14.58px;
+            padding: 15px 35px;
+            border-bottom: 10px solid #0000A7;
+            text-align: left;
+        }
+        .encashment .body .header-button a button, .encashment .body .ui-sliders a button, .cart .body a button, .product .body .holder .text a button {
+            background-color: #0000A7;
+            border-color: #0000A7;
+        }
+        .cart {
+            background-color: #fff;
+            border-top: 5px solid #0000A7;
+        }
+    </style>
 <div class="cart col-md-5 hidden-lg hidden-md" style="margin-bottom: 25px;">
     <div class="header">
         <img src="/resources/assets/frontend/img/icon-cart.png">

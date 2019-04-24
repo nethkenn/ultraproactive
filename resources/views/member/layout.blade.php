@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US" class="css3transitions">
+<html lang="en-US" class="css3transitions" style="background-color: #FFC200;">
 <head>
     <title>UltraProactive - Members Area</title>
 	<link rel="stylesheet" type="text/css" href="/resources/assets/members/css/member.css">
@@ -29,9 +29,26 @@
       ga('send', 'pageview');
 
     </script>
+
+    <style>
+        .wrapper .header-nav .navbar .nav .active a, .wrapper .header-nav .navbar .nav li a:hover, .wrapper .header-nav .navbar .nav li a:active, .wrapper .header-nav .navbar .open .dropdown-toggle, .wrapper .header-nav .navbar .nav .active a:focus {
+            background-color: #0000D2 !important;
+            color: #fff !important;
+        }
+        .wrapper .header-nav .navbar .nav li:hover span {
+            background-color: transparent !important;
+        }
+        .navbar-default .navbar-nav > li > a {
+            color: #fff;
+        }
+        .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+            background-color: #0000D2 !important;
+            color: #fff !important;
+        }
+    </style>
 </head>
-<body style="overflow-y: scroll">
-<div class="bg">
+<body style="overflow-y: scroll;">
+<div class="bg" style="background-color: #FFC200;">
 	<div class="wrapper">
 		<div class="header-nav">
 			<!-- <div class="header">
@@ -43,7 +60,7 @@
                     <div class="header-text"><a href="/member/logout">{{$member->account_name}} ( Logout )</a></div>
                 </div>
 			</div> -->
-			<nav class="navbar navbar-default">
+			<nav class="navbar navbar-default" style="background: none; background-color: #0000D3; border-radius: 0;">
 			  <div>
 			    <!-- Brand and toggle get grouped for better mobile display -->
 			    <div class="navbar-header">
