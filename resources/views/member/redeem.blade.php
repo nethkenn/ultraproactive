@@ -1,6 +1,21 @@
 @extends('member.layout')
 @section('content')
 
+    <style>
+        .encashment .header {
+            background-color: #0000D3;
+            color: #fff;
+            font-size: 14.58px;
+            padding: 15px 35px;
+            border-bottom: 10px solid #0000A7;
+            text-align: left;
+        }
+        .encashment .body .header-button a button, .encashment .body .ui-sliders a button {
+            background-color: #0000A7;
+            border-color: #0000A7;
+        }
+    </style>
+
 @if(isset($error))
 <div class="alert alert-danger">
     <ul>

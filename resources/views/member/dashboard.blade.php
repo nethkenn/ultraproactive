@@ -1,11 +1,21 @@
 @extends('member.layout')
 @section('content')
+    <style>
+        .leybel {
+            color: #000 !important;
+        }
+
+        .left .detail .holder .title {
+            background-color: #FFF4B8 !important;
+            color: #000 !important;
+        }
+    </style>
 <div class="info para col-md-12">
     <a href="javascript:">
         <div class="col-md-3" style="padding-left: 0 !important;">
-            <div class="box wallet para">
+            <div class="box wallet para" style="background: transparent linear-gradient(to right, #0000D3 50%, #0000A7 50%) repeat;">
                 <div class="img col-md-6">
-                    <img src="/resources/assets/frontend/img/wallet.png">
+                    <img src="https://image.flaticon.com/icons/svg/138/138207.svg">
                 </div>
                 <div class="text col-md-6">
                     <div class="middle">
@@ -13,15 +23,15 @@
                         <div>WALLET</div>
                     </div>
                 </div>
-                <div class="valuez para">{{ number_format($total_wallet, 2) }}</div>
+                <div class="valuez para" style="color: #000;">{{ number_format($total_wallet, 2) }}</div>
             </div>
         </div>
     </a>
     <a href="javascript:">
         <div class="col-md-3">
-            <div class="box slot para">
+            <div class="box slot para" style="background: transparent linear-gradient(to right, #0000D3 50%, #0000A7 50%) repeat;">
                 <div class="img col-md-6">
-                    <img src="/resources/assets/frontend/img/slot.png">
+                    <img src="https://image.flaticon.com/icons/svg/1593/1593661.svg">
                 </div>
                 <div class="text col-md-6">
                     <div class="middle">
@@ -29,16 +39,16 @@
                         <div>SLOT(S)</div>
                     </div>
                 </div>
-                <div class="valuez para">{{$total_count}} SLOT(S)</div>
+                <div class="valuez para" style="color: #000;">{{$total_count}} SLOT(S)</div>
             </div>
         </div>
     </a>
     @if($slotnow)
     <a href="javascript:">
         <div class="col-md-3">
-            <div class="box income para">
+            <div class="box income para" style="background: transparent linear-gradient(to right, #0000D3 50%, #0000A7 50%) repeat;">
                 <div class="img col-md-6">
-                    <img src="/resources/assets/frontend/img/income.png">
+                    <img src="https://image.flaticon.com/icons/svg/1006/1006544.svg">
                 </div>
                 <div class="text col-md-6">
                     <div class="middle">
@@ -46,16 +56,16 @@
                         <div>INCOME</div>
                     </div>
                 </div>
-                <div class="valuez para">{{ number_format($earnings['total_income'],2)}}</div>
+                <div class="valuez para" style="color: #000;">{{ number_format($earnings['total_income'],2)}}</div>
             </div>
         </div>
     </a>
     @endif
     <a href="javascript:">
         <div class="col-md-3" style="padding-right: 0 !important;">
-            <div class="box money para">
+            <div class="box money para" style="background: transparent linear-gradient(to right, #0000D3 50%, #0000A7 50%) repeat;">
                 <div class="img col-md-6">
-                    <img src="/resources/assets/frontend/img/money.png">
+                    <img src="https://image.flaticon.com/icons/svg/1151/1151301.svg">
                 </div>
                 <div class="text col-md-6">
                     <div class="middle">
@@ -63,13 +73,13 @@
                         <div>SPENT</div>
                     </div>
                 </div>
-                <div class="valuez para">{{number_format($earnings['total_withdrawal'],2)}}</div>
+                <div class="valuez para" style="color: #000;">{{number_format($earnings['total_withdrawal'],2)}}</div>
             </div>
         </div>
     </a>
 </div>
 <div class="col-md-9 left">
-    <div class="profile para">
+    <div class="profile para" style="background-color: #0000A7;">
         <div class="profile-pic">
             @if($member->image != "")
             <img src="{{$member->image}}">
@@ -104,7 +114,7 @@
     </div>
     <div class="detail para">
         @if($slotnow)
-        <div class="holder">
+        <div class="holder" style="background-color: #FFF4B8;">
             <div class="title">
                 <span>SLOT</span></br> OVERVIEW
             </div>
@@ -131,7 +141,7 @@
                 </div>
             </div>
         </div>
-        <div class="holder">
+        <div class="holder" style="background-color: #FFF4B8;">
             <div class="title">
                 <span>UPCOINS</span></br> INFORMATION
             </div>
@@ -161,7 +171,7 @@
         </div>
         @endif
         @if(isset($next_membership))
-        <div class="holder">
+        <div class="holder" style="background-color: #FFF4B8;">
             <div class="title">
                 <span>PROMOTION</span></br> QUALIFICATION
             </div>
@@ -186,7 +196,7 @@
         </div>
         @endif
         @if($slotnow)
-        <div class="holder">
+        <div class="holder" style="background-color: #FFF4B8;">
             <div class="title">
                 <span>BINARY</span></br> INFORMATION
             </div>
@@ -214,7 +224,7 @@
 
             </div>
         </div>
-        <div class="holder">
+        <div class="holder" style="background-color: #FFF4B8;">
             <div class="title">
                 <span>INCOME</span></br> SUMMARY
             </div>
@@ -241,7 +251,7 @@
             </div>
         </div>
 
-        <div class="holder">
+        <div class="holder" style="background-color: #FFF4B8;">
             <div class="title">
                 <span>TRAVEL BONUS</span></br> SUMMARY
             </div>
@@ -289,10 +299,10 @@
     @endif -->
 
     <!-- REAL NOTIFICATION :: NOTIFICATION IN TOP IS FAKE I PROMISE-->
-    <div class="holder">
-        <div class="header notif" style="background-color: #e67e22; border-bottom: 3px solid #d35400;">IMPORTANT ANNOUNCEMENT!</div>
-            <div class="holders">
-                <div class="text" style="white-space: pre-wrap;">
+    <div class="holder" style="background-color: #FFF4B8;">
+        <div class="header notif" style="background-color: #0000D3; border-bottom: 3px solid #0000A7;">IMPORTANT ANNOUNCEMENT!</div>
+            <div class="holders" style="background-color: #FFF4B8; border-bottom: 0;">
+                <div class="text" style="white-space: pre-wrap; color: #000;">
 In compliance with the National Internal Revenue Code (R.A. 8424,9337,9442,9504 Sections 57-58 and 78-83), all Income, Commissions and incentives of UPMI Distributors are subject to <b>Ten Percent (10%)</b> withholding Tax deductions. Therefore, distributors should expect that commissions reflected in their online account are NET OF TAX.
 
 Should you have any questions and feedback, feel free to contact us at 234-1993 / 0927 7447286
@@ -304,8 +314,8 @@ UPMI Management
             </div>
     </div>
     @if($_notification)
-    <div class="holder">
-        <div class="header notif">LATEST NOTIFICATION</div>
+    <div class="holder" style="background-color: #FFF4B8;">
+        <div class="header notif" style="background-color: #0000D3; border-bottom: 3px solid #0000A7;">LATEST NOTIFICATION</div>
         @foreach($_notification as $log)
             <div class="holders">
                 <div class="text">{!! $log->logs !!}</div>

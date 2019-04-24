@@ -16,23 +16,23 @@
     </div>
     @endif
     <div class="table">
-        <div class="table-head para">
+        <div class="table-head para" style="background-color: #0000D3;">
             <div class="col-md-6 aw">
                 <img src="/resources/assets/frontend/img/icon-member.png">
                 Unused Membership Codes ({{$count}})
             </div>
             <div class="col-md-6 ew">
                 <a style="cursor: pointer;" class="{{$member->disable_membership == 1 ? 'hidden' : ''}}">
-                    <div class="button" id="buymember">Buy Membership Codes</div>
+                    <div class="button" id="buymember" style="background-color: #0000A7; border-color: #0000A7;">Buy Membership Codes</div>
                 </a>
                 <a style="cursor: pointer;" class="claim_code">
-                    <div class="button">Claim Code</div>
+                    <div class="button" style="background-color: #0000A7; border-color: #0000A7;">Claim Code</div>
                 </a>
             </div>
         </div>
         @if($code)
         <table class="footable">
-            <thead>
+            <thead style="background-color: #0000A7;">
                 <tr>
                     <th>Pin</th>
                     <th data-hide="phone">Code</th>
@@ -82,7 +82,7 @@
     </div>
 
     <div class="table">
-        <div class="table-head para">
+        <div class="table-head para" style="background-color: #0000D3;">
             <div class="col-md-6 aw">
                 Used Membership Codes ({{$used_count}})
             </div>
@@ -97,7 +97,7 @@
         </div>
         @if($used_code)
         <table class="footable">
-            <thead>
+            <thead style="background-color: #0000A7;">
                 <tr>
                     <th>Pin</th>
                     <th data-hide="phone">Code</th>
@@ -137,7 +137,7 @@
 
     <!-- PRODUCT CODE TABLE -->
     <div class="table">
-        <div class="table-head para">
+        <div class="table-head para" style="background-color: #0000D3;">
             <div class="col-md-6 aw">
                 <img src="/resources/assets/frontend/img/icon-product.png">
                 Available Product Codes ( {{$count2}} )
@@ -145,7 +145,7 @@
         </div>
         @if($prodcode)
         <table class="footable">
-            <thead>
+            <thead style="background-color: #0000A7;">
                 <tr>
                     <th>Pin</th>
                     <th data-hide="phone">Code</th>
